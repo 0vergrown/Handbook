@@ -1,0 +1,183 @@
+/* Base reset + element defaults. Adapted from svelte.dev's site-kit base.css. */
+
+html {
+	font-size: 62.5%; /* 1rem = 10px */
+	-webkit-text-size-adjust: 100%;
+	box-sizing: border-box;
+}
+
+html,
+body {
+	height: 100%;
+	width: 100%;
+}
+
+body {
+	font-family: var(--sk-font-family-body);
+	line-height: 1.5;
+	color: var(--sk-fg-2);
+	background-color: var(--sk-bg-1);
+	width: 100%;
+	tab-size: 2;
+	-moz-tab-size: 2;
+	/* NB: no `overflow-x: hidden` here — it silently breaks `position: sticky`
+	   for the docs sidebars. Wide children scroll inside their own containers. */
+}
+
+* {
+	box-sizing: inherit;
+	margin: 0;
+	padding: 0;
+	scrollbar-width: thin;
+	scrollbar-color: var(--sk-scrollbar) transparent;
+}
+
+*:focus-visible {
+	outline: 2px solid var(--sk-fg-accent);
+	outline-offset: 1px;
+	border-radius: var(--sk-border-radius);
+}
+
+p,
+ul,
+ol {
+	font: var(--sk-font-body);
+	margin: 0.5lh 0;
+	text-wrap: pretty;
+}
+p:first-child,
+ul:first-child,
+ol:first-child {
+	margin-top: 0;
+}
+p:last-child,
+ul:last-child,
+ol:last-child {
+	margin-bottom: 0;
+}
+
+a {
+	position: relative;
+	text-decoration: none;
+	cursor: pointer;
+	color: var(--sk-fg-accent);
+}
+a:hover {
+	text-decoration: underline;
+}
+
+h1 {
+	font: var(--sk-font-h1);
+}
+h2 {
+	font: var(--sk-font-h2);
+}
+h3 {
+	font: var(--sk-font-h3);
+}
+h1,
+h2,
+h3,
+h4 {
+	position: relative;
+	text-wrap: balance;
+	color: var(--sk-fg-1);
+	font-family: var(--sk-font-family-heading);
+	font-weight: 500;
+}
+
+strong,
+b {
+	font-weight: 600;
+}
+
+code,
+kbd {
+	position: relative;
+	border-radius: var(--sk-border-radius);
+	background: var(--sk-bg-4);
+	line-height: 1.7;
+	font-size: 0.85em;
+}
+
+code {
+	font-family: var(--sk-font-family-mono);
+	margin: 0 0.2rem;
+	padding: 0.2rem 0.4rem;
+	white-space: nowrap;
+}
+
+kbd {
+	font-family: var(--sk-font-family-ui);
+	padding: 0.2rem 0.6rem;
+	border-bottom: 2px solid var(--sk-border);
+}
+
+pre {
+	overflow-x: auto;
+}
+pre code {
+	top: 0;
+	white-space: inherit;
+	background-color: transparent;
+	padding: 0;
+	margin: 0;
+	font-size: var(--sk-font-size-mono);
+}
+
+::selection {
+	background: var(--sk-bg-selection);
+}
+
+input,
+button,
+select,
+textarea {
+	font-family: var(--sk-font-family-ui);
+	font-size: inherit;
+	color: inherit;
+}
+
+button {
+	background-color: transparent;
+	border: none;
+	color: currentColor;
+	cursor: pointer;
+}
+button[disabled] {
+	color: var(--sk-fg-4);
+	cursor: default;
+}
+
+img {
+	max-width: 100%;
+	height: auto;
+}
+
+/* small "raised" square buttons used in the nav (theme toggle, mobile menu, ...) */
+.raised {
+	display: grid;
+	place-content: center;
+	width: 3.2rem;
+	height: 3.2rem;
+	border-radius: var(--sk-border-radius);
+	border: 1px solid var(--sk-raised-color);
+	color: var(--sk-fg-2);
+	transition: border-color 0.15s;
+}
+.raised:hover {
+	border-color: var(--sk-raised-hover-color);
+	text-decoration: none;
+}
+
+.visually-hidden {
+	border: 0;
+	clip: rect(0 0 0 0);
+	height: auto;
+	margin: 0;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	width: 1px;
+	white-space: nowrap;
+}

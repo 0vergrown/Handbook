@@ -1,0 +1,142 @@
+/*
+ * Long-form documentation content. Everything rendered from markdown lives
+ * inside `.prose`. Mirrors the reading experience of svelte.dev's docs.
+ */
+
+.prose {
+	font: var(--sk-font-body);
+	color: var(--sk-fg-2);
+	max-width: var(--sk-page-content-width);
+}
+
+.prose > :first-child {
+	margin-top: 0;
+}
+
+/* headings ---------------------------------------------------------------- */
+.prose :is(h2, h3, h4) {
+	margin: 4rem 0 1.5rem;
+	scroll-margin-top: calc(var(--sk-nav-height) + 2rem);
+}
+.prose h2 {
+	padding-bottom: 0.4rem;
+	border-bottom: 1px solid var(--sk-border);
+}
+.prose h3 {
+	font-size: var(--sk-font-size-h3);
+}
+.prose h4 {
+	font-size: var(--sk-font-size-h4);
+	font-family: var(--sk-font-family-ui);
+	font-weight: 600;
+	color: var(--sk-fg-1);
+}
+
+/* heading anchors (rehype-autolink-headings, behavior: wrap) */
+.prose :is(h2, h3, h4) > a.heading-anchor {
+	color: inherit;
+	text-decoration: none;
+}
+.prose :is(h2, h3, h4) > a.heading-anchor::after {
+	content: '#';
+	position: absolute;
+	margin-left: 0.4em;
+	color: var(--sk-fg-accent);
+	opacity: 0;
+	transition: opacity 0.15s;
+	font-family: var(--sk-font-family-ui);
+}
+.prose :is(h2, h3, h4):hover > a.heading-anchor::after {
+	opacity: 1;
+}
+
+/* text -------------------------------------------------------------------- */
+.prose p {
+	margin: 1.2rem 0;
+}
+
+.prose a {
+	color: var(--sk-fg-accent);
+	text-decoration: none;
+	box-shadow: inset 0 -1px 0 0 color-mix(in srgb, var(--sk-fg-accent) 40%, transparent);
+}
+.prose a:hover {
+	box-shadow: inset 0 -1px 0 0 var(--sk-fg-accent);
+	text-decoration: none;
+}
+
+.prose :is(ul, ol) {
+	margin: 1.2rem 0;
+	padding-left: 2.4rem;
+}
+.prose li {
+	margin: 0.4rem 0;
+}
+.prose li::marker {
+	color: var(--sk-fg-4);
+}
+
+/* inline code ------------------------------------------------------------- */
+.prose :not(pre) > code {
+	color: var(--sk-fg-1);
+	background: var(--sk-bg-4);
+	white-space: nowrap;
+}
+
+/* blockquotes / callouts -------------------------------------------------- */
+.prose blockquote {
+	position: relative;
+	margin: 1.6rem 0;
+	padding: 1.2rem 1.6rem 1.2rem 2rem;
+	border-left: 3px solid var(--sk-fg-accent);
+	border-radius: var(--sk-border-radius);
+	background: color-mix(in srgb, var(--sk-fg-accent) 8%, var(--sk-bg-2));
+}
+.prose blockquote :is(p, ul, ol) {
+	font-size: var(--sk-font-size-body-small);
+}
+.prose blockquote :last-child {
+	margin-bottom: 0;
+}
+
+/* tables ------------------------------------------------------------------ */
+.prose .table-wrapper {
+	overflow-x: auto;
+	margin: 1.6rem 0;
+}
+.prose table {
+	width: 100%;
+	border-collapse: collapse;
+	font: var(--sk-font-body-small);
+}
+.prose :is(td, th) {
+	text-align: left;
+	border-bottom: 1px solid var(--sk-border);
+	padding: 0.8rem 1.2rem 0.8rem 0;
+	vertical-align: top;
+}
+.prose th {
+	color: var(--sk-fg-1);
+	font-family: var(--sk-font-family-ui);
+	font-weight: 600;
+	white-space: nowrap;
+}
+.prose table :is(code) {
+	white-space: nowrap;
+}
+
+/* misc -------------------------------------------------------------------- */
+.prose hr {
+	border: none;
+	border-top: 1px solid var(--sk-border);
+	margin: 3rem 0;
+}
+.prose img {
+	border-radius: var(--sk-border-radius);
+	margin: 1.6rem 0;
+}
+.prose :is(h2, h3) > code {
+	all: unset;
+	font-family: var(--sk-font-family-mono);
+	font-size: 0.8em;
+}

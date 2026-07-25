@@ -1,0 +1,62 @@
+# Build the Handbook and deploy it to GitHub Pages.
+#
+# This produces a fully static site (SvelteKit adapter-static) — there is no
+# server running at request time, which is exactly what GitHub Pages needs.
+#
+# The base path is derived automatically from the repository name so the site
+# works when served from https://<user>.github.io/<repo>/. If you move to a
+# custom domain served at the root, set BASE_PATH to an empty string below.
+name: Deploy Handbook to Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent deployment, cancelling in-progress runs.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        env:
+          # For a project page (user.github.io/<repo>) the site lives under /<repo>.
+          # Change this to "" if you deploy to a custom domain or a user/org root site.
+          BASE_PATH: /${{ github.event.repository.name }}
+        run: npm run build
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: build
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

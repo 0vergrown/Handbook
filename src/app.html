@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" href="%sveltekit.assets%/handbook.svg" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="theme-color" content="#ff3e00" />
+
+		<!-- Set the theme before first paint to avoid a flash of the wrong colour scheme -->
+		<script>
+			try {
+				const stored = localStorage.getItem('handbook:theme');
+				const theme =
+					!stored || stored === 'system'
+						? window.matchMedia('(prefers-color-scheme: dark)').matches
+							? 'dark'
+							: 'light'
+						: stored;
+				document.documentElement.classList.add(theme);
+			} catch (e) {
+				// localStorage disabled — fall back to the media query via CSS
+			}
+		</script>
+
+		%sveltekit.head%
+	</head>
+	<body data-sveltekit-preload-data="hover">
+		<div style="display: contents">%sveltekit.body%</div>
+	</body>
+</html>

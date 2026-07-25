@@ -1,0 +1,56 @@
+/* Code block styling for shiki output (<pre class="shiki css-variables">). */
+
+pre.shiki {
+	position: relative;
+	margin: 1.5rem 0;
+	padding: 1.6rem 2rem;
+	border-radius: var(--sk-border-radius);
+	background: var(--sk-bg-2);
+	border: 1px solid var(--sk-border);
+	font-size: var(--sk-font-size-mono);
+	line-height: 1.7;
+	overflow-x: auto;
+	color: var(--shiki-foreground);
+	tab-size: 2;
+}
+
+:root.dark pre.shiki,
+:root:not(.light) pre.shiki {
+	background: var(--sk-bg-0);
+}
+
+@media (prefers-color-scheme: dark) {
+	:root:not(.light) pre.shiki {
+		background: var(--sk-bg-0);
+	}
+}
+
+pre.shiki code {
+	background: none;
+	padding: 0;
+	margin: 0;
+	white-space: pre;
+	font-family: var(--sk-font-family-mono);
+	font-size: inherit;
+}
+
+pre.shiki .line {
+	display: inline-block;
+	width: 100%;
+	min-height: 1.7em;
+}
+
+/* filename / language tag on a fenced block (optional, set via data-label) */
+pre.shiki[data-label]::before {
+	content: attr(data-label);
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding: 0.2rem 0.8rem;
+	font: var(--sk-font-ui-small);
+	color: var(--sk-fg-4);
+	background: var(--sk-bg-4);
+	border-bottom-left-radius: var(--sk-border-radius);
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+}
