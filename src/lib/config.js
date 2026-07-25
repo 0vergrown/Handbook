@@ -27,7 +27,7 @@ export const SITE = {
 				name: 'Origins',
 				blurb: 'The addon. Pick an origin at spawn and play with its powers.',
 				modrinth: 'https://modrinth.com/mod/origins',
-				curseforge: 'https://www.curseforge.com/minecraft/mc-mods/origins
+				curseforge: 'https://www.curseforge.com/minecraft/mc-mods/origins'
 			}
 		]
 	}
