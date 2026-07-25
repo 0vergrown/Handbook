@@ -2,69 +2,86 @@
 	import { onMount, tick } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { base } from '$app/paths';
-	import FlexSearchNS from 'flexsearch';
 	import { searchBlocks } from '$lib/content/index.js';
 	import { searchState } from '$lib/search.svelte.js';
 	import Icon from './Icon.svelte';
 
-	const FlexSearch = FlexSearchNS.default ?? FlexSearchNS;
-
-	let index = null;
 	let query = $state('');
-	let results = $state([]);
 	let selected = $state(0);
 	let input = $state(null);
+	let listEl = $state(null);
 
-	function buildIndex() {
-		if (index) return;
-		index = new FlexSearch.Document({
-			tokenize: 'forward',
-			cache: true,
-			document: {
-				id: 'id',
-				index: ['title', 'content'],
-				store: ['title', 'breadcrumb', 'href', 'topic']
-			}
-		});
-		for (const block of searchBlocks) index.add(block);
-	}
+	// Pre-lowercase everything once, so each keystroke is a cheap scan.
+	const HAYSTACK = searchBlocks.map((b) => ({
+		block: b,
+		title: b.title.toLowerCase(),
+		crumb: (b.breadcrumb || '').toLowerCase(),
+		content: (b.content || '').toLowerCase(),
+		// heading blocks (deep-links) rank a touch below full pages
+		isSection: b.href.includes('#')
+	}));
 
-	function run(q) {
-		if (!index || !q.trim()) return [];
-		const groups = index.search(q, { enrich: true, limit: 12, suggest: true });
-		const seen = new Set();
-		const out = [];
-		for (const group of groups) {
-			for (const item of group.result) {
-				if (seen.has(item.id)) continue;
-				seen.add(item.id);
-				out.push(item.doc);
-				if (out.length >= 10) break;
-			}
-			if (out.length >= 10) break;
+	/**
+	 * Deterministic ranked search. Every query term must match somewhere;
+	 * title matches outrank breadcrumb, which outranks body text.
+	 */
+	function score(entry, terms) {
+		let total = entry.isSection ? -3 : 0;
+		for (const t of terms) {
+			let best = 0;
+			if (entry.title === t) best = 120;
+			else if (entry.title.startsWith(t)) best = 60;
+			else if (wordStart(entry.title, t)) best = 45;
+			else if (entry.title.includes(t)) best = 30;
+			else if (entry.crumb.includes(t)) best = 10;
+			else if (entry.content.includes(t)) best = 6;
+			else return -1; // a term matched nothing → drop this result
+			total += best;
 		}
-		return out;
+		return total;
 	}
 
-	$effect(() => {
-		const q = query;
-		results = run(q);
-		selected = 0;
+	function wordStart(haystack, term) {
+		let i = haystack.indexOf(term);
+		while (i > 0) {
+			if (!/[a-z0-9]/.test(haystack[i - 1])) return true;
+			i = haystack.indexOf(term, i + 1);
+		}
+		return i === 0;
+	}
+
+	const results = $derived.by(() => {
+		const terms = query.toLowerCase().trim().split(/\s+/).filter(Boolean);
+		if (terms.length === 0) return [];
+		const scored = [];
+		for (const entry of HAYSTACK) {
+			const s = score(entry, terms);
+			if (s > 0) scored.push({ block: entry.block, s });
+		}
+		scored.sort((a, b) => b.s - a.s);
+		return scored.slice(0, 12).map((x) => x.block);
 	});
 
-	async function open() {
-		buildIndex();
-		searchState.open = true;
-		await tick();
-		input?.focus();
-	}
+	// keep the highlighted row valid + in view
+	$effect(() => {
+		results;
+		selected = 0;
+	});
+	$effect(() => {
+		if (listEl) {
+			const el = listEl.querySelector(`[data-i="${selected}"]`);
+			el?.scrollIntoView({ block: 'nearest' });
+		}
+	});
 
+	function open() {
+		searchState.open = true;
+		tick().then(() => input?.focus());
+	}
 	function close() {
 		searchState.open = false;
 		query = '';
-		results = [];
 	}
-
 	function choose(block) {
 		if (!block) return;
 		close();
@@ -72,19 +89,21 @@
 	}
 
 	function onKeydown(e) {
-		// global open shortcut
 		if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
 			e.preventDefault();
 			searchState.open ? close() : open();
 			return;
 		}
-		if (e.key === '/' && !searchState.open && !/input|textarea|select/i.test(e.target.tagName)) {
+		if (
+			e.key === '/' &&
+			!searchState.open &&
+			!/input|textarea|select/i.test(e.target?.tagName || '')
+		) {
 			e.preventDefault();
 			open();
 			return;
 		}
 		if (!searchState.open) return;
-
 		if (e.key === 'Escape') {
 			e.preventDefault();
 			close();
@@ -100,23 +119,17 @@
 		}
 	}
 
-	// react to external open requests (e.g. mobile search button)
 	$effect(() => {
-		if (searchState.open && !index) buildIndex();
 		if (searchState.open) tick().then(() => input?.focus());
 	});
-
 	$effect(() => {
 		if (typeof document !== 'undefined') {
 			document.body.style.overflow = searchState.open ? 'hidden' : '';
 		}
 	});
-
 	onMount(() => () => (document.body.style.overflow = ''));
 
-	function topicLabel(t) {
-		return t === 'datapack' ? 'Data Pack' : t === 'addon' ? 'Addon' : t;
-	}
+	const topicLabel = (t) => (t === 'datapack' ? 'Data Pack' : t === 'addon' ? 'Addon' : t);
 </script>
 
 <svelte:window onkeydown={onKeydown} />
@@ -145,7 +158,7 @@
 				</button>
 			</div>
 
-			<div class="results">
+			<div class="results" bind:this={listEl}>
 				{#if query.trim() === ''}
 					<p class="hint">Search powers, actions, conditions, data types and the API.</p>
 				{:else if results.length === 0}
@@ -156,6 +169,7 @@
 							<li>
 								<a
 									href={base + block.href}
+									data-i={i}
 									class:selected={i === selected}
 									onmouseenter={() => (selected = i)}
 									onclick={() => close()}
@@ -291,6 +305,12 @@
 	.topic-badge[data-topic='addon'] {
 		background: color-mix(in srgb, hsl(204, 90%, 50%) 20%, var(--sk-bg-4));
 		color: hsl(204, 80%, 42%);
+	}
+	:root.dark .topic-badge[data-topic='datapack'] {
+		color: hsl(140, 55%, 62%);
+	}
+	:root.dark .topic-badge[data-topic='addon'] {
+		color: hsl(204, 80%, 66%);
 	}
 
 	.footer {

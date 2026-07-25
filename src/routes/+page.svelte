@@ -3,6 +3,7 @@
 	import { SITE } from '$lib/config.js';
 	import Icon from '$lib/components/Icon.svelte';
 	import Footer from '$lib/components/Footer.svelte';
+	import AddonTree from '$lib/components/home/AddonTree.svelte';
 	import HeroPower from '$lib/components/home/hero-power.md';
 
 	let { data } = $props();
@@ -45,55 +46,23 @@
 		</div>
 	</section>
 
-	<!-- ─────────────────── pronunciation ─────────────────── -->
-	<section class="band pronounce">
-		<h2>Say it right</h2>
-		<div class="pron-row">
-			<div class="pron">
-				<div class="word">Apoli <span class="ipa">/əˈpɒl·i/</span></div>
-				<p>“uh-<strong>POL</strong>-ee.” The engine. It defines what a <em>power</em> is.</p>
-			</div>
-			<div class="pron">
-				<div class="word">Origins <span class="ipa">/ˈɒr·ɪ·dʒɪnz/</span></div>
-				<p>Just like the English word. The addon most players actually install.</p>
-			</div>
-		</div>
-	</section>
-
 	<!-- ─────────────── how it fits together ─────────────── -->
 	<section class="band">
-		<div class="section-head">
+		<div class="section-head centered">
 			<h2>One engine, many addons</h2>
 			<p>
-				Origins is the famous one — but it is only a passenger. <strong>Apoli</strong> is what makes
+				Origins is the famous one — but it's only a passenger. <strong>Apoli</strong> is what makes
 				powers possible; Origins is simply an addon that hands those powers out when you pick an
-				origin at spawn. Learn Apoli and you can build anything.
+				origin. Learn Apoli and you can build anything on top of it.
 			</p>
 		</div>
 
-		<div class="stack">
-			<div class="layer layer-3">
-				<span class="tag">Your content</span>
-				<div class="layer-body">
-					Data packs &amp; addons — the powers, origins, and mechanics <em>you</em> create.
-				</div>
-			</div>
-			<div class="layer layer-2">
-				<span class="tag">Origins</span>
-				<div class="layer-body">An addon: origin selection, the choose-your-origin screen, badges.</div>
-			</div>
-			<div class="layer layer-1">
-				<span class="tag">Apoli</span>
-				<div class="layer-body">
-					The engine: powers, actions, conditions, data types — the whole vocabulary.
-				</div>
-			</div>
-		</div>
+		<AddonTree />
 	</section>
 
 	<!-- ─────────────────── two doc tracks ─────────────────── -->
 	<section class="band">
-		<div class="section-head">
+		<div class="section-head centered">
 			<h2>Two ways in</h2>
 			<p>Pick the side that matches how you build.</p>
 		</div>
@@ -122,21 +91,23 @@
 	</section>
 
 	<!-- ─────────────────── feature strip ─────────────────── -->
-	<section class="band features">
-		<div class="feature">
-			<Icon name="search" size={22} />
-			<h4>Searchable</h4>
-			<p>Fuzzy search across every power, action and condition. Hit <kbd>/</kbd> to start.</p>
-		</div>
-		<div class="feature">
-			<Icon name="download" size={22} />
-			<h4>Always current</h4>
-			<p>The docs are wired to the source — when the mods change, these pages change.</p>
-		</div>
-		<div class="feature">
-			<Icon name="book" size={22} />
-			<h4>Copy-paste ready</h4>
-			<p>Real, working JSON examples for every type. Drop them straight into a data pack.</p>
+	<section class="band">
+		<div class="features">
+			<div class="feature">
+				<Icon name="search" size={22} />
+				<h4>Searchable</h4>
+				<p>Fuzzy search across every power, action and condition. Hit <kbd>/</kbd> to start.</p>
+			</div>
+			<div class="feature">
+				<Icon name="download" size={22} />
+				<h4>Always current</h4>
+				<p>The docs are wired to the source — when the mods change, these pages change.</p>
+			</div>
+			<div class="feature">
+				<Icon name="book" size={22} />
+				<h4>Copy-paste ready</h4>
+				<p>Real, working JSON examples for every type. Drop them straight into a data pack.</p>
+			</div>
 		</div>
 	</section>
 
@@ -159,23 +130,28 @@
 		content: '';
 		position: absolute;
 		inset: -20% -10% auto -10%;
-		height: 120%;
+		height: 130%;
 		background:
-			radial-gradient(60% 60% at 25% 15%, color-mix(in srgb, var(--sk-fg-accent) 22%, transparent), transparent),
-			radial-gradient(50% 50% at 90% 10%, color-mix(in srgb, hsl(140, 60%, 45%) 18%, transparent), transparent);
+			radial-gradient(55% 55% at 22% 12%, color-mix(in srgb, var(--sk-fg-accent) 22%, transparent), transparent),
+			radial-gradient(45% 45% at 88% 8%, color-mix(in srgb, hsl(140, 60%, 45%) 16%, transparent), transparent);
 		z-index: -1;
 		pointer-events: none;
 	}
 	.hero-grid {
-		max-width: 120rem;
+		max-width: 116rem;
 		margin: 0 auto;
 		display: grid;
 		gap: 4rem;
 		align-items: center;
 	}
 	@media (min-width: 900px) {
+		.hero {
+			padding-top: 8rem;
+			padding-bottom: 11rem;
+		}
 		.hero-grid {
-			grid-template-columns: 1.1fr 0.9fr;
+			grid-template-columns: 1.05fr 0.95fr;
+			gap: 6rem;
 		}
 	}
 	.eyebrow {
@@ -188,17 +164,17 @@
 	}
 	.hero h1 {
 		font: var(--sk-font-h1);
-		font-size: clamp(3.6rem, 7vw, 6rem);
-		line-height: 1.05;
+		font-size: clamp(3.6rem, 6vw, 6.4rem);
+		line-height: 1.04;
 		margin-bottom: 2rem;
 	}
 	.hero .accent {
 		color: var(--sk-fg-accent);
 	}
 	.hero .sub {
-		font-size: 2rem;
+		font-size: clamp(1.7rem, 2vw, 2.1rem);
 		color: var(--sk-fg-3);
-		max-width: 46rem;
+		max-width: 48rem;
 		margin-bottom: 2.8rem;
 	}
 	.hero strong {
@@ -214,12 +190,12 @@
 		display: inline-flex;
 		align-items: center;
 		gap: 0.6rem;
-		padding: 1rem 1.8rem;
+		padding: 1.1rem 2rem;
 		border-radius: var(--sk-border-radius);
 		font: var(--sk-font-ui-medium);
 		font-weight: 500;
 		text-decoration: none;
-		transition: transform 0.1s, background 0.15s;
+		transition: transform 0.1s, background 0.15s, border-color 0.15s;
 	}
 	.btn:hover {
 		text-decoration: none;
@@ -245,6 +221,9 @@
 		overflow: hidden;
 		background: var(--sk-bg-2);
 		box-shadow: var(--sk-shadow);
+		width: 100%;
+		max-width: 46rem;
+		justify-self: center;
 	}
 	:root.dark .code-card {
 		background: var(--sk-bg-0);
@@ -281,114 +260,46 @@
 
 	/* bands ------------------------------------------------------------- */
 	.band {
-		max-width: 108rem;
-		margin: 0 auto;
-		padding: 6rem var(--sk-page-padding-side);
 		width: 100%;
+		max-width: 112rem;
+		margin: 0 auto;
+		padding: 7rem var(--sk-page-padding-side);
+	}
+	@media (min-width: 1000px) {
+		.band {
+			padding: 9rem var(--sk-page-padding-side);
+		}
 	}
 	.section-head {
-		max-width: 62rem;
-		margin-bottom: 3.5rem;
+		max-width: 64rem;
+		margin-bottom: 4rem;
+	}
+	.section-head.centered {
+		margin-left: auto;
+		margin-right: auto;
+		margin-bottom: 5rem;
+		text-align: center;
 	}
 	.band h2 {
 		font: var(--sk-font-h2);
-		font-size: clamp(2.8rem, 4vw, 3.6rem);
-		margin-bottom: 1.2rem;
+		font-size: clamp(2.8rem, 4vw, 3.8rem);
+		margin-bottom: 1.4rem;
 	}
 	.section-head p {
-		font-size: 1.9rem;
+		font-size: clamp(1.7rem, 2vw, 2rem);
 		color: var(--sk-fg-3);
 	}
-
-	.pronounce {
-		text-align: center;
-	}
-	.pronounce h2 {
-		margin-bottom: 2.5rem;
-	}
-	.pron-row {
-		display: grid;
-		gap: 2rem;
-		max-width: 76rem;
-		margin: 0 auto;
-	}
-	@media (min-width: 720px) {
-		.pron-row {
-			grid-template-columns: 1fr 1fr;
-		}
-	}
-	.pron {
-		border: 1px solid var(--sk-border);
-		border-radius: var(--sk-border-radius);
-		padding: 2.4rem;
-		background: var(--sk-bg-2);
-		text-align: left;
-	}
-	.pron .word {
-		font-family: var(--sk-font-family-heading);
-		font-size: 2.6rem;
+	.section-head strong {
 		color: var(--sk-fg-1);
-		margin-bottom: 0.8rem;
-	}
-	.pron .ipa {
-		font-family: var(--sk-font-family-mono);
-		font-size: 1.5rem;
-		color: var(--sk-fg-accent);
-		margin-left: 0.6rem;
-	}
-	.pron p {
-		color: var(--sk-fg-3);
-		font-size: 1.7rem;
-	}
-
-	/* layered stack ----------------------------------------------------- */
-	.stack {
-		display: flex;
-		flex-direction: column;
-		gap: 1.2rem;
-		max-width: 72rem;
-	}
-	.layer {
-		display: flex;
-		flex-direction: column;
-		gap: 0.6rem;
-		padding: 1.8rem 2rem;
-		border-radius: var(--sk-border-radius);
-		border: 1px solid var(--sk-border);
-	}
-	.layer .tag {
-		font-family: var(--sk-font-family-heading);
-		font-size: 2rem;
-		color: var(--sk-fg-1);
-	}
-	.layer-body {
-		color: var(--sk-fg-3);
-		font-size: 1.6rem;
-	}
-	.layer-1 {
-		background: color-mix(in srgb, var(--sk-fg-accent) 12%, var(--sk-bg-2));
-		border-color: color-mix(in srgb, var(--sk-fg-accent) 30%, var(--sk-border));
-		margin-left: 0;
-	}
-	.layer-2 {
-		background: color-mix(in srgb, hsl(140, 55%, 45%) 10%, var(--sk-bg-2));
-		margin-left: 2rem;
-	}
-	.layer-3 {
-		background: var(--sk-bg-2);
-		margin-left: 4rem;
-	}
-	@media (max-width: 620px) {
-		.layer-2,
-		.layer-3 {
-			margin-left: 0;
-		}
+		font-weight: 500;
 	}
 
 	/* tracks ------------------------------------------------------------ */
 	.tracks {
 		display: grid;
 		gap: 2rem;
+		max-width: 88rem;
+		margin: 0 auto;
 	}
 	@media (min-width: 760px) {
 		.tracks {
@@ -399,7 +310,7 @@
 		display: flex;
 		flex-direction: column;
 		gap: 0.8rem;
-		padding: 2.8rem;
+		padding: 3rem;
 		border: 1px solid var(--sk-border);
 		border-radius: 0.8rem;
 		background: var(--sk-bg-2);
@@ -452,7 +363,9 @@
 	/* features ---------------------------------------------------------- */
 	.features {
 		display: grid;
-		gap: 2rem;
+		gap: 2.5rem;
+		max-width: 92rem;
+		margin: 0 auto;
 	}
 	@media (min-width: 760px) {
 		.features {

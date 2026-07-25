@@ -18,6 +18,10 @@
 	.docs-shell {
 		--sidebar-width: 27rem;
 		--toc-width: 24rem;
+		/* Past this width the whole sidebar+content+ToC cluster centres, instead
+		   of the content drifting rightwards into the fixed ToC on ultrawide. */
+		--docs-max: 132rem;
+		--gutter: max(0px, calc((100vw - var(--docs-max)) / 2));
 		position: relative;
 	}
 
@@ -37,7 +41,7 @@
 		.sidebar {
 			position: fixed;
 			top: var(--sk-nav-height);
-			left: 0;
+			left: var(--gutter);
 			width: var(--sidebar-width);
 			height: calc(100vh - var(--sk-nav-height));
 			overflow-y: auto;
@@ -46,13 +50,13 @@
 			z-index: 10;
 		}
 		.page-wrap {
-			padding-left: var(--sidebar-width);
+			padding-left: calc(var(--gutter) + var(--sidebar-width));
 		}
 	}
 
 	@media (min-width: 1200px) {
 		.page-wrap {
-			padding-right: var(--toc-width);
+			padding-right: calc(var(--gutter) + var(--toc-width));
 		}
 	}
 </style>

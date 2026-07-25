@@ -69,7 +69,9 @@
 			display: block;
 			position: fixed;
 			top: calc(var(--sk-nav-height) + var(--sk-page-padding-top));
-			right: max(2rem, calc((100vw - 120rem) / 2 + 2rem));
+			/* --gutter is set by the docs shell; keeps the ToC aligned with the
+			   centred content cluster on ultrawide screens. */
+			right: calc(var(--gutter, 0px) + 2rem);
 			width: 22rem;
 			max-height: calc(100vh - var(--sk-nav-height) - 8rem);
 			overflow-y: auto;
