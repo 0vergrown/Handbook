@@ -1,0 +1,17 @@
+---
+title: "apoli:owner"
+description: "Checks whether the actor entity is the owner of the tamable target entity."
+---
+
+Checks whether the actor entity is the owner of the tamable target entity.
+
+Type ID: `apoli:owner`
+## Fields
+_None._
+## Examples
+
+```json
+"bientity_condition": {
+    "type": "apoli:owner"
+}
+```

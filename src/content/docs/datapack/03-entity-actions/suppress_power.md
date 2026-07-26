@@ -1,0 +1,23 @@
+---
+title: "apoli:suppress_power"
+description: "Temporarily disables a power without removing it."
+---
+
+Temporarily disables a power without removing it.
+
+Type ID: `apoli:suppress_power`
+
+## Fields
+
+| Field | Type | Default |
+|-------|------|---------|
+| `power` | identifier | **required** |
+| `source` | identifier | _optional_ |
+
+## Example
+
+```json
+{
+  "type": "apoli:suppress_power"
+}
+```

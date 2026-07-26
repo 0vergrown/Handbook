@@ -8,13 +8,13 @@ searched. They exist only so every real doc page comes out in the same shape.
 
 1. Pick the template that matches what you're documenting:
 
-   | Template | For |
-   | --- | --- |
-   | `power-type.md` | a power `type` (e.g. `apoli:attribute`) |
-   | `action.md` | an action (entity / bientity / block / item / meta) |
-   | `condition.md` | a condition |
-   | `data-type.md` | a reusable value type (modifier, effect, …) |
-   | `section-overview.md` | the intro/overview page of a section |
+   | Template              | For                                                 |
+   |-----------------------|-----------------------------------------------------|
+   | `power-type.md`       | a power `type` (e.g. `apoli:attribute`)             |
+   | `action.md`           | an action (entity / bientity / block / item / meta) |
+   | `condition.md`        | a condition                                         |
+   | `data-type.md`        | a reusable value type (modifier, effect, …)         |
+   | `section-overview.md` | the intro/overview page of a section                |
 
 2. **Copy** it into the right place under `src/content/docs/`:
 
@@ -40,6 +40,6 @@ searched. They exist only so every real doc page comes out in the same shape.
   `<h1>`, the sidebar label, and the search title. The description shows under the
   heading and in search results.
 - **Every field in the fields table must match the source codec** — name, type,
-  and default. See `CLAUDE.md` §1 for where to read each codec. Don't guess.
+  and default.
 - Keep the house voice: one-line summary → fields table → working example. Short
-  paragraphs, second person, real type names. See `CLAUDE.md` §4.
+  paragraphs, second person, real type names.

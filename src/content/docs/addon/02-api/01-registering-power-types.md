@@ -61,7 +61,10 @@ PowerTypeRegistry.register(MyMod.id("gravity"), new GravityPower());
 Now this loads:
 
 ```json
-{ "type": "yourmod:gravity", "multiplier": 0.4 }
+{
+  "type":"yourmod:gravity",
+  "multiplier":0.4
+}
 ```
 
 ## Aliases and legacy fields

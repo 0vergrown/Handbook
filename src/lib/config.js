@@ -13,9 +13,10 @@ export const SITE = {
 	x: 'https://x.com/OvergrownMC',
 	discord: 'https://discord.gg/', // TODO: replace with the real invite
 
+	// Download destinations.
 	downloads: {
-		modrinth: 'https://modrinth.com/user/0vergrown',
-		curseforge: 'https://www.curseforge.com/members/0vergrown/projects',
+		modrinth: 'https://modrinth.com/user/Overgrown/mods',
+		curseforge: 'https://www.curseforge.com/members/overgrownmc/projects',
 		mods: [
 			{
 				name: 'Apoli',
@@ -26,8 +27,8 @@ export const SITE = {
 			{
 				name: 'Origins',
 				blurb: 'The addon. Pick an origin at spawn and play with its powers.',
-				modrinth: 'https://modrinth.com/mod/origins',
-				curseforge: 'https://www.curseforge.com/minecraft/mc-mods/origins'
+				modrinth: 'https://modrinth.com/mod/o-origins',
+				curseforge: 'https://www.curseforge.com/minecraft/mc-mods/o-origins'
 			}
 		]
 	}

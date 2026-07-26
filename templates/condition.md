@@ -14,8 +14,8 @@ Passes when CONDITION. This is a **FLAVOUR condition**.
 
 ## Fields
 
-| Field | Type | Default | Purpose |
-| --- | --- | --- | --- |
+| Field     | Type | Default | Purpose       |
+|-----------|------|---------|---------------|
 | `FIELD_A` | TYPE | DEFAULT | WHAT IT DOES. |
 
 <!-- Comparison-style conditions take `comparison` + `compare_to`; document those here. -->

@@ -14,8 +14,8 @@ ONE OR TWO SENTENCES. This is a **FLAVOUR action** — it goes in a `FLAVOUR_act
 
 ## Fields
 
-| Field | Type | Default | Purpose |
-| --- | --- | --- | --- |
+| Field     | Type | Default | Purpose       |
+|-----------|------|---------|---------------|
 | `FIELD_A` | TYPE | DEFAULT | WHAT IT DOES. |
 
 <!-- If the action takes no config, say so: "This action has no fields." -->

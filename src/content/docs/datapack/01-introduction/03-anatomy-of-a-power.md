@@ -13,7 +13,7 @@ A **power**, an **action**, and a **condition** are all JSON objects with a `typ
 { "type": "apoli:heal", "amount": 4 }
 ```
 
-The `type` is an [identifier](/docs/datapack/data-types/overview) (`namespace:path`). It selects *which* thing this is; the remaining fields configure it. Apoli looks the type up, and if it doesn't recognise it, the power fails to load with an error in the log.
+The `type` is an [identifier](/docs/datapack/introduction/data-types) (`namespace:path`). It selects *which* thing this is; the remaining fields configure it. Apoli looks the type up, and if it doesn't recognise it, the power fails to load with an error in the log.
 
 ## Fields are typed too
 
@@ -28,7 +28,7 @@ Each field expects a particular kind of value. Some are primitives (a number, a 
 }
 ```
 
-Here `cooldown` is a number, `bientity_action` is an [action](/docs/datapack/actions/overview), and `condition` is a [condition](/docs/datapack/conditions/overview). This nesting is the whole trick — you compose behaviour by putting typed objects inside typed objects.
+Here `cooldown` is a number, `bientity_action` is an [action](/docs/datapack/introduction/actions), and `condition` is a [condition](/docs/datapack/introduction/conditions). This nesting is the whole trick — you compose behaviour by putting typed objects inside typed objects.
 
 ## Lists where it makes sense
 
@@ -64,4 +64,4 @@ Every type page follows the same template:
 2. a **fields** table (name · type · default · purpose),
 3. a working example you can paste into a data pack.
 
-That's it. [Powers](/docs/datapack/powers/overview), [actions](/docs/datapack/actions/overview) and [conditions](/docs/datapack/conditions/overview) are all just this shape, repeated.
+That's it. [Powers](/docs/datapack/introduction/powers), [actions](/docs/datapack/introduction/actions) and [conditions](/docs/datapack/introduction/conditions) are all just this shape, repeated.

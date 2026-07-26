@@ -164,7 +164,11 @@ const ALL = [...ENTRIES.values()];
 // ordered list of pages within a topic (for sidebar + prev/next)
 function orderedPages(topic) {
 	return ALL.filter((e) => e.topic === topic).sort(
-		(a, b) => a.sectionOrder - b.sectionOrder || a.pageOrder - b.pageOrder
+		(a, b) =>
+			a.sectionOrder - b.sectionOrder ||
+			a.pageOrder - b.pageOrder ||
+			// ported per-type pages have no NN- prefix (equal pageOrder) → sort by title
+			a.title.localeCompare(b.title)
 	);
 }
 
@@ -188,6 +192,19 @@ export function getTopicNav(topic) {
 export function getFirstPage(topic) {
 	const pages = orderedPages(topic);
 	return pages[0]?.slug ?? null;
+}
+
+/** The first page of a section within a topic (for section-landing redirects). */
+export function firstPageOfSection(topic, section) {
+	const pages = orderedPages(topic).filter((e) => e.section === section);
+	return pages[0]?.slug ?? null;
+}
+
+/** All `topic/section` paths — prerendered as redirects to their first page. */
+export function allSectionPaths() {
+	const set = new Set();
+	for (const e of ALL) set.add(`${e.topic}/${e.section}`);
+	return [...set];
 }
 
 /** Everything the docs route needs to render one page. */

@@ -5,18 +5,24 @@
 
 	let { nav = [], topicTitle = 'Docs' } = $props();
 
-	let open = $state(true);
+	let navOpen = $state(true); // outer (mobile) toggle
 	onMount(() => {
-		// collapsed by default on small screens, always open on desktop
-		open = !window.matchMedia('(max-width: 831px)').matches;
+		navOpen = !window.matchMedia('(max-width: 831px)').matches;
 	});
 
 	const current = $derived(page.url.pathname);
 	const hrefOf = (slug) => `${base}/docs/${slug}`;
+	const sectionHasCurrent = (section) => section.pages.some((p) => hrefOf(p.slug) === current);
+
+	// per-section open state; the section holding the current page is always open
+	let open = $state({});
+	$effect(() => {
+		for (const s of nav) if (sectionHasCurrent(s)) open[s.title] = true;
+	});
 </script>
 
-<details class="docs-nav" bind:open>
-	<summary>
+<details class="docs-nav" bind:open={navOpen}>
+	<summary class="nav-toggle">
 		<span>{topicTitle} menu</span>
 		<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
 			><polyline points="6 9 12 15 18 9" /></svg
@@ -25,18 +31,26 @@
 
 	<nav aria-label="{topicTitle} navigation">
 		<ul class="sections">
-			{#each nav as section}
+			{#each nav as section (section.title)}
 				<li>
-					<h3>{section.title}</h3>
-					<ul class="pages">
-						{#each section.pages as p}
-							<li>
-								<a href={hrefOf(p.slug)} aria-current={current === hrefOf(p.slug) ? 'page' : undefined}>
-									{p.title}
-								</a>
-							</li>
-						{/each}
-					</ul>
+					<details bind:open={open[section.title]}>
+						<summary>
+							<span>{section.title}</span>
+							<span class="count">{section.pages.length}</span>
+						</summary>
+						<ul class="pages">
+							{#each section.pages as p (p.slug)}
+								<li>
+									<a
+										href={hrefOf(p.slug)}
+										aria-current={current === hrefOf(p.slug) ? 'page' : undefined}
+									>
+										{p.title}
+									</a>
+								</li>
+							{/each}
+						</ul>
+					</details>
 				</li>
 			{/each}
 		</ul>
@@ -47,7 +61,9 @@
 	.docs-nav {
 		font-family: var(--sk-font-family-body);
 	}
-	summary {
+
+	/* outer (mobile) toggle */
+	.nav-toggle {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
@@ -60,48 +76,92 @@
 		border-bottom: 1px solid var(--sk-border);
 		background: var(--sk-bg-2);
 	}
-	summary::-webkit-details-marker {
+	.nav-toggle::-webkit-details-marker {
 		display: none;
 	}
-	details[open] > summary svg {
+	details[open] > .nav-toggle svg {
 		transform: rotate(180deg);
 	}
 
 	nav {
-		padding: 2.4rem var(--sk-page-padding-side) 4rem;
+		padding: 1.6rem 0 4rem;
 	}
 	.sections {
 		list-style: none;
 	}
 	.sections > li {
-		margin-bottom: 2.8rem;
+		margin: 0;
 	}
-	h3 {
+
+	/* section headers (collapsible) */
+	.sections > li > details > summary {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.8rem;
+		padding: 0.6rem var(--sk-page-padding-side);
 		font: var(--sk-font-ui-small);
 		text-transform: uppercase;
-		letter-spacing: 0.06em;
-		color: var(--sk-fg-4);
+		letter-spacing: 0.05em;
+		color: var(--sk-fg-3);
 		font-family: var(--sk-font-family-ui);
-		margin-bottom: 0.8rem;
+		cursor: pointer;
+		list-style: none;
+		user-select: none;
+		border-radius: var(--sk-border-radius);
 	}
+	.sections > li > details > summary::-webkit-details-marker {
+		display: none;
+	}
+	.sections > li > details > summary::before {
+		content: '';
+		width: 0.8rem;
+		height: 0.8rem;
+		flex-shrink: 0;
+		background: currentColor;
+		mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6" fill="none" stroke="black" stroke-width="2.5"/></svg>')
+			no-repeat 50% 50%;
+		transition: transform 0.15s;
+		order: -1;
+	}
+	.sections > li > details[open] > summary::before {
+		transform: rotate(90deg);
+	}
+	.sections > li > details > summary:hover {
+		color: var(--sk-fg-1);
+		background: var(--sk-bg-4);
+	}
+	.summary-spacer {
+		flex: 1;
+	}
+	.count {
+		font-size: 1.1rem;
+		color: var(--sk-fg-4);
+		margin-left: auto;
+	}
+
 	.pages {
 		list-style: none;
+		margin: 0.2rem 0 1rem;
 	}
 	.pages li {
 		margin: 0;
 	}
 	.pages a {
 		display: block;
-		padding: 0.35rem 0;
+		padding: 0.3rem 0 0.3rem calc(var(--sk-page-padding-side) + 1.6rem);
 		color: var(--sk-fg-2);
 		font: var(--sk-font-body-small);
+		font-size: 1.4rem;
 		text-decoration: none;
 		border-left: 2px solid transparent;
-		padding-left: 1rem;
-		margin-left: -1rem;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
 	.pages a:hover {
 		color: var(--sk-fg-1);
+		background: var(--sk-bg-3);
 	}
 	.pages a[aria-current='page'] {
 		color: var(--sk-fg-accent);
@@ -109,13 +169,12 @@
 		font-weight: 500;
 	}
 
-	/* Desktop: always-open sidebar, no summary toggle */
 	@media (min-width: 832px) {
-		summary {
+		.nav-toggle {
 			display: none;
 		}
 		nav {
-			padding-top: var(--sk-page-padding-top);
+			padding-top: 2.4rem;
 		}
 	}
 </style>

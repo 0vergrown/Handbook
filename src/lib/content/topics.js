@@ -26,5 +26,9 @@ export const SECTION_TITLES = {
 	json: 'JSON',
 	'json-format': 'JSON Format',
 	faq: 'FAQ',
-	npcs: 'NPCs'
+	npcs: 'NPCs',
+	'bientity-actions': 'Bi-Entity Actions',
+	'bientity-conditions': 'Bi-Entity Conditions',
+	'meta-actions': 'Meta-Actions',
+	'meta-conditions': 'Meta-Conditions'
 };

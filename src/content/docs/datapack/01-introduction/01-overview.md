@@ -16,19 +16,19 @@ Before Apoli, a mod that wanted to give the player double jump, or fire immunity
 A single power can:
 
 - change an [attribute](/docs/datapack/data-types/attribute-modifier) (speed, max health, attack damage…)
-- run [actions](/docs/datapack/actions/overview) when something happens — on hit, on use, on a keybind, over time
-- gate itself behind [conditions](/docs/datapack/conditions/overview) — only in rain, only at night, only while sneaking
+- run [actions](/docs/datapack/introduction/actions) when something happens — on hit, on use, on a keybind, over time
+- gate itself behind [conditions](/docs/datapack/introduction/conditions) — only in rain, only at night, only while sneaking
 - bundle other powers together with [`apoli:multiple`](/docs/datapack/powers/multiple)
 
 ## The three building blocks
 
 Almost everything in Apoli is one of three things. Learn these and the rest is detail:
 
-| Block | What it is | Example |
-| --- | --- | --- |
-| **Power** | A thing an entity *has*. The top-level unit. | `apoli:attribute`, `apoli:multiple` |
-| **Action** | A thing that *happens*. Runs on a trigger. | `apoli:heal`, `apoli:apply_effect` |
-| **Condition** | A yes/no *test*. Gates powers and actions. | `apoli:sneaking`, `apoli:in_rain` |
+| Block         | What it is                                   | Example                             |
+|---------------|----------------------------------------------|-------------------------------------|
+| **Power**     | A thing an entity *has*. The top-level unit. | `apoli:attribute`, `apoli:multiple` |
+| **Action**    | A thing that *happens*. Runs on a trigger.   | `apoli:heal`, `apoli:apply_effect`  |
+| **Condition** | A yes/no *test*. Gates powers and actions.   | `apoli:sneaking`, `apoli:in_rain`   |
 
 Powers, actions and conditions all share the same shape: a JSON object with a `"type"` field that names it, plus whatever fields that type needs.
 

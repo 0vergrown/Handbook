@@ -92,4 +92,4 @@ Apoli adds the universal `inverted` field for you at the wrapper level — you n
 ## See also
 
 - [Registering power types](/docs/addon/api/registering-power-types)
-- [Data pack: actions](/docs/datapack/actions/overview) — the JSON side of what you're building.
+- [Data pack: actions](/docs/datapack/introduction/actions) — the JSON side of what you're building.

@@ -23,8 +23,8 @@ ONE OR TWO SENTENCES.
 
 <!-- A table grouping the members of this section, linking the important ones. -->
 
-| Kind | What it is | Example |
-| --- | --- | --- |
+| Kind       | What it is  | Example           |
+|------------|-------------|-------------------|
 | CATEGORY_A | DESCRIPTION | `apoli:EXAMPLE_A` |
 | CATEGORY_B | DESCRIPTION | `apoli:EXAMPLE_B` |
 

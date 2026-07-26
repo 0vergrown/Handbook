@@ -13,8 +13,8 @@ ONE OR TWO SENTENCES. Used by [WHO_USES_IT](/docs/datapack/powers/WHO_USES_IT).
 
 ## Fields
 
-| Field | Type | Default | Purpose |
-| --- | --- | --- | --- |
+| Field     | Type | Default | Purpose       |
+|-----------|------|---------|---------------|
 | `FIELD_A` | TYPE | DEFAULT | WHAT IT DOES. |
 
 ## Example

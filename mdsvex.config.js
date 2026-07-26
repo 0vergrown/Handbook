@@ -101,8 +101,11 @@ const config = {
 		[
 			rehypeAutolinkHeadings,
 			{
-				behavior: 'wrap',
-				properties: { class: 'heading-anchor', 'data-heading-anchor': true }
+				// `append` (not `wrap`) — a heading may itself contain links (ported
+				// docs do), and wrapping would create illegal nested <a> elements.
+				behavior: 'append',
+				properties: { class: 'heading-anchor', ariaHidden: 'true', tabIndex: -1 },
+				content: { type: 'text', value: '#' }
 			}
 		],
 		rehypeBasePath

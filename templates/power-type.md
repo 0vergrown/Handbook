@@ -15,9 +15,9 @@ ONE OR TWO SENTENCES DESCRIBING THE POWER.
 
 <!-- List EVERY field from the configCodec. optionalFieldOf("x", d) -> optional, default d. fieldOf("x") -> required, default "—". Link nested types. -->
 
-| Field | Type | Default | Purpose |
-| --- | --- | --- | --- |
-| `FIELD_A` | TYPE | DEFAULT | WHAT IT DOES. |
+| Field     | Type                                             | Default | Purpose       |
+|-----------|--------------------------------------------------|---------|---------------|
+| `FIELD_A` | TYPE                                             | DEFAULT | WHAT IT DOES. |
 | `FIELD_B` | [DATA_TYPE](/docs/datapack/data-types/DATA_TYPE) | DEFAULT | WHAT IT DOES. |
 
 <!-- The five shared power fields (type, name, description, condition, hidden) are documented once on the Powers overview — don't repeat them unless this power treats one specially. -->

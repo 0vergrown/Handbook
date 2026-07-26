@@ -38,9 +38,9 @@ Powers live in `data/<namespace>/powers/`. The file name is the power's id — t
 
 ```json
 {
-  "type": "apoli:swim_speed",
   "name": "Strong Swimmer",
   "description": "You move faster through water.",
+  "type": "apoli:swim_speed",
   "modifier": {
     "operation": "multiply_total_multiplicative",
     "value": 0.5
@@ -48,7 +48,7 @@ Powers live in `data/<namespace>/powers/`. The file name is the power's id — t
 }
 ```
 
-Every power has a [`type`](/docs/datapack/powers/overview). Here it's `apoli:swim_speed`, which speeds up swimming. `name` and `description` are shown in-game; the rest of the fields configure the type.
+Every power has a [`type`](/docs/datapack/introduction/powers). Here it's `apoli:swim_speed`, which speeds up swimming. `name` and `description` are shown in-game; the rest of the fields configure the type.
 
 ## Grant it to yourself
 
@@ -69,4 +69,4 @@ Jump in water — you're faster. Take it away again with `/power revoke @s my_pa
 - Apoli reads every file under `powers/` and registers it as a power.
 - `/power grant` attaches the power to an entity; Apoli applies its effect.
 
-From here, the interesting part is the [`type`](/docs/datapack/powers/overview) — there are over a hundred of them.
+From here, the interesting part is the [`type`](/docs/datapack/introduction/powers) — there are over a hundred of them.
