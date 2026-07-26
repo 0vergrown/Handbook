@@ -1,5 +1,5 @@
 ---
-title: "apoli:constant"
+title: "Constant (Meta Condition Type)"
 description: "Provides a constant state where it's either true or false."
 ---
 

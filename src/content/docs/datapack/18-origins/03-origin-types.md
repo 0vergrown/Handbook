@@ -15,7 +15,11 @@ An [entity condition](/docs/datapack/entity-conditions) that passes when the ent
 | `layer` | identifier | *(any layer)* |
 
 ```json
-{ "type": "origins:origin", "origin": "origins:phantom", "layer": "origins:origin" }
+{
+   "type":"origins:origin",
+   "origin":"origins:phantom",
+   "layer":"origins:origin"
+}
 ```
 
 This is how a power can behave differently depending on which origin the player picked — grant it broadly, then gate parts of it on `origins:origin`.
@@ -39,8 +43,3 @@ Copy an origin from one layer to another on the same entity.
 | --- | --- | --- |
 | `origin` | identifier | *(current)* |
 | `from_layer` / `to_layer` | identifier | **required** |
-
-## See also
-
-- [Origins overview](/docs/datapack/origins/overview)
-- [Badges](/docs/datapack/origins/badges) — the other Origins JSON system.

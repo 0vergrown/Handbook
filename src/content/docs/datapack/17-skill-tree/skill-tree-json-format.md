@@ -1,6 +1,6 @@
 ---
 title: "Skill Tree JSON Format"
-description: "The format of a JSON file that defines a skill tree, placed in the skilltrees folder of your namespace (data/<namespace>/skilltrees/<name>.json)."
+description: "The format of a JSON file that defines a skill tree, placed in the skilltrees folder of your namespace (data/<namespace>/skill_trees/<name>.json)."
 ---
 
 The format of a JSON file that **defines a skill tree**, placed in the `skill_trees` folder of your namespace (`data/<namespace>/skill_trees/<name>.json`). A skill tree file only defines the tree itself. Its tab, background, and the powers every holder of the tree gets by default. The individual skills that appear in the tree are **not** defined here; each skill lives in the power file it unlocks, via [Skill Tree Power Data](/docs/datapack/skill-tree/skill-tree-power-data) (the same way Origins badges live on their powers).
@@ -51,12 +51,14 @@ A skill is then attached to the tree from inside its power file:
 
 ```json
 {
-	"type": "apoli:multiple",
-	"skill": {
-		"parent": "example_pack:parkour_skills",
-		"icon": { "item": "minecraft:feather" },
-		"cost": 2
-	}
+   "type":"apoli:multiple",
+   "skill":{
+      "parent":"example_pack:parkour_skills",
+      "icon":{
+         "item":"minecraft:feather"
+      },
+      "cost":2
+   }
 }
 ```
 

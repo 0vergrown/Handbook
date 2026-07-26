@@ -1,5 +1,5 @@
 ---
-title: "apoli:prevent_elytra_flight"
+title: "origins:prevent_elytra_flight"
 description: "[Power Type](../powertypes.md)"
 ---
 
@@ -7,7 +7,7 @@ Power Type
 
 Prevents the entity that has the power from flying with either an Elytra item or a power that uses the [apoli:elytra_flight](/docs/datapack/powers/elytra_flight).
 
-Type ID: `apoli:prevent_elytra_flight`
+Type ID: `origins:prevent_elytra_flight`
 
 
 ## Fields
@@ -21,15 +21,15 @@ Field | Type | Default | Description
 
 ```json
 {
-    "type": "apoli:prevent_elytra_flight",
+    "type": "origins:prevent_elytra_flight",
     "entity_action": {
-        "type": "apoli:execute_command",
+        "type": "origins:execute_command",
         "command": "tellraw @s {\"text\": \"You cannot glide from this height!\", \"color\": \"red\"}"
     },
     "condition": {
-        "type": "apoli:in_block",
+        "type": "origins:in_block",
         "block_condition": {
-            "type": "apoli:height",
+            "type": "origins:height",
             "comparison": "<=",
             "compare_to": 64
         }

@@ -80,9 +80,3 @@ Loads as `apoli:action_on_hit` with `self_action` set to the heal.
 ```
 
 Loads as `apoli:action_on_hit` with `target_action` set to the fire action and `target_condition` carried through unchanged.
-
-## See also
-
-- [apoli:action_when_hit](/docs/datapack/powers/action_when_hit) — the "got hit by something" counterpart.
-- [apoli:modify_damage_dealt](/docs/datapack/powers/modify_damage_dealt) — fires on the same damage flow but rewrites the amount instead of running actions.
-- [apoli:multiple](/docs/datapack/powers/multiple) — bundle several powers into one JSON.

@@ -1,9 +1,9 @@
 ---
 title: "Model Part Transformation"
-description: "A single edit to one named part of a biped model, used by the [Modify Model Parts](../Power%20Types/Modify%20Model%20Parts%20%28Power%20Type%29.md) power type."
+description: "A single edit to one named part of a biped model, used by the Modify Model Parts (Power Type)."
 ---
 
-A single edit to one named part of a biped model, used by the [Modify Model Parts](/docs/datapack/powers/modify_model_parts) power type. Ported from the Sync mod.
+A single edit to one named part of a biped model, used by the [Modify Model Parts](/docs/datapack/powers/modify_model_parts) power type.
 
 ## Fields
 

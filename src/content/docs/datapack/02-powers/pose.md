@@ -22,11 +22,9 @@ Field  | Type | Default | Description
 
 ```json
 {
-   "type":"apoli:pose",
-   "arm_pose":"crossbow_hold",
-   "hands":[
-      "main_hand"
-   ]
+    "type": "apoli:pose",
+    "arm_pose": "crossbow_hold",
+    "hands": ["main_hand"]
 }
 ```
 

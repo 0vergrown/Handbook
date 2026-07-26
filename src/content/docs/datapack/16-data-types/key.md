@@ -57,7 +57,7 @@ Create the keybind in `data/<namespace>/keybinds/<name>.json`:
 | `category` | [String](/docs/datapack/data-types/string) | `key.categories.apoli` | The Controls-menu group it's listed under. |
 | `name` | [String](/docs/datapack/data-types/string) | *optional* | Display name. Falls back to an automatic translation key. |
 
-The keybind's **id** is its file path — `data/my_pack/keybinds/dash.json` becomes `my_pack:dash` — and its keybinding string is `key.<namespace>.<path>`. So reference the example above with:
+The keybind's **id** is its file path `data/my_pack/keybinds/dash.json` becomes `my_pack:dash` and its keybinding string is `key.<namespace>.<path>`. So reference the example above with:
 
 ```json
 "key": "key.my_pack.dash"
@@ -83,8 +83,3 @@ Trigger every tick the attack key is held:
     "continuous": true
 }
 ```
-
-## See also
-
-- [`apoli:action_on_key_press`](/docs/datapack/powers/action_on_key_press) — the power that consumes a Key.
-- [`apoli:action_on_key_sequence`](/docs/datapack/powers/action_on_key_sequence) — react to a combo of keys.

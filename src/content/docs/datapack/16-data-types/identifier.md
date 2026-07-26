@@ -35,8 +35,3 @@ The **path** may additionally contain `/` to indicate folders (e.g. `apoli:textu
 ## Where paths point
 
 For ids that refer to a pack file, the path maps to a folder under that namespace. For example, a power id `my_pack:swim` is the file `data/my_pack/powers/swim.json`.
-
-## See also
-
-- [String](/docs/datapack/data-types/string)
-- [Powers](/docs/datapack/introduction/powers) — power ids are identifiers.

@@ -1,6 +1,6 @@
 ---
 title: "Invert"
-description: "> There is no meta condition to invert the results of another condition."
+description: "There is no meta condition to invert the results of another condition."
 ---
 
 > **There is no meta condition to invert the results of another condition.** However, **every** condition supports the following field, which can be used to achieve the same:
@@ -9,7 +9,7 @@ description: "> There is no meta condition to invert the results of another cond
 
 Field  | Type | Default | Description
 -------|------|---------|-------------
-`inverted` | Boolean Data Type) | `false` | If true, the condition acts inverted.
+`inverted` | [Boolean](/docs/datapack/data-types/boolean) | `false` | If true, the condition acts inverted.
 
 ## Examples
 

@@ -20,34 +20,34 @@ Field  | Type | Default | Description
 
 ```json
 {
-   "type":"apoli:prevent_death",
-   "entity_action":{
-      "type":"apoli:and",
-      "actions":[
-         {
-            "type":"apoli:clear_effect"
-         },
-         {
-            "type":"apoli:apply_effect",
-            "effects":[
-               {
-                  "effect":"minecraft:regeneration",
-                  "amplifier":1,
-                  "duration":900
-               },
-               {
-                  "effect":"minecraft:fire_resistance",
-                  "duration":800
-               },
-               {
-                  "effect":"minecraft:absorption",
-                  "amplifier":1,
-                  "duration":100
-               }
-            ]
-         }
-      ]
-   }
+    "type": "apoli:prevent_death",
+    "entity_action": {
+		"type": "apoli:and",
+		"actions": [
+			{
+				"type": "apoli:clear_effect"
+			},
+			{
+				"type": "apoli:apply_effect",
+				"effects": [
+					{
+						"effect": "minecraft:regeneration",
+						"amplifier": 1,
+						"duration": 900
+					},
+					{
+						"effect": "minecraft:fire_resistance",
+						"duration": 800
+					},
+					{
+						"effect": "minecraft:absorption",
+						"amplifier": 1,
+						"duration": 100
+					}
+				]
+			}
+		]
+	}
 }
 ```
 

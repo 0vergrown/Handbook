@@ -1,6 +1,6 @@
 ---
 title: "apoli:action_on_speech"
-description: "Runs an [Entity Action Type](../entityactiontypes.md) when the holder says a word or phrase out loud — real speech-to-action."
+description: "Runs an Entity Action Type when the holder says a word or phrase out loud (real speech-to-action)."
 ---
 
 Runs an Entity Action Type when the holder **says** a word or phrase out loud — real speech-to-action. Say "Fireball" and cast a fireball.
@@ -35,17 +35,14 @@ Cast a fireball on the word, in English or French:
 
 ```json
 {
-  "type": "apoli:action_on_speech",
-  "messages": ["fireball", "boule de feu"],
-  "entity_action": {
-    "type": "apoli:fire_projectile",
-    "entity_type": "minecraft:small_fireball"
-  }
+   "type":"apoli:action_on_speech",
+   "messages":[
+      "fireball",
+      "boule de feu"
+   ],
+   "entity_action":{
+      "type":"apoli:fire_projectile",
+      "entity_type":"minecraft:small_fireball"
+   }
 }
 ```
-
-## See also
-
-- [[apoli:action_on_sending_message](/docs/datapack/powers/action_on_sending_message)](/docs/datapack/powers/action_on_sending_message) — the same idea via typed chat (also supports `messages` for multiple languages).
-- [[Voice Chat](/docs/datapack/powers/voice-chat)](/docs/datapack/powers/voice-chat) — react to voice *activity* (speaking/loudness) rather than words.
-
