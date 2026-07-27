@@ -85,6 +85,14 @@
 		<a href="{base}/blog" class="toplink" aria-current={isActive('/blog') ? 'page' : undefined}>
 			Blog
 		</a>
+
+		<a
+			href="{base}/license"
+			class="toplink"
+			aria-current={isActive('/license') ? 'page' : undefined}
+		>
+			License
+		</a>
 	</div>
 
 	<!-- desktop right menu -->
@@ -133,6 +141,8 @@
 		<a href={SITE.downloads.curseforge} target="_blank" rel="noreferrer" class="sub">CurseForge ↗</a>
 
 		<a href="{base}/blog" class="group-title">Blog</a>
+
+		<a href="{base}/license" class="group-title">License</a>
 
 		<div class="mobile-socials">
 			<a href={SITE.github} target="_blank" rel="noreferrer" aria-label="GitHub"

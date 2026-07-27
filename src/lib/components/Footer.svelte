@@ -1,6 +1,7 @@
 <script>
 	import { base } from '$app/paths';
 	import { SITE } from '$lib/config.js';
+	import { LICENSE } from '$lib/license.js';
 	import Icon from './Icon.svelte';
 
 	const year = new Date().getFullYear();
@@ -26,6 +27,7 @@
 				<h4>Project</h4>
 				<a href="{base}/download">Downloads</a>
 				<a href="{base}/blog">Blog</a>
+				<a href="{base}/license">License</a>
 			</div>
 			<div>
 				<h4>Community</h4>
@@ -37,7 +39,10 @@
 	</div>
 
 	<div class="baseline">
-		<span>© {year} Overgrown. Built with SvelteKit.</span>
+		<span>
+			© {year} Overgrown. Apoli, Origins and this website are licensed under
+			<a href="{base}/license">{LICENSE.name}</a>.
+		</span>
 		<div class="socials">
 			<a href={SITE.github} target="_blank" rel="noreferrer" aria-label="GitHub"
 				><Icon name="github" size={18} /></a
@@ -128,6 +133,12 @@
 		flex-wrap: wrap;
 		color: var(--sk-fg-4);
 		font: var(--sk-font-ui-small);
+	}
+	.baseline a {
+		color: var(--sk-fg-3);
+	}
+	.baseline a:hover {
+		color: var(--sk-fg-accent);
 	}
 	.socials {
 		display: flex;
