@@ -1,12 +1,12 @@
 export const LICENSE = {
-	name: 'The Overgrown License',
+	name: 'The A/O License',
 	updated: '2026-07-27',
 
 	lead: 'Apoli and Origins are distributed under a reasonably open license. Have a read through this if you want to do anything with them beyond playing.',
 
 	intro: [
 		'You are free to <strong>use</strong>, <strong>share</strong> and <strong>adapt</strong> both mods. Those rights cannot be taken away from you as long as you follow the terms below.',
-		'If you just want to play, or you are building a data pack or an addon, none of this is likely to affect you — see the <a href="#building-on-apoli">Building on Apoli</a> section and carry on.'
+		'If you just want to play, or you are building a data pack or an addon, none of this is likely to affect you. See the <a href="#building-on-apoli">Building on Apoli</a> section and carry on.'
 	],
 
 	sections: [
@@ -32,13 +32,13 @@ export const LICENSE = {
 					name: 'Personal Permission',
 					icon: 'message-circle',
 					tone: 'info',
-					text: "Personal permission is granted rarely — usually only where there's a good reason for it — because granting it reads as an endorsement. If what you want to do is already allowed below, you do not need to ask, and asking will most likely just get you pointed back at this page."
+					text: "Personal permission is granted rarely and usually only where there's a good reason for it because granting it reads as an endorsement. If what you want to do is already allowed below, you do not need to ask, and asking will most likely just get you pointed back at this page."
 				},
 				{
 					name: 'Informal',
 					icon: 'file-text',
 					tone: 'info',
-					text: "This license will not hold up in court, and there is no intention of taking anyone to one. The realistic worst case for breaking it is being asked to put it right — though a distribution platform such as Modrinth or CurseForge may take your project down. Breaking it also makes you a jerk, and you don't want to be a jerk."
+					text: "This license will not hold up in court, and there is no intention of taking anyone to one. The realistic worst case for breaking it is being asked to put it right. Though a distribution platform such as Modrinth or CurseForge may take your project down. Breaking it also makes you a jerk, and you don't want to be a jerk, do you?"
 				}
 			]
 		},
@@ -46,7 +46,7 @@ export const LICENSE = {
 			id: 'distributing',
 			kicker: 'If you want to',
 			heading: 'Distribute the mods',
-			blurb: 'Making the binaries, assets or source available from somewhere other than the original download pages — in a modpack, on a mirror, or bundled with a server.',
+			blurb: 'Making the binaries, assets or source available from somewhere other than the original download pages in a modpack, on a mirror, or bundled with a server.',
 			clauses: [
 				{
 					name: 'Modpack',
@@ -72,13 +72,13 @@ export const LICENSE = {
 			id: 'featuring',
 			kicker: 'If you want to',
 			heading: 'Feature the mods',
-			blurb: 'Using either mod somewhere you are not handing out binaries, assets or source — a video, a stream, a review, a public server.',
+			blurb: 'Using either mod somewhere you are not handing out binaries, assets or source like a video, a stream, a review, a public server, etc.',
 			clauses: [
 				{
 					name: 'Free Rein',
 					icon: 'thumbs-up',
 					tone: 'allow',
-					text: 'Go ahead. You do not need permission, you do not need to ask, and you may monetise the video or stream as usual — the Non-Monetary Clause is about distributing the files, not about your content.'
+					text: 'Go ahead. You do not need permission, you do not need to ask, and you may monetise the video or stream as usual. The Non-Monetary Clause is about distributing the files, not about your content.'
 				},
 				{
 					name: 'Thief',
@@ -104,7 +104,7 @@ export const LICENSE = {
 					name: 'Addon',
 					icon: 'puzzle',
 					tone: 'allow',
-					text: 'An addon that depends on Apoli and calls its API is <strong>not</strong> a derivative work of it. Your addon is yours, under any license you choose — including a closed one — as long as you do not copy Apoli\'s own code into it. This is the whole point of the engine; the <a href="/docs/addon">Addon docs</a> exist so you can do exactly this.'
+					text: 'An addon that depends on Apoli and calls its API is <strong>not</strong> a derivative work of it. Your addon is yours, under any license you choose (including a closed one) as long as you do not copy Apoli\'s own code into it. This is the whole point of the engine; the <a href="/docs/addon">Addon docs</a> exist so you can do exactly this.'
 				},
 				{
 					name: 'Compatibility',
@@ -149,5 +149,5 @@ export const LICENSE = {
 	],
 
 	footnote:
-		'Presentation and clause structure adapted, with thanks, from <a href="https://psi.vazkii.net/license.php" target="_blank" rel="noreferrer">the Psi License</a> by Vazkii.'
+	'Presentation and clause structure adapted, with thanks, from <a href="https://psi.vazkii.net/license.php" target="_blank" rel="noreferrer">the Psi License</a> by Vazkii.'
 };
