@@ -1,20 +1,20 @@
 ---
 title: "origins:transfer_origin"
-description: "Moves (or copies) a whole origin between two players, the way [apoli:transfer](Transfer%20%28Bi-entity%20Action%20Type%29.md) moves powers by source."
+description: "Bi-entity action — moves (or copies) a whole origin between two players."
 ---
 
 Moves (or copies) a **whole origin** between two players, the way [`apoli:transfer`](/docs/datapack/bientity-actions/transfer) moves powers by source. Because an origin is just the set of powers granted from its layer, this re-homes a player's pick on one layer onto another player's layer in a single action — steal an origin off someone, hand yours to them, or copy it across.
 
-Type ID: `origins:transfer_origin`
+Type ID: `origins:transfer_origin` — a [bi-entity action](/docs/datapack/bientity-actions).
 
-> This is an Origins addon action (not core Apoli). **Both** the actor and target must be players. If the donor has no origin in `from_layer`, nothing is transferred — but the `actor_action` / `target_action` follow-ups still run. A move never strips the donor unless the destination layer/origin resolves, so a bad `to_layer` can't destroy an origin.
+> **Needs the Origins mod.** Registered by Origins, not core Apoli. **Both** the actor and target must be players. If the donor has no origin in `from_layer`, nothing is transferred — but the `actor_action` / `target_action` follow-ups still run. A move never strips the donor unless the destination layer/origin resolves, so a bad `to_layer` can't destroy an origin.
 
 ## Fields
 
 Field  | Type | Default | Description
 -------|------|---------|-------------
 `mode` | [String](/docs/datapack/data-types/string) | `steal` | `steal` takes the **target's** origin onto the **actor**; `give` hands the **actor's** origin to the **target**. (Determines which side is the donor and which is the recipient.)
-`copy` | [Boolean](/docs/datapack/data-types/boolean) | `false` | If `false`, the origin is **moved** — the donor loses it on `from_layer` entirely. If `true`, it is **copied** (the donor keeps it); this is exactly what [`origins:copy_origin`](/docs/datapack/bientity-actions/copy_origin) does.
+`copy` | [Boolean](/docs/datapack/data-types/boolean) | `false` | If `false`, the origin is **moved** — the donor loses it on `from_layer` entirely. If `true`, it is **copied** (the donor keeps it); this is exactly what [`origins:copy_origin`](/docs/datapack/origins/copy_origin) does.
 `from_layer` | [Identifier](/docs/datapack/data-types/identifier) | `origins:origin` | The layer the origin is read from on the **donor**.
 `to_layer` | [Identifier](/docs/datapack/data-types/identifier) | `origins:origin` | The layer the origin is written to on the **recipient**. Use a dedicated layer (e.g. `origins:copy`) to add the origin alongside the recipient's own, or the same layer to replace it.
 `actor_action` | Entity Action | *optional* | Action run on the actor after the transfer (e.g. a sound or particle).
@@ -33,7 +33,7 @@ Removing an origin can gate off a dependent layer (e.g. a `copy`/one-for-all lay
 
 ## Relationship to other actions
 
-- [`origins:copy_origin`](/docs/datapack/bientity-actions/copy_origin) is the `copy: true`, `to_layer: origins:copy` special case — kept for back-compat and readability.
+- [`origins:copy_origin`](/docs/datapack/origins/copy_origin) is the `copy: true`, `to_layer: origins:copy` special case — kept for back-compat and readability.
 - [`apoli:transfer`](/docs/datapack/bientity-actions/transfer) is the layer-agnostic primitive that moves powers by source. Use it when you want power-level control; use `transfer_origin` when you want to think in whole origins and keep the `layer → origin` bookkeeping (GUI, badges, One-For-All gating) correct.
 
 ## Examples
@@ -75,4 +75,11 @@ Give your own origin to the target as a permanent gift, losing it yourself:
     "copy": false
 }
 ```
+
+## See also
+
+- [`origins:copy_origin`](/docs/datapack/origins/copy_origin) — the `copy: true` shorthand.
+- [`origins:store_origin` (bi-entity)](/docs/datapack/origins/store_origin_bientity) — record the target's origin without moving anything.
+- [`apoli:transfer`](/docs/datapack/bientity-actions/transfer) — the layer-agnostic power-level primitive.
+- [Layers](/docs/datapack/origins/layers) — what `from_layer` and `to_layer` refer to.
 

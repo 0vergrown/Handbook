@@ -1,13 +1,13 @@
 ---
 title: "origins:store_origin"
-description: "Remembers the entity's own origin under a named key so it can be applied again later."
+description: "Entity action — remembers the entity's own origin under a named key so it can be applied again later."
 ---
 
-Remembers the entity's own origin under a named key, so [`origins:apply_stored_origin`](/docs/datapack/entity-actions/apply_stored_origin) can put it back later.
+Remembers the entity's own origin under a named key, so [`origins:apply_stored_origin`](/docs/datapack/origins/apply_stored_origin) can put it back later.
 
-Type ID: `origins:store_origin`
+Type ID: `origins:store_origin` — an [entity action](/docs/datapack/entity-actions).
 
-> This is an Origins addon action (not core Apoli). It only works on players, and only on the server. See [Origin storage](/docs/datapack/origins/storage) for the system as a whole.
+> **Needs the Origins mod.** Registered by Origins, not core Apoli. It only works on players, and only on the server. See [Origin storage](/docs/datapack/origins/storage) for the system as a whole.
 
 ## Fields
 
@@ -53,7 +53,7 @@ Forget it again:
 
 ## See also
 
-- [`origins:store_origin`](/docs/datapack/bientity-actions/store_origin) — the bi-entity form, which reads the *target's* origin.
-- [`origins:apply_stored_origin`](/docs/datapack/entity-actions/apply_stored_origin)
-- [`origins:stored_origin`](/docs/datapack/entity-conditions/stored_origin)
+- [`origins:store_origin` (bi-entity)](/docs/datapack/origins/store_origin_bientity) — the bi-entity form, which reads the *target's* origin.
+- [`origins:apply_stored_origin`](/docs/datapack/origins/apply_stored_origin) — put a stored origin back.
+- [`origins:stored_origin`](/docs/datapack/origins/stored_origin) — test whether a key holds one.
 - [Origin storage](/docs/datapack/origins/storage)

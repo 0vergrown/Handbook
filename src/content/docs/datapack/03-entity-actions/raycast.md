@@ -78,64 +78,76 @@ Damages the first entity in the player's line of sight within 10 blocks.
 
 ```json
 {
-    "type": "apoli:raycast",
-    "distance": 20.0,
-    "entity": false,
-    "block_action": {
-        "type": "apoli:set_block",
-        "block": "minecraft:tnt"
-    },
-    "block_condition": {
-        "type": "apoli:block_state",
-        "block": "minecraft:stone"
-    }
+   "type":"apoli:raycast",
+   "distance":20.0,
+   "entity":false,
+   "block_action":{
+      "type":"apoli:set_block",
+      "block":"minecraft:tnt"
+   },
+   "block_condition":{
+      "type":"apoli:block_state",
+      "block":"minecraft:stone"
+   }
 }
 ```
 Replaces the first stone block in the line of sight with TNT. Ignores entities entirely.
 
 ```json
 {
-    "type": "apoli:raycast",
-    "pierce": true,
-    "entity_distance": 8.0,
-    "block_distance": 16.0,
-    "particle": {
-        "type": "minecraft:witch"
-    },
-    "spacing": 0.4,
-    "bientity_action": {
-        "type": "apoli:add_velocity",
-        "z": -2.0,
-        "space": "local"
-    },
-    "command_at_hit": "particle minecraft:explosion ~ ~ ~",
-    "command_along_ray_only_on_hit": true
+   "type":"apoli:raycast",
+   "pierce":true,
+   "entity_distance":8.0,
+   "block_distance":16.0,
+   "particle":{
+      "type":"minecraft:witch"
+   },
+   "spacing":0.4,
+   "bientity_action":{
+      "type":"apoli:add_velocity",
+      "z":-2.0,
+      "space":"local"
+   },
+   "command_at_hit":"particle minecraft:explosion ~ ~ ~",
+   "command_along_ray_only_on_hit":true
 }
 ```
 Fires a piercing ray that pushes back all entities within 8 blocks, traces particles along the path, and spawns an explosion particle at the impact point.
 
 ```json
 {
-    "type": "apoli:raycast",
-    "distance": 24.0,
-    "radius": { "x": 1.5, "y": 1.5, "z": 0.0 },
-    "particle": { "type": "minecraft:electric_spark" },
-    "bientity_action": {
-        "type": "apoli:damage",
-        "amount": 3,
-        "source": { "name": "magic" }
-    },
-    "chain": {
-        "type": "apoli:raycast",
-        "distance": 24.0,
-        "chain_direction": "reflect",
-        "particle": { "type": "minecraft:electric_spark" },
-        "bientity_action": {
-            "type": "apoli:damage",
-            "amount": 3,
-            "source": { "name": "magic" }
-        }
-    }
+   "type":"apoli:raycast",
+   "distance":24.0,
+   "radius":{
+      "x":1.5,
+      "y":1.5,
+      "z":0.0
+   },
+   "particle":{
+      "type":"minecraft:electric_spark"
+   },
+   "bientity_action":{
+      "type":"apoli:damage",
+      "amount":3,
+      "source":{
+         "name":"magic"
+      }
+   },
+   "chain":{
+      "type":"apoli:raycast",
+      "distance":24.0,
+      "chain_direction":"reflect",
+      "particle":{
+         "type":"minecraft:electric_spark"
+      },
+      "bientity_action":{
+         "type":"apoli:damage",
+         "amount":3,
+         "source":{
+            "name":"magic"
+         }
+      }
+   }
 }
 ```
 A wide (3-block cross-section) spark beam that bounces once off the first wall it hits, damaging entities along both segments.

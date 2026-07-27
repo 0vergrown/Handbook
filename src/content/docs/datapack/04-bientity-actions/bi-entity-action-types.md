@@ -11,16 +11,22 @@ As a rule of thumb, the actor is usually the entity that "triggers" the action (
 
 - [apoli:add_to_entity_set](/docs/datapack/bientity-actions/add_to_entity_set)
 - [apoli:add_velocity](/docs/datapack/bientity-actions/add_velocity)
-- [origins:copy_origin](/docs/datapack/bientity-actions/copy_origin)
 - [apoli:mount](/docs/datapack/bientity-actions/mount)
 - [apoli:remove_from_entity_set](/docs/datapack/bientity-actions/remove_from_entity_set)
 - [apoli:tame](/docs/datapack/bientity-actions/tame)
 - [apoli:transfer](/docs/datapack/bientity-actions/transfer)
-- [origins:transfer_origin](/docs/datapack/bientity-actions/transfer_origin)
 
 ## Meta Types
 
 - [apoli:actor_action](/docs/datapack/bientity-actions/actor_action)
 - [apoli:invert](/docs/datapack/bientity-actions/invert)
 - [apoli:target_action](/docs/datapack/bientity-actions/target_action)
+
+## From Origins
+
+These need the Origins mod installed, and are documented in the [Origins](/docs/datapack/origins/overview) section:
+
+- [origins:copy_origin](/docs/datapack/origins/copy_origin)
+- [origins:store_origin](/docs/datapack/origins/store_origin_bientity)
+- [origins:transfer_origin](/docs/datapack/origins/transfer_origin)
 

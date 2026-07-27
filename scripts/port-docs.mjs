@@ -27,6 +27,22 @@ const SECTIONS = {
 	'Skill Tree': ['17-skill-tree', 'skill-tree']
 };
 
+// Types registered by Origins, not Apoli. Their pages are hand-authored under
+// 18-origins, so we index them — cross-links from the Apoli
+// reference still resolve — but never write them, which would otherwise
+// resurrect them in the Apoli sections they used to live in.
+// typeId -> page slug within 18-origins/.
+const ORIGINS_PAGES = {
+	'origins:origin': 'origin',
+	'origins:copy_origin': 'copy_origin',
+	'origins:transfer_origin': 'transfer_origin',
+	'origins:store_origin': 'store_origin', // bi-entity flavour: store_origin_bientity
+	'origins:apply_stored_origin': 'apply_stored_origin',
+	'origins:store_value': 'store_value',
+	'origins:stored_origin': 'stored_origin',
+	'origins:stored_value': 'stored_value'
+};
+
 // Concept pages that are linked but live elsewhere on the site
 const CONCEPT_LINKS = {
 	'Power JSON Format': '/docs/datapack/introduction/powers',
@@ -92,10 +108,14 @@ for (const file of files) {
 
 	const slug = typeId ? typeId.split(':')[1].replace(/\//g, '-') : kebab(humanName);
 	const title = typeId ?? humanName;
-	const url = `/docs/datapack/${sectionSlug}/${slug}`;
+	const originsPage = typeId ? ORIGINS_PAGES[typeId] : undefined;
+	const url = originsPage
+		? `/docs/datapack/origins/${originsPage}`
+		: `/docs/datapack/${sectionSlug}/${slug}`;
 
 	const linkText = typeId ?? humanName;
 	index.set(wikiName, { url, linkText });
+	if (originsPage) continue; // hand-authored under 18-origins — index it, don't write it
 	// also index by human name for bare "Name (Suffix)" that dropped the suffix
 	entries.push({ file, raw, sectionFolder, sectionSlug, slug, title, humanName, wikiName });
 }

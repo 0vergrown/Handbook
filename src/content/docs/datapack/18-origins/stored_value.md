@@ -1,13 +1,13 @@
 ---
 title: "origins:stored_value"
-description: "Passes when the entity has a text value saved under a key."
+description: "Entity condition — passes when the entity has a text value saved under a key."
 ---
 
 Passes when the entity has a text value saved in its [store](/docs/datapack/origins/storage) under `key`, optionally equal to a specific string.
 
-Type ID: `origins:stored_value`
+Type ID: `origins:stored_value` — an [entity condition](/docs/datapack/entity-conditions).
 
-> This is an Origins addon condition (not core Apoli). It reads server-side state, so it always fails when evaluated purely client-side.
+> **Needs the Origins mod.** Registered by Origins, not core Apoli. It reads server-side state, so it always fails when evaluated purely client-side.
 
 ## Fields
 
@@ -16,7 +16,7 @@ Type ID: `origins:stored_value`
 | `key` | [String](/docs/datapack/data-types/string) | _required_ | Which entry to check. |
 | `value` | [String](/docs/datapack/data-types/string) | _optional_ | The stored text must equal this exactly. Omit to check only that the key exists. |
 
-Only text entries are checked — a key holding a stored *origin* does not satisfy this condition. Use [`origins:stored_origin`](/docs/datapack/entity-conditions/stored_origin) for those.
+Only text entries are checked — a key holding a stored *origin* does not satisfy this condition. Use [`origins:stored_origin`](/docs/datapack/origins/stored_origin) for those.
 
 ## Examples
 
@@ -41,5 +41,6 @@ Has the phase been set at all?
 
 ## See also
 
-- [`origins:store_value`](/docs/datapack/entity-actions/store_value)
+- [`origins:store_value`](/docs/datapack/origins/store_value) — write the entry this reads.
+- [`origins:stored_origin`](/docs/datapack/origins/stored_origin) — the origin-entry equivalent.
 - [Origin storage](/docs/datapack/origins/storage)

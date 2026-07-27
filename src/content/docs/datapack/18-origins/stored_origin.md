@@ -1,13 +1,13 @@
 ---
 title: "origins:stored_origin"
-description: "Passes when the entity has an origin saved in its store."
+description: "Entity condition — passes when the entity has an origin saved in its store."
 ---
 
 Passes when the entity has an origin saved in its [store](/docs/datapack/origins/storage), optionally matching a specific key, origin or layer.
 
-Type ID: `origins:stored_origin`
+Type ID: `origins:stored_origin` — an [entity condition](/docs/datapack/entity-conditions).
 
-> This is an Origins addon condition (not core Apoli). It reads server-side state, so it always fails when evaluated purely client-side.
+> **Needs the Origins mod.** Registered by Origins, not core Apoli. It reads server-side state, so it always fails when evaluated purely client-side.
 
 ## Fields
 
@@ -46,6 +46,8 @@ Anything at all in the store:
 
 ## See also
 
-- [`origins:store_origin`](/docs/datapack/entity-actions/store_origin)
-- [`origins:stored_value`](/docs/datapack/entity-conditions/stored_value)
+- [`origins:store_origin`](/docs/datapack/origins/store_origin) — write the entry this reads.
+- [`origins:apply_stored_origin`](/docs/datapack/origins/apply_stored_origin) — put it back.
+- [`origins:stored_value`](/docs/datapack/origins/stored_value) — the text-entry equivalent.
+- [`origins:origin`](/docs/datapack/origins/origin) — test the origin the player is *wearing*, not one in the store.
 - [Origin storage](/docs/datapack/origins/storage)

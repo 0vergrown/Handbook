@@ -1,13 +1,13 @@
 ---
 title: "origins:store_value"
-description: "Stores a piece of text on the entity under a named key."
+description: "Entity action — stores a piece of text on the entity under a named key."
 ---
 
-Stores a piece of text on the entity under a named key — a marker, a name, a state flag — retrievable with [`origins:stored_value`](/docs/datapack/entity-conditions/stored_value).
+Stores a piece of text on the entity under a named key — a marker, a name, a state flag — retrievable with [`origins:stored_value`](/docs/datapack/origins/stored_value).
 
-Type ID: `origins:store_value`
+Type ID: `origins:store_value` — an [entity action](/docs/datapack/entity-actions).
 
-> This is an Origins addon action (not core Apoli). It only works on players, and only on the server. See [Origin storage](/docs/datapack/origins/storage) for the system as a whole.
+> **Needs the Origins mod.** Registered by Origins, not core Apoli. It only works on players, and only on the server. See [Origin storage](/docs/datapack/origins/storage) for the system as a whole.
 
 ## Fields
 
@@ -47,5 +47,6 @@ Record the display name of a stored origin so it can be shown in a message later
 
 ## See also
 
-- [`origins:stored_value`](/docs/datapack/entity-conditions/stored_value)
-- [Origin storage](/docs/datapack/origins/storage)
+- [`origins:stored_value`](/docs/datapack/origins/stored_value) — read it back.
+- [`origins:store_origin`](/docs/datapack/origins/store_origin) — store an origin instead of text.
+- [Origin storage](/docs/datapack/origins/storage) — the placeholder syntax in full.

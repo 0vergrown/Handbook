@@ -1,13 +1,13 @@
 ---
-title: "origins:store_origin"
-description: "Stores the target's origin into the actor's store under a named key."
+title: "origins:store_origin (bi-entity)"
+description: "Bi-entity action — stores the target's origin into the actor's store under a named key."
 ---
 
 Reads the **target's** origin and writes it into the **actor's** store under a named key. The target is not changed — this copies the id, it does not take the origin.
 
-Type ID: `origins:store_origin`
+Type ID: `origins:store_origin` — a [bi-entity action](/docs/datapack/bientity-actions). It shares its id and its fields with the [entity action of the same name](/docs/datapack/origins/store_origin); which one you get depends on whether you write it in a `bientity_action` field or an `entity_action` field.
 
-> This is an Origins addon action (not core Apoli). **Both** the actor and target must be players. See [Origin storage](/docs/datapack/origins/storage) for the system as a whole.
+> **Needs the Origins mod.** Registered by Origins, not core Apoli. **Both** the actor and target must be players, and it only runs on the server. See [Origin storage](/docs/datapack/origins/storage) for the system as a whole.
 
 ## Fields
 
@@ -31,7 +31,7 @@ Note down what you just hit:
 }
 ```
 
-Read the target's origin but write it to the target's own store:
+Read the actor's origin but write it to the target's own store:
 
 ```json
 {
@@ -42,6 +42,6 @@ Read the target's origin but write it to the target's own store:
 
 ## See also
 
-- [`origins:store_origin`](/docs/datapack/entity-actions/store_origin) — the entity form, which reads the acting entity's own origin.
-- [`origins:transfer_origin`](/docs/datapack/bientity-actions/transfer_origin) — actually move an origin between players.
+- [`origins:store_origin`](/docs/datapack/origins/store_origin) — the entity form, which reads the acting entity's own origin.
+- [`origins:transfer_origin`](/docs/datapack/origins/transfer_origin) — actually move an origin between players.
 - [Origin storage](/docs/datapack/origins/storage)

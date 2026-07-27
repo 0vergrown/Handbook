@@ -47,7 +47,27 @@ The `powers` list is just Apoli power ids. There's nothing Origins-specific abou
 
 An origin file alone doesn't appear in-game. It has to be placed into a **layer** — the slot the player chooses from. See [Layers](/docs/datapack/origins/layers).
 
+## The types Origins adds
+
+Origins is an Apoli addon, so as well as origins and layers it registers a handful of Apoli types in the `origins:` namespace. Use them in any power's JSON, exactly like the built-in Apoli types — but a power that uses one **fails to load without Origins installed**.
+
+| Type | Kind | What it does |
+| --- | --- | --- |
+| [`origins:origin`](/docs/datapack/origins/origin) | Entity condition | Does this player have a given origin? |
+| [`origins:copy_origin`](/docs/datapack/origins/copy_origin) | Bi-entity action | Copy the target's origin onto the actor's copy layer. |
+| [`origins:transfer_origin`](/docs/datapack/origins/transfer_origin) | Bi-entity action | Steal, give or copy a whole origin between two players. |
+| [`origins:store_origin`](/docs/datapack/origins/store_origin) | Entity action | Remember an origin under a named key. |
+| [`origins:store_origin` (bi-entity)](/docs/datapack/origins/store_origin_bientity) | Bi-entity action | Remember the *target's* origin on the actor. |
+| [`origins:apply_stored_origin`](/docs/datapack/origins/apply_stored_origin) | Entity action | Put a remembered origin back. |
+| [`origins:store_value`](/docs/datapack/origins/store_value) | Entity action | Remember a piece of text. |
+| [`origins:stored_origin`](/docs/datapack/origins/stored_origin) | Entity condition | Is an origin remembered? |
+| [`origins:stored_value`](/docs/datapack/origins/stored_value) | Entity condition | Is this text remembered? |
+
+The last six are the [origin storage](/docs/datapack/origins/storage) system. Origins also adds four [badge](/docs/datapack/origins/badges) types, and two fields to [`apoli:action_on_callback`](/docs/datapack/powers/action_on_callback) — that power is core Apoli, but its `entity_action_chosen` only fires when Origins is there to report the choice.
+
 ## See also
 
 - [Layers](/docs/datapack/origins/layers) — how origins are offered to players.
+- [Badges](/docs/datapack/origins/badges) — annotating a power in the selection screen.
+- [Origin storage](/docs/datapack/origins/storage) — remembering an origin and putting it back.
 - [`apoli:multiple`](/docs/datapack/powers/multiple) — the usual way to package an origin's traits.

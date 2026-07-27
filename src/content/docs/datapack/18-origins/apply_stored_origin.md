@@ -1,13 +1,13 @@
 ---
 title: "origins:apply_stored_origin"
-description: "Sets the entity's origin from a previously stored key."
+description: "Entity action — sets the entity's origin from a previously stored key."
 ---
 
-Sets the entity's origin from an entry saved earlier by [`origins:store_origin`](/docs/datapack/entity-actions/store_origin).
+Sets the entity's origin from an entry saved earlier by [`origins:store_origin`](/docs/datapack/origins/store_origin).
 
-Type ID: `origins:apply_stored_origin`
+Type ID: `origins:apply_stored_origin` — an [entity action](/docs/datapack/entity-actions).
 
-> This is an Origins addon action (not core Apoli). It only works on players, and only on the server. See [Origin storage](/docs/datapack/origins/storage) for the system as a whole.
+> **Needs the Origins mod.** Registered by Origins, not core Apoli. It only works on players, and only on the server. See [Origin storage](/docs/datapack/origins/storage) for the system as a whole.
 
 ## Fields
 
@@ -45,6 +45,7 @@ Apply a stored origin onto a different layer than it came from:
 
 ## See also
 
-- [`origins:store_origin`](/docs/datapack/entity-actions/store_origin)
-- [`origins:stored_origin`](/docs/datapack/entity-conditions/stored_origin)
+- [`origins:store_origin`](/docs/datapack/origins/store_origin) — write the entry this reads.
+- [`origins:stored_origin`](/docs/datapack/origins/stored_origin) — check the key exists before applying it.
+- [`origins:transfer_origin`](/docs/datapack/origins/transfer_origin) — move an origin between two players instead.
 - [Origin storage](/docs/datapack/origins/storage)
