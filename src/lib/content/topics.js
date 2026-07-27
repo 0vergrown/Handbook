@@ -3,6 +3,7 @@
  *
  *   datapack -> the JSON side: powers, actions, conditions, data types
  *   addon    -> the Java side: the API, systems, and how to extend Apoli
+ *   compat   -> per-mod integrations and the types each one unlocks
  */
 export const TOPICS = {
 	datapack: {
@@ -12,10 +13,14 @@ export const TOPICS = {
 	addon: {
 		title: 'Addon',
 		blurb: 'Extend Apoli from Java: the API, its systems, and how to register your own types.'
+	},
+	compat: {
+		title: 'Compatibility',
+		blurb: 'The mods Apoli integrates with, and the extra types each one unlocks.'
 	}
 };
 
-export const TOPIC_ORDER = ['datapack', 'addon'];
+export const TOPIC_ORDER = ['datapack', 'addon', 'compat'];
 
 /**
  * Human titles for section folders where simple title-casing isn't enough.
@@ -30,5 +35,8 @@ export const SECTION_TITLES = {
 	'bientity-actions': 'Bi-Entity Actions',
 	'bientity-conditions': 'Bi-Entity Conditions',
 	'meta-actions': 'Meta-Actions',
-	'meta-conditions': 'Meta-Conditions'
+	'meta-conditions': 'Meta-Conditions',
+	'simple-voice-chat': 'Simple Voice Chat',
+	'hardcore-revival': 'Hardcore Revival',
+	'writing-compat': 'Writing Compat'
 };

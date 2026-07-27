@@ -45,4 +45,4 @@ Apoli and Origins are bumped together, and an addon should depend on a specific 
 ## See also
 
 - [Getting started](/docs/addon/introduction/getting-started) — build setup.
-- [Mod compatibility](/docs/addon/compat/overview) — the same gating idea, for other mods.
+- [Mod compatibility](/docs/compat/writing-compat/gated-modules) — the same gating idea, for other mods.

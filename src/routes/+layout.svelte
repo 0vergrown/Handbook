@@ -15,7 +15,11 @@
 
 <a href="#main" class="skip-link">Skip to content</a>
 
-<Nav datapackHome={data.datapackHome} addonHome={data.addonHome} />
+<Nav
+	datapackHome={data.datapackHome}
+	addonHome={data.addonHome}
+	compatHome={data.compatHome}
+/>
 
 <main id="main">
 	{@render children()}

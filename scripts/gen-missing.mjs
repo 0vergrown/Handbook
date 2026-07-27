@@ -9,6 +9,34 @@ import { fileURLToPath } from 'node:url';
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const schema = JSON.parse(fs.readFileSync(path.join(ROOT, 'scripts/schema.json'), 'utf8')).apoli;
 const OUT = path.join(ROOT, 'src/content/docs/datapack');
+const DOCS = path.join(ROOT, 'src/content/docs');
+
+// Types that only exist when another mod is installed live in the Compatibility
+// topic, one folder per mod — not in the datapack reference. Keyed by type id.
+const COMPAT = {
+	action_on_speak: 'compat/02-simple-voice-chat',
+	action_on_reply: 'compat/02-simple-voice-chat',
+	action_on_speech: 'compat/02-simple-voice-chat',
+	action_on_sending_message: 'compat/02-simple-voice-chat',
+	voice_speaking: 'compat/02-simple-voice-chat',
+	voice_disabled: 'compat/02-simple-voice-chat',
+	voice_loudness: 'compat/02-simple-voice-chat',
+	voice_listeners: 'compat/02-simple-voice-chat',
+	action_on_accessory_change: 'compat/03-accessories',
+	prevent_accessory_equip: 'compat/03-accessories',
+	prevent_accessory_unequip: 'compat/03-accessories',
+	modify_accessory_slots: 'compat/03-accessories',
+	modify_accessory: 'compat/03-accessories',
+	accessory_equipped_count: 'compat/03-accessories',
+	accessory_slot_count: 'compat/03-accessories',
+	accessory: 'compat/03-accessories',
+	wings: 'compat/05-icarus',
+	action_on_knockout: 'compat/06-hardcore-revival',
+	action_on_revive: 'compat/06-hardcore-revival',
+	knock_out: 'compat/06-hardcore-revival',
+	revive: 'compat/06-hardcore-revival',
+	knocked_out: 'compat/06-hardcore-revival'
+};
 
 const SECTION = {
 	powers: '02-powers',
@@ -90,11 +118,19 @@ function cleanType(t, cat) {
 		.replace(/\bNbt\b/g, 'nbt');
 }
 
+const listPages = (dir) =>
+	new Set(fs.readdirSync(dir).map((f) => f.replace(/\.md$/, '').replace(/^\d+-/, '')));
+
 function build(cat, folder) {
-	const files = new Set(fs.readdirSync(path.join(OUT, folder)).map((f) => f.replace(/\.md$/, '')));
+	const existing = new Map();
+	const pagesIn = (dir) => {
+		if (!existing.has(dir)) existing.set(dir, listPages(dir));
+		return existing.get(dir);
+	};
 	let n = 0;
 	for (const t of schema[cat] || []) {
-		if (files.has(t.id)) continue;
+		const dir = COMPAT[t.id] ? path.join(DOCS, COMPAT[t.id]) : path.join(OUT, folder);
+		if (pagesIn(dir).has(t.id)) continue;
 		if (!D[t.id]) continue; // only generate ones we have a description for
 		const rows = t.fields
 			.map((f) => `| \`${f.name}\` | ${cleanType(f.type, cat)} | ${fmtDefault(f)} |`)
@@ -104,7 +140,7 @@ function build(cat, folder) {
 			: '## Fields\n\nThis type has no fields.\n';
 		const example = `## Example\n\n\`\`\`json\n{\n  "type": "apoli:${t.id}"\n}\n\`\`\`\n`;
 		const md = `---\ntitle: "apoli:${t.id}"\ndescription: "${D[t.id].replace(/"/g, "'").replace(/`/g, '')}"\n---\n\n${D[t.id]}\n\nType ID: \`apoli:${t.id}\`\n\n${fields}\n${example}`;
-		fs.writeFileSync(path.join(OUT, folder, `${t.id}.md`), md);
+		fs.writeFileSync(path.join(dir, `${t.id}.md`), md);
 		n++;
 	}
 	return n;

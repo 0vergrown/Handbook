@@ -85,5 +85,5 @@ Then declare it in `fabric.mod.json` (or the NeoForge equivalent) so the game en
 | Client sync | [Networking](/docs/addon/systems/networking) |
 | Math fields | [Expressions](/docs/addon/systems/expressions) |
 | Hot-path rules | [Performance](/docs/addon/systems/performance) |
-| Other-mod support | [Compatibility](/docs/addon/compat/overview) |
+| Other-mod support | [Compatibility](/docs/compat/writing-compat/gated-modules) |
 | Loader/version gaps | [Loaders & versions](/docs/addon/loaders/per-loader) |

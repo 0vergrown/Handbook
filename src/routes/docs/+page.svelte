@@ -19,6 +19,7 @@
 		<p>
 			The <strong>Data Pack</strong> reference covers the JSON — powers, actions, conditions and data
 			types. The <strong>Addon</strong> reference covers the Java API for extending Apoli itself.
+			<strong>Compatibility</strong> covers the types other mods unlock.
 		</p>
 	</header>
 
@@ -33,6 +34,12 @@
 			<span class="icon"><Icon name="zap" size={28} /></span>
 			<h2>Addon</h2>
 			<p>The API, its systems, and how to register your own types from Java.</p>
+			<span class="go">Open <Icon name="arrow-right" size={16} /></span>
+		</a>
+		<a class="card compat" href={base + data.compatHome}>
+			<span class="icon"><Icon name="puzzle" size={28} /></span>
+			<h2>Compatibility</h2>
+			<p>The mods Apoli integrates with, and the extra types each one unlocks.</p>
 			<span class="go">Open <Icon name="arrow-right" size={16} /></span>
 		</a>
 	</div>
@@ -100,6 +107,9 @@
 	.card.addon:hover {
 		border-color: hsl(204, 90%, 52%);
 	}
+	.card.compat:hover {
+		border-color: hsl(28, 85%, 52%);
+	}
 	.icon {
 		display: grid;
 		place-content: center;
@@ -114,6 +124,9 @@
 	}
 	.addon .icon {
 		background: hsl(204, 80%, 48%);
+	}
+	.compat .icon {
+		background: hsl(28, 75%, 48%);
 	}
 	.card h2 {
 		font-size: 2.6rem;

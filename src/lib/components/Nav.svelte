@@ -9,7 +9,11 @@
 	import ThemeToggle from './ThemeToggle.svelte';
 	import SearchTrigger from './SearchTrigger.svelte';
 
-	let { datapackHome = '/docs/datapack', addonHome = '/docs/addon' } = $props();
+	let {
+		datapackHome = '/docs/datapack',
+		addonHome = '/docs/addon',
+		compatHome = '/docs/compat'
+	} = $props();
 
 	let open = $state(false); // mobile menu
 
@@ -46,6 +50,12 @@
 						<span class="menu-item-label">
 							Addon
 							<span class="menu-item-sub">The Java API and its systems</span>
+						</span>
+					</a>
+					<a href={base + compatHome}>
+						<span class="menu-item-label">
+							Compatibility
+							<span class="menu-item-sub">Types unlocked by other mods</span>
 						</span>
 					</a>
 				</HoverMenu>
@@ -116,6 +126,7 @@
 		<a href="{base}/docs" class="group-title">Docs</a>
 		<a href={base + datapackHome} class="sub">Data Pack</a>
 		<a href={base + addonHome} class="sub">Addon</a>
+		<a href={base + compatHome} class="sub">Compatibility</a>
 
 		<a href="{base}/download" class="group-title">Downloads</a>
 		<a href={SITE.downloads.modrinth} target="_blank" rel="noreferrer" class="sub">Modrinth ↗</a>

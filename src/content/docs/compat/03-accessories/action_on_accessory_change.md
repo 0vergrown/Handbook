@@ -1,5 +1,5 @@
 ---
-title: "Action On Accessory Change (Power Type)"
+title: "apoli:action_on_accessory_change"
 description: "Runs an action when an accessory is equipped or unequipped."
 ---
 

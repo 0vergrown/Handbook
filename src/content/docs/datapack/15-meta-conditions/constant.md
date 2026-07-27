@@ -1,5 +1,5 @@
 ---
-title: "Constant (Meta Condition Type)"
+title: "Constant"
 description: "Provides a constant state where it's either true or false."
 ---
 
