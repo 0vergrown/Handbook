@@ -7,8 +7,13 @@
 	import { assistant } from '$lib/assistants/state.svelte.js';
 	import { GREETINGS, NUDGES, pick, tipsFor } from '$lib/assistants/tips.js';
 
-	const SPEAK_MS_PER_WORD = 190;
-	const MIN_BALLOON_MS = 3800;
+	// Reveal is quick, the dwell afterwards is what people actually read in.
+	const REVEAL_MS_PER_WORD = 95;
+	const DWELL_MS_PER_WORD = 300;
+	const MIN_DWELL_MS = 5000;
+	const MIN_VISIBLE_MS = 8000;
+	// Nothing new gets said until this long after the last balloon closed.
+	const MIN_QUIET_MS = 12_000;
 
 	let host = $state(null);
 	let sprite = $state(null);
@@ -22,23 +27,29 @@
 	let balloonWords = $state(0);
 	let menuOpen = $state(false);
 	let submenuOpen = $state(false);
-	let lastLine = '';
 	let greeted = false;
+	let lastClosedAt = 0;
+	let lastClickAt = 0;
 
-	let timers = [];
+	let timers = new Set();
 	let speakLoop = null;
+	let hideTimer = null;
 
 	function later(fn, ms) {
-		const t = setTimeout(fn, ms);
-		timers.push(t);
+		const t = setTimeout(() => {
+			timers.delete(t);
+			fn();
+		}, ms);
+		timers.add(t);
 		return t;
 	}
 
 	function clearTimers() {
 		timers.forEach(clearTimeout);
-		timers = [];
+		timers.clear();
 		clearInterval(speakLoop);
 		speakLoop = null;
+		hideTimer = null;
 	}
 
 	function rand(min, max) {
@@ -60,28 +71,44 @@
 		if (name) play(name);
 	}
 
-	function say(text, animate = true) {
-		if (!text) return;
-		lastLine = text;
+	function closeBalloon() {
+		balloon = '';
+		lastClosedAt = Date.now();
+	}
+
+	/**
+	 * Say something. Unforced lines never interrupt a balloon that is already up
+	 * and never land inside the quiet gap after the last one, so there is always
+	 * time to finish reading.
+	 */
+	function say(text, { animate = true, force = false } = {}) {
+		if (!text) return false;
+		if (!force && (balloon || Date.now() - lastClosedAt < MIN_QUIET_MS)) return false;
+
+		clearTimeout(hideTimer);
+		timers.delete(hideTimer);
+		clearInterval(speakLoop);
+
 		balloon = text;
 		balloonWords = 0;
 		const words = text.split(/\s+/).length;
 
-		clearInterval(speakLoop);
 		speakLoop = setInterval(() => {
 			balloonWords += 1;
 			if (balloonWords >= words) {
 				clearInterval(speakLoop);
 				speakLoop = null;
 			}
-		}, SPEAK_MS_PER_WORD);
+		}, REVEAL_MS_PER_WORD);
 
 		if (animate) play('Explain', 'GestureRight', 'Congratulate', 'Wave', 'Greeting');
 
-		const hold = Math.max(MIN_BALLOON_MS, words * SPEAK_MS_PER_WORD + 2600);
-		later(() => {
-			if (balloon === text) balloon = '';
-		}, hold);
+		const reveal = words * REVEAL_MS_PER_WORD;
+		const dwell = Math.max(MIN_DWELL_MS, words * DWELL_MS_PER_WORD);
+		hideTimer = later(() => {
+			if (balloon === text) closeBalloon();
+		}, Math.max(MIN_VISIBLE_MS, reveal + dwell));
+		return true;
 	}
 
 	function currentTips() {
@@ -90,19 +117,15 @@
 		return tipsFor(path, title);
 	}
 
-	function speakTip() {
-		say(pick(currentTips(), lastLine));
+	function speakTip(force = false) {
+		return say(pick(currentTips()), { force });
 	}
 
 	function scheduleNextTip() {
 		later(() => {
-			if (!visible || menuOpen) {
-				scheduleNextTip();
-				return;
-			}
-			speakTip();
+			if (visible && !menuOpen) speakTip();
 			scheduleNextTip();
-		}, rand(55_000, 110_000));
+		}, rand(70_000, 140_000));
 	}
 
 	function scheduleIdle() {
@@ -142,7 +165,7 @@
 			visible = true;
 			play('Show', 'Greeting', 'Wave', 'RestPose');
 			later(() => {
-				say(greeted ? pick(currentTips(), lastLine) : pick(GREETINGS, lastLine), false);
+				say(greeted ? pick(currentTips()) : pick(GREETINGS), { animate: false, force: true });
 				greeted = true;
 			}, 1400);
 			scheduleIdle();
@@ -163,7 +186,7 @@
 
 	function hide() {
 		play('Hide', 'GoodBye');
-		balloon = '';
+		closeBalloon();
 		menuOpen = false;
 		later(() => assistant.setEnabled(false), 700);
 	}
@@ -173,10 +196,12 @@
 			menuOpen = false;
 			return;
 		}
-		if (balloon) {
-			say(pick(NUDGES, lastLine));
+		const impatient = Date.now() - lastClickAt < 2500;
+		lastClickAt = Date.now();
+		if (impatient) {
+			say(pick(NUDGES), { force: true });
 		} else {
-			speakTip();
+			speakTip(true);
 		}
 	}
 
@@ -227,13 +252,19 @@
 		return teardown;
 	});
 
-	// A fresh page is a fresh excuse to say something.
+	// A fresh page is a fresh excuse to say something, but only sometimes, and
+	// never on top of a line that is still up. Deliberately does not read
+	// `visible`, or arriving would re-fire this on top of the greeting.
 	$effect(() => {
 		const path = $page.url?.pathname;
-		if (!browser || !visible || !path) return;
-		later(() => {
-			if (visible && !balloon && Math.random() < 0.55) speakTip();
-		}, rand(4_000, 9_000));
+		if (!browser || !path) return;
+		const t = later(() => {
+			if (visible && !menuOpen && Math.random() < 0.45) speakTip();
+		}, rand(9_000, 18_000));
+		return () => {
+			clearTimeout(t);
+			timers.delete(t);
+		};
 	});
 
 	const balloonText = $derived.by(() => {
@@ -318,7 +349,7 @@
 					class="item"
 					onclick={() => {
 						menuOpen = false;
-						speakTip();
+						speakTip(true);
 					}}
 				>
 					Tell me something
