@@ -36,9 +36,6 @@ side, `addon/` for the Java side) and `src/content/blog/` for posts. The sidebar
 table of contents, prev/next and search index are all generated from the files —
 just add a Markdown file with `title` and `description` frontmatter.
 
-See [`CLAUDE.md`](./CLAUDE.md) for the full authoring guide and the rule that
-keeps these docs in sync with the mod source.
-
 ## Configuration
 
 Social and download links live in `src/lib/config.js` (some are `TODO`

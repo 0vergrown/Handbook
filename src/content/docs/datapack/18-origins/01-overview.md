@@ -30,7 +30,7 @@ Origins live in `data/<namespace>/origins/`. The file name is the origin's id.
 | Field | Type | Default | Purpose |
 | --- | --- | --- | --- |
 | `powers` | list of identifier | `[]` | The Apoli powers this origin grants. |
-| `icon` | item / identifier | — | Shown in the selection screen. |
+| `icon` | [Origin Icon](#the-icon-field) | — | Shown in the selection screen. An item or a texture. |
 | `impact` | 0–3 | `0` | The "impact" dots — how strong the origin is. |
 | `name` | [text](/docs/datapack/data-types/text-component) | auto | The origin's display name. |
 | `description` | [text](/docs/datapack/data-types/text-component) | auto | The lore shown when selecting. |
@@ -38,6 +38,53 @@ Origins live in `data/<namespace>/origins/`. The file name is the origin's id.
 | `loading_priority` | number | `0` | Higher wins when packs define the same id. |
 | `unchoosable` | boolean | `false` | Exists but can't be picked (e.g. an admin origin). |
 | `name_scroll_speed` | number | — | Speed a long name marquees at. |
+
+## The `icon` field
+
+`icon` accepts three shapes:
+
+```json
+"icon": "minecraft:cod"
+```
+
+```json
+"icon":{
+   "item":"minecraft:potion",
+   "components":{
+      "minecraft:potion_contents":{
+         "potion":"minecraft:water_breathing"
+      }
+   }
+}
+```
+
+```json
+"icon":{
+   "texture":"example:textures/gui/origins/merling.png"
+}
+```
+
+The first two are an item id and a full [Item Stack](/docs/datapack/data-types/item-stack); the third draws a texture instead, so you don't have to register a throwaway item just to have a custom icon.
+
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `texture` | [Identifier](/docs/datapack/data-types/identifier) | **required** for the texture form | Path to the PNG, relative to `assets/<namespace>/`. |
+| `width` | [Integer](/docs/datapack/data-types/integer) | `16` | Width of the source image in pixels. |
+| `height` | [Integer](/docs/datapack/data-types/integer) | `16` | Height of the source image in pixels. |
+
+`width` and `height` describe the **file**, not the drawn size — the image is always scaled into the 16×16 icon slot. A 32×32 PNG needs `"width": 32, "height": 32` or it will be drawn cropped.
+
+```json
+{
+  "icon": {
+    "texture": "example:textures/gui/origins/merling.png",
+    "width": 32,
+    "height": 32
+  }
+}
+```
+
+> A texture icon is a plain image: no enchantment glint, no item tooltip, no durability bar. Use the item form when you want those.
 
 ## Powers come from Apoli
 
@@ -70,4 +117,4 @@ The last six are the [origin storage](/docs/datapack/origins/storage) system. Or
 - [Layers](/docs/datapack/origins/layers) — how origins are offered to players.
 - [Badges](/docs/datapack/origins/badges) — annotating a power in the selection screen.
 - [Origin storage](/docs/datapack/origins/storage) — remembering an origin and putting it back.
-- [`apoli:multiple`](/docs/datapack/powers/multiple) — the usual way to package an origin's traits.
+- [`Multiple (Power Type)`](/docs/datapack/powers/multiple) — the usual way to package an origin's traits.

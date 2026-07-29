@@ -1,11 +1,13 @@
 ---
 title: "apoli:raycast"
-description: "Fires a ray from an entity's eye position and executes actions based on what it hits."
+description: "Fires a ray from an entity's eye position — or straight at a target entity — and executes actions based on what it hits."
 ---
 
 Fires a ray from an entity's eye position and executes actions based on what it hits. Supports per-type distances, custom directions, piercing, particle trails, and command execution along the ray.
 
 Type ID: `apoli:raycast`
+
+Registered as **both an entity action and a bi-entity action**. As a bi-entity action it aims the ray straight at the target entity instead of the actor's look direction — see [Aiming at a target](#aiming-at-a-target). The type-alias `apoli:raycast_between` is accepted for the bi-entity form.
 
 ## Fields
 
@@ -18,7 +20,11 @@ Type ID: `apoli:raycast`
 | `fluid_handling`                | [Fluid Handling](/docs/datapack/data-types/fluid-handling)   | `any`      | How fluids are treated during block raycasting                                                                                                                                                                                                                |
 | `space`                         | [Space](/docs/datapack/data-types/space)            | `world`    | The coordinate space in which `direction` is interpreted                                                                                                                                                                                                      |
 | `direction`                     | [Vector](/docs/datapack/data-types/vector)           | *optional* | Custom ray direction. If omitted, uses the entity's current look direction                                                                                                                                                                                    |
-| `pierce`                        | [Boolean](/docs/datapack/data-types/boolean)          | `false`    | If `true`, the ray passes through entities **and blocks**: `bientity_action` runs on every entity along the ray, `block_action` runs on every block the ray intersects (up to 128), and the ray always traces its full length                                                                                                                                       |
+| `pierce`                        | [Boolean](/docs/datapack/data-types/boolean)          | `false`    | Shorthand that sets both `pierce_blocks` and `pierce_entities`.                                                                                                                                                                                               |
+| `pierce_blocks`                 | [Boolean](/docs/datapack/data-types/boolean)          | `pierce`   | If `true`, the ray passes **through blocks**: `block_action` runs on every block the ray intersects (up to 128), blocks stop culling entities behind them, and the ray traces its full length.                                                                 |
+| `pierce_entities`               | [Boolean](/docs/datapack/data-types/boolean)          | `pierce`   | If `true`, the ray passes **through entities**: `bientity_action` runs on every entity along the ray instead of only the nearest.                                                                                                                              |
+| `aim_at_target`                 | [Boolean](/docs/datapack/data-types/boolean)          | `true`     | Bi-entity form only — aim the ray at the target entity instead of the actor's look direction.                                                                                                                                                                 |
+| `stop_at_target`                | [Boolean](/docs/datapack/data-types/boolean)          | `true`     | Bi-entity form only — clamp the ray's length to the distance between actor and target.                                                                                                                                                                        |
 | `particle`                      | [Particle Effect](/docs/datapack/data-types/particle-effect)  | *optional* | Particle to spawn at intervals along the ray                                                                                                                                                                                                                  |
 | `spacing`                       | [Float](/docs/datapack/data-types/float)            | `0.5`      | Distance in blocks between each particle spawn along the ray                                                                                                                                                                                                  |
 | `entity_distance`               | [Float](/docs/datapack/data-types/float)            | *optional* | Maximum range for entity detection only. Overrides `distance` for entities                                                                                                                                                                                    |
@@ -43,13 +49,33 @@ Type ID: `apoli:raycast`
 ## Notes
 
 - The ray always originates from the entity's **eye position**.
-- When both `block` and `entity` are enabled, the **closest** hit wins for `hit_action` and `command_at_hit`. With `pierce`, `bientity_action` fires on every entity closer than the first block hit.
+- When both `block` and `entity` are enabled, the **closest** hit wins for `hit_action` and `command_at_hit`. With `pierce_entities`, `bientity_action` fires on every entity along the ray; with `pierce_blocks`, entities behind a wall stop being culled.
 - `distance` is the shared fallback. `entity_distance` and `block_distance` each override it for their respective type. If none of these are set, the entity's live reach values are used (including any modifiers from `reach-entity-attributes`).
 - Particles and `command_along_ray` both trace up to the hit position (or the full range on a miss).
 - `block_action` respects `block_condition`; `bientity_action` respects `bientity_condition`.
 - **`radius`** only affects which entities the beam catches; a wide beam still stops on the first block along its centre line. Use `{ "x": w, "y": h, "z": d }` for a rectangular cross-section (x = left/right, y = up/down, z = forward/back).
-- **`cone_angle`** replaces `radius` for entity hits with a directional cone in front of the caster (e.g. `30` gives a 60°-wide cone). Ideal for shout/breath attacks. Pair with `pierce` to hit every entity in the cone; without it, only the nearest is hit. Occlusion is approximate — entities past the centre-line block are still culled.
+- **`cone_angle`** replaces `radius` for entity hits with a directional cone in front of the caster (e.g. `30` gives a 60°-wide cone). Ideal for shout/breath attacks. Pair with `pierce_entities` to hit every entity in the cone; without it, only the nearest is hit. Occlusion is approximate — entities past the centre-line block are still culled.
 - **`chain`** re-casts a full raycast from the previous ray's end point. Every level runs its own `before_action`/`hit_action`/`particle`/etc., so you can trace a multi-segment beam. `reflect` uses the hit block's face normal to bounce; if the parent ray hit an entity or nothing, `reflect` falls back to `forward`. Chaining is capped at 32 levels as a safety limit.
+
+## Aiming at a target
+
+Used as a **bi-entity action**, the ray is cast from the actor's eyes straight at the target entity, with its length clamped to the gap between them. That gives you the "is there a wall between us?" trace: run a `block_action` on whatever is in the way, or draw a particle line between two entities.
+
+```json
+{
+    "type": "apoli:raycast",
+    "particle": { "type": "minecraft:end_rod" },
+    "spacing": 0.4,
+    "block_action": {
+        "type": "apoli:set_block",
+        "block": "minecraft:air"
+    }
+}
+```
+
+Placed in a `bientity_action` slot, this draws a line of particles from the actor to the target and clears the first block between them.
+
+Set `aim_at_target: false` to keep the actor's look direction, or `stop_at_target: false` to let the ray keep going past the target out to its normal `distance`. Supplying an explicit `direction` also wins over the automatic aim.
 
 ## Examples
 

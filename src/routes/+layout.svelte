@@ -9,6 +9,7 @@
 
 	import Nav from '$lib/components/Nav.svelte';
 	import SearchModal from '$lib/components/SearchModal.svelte';
+	import OfficeAssistant from '$lib/components/OfficeAssistant.svelte';
 
 	let { children, data } = $props();
 </script>
@@ -26,6 +27,8 @@
 </main>
 
 <SearchModal />
+
+<OfficeAssistant />
 
 <style>
 	main {
