@@ -43,5 +43,26 @@ Disguises the entity as an armor stand.
 Disguises the entity as the player "Notch" (shown with their skin if they are online).
 
 
+## How the disguise renders
+
+For a **mob disguise** the client builds a hidden copy of that entity type and draws it in place of the real
+one, so everything about the disguise is client-side — hitbox, collisions and behaviour are unchanged.
+
+That copy is kept in step with the entity it is hiding:
+
+- **Animations play.** Walking, swimming, sneaking, the hurt flash, death and pose all follow the real entity.
+- **Attacks animate too.** Swinging, and the attack animations of mobs that have their own — an Iron Golem's
+  arm swing, a Warden's lunge — fire when the disguised entity attacks.
+- **Fire shows** on the disguise when the real entity is burning.
+- **The disguise is silent.** It never plays the disguise mob's idle or attack sounds; only the real entity's
+  own sounds are heard.
+- Particle effects belonging to the disguise mob (an Enderman's portal particles, for instance) do appear.
+
+Disguising as something that is **not** a living entity — an arrow, a boat, an item — renders correctly but
+stays still; only living disguises are animated.
+
+> An action that damages without a swing (a bare [apoli:damage](/docs/datapack/bientity-actions/damage), say)
+> produces no attack animation, because nothing tells the client an attack happened.
+
 > Since 2026-07-10 a disguise also changes the holder's name in **chat** and the **multiplayer tab list** (not just the nameplate), unless `change_name` is `false`. An active [apoli:modify_label_render](/docs/datapack/powers/modify_label_render) takes priority over the disguise's name.
 

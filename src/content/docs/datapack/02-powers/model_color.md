@@ -56,3 +56,12 @@ This example will give the entity's whole texture a blue-ish tint and makes it s
 
 This example tints only the head red and the left arm blue, leaving the rest of the model its normal color.
 
+## Disguises
+
+The colour follows a [disguise](/docs/datapack/entity-actions/disguise_as): a disguised entity's replacement
+model is tinted by the powers **the real entity** holds, so a disguise can be recoloured, faded out or made
+translucent exactly like an undisguised one.
+
+`parts` only applies where the disguise's model has those parts — humanoid disguises (zombie, skeleton,
+another player) accept the usual `head` / `body` / arm and leg parts, while a model that has none of them, like
+an Iron Golem, only takes the whole-model colour.
