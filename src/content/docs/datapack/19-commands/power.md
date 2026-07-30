@@ -13,9 +13,11 @@ Every sub-command takes an entity selector, not just players — Apoli holds pow
 |-------------|--------------|
 | `grant <targets> <power> [source]` | Adds a power. |
 | `revoke <targets> <power>` | Removes a power completely, including its sub-powers. |
+| `remove <targets> <power>` | Alias of `revoke`. |
 | `revoke <targets> <power> from <source>` | Removes only one source's grant of that power. |
 | `grantall <targets> <source>` | Adds every power that `<source>` provides. |
 | `revokeall <targets> <source>` | Removes every power that came from `<source>`. |
+| `removeall <targets> <source>` | Alias of `revokeall`. |
 | `has <targets>` | Lists every power the targets hold. |
 | `has <targets> <power>` | Reports `true`/`false` per target. |
 | `suppress <targets> power <power> [source]` | Suppresses one power. |
@@ -44,6 +46,8 @@ power revoke @s example:fire from example:origin_kit
 ```
 
 `revoke` removes the power **entirely** — every source that granted it, plus any sub-powers it owns. That is almost always what you mean.
+
+`remove` is an alias of `revoke`, and `removeall` of `revokeall` — identical behaviour, for muscle memory from `/effect` and friends.
 
 Sub-powers of an `apoli:multiple` power are named `<parent>_<key>`, so a `dome` block inside `example:fire` becomes `example:fire_dome`. Type `example:fire_` at the prompt and tab-completion lists the sub-powers you can target individually.
 

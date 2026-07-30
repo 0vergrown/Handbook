@@ -17,18 +17,23 @@ The `type` is an [identifier](/docs/datapack/introduction/data-types) (`namespac
 
 ## Fields are typed too
 
-Each field expects a particular kind of value. Some are primitives (a number, a string, a boolean). Many are **nested typed objects** — an action field wants an action, a condition field wants a condition:
+Each field expects a particular kind of value. Some are primitives (a number, a string, a boolean). Many are **nested typed objects**, an action field wants an action, a condition field wants a condition:
 
 ```json
 {
-  "type": "apoli:action_on_hit",
-  "cooldown": 20,
-  "bientity_action": { "type": "apoli:damage", "amount": 2 },
-  "condition": { "type": "apoli:sneaking" }
+   "type":"apoli:action_on_hit",
+   "cooldown":20,
+   "bientity_action":{
+      "type":"apoli:damage",
+      "amount":2
+   },
+   "condition":{
+      "type":"apoli:sneaking"
+   }
 }
 ```
 
-Here `cooldown` is a number, `bientity_action` is an [action](/docs/datapack/introduction/actions), and `condition` is a [condition](/docs/datapack/introduction/conditions). This nesting is the whole trick — you compose behaviour by putting typed objects inside typed objects.
+Here `cooldown` is a number, `bientity_action` is an [action](/docs/datapack/introduction/actions), and `condition` is a [condition](/docs/datapack/introduction/conditions). This nesting is the whole trick, you compose behaviour by putting typed objects inside typed objects.
 
 ## Lists where it makes sense
 
@@ -36,24 +41,32 @@ Wherever one value is allowed, a **list** of them usually is too. Apoli's `apoli
 
 ```json
 {
-  "type": "apoli:and",
-  "actions": [
-    { "type": "apoli:extinguish" },
-    { "type": "apoli:heal", "amount": 2 }
-  ]
+   "type":"apoli:and",
+   "actions":[
+      {
+         "type":"apoli:extinguish"
+      },
+      {
+         "type":"apoli:heal",
+         "amount":2
+      }
+   ]
 }
 ```
 
 ## Optional fields have defaults
 
-Most fields are optional and fall back to a default. In the `action_on_hit` example, `cooldown` defaults to `1` and `condition` defaults to "always". Only write the fields you actually want to change — the docs list every field, its type, and its default.
+Most fields are optional and fall back to a default. In the `action_on_hit` example, `cooldown` defaults to `1` and `condition` defaults to "always". Only write the fields you actually want to change - the docs list every field, its type, and its default.
 
 ## Inverting a condition
 
-Any condition can be flipped by adding `"inverted": true`. There's no separate "not sneaking" condition — you invert `apoli:sneaking`:
+Any condition can be flipped by adding `"inverted": true`. There's no separate "not sneaking" condition - you invert `apoli:sneaking`:
 
 ```json
-{ "type": "apoli:sneaking", "inverted": true }
+{
+   "type":"apoli:sneaking",
+   "inverted":true
+}
 ```
 
 ## How to read the rest of these docs

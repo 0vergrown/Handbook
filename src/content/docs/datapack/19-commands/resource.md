@@ -14,7 +14,7 @@ Reads and writes the value behind an [`apoli:resource`](/docs/datapack/powers/re
 | `change <targets> <power> <value>` | Adds `<value>` to the current value (negative to subtract). |
 | `has <targets> <power>` | Prints which targets hold that resource, returns the count. |
 
-`<power>` tab-completes to the loaded resource and cooldown powers.
+`<power>` tab-completes to the resource and cooldown powers the **targets actually hold**, falling back to every loaded one when the targets cannot be resolved yet.
 
 ## Examples
 
@@ -31,7 +31,9 @@ Store a resource in a scoreboard:
 execute store result score @s mana run resource get @s example:mana
 ```
 
-Targets that do not hold the power are skipped. If no target holds it the command fails with a message and returns `0`, so `/execute if` behaves sensibly.
+Targets that do not hold the power are skipped. If no target holds it the command reports that and returns `0`, so `/execute if` behaves sensibly.
+
+> A resource's stored value outlives the power itself, so that re-granting the power restores what you had. All four sub-commands therefore check that the target still **holds** the power before reporting a value — a leftover value from a power you no longer have never shows up.
 
 > `set` and `change` respect the power's own bounds — you cannot push a resource past its `max` or below its `min`. To go further, change the power.
 
