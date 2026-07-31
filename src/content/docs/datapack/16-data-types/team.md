@@ -1,6 +1,7 @@
 ---
 title: "Team (Data Type)"
 description: "A scoreboard team, given either by name or as a set of properties to match."
+navigation_title: "Team"
 ---
 
 Describes a scoreboard team. Accepts either a **string** (the team's name) or an **object** whose fields are matched against — or applied to — a team.

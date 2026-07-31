@@ -1,6 +1,8 @@
 ---
-title: "apoli:modify_resource"
+title: "Modify Resource (Entity Action Type)"
 description: "Modifies the value of a Resource or Cooldown via an Attribute Modifier."
+navigation_title: "Modify Resource"
+aliases: ["change_resource", "origins:change_resource"]
 ---
 
 Modifies the value of a [apoli:resource](/docs/datapack/powers/resource) or [apoli:cooldown](/docs/datapack/powers/cooldown) via an [Attribute Modifier](/docs/datapack/data-types/attribute-modifier).
@@ -74,10 +76,3 @@ Legacy `apoli:change_resource` (or `origins:change_resource`) — still works un
     "operation": "add"
 }
 ```
-
-## See also
-
-- [apoli:change_resource](/docs/datapack/entity-actions/change_resource) — kept as a doc page because old data packs cite it; the implementation is this action with the legacy schema shim.
-- [apoli:resource](/docs/datapack/powers/resource), [apoli:cooldown](/docs/datapack/powers/cooldown) — the targets.
-- [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) — what `modifier` accepts.
-

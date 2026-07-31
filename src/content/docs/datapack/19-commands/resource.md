@@ -1,6 +1,7 @@
 ---
-title: "/apoli:resource"
+title: "Resource (Command)"
 description: "Read and write resource and cooldown values on any entity."
+navigation_title: "Resource"
 ---
 
 Reads and writes the value behind an [`apoli:resource`](/docs/datapack/powers/resource) or [`apoli:cooldown`](/docs/datapack/powers/cooldown) power. Aliased to `/resource`.
@@ -36,10 +37,3 @@ Targets that do not hold the power are skipped. If no target holds it the comman
 > A resource's stored value outlives the power itself, so that re-granting the power restores what you had. All four sub-commands therefore check that the target still **holds** the power before reporting a value — a leftover value from a power you no longer have never shows up.
 
 > `set` and `change` respect the power's own bounds — you cannot push a resource past its `max` or below its `min`. To go further, change the power.
-
-## See also
-
-- [apoli:resource](/docs/datapack/powers/resource)
-- [apoli:cooldown](/docs/datapack/powers/cooldown)
-- [apoli:change_resource](/docs/datapack/entity-actions/change_resource)
-- [Commands overview](/docs/datapack/commands/overview)

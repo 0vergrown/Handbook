@@ -1,0 +1,175 @@
+{
+	"bientity actions/add_to_entity_set": [
+		"add_to_set"
+	],
+	"bientity actions/raycast": [
+		"raycast_between"
+	],
+	"bientity actions/remove_from_entity_set": [
+		"remove_from_set"
+	],
+	"bientity conditions/in_entity_set": [
+		"in_set"
+	],
+	"bientity conditions/same_team": [
+		"allied"
+	],
+	"block conditions/replacable": [
+		"replaceable"
+	],
+	"block conditions/slipperiness": [
+		"slipperness"
+	],
+	"entity actions/action_on_entity_set": [
+		"action_on_set"
+	],
+	"entity actions/disguise_as": [
+		"disguise_as_player"
+	],
+	"entity actions/force_key_pressed": [
+		"press_key",
+		"force_key"
+	],
+	"entity actions/inventory_action": [
+		"modify_inventory",
+		"replace_inventory",
+		"drop_inventory"
+	],
+	"entity actions/modify_accessory": [
+		"modify_trinket"
+	],
+	"entity actions/modify_entity_data": [
+		"set_entity_data",
+		"change_entity_data",
+		"set_no_gravity",
+		"set_gravity"
+	],
+	"entity actions/modify_resource": [
+		"change_resource",
+		"origins:change_resource"
+	],
+	"entity actions/modify_stat": [
+		"change_stat",
+		"set_stat"
+	],
+	"entity actions/radial_menu": [
+		"sync:radial_menu"
+	],
+	"entity actions/set_summon_max_life": [
+		"set_summon_max_life_ticks"
+	],
+	"entity actions/team": [
+		"modify_team",
+		"join_team",
+		"leave_team"
+	],
+	"entity actions/text": [
+		"text_bar",
+		"show_text"
+	],
+	"entity conditions/accessory_equipped_count": [
+		"equipped_trinket_count"
+	],
+	"entity conditions/accessory_slot_count": [
+		"trinket_slot_count"
+	],
+	"entity conditions/entity_set_size": [
+		"set_size"
+	],
+	"entity conditions/in_team": [
+		"team"
+	],
+	"entity conditions/key_pressed": [
+		"key_held",
+		"held_key"
+	],
+	"entity conditions/stat": [
+		"stats",
+		"status",
+		"statistic"
+	],
+	"entity conditions/voice_disabled": [
+		"voice_muted"
+	],
+	"item actions/holder_action": [
+		"holder"
+	],
+	"item conditions/accessory": [
+		"trinket"
+	],
+	"item conditions/is_equippable": [
+		"equippable"
+	],
+	"meta actions/random_chance": [
+		"chance"
+	],
+	"meta conditions/all_of": [
+		"and"
+	],
+	"meta conditions/any_of": [
+		"or"
+	],
+	"meta conditions/random_chance": [
+		"chance"
+	],
+	"powers/action_on_accessory_change": [
+		"action_on_trinket_change"
+	],
+	"powers/action_on_hit": [
+		"self_action_on_hit",
+		"target_action_on_hit"
+	],
+	"powers/action_on_key_press": [
+		"active_self"
+	],
+	"powers/action_on_key_sequence": [
+		"sync:action_on_key_sequence"
+	],
+	"powers/action_on_kill": [
+		"self_action_on_kill"
+	],
+	"powers/action_on_use": [
+		"action_on_entity_use",
+		"action_on_being_used"
+	],
+	"powers/action_when_hit": [
+		"self_action_when_hit",
+		"attacker_action_when_hit",
+		"action_when_damage_taken"
+	],
+	"powers/attribute": [
+		"conditioned_attribute"
+	],
+	"powers/entity_glow": [
+		"self_glow"
+	],
+	"powers/ignore_fluid": [
+		"ignore_water"
+	],
+	"powers/modify_accessory_slots": [
+		"modify_trinket_slot",
+		"modify_trinket_slots"
+	],
+	"powers/modify_cursor_speed": [
+		"modify_mouse_sensitivity",
+		"modify_mouse_speed",
+		"modify_look_sensitivity"
+	],
+	"powers/modify_damage": [
+		"modify_damage_dealt",
+		"modify_damage_taken"
+	],
+	"powers/modify_label_render": [
+		"sync:modify_label_render"
+	],
+	"powers/prevent_accessory_equip": [
+		"prevent_trinket_equip"
+	],
+	"powers/prevent_accessory_unequip": [
+		"prevent_trinket_unequip"
+	],
+	"powers/prevent_use": [
+		"prevent_entity_use",
+		"prevent_being_used"
+	]
+}

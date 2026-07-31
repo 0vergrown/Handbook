@@ -1,6 +1,7 @@
 ---
 title: "Loop (Meta Action Type)"
 description: "Executes an action a set number of times, spaced evenly over time."
+navigation_title: "Loop"
 ---
 
 Executes an action a set number of times, spaced evenly over time.

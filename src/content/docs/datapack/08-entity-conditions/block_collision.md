@@ -1,14 +1,12 @@
 ---
-title: "origins:block_collision"
-description: "[Entity Condition Type](../entityconditiontypes.md)"
+title: "Block Collision (Entity Condition Type)"
+description: "Checks whether the bounding box of the entity collides with a block."
+navigation_title: "Block Collision"
 ---
-
-Entity Condition Type
 
 Checks whether the bounding box of the entity collides with a block.
 
-Type ID: `origins:block_collision`
-
+Type ID: `apoli:block_collision`
 
 ## Fields
 
@@ -19,12 +17,11 @@ Field  | Type | Default | Description
 `offset_y` | Float | `0` |  By how much of the bounding box size should the box be offset in the Y direction (e.g.: 0 = no offset, 1 = offset of exact height, 2 = offset of twice the height of the bounding box)
 `offset_z` | Float | `0` | By how much of the bounding box size should the box be offset in the Z direction (e.g.: 0 = no offset, 1 = offset of exact depth, 2 = offset of twice the depth of the bounding box)
 
-
 ## Examples
 
 ```json
 "condition": {
-    "type": "origins:block_collision",
+    "type": "apoli:block_collision",
     "offset_x": 0.1,
     "offset_y": 0,
     "offset_z": 0.1
@@ -33,25 +30,23 @@ Field  | Type | Default | Description
 
 This example will check if the entity is colliding with the positive X or Z faces of a block.
 
-
-
 ```json
 "condition": {
-    "type": "origins:or",
+    "type": "apoli:or",
     "conditions": [
         {
-            "type": "origins:block_collision",
+            "type": "apoli:block_collision",
             "block_condition": {
-                "type": "origins:block",
+                "type": "apoli:block",
                 "block": "minecraft:slime_block"
             },
             "offset_x": 0.1,
             "offset_z": 0.1
         },
         {
-            "type": "origins:block_collision",
+            "type": "apoli:block_collision",
             "block_condition": {
-                "type": "origins:block",
+                "type": "apoli:block",
                 "block": "minecraft:slime_block"
             },
             "offset_x": -0.1,
@@ -62,4 +57,3 @@ This example will check if the entity is colliding with the positive X or Z face
 ```
 
 This example will check if the entity is colliding with the X and Z faces of a Slime block.
-

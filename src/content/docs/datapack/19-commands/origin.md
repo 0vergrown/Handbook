@@ -1,6 +1,7 @@
 ---
-title: "/origin"
+title: "Origin (Command)"
 description: "Set, query and reroll a player's origin, and manage stored origin data."
+navigation_title: "Origin"
 ---
 
 Manages which origin each player has in each [layer](/docs/datapack/origins/layers). Added by Origins, not Apoli, so it is only present when Origins is installed.
@@ -77,9 +78,3 @@ origin storage list @s
 ## Permissions
 
 `set`, `gui`, `random` and `storage` need permission level 2 (nodes `origins.command.origin.set`, `.gui`, `.random`, `.storage`). `has` and `get` are open to everyone.
-
-## See also
-
-- [Origins overview](/docs/datapack/origins/overview)
-- [Entity selector options](/docs/datapack/commands/selectors)
-- [Commands overview](/docs/datapack/commands/overview)

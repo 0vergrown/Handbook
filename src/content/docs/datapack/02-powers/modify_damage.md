@@ -1,6 +1,8 @@
 ---
-title: "apoli:modify_damage"
+title: "Modify Damage (Power Type)"
 description: "Modifies the damage this entity deals or takes (aliases modify_damage_dealt, modify_damage_taken)."
+navigation_title: "Modify Damage"
+aliases: ["modify_damage_dealt", "modify_damage_taken"]
 ---
 
 Modifies the damage this entity deals or takes (aliases `modify_damage_dealt`, `modify_damage_taken`).

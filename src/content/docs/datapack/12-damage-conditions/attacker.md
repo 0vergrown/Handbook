@@ -1,12 +1,12 @@
 ---
-title: "apoli:attacker"
+title: "Attacker (Damage Condition Type)"
 description: "Checks whether the damage source is from an entity."
+navigation_title: "Attacker"
 ---
 
 Checks whether the damage source is from an entity.
 
 Type ID: `apoli:attacker`
-
 
 ## Fields
 

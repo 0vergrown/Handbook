@@ -39,10 +39,5 @@ These affect a data type's codec (e.g. [item stack](/docs/datapack/data-types/it
 
 Apoli and Origins are bumped together, and an addon should depend on a specific qualified build. Two rules that prevent the most common crash:
 
-1. **Rebuild against the exact Apoli build you ship with.** A "same version, different jar" mismatch crashes on join — see [networking](/docs/addon/systems/networking#protocol-versioning-the-rules).
+1. **Rebuild against the exact Apoli build you ship with.** A "same version, different jar" mismatch crashes on join — see [networking](/docs/addon/systems/networking#protocol-versioning--the-rules).
 2. When Apoli changes, republish it to `mavenLocal` and rebuild your addon with `--refresh-dependencies` so you're not compiling against a stale copy.
-
-## See also
-
-- [Getting started](/docs/addon/introduction/getting-started) — build setup.
-- [Mod compatibility](/docs/compat/writing-compat/gated-modules) — the same gating idea, for other mods.

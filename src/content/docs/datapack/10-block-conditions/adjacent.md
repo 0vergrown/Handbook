@@ -1,6 +1,7 @@
 ---
-title: "apoli:adjacent"
+title: "Adjacent (Block Condition Type)"
 description: "Checks whether a specified amount of blocks adjacent to the block in question fulfills a specified Block Condition Type."
+navigation_title: "Adjacent"
 ---
 
 Checks whether a specified amount of blocks adjacent to the block in question fulfills a specified Block Condition Type.
@@ -14,7 +15,6 @@ Field  | Type | Default | Description
 `adjacent_condition` | Block Condition Type (Data Type) | | The block condition that needs to be fulfilled by adjacent blocks to count towards this condition.
 `comparison` | [Comparison](/docs/datapack/data-types/comparison) | | Determines how the number of adjacent blocks which fulfill the `adjacent_condition` block condition should be compared to the specified value.
 `compare_to` | [Float](/docs/datapack/data-types/float) | | The value at which the number of adjacent blocks which fulfill `adjacent_condition` will be compared to.
-
 
 ## Examples
 
@@ -31,4 +31,3 @@ Field  | Type | Default | Description
 ```
 
 This example will check if there are four or more Iron Ore blocks next to the block in question.
-

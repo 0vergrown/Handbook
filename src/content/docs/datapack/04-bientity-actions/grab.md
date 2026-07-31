@@ -1,6 +1,7 @@
 ---
-title: "apoli:grab"
+title: "Grab (Bi-Entity Action Type)"
 description: "Makes the actor grab the target: the target entity is held in front of the actor's face and follows the actor's camera as they look and move around, like…"
+navigation_title: "Grab"
 ---
 
 Makes the actor grab the target: the target entity is held in front of the actor's face and follows the actor's camera as they look and move around, like carrying something at arm's length. The hold is enforced server-side every tick (velocity zeroed, fall distance reset), so the grabbed entity cannot walk, fall or knockback away. The target's hitbox collides with the world while held: looking down presses it against the ground (never into it), and it cannot be pushed through walls or ceilings, so a grab can't suffocate the target in blocks.
@@ -34,4 +35,3 @@ Setting both booleans holds the target at a fixed point: eye height, in the dire
 ```
 
 Holds the target in front of the actor for 5 seconds; the target cannot fire their power keybinds while held.
-

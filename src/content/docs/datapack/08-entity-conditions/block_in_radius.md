@@ -1,14 +1,12 @@
 ---
-title: "origins:block_in_radius"
-description: "[Entity Condition Type](../entityconditiontypes.md)"
+title: "Block In Radius (Entity Condition Type)"
+description: "Checks whether there is a specified number of blocks that fulfills the specified Block Condition Type within a specified radius relative to the entity's feet."
+navigation_title: "Block In Radius"
 ---
-
-Entity Condition Type
 
 Checks whether there is a specified number of blocks that fulfills the specified Block Condition Type within a specified radius relative to the entity's feet.
 
-Type ID: `origins:block_in_radius`
-
+Type ID: `apoli:block_in_radius`
 
 ## Fields
 
@@ -20,14 +18,13 @@ Field  | Type | Default | Description
 `comparison` | Comparison | `">="` | Determines how the amount of blocks which fulfill `block_condition` block condition should be compared to the specified value.
 `compare_to` | Integer | `1` | The value at which the amount of blocks which fulfill `block_condition` will be compared to.
 
-
 ## Examples
 
 ```json
 "condition": {
-    "type": "origins:block_in_radius",
+    "type": "apoli:block_in_radius",
     "block_condition": {
-        "type": "origins:in_tag",
+        "type": "apoli:in_tag",
         "tag": "origins:natural_stone"
     },
     "radius": 1,

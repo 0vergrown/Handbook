@@ -1,6 +1,7 @@
 ---
-title: "apoli:simple"
+title: "Simple (Power Type)"
 description: "Does nothing."
+navigation_title: "Simple"
 ---
 
 Does nothing.

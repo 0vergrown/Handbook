@@ -1,23 +1,20 @@
 ---
-title: "origins:daytime"
-description: "[Entity Condition Type](../entityconditiontypes.md)"
+title: "Daytime (Entity Condition Type)"
+description: "Checks whether it is daytime in the world."
+navigation_title: "Daytime"
 ---
-
-Entity Condition Type
 
 Checks whether it is daytime in the world.
 
-Type ID: `origins:daytime`
-
+Type ID: `apoli:daytime`
 
 ## Fields
 
 _None._
 
-
 ## Examples
 ```json
 "condition": {
-    "type": "origins:daytime"
+    "type": "apoli:daytime"
 }
 ```

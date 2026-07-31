@@ -38,5 +38,6 @@ export const SECTION_TITLES = {
 	'meta-conditions': 'Meta-Conditions',
 	'simple-voice-chat': 'Simple Voice Chat',
 	'hardcore-revival': 'Hardcore Revival',
+	'not-enough-recipe-book': 'Not Enough Recipe Book',
 	'writing-compat': 'Writing Compat'
 };

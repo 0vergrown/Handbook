@@ -1,6 +1,7 @@
 ---
-title: "/apoli:skill_tree"
+title: "Skill Tree (Command)"
 description: "Buy and refund skills, hand out points, grant and revoke trees."
+navigation_title: "Skill Tree"
 ---
 
 Drives the [skill tree](/docs/datapack/skill-tree/skill-tree-json-format) system from the command line. Aliased to `/skills`.
@@ -82,10 +83,3 @@ A skill can be declared two ways, and both end up in the same tree:
 - a file in `skill_trees/` that carries a `parent` field — the classic layout, where the file names the power(s) it unlocks
 
 A file in `skill_trees/` **without** a `parent` is the tree itself. That one field is the whole distinction.
-
-## See also
-
-- [Skill Tree JSON Format](/docs/datapack/skill-tree/skill-tree-json-format)
-- [Skill data on a power](/docs/datapack/skill-tree/skill-tree-power-data)
-- [apoli:add_skill_points](/docs/datapack/skill-tree/add_skill_points)
-- [Commands overview](/docs/datapack/commands/overview)

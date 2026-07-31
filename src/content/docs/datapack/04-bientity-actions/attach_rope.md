@@ -1,6 +1,7 @@
 ---
-title: "apoli:attach_rope"
+title: "Attach Rope (Bi-Entity Action Type)"
 description: "Attaches a rope between the actor and the target."
+navigation_title: "Attach Rope"
 ---
 
 Attaches a rope between the actor and the target.

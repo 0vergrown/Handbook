@@ -1,6 +1,8 @@
 ---
-title: "apoli:action_when_hit"
+title: "Action When Hit (Power Type)"
 description: "Executes an action when the entity that has the power has been hit by another entity, after the hit's damage actually lands."
+navigation_title: "Action When Hit"
+aliases: ["self_action_when_hit", "attacker_action_when_hit", "action_when_damage_taken"]
 ---
 
 Executes an action when the entity that has the power has been hit by another entity, after the hit's damage actually lands.
@@ -11,31 +13,39 @@ Executes an action when the entity that has the power has been hit by another en
 
 ## Fields
 
-| Field                | Type                     | Default                    | Description                                                       |
-| -------------------- | ------------------------ | -------------------------- | ----------------------------------------------------------------- |
-| `bientity_action`    | Bi-entity Action Type    | _optional_                 | Action run with the (actor, target) pair when the hit lands.      |
-| `self_action`        | Entity Action Type       | _optional_                 | Action run on the target (the entity that has the power).         |
-| `attacker_action`    | Entity Action Type       | _optional_                 | Action run on the actor (the entity that dealt the damage).       |
-| `bientity_condition` | Bi-entity Condition Type | _optional_                 | Gates firing on the (actor, target) pair. Skipped if no attacker. |
-| `damage_condition`   | Damage Condition Type    | _optional_                 | Gates firing on the damage that was dealt.                        |
-| `cooldown`           | Integer                  | `1`                        | Ticks the power needs to recharge between fires.                  |
-| `hud_render`         | Hud Render               | `{"should_render": false}` | How the cooldown is shown on the HUD.                             |
+Every field below works under **every** ID this power type answers to. The legacy ID you write only decides where a legacy `entity_action` lands — it never turns other fields off.
 
-If the damage source has no living attacker (environmental, `/kill`, etc.) the `bientity_condition` gate fails, and `bientity_action` / `attacker_action` are skipped. `self_action` still fires.
+| Field                 | Type                     | Default                    | Description                                                                     |
+| --------------------- | ------------------------ | -------------------------- | ------------------------------------------------------------------------------- |
+| `bientity_action`     | Bi-entity Action Type    | _optional_                 | Action run with the (actor, target) pair when the hit lands.                    |
+| `self_action`         | Entity Action Type       | _optional_                 | Action run on the target (the entity that has the power).                       |
+| `target_action`       | Entity Action Type       | _optional_                 | Action run on the target. Here the target **is** the holder, so this is a synonym for `self_action`. |
+| `attacker_action`     | Entity Action Type       | _optional_                 | Action run on the actor (the entity that dealt the damage).                     |
+| `entity_action`       | Entity Action Type       | _optional_                 | Legacy field. Runs on whichever side `entity_action_target` names.              |
+| `entity_action_target`| `"self"` / `"attacker"` / `"target"` | `"self"`       | Which entity `entity_action` runs on. Set automatically by the legacy IDs below. |
+| `bientity_condition`  | Bi-entity Condition Type | _optional_                 | Gates firing on the (actor, target) pair. Fails if there is no attacker.        |
+| `attacker_condition`  | Entity Condition Type    | _optional_                 | Gates firing on the attacker. Fails if there is no attacker.                    |
+| `target_condition`    | Entity Condition Type    | _optional_                 | Gates firing on the target (the holder).                                        |
+| `damage_condition`    | Damage Condition Type    | _optional_                 | Gates firing on the damage that was dealt.                                      |
+| `cooldown`            | Integer                  | `1`                        | Ticks the power needs to recharge between fires.                                |
+| `hud_render`          | Hud Render               | `{"should_render": false}` | How the cooldown is shown on the HUD.                                           |
 
-There is intentionally no `target_condition` field: the target is the holder, and the holder is already gated by the top-level `condition`. To gate on the attacker, put a `condition` inside a `apoli:actor_condition` bientity-condition.
+If the damage source has no living attacker (environmental, `/kill`, etc.) the `bientity_condition` and `attacker_condition` gates fail, and `bientity_action` / `attacker_action` (and `entity_action` when it is bound to the attacker) are skipped. `self_action` and `target_action` still fire.
+
+Inside any of these actions the `damage` [Expression](/docs/datapack/data-types/expression) variable holds the damage amount of the hit.
 
 ## Apace compatibility
 
-This power type absorbs three legacy Apace types into one schema. JSON authored under the old IDs still loads — the loader rewrites the `entity_action` key to whichever side the legacy ID targeted before parsing.
+This power type absorbs four legacy Apace types into one schema, and JSON authored under the old IDs still loads unchanged.
 
-| Legacy ID | Field rewrite | Notes |
+| Legacy ID | `entity_action` runs on | Notes |
 |---|---|---|
-| `apoli:action_when_hit` | _(no rewrite)_ | Used `bientity_action` directly — already canonical. |
-| `apoli:self_action_when_hit` | `entity_action` → `self_action` | Apace's variant that ran the action on the holder (target side). |
-| `apoli:attacker_action_when_hit` | `entity_action` → `attacker_action` | Apace's variant that ran the action on the attacker. |
+| `apoli:action_when_hit` | the target (holder) | Apace's canonical type used `bientity_action`; `entity_action` is an Apoli extension here. |
+| `apoli:self_action_when_hit` | the target (holder) | Apace's variant that ran the action on the holder. |
+| `apoli:action_when_damage_taken` | the target (holder) | Older name for the same thing. |
+| `apoli:attacker_action_when_hit` | the attacker | Apace's variant that ran the action on the attacker. |
 
-Neither legacy variant accepted a `bientity_condition`, so old data packs only needed `damage_condition` to gate. The unified type still accepts `damage_condition` exactly the same way and additionally accepts `bientity_condition` for new packs.
+The legacy IDs are **aliases only**. They no longer rename or consume fields, so a power written as `apoli:attacker_action_when_hit` can still use `bientity_action`, `self_action` and `target_action` alongside its `entity_action`. Neither legacy variant accepted `bientity_condition` in Apace; this unified type does, under every ID. If you want `entity_action` on a side the alias does not imply, set `entity_action_target` explicitly.
 
 ## Examples
 
@@ -69,7 +79,7 @@ Deals 1 heart back to the attacker. The `invert` swaps which entity the inner da
 }
 ```
 
-Loads as `apoli:action_when_hit` with `self_action` set to the effect. Fires for every damage event regardless of whether there's a living attacker.
+Loads as `apoli:action_when_hit` with `entity_action` bound to the holder. Fires for every damage event regardless of whether there's a living attacker.
 
 ## Legacy `attacker_action_when_hit` — ignite the attacker
 
@@ -87,17 +97,4 @@ Loads as `apoli:action_when_hit` with `self_action` set to the effect. Fires for
 }
 ```
 
-Loads as `apoli:action_when_hit` with `attacker_action` set to the fire action. Skipped silently when the damage has no living attacker.
-
-## See also
-
-- [apoli:action_on_hit](/docs/datapack/powers/action_on_hit) — the "I hit something" counterpart.
-- [apoli:modify_damage_taken](/docs/datapack/powers/modify_damage_taken) — same damage flow, but rewrites the amount instead of running actions.
-- [apoli:multiple](/docs/datapack/powers/multiple) — bundle several powers into one JSON.
-
-## Sources
-
-- 60 Sources/raw/apoli-1.20/src/main/java/io/github/apace100/apoli/power/ActionWhenHitPower
-- 60 Sources/raw/apoli-1.20/src/main/java/io/github/apace100/apoli/power/SelfActionWhenHitPower
-- 60 Sources/raw/apoli-1.20/src/main/java/io/github/apace100/apoli/power/AttackerActionWhenHitPower
-
+Loads as `apoli:action_when_hit` with `entity_action` bound to the attacker. Skipped silently when the damage has no living attacker.

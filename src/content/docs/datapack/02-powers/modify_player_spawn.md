@@ -1,14 +1,12 @@
 ---
-title: "origins:modify_player_spawn"
-description: "[Power Type](../powertypes.md)"
+title: "Modify Player Spawn (Power Type)"
+description: "Modifies the location of the player's spawnpoint to the specified dimension, biome and/or structure."
+navigation_title: "Modify Player Spawn"
 ---
-
-Power Type
 
 Modifies the location of the player's spawnpoint to the specified dimension, biome and/or structure.
 
-Type ID: `origins:modify_player_spawn`
-
+Type ID: `apoli:modify_player_spawn`
 
 !!! note
 
@@ -17,7 +15,6 @@ Type ID: `origins:modify_player_spawn`
 !!! warning
 
     Keep in mind that structure location is costly and it might take one or two seconds (or longer) before the player gets teleported when choosing the power.
-
 
 ## Fields
 
@@ -29,12 +26,11 @@ Field  | Type | Default | Description
 `spawn_strategy` | String | `"default"` | Determines whether the player should spawn near the world spawnpoint (0, 0) of the dimension (`"center"`) or near the coordinates of the Overworld spawnpoint (whilst considering the value of the `dimension_distance_multiplier` field) (`"default"`).
 `dimension_distance_multiplier` | Float | _optional_ | Defines the ratio of Overworld blocks to blocks in the specified dimension. e.g: for The Nether dimension, this would be set to `0.125`. **This needs to be set when `spawn_strategy` is set to `"default"`**
 
-
 ## Examples
 
 ```json
 {
-  "type": "origins:modify_player_spawn",
+  "type": "apoli:modify_player_spawn",
   "dimension": "minecraft:the_end",
   "structure": "minecraft:end_city",
   "spawn_strategy": "center"
@@ -42,4 +38,3 @@ Field  | Type | Default | Description
 ```
 
 This example will let players spawn at an End City in The End dimension.
-

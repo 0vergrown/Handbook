@@ -1,6 +1,7 @@
 ---
-title: "Action Result"
+title: "Action Result (Data Type)"
 description: "A String used to indicate the result of a certain action."
+navigation_title: "Action Result"
 ---
 
 A [String](/docs/datapack/data-types/string) used to indicate the result of a certain action.

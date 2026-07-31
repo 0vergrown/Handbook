@@ -1,6 +1,7 @@
 ---
-title: "apoli:fire_projectile"
+title: "Fire Projectile (Power Type)"
 description: "Fires one or more projectiles upon pressing the specified Key with customizable projectile-firing ability with configurable visuals, behavior, and actions…"
+navigation_title: "Fire Projectile"
 ---
 
 Fires one or more projectiles upon pressing the specified [Key](/docs/datapack/data-types/key) with customizable projectile-firing ability with configurable visuals, behavior, and actions on hit/miss.

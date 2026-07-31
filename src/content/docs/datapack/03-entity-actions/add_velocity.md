@@ -1,6 +1,7 @@
 ---
-title: "apoli:add_velocity"
+title: "Add Velocity (Entity Action Type)"
 description: "Adds or sets velocity towards a specific direction."
+navigation_title: "Add Velocity"
 ---
 
 Adds or sets velocity towards a specific direction.

@@ -1,6 +1,7 @@
 ---
-title: "apoli:add_velocity"
+title: "Add Velocity (Bi-Entity Action Type)"
 description: "Adds or sets the velocity of the target entity, based on the direction from the actor entity to the target entity."
+navigation_title: "Add Velocity"
 ---
 
 Adds or sets the velocity of the target entity, based on the direction from the actor entity to the target entity.

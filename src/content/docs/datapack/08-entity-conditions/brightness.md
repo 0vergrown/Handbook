@@ -1,13 +1,12 @@
 ---
-title: "origins:brightness"
-description: "[Entity Condition Type](../entityconditiontypes.md)"
+title: "Brightness (Entity Condition Type)"
+description: "Checks the brightness level at the entity's eyes, which ranges from 0 to 1."
+navigation_title: "Brightness"
 ---
-
-Entity Condition Type
 
 Checks the brightness level at the entity's eyes, which ranges from 0 to 1.
 
-Type ID: `origins:brightness`
+Type ID: `apoli:brightness`
 
 !!! note
 
@@ -20,7 +19,6 @@ Type ID: `origins:brightness`
     Overworld brightness | 0.0 | 0.017543862 | 0.03703704 | 0.05882353 | 0.08333334 | 0.11111111 | 0.14285715 | 0.17948718 | 0.22222225 | 0.2727273 | 0.33333334 | 0.40740743 | 0.50000006 | 0.6190476 | 0.77777773 | 1.0
     Nether brightness | 0.1 | 0.11578947 | 0.13333334 | 0.15294118 | 0.17500001 | 0.2 | 0.22857144 | 0.26153848 | 0.3 | 0.34545457 | 0.4 | 0.4666667 | 0.5500001 | 0.6571428 | 0.79999995 | 1.0
 
-
 ## Fields
 
 Field  | Type | Default | Description
@@ -28,16 +26,14 @@ Field  | Type | Default | Description
 `comparison` | Comparison | | Determines how the calculated brightness value should be compared to the specified value.
 `compare_to` | Float | | The value at which the calculated brightness value will be compared to.
 
-
 ## Examples
 
 ```json
 "condition": {
-    "type": "origins:brightness",
+    "type": "apoli:brightness",
     "comparison": "<=",
     "compare_to": 0.5
 }
 ```
 
 This example will check if the brightness level at the player's eyes is 0.5 or lower, which corresponds to a light level of 11 or below in any of the three default dimensions.
-

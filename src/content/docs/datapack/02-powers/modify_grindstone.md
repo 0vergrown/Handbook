@@ -1,14 +1,12 @@
 ---
-title: "origins:modify_grindstone"
-description: "[Power Type](../powertypes.md)"
+title: "Modify Grindstone (Power Type)"
+description: "Modifies the result of a certain item upon repairing/removing the enchantments of the said item using a Grindstone."
+navigation_title: "Modify Grindstone"
 ---
-
-Power Type
 
 Modifies the result of a certain item upon repairing/removing the enchantments of the said item using a Grindstone.
 
-Type ID: `origins:modify_grindstone`
-
+Type ID: `apoli:modify_grindstone`
 
 ## Fields
 
@@ -25,12 +23,11 @@ Field | Type | Default | Description
 `result_stack` | Item Stack | _optional_ | If specified, this item stack will be used as a replacement only if the `result_type` field has a value of `"specified"`.
 `xp_modifier` | Attribute Modifier | _optional_ | If specified, this modifier will be applied to the value of the experience received from removing an enchantment from an item stack.
 
-
 ## Examples
 
 ```json
 {
-    "type": "origins:modify_grindstone",
+    "type": "apoli:modify_grindstone",
     "xp_modifier": {
         "operation": "multiply_total_multiplicative",
         "value": 0.5
@@ -40,18 +37,16 @@ Field | Type | Default | Description
 
 This example will increase the experience recieved from removing enchantments from an enchanted item to 50%.
 
-
-
 ```json
 {
-    "type": "origins:modify_grindstone",
+    "type": "apoli:modify_grindstone",
     "result_type": "specified",
     "block_action": {
-        "type": "origins:set_block",
+        "type": "apoli:set_block",
         "block": "minecraft:air"
     },
     "output_condition": {
-        "type": "origins:ingredient",
+        "type": "apoli:ingredient",
         "ingredient": {
             "item": "minecraft:diamond_sword"
         }
@@ -63,4 +58,3 @@ This example will increase the experience recieved from removing enchantments fr
 ```
 
 This example will replace the item in the output/result slot of a Grindstone with a Netherite Sword if the initial item is a Diamond Sword. This will also remove the used Grindstone block after taking the said item.
-

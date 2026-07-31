@@ -1,6 +1,7 @@
 ---
-title: "apoli:modify_break_speed"
+title: "Modify Break Speed (Power Type)"
 description: "Modifies how fast the player that has the power can break blocks."
+navigation_title: "Modify Break Speed"
 ---
 
 Modifies how fast the player that has the power can break blocks.
@@ -56,4 +57,3 @@ This example will allow the player to break Netherrack 50% faster than usual.
 ```
 
 This example will make the player break blocks 90% slower than usual, which also applies to blocks that can be mined instantly (which is handled by assigning a minimum value of `0.1` if the hardness value of the block is `0`, which is the case for such blocks.)
-

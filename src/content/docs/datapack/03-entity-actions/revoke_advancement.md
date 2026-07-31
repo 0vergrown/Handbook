@@ -1,14 +1,12 @@
 ---
-title: "origins:revoke_advancement"
-description: "[Entity Action Type](../entityactiontypes.md)"
+title: "Revoke Advancement (Entity Action Type)"
+description: "Revokes an advancement from the player."
+navigation_title: "Revoke Advancement"
 ---
-
-Entity Action Type
 
 Revokes an advancement from the player.
 
-Type ID: `origins:revoke_advancement`
-
+Type ID: `apoli:revoke_advancement`
 
 ## Fields
 
@@ -19,16 +17,13 @@ Field | Type | Default | Description
 `criterion` | String | _optional_ | If specified, determines the criterion to revoke from the specified advancement.
 `selection` | String | _optional_ | Determines how to select the parent advancement(s) or child(ren) advancement(s) of the specified advancement. Can be one of: `"only"`, `"through"`, `"from"`, `"until"`, `"everything"`
 
-
-
 ## Examples
 
 ```json
 "entity_action": {
-    "type": "origins:revoke_advancement",
+    "type": "apoli:revoke_advancement",
     "advancement": "minecraft:adventure/arbalistic"
 }
 ```
 
 This example will revoke the Arbalistic advancement from the player, if they have it.
-

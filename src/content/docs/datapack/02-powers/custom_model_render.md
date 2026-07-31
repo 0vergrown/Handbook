@@ -1,6 +1,7 @@
 ---
-title: "apoli:custom_model_render"
+title: "Custom Model Render (Power Type)"
 description: "Renders a custom look on a player: either re-skinning the vanilla model with a texture (texture mode) or drawing a separate 3D model made in Blockbench that…"
+navigation_title: "Custom Model Render"
 ---
 
 Renders a custom look on a player: either re-skinning the vanilla model with a texture (**texture mode**) or drawing a separate 3D model made in Blockbench that follows the player's pose (**geometry mode**). Geometry mode is a JSON-defined feature renderer — no Java, no extra mods.
@@ -9,7 +10,7 @@ Type ID: `apoli:custom_model_render`
 
 > **Breaking change:** this power replaces the old `apoli:entity_texture_overlay`. The `mode: texture` fields below are the direct successors of that power's fields; the multi-`layers` field was removed (use one power per layer instead). Rename `apoli:entity_texture_overlay` → `apoli:custom_model_render` in existing JSON.
 
-> This is a client-side rendering power and applies to **players** only. Textures and models must be present in every viewer's resource pack.
+> This is a client-side rendering power. **Texture mode** applies to players only. **Geometry mode** works on players and on the minions summoned by [apoli:summon_minion](/docs/datapack/entity-actions/summon_minion). Textures and models must be present in every viewer's resource pack.
 
 ## Shared fields (both modes)
 
@@ -17,7 +18,7 @@ Type ID: `apoli:custom_model_render`
 | ---------------------------------- | ------------------------------------------------------------------------------------ | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `mode`                             | String                                                    | `texture`     | `texture` (re-skin the vanilla model) or `geometry` (draw a custom Blockbench model).                                                                                                          |
 | `render_type`                      | Render Type                                          | `translucent` | Draw style — `translucent`, `cutout`, `cutout_no_cull`, `solid`, `emissive`/`glow`, `eyes`.                                                                                                    |
-| `body_parts`                       | String or Array of String       | _whole model_ | In texture mode, restrict an overlay to these parts. In geometry mode, only render the bones with these names. Names: `head`, `hat`, `body`, `right_arm`, `left_arm`, `right_leg`, `left_leg`. |
+| `body_parts`                       | String or Array of String       | _whole model_ | In texture mode, restrict an overlay to these parts. In geometry mode, only render the bones with these names. Names on a player: `head`, `hat`, `body`, `right_arm`, `left_arm`, `right_leg`, `left_leg`. On a minion: `main`, `flat2`, `flat3`. |
 | `red` / `green` / `blue` / `alpha` | Float                                                      | `1.0`         | Colour/opacity multipliers (0.0 – 1.0).                                                                                                                                                        |
 | `scale`                            | Float                                                      | `1.0`         | Scales the drawn geometry outward from the model origin (aura/shell effect above 1.0).                                                                                                         |
 | `hidden_slots`                     | Array of Equipment Slot | _none_        | Hide this render whenever any listed slot is occupied — e.g. `["head"]` hides a custom hat model when a real helmet is worn.                                                                   |
@@ -38,16 +39,50 @@ Field | Type | Default | Description
 ------|------|---------|-------------
 `model_location` | Identifier | _required_ | The Blockbench model. `mymod:cape` resolves to `assets/mymod/geo/cape.geo.json` (the standard Blockbench/GeckoLib folder) — `assets/mymod/models/apoli/cape.geo.json` also works. Export from Blockbench as **Bedrock geometry** (`.geo.json`).
 `texture_location` | Identifier | _required_ | The texture that UV-maps onto the model, e.g. `mymod:textures/entity/cape.png`.
+`render_as_overlay` | Boolean | `false` | **Minions only.** `false` replaces the minion's own model with yours; `true` draws yours on top of it. Ignored on players, where geometry is always drawn over the player model.
 
 On resource (re)load, the log prints `Loaded N custom model(s) for custom_model_render.` — if your model isn't drawing, check `N` and confirm the file sits at one of the two paths above with the `.geo.json` extension.
 
 **How geometry follows the player:** bones named `head`, `body`, `right_arm`, `left_arm`, `right_leg`, `left_leg`, `hat` inherit the matching vanilla body part's live pose, so the model bends with the arms and turns with the head. Any other bone (a `cape`, a `backpack`, a `tail`…) rides along with its parent bone. Model the humanoid skeleton in Blockbench with those bone names and attach your extra geometry as child bones.
 
+> The pose-following bones must be **top-level** bones in the Blockbench model — bones nested under a wrapper like `bb_main` are drawn, but do not inherit a pose.
+
+### Geometry mode on minions
+
+Give the power to a [apoli:summon_minion](/docs/datapack/entity-actions/summon_minion) minion through that action's `powers` list and the minion is drawn as your Blockbench model instead of the default orb — a data-pack-only way to give a summon any shape you like.
+
+The minion skeleton is `main` (the root bone) with `flat2` and `flat3` under it. A bone in your model with one of those names inherits that part's pose; every other bone keeps the pose you gave it in Blockbench. Since a root bone pivoted at `[0, 0, 0]` lands exactly where `main` does, a model built around the origin needs no matching bones at all.
+
+The minion's `texture` field still applies to the minion's own model, so it only matters when `render_as_overlay` is `true`. Your geometry always uses `texture_location`. `scale` on the summon still applies — the custom model is scaled with the minion.
+
+```json
+{
+  "type": "apoli:summon_minion",
+  "follow_owner": true,
+  "follow_offset": [0.0, 1.0, -1.0],
+  "max_life_ticks": 0,
+  "powers": ["example:minion_wisp_model"]
+}
+```
+
+```json
+{
+  "type": "apoli:custom_model_render",
+  "mode": "geometry",
+  "model_location": "example:wisp",
+  "texture_location": "example:textures/entity/wisp.png",
+  "render_type": "cutout_no_cull"
+}
+```
+
+> `custom_model_render` is a client-side render power, so the minion never *behaves* differently — only its appearance changes.
+
 ## Behaviour & limits
 
-- Multiple active `custom_model_render` powers stack; each is drawn.
+- Multiple active `custom_model_render` powers stack; each is drawn. On a minion, one non-overlay geometry power is enough to hide the base model, and the rest still draw.
 - Conditions on the power gate the whole render dynamically (combine with `hidden_slots` for equipment-based hiding).
 - Geometry mode renders in third person only (no first-person hand model yet).
+- If `model_location` fails to load, the minion falls back to its normal model rather than turning invisible.
 - The Bedrock parser supports box-UV cubes (the Blockbench default), `inflate`, per-bone `pivot`/`rotation` and bone parenting. Per-face UV cubes fall back to their north-face UV — prefer box UV for now.
 
 ## Examples
@@ -88,11 +123,3 @@ A custom cape model that follows the body, hidden when a chestplate is worn:
   "hidden_slots": ["chest"]
 }
 ```
-
-## See also
-
-- [Render Type](/docs/datapack/data-types/render-type) — the draw styles for `render_type`.
-- Equipment Slot (Data Type) — values for `hidden_slots`.
-- [[apoli:model_color](/docs/datapack/powers/model_color)](/docs/datapack/powers/model_color) — per-part tinting of the existing skin.
-- [[apoli:modify_player_model](/docs/datapack/powers/modify_player_model)](/docs/datapack/powers/modify_player_model) — swap the whole player model for a Java/Figura model.
-

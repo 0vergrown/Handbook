@@ -1,6 +1,7 @@
 ---
-title: "apoli:restrict_armor"
+title: "Restrict Armor (Power Type)"
 description: "Restricts the entity that has the power from equipping items as armor (via right-click, dispensing or by dragging and dropping the item in the equipment…"
+navigation_title: "Restrict Armor"
 ---
 
 Restricts the entity that has the power from equipping items as armor (via right-click, dispensing or by dragging and dropping the item in the equipment slot(s)) in the specified equipment slot(s).
@@ -15,7 +16,6 @@ Field  | Type | Default | Description
 `chest` | Item Condition Type | _optional_ | If specified, items which fulfills this condition cannot be equipped in the chest equipment slot.
 `legs` | Item Condition Type | _optional_ | If specified, items which fulfills this condition cannot be equipped in the legs equipment slot.
 `feet` | Item Condition Type | _optional_ | If specified, items which fulfills this condition cannot be equipped in the feet equipment slot.
-
 
 ## Examples
 
@@ -66,4 +66,3 @@ This example will prevent the entity from equipping any armor which has more def
 ```
 
 This example will prevent the entity from equipping a Turtle Shell or an Elytra.
-

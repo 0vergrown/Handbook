@@ -1,19 +1,18 @@
 ---
-title: "apoli:nbt"
+title: "NBT (Block Condition Type)"
 description: "Checks the NBT of the block entity."
+navigation_title: "NBT"
 ---
 
 Checks the NBT of the block entity.
 
 Type ID: `apoli:nbt`
 
-
 ## Fields
 
 Field | Type | Default | Description
 ------|------|---------|-------------
 `nbt` | NBT | | The NBT data to check for.
-
 
 ## Examples
 
@@ -34,4 +33,3 @@ Field | Type | Default | Description
 ```
 
 This example will check if Beacon block has a `Level` value of 1.
-

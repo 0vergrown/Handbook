@@ -1,6 +1,7 @@
 ---
-title: "Expression"
+title: "Expression (Data Type)"
 description: "A String representing a mathematical expression."
+navigation_title: "Expression"
 ---
 
 A [String](/docs/datapack/data-types/string) representing a mathematical expression. Any field documented as accepting an Expression also accepts a plain number.
@@ -14,6 +15,7 @@ A [String](/docs/datapack/data-types/string) representing a mathematical express
 | [apoli:chance](/docs/datapack/meta-actions/chance) | `chance` |
 | [apoli:resource](/docs/datapack/powers/resource) / [apoli:cooldown](/docs/datapack/powers/cooldown) | `min`, `max`, `start_value` / `cooldown` |
 | Resource | `compare_to` |
+| [apoli:change_resource](/docs/datapack/entity-actions/change_resource) | `change` |
 | Entity actions | `add_velocity` (`x`/`y`/`z`), `damage` (`amount`), `heal`, `exhaust`, `feed` (`food`/`saturation`), `gain_air`, `add_xp` (`points`/`levels`), `set_on_fire` (`duration`) |
 
 ## Operators
@@ -100,6 +102,8 @@ Variables are resolved when the expression is compiled and read live from the en
 | `value`                                  | Context-dependent: the current resource/cooldown value in resource operations; the unmodified base value inside an [Attribute Modifier](/docs/datapack/data-types/attribute-modifier). `0` elsewhere. |
 | `damage`                                 | The damage amount of the hit, inside actions fired by `action_on_hit` / `action_when_hit` (including their self/target/attacker/bi-entity actions and anything nested in them, e.g. a `modify_resource` with `"value": "damage * 2"`). `0` outside a hit context. |
 | `<namespace>:<path>`                     | Value of any Resource/Cooldown power the entity has (the full power id is the variable name). Missing → `0`.                                                          |
+| `<namespace>:<path>_max`                 | The **maximum** of that Resource/Cooldown power, evaluated live — so it follows an expression-valued `max`. If no such resource exists, the whole name is read as a plain resource id instead. Missing → `0`. |
+| `<namespace>:<path>_min`                 | The **minimum** of that Resource power, same rules as `_max`.                                                                                                          |
 | `health` / `max_health`                  | Current / maximum health.                                                                                                                                             |
 | `absorption`                             | Absorption hearts.                                                                                                                                                    |
 | `armor`                                  | Armor value.                                                                                                                                                          |
@@ -117,6 +121,18 @@ Variables are resolved when the expression is compiled and read live from the en
 | `moon_phase`                             | Moon phase, 0–7.                                                                                                                                                      |
 
 Unknown variable names, unknown functions and any other syntax error are a **load-time error**: the power (or other JSON file) containing the expression fails to parse and the error message names the offending expression and position. There is no fallback engine — the compiled engine is the only evaluator (the bundled mXparser fallback was removed in July 2026; everything it was kept around for is now supported natively).
+
+## Reading a resource's bounds
+
+Suffixing a resource id with `_max` or `_min` reads that resource's limit rather than its current value:
+
+```json
+{ "type": "apoli:change_resource", "resource": "example:mana", "change": "example:mana_max / 10", "operation": "add" }
+```
+
+The bound is evaluated at the same moment as the expression around it, so a resource whose `max` is itself an Expression (`"max": "20 + 5 * xp_level"`) reports its *current* ceiling, not a stale one.
+
+If there is no resource power at the stripped id, the name is treated as an ordinary resource id — so a resource genuinely called `example:mana_max` still resolves to its own value. Bound lookups nest up to 8 deep; beyond that they read `0`, which stops a cycle (a `max` referring to its own `_max`) from hanging the server.
 
 ## NaN policy
 

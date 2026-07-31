@@ -1,6 +1,7 @@
 ---
-title: "apoli:action_on_block_use"
+title: "Action On Block Use (Power Type)"
 description: "Executes a Block Action Type and/or Item Action Types when the player that has the power 'uses' (right-clicks) a block."
+navigation_title: "Action On Block Use"
 ---
 
 Executes a Block Action Type and/or Item Action Types when the player that has the power "uses" (right-clicks) a block.
@@ -21,7 +22,6 @@ Field | Type | Default | Description
 `held_item_action` | Item Action Type | _optional_ | If specified, this action will be executed on the item used for right-clicking the 'target' entity in the specified hand(s) determined by the `hands` string field.
 `result_item_action` | Item Action Type | _optional_ | If specified, this action will be executed on the item that is given to the 'actor' (the player that has the power) entity.
 `action_result` | [Action Result](/docs/datapack/data-types/action-result) | `"success"` | Determines the result of the 'use' action.
-
 
 ## Examples
 
@@ -47,4 +47,3 @@ Field | Type | Default | Description
 ```
 
 This example will replace any iron blocks with gold blocks if you right click the top or bottom of the block while sprinting.
-

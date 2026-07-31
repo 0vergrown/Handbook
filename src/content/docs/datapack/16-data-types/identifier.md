@@ -1,6 +1,7 @@
 ---
-title: "Identifier"
+title: "Identifier (Data Type)"
 description: "A namespaced string that names a game object — an item, block, power, tag and so on."
+navigation_title: "Identifier"
 ---
 
 An **identifier** (also called a *resource location*) is a [String](/docs/datapack/data-types/string) that names something in the game — an item, block, entity type, status effect, power, tag, or a file in a data/resource pack. It's the single most common value type in Apoli: every `type` field is an identifier, and so are `power`, `attribute`, `effect`, `sound`, and many more.

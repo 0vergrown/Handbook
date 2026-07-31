@@ -1,6 +1,7 @@
 ---
-title: "apoli:game_event_listener"
+title: "Game Event Listener (Power Type)"
 description: "Executes an action upon listening to a game event or vibration."
+navigation_title: "Game Event Listener"
 ---
 
 Executes an action upon listening to a game event or vibration.
@@ -8,7 +9,6 @@ Executes an action upon listening to a game event or vibration.
 Type ID: `apoli:game_event_listener`
 
 > In the context of this power type, the '**actor**' entity is the entity that emmited the game event or vibration while the '**target**' entity is the entity that has the power.
-
 
 ## Fields
 
@@ -27,7 +27,6 @@ Field | Type | Default | Description
 `events` | Array of Identifiers | _optional_ | If specified, will make the power only listen for the game events with these namespace and IDs.
 `event_tag` | Identifier | _optional_ | If specified, will make the power only listen for the game events inside game event tag.
 `show_particle` | Boolean | `true` | Determines whether the vibration should emit a particle effect.
-
 
 ## Examples
 
@@ -48,4 +47,3 @@ Field | Type | Default | Description
 This example will set the entity with the power on fire every time the `hit_ground` game event is emmited.
 
 > **Verified 2026-07-10** end-to-end on a dedicated server (lightning_strike via block_action, self-emitted hit_ground via bientity_action, command-granted mid-play). Registration now retries until the holder's chunk is fully loaded — previously a listener granted while its chunk was still loading could silently never register. Note that `minecraft:hit_ground` is emitted by vanilla on **any** landing with fall distance > 0 (even a 1-block hop); filter with a bientity/block condition if you only want damaging falls. When testing on a dedicated server with no players online, entity ticking pauses after 15 seconds — mobs freeze and no events fire.
-

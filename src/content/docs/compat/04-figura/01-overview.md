@@ -24,8 +24,3 @@ Apoli looks the identifier up as a Figura avatar first, then falls back to a mod
 
 - Rendering is entirely client-side. Players without Figura see the fallback model, or no change at all.
 - Figura's own avatar permission settings still apply — Apoli does not bypass them.
-
-## See also
-
-- [`apoli:modify_player_model`](/docs/datapack/powers/modify_player_model)
-- [`apoli:custom_model_render`](/docs/datapack/powers/custom_model_render) — Apoli's own Blockbench-model path, no Figura needed.

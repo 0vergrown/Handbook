@@ -1,23 +1,20 @@
 ---
-title: "origins:creative_flying"
-description: "[Entity Condition Type](../entityconditiontypes.md)"
+title: "Creative Flying (Entity Condition Type)"
+description: "Checks if the player is Creative Mode flying."
+navigation_title: "Creative Flying"
 ---
-
-Entity Condition Type
 
 Checks if the player is Creative Mode flying.
 
-Type ID: `origins:creative_flying`
-
+Type ID: `apoli:creative_flying`
 
 ## Fields
 
 _None._
 
-
 ## Examples
 ```json
 "condition": {
-    "type": "origins:creative_flying"
+    "type": "apoli:creative_flying"
 }
 ```

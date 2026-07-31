@@ -1,6 +1,7 @@
 ---
-title: "apoli:relative_rotation"
+title: "Relative Rotation (Bi-Entity Condition Type)"
 description: "Compares the rotation angle of the 'actor' to the 'target'."
+navigation_title: "Relative Rotation"
 ---
 
 Compares the rotation angle of the 'actor' to the 'target'.
@@ -17,7 +18,6 @@ Field | Type | Default | Description
 `comparison` | Comparison | | Determines how the calculated angle value should be compared to the specified value.
 `compare_to` | Float | | The value at which the calculated angle value will be compared to.
 
-
 ## Examples
 
 ```json
@@ -32,8 +32,6 @@ Field | Type | Default | Description
 
 This example will check if the actor and target are essentially facing each other.
 
-
-
 ```json
 "bientity_condition": {
     "type": "apoli:relative_rotation",
@@ -45,4 +43,3 @@ This example will check if the actor and target are essentially facing each othe
 ```
 
 This example will check if the actor's head is essentially facing the same way as the target's body.
-

@@ -1,6 +1,7 @@
 ---
-title: "apoli:item_on_item"
+title: "Item On Item (Power Type)"
 description: "Executes an Entity Action Type or Item Action Types when the player uses an item on an item, similar to how you would put items in a bundle."
+navigation_title: "Item On Item"
 ---
 
 Executes an Entity Action Type or Item Action Types when the player uses an item on an item, similar to how you would put items in a bundle.
@@ -20,7 +21,6 @@ Field | Type | Default | Description
 `result_item_action` | Item Action Type | _optional_ | If specified, this action will be executed on the item that is given to the player.
 `entity_action` | Entity Action Type | _optional_ | If specified, this action will be executed on the player after they used an item on an item.
 `click_type` | String or Integer | `"secondary"` | Determines whether to execute the actions if the player does a right-click (`0` or `"primary"`) or left-click (`1` or `"secondary"`) action.
-
 
 ## Examples
 
@@ -95,5 +95,4 @@ This example being the contents of the `example:furnace_smelt` (`data/example/it
 }
 ```
 
-This example will give the player 8 Oak Planks if the player were to use any Axe tool item on an Oak Log item (have the Axe tool item in the cursor, and right-click on an Oak Log item). 
-
+This example will give the player 8 Oak Planks if the player were to use any Axe tool item on an Oak Log item (have the Axe tool item in the cursor, and right-click on an Oak Log item).

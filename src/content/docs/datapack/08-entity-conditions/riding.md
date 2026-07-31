@@ -1,6 +1,7 @@
 ---
-title: "apoli:riding"
+title: "Riding (Entity Condition Type)"
 description: "Checks whether the 'actor' entity is directly riding the 'target' entity."
+navigation_title: "Riding"
 ---
 
 Checks whether the '**actor**' entity is directly riding the '**target**' entity.
@@ -14,7 +15,6 @@ Type ID: `apoli:riding`
 Field | Type | Default | Description
 ------|------|---------|-------------
 `bientity_condition` | Bi-entity Condition Type | _optional_ | If specified, this condition type will only evaluate to true if this condition is fulfilled by either or both the '**actor**' and '**target**' entities.
-
 
 ## Examples
 
@@ -40,4 +40,3 @@ This example will check if the '**actor**' entity is riding an entity.
 ```
 
 This example will check if the '**actor**' entity is currently riding a minecart ('**target**' entity).
-

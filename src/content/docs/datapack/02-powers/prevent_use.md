@@ -1,6 +1,8 @@
 ---
-title: "apoli:prevent_use"
+title: "Prevent Use (Power Type)"
 description: "Prevents the general use / right-click interaction."
+navigation_title: "Prevent Use"
+aliases: ["prevent_entity_use", "prevent_being_used"]
 ---
 
 Prevents the general use / right-click interaction.

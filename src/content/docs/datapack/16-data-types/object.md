@@ -1,6 +1,7 @@
 ---
-title: "Object"
+title: "Object (Data Type)"
 description: "A complex piece of data consisting of more fields."
+navigation_title: "Object"
 ---
 
 A complex piece of data consisting of more fields. Objects are enclosed in curly braces and contain multiple `"key": value` entries separated by commas.

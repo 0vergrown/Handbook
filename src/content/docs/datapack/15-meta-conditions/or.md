@@ -1,19 +1,18 @@
 ---
-title: "apoli:or"
+title: "Or (Meta Condition Type)"
 description: "Checks whether any (one or more) of the provided conditions are fulfilled."
+navigation_title: "Or"
 ---
 
 Checks whether any (one or more) of the provided conditions are fulfilled.
 
 Type ID: `apoli:or`
 
-
 ## Fields
 
 Field  | Type | Default | Description
 -------|------|---------|-------------
 `conditions` | [Array](/docs/datapack/data-types/array) of Condition Types | | Any of these condition types have to be fulfilled in order for this condition to be fulfilled.
-
 
 ## Examples
 
@@ -34,4 +33,3 @@ Field  | Type | Default | Description
 ```
 
 This example will check if the entity has either the Poison or Wither status effects.
-

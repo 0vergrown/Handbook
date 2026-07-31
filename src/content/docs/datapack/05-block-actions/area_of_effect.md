@@ -1,12 +1,12 @@
 ---
-title: "apoli:area_of_effect"
+title: "Area Of Effect (Block Action Type)"
 description: "Executes the provided Block Action Type on all blocks within the specified radius and shape."
+navigation_title: "Area Of Effect"
 ---
 
 Executes the provided Block Action Type on all blocks within the specified radius and shape.
 
 Type ID: `apoli:area_of_effect`
-
 
 ## Fields
 
@@ -16,7 +16,6 @@ Field | Type | Default | Description
 `shape` | [Shape](/docs/datapack/data-types/shape) | `"cube"` | The outline of the area: `cube`, `sphere`, `star`, or `cone`.
 `block_action` | Block Action Type | | The block action to execute on the blocks within the specified radius.
 `block_condition` | Block Condition Type | *optional* | If specified, the specified block action will only be executed on blocks that fulfill this block condition.
-
 
 ## Examples
 
@@ -53,4 +52,3 @@ This example will make all waterloggable blocks not waterlogged within 16 blocks
 ```
 
 This example will replace all blocks that aren't included in the `#minecraft:dragon_immune` block tag with air within a 4 blocks radius with a shape of a diamond.
-

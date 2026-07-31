@@ -1,16 +1,14 @@
 ---
-title: "apoli:inventory"
-description: "Entity Condition Type"
+title: "Inventory (Entity Condition Type)"
+description: "Checks the entity's inventory (and/or an Inventory power's container) for items matching a condition, comparing the count against a value."
+navigation_title: "Inventory"
 ---
-
-Entity Condition Type
 
 Checks the entity's inventory (and/or an [Inventory power](/docs/datapack/entity-conditions/inventory)'s container) for items matching a condition, comparing the count against a value.
 
 Type ID: `apoli:inventory`
 
-> **POWER INVENTORIES:** including `"power"` in `inventory_types` counts items in the [[apoli:inventory](/docs/datapack/powers/inventory)](/docs/datapack/entity-conditions/inventory) named by the `power` field. This reads the power's stored container **server-side only** (its contents aren't synced to clients). Address its slots with the `container.N` Item Slot form rather than named slots.
-
+> **POWER INVENTORIES:** including `"power"` in `inventory_types` counts items in the [apoli:inventory](/docs/datapack/powers/inventory) named by the `power` field. This reads the power's stored container **server-side only** (its contents aren't synced to clients). Address its slots with the `container.N` Item Slot form rather than named slots.
 
 ## Fields
 
@@ -25,12 +23,11 @@ Field | Type | Default | Description
 `comparison` | Comparison | `">"` | Determines how the amount of items/stacks that were evaluated should be compared to the specified value.
 `compare_to` | Integer | `0` | The value at which the amount of items/stacks that were evaluated will be compared to.
 
-
 ## Examples
 
 ```json
 "condition": {
-    "type": "origins:inventory",
+    "type": "apoli:inventory",
     "process_mode": "stacks",
     "comparison": ">=",
     "compare_to": 10
@@ -39,14 +36,12 @@ Field | Type | Default | Description
 
 This example will check if 10 or more slots are occupied by any items in the entity's inventory.
 
-
-
 ```json
 "condition": {
-    "type": "origins:inventory",
+    "type": "apoli:inventory",
     "process_mode": "items",
     "item_condition": {
-        "type": "origins:ingredient",
+        "type": "apoli:ingredient",
         "ingredient": {
             "tag": "minecraft:flowers"
         }
@@ -57,4 +52,3 @@ This example will check if 10 or more slots are occupied by any items in the ent
 ```
 
 This example will check if 15 or less individual items that are included in the `#minecraft:flowers` (`data/minecraft/tags/items/flowers.json`) item tag are in the inventory of the entity.
-

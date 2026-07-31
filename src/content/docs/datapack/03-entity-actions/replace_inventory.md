@@ -1,9 +1,8 @@
 ---
-title: "apoli:replace_inventory"
-description: "[Entity Action Type](../entityactiontypes.md)"
+title: "Replace Inventory (Entity Action Type)"
+description: "Replaces each matching slot of the entity's inventory (or a power's inventory) with a given item stack."
+navigation_title: "Replace Inventory"
 ---
-
-Entity Action Type
 
 Replaces each matching slot of the entity's inventory (or a power's inventory) with a given item stack.
 
@@ -20,4 +19,3 @@ Type ID: `apoli:replace_inventory`
 ```
 
 Equivalent to `{ "type": "apoli:inventory_action", "operation": "replace", "slot": "weapon.offhand", "stack": { "item": "minecraft:barrier" } }`.
-

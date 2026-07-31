@@ -1,19 +1,18 @@
 ---
-title: "apoli:set_on_fire"
+title: "Set On Fire (Entity Action Type)"
 description: "Sets the entity on fire for the specified amount of time in seconds."
+navigation_title: "Set On Fire"
 ---
 
 Sets the entity on fire for the specified amount of time in seconds.
 
 Type ID: `apoli:set_on_fire`
 
-
 ## Fields
 
 Field  | Type | Default | Description
 -------|------|---------|-------------
 `duration` | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) |  | The amount of seconds the entity should burn.
-
 
 ## Examples
 
@@ -25,4 +24,3 @@ Field  | Type | Default | Description
 ```
 
 This example will set the entity on fire for 5 seconds.
-

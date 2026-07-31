@@ -1,6 +1,7 @@
 ---
-title: "apoli:target_action"
+title: "Target Action (Bi-Entity Action Type)"
 description: "Executes an Entity Action Type on the target entity."
+navigation_title: "Target Action"
 ---
 
 Executes an Entity Action Type on the target entity.
@@ -26,4 +27,3 @@ Field  | Type | Default | Description
 ```
 
 This example will set the target entity on fire for 5 seconds.
-

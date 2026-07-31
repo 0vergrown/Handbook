@@ -1,6 +1,7 @@
 ---
-title: "/apoli:disguise"
+title: "Disguise (Command)"
 description: "Make an entity render as another entity type or as a player."
+navigation_title: "Disguise"
 ---
 
 Applies the same disguise the [`apoli:disguise`](/docs/datapack/bientity-actions/disguise) action uses. Aliased to `/disguise`.
@@ -53,9 +54,3 @@ disguise random @s entity
 disguise clear @s
 disguise query @s
 ```
-
-## See also
-
-- [apoli:disguise (bi-entity action)](/docs/datapack/bientity-actions/disguise)
-- [apoli:disguised (condition)](/docs/datapack/entity-conditions/disguised)
-- [Commands overview](/docs/datapack/commands/overview)

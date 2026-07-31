@@ -1,19 +1,16 @@
 ---
-title: "origins:tooltip"
-description: "[Power Type](../powertypes.md)"
+title: "Tooltip (Power Type)"
+description: "Applies the specified tooltip(s) to an item that is only visible to the entity that has the power."
+navigation_title: "Tooltip"
 ---
-
-Power Type
 
 Applies the specified tooltip(s) to an item that is only visible to the entity that has the power.
 
-Type ID: `origins:tooltip`
-
+Type ID: `apoli:tooltip`
 
 !!! warning
 
     Currently, this power type is not able to "resolve" certain JSON text components. See [Minecraft Wiki: Raw JSON text format (Component resolution)](https://minecraft.wiki/w/Raw_JSON_text_format#Component_resolution) for more information.
-
 
 ## Fields
 
@@ -24,14 +21,13 @@ Field | Type | Default | Description
 `texts` | Array of Text Components | _optional_ | If specified, apply these strings as a tooltip.
 `order` | Integer | `0` | Determines the placement order of the tooltip(s) of the power.
 
-
 ## Examples
 
 ```json
 {
-    "type": "origins:tooltip",
+    "type": "apoli:tooltip",
     "item_condition": {
-        "type": "origins:ingredient",
+        "type": "apoli:ingredient",
         "ingredient": {
             "item": "minecraft:egg"
         }
@@ -42,13 +38,11 @@ Field | Type | Default | Description
 
 This example will apply a "`Hmm, egg.`" tooltip to an Egg item.
 
-
-
 ```json
 {
-    "type": "origins:tooltip",
+    "type": "apoli:tooltip",
     "item_condition": {
-        "type": "origins:ingredient",
+        "type": "apoli:ingredient",
         "ingredient": {
             "item": "minecraft:cake"
         }
@@ -61,4 +55,3 @@ This example will apply a "`Hmm, egg.`" tooltip to an Egg item.
 ```
 
 This example will apply a yellow-colored "`Happy birthday!`" tooltip to a Cake item.
-

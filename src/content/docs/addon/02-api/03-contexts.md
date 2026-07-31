@@ -65,8 +65,3 @@ someEntityAction.run(EntityCtx.of(ctx.rawActor(), ctx.level()));
 ```
 
 The built-in `apoli:actor_action` / `apoli:target_action` do exactly this.
-
-## See also
-
-- [Actions & conditions](/docs/addon/api/actions-and-conditions)
-- [Raw-first entities](/docs/addon/systems/performance) — why `raw()` is the default.

@@ -1,6 +1,7 @@
 ---
-title: "apoli:climbing"
+title: "Climbing (Power Type)"
 description: "Allows the entity that has the power to climb."
+navigation_title: "Climbing"
 ---
 
 Allows the entity that has the power to climb.
@@ -8,7 +9,6 @@ Allows the entity that has the power to climb.
 Type ID: `apoli:climbing`
 
 > To have the usual climbing effect, it is recommended to check for the Collided Horizontally (Entity Condition Type) inside the `condition` object of the power.
-
 
 ## Fields
 
@@ -40,4 +40,3 @@ Field  | Type | Default | Description
 ```
 
 This example will allow the entity to climb in cobwebs and hold onto them by sneaking.
-

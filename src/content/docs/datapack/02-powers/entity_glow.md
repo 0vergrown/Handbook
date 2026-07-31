@@ -1,6 +1,8 @@
 ---
-title: "apoli:entity_glow"
+title: "Entity Glow (Power Type)"
 description: "Makes other entities glow (as with the glowing status effect), but only for the player that has the power."
+navigation_title: "Entity Glow"
+aliases: ["self_glow"]
 ---
 
 Makes other entities glow (as with the glowing status effect), but only for the player that has the power.
@@ -64,4 +66,3 @@ This example will make all entities which are not arthropods glow when they're i
 ```
 
 This example will make all entities that the player is able to see glow with a green glow.
-

@@ -1,6 +1,7 @@
 ---
-title: "apoli:empty"
+title: "Empty (Fluid Condition Type)"
 description: "Checks whether there is no fluid in this state."
+navigation_title: "Empty"
 ---
 
 Checks whether there is no fluid in this state.
@@ -18,4 +19,3 @@ _None._
     "type": "apoli:empty"
 }
 ```
-

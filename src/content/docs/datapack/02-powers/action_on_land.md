@@ -1,6 +1,7 @@
 ---
-title: "apoli:action_on_land"
+title: "Action On Land (Power Type)"
 description: "Executes an Entity Action Type when the player lands on the ground after being airborne."
+navigation_title: "Action On Land"
 ---
 
 Executes an Entity Action Type when the player lands on the ground after being airborne.
@@ -12,8 +13,6 @@ Type ID: `apoli:action_on_land`
 Field  | Type | Default | Description
 -------|------|---------|-------------
 `entity_action` | Entity Action Type | | The action to execute on the player.
-
-
 
 ## Examples
 
@@ -33,4 +32,3 @@ Field  | Type | Default | Description
 ```
 
 This example will execute an [apoli:execute_command](/docs/datapack/entity-actions/execute_command) that will then execute a `/fill` command that will replace a 3x3 area of Grass Blocks with Air underneath the entity's feet if the entity in question has been falling for 4 or more blocks.
-

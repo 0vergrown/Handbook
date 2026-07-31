@@ -1,6 +1,7 @@
 ---
-title: "Shape Type"
+title: "Shape Type (Data Type)"
 description: "A String used to determine how raycasts will handle blocks."
+navigation_title: "Shape Type"
 ---
 
 A [String](/docs/datapack/data-types/string) used to determine how raycasts will handle blocks.

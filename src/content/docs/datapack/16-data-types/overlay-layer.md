@@ -1,6 +1,7 @@
 ---
-title: "Overlay Layer"
-description: "One render layer of an [Entity Texture Overlay](../Power%20Types/Entity%20Texture%20Overlay%20%28Power%20Type%29.md) power — a single texture drawn over the…"
+title: "Overlay Layer (Data Type)"
+description: "One render layer of an Entity Texture Overlay power — a single texture drawn over the player model with its own draw style, tint and target body parts. A power's layers field is an array of these, each independent and drawn in order on top of the base overlay."
+navigation_title: "Overlay Layer"
 ---
 
 One render layer of an Entity Texture Overlay power — a single texture drawn over the player model with its own draw style, tint and target body parts. A power's `layers` field is an array of these, each independent and drawn in order on top of the base overlay.
@@ -46,9 +47,3 @@ A layer that re-styles just the head using the power's own base texture (no `tex
   "body_parts": ["head"]
 }
 ```
-
-## See also
-
-- Entity Texture Overlay (Power Type) — the power that owns the `layers` array.
-- [Render Type](/docs/datapack/data-types/render-type) — the draw styles available to `render_type`.
-

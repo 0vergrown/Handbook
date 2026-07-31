@@ -1,12 +1,12 @@
 ---
-title: "apoli:type"
+title: "Type (Damage Condition Type)"
 description: "Checks whether the damage source is of a certain damage type."
+navigation_title: "Type"
 ---
 
 Checks whether the damage source is of a certain damage type.
 
 Type ID: `apoli:type`
-
 
 ##	Fields
 

@@ -1,12 +1,12 @@
 ---
-title: "apoli:invert"
+title: "Invert (Bi-Entity Action Type)"
 description: "Swaps the context of the target entity and the actor entity."
+navigation_title: "Invert"
 ---
 
 Swaps the context of the target entity and the actor entity.
 
 Type ID: `apoli:invert`
-
 
 ## Fields
 

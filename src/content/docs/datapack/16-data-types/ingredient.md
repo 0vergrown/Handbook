@@ -1,6 +1,7 @@
 ---
-title: "Ingredient"
+title: "Ingredient (Data Type)"
 description: "Either: an Object specifying a registered item or item tag."
+navigation_title: "Ingredient"
 ---
 
 _Either_: an [Object](/docs/datapack/data-types/object) specifying a registered item or item tag.

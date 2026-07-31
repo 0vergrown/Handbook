@@ -1,14 +1,12 @@
 ---
-title: "origins:grant_advancement"
-description: "[Entity Action Type](../entityactiontypes.md)"
+title: "Grant Advancement (Entity Action Type)"
+description: "Grants an advancement to the player."
+navigation_title: "Grant Advancement"
 ---
-
-Entity Action Type
 
 Grants an advancement to the player.
 
-Type ID: `origins:grant_advancement`
-
+Type ID: `apoli:grant_advancement`
 
 ## Fields
 
@@ -23,10 +21,9 @@ Field | Type | Default | Description
 
 ```json
 "entity_action": {
-    "type": "origins:grant_advancement",
+    "type": "apoli:grant_advancement",
     "advancement": "minecraft:adventure/arbalistic"
 }
 ```
 
 This example will grant the player the Arbalistic advancement.
-

@@ -1,6 +1,7 @@
 ---
-title: "Item Stack"
+title: "Item Stack (Data Type)"
 description: "An Object which defines a new item stack."
+navigation_title: "Item Stack"
 ---
 
 An [Object](/docs/datapack/data-types/object) which defines a new item stack.

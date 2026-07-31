@@ -1,10 +1,10 @@
 ---
-title: "Space"
+title: "Space (Data Type)"
 description: "A String that defines which coordinate system is used for directions."
+navigation_title: "Space"
 ---
 
 A  [String](/docs/datapack/data-types/string) that defines which coordinate system is used for directions.
-
 
 ##	Values
 
@@ -17,4 +17,4 @@ A  [String](/docs/datapack/data-types/string) that defines which coordinate syst
   `velocity`                        |  The axes are local to the entity's velocity, similar to `local`. If the velocity is purely vertical, the way the entity is pointing is used to determine the direction of `x` and `y` instead of the velocity. The axes scale based on how fast the entity is moving. *(e.g: if the entity is not moving, the axes will have a length of 0, akin to forcing `x`, `y` and `z` to be `0`)*  
   `velocity_normalized`             |  Same as `velocity`, except the axes are normalized. *(e.g: the axes' length are brought back to its previous length of 1 if it's of non-zero length, making it **not** depend on the speed of the entity's movement, only as long as the entity is moving)*  
   `velocity_horizontal`             |  Same as `velocity`, except the vertical velocity is considered to be `0`.  
-  `velocity_horizontal_normalized`  |  Same as `velocity_horizontal`, except the axes are normalized. *(e.g: the axes' length are brought back to its previous length of 1 if it's of non-zero length)*  
+  `velocity_horizontal_normalized`  |  Same as `velocity_horizontal`, except the axes are normalized. *(e.g: the axes' length are brought back to its previous length of 1 if it's of non-zero length)*

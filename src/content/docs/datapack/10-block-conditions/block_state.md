@@ -1,6 +1,7 @@
 ---
-title: "apoli:block_state"
+title: "Block State (Block Condition Type)"
 description: "Checks a block state property of the block."
+navigation_title: "Block State"
 ---
 
 Checks a block state property of the block.
@@ -18,7 +19,6 @@ Field  | Type | Default | Description
 `compare_to` | [Integer](/docs/datapack/data-types/integer) | _optional_ | If specified, the integer at which the integer value of the specified property will be compared to. **Only used if the specified property has an integer value.**
 `value` | [Boolean](/docs/datapack/data-types/boolean) | _optional_ | If specified, the boolean to compare to the boolean value of the specified property. **Only used if the specified property has a boolean value.**
 `enum` | [String](/docs/datapack/data-types/string) | _optional_ | If specified, the string at which the string value of the specified property will be compared to. **Only used if the specified property has a string value.**
-
 
 ## Examples
 
@@ -49,4 +49,3 @@ This example will check if a Chest block is facing north.
 ```
 
 This example will check if the specified block has the `age` Block State property.
-

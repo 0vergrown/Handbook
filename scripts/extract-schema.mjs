@@ -9,7 +9,7 @@
 //     -> scripts/schema.json  (structured)
 //     -> scripts/schema.txt   (readable, grouped by category)
 //
-// Adjust ROOTS below if the mod repos move. See CLAUDE.md §1.
+// Adjust ROOTS below if the mod repos move.
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';

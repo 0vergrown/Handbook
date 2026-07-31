@@ -1,25 +1,21 @@
 ---
-title: "origins:tamed"
-description: "[Entity Condition Type](../entityconditiontypes.md)"
+title: "Tamed (Entity Condition Type)"
+description: "Checks whether a tamable entity is tamed. Will always return false if the entity is not tamable."
+navigation_title: "Tamed"
 ---
-
-Entity Condition Type
 
 Checks whether a tamable entity is tamed. Will always return false if the entity is not tamable.
 
-Type ID: `origins:tamed`
-
+Type ID: `apoli:tamed`
 
 ## Fields
 
 _None._
 
-
 ## Examples
 
 ```json
 "condition": {
-    "type": "origins:tamed"
+    "type": "apoli:tamed"
 }
 ```
-

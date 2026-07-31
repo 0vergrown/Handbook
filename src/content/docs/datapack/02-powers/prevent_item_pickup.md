@@ -1,14 +1,12 @@
 ---
-title: "origins:prevent_item_pickup"
-description: "[Power Type](../powertypes.md)"
+title: "Prevent Item Pickup (Power Type)"
+description: "Prevents the entity that has the power from picking up an item."
+navigation_title: "Prevent Item Pickup"
 ---
-
-Power Type
 
 Prevents the entity that has the power from picking up an item.
 
-Type ID: `origins:prevent_item_pickup`
-
+Type ID: `apoli:prevent_item_pickup`
 
 !!!	note
 
@@ -19,7 +17,6 @@ Type ID: `origins:prevent_item_pickup`
 	`bientity_action_thrower` | The entity that threw the item. | The entity about to pick up the item.
 	`bientity_action_item` | The entity about to pick up the item. | The item entity to be picked up.
 	`bientity_condition` | The entity that threw the item. | The entity about to pick up the item.
-
 
 ##	Fields
 
@@ -32,17 +29,15 @@ Field | Type | Default | Description
 `item_condition` | Item Condition Type | *optional* | If specified, the restriction will only happen if this item condition is fulfilled by the item about to be picked up.
 `priority` | Integer | `0` | Determines the execution priority of the powers that use this power type (in a low-to-high priority order.)
 
-
 ##	Examples
 
 ```json
 {
-	"type": "origins:prevent_item_pickup",
+	"type": "apoli:prevent_item_pickup",
 	"item_condition": {
-		"type": "origins:meat"
+		"type": "apoli:meat"
 	}
 }
 ```
 
 This example will prevent the entity that has the power from picking up food items that are considered meat.
-

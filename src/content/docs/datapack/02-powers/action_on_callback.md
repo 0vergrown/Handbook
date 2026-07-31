@@ -1,6 +1,7 @@
 ---
-title: "apoli:action_on_callback"
+title: "Action On Callback (Power Type)"
 description: "Execute Entity Action Types depending on the context."
+navigation_title: "Action On Callback"
 ---
 
 Execute Entity Action Types depending on the context.
@@ -56,4 +57,3 @@ The action runs when the player has chosen on **all** layers, not once per layer
 
 This example will make players automatically join the team called "TheNetherBoys" upon gaining the power, and will make the players also leave automatically.
 (The "TheNetherBoys" team has to exist beforehand for this power to work!)
-

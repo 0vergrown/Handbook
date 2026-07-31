@@ -1,6 +1,7 @@
 ---
-title: "Status Effect Instance"
+title: "Status Effect Instance (Data Type)"
 description: "An Object used to define a status effect with duration, amplifier, etc."
+navigation_title: "Status Effect Instance"
 ---
 
 An [Object](/docs/datapack/data-types/object) used to define a status effect with duration, amplifier, etc.

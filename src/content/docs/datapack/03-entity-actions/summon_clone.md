@@ -1,6 +1,7 @@
 ---
-title: "apoli:summon_clone"
+title: "Summon Clone (Entity Action Type)"
 description: "Summons a clone that fights for the player who has the power."
+navigation_title: "Summon Clone"
 ---
 
 Summons a **clone** that fights for the player who has the power. The clone is player-shaped, attacks with melee, a bow, or a crossbow (whatever it holds), defends/assists its owner, and can be told to sit by right-clicking it. It mirrors the owner's `entity_texture_overlay` so they look the same. Only works when the action's entity is a player.
@@ -35,4 +36,3 @@ Type ID: `apoli:summon_clone`
 ```
 
 Summons a clone that looks like the player, inherits their gear, fights for them, and disappears after 30 seconds.
-

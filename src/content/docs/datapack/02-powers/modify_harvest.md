@@ -1,14 +1,12 @@
 ---
-title: "origins:modify_harvest"
-description: "[Power Type](../powertypes.md)"
+title: "Modify Harvest (Power Type)"
+description: "Modifies whether a player is able to harvest a block or not (= receive the block drops)."
+navigation_title: "Modify Harvest"
 ---
-
-Power Type
 
 Modifies whether a player is able to harvest a block or not (= receive the block drops).
 
-Type ID: `origins:modify_harvest`
-
+Type ID: `apoli:modify_harvest`
 
 ## Fields
 
@@ -17,14 +15,13 @@ Field  | Type | Default | Description
 `block_condition` | Block Condition Type | _optional_ | If specified, only blocks that fulfill this condition are affected.
 `allow` | Boolean | | Determines whether the player is be able to harvest the block.
 
-
 ## Examples
 
 ```json
 {
-    "type": "origins:modify_harvest",
+    "type": "apoli:modify_harvest",
     "block_condition": {
-        "type": "origins:block",
+        "type": "apoli:block",
         "block": "minecraft:diamond_block"
     },
     "allow": true
@@ -32,4 +29,3 @@ Field  | Type | Default | Description
 ```
 
 This example will allow players to harvest a Diamond Block regardless of using the proper tool or not.
-

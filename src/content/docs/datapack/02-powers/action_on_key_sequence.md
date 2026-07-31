@@ -1,6 +1,8 @@
 ---
-title: "apoli:action_on_key_sequence"
+title: "Action On Key Sequence (Power Type)"
 description: "Runs an action when a sequence of keys is entered, like a combo."
+navigation_title: "Action On Key Sequence"
+aliases: ["sync:action_on_key_sequence"]
 ---
 
 Runs an action when a sequence of keys is entered, like a combo.
@@ -23,29 +25,18 @@ Type ID: `apoli:action_on_key_sequence`
 
 ```json
 {
-   "type":"apoli:action_on_key_sequence",
-   "keys":[
-      {
-         "key":{
-            "key":"key.apoli.primary_active"
-         }
-      },
-      {
-         "key":{
-            "key":"key.apoli.secondary_active"
-         }
-      }
-   ],
-   "key_sequence":[
-      "key.apoli.primary_active",
-      "key.apoli.primary_active",
-      "key.apoli.secondary_active"
-   ],
-   "cooldown":20,
-   "success_action":{
-      "type":"apoli:heal",
-      "amount":4
-   }
+  "type": "apoli:action_on_key_sequence",
+  "keys": [
+    { "key": { "key": "key.apoli.primary_active" } },
+    { "key": { "key": "key.apoli.secondary_active" } }
+  ],
+  "key_sequence": [
+    "key.apoli.primary_active",
+    "key.apoli.primary_active",
+    "key.apoli.secondary_active"
+  ],
+  "cooldown": 20,
+  "success_action": { "type": "apoli:heal", "amount": 4 }
 }
 ```
 

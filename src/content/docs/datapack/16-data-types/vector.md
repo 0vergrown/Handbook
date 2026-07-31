@@ -1,6 +1,7 @@
 ---
-title: "Vector"
+title: "Vector (Data Type)"
 description: "An Object that specifies the X, Y and Z coordinates of a certain point in space."
+navigation_title: "Vector"
 ---
 
 An [Object](/docs/datapack/data-types/object) that specifies the X, Y and Z coordinates of a certain point in space.
@@ -12,7 +13,6 @@ Field | Type | Default | Description
 `x` | [Float](/docs/datapack/data-types/float) | `0.0` | The X coordinate of the point.
 `y` | [Float](/docs/datapack/data-types/float) | `0.0` | The Y coordinate of the point.
 `z` | [Float](/docs/datapack/data-types/float) | `0.0` | The Z coordinate of the point.
-
 
 ## Examples
 

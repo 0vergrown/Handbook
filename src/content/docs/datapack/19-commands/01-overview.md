@@ -49,8 +49,3 @@ Every command returns a count so it composes with `/execute store`:
 execute store result score @s power_count run power has @s
 execute if entity @a[origin=example:phoenix] run say someone is a phoenix
 ```
-
-## See also
-
-- [Powers](/docs/datapack/introduction/powers)
-- [Skill Tree JSON Format](/docs/datapack/skill-tree/skill-tree-json-format)

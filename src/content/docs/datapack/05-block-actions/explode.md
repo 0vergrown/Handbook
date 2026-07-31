@@ -1,12 +1,12 @@
 ---
-title: "apoli:explode"
+title: "Explode (Block Action Type)"
 description: "Summons an explosion with a specific explosion power."
+navigation_title: "Explode"
 ---
 
 Summons an explosion with a specific explosion power.
 
 Type ID: `apoli:explode`
-
 
 ## Fields
 
@@ -17,7 +17,6 @@ Field | Type | Default | Description
 `indestructible` | Block Condition Type | _optional_ | If specified, the blocks that fulfill this condition will not be destroyed by the summoned explosion.
 `destructible` | Block Condition Type | _optional_ | If specified, only the blocks that fulfill this condition will be destroyed by the summoned explosion.
 `create_fire` | Boolean | `false` | Determines if the summoned explosion should create fire.
-
 
 ## Examples
 
@@ -31,7 +30,6 @@ Field | Type | Default | Description
 ```
 
 This example will summon an explosion at the position of where the block action was invoked that would not destroy the terrain nor spread fire.
-
 
 ```json
 "block_action": {
@@ -47,4 +45,3 @@ This example will summon an explosion at the position of where the block action 
 ```
 
 This example will summon an explosion at the position of where the block action was invoked that would only destroy blocks that are in the `#minecraft:impermeable` (`data/minecraft/tags/blocks/impermeable.json`) block tag.
-

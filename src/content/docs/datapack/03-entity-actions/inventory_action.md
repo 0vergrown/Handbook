@@ -1,11 +1,11 @@
 ---
-title: "apoli:inventory_action"
-description: "[Entity Action Type](../entityactiontypes.md)"
+title: "Inventory Action (Entity Action Type)"
+description: "Walks the entity's inventory or a power inventory and performs one operation per matching slot — the operation field replaces the separate modify_inventory, replace_inventory and drop_inventory actions."
+navigation_title: "Inventory Action"
+aliases: ["modify_inventory", "replace_inventory", "drop_inventory"]
 ---
 
-Entity Action Type
-
-Walks the items of either the entity's inventory or an [[apoli:inventory](/docs/datapack/powers/inventory)](/docs/datapack/entity-conditions/inventory), and performs one operation per matching slot. This single action replaces Apace's `modify_inventory`, `replace_inventory`, and `drop_inventory` — the `operation` field picks which behaviour you get.
+Walks the items of either the entity's inventory or an [apoli:inventory](/docs/datapack/powers/inventory), and performs one operation per matching slot. This single action replaces Apace's `modify_inventory`, `replace_inventory`, and `drop_inventory` — the `operation` field picks which behaviour you get.
 
 Type ID: `apoli:inventory_action`
 
@@ -30,7 +30,7 @@ Type ID: `apoli:inventory_action`
 | `item_condition`   | Item Condition Type                           | _optional_    | If specified, only items fulfilling this condition are affected.                                                 |
 | `slot`             | Item Slot                                     | _optional_    | Restrict to a single slot.                                                                                       |
 | `slots`            | Array of Item Slots | _optional_    | Restrict to these slots. For a `power` inventory, use the `container.N` form (raw slot index).                   |
-| `power`            | Identifier                                   | _optional_    | The [[apoli:inventory](/docs/datapack/powers/inventory)](/docs/datapack/entity-conditions/inventory) to walk, when `inventory_type` is `"power"`.           |
+| `power`            | Identifier                                   | _optional_    | The [apoli:inventory](/docs/datapack/powers/inventory) to walk, when `inventory_type` is `"power"`.           |
 | `process_mode`     | Process Mode                               | `"stacks"`    | How stacks are counted toward `limit`. Honoured by `modify`; `replace`/`drop` always act once per stack.         |
 | `limit`            | Integer                                         | `0`           | Max number of stacks (or items, in `items` mode) to affect. `<= 0` means no limit.                               |
 | `item_action`      | Item Action Type                                 | _optional_    | **Required-in-spirit for `modify`** (without it `modify` is a no-op); optional post-step for `replace`/`drop`.   |
@@ -61,8 +61,6 @@ Type ID: `apoli:inventory_action`
 
 Slightly damages every armour-valued item in the entity's inventory.
 
-
-
 ```json
 "entity_action": {
     "type": "apoli:inventory_action",
@@ -74,8 +72,6 @@ Slightly damages every armour-valued item in the entity's inventory.
 
 Replaces the entity's offhand item with a Barrier. *(Equivalent to the legacy `apoli:replace_inventory`.)*
 
-
-
 ```json
 "entity_action": {
     "type": "apoli:drop_inventory",
@@ -84,8 +80,6 @@ Replaces the entity's offhand item with a Barrier. *(Equivalent to the legacy `a
 ```
 
 A legacy-id example: drops the first three hotbar slots. Resolves to `operation: drop`.
-
-
 
 ```json
 "entity_action": {
@@ -98,10 +92,3 @@ A legacy-id example: drops the first three hotbar slots. Resolves to `operation:
 ```
 
 Walks the `example:extra_inventory` [Inventory power](/docs/datapack/entity-conditions/inventory)'s stored container and consumes one of each item. Power-inventory slots are addressed with `container.N` (e.g. `"slots": ["container.0", "container.1"]`); this runs server-side only.
-
-## See also
-
-- [apoli:inventory](/docs/datapack/powers/inventory) — the container this action can target with `inventory_type: power`.
-- [Inventory Type](/docs/datapack/data-types/inventory-type) — the `inventory` / `power` values.
-- [Item Slot](/docs/datapack/data-types/item-slot) — slot strings, including the `container.N` form for power inventories.
-

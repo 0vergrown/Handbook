@@ -1,6 +1,7 @@
 ---
-title: "apoli:entity_in_radius"
+title: "Entity In Radius (Entity Condition Type)"
 description: "Counts entities within a specified radius and compares the count against a value."
+navigation_title: "Entity In Radius"
 ---
 
 Counts entities within a specified radius and compares the count against a value. Can filter entities with bi-entity conditions.
@@ -43,4 +44,3 @@ Type ID: `apoli:entity_in_radius`
 }
 ```
 This example checks if there are at least 3 other players within 10 blocks.
-

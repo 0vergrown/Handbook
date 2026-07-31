@@ -62,8 +62,3 @@ Reaching for these keeps your JSON consistent with the rest of Apoli, and means 
 ## Aliasing field names
 
 To accept a legacy field name for a data type, use the [field-alias helpers](/docs/addon/api/aliasing) at registration rather than branching inside the codec.
-
-## See also
-
-- [Data types (JSON)](/docs/datapack/introduction/data-types) — the reader's view.
-- [Expressions](/docs/addon/systems/expressions) — the compiled math data type.

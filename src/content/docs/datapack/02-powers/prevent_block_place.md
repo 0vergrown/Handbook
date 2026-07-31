@@ -1,14 +1,12 @@
 ---
-title: "origins:prevent_block_place"
-description: "[Power Type](../powertypes.md)"
+title: "Prevent Block Place (Power Type)"
+description: "Prevents the player from placing a block."
+navigation_title: "Prevent Block Place"
 ---
-
-Power Type
 
 Prevents the player from placing a block.
 
-Type ID: `origins:prevent_block_place`
-
+Type ID: `apoli:prevent_block_place`
 
 ##	Fields
 
@@ -26,20 +24,19 @@ Field | Type | Default | Description
 `result_stack` | Item Stack | *optional* | If specified, this item stack will be given to the player upon trying to place a block.
 `result_item_action` | Item Action Type | *optional* | If specified, this item action will be executed on the item that will be given to the player upon trying to place a block.
 
-
 ##	Examples
 
 ```json
 {
-	"type": "origins:prevent_block_place",
+	"type": "apoli:prevent_block_place",
 	"entity_action": {
-		"type": "origins:execute_command",
+		"type": "apoli:execute_command",
 		"command": "tellraw @s {\"text\": \"Cannot place a block here!\", \"color\": \"red\"}"
 	},
 	"place_to_condition": {
-		"type": "origins:fluid",
+		"type": "apoli:fluid",
 		"fluid_condition": {
-			"type": "origins:still",
+			"type": "apoli:still",
 			"inverted": true
 		}
 	}
@@ -47,4 +44,3 @@ Field | Type | Default | Description
 ```
 
 This example will prevent the player from placing blocks in spaces occupied by source fluids.
-

@@ -1,6 +1,7 @@
 ---
-title: "apoli:suppress_power"
+title: "Suppress Power (Entity Action Type)"
 description: "Temporarily disables a power without removing it."
+navigation_title: "Suppress Power"
 ---
 
 Temporarily disables a power without removing it.

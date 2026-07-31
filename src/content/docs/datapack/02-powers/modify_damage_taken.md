@@ -1,6 +1,7 @@
 ---
-title: "apoli:modify_damage_taken"
+title: "Modify Damage Taken (Power Type)"
 description: "Modifies how much damage the entity that has the power takes."
+navigation_title: "Modify Damage Taken"
 ---
 
 Modifies how much damage the entity that has the power takes.
@@ -8,7 +9,6 @@ Modifies how much damage the entity that has the power takes.
 Type ID: `apoli:modify_damage_taken`
 
 > In the context of this power type, the '**actor**' entity is the entity that did the attacking whilst the '**target**' entity is the entity that has the power.
-
 
 ## Fields
 

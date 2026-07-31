@@ -1,17 +1,14 @@
 ---
-title: "origins:particle"
-description: "[Power Type](../powertypes.md)"
+title: "Particle (Power Type)"
+description: "Spawns particles on the body of the entity that has the power for visual effects."
+navigation_title: "Particle"
 ---
-
-Power Type
 
 Spawns particles on the body of the entity that has the power for visual effects.
 
-Type ID: `origins:particle`
-
+Type ID: `apoli:particle`
 
 > Unlike the original Apoli, this re-implementation spawns the particles **server-side** (via `sendParticles` per viewer), so the `bientity_condition` is evaluated on the server and every condition type works. The power-level `condition` field is also honored: while the condition is false, no particles spawn (fixed July 2026; the condition is checked once per `frequency` interval, so it adds no per-tick cost).
-
 
 ## Fields
 
@@ -30,16 +27,14 @@ Field  | Type | Default | Description
 `visible_in_first_person` | Boolean | `false` | Determines whether the particle type should be visible in first person.
 `visible_while_invisible` | Boolean | `false` | Determines whether the particle type should be visible if the entity is invisible.
 
-
 ## Examples
 
 ```json
 {
-  	"type": "origins:particle",
+  	"type": "apoli:particle",
   	"particle": "minecraft:portal",
   	"frequency": 4
 }
 ```
 
 This example will continuously spawn portal particles on the entity that has the power.
-

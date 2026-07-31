@@ -1,6 +1,7 @@
 ---
-title: "apoli:on_fire"
+title: "On Fire (Entity Condition Type)"
 description: "Checks if the entity is currently burning."
+navigation_title: "On Fire"
 ---
 
 Checks if the entity is currently burning.
@@ -18,4 +19,3 @@ _None._
     "type": "apoli:on_fire"
 }
 ```
-

@@ -1,6 +1,7 @@
 ---
-title: "Render Type"
+title: "Render Type (Data Type)"
 description: "Selects how a texture is drawn onto the model — the blend/cull/lighting style of a render layer."
+navigation_title: "Render Type"
 ---
 
 Selects how a texture is drawn onto the model — the blend/cull/lighting style of a render layer. Used by the `render_type` field of Entity Texture Overlay and Overlay Layer. Given as a String; matching ignores case and separators.
@@ -35,9 +36,3 @@ Selects how a texture is drawn onto the model — the blend/cull/lighting style 
 ```
 
 A red, glowing visor over the head.
-
-## See also
-
-- Entity Texture Overlay (Power Type)
-- [Overlay Layer](/docs/datapack/data-types/overlay-layer)
-

@@ -20,7 +20,7 @@
 
 	<div class="doc-inner">
 		<header>
-			<Breadcrumbs crumbs={doc.breadcrumbs.slice(0, 2)} />
+			<Breadcrumbs crumbs={doc.breadcrumbs.slice(0, -1)} />
 			<h1>{doc.title}</h1>
 			{#if doc.description}
 				<p class="lead">{doc.description}</p>

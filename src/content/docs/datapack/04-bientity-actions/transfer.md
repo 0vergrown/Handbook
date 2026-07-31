@@ -1,6 +1,7 @@
 ---
-title: "apoli:transfer"
+title: "Transfer (Bi-Entity Action Type)"
 description: "Moves or copies powers between the actor and target using Apoli's power source system."
+navigation_title: "Transfer"
 ---
 
 Moves or copies powers between the **actor** and **target** using Apoli's power **source** system. This is the flexible replacement for command-based origin/power "stealing" — it can steal, give, copy, and (paired with a removal by source) let powers be lost and brought back.
@@ -74,9 +75,3 @@ Permanently give one of your powers' source group to the target and lose it your
     "sources": [ "example:my_gift" ]
 }
 ```
-
-## See also
-
-- `apoli:revoke_all_powers` — remove every power that shares a source (use the transfer's `new_source` to undo a steal).
-- `apoli:grant_power` / `apoli:grant_all_powers` — the single-entity source-based grant actions.
-

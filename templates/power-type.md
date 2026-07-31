@@ -37,8 +37,3 @@ ONE OR TWO SENTENCES DESCRIBING THE POWER.
 EXPLAIN WHAT THE EXAMPLE DOES IN ONE LINE.
 
 <!-- Optional: a second example showing a common variation, or a > blockquote for a gotcha / performance note. -->
-
-## See also
-
-- [RELATED_PAGE_TITLE](/docs/datapack/powers/RELATED)
-- [Powers overview](/docs/datapack/powers/overview)

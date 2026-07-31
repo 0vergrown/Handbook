@@ -1,6 +1,7 @@
 ---
-title: "Attribute Modifier Operation"
+title: "Attribute Modifier Operation (Data Type)"
 description: "A String used to specify the operation in an Attribute Modifier."
+navigation_title: "Attribute Modifier Operation"
 ---
 
 A [String](/docs/datapack/data-types/string) used to specify the operation in an [Attribute Modifier](/docs/datapack/data-types/attribute-modifier).
@@ -43,4 +44,3 @@ The three "short" operation names from vanilla Minecraft and the long-named Apol
 Modifiers run in two phases: **base** first, then **total**. Within a phase, ordering follows the table above (top is earliest). When two modifiers share a phase and order, evaluation order is undefined — don't rely on it.
 
 For resource operations (apoli:modify_resource, apoli:change_resource alias), the resource value plays the role of both `Base` and `Total` — i.e. the operations effectively reduce to a single-number transform.
-

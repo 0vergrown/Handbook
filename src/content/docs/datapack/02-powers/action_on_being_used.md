@@ -1,6 +1,7 @@
 ---
-title: "apoli:action_on_being_used"
+title: "Action On Being Used (Power Type)"
 description: "Executes an action when a player 'uses' (right-clicks) the entity that has the power."
+navigation_title: "Action On Being Used"
 ---
 
 Executes an action when a player "uses" (right-clicks) the entity that has the power.
@@ -10,7 +11,6 @@ Type ID: `apoli:action_on_being_used`
 > **Note:** In Overgrown's Apoli reimplementation this id is an alias of [apoli:action_on_use](/docs/datapack/powers/action_on_use) with `target_used: true` injected automatically. Data packs authored against either id keep working unchanged; new authoring is encouraged to use the canonical `apoli:action_on_use` for clarity.
 
 > In the context of this power type, the '**actor**' entity is the entity that did the "usage" action (right-click) while the '**target**' entity is the entity that has the power.
-
 
 ## Fields
 
@@ -24,7 +24,6 @@ Field | Type | Default | Description
 `hands`| [Array](/docs/datapack/data-types/array) of Strings (Data Type) | `["off_hand", "main_hand"]` | Determines if the power should be activated if the '**actor**' entity used the specified hand(s). Accepts `"off_hand"`, `"main_hand"` or both
 `result_stack`| [Item Stack](/docs/datapack/data-types/item-stack) | _optional_ | If specified, this item stack will be given to the '**actor**' entity.
 `action_result` | [Action Result](/docs/datapack/data-types/action-result) | `"success"` | Determines the result of the 'use' action.
-
 
 ## Examples
 
@@ -45,4 +44,3 @@ Field | Type | Default | Description
 ```
 
 This example will grant the players the ability to mount the target entity that has the power upon "using" (right-clicking) the said entity, unless the entity that has the power already has a passenger.
-

@@ -1,6 +1,7 @@
 ---
-title: "apoli:multiple"
+title: "Multiple (Power Type)"
 description: "Allows for defining more than one power in a single file."
+navigation_title: "Multiple"
 ---
 
 Allows for defining more than one power in a single file.
@@ -12,7 +13,6 @@ Type ID: `apoli:multiple`
 > You can reference sub-powers by using the ID of the super-power and the ID of the sub-power, split by an underscore (`_`). (e.g: `namespace:super-power_sub-power`)
 > 
 > If you wish to check for an entity condition for the entire super-power, you would have to check for the said entity condition in every sub-power of the super-power.
-
 
 ## Fields
 

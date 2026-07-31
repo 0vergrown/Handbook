@@ -1,6 +1,7 @@
 ---
-title: "apoli:living"
+title: "Living (Entity Condition Type)"
 description: "Checks if the entity is an instance of Living Entity."
+navigation_title: "Living"
 ---
 
 Checks if the entity is an instance of Living Entity.
@@ -18,4 +19,3 @@ _None._
     "type": "apoli:living"
 }
 ```
-

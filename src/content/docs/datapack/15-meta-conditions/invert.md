@@ -1,6 +1,7 @@
 ---
-title: "Invert"
+title: "Invert (Meta Condition Type)"
 description: "There is no meta condition to invert the results of another condition."
+navigation_title: "Invert"
 ---
 
 > **There is no meta condition to invert the results of another condition.** However, **every** condition supports the following field, which can be used to achieve the same:
@@ -21,4 +22,3 @@ Field  | Type | Default | Description
 ```
 
 This example will check if the player is **not** sneaking.
-

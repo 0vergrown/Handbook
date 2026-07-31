@@ -1,10 +1,10 @@
 ---
-title: "Positioned Item Stack"
+title: "Positioned Item Stack (Data Type)"
 description: "An Object which defines a new item stack alongside a position in an inventory."
+navigation_title: "Positioned Item Stack"
 ---
 
 An [Object](/docs/datapack/data-types/object) which defines a new item stack alongside a position in an inventory. Basically an [Item Stack](/docs/datapack/data-types/item-stack) with a `slot` field.
-
 
 ## Fields
 
@@ -14,7 +14,6 @@ Field  | Type | Default | Description
 `amount` | Integer | `1` | Size of the stack.
 `tag` | NBT | _optional_ | NBT data of the item.
 `slot` | Integer | _optional_ | Inventory slot position of the stack. If not specified, will be the first free slot in the inventory. See Positioned Item Stack Slots for possible values.
-
 
 ## Examples
 

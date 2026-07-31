@@ -17,22 +17,28 @@
 		title: b.title.toLowerCase(),
 		crumb: (b.breadcrumb || '').toLowerCase(),
 		content: (b.content || '').toLowerCase(),
+		// type id + legacy aliases; page titles are human, so ids live only here
+		keywords: (b.keywords || []).map((k) => k.toLowerCase()),
 		// heading blocks (deep-links) rank a touch below full pages
 		isSection: b.href.includes('#')
 	}));
 
 	/**
 	 * Deterministic ranked search. Every query term must match somewhere;
-	 * title matches outrank breadcrumb, which outranks body text.
+	 * an exact type id or alias ranks with an exact title, then title matches,
+	 * then breadcrumb, then body text.
 	 */
 	function score(entry, terms) {
 		let total = entry.isSection ? -3 : 0;
 		for (const t of terms) {
 			let best = 0;
 			if (entry.title === t) best = 120;
+			else if (entry.keywords.includes(t)) best = 110;
 			else if (entry.title.startsWith(t)) best = 60;
+			else if (entry.keywords.some((k) => k.startsWith(t))) best = 50;
 			else if (wordStart(entry.title, t)) best = 45;
 			else if (entry.title.includes(t)) best = 30;
+			else if (entry.keywords.some((k) => k.includes(t))) best = 20;
 			else if (entry.crumb.includes(t)) best = 10;
 			else if (entry.content.includes(t)) best = 6;
 			else return -1; // a term matched nothing → drop this result

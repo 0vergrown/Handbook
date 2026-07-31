@@ -1,6 +1,8 @@
 ---
-title: "apoli:set_summon_max_life"
+title: "Set Summon Max Life (Entity Action Type)"
 description: "Re-targets a summon's remaining lifetime."
+navigation_title: "Set Summon Max Life"
+aliases: ["set_summon_max_life_ticks"]
 ---
 
 Re-targets a summon's remaining lifetime. Apply it **to the summon**. For example, through a summon action's `bientity_action`, or any entity-targeting action (selector, area of effect, …). Has no effect on entities that are not summons.
@@ -32,4 +34,3 @@ Alias: `apoli:set_summon_max_life_ticks`.
 ```
 
 Spawns a minion and immediately makes it permanent by re-targeting its lifetime through the summon's `bientity_action`.
-

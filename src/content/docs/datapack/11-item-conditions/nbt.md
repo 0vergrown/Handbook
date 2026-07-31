@@ -1,19 +1,18 @@
 ---
-title: "apoli:nbt"
+title: "NBT (Item Condition Type)"
 description: "Checks the item's NBT."
+navigation_title: "NBT"
 ---
 
 Checks the item's NBT.
 
 Type ID: `apoli:nbt`
 
-
 ## Fields
 
 Field | Type | Default | Description
 ------|------|---------|-------------
 `nbt` | NBT | | The NBT data to check for.
-
 
 ## Examples
 
@@ -25,4 +24,3 @@ Field | Type | Default | Description
 ```
 
 This example will check if the item stack has the `exampleCustomTag: 1b` NBT.
-

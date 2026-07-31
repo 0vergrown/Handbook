@@ -1,19 +1,18 @@
 ---
-title: "Constant"
+title: "Constant (Meta Condition Type)"
 description: "Provides a constant state where it's either true or false."
+navigation_title: "Constant"
 ---
 
 Provides a constant state where it's either true or false. Mainly added as a backup case in case a condition is required in some power/action/condition types.
 
 Type ID: `apoli:constant`
 
-
 ## Fields
 
 Field  | Type | Default | Description
 -------|------|---------|-------------
 `value` | [Boolean](/docs/datapack/data-types/boolean) | | If true, the condition is always fulfilled. If false, the condition is never fulfilled.
-
 
 ## Examples
 
@@ -25,4 +24,3 @@ Field  | Type | Default | Description
 ```
 
 This example is always true.
-

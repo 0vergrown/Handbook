@@ -32,8 +32,3 @@ Passes when CONDITION. This is a **FLAVOUR condition**.
 EXPLAIN THE EXAMPLE IN ONE LINE.
 
 <!-- Remember: any condition can be inverted with "inverted": true — don't add a separate "not_x". -->
-
-## See also
-
-- [FLAVOUR conditions](/docs/datapack/conditions/FLAVOUR-conditions)
-- [Conditions overview](/docs/datapack/conditions/overview)

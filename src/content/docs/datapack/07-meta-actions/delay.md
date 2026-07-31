@@ -1,6 +1,7 @@
 ---
-title: "apoli:delay"
+title: "Delay (Meta Action Type)"
 description: "Executes the provided action after a set amount of ticks."
+navigation_title: "Delay"
 ---
 
 Executes the provided action after a set amount of ticks.
@@ -13,7 +14,6 @@ Field  | Type | Default | Description
 -------|------|---------|-------------
 `action` | Action Type | | The action which will be executed after the delay.
 `ticks` | [Integer](/docs/datapack/data-types/integer) | | The amount of ticks until the action is executed.
-
 
 ## Examples
 
@@ -32,4 +32,3 @@ Field  | Type | Default | Description
 }
 ```
 This example will apply a Speed II status effect after 1 second.
-

@@ -1,6 +1,7 @@
 ---
-title: "apoli:roped_together"
-description: "Checks whether the actor and the target are connected by a rope (in either direction) — see the [Attach…"
+title: "Roped Together (Bi-Entity Condition Type)"
+description: "Checks whether the actor and the target are connected by a rope (in either direction) — see the Attach…"
+navigation_title: "Roped Together"
 ---
 
 Checks whether the actor and the target are connected by a rope (in either direction) — see the [Attach Rope](/docs/datapack/entity-actions/attach_rope) action. Useful for logic like a captured entity checking whether it is still tied to its captor, or a whip user checking they still hold their target.
@@ -17,4 +18,3 @@ This condition takes no fields.
 ```
 
 True while a rope has the actor as one end and the target as the other.
-

@@ -1,6 +1,7 @@
 ---
-title: "apoli:modify_block_render"
+title: "Modify Block Render (Power Type)"
 description: "Modifies how a block would look like to the entity that has the power."
+navigation_title: "Modify Block Render"
 ---
 
 Modifies how a block would look like to the entity that has the power.
@@ -28,4 +29,3 @@ Field | Type | Default | Description
 ```
 
 This example will make Diamond Ore blocks look like Diamond Blocks.
-

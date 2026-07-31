@@ -1,6 +1,7 @@
 ---
-title: "apoli:prevent_powers"
+title: "Prevent Powers (Power Type)"
 description: "Suppresses other powers on the entity while active."
+navigation_title: "Prevent Powers"
 ---
 
 Suppresses other powers on the entity while active.

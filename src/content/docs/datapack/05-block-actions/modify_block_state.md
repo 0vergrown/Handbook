@@ -1,6 +1,7 @@
 ---
-title: "apoli:modify_block_state"
+title: "Modify Block State (Block Action Type)"
 description: "Modifies the block state property of the block."
+navigation_title: "Modify Block State"
 ---
 
 Modifies the block state property of the block. Depending on the property type, different values are expected: boolean properties use `value`, enumeration properties use `enum`, and integer properties use `operation` and `change`.
@@ -8,7 +9,6 @@ Modifies the block state property of the block. Depending on the property type, 
 Type ID: `apoli:modify_block_state`
 
 > If none of the expected fields are specified, this action will do nothing.
-
 
 ## Fields
 
@@ -21,7 +21,6 @@ Field | Type | Default | Description
 `enum` | String | _optional_ | If specified, the string to use as the new value for the specified property if the specified property is a string.
 `cycle` | Boolean | `false` | If set to true, changes the property to the next state in the cycle, ignoring all other optional fields. All property types can use this operation.
 
-
 ## Examples
 
 ```json
@@ -33,4 +32,3 @@ Field | Type | Default | Description
 ```
 
 This example will cycle through the values of the `facing` property if available.
-

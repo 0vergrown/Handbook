@@ -1,6 +1,8 @@
 ---
-title: "apoli:modify_entity_data"
+title: "Modify Entity Data (Entity Action Type)"
 description: "Changes a single piece of an entity's data (e.g."
+navigation_title: "Modify Entity Data"
+aliases: ["set_entity_data", "change_entity_data", "set_no_gravity", "set_gravity"]
 ---
 
 Changes a single piece of an entity's data (e.g. whether it has gravity). Works on any entity, not just living ones.
@@ -61,4 +63,3 @@ and omitting `value` toggles gravity instead.
 ```
 
 This sets the entity on fire for 5 seconds.
-

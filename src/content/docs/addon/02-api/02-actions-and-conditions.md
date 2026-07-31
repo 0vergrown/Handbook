@@ -88,8 +88,3 @@ Apoli adds the universal `inverted` field for you at the wrapper level — you n
 ## Performance
 
 `test` and `run` are called wherever the containing power fires — potentially per tick, per hit, or per entity in a selector. Keep them allocation-free and O(1). Read the [performance rules](/docs/addon/systems/power-container) before shipping anything that runs in a loop.
-
-## See also
-
-- [Registering power types](/docs/addon/api/registering-power-types)
-- [Data pack: actions](/docs/datapack/introduction/actions) — the JSON side of what you're building.

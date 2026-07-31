@@ -1,12 +1,12 @@
 ---
-title: "apoli:remove_enchantment"
+title: "Remove Enchantment (Item Action Type)"
 description: "Removes certain enchantments from the item."
+navigation_title: "Remove Enchantment"
 ---
 
 Removes certain enchantments from the item.
 
 Type ID: `apoli:remove_enchantment`
-
 
 ## Fields
 
@@ -16,7 +16,6 @@ Field | Type | Default | Description
 `enchantments` | Array of Identifiers | _optional_ | If specified, these enchantments will be removed from the item.
 `levels` | Integer | _optional_ | If specified, only the enchantments that has the specified level will be removed from the item.
 `reset_repair_cost` | Boolean | `false` | Determines whether the 'repair cost' of the item should be reset.
-
 
 ## Examples
 

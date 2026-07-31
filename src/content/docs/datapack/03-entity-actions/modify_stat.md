@@ -1,6 +1,8 @@
 ---
-title: "apoli:modify_stat"
+title: "Modify Stat (Entity Action Type)"
 description: "Modifies the value of a certain statistic with Attribute Modifiers."
+navigation_title: "Modify Stat"
+aliases: ["change_stat", "set_stat"]
 ---
 
 Modifies the value of a certain statistic with Attribute Modifiers (Data Type). The `stat` accepts a plain id string as shorthand for a `minecraft:custom` statistic (e.g. `"minecraft:jump"`). Writes go through the vanilla stat path, so stat-based scoreboard objectives update too.
@@ -17,7 +19,6 @@ Field | Type | Default | Description
 ------|------|---------|------------
 `stat` | [Stat](/docs/datapack/data-types/stat) | | The type and name of the statistic to be modified.
 `modifier` | Attribute Modifiers (Data Type) | | This modifier will be applied to the current value of the statistic specified.
-
 
 ## Examples
 
@@ -52,4 +53,3 @@ This example will add 24000 to the value of the player's `minecraft.custom:minec
 ```
 
 This example will add 1 to the value of the player's `minecraft.used:origins.orb_of_origin` statistic.
-

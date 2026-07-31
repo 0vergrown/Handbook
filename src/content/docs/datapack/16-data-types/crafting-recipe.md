@@ -1,6 +1,7 @@
 ---
-title: "Crafting Recipe"
+title: "Crafting Recipe (Data Type)"
 description: "An Object specifying a shapeless or shaped crafting recipe."
+navigation_title: "Crafting Recipe"
 ---
 
 An [Object](/docs/datapack/data-types/object) specifying a shapeless or shaped crafting recipe.
@@ -18,7 +19,6 @@ Field  | Type | Default | Description
 Field  | Type | Default | Description
 -------|------|---------|-------------
 `ingredients` | Array of Ingredient | | The items that need to be put in the crafting grid for the recipe.
-
 
 ## Examples (shapeless)
 
@@ -55,7 +55,6 @@ Field  | Type | Default | Description
 `pattern` | Array of Strings | | Specifies the pattern, with each element representing one row. Use a single character to describe one item. A space means that position is empty.
 `key` | Object of "character": Ingredient fields | | Specifies which character in the pattern corresponds to which Ingredient.
 
-
 ## Examples (shaped)
 
 ```json
@@ -79,4 +78,3 @@ Field  | Type | Default | Description
 ```
 
 A crafting recipe for a birch boat, but with the planks rotated to the side in the crafting grid.
-

@@ -1,6 +1,7 @@
 ---
-title: "apoli:modify_player_model"
+title: "Modify Player Model (Power Type)"
 description: "Replaces the holder's player model while the power is active — either with a custom model registered by an addon mod, or with a…"
+navigation_title: "Modify Player Model"
 ---
 
 Replaces the holder's player model while the power is active — either with a custom model registered by an addon mod, or with a [Figura](https://modrinth.com/mod/figura) avatar shipped in a resource pack.
@@ -57,4 +58,3 @@ Client-side, addon mods can register model factories with `ApoliPlayerModels.reg
 ```
 
 Applies the `assets/mymod/figura_avatars/werewolf.nbt` avatar while the player sneaks and restores the player's own model when they stop.
-

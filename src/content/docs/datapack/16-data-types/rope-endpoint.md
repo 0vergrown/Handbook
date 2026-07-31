@@ -1,6 +1,7 @@
 ---
-title: "Rope Endpoint"
+title: "Rope Endpoint (Data Type)"
 description: "Describes one end of a rope (how it is chosen at runtime) used by the from and to fields of the Attach Rope."
+navigation_title: "Rope Endpoint"
 ---
 
 Describes **one end of a rope** (how it is chosen at runtime) used by the `from` and `to` fields of the [apoli:attach_rope](/docs/datapack/entity-actions/attach_rope). An endpoint resolves to either an entity (the rope follows it) or a fixed world point (immovable, so the other end can't get farther than the rope's length - a tether/leash).
@@ -45,4 +46,3 @@ Whatever entity the actor is looking at within 20 blocks.
 }
 ```
 A fixed anchor in the world.
-

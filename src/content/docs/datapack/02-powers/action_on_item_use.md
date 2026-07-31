@@ -1,6 +1,7 @@
 ---
-title: "apoli:action_on_item_use"
+title: "Action On Item Use (Power Type)"
 description: "Executes an Entity Action Type or an Item Action Type when the player uses an item (e.g: eating food or drinking a potion)."
+navigation_title: "Action On Item Use"
 ---
 
 Executes an Entity Action Type or an Item Action Type when the player uses an item (e.g: eating food or drinking a potion).
@@ -76,4 +77,3 @@ This example will give half a shank of hunger, and 1 saturation point if the pla
 ```
 
 This example will give the player 20 seconds of invisibility whenever they throw an ender pearl.
-

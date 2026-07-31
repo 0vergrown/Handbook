@@ -1,6 +1,7 @@
 ---
-title: "apoli:offset"
+title: "Offset (Meta Condition Type)"
 description: "Tests a block condition at an offset from this position (block conditions only)."
+navigation_title: "Offset"
 ---
 
 Tests a block condition at an offset from this position (block conditions only).

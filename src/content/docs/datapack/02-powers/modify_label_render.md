@@ -1,6 +1,8 @@
 ---
-title: "apoli:modify_label_render"
+title: "Modify Label Render (Power Type)"
 description: "Modifies how the holder's nameplate (the floating name label) renders, replace the text, dim it like sneaking, or hide it entirely with optional per-viewer…"
+navigation_title: "Modify Label Render"
+aliases: ["sync:modify_label_render"]
 ---
 
 Modifies how the holder's nameplate (the floating name label) renders, replace the text, dim it like sneaking, or hide it entirely with optional per-viewer conditions so different players can see different labels. Optionally the label also replaces the holder's name in chat and in the multiplayer tab list, taking priority over a disguise's name.
@@ -83,4 +85,3 @@ Hide nameplates entirely while invisible:
     }
 }
 ```
-

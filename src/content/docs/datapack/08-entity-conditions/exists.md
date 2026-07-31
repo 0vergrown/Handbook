@@ -1,24 +1,21 @@
 ---
-title: "origins:exists"
-description: "[Entity Condition Type](../entityconditiontypes.md)"
+title: "Exists (Entity Condition Type)"
+description: "Checks if the entity exists."
+navigation_title: "Exists"
 ---
-
-Entity Condition Type
 
 Checks if the entity exists.
 
-Type ID: `origins:exists`
-
+Type ID: `apoli:exists`
 
 ## Fields
 
 _None._
 
-
 ## Examples
 
 ```json
 "condition": {
-    "type": "origins:exists"
+    "type": "apoli:exists"
 }
 ```

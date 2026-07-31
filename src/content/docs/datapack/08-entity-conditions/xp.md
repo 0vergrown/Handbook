@@ -1,6 +1,7 @@
 ---
-title: "apoli:xp"
+title: "XP (Entity Condition Type)"
 description: "Compares the entity's experience (aliases xp_levels, xp_points)."
+navigation_title: "XP"
 ---
 
 Compares the entity's experience (aliases `xp_levels`, `xp_points`).

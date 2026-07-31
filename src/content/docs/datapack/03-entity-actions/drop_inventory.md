@@ -1,9 +1,8 @@
 ---
-title: "apoli:drop_inventory"
-description: "[Entity Action Type](../entityactiontypes.md)"
+title: "Drop Inventory (Entity Action Type)"
+description: "Drops each matching slot of the entity's inventory (or a power's inventory) onto the ground."
+navigation_title: "Drop Inventory"
 ---
-
-Entity Action Type
 
 Drops each matching slot of the entity's inventory (or a power's inventory) onto the ground.
 
@@ -16,4 +15,3 @@ Type ID: `apoli:drop_inventory`
 ```
 
 Equivalent to `{ "type": "apoli:inventory_action", "operation": "drop" }` — drops the entity's whole inventory.
-

@@ -36,9 +36,3 @@ kill @e[type=zombie,power=example:cursed]
 - Options combine with everything vanilla offers, and multiple Apoli options in one selector are ANDed like any other.
 
 > `origin` and `origin_layer` are registered by Apoli but only work with Origins installed. Without it they produce a clear "needs the Origins mod" error rather than silently matching nothing.
-
-## See also
-
-- [/apoli:power](/docs/datapack/commands/power)
-- [/origin](/docs/datapack/commands/origin)
-- [Commands overview](/docs/datapack/commands/overview)

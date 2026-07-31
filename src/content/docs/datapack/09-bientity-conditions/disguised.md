@@ -1,6 +1,7 @@
 ---
-title: "apoli:disguised"
+title: "Disguised (Bi-Entity Condition Type)"
 description: "Checks whether the actor is currently disguised as the target."
+navigation_title: "Disguised"
 ---
 
 Checks whether the **actor** is currently disguised as the **target**. For a player target it compares UUIDs; otherwise it compares entity types. Ported from the Sync mod.
@@ -20,4 +21,3 @@ This condition type has no fields.
 ```
 
 True while the actor is disguised as the target (same entity type, or same player).
-

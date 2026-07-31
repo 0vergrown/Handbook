@@ -1,6 +1,7 @@
 ---
-title: "Particle Effect"
+title: "Particle Effect (Data Type)"
 description: "A data type that's either a String which defines only the particle type or an Object which defines the particle type and its additional parameters."
+navigation_title: "Particle Effect"
 ---
 
 A data type that's either a [String](/docs/datapack/data-types/string) which defines only the particle type or an [Object](/docs/datapack/data-types/object) which defines the particle type and its additional parameters.

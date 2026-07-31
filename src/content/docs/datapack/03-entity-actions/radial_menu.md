@@ -1,6 +1,8 @@
 ---
-title: "apoli:radial_menu"
+title: "Radial Menu (Entity Action Type)"
 description: "Opens a radial selection menu of actions."
+navigation_title: "Radial Menu"
+aliases: ["sync:radial_menu"]
 ---
 
 Opens a radial selection menu of actions.

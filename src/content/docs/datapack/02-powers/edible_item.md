@@ -1,6 +1,7 @@
 ---
-title: "apoli:edible_item"
+title: "Edible Item (Power Type)"
 description: "Makes an item edible."
+navigation_title: "Edible Item"
 ---
 
 Makes an item edible.

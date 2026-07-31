@@ -1,6 +1,7 @@
 ---
-title: "apoli:attach_rope"
+title: "Attach Rope (Entity Action Type)"
 description: "Attaches a rope between two endpoints."
+navigation_title: "Attach Rope"
 ---
 
 Attaches a rope between two endpoints. Each end is a [Rope Endpoint](/docs/datapack/data-types/rope-endpoint) — an entity or a fixed point — so this one action covers grappling (self ↔ block), whip-grabbing (self ↔ entity) and tethering (entity ↔ block). An entity can hold several ropes at once; label them with `slot` so they can be cut or counted individually.
@@ -84,4 +85,3 @@ Used as a `bientity_action`, this tethers the target entity to a point so it can
 }
 ```
 A harpoon-style rope that holds a **rigid** distance to whatever you hit and **snaps** if the two ends are ever pulled more than 12 blocks apart.
-

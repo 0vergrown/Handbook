@@ -1,6 +1,8 @@
 ---
-title: "apoli:add_to_entity_set"
+title: "Add To Entity Set (Bi-Entity Action Type)"
 description: "Add the target entity to the power that uses the Entity Set of the actor entity."
+navigation_title: "Add To Entity Set"
+aliases: ["add_to_set"]
 ---
 
 Add the target entity to the power that uses the [apoli:entity_set](/docs/datapack/powers/entity_set) of the actor entity.
@@ -13,7 +15,6 @@ Field | Type | Default | Description
 ------|------|---------|------------
 `set` | [Identifier](/docs/datapack/data-types/identifier) | | The ID of the power to add the target entity into.
 `time_limit` | [Integer](/docs/datapack/data-types/integer) | *optional* | If specified, this will determine how long the target entity will be stored in the specified power in ticks.
-
 
 ##	Examples
 
@@ -35,4 +36,3 @@ This example will add the target entity to the `example:entities_to_exclude` (`d
 ```
 
 This example will add the target entity to the `example:make_em_glow` (`data/example/powers/make_em_glow.json`) power temporarily for 10 seconds, after which the target entity will be removed.
-

@@ -1,18 +1,16 @@
 ---
-title: "origins:prevent_entity_use"
-description: "[Power Type](../powertypes.md)"
+title: "Prevent Entity Use (Power Type)"
+description: "Prevents the player that has the power from 'using' (right-clicking) an entity and executes a bi-entity action, item action and/or give an item upon being prevented."
+navigation_title: "Prevent Entity Use"
 ---
-
-Power Type
 
 Prevents the player that has the power from "using" (right-clicking) an entity and executes a bi-entity action, item action and/or give an item upon being prevented.
 
-Type ID: `origins:prevent_entity_use`
+Type ID: `apoli:prevent_entity_use`
 
 !!! note
 
     In the context of this power type, the '**actor**' entity is the entity that has the power whilst the '**target**' entity is the entity that was "used" (right-clicked).
-
 
 ## Fields
 
@@ -26,23 +24,22 @@ Field | Type | Default | Description
 `hands` | Array of Strings | `["off_hand", "main_hand"]` | Determines if the power should be activated if the '**actor**' entity used the specified hand(s). Accepts `"off_hand"`, `"main_hand"` or both.
 `result_stack` | Item Stack | _optional_ | If specified, this item stack will be given to the '**actor**' entity.
 
-
 ## Examples
 
 ```json
 {
-    "type": "origins:prevent_entity_use",
+    "type": "apoli:prevent_entity_use",
     "bientity_action": {
-        "type": "origins:actor_action",
+        "type": "apoli:actor_action",
         "action": {
-            "type": "origins:execute_command",
+            "type": "apoli:execute_command",
             "command": "title @s actionbar {\"text\": \"Cannot interact with pigs!\", \"color\": \"red\"}"
         }
     },
     "bientity_condition": {
-        "type": "origins:target_condition",
+        "type": "apoli:target_condition",
         "condition": {
-            "type": "origins:entity_type",
+            "type": "apoli:entity_type",
             "entity_type": "minecraft:pig"
         }
     }
@@ -50,4 +47,3 @@ Field | Type | Default | Description
 ```
 
 This example will prevent the player that has the power from interacting with a Pig (also prevent powers that enables you to interact with a Pig) and executes an [apoli:execute_command](/docs/datapack/entity-actions/execute_command) to the entity that has attempted to interact with a Pig.
-

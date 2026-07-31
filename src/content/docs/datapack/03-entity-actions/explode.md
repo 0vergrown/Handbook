@@ -1,12 +1,12 @@
 ---
-title: "apoli:explode"
+title: "Explode (Entity Action Type)"
 description: "Summons an explosion with a specific explosion power."
+navigation_title: "Explode"
 ---
 
 Summons an explosion with a specific explosion power.
 
 Type ID: `apoli:explode`
-
 
 ## Fields
 
@@ -18,7 +18,6 @@ Field | Type | Default | Description
 `indestructible` | Block Condition Type | _optional_ | If specified, the blocks that fulfill this condition will not be destroyed by the summoned explosion.
 `destructible` | Block Condition Type | _optional_ | If specified, only the blocks that fulfill this condition will be destroyed by the summoned explosion.
 `create_fire` | Boolean | `false` | Determines if the summoned explosion should create fire.
-
 
 ## Examples
 
@@ -33,4 +32,3 @@ Field | Type | Default | Description
 ```
 
 This example will summon an explosion that will **not** damage the entity that invoked the action, the terrain, or create fire.
-

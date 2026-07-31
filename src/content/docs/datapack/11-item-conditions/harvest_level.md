@@ -1,12 +1,12 @@
 ---
-title: "apoli:harvest_level"
+title: "Harvest Level (Item Condition Type)"
 description: "Checks whether the material of the item has a certain harvest level value."
+navigation_title: "Harvest Level"
 ---
 
 Checks whether the material of the item has a certain harvest level value. Items without a material are considered to have a harvest level of 0.
 
 Type ID: `apoli:harvest_level`
-
 
 ## Fields
 
@@ -26,4 +26,3 @@ Type ID: `apoli:harvest_level`
 ```
 
 This example checks if the item has a harvest level higher than 1, which is the value for stone tools.
-

@@ -41,8 +41,3 @@ Some triggers expose extra variables. In a damage context, `damage` is bound to 
 - **Compile once, eval many.** Parsing is done at load; `eval` is the hot path and must stay allocation-free.
 - The built-in engine is the fast path; a general parser exists only as a fallback for expressions it can't compile. Prefer syntax the fast engine understands.
 - Don't call `eval` more often than you need — cache the result within a tick if it's reused.
-
-## See also
-
-- [Performance](/docs/addon/systems/performance)
-- Number fields in the [data-pack docs](/docs/datapack/entity-actions) marked *expression*.

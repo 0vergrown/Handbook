@@ -1,12 +1,12 @@
 ---
-title: "apoli:offset"
+title: "Offset (Block Condition Type)"
 description: "Checks the provided Block Condition Type at a position offset from the current position."
+navigation_title: "Offset"
 ---
 
 Checks the provided Block Condition Type at a position offset from the current position.
 
 Type ID: `apoli:offset`
-
 
 ## Fields
 
@@ -16,7 +16,6 @@ Field  | Type | Default | Description
 `x` | Integer | `0` |  How much to offset the position on the x-axis.
 `y` | Integer | `0` |  How much to offset the position on the y-axis.
 `z` | Integer | `0` |  How much to offset the position on the z-axis.
-
 
 ## Examples
 
@@ -32,4 +31,3 @@ Field  | Type | Default | Description
 ```
 
 This example will check if the block above the block is a Grass Block.
-

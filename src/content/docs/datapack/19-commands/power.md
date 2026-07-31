@@ -1,6 +1,7 @@
 ---
-title: "/apoli:power"
+title: "Power (Command)"
 description: "Grant, revoke, inspect and suppress powers on any entity."
+navigation_title: "Power"
 ---
 
 Grants, revokes, inspects and suppresses powers. Aliased to `/power`.
@@ -112,10 +113,3 @@ power unsuppress @a key "key.origins.primary"
 `key` mode suppresses every power the target holds that is bound to that key — handy when a pack maps a dozen active powers onto the same button and you want to disable the lot during a cutscene or a minigame round. Tab-completion offers the keys the selected targets actually use.
 
 Keys are quoted strings, matching the `key` field on [`apoli:action_on_key_press`](/docs/datapack/powers/action_on_key_press), [`apoli:toggle`](/docs/datapack/powers/toggle), [`apoli:inventory`](/docs/datapack/powers/inventory), [`apoli:fire_projectile`](/docs/datapack/powers/fire_projectile) and [`apoli:action_on_key_sequence`](/docs/datapack/powers/action_on_key_sequence).
-
-## See also
-
-- [Commands overview](/docs/datapack/commands/overview)
-- [Entity selector options](/docs/datapack/commands/selectors)
-- [apoli:grant_all_powers](/docs/datapack/entity-actions/grant_all_powers)
-- [apoli:suppress_power](/docs/datapack/entity-actions/suppress_power)

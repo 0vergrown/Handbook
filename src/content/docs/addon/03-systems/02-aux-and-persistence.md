@@ -48,8 +48,3 @@ public static void onEntityGone(UUID entityId) {
 ## Mark dirty when you mutate
 
 Cached serialisation and client sync only update when the container is told the data changed. After mutating stored state, mark it dirty (`markDirty` / `setAuxNbt` do this for you). A stale cache that never re-saves is a **data-loss bug** — worse than a slow one.
-
-## See also
-
-- [The power container](/docs/addon/systems/power-container)
-- [Performance](/docs/addon/systems/performance) — why singletons and caches matter.

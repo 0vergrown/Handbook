@@ -1,12 +1,12 @@
 ---
-title: "apoli:equipped_item"
+title: "Equipped Item (Entity Condition Type)"
 description: "Checks whether the entity has an item equipped in the specified equipment slot that fulfills the specified Item Condition Type."
+navigation_title: "Equipped Item"
 ---
 
 Checks whether the entity has an item equipped in the specified equipment slot that fulfills the specified Item Condition Type.
 
 Type ID: `apoli:equipped_item`
-
 
 ## Fields
 
@@ -19,10 +19,10 @@ Type ID: `apoli:equipped_item`
 
 ```json
 "condition": {
-    "type": "origins:equipped_item",
+    "type": "apoli:equipped_item",
     "equipment_slot": "mainhand",
     "item_condition": {
-        "type": "origins:harvest_level",
+        "type": "apoli:harvest_level",
         "comparison": ">=",
         "compare_to": 2
     }
@@ -30,4 +30,3 @@ Type ID: `apoli:equipped_item`
 ```
 
 This example will check if the item in the entity's mainhand has a harvest level of 2 or more.
-

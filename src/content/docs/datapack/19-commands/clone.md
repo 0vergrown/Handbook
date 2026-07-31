@@ -1,6 +1,7 @@
 ---
-title: "/apoli:clone"
+title: "Clone (Command)"
 description: "Summon, list and remove player clones from the command line."
+navigation_title: "Clone"
 ---
 
 Summons the same clone entity that [`apoli:summon_clone`](/docs/datapack/entity-actions/summon_clone) creates, straight from a command. There is no short alias — `/clone` is a vanilla command.
@@ -63,9 +64,3 @@ apoli:clone list @s
 Prints each clone's UUID, owner, `summon_id` and lifetime, and returns the count.
 
 > `summon` and `list` search a 256-block box around each owner, so clones in unloaded chunks or far-away dimensions are not found.
-
-## See also
-
-- [apoli:summon_clone](/docs/datapack/entity-actions/summon_clone)
-- [apoli:summon_minion](/docs/datapack/entity-actions/summon_minion)
-- [Commands overview](/docs/datapack/commands/overview)

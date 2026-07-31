@@ -1,6 +1,7 @@
 ---
-title: "apoli:resource"
+title: "Resource (Power Type)"
 description: "Provides a variable with an assignable, modifiable, and optionally dynamic minimum and maximum value."
+navigation_title: "Resource"
 ---
 
 Provides a variable with an assignable, modifiable, and optionally dynamic minimum and maximum value.
@@ -82,10 +83,3 @@ A resource whose ceiling is the value of another resource (composes cleanly with
    "start_value":0
 }
 ```
-
-## See also
-
-- [apoli:cooldown](/docs/datapack/powers/cooldown) — internally a resource with `min = 0`, `max = cooldown`, auto-decrementing each tick.
-- [apoli:modify_resource](/docs/datapack/entity-actions/modify_resource) — the canonical way to change a resource's value.
-- [apoli:change_resource](/docs/datapack/entity-actions/change_resource) — legacy alias of Modify Resource; kept for old data packs.
-

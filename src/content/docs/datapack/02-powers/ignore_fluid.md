@@ -1,6 +1,8 @@
 ---
-title: "apoli:ignore_fluid"
-description: "Prevents the movement of the entity that has the power from being affected by the matching fluid (water by default, but the fluidcondition accepts any)."
+title: "Ignore Fluid (Power Type)"
+description: "Stops the entity being affected by the matching fluid — water by default, but the fluid_condition accepts any."
+navigation_title: "Ignore Fluid"
+aliases: ["ignore_water"]
 ---
 
 Prevents the movement of the entity that has the power from being affected by the matching fluid (water by default, but the `fluid_condition` accepts any).

@@ -1,6 +1,7 @@
 ---
-title: "Text Component"
+title: "Text Component (Data Type)"
 description: "A String, Array, or Object used for displaying text with formatting, translations, keybinds, and the other Minecraft JSON-text features."
+navigation_title: "Text Component"
 ---
 
 A [String](/docs/datapack/data-types/string), [Array](/docs/datapack/data-types/array), or [Object](/docs/datapack/data-types/object) used for displaying text with formatting, translations, keybinds, and the other Minecraft JSON-text features. Accepts everything vanilla's text component format accepts.
@@ -50,4 +51,3 @@ A composite component built from a list — formatting on the first element inhe
 ```
 
 An explicit translation key. Equivalent to omitting the field entirely (when the auto-key matches the power's id).
-

@@ -1,6 +1,7 @@
 ---
-title: "apoli:shaking"
+title: "Shaking (Power Type)"
 description: "Makes the entity that has the power shake, similar to a Strider out of lava or a Zombie undergoing conversion."
+navigation_title: "Shaking"
 ---
 
 Makes the entity that has the power shake, similar to a Strider out of lava or a Zombie undergoing conversion.

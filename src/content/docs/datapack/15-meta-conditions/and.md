@@ -1,6 +1,7 @@
 ---
-title: "apoli:and"
+title: "And (Meta Condition Type)"
 description: "Checks whether all of the provided conditions are fulfilled."
+navigation_title: "And"
 ---
 
 Checks whether all of the provided conditions are fulfilled.
@@ -30,4 +31,3 @@ Field  | Type | Default | Description
 ```
 
 This example will check if it is both daytime, and the entity is invisible.
-

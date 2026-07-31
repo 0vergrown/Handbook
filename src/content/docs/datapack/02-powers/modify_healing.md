@@ -1,13 +1,12 @@
 ---
-title: "origins:modify_healing"
-description: "[Power Type](../powertypes.md)"
+title: "Modify Healing (Power Type)"
+description: "Modifies the amount of health you get from all sources of healing (e.g natural regen, instant health effect, regeneration effect)"
+navigation_title: "Modify Healing"
 ---
-
-Power Type
 
 Modifies the amount of health you get from all sources of healing _(e.g natural regen, instant health effect, regeneration effect)_
 
-Type ID: `origins:modify_healing`
+Type ID: `apoli:modify_healing`
 
 ## Fields
 
@@ -20,7 +19,7 @@ Field  | Type | Default | Description
 
 ```json
 {
-    "type": "origins:modify_healing",
+    "type": "apoli:modify_healing",
     "modifier": {
         "operation": "multiply_total",
         "value": 1
@@ -31,7 +30,7 @@ Field  | Type | Default | Description
 This example will double the effectiveness of all healing used on you.
 ```json
 {
-    "type": "origins:modify_healing",
+    "type": "apoli:modify_healing",
     "modifier": {
         "operation": "multiply_total",
         "value": -0.5
@@ -40,4 +39,3 @@ This example will double the effectiveness of all healing used on you.
 ```
 
 This example will half the effectiveness of all healing used on you.
-

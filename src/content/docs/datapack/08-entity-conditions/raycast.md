@@ -1,14 +1,12 @@
 ---
-title: "origins:raycast"
-description: "[Entity Condition Type](../entityconditiontypes.md)"
+title: "Raycast (Entity Condition Type)"
+description: "Casts a ray to the direction where the entity is looking."
+navigation_title: "Raycast"
 ---
-
-Entity Condition Type
 
 Casts a ray to the direction where the entity is looking.
 
-Type ID: `origins:raycast`
-
+Type ID: `apoli:raycast`
 
 ## Fields
 
@@ -27,29 +25,27 @@ Field | Type | Default | Description
 `block_condition` | Block Condition Type | _optional_ | If specified, the entity condition type will check if the block that was hit by the ray-cast fulfills this block condition type.
 `block_distance` | Float | _optional_ | Determines the distance of the raycast for blocks if `block` is set to `true`. If absent, it will use the higher value between the entity's block reach (with Reach Entity Attributes compatibility) or the `distance` field.
 
-
 ## Examples
 
 ```json
 "condition": {
-    "type": "origins:raycast",
+    "type": "apoli:raycast",
     "distance": 6,
     "block": true,
     "entity": true,
     "shape_type": "visual",
     "fluid_handling": "any",
     "match_bientity_condition": {
-        "type": "origins:target_condition",
+        "type": "apoli:target_condition",
         "condition": {
-            "type": "origins:entity_type",
+            "type": "apoli:entity_type",
             "entity_type": "minecraft:wolf"
         }
     },
     "hit_bientity_condition": {
-        "type": "origins:owner"
+        "type": "apoli:owner"
     }
 }
 ```
 
 This example will check if a wolf mob is tamed by the entity that has fired the ray-cast. The ray-cast will ignore tamable mobs other than wolves.
-

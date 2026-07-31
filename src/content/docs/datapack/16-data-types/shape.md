@@ -1,6 +1,7 @@
 ---
-title: "Shape"
+title: "Shape (Data Type)"
 description: "The outline of a region around a centre point."
+navigation_title: "Shape"
 ---
 
 The outline of a region around a centre point. Used by area-of-effect powers and block-scanning conditions together with a `radius`. Written as a string.
@@ -36,12 +37,6 @@ The second makes a flat 17×7×17 slab — a `cube` outline sized independently 
 
 ## Used by
 
-- [[apoli:area_of_effect](/docs/datapack/entity-actions/area_of_effect)](/docs/datapack/entity-actions/area_of_effect)
-- [[apoli:area_of_effect](/docs/datapack/block-actions/area_of_effect)](/docs/datapack/block-actions/area_of_effect)
+- [apoli:area_of_effect](/docs/datapack/entity-actions/area_of_effect)
+- [apoli:area_of_effect](/docs/datapack/block-actions/area_of_effect)
 - `apoli:block_in_radius` (entity condition)
-
-## See also
-
-- [[Vector](/docs/datapack/data-types/vector)](/docs/datapack/data-types/vector) — the form of the `radius` that sizes the shape.
-- [[Shape Type](/docs/datapack/data-types/shape-type)](/docs/datapack/data-types/shape-type) — unrelated: the block-collision mode (`collider`/`outline`/`visual`) used by raycasts.
-

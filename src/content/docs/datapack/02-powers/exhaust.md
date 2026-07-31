@@ -1,6 +1,7 @@
 ---
-title: "apoli:exhaust"
+title: "Exhaust (Power Type)"
 description: "Applies exhaustion to the player over time."
+navigation_title: "Exhaust"
 ---
 
 Applies exhaustion to the player over time.
@@ -31,4 +32,3 @@ Field  | Type | Default | Description
 ```
 
 This example will apply 4.0 exhaustion to the player if the player is touching water.
-

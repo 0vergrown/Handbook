@@ -1,6 +1,7 @@
 ---
-title: "apoli:unsuppress_power"
+title: "Unsuppress Power (Entity Action Type)"
 description: "Re-enables a power previously suppressed."
+navigation_title: "Unsuppress Power"
 ---
 
 Re-enables a power previously suppressed.

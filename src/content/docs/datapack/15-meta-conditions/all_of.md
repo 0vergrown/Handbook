@@ -1,6 +1,8 @@
 ---
-title: "apoli:all_of"
+title: "All Of (Meta Condition Type)"
 description: "Passes when every listed condition passes (alias and)."
+navigation_title: "All Of"
+aliases: ["and"]
 ---
 
 Passes when every listed condition passes (alias `and`).

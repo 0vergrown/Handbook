@@ -1,12 +1,12 @@
 ---
-title: "apoli:in_tag"
+title: "In Tag (Fluid Condition Type)"
 description: "Checks whether the fluid is in a specified tag."
+navigation_title: "In Tag"
 ---
 
 Checks whether the fluid is in a specified tag.
 
 Type ID: `apoli:in_tag`
-
 
 ## Fields
 
@@ -24,4 +24,3 @@ Field  | Type | Default | Description
 ```
 
 This example will check if the fluid is included in the `#minecraft:water` (`data\minecraft\tags\fluids`) block tag.
-

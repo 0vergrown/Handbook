@@ -1,6 +1,8 @@
 ---
-title: "apoli:holder_action"
+title: "Holder Action (Item Action Type)"
 description: "Executes an entity action on the holder of the item stack."
+navigation_title: "Holder Action"
+aliases: ["holder"]
 ---
 
 Executes an entity action on the holder of the item stack.

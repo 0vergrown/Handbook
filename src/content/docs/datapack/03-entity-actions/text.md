@@ -1,6 +1,8 @@
 ---
-title: "apoli:text"
+title: "Text (Entity Action Type)"
 description: "Displays text on the target player's screen at a chosen position — the vanilla title, subtitle and actionbar slots, or one of Apoli's custom HUD anchors —…"
+navigation_title: "Text"
+aliases: ["text_bar", "show_text"]
 ---
 
 Displays text on the target player's screen at a chosen position — the vanilla title, subtitle and actionbar slots, or one of Apoli's custom HUD anchors — with fade-in/stay/fade-out timing. Each entry in a `text` list carries its own condition, so a single action can render several segments side by side and restyle or hide them individually (e.g. two selectable options where the active one is highlighted). Colors and other styling come from the text components themselves — there is no separate color field.
@@ -126,4 +128,3 @@ A one-shot title on key press:
    }
 }
 ```
-

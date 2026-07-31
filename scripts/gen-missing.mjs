@@ -38,6 +38,15 @@ const COMPAT = {
 	knocked_out: 'compat/06-hardcore-revival'
 };
 
+// Types that are documented outside their flavour's reference section because
+// they belong to a feature that has its own section. Same idea as COMPAT.
+const RELOCATED = {
+	add_skill_points: 'datapack/17-skill-tree/02-entity-actions',
+	grant_skill_tree: 'datapack/17-skill-tree/02-entity-actions',
+	reset_skills: 'datapack/17-skill-tree/02-entity-actions',
+	revoke_skill_tree: 'datapack/17-skill-tree/02-entity-actions'
+};
+
 const SECTION = {
 	powers: '02-powers',
 	'entity actions': '03-entity-actions',
@@ -118,8 +127,49 @@ function cleanType(t, cat) {
 		.replace(/\bNbt\b/g, 'nbt');
 }
 
-const listPages = (dir) =>
-	new Set(fs.readdirSync(dir).map((f) => f.replace(/\.md$/, '').replace(/^\d+-/, '')));
+// Recursive: a section may nest one folder to group its pages in the sidebar
+// (compat/06-hardcore-revival/03-entity-actions/revive.md), and a page that
+// already exists inside a group must not be regenerated at the section root.
+function listPages(dir) {
+	const out = new Set();
+	const walk = (d) => {
+		for (const e of fs.readdirSync(d, { withFileTypes: true })) {
+			if (e.isDirectory()) walk(path.join(d, e.name));
+			// hyphen/underscore-insensitive: a ported page named is-equippable.md
+			// documents the same type as a generated is_equippable.md would
+			else if (e.name.endsWith('.md'))
+				out.add(e.name.replace(/\.md$/, '').replace(/^\d+-/, '').replace(/-/g, '_'));
+		}
+	};
+	walk(dir);
+	return out;
+}
+
+const TYPE_LABEL = {
+	powers: 'Power Type',
+	'entity actions': 'Entity Action Type',
+	'bientity actions': 'Bi-Entity Action Type',
+	'block actions': 'Block Action Type',
+	'item actions': 'Item Action Type',
+	'meta actions': 'Meta Action Type',
+	'entity conditions': 'Entity Condition Type',
+	'bientity conditions': 'Bi-Entity Condition Type',
+	'block conditions': 'Block Condition Type',
+	'item conditions': 'Item Condition Type',
+	'damage conditions': 'Damage Condition Type',
+	'biome conditions': 'Biome Condition Type',
+	'fluid conditions': 'Fluid Condition Type',
+	'meta conditions': 'Meta Condition Type'
+};
+
+const ACRONYMS = { nbt: 'NBT', xp: 'XP', hud: 'HUD', json: 'JSON', npc: 'NPC', id: 'ID', ai: 'AI' };
+
+const prettyName = (id) =>
+	id
+		.split('_')
+		.filter(Boolean)
+		.map((w) => ACRONYMS[w] ?? w.charAt(0).toUpperCase() + w.slice(1))
+		.join(' ');
 
 function build(cat, folder) {
 	const existing = new Map();
@@ -129,8 +179,9 @@ function build(cat, folder) {
 	};
 	let n = 0;
 	for (const t of schema[cat] || []) {
-		const dir = COMPAT[t.id] ? path.join(DOCS, COMPAT[t.id]) : path.join(OUT, folder);
-		if (pagesIn(dir).has(t.id)) continue;
+		const relocated = COMPAT[t.id] ?? RELOCATED[t.id];
+		const dir = relocated ? path.join(DOCS, relocated) : path.join(OUT, folder);
+		if (pagesIn(dir).has(t.id.replace(/-/g, '_'))) continue;
 		if (!D[t.id]) continue; // only generate ones we have a description for
 		const rows = t.fields
 			.map((f) => `| \`${f.name}\` | ${cleanType(f.type, cat)} | ${fmtDefault(f)} |`)
@@ -139,7 +190,12 @@ function build(cat, folder) {
 			? `## Fields\n\n| Field | Type | Default |\n|-------|------|---------|\n${rows}\n`
 			: '## Fields\n\nThis type has no fields.\n';
 		const example = `## Example\n\n\`\`\`json\n{\n  "type": "apoli:${t.id}"\n}\n\`\`\`\n`;
-		const md = `---\ntitle: "apoli:${t.id}"\ndescription: "${D[t.id].replace(/"/g, "'").replace(/`/g, '')}"\n---\n\n${D[t.id]}\n\nType ID: \`apoli:${t.id}\`\n\n${fields}\n${example}`;
+		const name = prettyName(t.id);
+		const md =
+			`---\ntitle: "${name} (${TYPE_LABEL[cat]})"\n` +
+			`description: "${D[t.id].replace(/"/g, "'").replace(/`/g, '')}"\n` +
+			`navigation_title: "${name}"\n---\n\n` +
+			`${D[t.id]}\n\nType ID: \`apoli:${t.id}\`\n\n${fields}\n${example}`;
 		fs.writeFileSync(path.join(dir, `${t.id}.md`), md);
 		n++;
 	}

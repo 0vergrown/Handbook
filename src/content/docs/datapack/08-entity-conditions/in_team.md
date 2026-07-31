@@ -1,9 +1,9 @@
 ---
-title: "apoli:in_team"
-description: "[Entity Condition Type](../entityconditiontypes.md)"
+title: "In Team (Entity Condition Type)"
+description: "Checks whether the entity is on a scoreboard team, optionally one matching specific properties."
+navigation_title: "In Team"
+aliases: ["team"]
 ---
-
-Entity Condition Type
 
 Checks whether the entity is on a scoreboard team, optionally one matching specific properties.
 
@@ -35,26 +35,17 @@ On any team whose nametags are hidden:
 
 ```json
 {
-   "type":"apoli:in_team",
-   "team":{
-      "nametag_visibility":"never"
-   }
+  "type": "apoli:in_team",
+  "team": { "nametag_visibility": "never" }
 }
 ```
 
 On any team at all:
 
 ```json
-{
-   "type":"apoli:in_team"
-}
+{ "type": "apoli:in_team" }
 ```
 
 !!! note
 
     Coming from Eggolib's `eggolib:in_team`: the field names and the string-or-object shape are the same, but a multi-field object here means **all** of those properties must match, where Eggolib passed if *any single* property matched. Split the object across `teams` to get the old behaviour.
-
-## See also
-
-- [`apoli:same_team`](/docs/datapack/bientity-conditions/same_team) — whether two entities are allied.
-- [`apoli:team`](/docs/datapack/entity-actions/team) — join, leave and edit teams.

@@ -1,6 +1,8 @@
 ---
-title: "apoli:force_key_pressed"
+title: "Force Key Pressed (Entity Action Type)"
 description: "Holds a key down on the target player's client as if they pressed it."
+navigation_title: "Force Key Pressed"
+aliases: ["press_key", "force_key"]
 ---
 
 Holds a [Key](/docs/datapack/data-types/key) down on the target player's client, as if they had pressed it themselves.
@@ -58,8 +60,3 @@ Stop an ongoing force early:
 - Only works on players. Non-player entities are ignored.
 - Requires Apoli on the client. A vanilla client silently ignores the packet.
 - Key names are keybind **translation keys** (`key.jump`, `key.attack`, `key.use`, `key.sneak`, `key.forward`…), the same strings the [Key](/docs/datapack/data-types/key) data type accepts everywhere else.
-
-## See also
-
-- [Key](/docs/datapack/data-types/key)
-- [`apoli:key_pressed`](/docs/datapack/entity-conditions/key_pressed)

@@ -1,9 +1,9 @@
 ---
-title: "apoli:team"
-description: "[Entity Action Type](../entityactiontypes.md)"
+title: "Team (Entity Action Type)"
+description: "Joins, leaves, creates, edits, empties or deletes a scoreboard team — the datapack equivalent of the /team command."
+navigation_title: "Team"
+aliases: ["modify_team", "join_team", "leave_team"]
 ---
-
-Entity Action Type
 
 Joins, leaves, creates, edits, empties or deletes a scoreboard team — the datapack equivalent of the `/team` command.
 
@@ -36,41 +36,32 @@ Join a team, creating it with the right settings on first use:
 
 ```json
 {
-   "type":"apoli:team",
-   "operation":"join",
-   "team":{
-      "name":"vampires",
-      "friendly_fire":false,
-      "see_friendly_invisibles":true,
-      "color":"dark_red"
-   }
+  "type": "apoli:team",
+  "operation": "join",
+  "team": {
+    "name": "vampires",
+    "friendly_fire": false,
+    "see_friendly_invisibles": true,
+    "color": "dark_red"
+  }
 }
 ```
 
 Leave on power loss:
 
 ```json
-{
-   "type":"apoli:leave_team"
-}
+{ "type": "apoli:leave_team" }
 ```
 
 Turn off friendly fire on the team the holder is already on:
 
 ```json
 {
-   "type":"apoli:modify_team",
-   "team":{
-      "friendly_fire":false
-   }
+  "type": "apoli:modify_team",
+  "team": { "friendly_fire": false }
 }
 ```
 
 !!! caution
 
     Teams are server state shared by everyone. `delete` and `empty` affect all members, not just the entity running the action.
-
-## See also
-
-- [`apoli:in_team`](/docs/datapack/entity-conditions/in_team)
-- [Team](/docs/datapack/data-types/team)

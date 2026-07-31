@@ -1,6 +1,7 @@
 ---
-title: "String"
+title: "String (Data Type)"
 description: "A piece of text."
+navigation_title: "String"
 ---
 
 A piece of text. Has to be enclosed by quotation marks. Please note that if there are supposed to be quotation marks within the text itself, they need to be escaped with a backslash. (`\`)

@@ -23,4 +23,3 @@ Bi-entity Condition Types operate on a `Pair<Entity, Entity>`, or in simpler ter
 - [apoli:invert](/docs/datapack/bientity-conditions/invert)
 - [apoli:target_condition](/docs/datapack/bientity-conditions/target_condition)
 - [apoli:undirected](/docs/datapack/bientity-conditions/undirected)
-

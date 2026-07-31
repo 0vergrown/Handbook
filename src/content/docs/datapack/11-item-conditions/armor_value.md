@@ -1,6 +1,7 @@
 ---
-title: "apoli:armor_value"
+title: "Armor Value (Item Condition Type)"
 description: "Checks whether the item has a certain armor value."
+navigation_title: "Armor Value"
 ---
 
 Checks whether the item has a certain armor value. Non-armor items are considered as having an armor value of 0.
@@ -16,14 +17,12 @@ Type ID: `apoli:armor_value`
     * [Leggings](https://minecraft.wiki/w/Leggings#Defense_points)
     * [Boots](https://minecraft.wiki/w/Boots#Defense_points)
 
-
 ## Fields
 
 Field  | Type | Default | Description
 -------|------|---------|-------------
 `comparison` | Comparison | | Determines how the armor value of the item should be compared to the specified value.
 `compare_to` | Integer | | The value at which the armor value of the item will be compared to.
-
 
 ## Examples
 
@@ -36,4 +35,3 @@ Field  | Type | Default | Description
 ```
 
 This example will check if the armor item (in this context, a chestplate) has a higher armor value than 3, which is the armor value for the leather chestplate armor item.
-

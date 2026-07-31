@@ -1,6 +1,7 @@
 ---
-title: "apoli:ingredient"
+title: "Ingredient (Item Condition Type)"
 description: "Checks whether the item matches the specified Ingredient."
+navigation_title: "Ingredient"
 ---
 
 Checks whether the item matches the specified [Ingredient](/docs/datapack/data-types/ingredient). Essentially, checking either for the item ID or whether the item is in a specified tag.
@@ -12,7 +13,6 @@ Type ID: `apoli:ingredient`
 Field  | Type | Default | Description
 -------|------|---------|-------------
 `ingredient` | [Ingredient](/docs/datapack/data-types/ingredient) | |  The ingredient this item must match to pass the check.
-
 
 ## Examples
 

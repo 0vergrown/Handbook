@@ -1,29 +1,25 @@
 ---
-title: "origins:swimming"
-description: "[Entity Condition Type](../entityconditiontypes.md)"
+title: "Swimming (Entity Condition Type)"
+description: "Checks whether the entity is currently swimming (in the swimming pose)."
+navigation_title: "Swimming"
 ---
-
-Entity Condition Type
 
 Checks whether the entity is currently swimming (in the swimming pose).
 
-Type ID: `origins:swimming`
+Type ID: `apoli:swimming`
 
 !!! note
 
     **This entity condition type will only work on players.**
 
-
 ## Fields
 
 _None._
-
 
 ## Examples
 
 ```json
 "condition": {
-    "type": "origins:swimming"
+    "type": "apoli:swimming"
 }
 ```
-

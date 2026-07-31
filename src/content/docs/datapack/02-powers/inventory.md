@@ -1,6 +1,7 @@
 ---
-title: "apoli:inventory"
+title: "Inventory (Power Type)"
 description: "Provides an inventory that can be opened with the specified Key; may or may not persist on death."
+navigation_title: "Inventory"
 ---
 
 Provides an inventory that can be opened with the specified [Key](/docs/datapack/data-types/key); may or may not persist on death.

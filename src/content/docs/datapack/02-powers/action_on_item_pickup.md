@@ -1,6 +1,7 @@
 ---
-title: "apoli:action_on_item_pickup"
+title: "Action On Item Pickup (Power Type)"
 description: "Execute actions upon picking up an item."
+navigation_title: "Action On Item Pickup"
 ---
 
 Execute actions upon picking up an item.
@@ -26,7 +27,7 @@ Field | Type | Default | Description
 	"bientity_action": {
 		"type": "apoli:target_action",
 		"action": {
-			"type": "origins:heal",
+			"type": "apoli:heal",
 			"amount": 2
 		}
 	},
@@ -83,4 +84,3 @@ This example will recover 1 heart to the entity upon the entity picking up an it
 ```
 
 This example will notify all players that the entity that has the power has picked up an item thrown by another entity.
-

@@ -1,6 +1,7 @@
 ---
-title: "apoli:in_tag"
+title: "In Tag (Damage Condition Type)"
 description: "Checks whether the type of this damage is in a specified tag."
+navigation_title: "In Tag"
 ---
 
 Checks whether the type of this damage is in a specified tag.
@@ -22,4 +23,3 @@ Type ID: `apoli:in_tag`
 }
 ```
 This example will check if the damage is considered drowning damage.
-

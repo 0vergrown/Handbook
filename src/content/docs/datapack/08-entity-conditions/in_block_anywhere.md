@@ -1,14 +1,12 @@
 ---
-title: "origins:in_block_anywhere"
-description: "[Entity Condition Type](../entityconditiontypes.md)"
+title: "In Block Anywhere (Entity Condition Type)"
+description: "Checks how many blocks are overlapping with the entity's eyes or feet."
+navigation_title: "In Block Anywhere"
 ---
-
-Entity Condition Type
 
 Checks how many blocks are overlapping with the entity's eyes or feet.
 
-Type ID: `origins:in_block_anywhere`
-
+Type ID: `apoli:in_block_anywhere`
 
 ## Fields
 
@@ -18,14 +16,13 @@ Field  | Type | Default | Description
 `comparison` | Comparison | `">="` |  Determines how the amount of blocks which overlap and fulfill `block_condition` should be compared to the specified value.
 `compare_to` | Integer | `1` |  The value at which the amount of blocks which overlap and fulfill `block_condition` will be compared to.
 
-
 ## Examples
 
 ```json
 "condition": {
-    "type": "origins:in_block_anywhere",
+    "type": "apoli:in_block_anywhere",
     "block_condition": {
-        "type": "origins:in_tag",
+        "type": "apoli:in_tag",
         "tag": "minecraft:flowers"
     },
     "comparison": ">",
@@ -34,4 +31,3 @@ Field  | Type | Default | Description
 ```
 
 This example will check if the entity is currently inside a two-block tall foliage block that belongs in the `#minecraft:flowers` (`data\minecraft\tags\blocks\flowers.json`) block tag. An example is the rose bush block.
-

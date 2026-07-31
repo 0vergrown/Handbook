@@ -1,9 +1,8 @@
 ---
-title: "apoli:self_glow"
-description: "[Power Type](../powertypes.md)"
+title: "Self Glow (Power Type)"
+description: "Makes the entity that has the power glow if certain conditions are met."
+navigation_title: "Self Glow"
 ---
-
-Power Type
 
 Makes the entity that has the power glow if certain conditions are met.
 
@@ -21,7 +20,6 @@ Type ID: `apoli:self_glow` *(alias of [`apoli:entity_glow`](/docs/datapack/power
 
     The conditions specified in the `entity_condition` and `bientity_condition` fields are only evaluated on the **client-side**, therefore, using any condition types that only work on the server-side will not work.
 
-
 ## Fields
 
 Field | Type | Default | Description
@@ -33,31 +31,28 @@ Field | Type | Default | Description
 `green` | Float | `1.0` | Value by which the green component of the glow will be multiplied. Range: 0.0 - 1.0.
 `blue` | Float | `1.0` | Value by which the blue component of the glow will be multiplied. Range: 0.0 - 1.0.
 
-
 ## Examples
 
 ```json
 {
-    "type": "origins:self_glow",
+    "type": "apoli:self_glow",
     "use_teams": false,
     "red": 0.56862745098,
     "green": 0.89019607843,
     "blue": 0.65098039215,
     "condition": {
-        "type": "origins:in_rain"
+        "type": "apoli:in_rain"
     }
 }
 ```
 
 This example will make the entity that has the power glow for everyone if the entity in question is in rain.
 
-
-
 ```json
 {
-    "type": "origins:self_glow",
+    "type": "apoli:self_glow",
     "bientity_condition": {
-        "type": "origins:can_see"
+        "type": "apoli:can_see"
     },
     "use_teams": false,
     "red": 1.0,
@@ -67,4 +62,3 @@ This example will make the entity that has the power glow for everyone if the en
 ```
 
 This example will make the entity that has the power glow for the entity that can see the said entity.
-

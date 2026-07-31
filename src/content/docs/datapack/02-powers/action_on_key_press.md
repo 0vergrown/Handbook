@@ -1,12 +1,13 @@
 ---
-title: "apoli:action_on_key_press"
+title: "Action On Key Press (Power Type)"
 description: "Executes an Entity Action Type on the entity that has the power upon pressing the specified Key."
+navigation_title: "Action On Key Press"
+aliases: ["active_self"]
 ---
 
 Executes an Entity Action Type on the entity that has the power upon pressing the specified [Key](/docs/datapack/data-types/key).
 
 Type ID: `apoli:action_on_key_press` (but can use it's old `active_self` type id as an alias)
-
 
 ## Fields
 
@@ -16,7 +17,6 @@ Field  | Type | Default | Description
 `cooldown` | [Integer](/docs/datapack/data-types/integer) | `1` | Interval of ticks this power needs to recharge before the power can be triggered again.
 `hud_render` | [Hud Render](/docs/datapack/data-types/hud-render) | `{"should_render": false}` | Determines how the cooldown of this power is visualized on the HUD.
 `key` | [Key](/docs/datapack/data-types/key) | `{"key": "key.apoli.primary_active"}` | Which active key this power should respond to.
-
 
 ## Examples
 
@@ -55,7 +55,7 @@ This example will set the player on fire for 8 seconds, or extinguish themselves
 				"type": "apoli:equipped_item_action",
 				"equipment_slot": "mainhand",
 				"action": {
-					"type": "origins:consume",
+					"type": "apoli:consume",
 					"amount": 1
 				}
 			},

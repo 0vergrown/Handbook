@@ -1,6 +1,7 @@
 ---
-title: "apoli:rope_pull"
+title: "Rope Pull (Entity Action Type)"
 description: "Shoves an end of the acting entity's ropes toward the other end — the 'launch', 'grab' and 'reel' verb."
+navigation_title: "Rope Pull"
 ---
 
 Shoves an end of the acting entity's ropes toward the other end — the "launch", "grab" and "reel" verb. Pushing the entity's own end at it launches you along the rope (fire a whip at a wall, then yank yourself to it); pushing the far end drags that entity in (grab an enemy). Player velocity is applied in a way that actually reaches the client.
@@ -55,4 +56,3 @@ Drags whatever is tied to the actor's `grab` rope toward them.
 }
 ```
 The canonical "held pull" recipe, as a separate power entry (not the one that attaches the rope): a small additive kick every tick plus a continuous `reel`. The kick alone would ramp forever with nothing to stop it once the actor reaches the anchor — the `reel` is what makes it self-limiting, since it shortens the rope down to `min_length` and the already-tuned leash spring (`stiffness`/`radial_damping`/`swing_boost` on [Attach Rope](/docs/datapack/entity-actions/attach_rope)) simply stops correcting once the actor is that close. No extra key or distance check needed — `attached_to_rope` turns itself off when the rope detaches. A single large one-shot `speed` (e.g. 8+) instead of this pattern is what makes a grapple feel like a teleport.
-

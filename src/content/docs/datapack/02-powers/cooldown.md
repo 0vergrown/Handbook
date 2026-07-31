@@ -1,6 +1,7 @@
 ---
-title: "apoli:cooldown"
+title: "Cooldown (Power Type)"
 description: "Provides a cooldown — a count-down timer that can be triggered, queried, and modified."
+navigation_title: "Cooldown"
 ---
 
 Provides a cooldown — a count-down timer that can be triggered, queried, and modified. Useful for power types that don't have a built-in cooldown, or as a simple recurring timer.
@@ -49,9 +50,3 @@ A cooldown whose duration depends on the player's XP level (longer for higher-XP
     "cooldown": "100 + 10 * xp_level"
 }
 ```
-
-## See also
-
-- [apoli:resource](/docs/datapack/powers/resource) — the underlying state machine.
-- [apoli:modify_resource](/docs/datapack/entity-actions/modify_resource) — generic way to nudge a cooldown's remaining ticks.
-

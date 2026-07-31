@@ -62,8 +62,3 @@ private static final ResourceLocation X = MyMod.id("x"); // interned once
     if (holder.hasPower(X)) doThing();                 // indexed lookup
 }
 ```
-
-## See also
-
-- [Auxiliary state](/docs/addon/systems/aux-and-persistence)
-- [The power container](/docs/addon/systems/power-container) — the indexes you lean on.

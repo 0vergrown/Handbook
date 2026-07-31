@@ -1,6 +1,7 @@
 ---
-title: "Attribute Modifier"
+title: "Attribute Modifier (Data Type)"
 description: "An Object describing how a single numerical value should be modified."
+navigation_title: "Attribute Modifier"
 ---
 
 An [Object](/docs/datapack/data-types/object) describing how a single numerical value should be modified. Used by both vanilla-attribute powers (apoli:attribute) and by resource operations (apoli:modify_resource, apoli:change_resource alias). One data type, both call sites.
@@ -84,11 +85,3 @@ Expression value (a max-health bonus that scales with the player's current XP le
     "value": "xp_level / 2"
 }
 ```
-
-## See also
-
-- [Attribute Modifier Operation](/docs/datapack/data-types/attribute-modifier-operation) — the operation table.
-- [Expression](/docs/datapack/data-types/expression) — what `value` accepts in addition to Float.
-- [apoli:modify_resource](/docs/datapack/entity-actions/modify_resource) — the primary action that consumes this data type for resources.
-- [apoli:attribute](/docs/datapack/powers/attribute) — the power that consumes it for vanilla attributes.
-

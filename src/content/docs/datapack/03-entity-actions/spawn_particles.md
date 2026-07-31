@@ -1,14 +1,12 @@
 ---
-title: "origins:spawn_particles"
-description: "[Entity Action Type](../entityactiontypes.md)"
+title: "Spawn Particles (Entity Action Type)"
+description: "Spawns particles on the body of the entity that has the power for visual effects."
+navigation_title: "Spawn Particles"
 ---
-
-Entity Action Type
 
 Spawns particles on the body of the entity that has the power for visual effects.
 
-Type ID: `origins:spawn_particles`
-
+Type ID: `apoli:spawn_particles`
 
 ## Fields
 
@@ -24,12 +22,11 @@ Field | Type | Default | Description
 `offset_y` | Float | `0.5` | The offset of where the particle will be centered in the Y axis.
 `offset_z` | Float | `0.0` | The offset of where the particle will be centered in the Z axis.
 
-
 ## Examples
 
 ```json
 "entity_action": {
-    "type": "origins:spawn_particles",
+    "type": "apoli:spawn_particles",
     "particle": {
         "type": "minecraft:block",
         "params": "minecraft:redstone_block"
@@ -46,4 +43,3 @@ Field | Type | Default | Description
 ```
 
 This example will spawn a particle cuboid that is about 5x0x5 in size that will use the Redstone Block texture.
-

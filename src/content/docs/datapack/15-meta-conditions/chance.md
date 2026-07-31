@@ -1,19 +1,18 @@
 ---
-title: "apoli:chance"
+title: "Chance (Meta Condition Type)"
 description: "Generates a random number between 0.0 and 1.0 and checks if it's less than a specified value."
+navigation_title: "Chance"
 ---
 
 Generates a random number between 0.0 and 1.0 and checks if it's less than a specified value.
 
 Type ID: `apoli:chance`
 
-
 ##	Fields
 
 Field | Type | Default | Description
 ------|------|---------|------------
 `chance` | [Float](/docs/datapack/data-types/float) | | The value to compare the randomly generated number to.
-
 
 ##	Examples
 
@@ -25,4 +24,3 @@ Field | Type | Default | Description
 ```
 
 This example will evaluate to true 50% of the time.
-

@@ -1,6 +1,7 @@
 ---
-title: "apoli:area_of_effect"
+title: "Area Of Effect (Entity Action Type)"
 description: "Executes a Bi-Entity Action within a specified radius."
+navigation_title: "Area Of Effect"
 ---
 
 Executes a Bi-Entity Action within a specified radius.
@@ -8,7 +9,6 @@ Executes a Bi-Entity Action within a specified radius.
 Type ID: `apoli:area_of_effect`
 
 > In the context of this entity action type, the '**actor**' is the entity that invoked the action and the '**target(s)**' is/are the entity/entities within the specified radius.
-
 
 ## Fields
 
@@ -19,7 +19,6 @@ Field | Type | Default | Description
 `bientity_action` | Bi-entity Action Type | | The bi-entity action to execute on either or both the '**actor**' or the '**target(s)**'.
 `bientity_condition` | Bi-entity Condition Type | *optional* | If specified, the specified bi-entity action will only be executed on either or both the '**actor**' or '**target(s)**' that fulfill this bi-entity condition.
 `include_actor` | Boolean | `false` | Determines whether the '**actor**' should be included as a target.
-
 
 ## Examples
 
@@ -72,4 +71,3 @@ This example will set entities within a 32 block radius on fire for 5 seconds if
 ```
 
 This example gives `radius` a per-axis vector to make a wide, flat 25×7×25 slab (12 out on each horizontal axis, only 3 up/down) — a ground-hugging area effect instead of a full cube.
-

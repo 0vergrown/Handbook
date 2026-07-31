@@ -1,12 +1,12 @@
 ---
-title: "apoli:chance"
+title: "Chance (Meta Action Type)"
 description: "Executes the provided action only with a specific chance."
+navigation_title: "Chance"
 ---
 
 Executes the provided action only with a specific chance.
 
 Type ID: `apoli:chance`
-
 
 ## Fields
 
@@ -47,4 +47,3 @@ This example has a 40% chance to set the entity on fire for 5 seconds.
 ```
 
 This example's chance scales with the entity's XP level: 10% at level 0, 40% at level 30.
-

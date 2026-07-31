@@ -29,4 +29,3 @@ These need the Origins mod installed, and are documented in the [Origins](/docs/
 - [origins:copy_origin](/docs/datapack/origins/copy_origin)
 - [origins:store_origin](/docs/datapack/origins/store_origin_bientity)
 - [origins:transfer_origin](/docs/datapack/origins/transfer_origin)
-

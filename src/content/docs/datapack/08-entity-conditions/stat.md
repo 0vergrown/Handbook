@@ -1,6 +1,8 @@
 ---
-title: "apoli:stat"
+title: "Stat (Entity Condition Type)"
 description: "Compares one of the player's in-game statistics (the values on the Statistics screen) against a number."
+navigation_title: "Stat"
+aliases: ["stats", "status", "statistic"]
 ---
 
 Compares one of the player's in-game statistics (the values on the Statistics screen) against a number.
@@ -64,4 +66,3 @@ Run an action once the player has travelled 2 km on foot:
    }
 }
 ```
-

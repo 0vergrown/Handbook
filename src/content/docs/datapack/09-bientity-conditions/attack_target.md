@@ -1,6 +1,7 @@
 ---
-title: "apoli:attack_target"
+title: "Attack Target (Bi-Entity Condition Type)"
 description: "Checks if the actor entity is currently aggressive to the target entity."
+navigation_title: "Attack Target"
 ---
 
 Checks if the actor entity is currently aggressive to the target entity.

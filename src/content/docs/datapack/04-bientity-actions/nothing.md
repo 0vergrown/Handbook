@@ -1,6 +1,7 @@
 ---
-title: "apoli:nothing"
+title: "Nothing (Bi-Entity Action Type)"
 description: "Does nothing. Useful as an explicit no-op branch."
+navigation_title: "Nothing"
 ---
 
 Does nothing. Useful as an explicit no-op branch.

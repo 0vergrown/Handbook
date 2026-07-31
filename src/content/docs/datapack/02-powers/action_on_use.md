@@ -1,6 +1,8 @@
 ---
-title: "apoli:action_on_use"
+title: "Action On Use (Power Type)"
 description: "Executes an action when one entity right-clicks another."
+navigation_title: "Action On Use"
+aliases: ["action_on_entity_use", "action_on_being_used"]
 ---
 
 Executes an action when one entity right-clicks another. The same power type covers both sides of the interaction — toggle with `target_used`.
@@ -64,4 +66,3 @@ Player with this power can right-click any entity (empty main hand, not sneaking
 ```
 
 The entity with this power can be mounted by right-clicking it, unless it already has a passenger. Equivalent to the legacy `apoli:action_on_being_used` form.
-

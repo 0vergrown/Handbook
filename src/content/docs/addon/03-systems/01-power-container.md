@@ -50,8 +50,3 @@ The container is saved with the entity and synced to the client that needs it. W
 ## Performance shape
 
 Lookups you do per tick or per hit must be O(1) against the container's indexes, never a walk over all powers. The container maintains those indexes and invalidates them on change — lean on them instead of scanning.
-
-## See also
-
-- [Registering power types](/docs/addon/api/registering-power-types) — where `holder` comes from.
-- [Actions & conditions](/docs/addon/api/actions-and-conditions)

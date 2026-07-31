@@ -1,14 +1,12 @@
 ---
-title: "origins:modify_projectile_damage"
-description: "[Power Type](../powertypes.md)"
+title: "Modify Projectile Damage (Power Type)"
+description: "Modifies how much damage the projectile of the entity that has the power deals."
+navigation_title: "Modify Projectile Damage"
 ---
-
-Power Type
 
 Modifies how much damage the projectile of the entity that has the power deals.
 
-Type ID: `origins:modify_projectile_damage`
-
+Type ID: `apoli:modify_projectile_damage`
 
 ## Fields
 
@@ -21,15 +19,13 @@ Field  | Type | Default | Description
 `self_action` | Entity Action Type | _optional_ | If specified, this action will be executed on the 'actor' entity (the entity that has the power) whenever the modifier(s) are applied.
 `target_action` | Entity Action Type | _optional_ | If specified, this action will be executed on the the entity that has been hit whenever the modifier(s) are applied.
 
-
-
 ## Examples
 
 ```json
 {
-    "type": "origins:modify_projectile_damage",
+    "type": "apoli:modify_projectile_damage",
     "damage_condition": {
-        "type": "origins:projectile",
+        "type": "apoli:projectile",
         "projectile": "minecraft:spectral_arrow"
     },
     "modifier": {
@@ -40,4 +36,3 @@ Field  | Type | Default | Description
 ```
 
 This example will modify the damage of the Spectral Arrow projectile entity shot by the entity that has the power to deal additional 4 hearts of damage.
-

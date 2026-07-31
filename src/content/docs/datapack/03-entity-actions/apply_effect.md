@@ -1,12 +1,12 @@
 ---
-title: "apoli:apply_effect"
+title: "Apply Effect (Entity Action Type)"
 description: "Adds one or more status effects to the living entity."
+navigation_title: "Apply Effect"
 ---
 
 Adds one or more status effects to the living entity. Does not have an effect on non-living entities.
 
 Type ID: `apoli:apply_effect`
-
 
 ## Fields
 
@@ -14,7 +14,6 @@ Type ID: `apoli:apply_effect`
 | --------- | ------------------------------------------------------- | ---------- | ------------------------------------------------------------ |
 | `effect`  | [Status Effect Instance](/docs/datapack/data-types/status-effect-instance)                      | _optional_ | If set, this status effect will be applied by this action.   |
 | `effects` | [Array](/docs/datapack/data-types/array) of [Status Effect Instance](/docs/datapack/data-types/status-effect-instance) | _optional_ | If set, these status effects will be applied by this action. |
-
 
 ## Examples
 
@@ -30,7 +29,6 @@ Type ID: `apoli:apply_effect`
 ```
 
 This example will apply a Speed I status effect to the entity that would last for 20 seconds.
-
 
 ```json
 "entity_action": {

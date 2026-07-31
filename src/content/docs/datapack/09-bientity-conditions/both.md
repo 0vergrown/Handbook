@@ -1,6 +1,7 @@
 ---
-title: "apoli:both"
+title: "Both (Bi-Entity Condition Type)"
 description: "Checks for an entity condition on both the actor and target entities."
+navigation_title: "Both"
 ---
 
 Checks for an entity condition on both the actor and target entities.
@@ -25,4 +26,3 @@ Field | Type | Default | Description
 ```
 
 This example will check if both the actor entity and the target entity is a player.
-

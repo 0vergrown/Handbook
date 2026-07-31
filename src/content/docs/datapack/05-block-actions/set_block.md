@@ -1,12 +1,12 @@
 ---
-title: "apoli:set_block"
+title: "Set Block (Block Action Type)"
 description: "Overwrites the block at the targeted position with the default state of another one."
+navigation_title: "Set Block"
 ---
 
 Overwrites the block at the targeted position with the default state of another one.
 
 Type ID: `apoli:set_block`
-
 
 ## Fields
 
@@ -14,7 +14,6 @@ Field  | Type | Default | Description
 -------|------|---------|-------------
 `block` | Identifier | | The namespace and ID of the block to place.
 `nbt` | NBT | *optional* | The NBT data to give the block.
-
 
 ## Examples
 

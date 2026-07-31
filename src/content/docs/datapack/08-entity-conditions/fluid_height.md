@@ -1,14 +1,12 @@
 ---
-title: "origins:fluid_height"
-description: "[Entity Condition Type](../entityconditiontypes.md)"
+title: "Fluid Height (Entity Condition Type)"
+description: "Checks how high a specific fluid is at the entity. A fluid height of 0 means the entity is not touching the fluid."
+navigation_title: "Fluid Height"
 ---
-
-Entity Condition Type
 
 Checks how high a specific fluid is at the entity. A fluid height of 0 means the entity is not touching the fluid.
 
-Type ID: `origins:fluid_height`
-
+Type ID: `apoli:fluid_height`
 
 ## Fields
 
@@ -18,12 +16,11 @@ Field  | Type | Default | Description
 `comparison` | Comparison | | Determines how the height of the fluid should be compared to the specified value.
 `compare_to` | Float | | The value at which the height of the fluid will be compared to.
 
-
 ## Examples
 
 ```json
 "condition": {
-    "type": "origins:fluid_height",
+    "type": "apoli:fluid_height",
     "fluid": "minecraft:lava",
     "comparison": "==",
     "compare_to": 0
@@ -31,4 +28,3 @@ Field  | Type | Default | Description
 ```
 
 This example will check if the entity is not touching a lava fluid.
-

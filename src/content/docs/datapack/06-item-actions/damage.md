@@ -1,6 +1,7 @@
 ---
-title: "apoli:damage"
+title: "Damage (Item Action Type)"
 description: "Damages the item stack with a specified amount."
+navigation_title: "Damage"
 ---
 
 Damages the item stack with a specified amount.

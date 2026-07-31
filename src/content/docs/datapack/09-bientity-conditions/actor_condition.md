@@ -1,12 +1,12 @@
 ---
-title: "apoli:actor_condition"
+title: "Actor Condition (Bi-Entity Condition Type)"
 description: "Checks for an Entity Condition Type on the actor entity."
+navigation_title: "Actor Condition"
 ---
 
 Checks for an Entity Condition Type on the actor entity.
 
 Type ID: `apoli:actor_condition`
-
 
 ## Fields
 

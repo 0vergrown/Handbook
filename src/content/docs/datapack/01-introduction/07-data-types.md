@@ -34,6 +34,12 @@ Numeric conditions and resource checks share a comparison shape: a `comparison` 
 
 Operators: `<`, `<=`, `==`, `>=`, `>`, `!=`.
 
+On [apoli:resource](/docs/datapack/entity-conditions/resource), `compare_to` also accepts an [Expression](/docs/datapack/data-types/expression), so a resource can be compared against another resource or an entity stat rather than a fixed number:
+
+```json
+{ "comparison": ">=", "compare_to": "example:spell_cost" }
+```
+
 ## Single or list, almost everywhere
 
 Many fields accept **either** a single value **or** a list of them. `apoli:attribute` takes `modifier` (one) or `modifiers` (many); `apoli:apply_effect` takes `effect` as one object or an array. When a page says "single or list", both forms are valid — use whichever reads better.

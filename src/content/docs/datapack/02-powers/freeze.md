@@ -1,6 +1,7 @@
 ---
-title: "apoli:freeze"
+title: "Freeze (Power Type)"
 description: "Freezes the entity that has the power, as if they're in a Powder Snow block."
+navigation_title: "Freeze"
 ---
 
 Freezes the entity that has the power, as if they're in a Powder Snow block.
@@ -35,4 +36,3 @@ This example will freeze the entity that has the power.
 ```
 
 This example will freeze the entity that has the power if the entity is in a biome that snows.
-

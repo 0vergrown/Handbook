@@ -29,8 +29,3 @@ ONE OR TWO SENTENCES. Used by [WHO_USES_IT](/docs/datapack/powers/WHO_USES_IT).
 EXPLAIN THE EXAMPLE IN ONE LINE.
 
 <!-- If the type accepts "single or list" forms, or has legacy aliases, document them in their own short section. -->
-
-## See also
-
-- [WHO_USES_IT](/docs/datapack/powers/WHO_USES_IT)
-- [Data types overview](/docs/datapack/data-types/overview)

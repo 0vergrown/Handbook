@@ -1,6 +1,7 @@
 ---
-title: "apoli:modify_falling"
+title: "Modify Falling (Power Type)"
 description: "Modifies the falling velocity of the entity that has the power; can determine whether the entity should take fall damage or not."
+navigation_title: "Modify Falling"
 ---
 
 Modifies the falling velocity of the entity that has the power; can determine whether the entity should take fall damage or not.
@@ -9,14 +10,12 @@ Type ID: `apoli:modify_falling`
 
 > By default, the player falls at a speed of 0.08, or 0.01 if a Slow Falling status effect is present.
 
-
 ## Fields
 
 Field | Type | Default | Description
 ------|------|---------|------------
 `velocity` | [Float](/docs/datapack/data-types/float) | | Determines the speed of the falling velocity.
 `take_fall_damage` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Determines whether the entity should take fall damage or not.
-
 
 ## Examples
 

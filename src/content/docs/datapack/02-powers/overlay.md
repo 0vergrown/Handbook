@@ -1,14 +1,12 @@
 ---
-title: "origins:overlay"
-description: "[Power Type](../powertypes.md)"
+title: "Overlay (Power Type)"
+description: "Applies an overlay to the player's screen."
+navigation_title: "Overlay"
 ---
-
-Power Type
 
 Applies an overlay to the player's screen.
 
-Type ID: `origins:overlay`
-
+Type ID: `apoli:overlay`
 
 ## Fields
 
@@ -24,12 +22,11 @@ Field | Type | Default | Description
 `hide_with_hud` | Boolean | `true` | Determines if the overlay should be hidden if the HUD elements are hidden (with F1).
 `visible_in_third_person` | Boolean | `false` | Determines if the overlay is visible in third person.
 
-
 ## Examples
 
 ```json
 {
-    "type": "origins:overlay",
+    "type": "apoli:overlay",
     "texture": "minecraft:textures/block/ice.png",
     "strength": 1.0,
     "red": 1.0,
@@ -43,4 +40,3 @@ Field | Type | Default | Description
 ```
 
 This example will render an overlay with the texture of an Ice block, below the HUD and is not visible in third person.
-

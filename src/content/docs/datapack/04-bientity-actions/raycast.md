@@ -1,6 +1,8 @@
 ---
 title: "Raycast (Bi-Entity Action Type)"
 description: "Casts a ray from the actor straight at the target entity."
+navigation_title: "Raycast"
+aliases: ["raycast_between"]
 ---
 
 Casts a ray from the actor's eye position straight at the **target** entity, clamped to the distance between them, and runs actions on whatever it passes through.

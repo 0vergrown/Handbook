@@ -1,6 +1,7 @@
 ---
-title: "apoli:amount"
+title: "Amount (Damage Condition Type)"
 description: "Checks whether the damage is of a specified amount."
+navigation_title: "Amount"
 ---
 
 Checks whether the damage is of a specified amount.

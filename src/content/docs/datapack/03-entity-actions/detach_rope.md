@@ -1,6 +1,7 @@
 ---
-title: "apoli:detach_rope"
+title: "Detach Rope (Entity Action Type)"
 description: "Cuts ropes the acting entity owns."
+navigation_title: "Detach Rope"
 ---
 
 Cuts ropes the acting entity owns. With a `slot` it releases only that labelled rope (e.g. one of two whips); without one it releases every rope the entity owns.
@@ -23,4 +24,3 @@ Field  | Type | Default | Description
 ```
 
 This releases the entity's `left_whip` rope, leaving any others in place.
-

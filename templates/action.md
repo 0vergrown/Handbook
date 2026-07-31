@@ -32,8 +32,3 @@ ONE OR TWO SENTENCES. This is a **FLAVOUR action** — it goes in a `FLAVOUR_act
 EXPLAIN THE EXAMPLE IN ONE LINE.
 
 <!-- Optional: show it fired from a power, e.g. inside an action_on_hit's bientity_action. -->
-
-## See also
-
-- [FLAVOUR actions](/docs/datapack/actions/FLAVOUR-actions)
-- [Meta-actions](/docs/datapack/actions/meta-actions)

@@ -1,6 +1,7 @@
 ---
-title: "apoli:consume"
+title: "Consume (Item Action Type)"
 description: "Removes a provided amount of items from the item stack."
+navigation_title: "Consume"
 ---
 
 Removes a provided amount of items from the item stack. (Similar to how Minecraft's vanilla `/clear` command works)

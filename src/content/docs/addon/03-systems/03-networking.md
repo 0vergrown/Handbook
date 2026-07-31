@@ -35,8 +35,3 @@ Two builds with the *same* mod version can still disagree on the wire if a packe
 ## Sending to a specific client
 
 When a value only matters to one player (their own resource), sync it to that player's tracker, not to everyone — it's smaller and avoids leaking other players' state.
-
-## See also
-
-- [Auxiliary state & persistence](/docs/addon/systems/aux-and-persistence)
-- [Per-loader notes](/docs/addon/loaders/per-loader) — networking APIs differ between Fabric and NeoForge.

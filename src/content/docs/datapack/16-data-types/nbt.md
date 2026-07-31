@@ -1,6 +1,7 @@
 ---
-title: "NBT"
+title: "NBT (Data Type)"
 description: "A String or Object that defines a named binary tag (NBT) for storing arbitrary data."
+navigation_title: "NBT"
 ---
 
 A [String](/docs/datapack/data-types/string) or [Object](/docs/datapack/data-types/object) that defines a named binary tag (NBT) for storing arbitrary data. It consists of key-value pairs (the key being the name of the tag) separated by a comma.

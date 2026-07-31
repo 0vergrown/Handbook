@@ -1,6 +1,7 @@
 ---
-title: "Boolean"
+title: "Boolean (Data Type)"
 description: "A data type of which the value can be either true or false."
+navigation_title: "Boolean"
 ---
 
 A data type of which the value can be either `true` or `false`.

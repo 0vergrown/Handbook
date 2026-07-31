@@ -1,6 +1,7 @@
 ---
-title: "apoli:damage"
+title: "Damage (Bi-Entity Action Type)"
 description: "Applies damage to the target entity as if the actor entity has attacked it."
+navigation_title: "Damage"
 ---
 
 Applies damage to the target entity as if the actor entity has attacked it.
@@ -8,7 +9,6 @@ Applies damage to the target entity as if the actor entity has attacked it.
 Type ID: `apoli:damage`
 
 > The max health of the target entity will be used as the base value for the modifier(s).
-
 
 ## Fields
 
@@ -18,7 +18,6 @@ Field | Type | Default | Description
 `damage_type` | [Identifier](/docs/datapack/data-types/identifier) | | Defines the properties of the damage source that will be dealt, such as part of its death message, and whether it can bypass armor, shield, etc. (via damage type tags.)
 `modifier` | [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) | _optional_ | If specified, this modifier will be applied to the damage taken by the '**target**' entity.
 `modifiers` | [Array](/docs/datapack/data-types/array) of Attribute Modifiers | _optional_ | If specified, these modifiers will be applied to the damage taken by the '**target**' entity.
-
 
 ## Examples
 

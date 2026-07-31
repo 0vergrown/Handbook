@@ -1,6 +1,7 @@
 ---
-title: "Float"
+title: "Float (Data Type)"
 description: "A floating point (decimal) number, like 6.0, -1.5 or 0.1."
+navigation_title: "Float"
 ---
 
 A floating point (decimal) number, like `6.0`, `-1.5` or `0.1`.

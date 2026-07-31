@@ -1,18 +1,16 @@
 ---
-title: "origins:random_teleport"
-description: "[Entity Action Type](../entityactiontypes.md)"
+title: "Random Teleport (Entity Action Type)"
+description: "Teleports the entity to a random location within the specified area."
+navigation_title: "Random Teleport"
 ---
-
-Entity Action Type
 
 Teleports the entity to a random location within the specified area.
 
-Type ID: `origins:random_teleport`
+Type ID: `apoli:random_teleport`
 
 !!! note
 
     The actual width and height of the available teleportation area is double the respective provided value, +1 for the block the player stands on in the very center.
-
 
 ##	Fields
 
@@ -29,21 +27,20 @@ Field | Type | Default | Description
 `success_action` | Entity Action Type | *optional* | If specified, this entity action will be executed on the entity after it's been successfully teleported to a random location.
 `fail_action` | Entity Action Type | *optional* | If specified, this entity action will be executed on the entity upon failing to be teleported on a random location.
 
-
 ##	Examples
 
 ```json
 "entity_action": {
-	"type": "origins:random_teleport",
+	"type": "apoli:random_teleport",
 	"area_width": 8,
 	"area_height": 8,
 	"success_action": {
-		"type": "origins:spawn_particles",
+		"type": "apoli:spawn_particles",
 		"particle": "minecraft:poof",
 		"count": 8
 	},
 	"fail_action": {
-		"type": "origins:execute_command",
+		"type": "apoli:execute_command",
 		"command": "title @s actionbar {\"text\": \"Cannot teleport!\", \"color\": \"red\"}"
 	}
 }
@@ -51,15 +48,13 @@ Field | Type | Default | Description
 
 This example will teleport the entity to a random location within a 17x17x17 area. If the entity has been successfully teleported to a random location, the entity will emit a poof particle, otherwise, a message will pop-up that indicates the entity cannot be teleported.
 
-
-
 ```json
 "entity_action": {
-	"type": "origins:random_teleport",
+	"type": "apoli:random_teleport",
 	"area_width": 4,
 	"area_height": 8,
 	"landing_block_condition": {
-		"type": "origins:in_tag",
+		"type": "apoli:in_tag",
 		"tag": "minecraft:wool"
 	},
 	"landing_offset": {
@@ -70,4 +65,3 @@ This example will teleport the entity to a random location within a 17x17x17 are
 ```
 
 This example will teleport the entity on top of the center of a random block included in the `minecraft:wools` block tag within a 9x17x9 area.
-

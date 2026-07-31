@@ -1,6 +1,7 @@
 ---
-title: "apoli:trigger_cooldown"
+title: "Trigger Cooldown (Entity Action Type)"
 description: "Sets a Cooldown's remaining ticks to its maximum — i.e."
+navigation_title: "Trigger Cooldown"
 ---
 
 Sets a [apoli:cooldown](/docs/datapack/powers/cooldown)'s remaining ticks to its maximum — i.e. "uses" the cooldown so it starts ticking down toward `0` (ready). Does nothing if the cooldown isn't ready yet.
@@ -27,10 +28,3 @@ Type ID: `apoli:trigger_cooldown`
     "power": "example:dash_cooldown"
 }
 ```
-
-## See also
-
-- [apoli:cooldown](/docs/datapack/powers/cooldown) — the power being triggered.
-- [apoli:modify_resource](/docs/datapack/entity-actions/modify_resource) — generic alternative; lets you bypass the "must be ready" check.
-- Resource — check whether the cooldown is ready (`comparison: ==, compare_to: 0`).
-

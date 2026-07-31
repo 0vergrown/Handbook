@@ -1,6 +1,7 @@
 ---
-title: "apoli:raycast"
+title: "Raycast (Entity Action Type)"
 description: "Fires a ray from an entity's eye position — or straight at a target entity — and executes actions based on what it hits."
+navigation_title: "Raycast"
 ---
 
 Fires a ray from an entity's eye position and executes actions based on what it hits. Supports per-type distances, custom directions, piercing, particle trails, and command execution along the ray.

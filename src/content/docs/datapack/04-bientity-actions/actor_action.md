@@ -1,6 +1,7 @@
 ---
-title: "apoli:actor_action"
+title: "Actor Action (Bi-Entity Action Type)"
 description: "Executes an Entity Action Type on the actor entity."
+navigation_title: "Actor Action"
 ---
 
 Executes an Entity Action Type on the actor entity.
@@ -11,7 +12,6 @@ Type ID: `apoli:actor_action`
 Field  | Type | Default | Description
 -------|------|---------|-------------
 `action` | Entity Action Type | | The entity action type to execute on the actor entity.
-
 
 ## Examples
 ```json

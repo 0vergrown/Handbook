@@ -1,6 +1,7 @@
 ---
-title: "apoli:distance"
+title: "Distance (Bi-Entity Condition Type)"
 description: "Checks the distance between the target entity and the actor entity."
+navigation_title: "Distance"
 ---
 
 Checks the distance between the target entity and the actor entity.
@@ -13,7 +14,6 @@ Field  | Type | Default | Description
 `comparison` | [Comparison](/docs/datapack/data-types/comparison) | | Determines how the distance (in blocks) between the actor and target entities should be compared to the specified value.
 `compare_to` | [Float](/docs/datapack/data-types/float) | | The value at which the distance (in blocks) between the actor and target entities will be compared to.
 
-
 ## Examples
 
 ```json
@@ -24,4 +24,3 @@ Field  | Type | Default | Description
 }
 ```
 This example will check if the target entity is within 30 blocks radius relative from the actor entity.
-

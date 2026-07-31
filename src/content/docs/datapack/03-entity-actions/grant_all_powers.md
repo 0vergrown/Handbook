@@ -1,6 +1,7 @@
 ---
-title: "apoli:grant_all_powers"
+title: "Grant All Powers (Entity Action Type)"
 description: "Grants every power a named source provides — an origin, a skill tree, or an apoli:multiple power."
+navigation_title: "Grant All Powers"
 ---
 
 Grants every power that a named **power source** provides.
@@ -61,9 +62,3 @@ Grant a skill tree's powers without the hidden plumbing ones:
 ```
 
 > With `from` omitted this grants **every loaded power in the game**, which is almost never what you want and will happily hand a player every power of every origin in the pack. Always name a source.
-
-## See also
-
-- [apoli:revoke_all_powers](/docs/datapack/entity-actions/revoke_all_powers)
-- [apoli:grant_power](/docs/datapack/entity-actions/grant_power)
-- [/apoli:power grantall](/docs/datapack/commands/power)

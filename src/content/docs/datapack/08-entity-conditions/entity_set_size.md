@@ -1,12 +1,13 @@
 ---
-title: "apoli:entity_set_size"
+title: "Entity Set Size (Entity Condition Type)"
 description: "Compares the amount of entities stored in a power that uses the Entity Set to a certain value."
+navigation_title: "Entity Set Size"
+aliases: ["set_size"]
 ---
 
 Compares the amount of entities stored in a power that uses the [apoli:entity_set](/docs/datapack/powers/entity_set) to a certain value.
 
 Type ID: `apoli:entity_set_size` (but can use it's old `set_size` type id as an alias)
-
 
 ##	Fields
 
@@ -15,7 +16,6 @@ Field | Type | Default | Description
 `set` | [Identifier](/docs/datapack/data-types/identifier) | | The ID of the power.
 `comparison` | [Comparison](/docs/datapack/data-types/comparison) | | Determines how the amount of referenced entities in the specified power should be compared to the specified value.
 `compare_to` | [Integer](/docs/datapack/data-types/integer) | | The value at which the amount of referenced entities in the specified power will be compared to.
-
 
 ##	Examples
 

@@ -1,14 +1,12 @@
 ---
-title: "origins:time_of_day"
-description: "[Entity Condition Type](../entityconditiontypes.md)"
+title: "Time Of Day (Entity Condition Type)"
+description: "Checks the current day time ticks of the world."
+navigation_title: "Time Of Day"
 ---
-
-Entity Condition Type
 
 Checks the current day time ticks of the world.
 
-Type ID: `origins:time_of_day`
-
+Type ID: `apoli:time_of_day`
 
 ## Fields
 
@@ -17,20 +15,19 @@ Field | Type | Default | Description
 `comparison` | Comparison | | Determines how the current day time ticks of the world should be compared to the specified value.
 `compare_to` | Integer | | The value at which the current day time ticks of the world will be compared to.
 
-
 ## Examples
 
 ```json
 "condition": {
-    "type": "origins:and",
+    "type": "apoli:and",
     "conditions": [
         {
-            "type": "origins:time_of_day",
+            "type": "apoli:time_of_day",
             "comparison": ">=",
             "compare_to": 12000
         },
         {
-            "type": "origins:time_of_day",
+            "type": "apoli:time_of_day",
             "comparison": "<=",
             "compare_to": 13000
         }
@@ -39,4 +36,3 @@ Field | Type | Default | Description
 ```
 
 This example will check if it's the sun is currently setting.
-

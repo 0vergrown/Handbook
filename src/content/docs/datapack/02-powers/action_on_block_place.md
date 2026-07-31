@@ -1,6 +1,7 @@
 ---
-title: "apoli:action_on_block_place"
+title: "Action On Block Place (Power Type)"
 description: "Executes an action upon placing a block."
+navigation_title: "Action On Block Place"
 ---
 
 Executes an action upon placing a block.
@@ -22,7 +23,6 @@ Field | Type | Default | Description
 `hands` | [Array](/docs/datapack/data-types/array) of [Hand](/docs/datapack/data-types/hand) | `["main_hand", "off_hand"]` | Determines whether the specified actions should be executed if the player used the specified hand(s) when trying to place a block.
 `result_stack` | [Item Stack](/docs/datapack/data-types/item-stack) | *optional* | If specified, this item stack will be given to the player upon placing a block.
 `result_item_action` | Item Action Type | *optional* | If specified, this item action will be executed on the item that will be given to the player upon placing a block.
-
 
 ##	Examples
 

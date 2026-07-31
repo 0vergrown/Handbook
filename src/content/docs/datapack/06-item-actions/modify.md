@@ -1,6 +1,7 @@
 ---
-title: "apoli:modify"
+title: "Modify (Item Action Type)"
 description: "Applies an Item Modifier to the item stack."
+navigation_title: "Modify"
 ---
 
 Applies an Item Modifier to the item stack.

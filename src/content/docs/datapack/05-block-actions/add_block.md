@@ -1,12 +1,12 @@
 ---
-title: "apoli:add_block"
+title: "Add Block (Block Action Type)"
 description: "Adds a block at the specified action position."
+navigation_title: "Add Block"
 ---
 
 Adds a block at the specified action position. Adding means setting the block at the position, offset by the direction of the action.
 
 Type ID: `apoli:add_block`
-
 
 ## Fields
 
@@ -14,7 +14,6 @@ Field  | Type | Default | Description
 -------|------|---------|-------------
 `block` | Identifier | | The namespace and ID of the block to place.
 `nbt` | NBT | *optional* | The NBT data to give the block.
-
 
 ## Examples
 
@@ -44,4 +43,3 @@ This example will add a Chest block facing north at the position of the block ac
 }
 ```
 Same as before but with the NBT field
-

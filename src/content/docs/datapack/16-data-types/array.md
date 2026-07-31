@@ -1,6 +1,7 @@
 ---
-title: "Array"
+title: "Array (Data Type)"
 description: "Arrays are lists of other existing data types."
+navigation_title: "Array"
 ---
 
 Arrays are lists of other existing data types. They are enclosed by square brackets and each element is separated from the next by a comma.

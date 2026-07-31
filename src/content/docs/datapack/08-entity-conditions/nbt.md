@@ -1,6 +1,7 @@
 ---
-title: "apoli:nbt"
+title: "NBT (Entity Condition Type)"
 description: "Checks the entity's NBT."
+navigation_title: "NBT"
 ---
 
 Checks the entity's NBT.
@@ -13,7 +14,6 @@ Field | Type | Default | Description
 ------|------|---------|-------------
 `nbt` | [NBT](/docs/datapack/data-types/nbt) | | The NBT data to check for.
 
-
 ## Examples
 
 ```json
@@ -24,4 +24,3 @@ Field | Type | Default | Description
 ```
 
 This example will check if the entity has the `example_tag` added via `/tag` or by modifying the entity's `Tags` NBT string list.
-

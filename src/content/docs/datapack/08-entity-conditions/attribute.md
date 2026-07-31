@@ -1,14 +1,12 @@
 ---
-title: "origins:attribute"
-description: "[Entity Condition Type](../entityconditiontypes.md)"
+title: "Attribute (Entity Condition Type)"
+description: "Applies a check towards a specific attribute value of the entity."
+navigation_title: "Attribute"
 ---
-
-Entity Condition Type
 
 Applies a check towards a specific attribute value of the entity.
 
-Type ID: `origins:attribute`
-
+Type ID: `apoli:attribute`
 
 ## Fields
 
@@ -18,12 +16,11 @@ Field  | Type | Default | Description
 `comparison` | Comparison | |  Determines how the attribute's total value should be compared to the specified value.
 `compare_to` | Float | | The value at which the attribute's total value will be compared to.
 
-
 ## Examples
 
 ```json
 "condition": {
-    "type": "origins:attribute",
+    "type": "apoli:attribute",
     "attribute": "minecraft:generic.armor",
     "comparison": ">=",
     "compare_to": 10.0
@@ -31,4 +28,3 @@ Field  | Type | Default | Description
 ```
 
 This example will check if the value of the entity's `minecraft:generic.armor` attribute is 10 or more.
-

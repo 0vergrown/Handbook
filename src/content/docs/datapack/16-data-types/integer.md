@@ -1,6 +1,7 @@
 ---
-title: "Integer"
+title: "Integer (Data Type)"
 description: "A whole number (integer number), like 3 or -1."
+navigation_title: "Integer"
 ---
 
 A whole number (integer number), like 3 or -1. Numbers such as 0.3 or 5.5 are not allowed, those would be [Float](/docs/datapack/data-types/float)

@@ -1,6 +1,8 @@
 ---
-title: "apoli:modify_cursor_speed"
+title: "Modify Cursor Speed (Power Type)"
 description: "Scales how fast the holder's view turns with the mouse."
+navigation_title: "Modify Cursor Speed"
+aliases: ["modify_mouse_sensitivity", "modify_mouse_speed", "modify_look_sensitivity"]
 ---
 
 Scales how far the camera turns for a given amount of physical mouse movement — effectively a per-power mouse sensitivity multiplier.
@@ -59,8 +61,3 @@ Can't look up or down quickly, but turning is unaffected:
 - Several active `modify_cursor_speed` powers stack multiplicatively.
 - The value is recomputed once per client tick, not per frame, so it costs nothing on the render path.
 - Players without Apoli installed are unaffected. The server never desyncs from it — only the local view speed changes.
-
-## See also
-
-- [Attribute Modifier](/docs/datapack/data-types/attribute-modifier)
-- [`apoli:modify_swim_speed`](/docs/datapack/powers/modify_swim_speed)

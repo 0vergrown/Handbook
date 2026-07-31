@@ -1,12 +1,12 @@
 ---
-title: "apoli:distance_from_coordinates"
+title: "Distance From Coordinates (Block Condition Type)"
 description: "Compares the distance of the block's current position to the specified coordinates."
+navigation_title: "Distance From Coordinates"
 ---
 
 Compares the distance of the block's current position to the specified coordinates.
 
 Type ID: `apoli:distance_from_coordinates`
-
 
 ## Fields
 
@@ -24,7 +24,6 @@ Field | Type | Default | Description
 `comparison` | Comparison | | Determines how the calculated distance (in blocks) should be compared to the specified value.
 `compare_to` | Float | | The value at which the calculated distance (in blocks) will be compared to.
 
-
 ## Examples
 
 ```json
@@ -41,4 +40,3 @@ Field | Type | Default | Description
 ```
 
 This example will check if the block is within an 8 blocks radius relative to the specified coordinates (X: 1024, Z: 512).
-

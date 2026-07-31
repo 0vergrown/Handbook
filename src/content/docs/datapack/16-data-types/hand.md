@@ -1,6 +1,7 @@
 ---
-title: "Hand"
+title: "Hand (Data Type)"
 description: "A String used to indicate one of the hands of an entity."
+navigation_title: "Hand"
 ---
 
 A [String](/docs/datapack/data-types/string) used to indicate one of the hands of an entity.
@@ -32,4 +33,3 @@ Only consider the main hand.
 ```
 
 Consider both hands. Equivalent to omitting the field on power types that default to both.
-

@@ -1,12 +1,12 @@
 ---
-title: "apoli:fluid"
+title: "Fluid (Block Condition Type)"
 description: "Checks the fluid state of the current position with a Fluid Condition Type."
+navigation_title: "Fluid"
 ---
 
 Checks the fluid state of the current position with a Fluid Condition Type.
 
 Type ID: `apoli:fluid`
-
 
 ## Fields
 
@@ -26,4 +26,3 @@ Field  | Type | Default | Description
 ```
 
 This example will check if the block is a source fluid.
-

@@ -1,6 +1,7 @@
 ---
-title: "apoli:command"
+title: "Command (Block Condition Type)"
 description: "Compares the result of the specified command to the specified value at the position of the block."
+navigation_title: "Command"
 ---
 
 Compares the result of the specified command to the specified value at the position of the block.
@@ -15,7 +16,6 @@ Field  | Type | Default | Description
 `comparison` | [Comparison](/docs/datapack/data-types/comparison) | | Determines how the result value (an integer) of the executed command should be compared to the specified value.
 `compare_to` | [Integer](/docs/datapack/data-types/integer) | | The value at which the result value (an integer) of the executed command will be compared to.
 
-
 ## Examples
 
 ```json
@@ -28,4 +28,3 @@ Field  | Type | Default | Description
 ```
 
 This example will check if there is an entity inside the block.
-

@@ -1,6 +1,7 @@
 ---
-title: "Destruction Type"
+title: "Destruction Type (Data Type)"
 description: "A String used to determine the effect of an explosion to the terrain."
+navigation_title: "Destruction Type"
 ---
 
 A [String](/docs/datapack/data-types/string) used to determine the effect of an explosion to the terrain.

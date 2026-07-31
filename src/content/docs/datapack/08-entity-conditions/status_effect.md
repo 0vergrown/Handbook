@@ -1,12 +1,12 @@
 ---
-title: "apoli:status_effect"
+title: "Status Effect (Entity Condition Type)"
 description: "Checks whether the entity has a specified status effect with a specified amplifier, and/or duration range."
+navigation_title: "Status Effect"
 ---
 
 Checks whether the entity has a specified status effect with a specified amplifier, and/or duration range.
 
 Type ID: `apoli:status_effect`
-
 
 ## Fields
 
@@ -17,7 +17,6 @@ Field  | Type | Default | Description
 `max_amplifier` | [Integer](/docs/datapack/data-types/integer) | `2147483647` | The maximum amplifier the status effect should have in order to pass the check.
 `min_duration` | [Integer](/docs/datapack/data-types/integer) | `-1` | The minimum duration in ticks the status effect should have left in order to pass the check.
 `max_duration` | [Integer](/docs/datapack/data-types/integer) | `2147483647` | The maximum duration in ticks the status effect should have left in order to pass the check.
-
 
 ## Examples
 

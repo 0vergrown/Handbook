@@ -12,12 +12,21 @@
 
 	const current = $derived(page.url.pathname);
 	const hrefOf = (slug) => `${base}/docs/${slug}`;
-	const sectionHasCurrent = (section) => section.pages.some((p) => hrefOf(p.slug) === current);
+	const holdsCurrent = (pages) => pages.some((p) => hrefOf(p.slug) === current);
+	const sectionHasCurrent = (s) =>
+		holdsCurrent(s.pages) || s.groups.some((g) => holdsCurrent(g.pages));
 
-	// per-section open state; the section holding the current page is always open
+	// Open state for sections and for groups (keyed "section/group"). Whatever
+	// holds the current page is forced open so a deep link never lands collapsed.
 	let open = $state({});
+	let groupOpen = $state({});
 	$effect(() => {
-		for (const s of nav) if (sectionHasCurrent(s)) open[s.title] = true;
+		for (const s of nav) {
+			if (sectionHasCurrent(s)) open[s.title] = true;
+			for (const g of s.groups) {
+				if (holdsCurrent(g.pages)) groupOpen[`${s.title}/${g.title}`] = true;
+			}
+		}
 	});
 </script>
 
@@ -36,20 +45,46 @@
 					<details bind:open={open[section.title]}>
 						<summary>
 							<span>{section.title}</span>
-							<span class="count">{section.pages.length}</span>
+							<span class="count">{section.count}</span>
 						</summary>
-						<ul class="pages">
-							{#each section.pages as p (p.slug)}
-								<li>
-									<a
-										href={hrefOf(p.slug)}
-										aria-current={current === hrefOf(p.slug) ? 'page' : undefined}
-									>
-										{p.title}
-									</a>
-								</li>
-							{/each}
-						</ul>
+
+						{#if section.pages.length}
+							<ul class="pages">
+								{#each section.pages as p (p.slug)}
+									<li>
+										<a
+											href={hrefOf(p.slug)}
+											aria-current={current === hrefOf(p.slug) ? 'page' : undefined}
+										>
+											{p.title}
+										</a>
+									</li>
+								{/each}
+							</ul>
+						{/if}
+
+						{#each section.groups as group (group.title)}
+							<div class="group">
+								<details bind:open={groupOpen[`${section.title}/${group.title}`]}>
+									<summary>
+										<span>{group.title}</span>
+										<span class="count">{group.pages.length}</span>
+									</summary>
+									<ul class="pages nested">
+										{#each group.pages as p (p.slug)}
+											<li>
+												<a
+													href={hrefOf(p.slug)}
+													aria-current={current === hrefOf(p.slug) ? 'page' : undefined}
+												>
+													{p.title}
+												</a>
+											</li>
+										{/each}
+									</ul>
+								</details>
+							</div>
+						{/each}
 					</details>
 				</li>
 			{/each}
@@ -140,9 +175,53 @@
 		margin-left: auto;
 	}
 
+	/* sub-category headers, one level inside a section */
+	.group > details > summary {
+		display: flex;
+		align-items: center;
+		gap: 0.8rem;
+		padding: 0.35rem var(--sk-page-padding-side) 0.35rem calc(var(--sk-page-padding-side) + 1.2rem);
+		font: var(--sk-font-ui-small);
+		font-family: var(--sk-font-family-ui);
+		color: var(--sk-fg-3);
+		cursor: pointer;
+		list-style: none;
+		user-select: none;
+	}
+	.group > details > summary::-webkit-details-marker {
+		display: none;
+	}
+	.group > details > summary::before {
+		content: '';
+		width: 0.7rem;
+		height: 0.7rem;
+		flex-shrink: 0;
+		background: currentColor;
+		mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6" fill="none" stroke="black" stroke-width="2.5"/></svg>')
+			no-repeat 50% 50%;
+		transition: transform 0.15s;
+		order: -1;
+	}
+	.group > details[open] > summary::before {
+		transform: rotate(90deg);
+	}
+	.group > details > summary:hover {
+		color: var(--sk-fg-1);
+		background: var(--sk-bg-4);
+	}
+	.group:last-child {
+		margin-bottom: 1rem;
+	}
+
 	.pages {
 		list-style: none;
 		margin: 0.2rem 0 1rem;
+	}
+	.pages.nested {
+		margin: 0.1rem 0 0.6rem;
+	}
+	.pages.nested a {
+		padding-left: calc(var(--sk-page-padding-side) + 3rem);
 	}
 	.pages li {
 		margin: 0;

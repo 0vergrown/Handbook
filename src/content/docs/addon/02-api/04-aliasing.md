@@ -72,8 +72,3 @@ PowerTypeRegistry.registerAliasDefaults(MyMod.id("modify_damage_taken"), Map.of(
 - Removing an alias later is a one-line change.
 
 This is the pattern behind the many aliases you see across the [data-pack docs](/docs/datapack/introduction/powers) (`change_resource`, `set_size`, `disguise_as_player`, …).
-
-## See also
-
-- [Registering power types](/docs/addon/api/registering-power-types)
-- [Actions & conditions](/docs/addon/api/actions-and-conditions)

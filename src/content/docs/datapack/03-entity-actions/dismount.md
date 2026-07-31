@@ -1,24 +1,21 @@
 ---
-title: "origins:dismount"
-description: "[Entity Action Type](../entityactiontypes.md)"
+title: "Dismount (Entity Action Type)"
+description: "Dismounts the entity from their vehicle."
+navigation_title: "Dismount"
 ---
-
-Entity Action Type
 
 Dismounts the entity from their vehicle.
 
-Type ID: `origins:dismount`
-
+Type ID: `apoli:dismount`
 
 ## Fields
 
 _None._
 
-
 ## Examples
 
 ```json
 "entity_action": {
-    "type": "origins:dismount"
+    "type": "apoli:dismount"
 }
 ```

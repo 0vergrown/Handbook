@@ -1,6 +1,8 @@
 ---
-title: "apoli:attribute"
+title: "Attribute (Power Type)"
 description: "Modifies one or more attributes on the entity for as long as the power is held."
+navigation_title: "Attribute"
+aliases: ["conditioned_attribute"]
 ---
 
 Modifies one or more attributes on the entity for as long as the power is held.
@@ -71,10 +73,3 @@ Modifier driven by a resource value (links a vanilla attribute to a [apoli:resou
     }
 }
 ```
-
-## See also
-
-- [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) — the per-modifier data shape.
-- [Attribute Modifier Operation](/docs/datapack/data-types/attribute-modifier-operation) — the operation table (and aliases to vanilla operations).
-- [apoli:resource](/docs/datapack/powers/resource) — when modifiers feed off a resource via the `resource` field.
-

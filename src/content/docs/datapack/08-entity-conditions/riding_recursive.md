@@ -1,19 +1,16 @@
 ---
-title: "origins:riding_recursive"
-description: "[Entity Condition Type](../entityconditiontypes.md)"
+title: "Riding Recursive (Entity Condition Type)"
+description: "Checks whether the 'actor' entity is directly riding the 'target' entity or the passenger(s) of the 'target' entity."
+navigation_title: "Riding Recursive"
 ---
-
-Entity Condition Type
 
 Checks whether the '**actor**' entity is directly riding the '**target**' entity or the passenger(s) of the '**target**' entity.
 
-Type ID: `origins:riding_recursive`
-
+Type ID: `apoli:riding_recursive`
 
 !!! note
 
     In the context of this entity condition type, the '**actor**' entity is the passenger and the entity that invoked the condition whilst the '**target**' entities are the entity that is being directly ridden and the passenger(s) of the said entity.
-
 
 ## Fields
 
@@ -23,12 +20,11 @@ Field | Type | Default | Description
 `comparison` | Comparison | `">="` | Determines how the amount of entities currently being ridden should be compared to the specified value.
 `compare_to` | Integer | `1` | The value at which the amoutn of entities currently being ridden will be compared to.
 
-
 ## Examples
 
 ```json
 "condition": {
-    "type": "origins:riding_recursive",
+    "type": "apoli:riding_recursive",
     "comparison": ">=",
     "compare_to": 2
 }
@@ -36,15 +32,13 @@ Field | Type | Default | Description
 
 This example will check if the '**actor**' entity is currently riding an entity directly or an entity that has one or multiple passengers, regardless of their entity type.
 
-
-
 ```json
 "condition": {
-    "type": "origins:riding_recursive",
+    "type": "apoli:riding_recursive",
     "bientity_condition": {
-        "type": "origins:target_condition",
+        "type": "apoli:target_condition",
         "condition": {
-            "type": "origins:entity_type",
+            "type": "apoli:entity_type",
             "entity_type": "minecraft:strider"
         }
     },
@@ -53,5 +47,4 @@ This example will check if the '**actor**' entity is currently riding an entity 
 }
 ```
 
-This example will check if the '**actor**' entity is currently riding a Strider directly or an entity that has Striders as its passengers. 
-
+This example will check if the '**actor**' entity is currently riding a Strider directly or an entity that has Striders as its passengers.

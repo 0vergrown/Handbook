@@ -1,12 +1,12 @@
 ---
-title: "apoli:prevent_death"
+title: "Prevent Death (Power Type)"
 description: "Prevents death; any damage which would kill the entity that has the power will instead reduce their health to half a heart."
+navigation_title: "Prevent Death"
 ---
 
 Prevents death; any damage which would kill the entity that has the power will instead reduce their health to half a heart.
 
 Type ID: `apoli:prevent_death`
-
 
 ## Fields
 
@@ -14,7 +14,6 @@ Field  | Type | Default | Description
 -------|------|---------|-------------
 `damage_condition` | Damage Condition Type | _optional_ | If specified, death will only be prevented if the damage dealt to the entity fulfills this condition.
 `entity_action` | Entity Action Type | _optional_ | If specified, this action will be executed on the entity when death is prevented.
-
 
 ## Examples
 
@@ -52,4 +51,3 @@ Field  | Type | Default | Description
 ```
 
 This example will always prevent the entity from dying and then apply the same effects as a Totem of Undying, e.g: clear all status effects on the entity and then apply Regeneration II, Fire Resistance I and Absorption I.
-

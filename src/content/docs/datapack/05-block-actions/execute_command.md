@@ -1,19 +1,18 @@
 ---
-title: "apoli:execute_command"
+title: "Execute Command (Block Action Type)"
 description: "Executes a command at the position of the block."
+navigation_title: "Execute Command"
 ---
 
 Executes a command at the position of the block.
 
 Type ID: `apoli:execute_command`
 
-
 ## Fields
 
 Field  | Type | Default | Description
 -------|------|---------|-------------
 `command` | String |  | The command to execute.
-
 
 ## Examples
 
@@ -25,4 +24,3 @@ Field  | Type | Default | Description
 ```
 
 This example will summon a Wheat item entity at the position of the block action type.
-

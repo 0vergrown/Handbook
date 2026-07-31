@@ -1,12 +1,12 @@
 ---
-title: "Food Component"
+title: "Food Component (Data Type)"
 description: "An Object which defines a new food component."
+navigation_title: "Food Component"
 ---
 
 An [Object](/docs/datapack/data-types/object) which defines a new food component.
 
 > The actual food saturation level is determined by the `food * saturation * 2` formula.
-
 
 ## Fields
 
@@ -30,4 +30,3 @@ Field  | Type | Default | Description
 ```
 
 A food component that recovers 4 hunger and 8 saturation points.
-

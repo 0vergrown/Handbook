@@ -1,6 +1,7 @@
 ---
-title: "apoli:fire_projectile"
+title: "Fire Projectile (Entity Action Type)"
 description: "Fires one or more projectiles or entities."
+navigation_title: "Fire Projectile"
 ---
 
 Fires one or more projectiles or entities.
@@ -44,4 +45,3 @@ Type ID: `apoli:fire_projectile`
 ```
 
 This example will fire three snowballs at where the player is facing.
-

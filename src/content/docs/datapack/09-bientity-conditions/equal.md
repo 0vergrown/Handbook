@@ -1,6 +1,7 @@
 ---
-title: "apoli:equal"
+title: "Equal (Bi-Entity Condition Type)"
 description: "Checks if the actor entity is the target entity."
+navigation_title: "Equal"
 ---
 
 Checks if the actor entity is the target entity.
@@ -18,4 +19,3 @@ _None._
 	"type": "apoli:equal"
 }
 ```
-

@@ -1,6 +1,7 @@
 ---
-title: "apoli:phasing"
+title: "Phasing (Power Type)"
 description: "Allows the entity that has the power to 'phase' (move) through blocks."
+navigation_title: "Phasing"
 ---
 
 Allows the entity that has the power to "phase" (move) through blocks.
@@ -44,4 +45,3 @@ Field  | Type | Default | Description
 ```
 
 This example will allow the player to phase through all blocks except for those in the `origins:unphasable` (`data/origins/tags/blocks/unphasable.json`) block tag. They can also phase down while sneaking, but will make a short stop at each block so they don't take fall damage.
-

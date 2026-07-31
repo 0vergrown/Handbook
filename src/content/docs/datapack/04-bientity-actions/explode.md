@@ -1,6 +1,7 @@
 ---
-title: "apoli:explode"
+title: "Explode (Bi-Entity Action Type)"
 description: "Creates an explosion in the world, with control over where it originates and how it interacts with blocks."
+navigation_title: "Explode"
 ---
 
 Creates an explosion in the world, with control over where it originates and how it interacts with blocks. Damage attribution and kill credit go to the **actor**.
@@ -37,4 +38,3 @@ Block protection is resolved in this order:
 }
 ```
 Explosion at the actor's position, breaking blocks.
-

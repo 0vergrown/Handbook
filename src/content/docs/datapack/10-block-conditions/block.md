@@ -1,19 +1,18 @@
 ---
-title: "apoli:block"
+title: "Block (Block Condition Type)"
 description: "Checks whether the block is a certain block (by ID)."
+navigation_title: "Block"
 ---
 
 Checks whether the block is a certain block (by ID).
 
 Type ID: `apoli:block`
 
-
 ## Fields
 
 Field  | Type | Default | Description
 -------|------|---------|-------------
 `block` | [Identifier](/docs/datapack/data-types/identifier) | | The namespace and ID of the block that this block needs to be to pass the check.
-
 
 ## Examples
 
@@ -25,8 +24,6 @@ Field  | Type | Default | Description
 ```
 
 This example checks if the block is a Diamond Block.
-
-
 
 ```json
 "block_condition": {
@@ -45,4 +42,3 @@ This example checks if the block is a Diamond Block.
 ```
 
 This example will check if the block is either a Diamond Block or an Emerald Block.
-

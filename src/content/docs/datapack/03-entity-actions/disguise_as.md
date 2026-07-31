@@ -1,6 +1,8 @@
 ---
-title: "apoli:disguise_as"
+title: "Disguise As (Entity Action Type)"
 description: "Makes the entity appear as another entity — a mob type, or a player."
+navigation_title: "Disguise As"
+aliases: ["disguise_as_player"]
 ---
 
 Makes the entity appear as another entity — a mob type, or a player. Ported from the Sync mod (merging `disguise_as` and `disguise_as_player`). Client-side visual; the entity's actual type/behavior is unchanged.
@@ -42,7 +44,6 @@ Disguises the entity as an armor stand.
 
 Disguises the entity as the player "Notch" (shown with their skin if they are online).
 
-
 ## How the disguise renders
 
 For a **mob disguise** the client builds a hidden copy of that entity type and draws it in place of the real
@@ -65,4 +66,3 @@ stays still; only living disguises are animated.
 > produces no attack animation, because nothing tells the client an attack happened.
 
 > Since 2026-07-10 a disguise also changes the holder's name in **chat** and the **multiplayer tab list** (not just the nameplate), unless `change_name` is `false`. An active [apoli:modify_label_render](/docs/datapack/powers/modify_label_render) takes priority over the disguise's name.
-

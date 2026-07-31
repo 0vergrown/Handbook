@@ -1,6 +1,7 @@
 ---
-title: "apoli:empty"
+title: "Empty (Item Condition Type)"
 description: "Checks if there is no item."
+navigation_title: "Empty"
 ---
 
 Checks if there is no item.
@@ -10,7 +11,6 @@ Type ID: `apoli:empty`
 ## Fields
 
 _None._
-
 
 ## Examples
 

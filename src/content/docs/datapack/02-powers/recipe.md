@@ -1,6 +1,7 @@
 ---
-title: "apoli:recipe"
+title: "Recipe (Power Type)"
 description: "Allows a player with this power to craft the defined crafting recipe."
+navigation_title: "Recipe"
 ---
 
 Allows a player with this power to craft the defined crafting recipe. The recipe is injected server-side and only players holding the power can use it.
@@ -80,4 +81,3 @@ This example will allow the player that has the power to craft Cobwebs by combin
 ```
 
 This example crafts an iron sword that grants `example:fire_touch` while held in the main hand, and `example:warm_glow` in any equipment slot.
-

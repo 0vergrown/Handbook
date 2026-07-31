@@ -1,6 +1,7 @@
 ---
-title: "apoli:model_color"
+title: "Model Color (Power Type)"
 description: "Multiplies the luminosity of the base color of the texture of the entity that has the power by the specified color values."
+navigation_title: "Model Color"
 ---
 
 Multiplies the luminosity of the base color of the texture of the entity that has the power by the specified color values.

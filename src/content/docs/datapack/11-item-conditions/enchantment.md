@@ -1,6 +1,7 @@
 ---
-title: "apoli:enchantment"
+title: "Enchantment (Item Condition Type)"
 description: "Checks the level of a certain enchantment, or the amount of individual enchantments on the item."
+navigation_title: "Enchantment"
 ---
 
 Checks the level of a certain enchantment, or the amount of individual enchantments on the item.

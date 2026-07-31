@@ -1,6 +1,7 @@
 ---
-title: "apoli:hunger"
+title: "Hunger (Entity Condition Type)"
 description: "Compares the entity's hunger level (alias food_level)."
+navigation_title: "Hunger"
 ---
 
 Compares the entity's hunger level (alias `food_level`).

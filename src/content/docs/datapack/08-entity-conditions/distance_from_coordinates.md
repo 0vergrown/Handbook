@@ -1,14 +1,12 @@
 ---
-title: "origins:distance_from_coordinates"
-description: "[Entity Condition Type](../entityconditiontypes.md)"
+title: "Distance From Coordinates (Entity Condition Type)"
+description: "Compares the distance of the entity's current position to the specified coordinates."
+navigation_title: "Distance From Coordinates"
 ---
-
-Entity Condition Type
 
 Compares the distance of the entity's current position to the specified coordinates.
 
-Type ID: `origins:distance_from_coordinates`
-
+Type ID: `apoli:distance_from_coordinates`
 
 ## Fields
 
@@ -26,12 +24,11 @@ Field | Type | Default | Description
 `comparison` | Comparison | | Determines how the calculated distance should be compared to the specified value.
 `compare_to` | Float | | The value at which the calculated distance is compared to.
 
-
 ## Examples
 
 ```json
 "condition": {
-    "type": "origins:distance_from_coordinates",
+    "type": "apoli:distance_from_coordinates",
     "offset": {
         "x": 256,
         "y": 64,
@@ -45,11 +42,9 @@ Field | Type | Default | Description
 
 This example will check if the entity is within an 8 blocks radius relative to the specified coordinates (X: 256, Y: 64, Z: 32).
 
-
-
 ```json
 "condition": {
-    "type": "origins:distance_from_coordinates",
+    "type": "apoli:distance_from_coordinates",
     "reference": "world_spawn",
     "shape": "cube",
     "ignore_y": true,
@@ -59,4 +54,3 @@ This example will check if the entity is within an 8 blocks radius relative to t
 ```
 
 This example will check if the player is within a 4 blocks radius relative to the world spawn.
-

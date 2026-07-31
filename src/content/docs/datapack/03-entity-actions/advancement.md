@@ -1,6 +1,7 @@
 ---
-title: "apoli:advancement"
+title: "Advancement (Entity Action Type)"
 description: "Grants or revokes an advancement (aliases grant_advancement, revoke_advancement)."
+navigation_title: "Advancement"
 ---
 
 Grants or revokes an advancement (aliases `grant_advancement`, `revoke_advancement`).

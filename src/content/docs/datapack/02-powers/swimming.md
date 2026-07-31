@@ -1,31 +1,26 @@
 ---
-title: "origins:swimming"
-description: "[Power Type](../powertypes.md)"
+title: "Swimming (Power Type)"
+description: "Allows the player to swim (outside of water!)."
+navigation_title: "Swimming"
 ---
-
-Power Type
 
 Allows the player to swim (outside of water!).
 
-Type ID: `origins:swimming`
-
+Type ID: `apoli:swimming`
 
 ## Fields
 
 _None._
 
-
-
 ## Examples
 
 ```json
 {
-    "type": "origins:swimming",
+    "type": "apoli:swimming",
     "condition": {
-        "type": "origins:on_block"
+        "type": "apoli:on_block"
     }
 }
 ```
 
 This example will make the player swim instead of sprint if the player is on the ground.
-

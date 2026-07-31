@@ -1,13 +1,12 @@
 ---
-title: "origins:replace_loot_table"
-description: "[Power Type](../powertypes.md)"
+title: "Replace Loot Table (Power Type)"
+description: "Replaces a loot table with another loot table."
+navigation_title: "Replace Loot Table"
 ---
-
-Power Type
 
 Replaces a loot table with another loot table.
 
-Type ID: `origins:replace_loot_table`
+Type ID: `apoli:replace_loot_table`
 
 !!! note
 
@@ -27,7 +26,6 @@ Type ID: `origins:replace_loot_table`
     Entity     | The entity that died.
     Fishing    | The '**actor**' entity's fishing bobber.
 
-
 ## Fields
 
 Field | Type | Default | Description
@@ -37,7 +35,6 @@ Field | Type | Default | Description
 `block_condition` | Block Condition Type | _optional_ | If specified, the loot tables will only be replaced if the block at the context of the loot tables fulfill this condition.
 `item_condition` | Item Condition Type | _optional_ | If specified, the loot tables will only be replaced if the item in the context of the loot tables fulfill this condition.
 `priority` | Integer | `0` | Determines the application priority of the power.
-
 
 ## Examples
 
@@ -64,7 +61,7 @@ Field | Type | Default | Description
 
 ```json
 {
-    "type": "origins:replace_loot_table",
+    "type": "apoli:replace_loot_table",
     "replace": {
         "([a-z|0-9|\\-|_]).*:blocks\/((?!diamond).*)_ore": "example:double_drops"
     }
@@ -72,8 +69,6 @@ Field | Type | Default | Description
 ```
 
 This example will essentially double the drops of Ore blocks except for Diamond Ore block, as indicated in the specified regular expression. The `apoli:replaced_loot_table` loot table contains the contents of the replaced loot table, which is in this case would be the loot tables for Ore blocks except for the Diamond Ore block.
-
-
 
 `data/example/loot_tables/entities/custom_creeper_loot.json`
 
@@ -99,15 +94,15 @@ This example will essentially double the drops of Ore blocks except for Diamond 
 
 ```json
 {
-    "type": "origins:replace_loot_table",
+    "type": "apoli:replace_loot_table",
     "replace": {
         "minecraft:entities/creeper": "example:entities/custom_creeper_loot"
     },
     "condition": {
-        "type": "origins:equipped_item",
+        "type": "apoli:equipped_item",
         "equipment_slot": "mainhand",
         "item_condition": {
-            "type": "origins:ingredient",
+            "type": "apoli:ingredient",
             "ingredient": {
                 "item": "minecraft:wooden_sword"
             }
@@ -117,4 +112,3 @@ This example will essentially double the drops of Ore blocks except for Diamond 
 ```
 
 This example will replace the loot table for Creepers with the `example:entities/custom_creeper_loot` loot table if the actor entity is holding a Wooden Sword, which will make the Creeper drop one of the Music Disc items from the `#minecraft:creeper_drop_music_discs` item tag in a random fashion if killed.
-

@@ -82,8 +82,3 @@ PowerTypeRegistry.register(
 ```
 
 This is how Apoli keeps `apoli:conditioned_attribute` working as an alias of `apoli:attribute`, and how it renames legacy fields to their canonical names before parsing.
-
-## See also
-
-- [Actions & conditions](/docs/addon/api/actions-and-conditions) — the other things you'll register.
-- [The power container](/docs/addon/systems/power-container) — what `holder` is.

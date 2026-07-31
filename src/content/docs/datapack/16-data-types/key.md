@@ -1,6 +1,7 @@
 ---
-title: "Key"
+title: "Key (Data Type)"
 description: "Defines which key an active power reacts to — a built-in key or one you define in a data pack."
+navigation_title: "Key"
 ---
 
 A **Key** tells an [active power](/docs/datapack/powers/action_on_key_press) which keybinding to react to. It can be written two ways: a plain [String](/docs/datapack/data-types/string) naming the key, or an [Object](/docs/datapack/data-types/object) with extra options.

@@ -1,12 +1,12 @@
 ---
-title: "Hud Render"
+title: "HUD Render (Data Type)"
 description: "An Object or Array of objects used to define how a resource or cooldown bar should be rendered."
+navigation_title: "HUD Render"
 ---
 
 An [Object](/docs/datapack/data-types/object) or [Array](/docs/datapack/data-types/array) of objects used to define how a resource or cooldown bar should be rendered.
 
 > If the specified HUD render is an array of objects, then the HUD render will choose the first object that is allowed to be rendered (its `should_render` field set to `true`) and its condition fulfilled (or if its `condition` field is absent) from top to bottom. The `order` value of the very first object will also be inherited by the following objects that do not have the `order` field specified.
-
 
 ##	Fields
 
@@ -19,7 +19,6 @@ Field  | Type | Default | Description
 `condition` | Entity Condition Type | _optional_ | If set (and `should_render` is true), the bar will only display when the entity with the power fulfills this condition.
 `inverted` | [Boolean](/docs/datapack/data-types/boolean) | `false` | If set to true, inverts the way the hud render process (it'll look like its value is being decreased).
 `order` | [Integer](/docs/datapack/data-types/integer) | *optional* | If specified, this determines the position of the HUD render when being rendered. The higher the `order` value is, the higher it is on the rendered HUD render stack.
-
 
 ## Examples
 

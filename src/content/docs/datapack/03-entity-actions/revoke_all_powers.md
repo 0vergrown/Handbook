@@ -1,6 +1,7 @@
 ---
-title: "apoli:revoke_all_powers"
+title: "Revoke All Powers (Entity Action Type)"
 description: "Revokes every power that came from the named source(s)."
+navigation_title: "Revoke All Powers"
 ---
 
 Revokes every power that came from the named source(s).

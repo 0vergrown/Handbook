@@ -107,7 +107,10 @@ for (const file of files) {
 	const typeId = idMatch ? idMatch[1] : null;
 
 	const slug = typeId ? typeId.split(':')[1].replace(/\//g, '-') : kebab(humanName);
-	const title = typeId ?? humanName;
+	// The Node docs already name files "Attribute (Power Type)" — that IS the
+	// house title format, so use it rather than the raw type id. Run
+	// scripts/retitle-docs.mjs afterwards to normalise and add `aliases:`.
+	const title = wikiName;
 	const originsPage = typeId ? ORIGINS_PAGES[typeId] : undefined;
 	const url = originsPage
 		? `/docs/datapack/origins/${originsPage}`
@@ -286,7 +289,9 @@ for (const e of entries) {
 	body = linkify(body);
 	body = sanitizeProse(body);
 
-	const fm = `---\ntitle: "${e.title}"\ndescription: "${description}"\n---\n\n`;
+	const fm =
+		`---\ntitle: "${e.title}"\ndescription: "${description}"\n` +
+		`navigation_title: "${e.humanName}"\n---\n\n`;
 	const outDir = path.join(OUT, e.sectionFolder);
 	fs.mkdirSync(outDir, { recursive: true });
 	fs.writeFileSync(path.join(outDir, `${e.slug}.md`), fm + body.trimStart() + '\n');

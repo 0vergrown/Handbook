@@ -1,6 +1,7 @@
 ---
-title: "apoli:action_over_time"
+title: "Action Over Time (Power Type)"
 description: "Executes an Entity Action Type on the entity that has the power within the specified interval."
+navigation_title: "Action Over Time"
 ---
 
 Executes an Entity Action Type on the entity that has the power within the specified interval.
@@ -32,4 +33,3 @@ Field  | Type | Default | Description
 ```
 
 This example will set the entity on fire if the entity that has the power is on fire, essentially making the entity burn indefinitely unless the entity manages to extinguish the fire.
-

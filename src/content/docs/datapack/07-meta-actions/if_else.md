@@ -1,6 +1,7 @@
 ---
-title: "apoli:if_else"
+title: "If Else (Meta Action Type)"
 description: "Executes an action only if a condition holds, and optionally executes another action when it doesn't hold."
+navigation_title: "If Else"
 ---
 
 Executes an action only if a condition holds, and optionally executes another action when it doesn't hold.
@@ -24,7 +25,6 @@ Field  | Type | Default | Description
 `if_action` | Action Type | | The action which is executed when the condition evaluates to true.
 `else_action` | Action Type | _optional_ | If present, this action will be executed when the condition evaluates to false.
 
-
 ## Examples
 
 ```json
@@ -45,4 +45,3 @@ Field  | Type | Default | Description
 ```
 
 This example will set the entity on fire for 5 seconds if they are "sneaking". Otherwise, it will restore 3 hearts of health to the entity instead.
-

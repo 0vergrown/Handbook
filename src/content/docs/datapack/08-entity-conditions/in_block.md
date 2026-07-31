@@ -1,14 +1,12 @@
 ---
-title: "origins:in_block"
-description: "[Entity Condition Type](../entityconditiontypes.md)"
+title: "In Block (Entity Condition Type)"
+description: "Checks whether a block that fulfills the specified Block Condition Type is overlapping with the entity's feet."
+navigation_title: "In Block"
 ---
-
-Entity Condition Type
 
 Checks whether a block that fulfills the specified Block Condition Type is overlapping with the entity's feet.
 
-Type ID: `origins:in_block`
-
+Type ID: `apoli:in_block`
 
 ## Fields
 
@@ -16,14 +14,13 @@ Field  | Type | Default | Description
 -------|------|---------|-------------
 `block_condition` | Block Condition Type | | The block condition type to check for on the block that is overlapping with the entity's feet.
 
-
 ## Examples
 
 ```json
 "condition": {
-    "type": "origins:in_block",
+    "type": "apoli:in_block",
     "block_condition": {
-        "type": "origins:block",
+        "type": "apoli:block",
         "block": "minecraft:grass"
     }
 }
@@ -31,22 +28,20 @@ Field  | Type | Default | Description
 
 This example will check if Grass (foliage) is currently overlapping the entity's feet.
 
-
-
 ```json
 "condition": {
-    "type": "origins:in_block",
+    "type": "apoli:in_block",
     "block_condition": {
-        "type": "origins:and",
+        "type": "apoli:and",
         "conditions": [
             {
-                "type": "origins:block",
+                "type": "apoli:block",
                 "block": "minecraft:sand"
             },
             {
-                "type": "origins:offset",
+                "type": "apoli:offset",
                 "condition": {
-                    "type": "origins:block",
+                    "type": "apoli:block",
                     "block": "minecraft:sand"
                 },
                 "y": 1
@@ -57,4 +52,3 @@ This example will check if Grass (foliage) is currently overlapping the entity's
 ```
 
 This example will check if there are Sand blocks at the entity's feet and eyes, essentially checking if the entity is buried in sand.
-

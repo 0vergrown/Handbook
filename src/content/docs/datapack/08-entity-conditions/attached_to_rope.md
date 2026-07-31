@@ -1,6 +1,7 @@
 ---
-title: "apoli:attached_to_rope"
+title: "Attached To Rope (Entity Condition Type)"
 description: "Checks whether the entity is an end of some rope, and optionally how many."
+navigation_title: "Attached To Rope"
 ---
 
 Checks whether the entity is an end of some rope, and optionally how many. With no fields it is simply "attached to any rope". A `slot` narrows the count to ropes with that label, and `comparison`/`compare_to` let you gate on the number — e.g. "are both whips out?".
@@ -30,4 +31,3 @@ True while the entity has at least one rope (the default `>= 1`).
 }
 ```
 True once the entity has two or more ropes — useful to detect that both whips are deployed before allowing a launch.
-

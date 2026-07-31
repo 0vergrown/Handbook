@@ -1,12 +1,12 @@
 ---
-title: "apoli:spawn_entity"
+title: "Spawn Entity (Block Action Type)"
 description: "Spawns an entity at the position of the block."
+navigation_title: "Spawn Entity"
 ---
 
 Spawns an entity at the position of the block.
 
 Type ID: `apoli:spawn_entity`
-
 
 ##	Fields
 
@@ -15,7 +15,6 @@ Field | Type | Default | Description
 `entity_type` | Identifier | | The ID of the type of entity that will be spawned.
 `tag` | NBT | *optional* | If specified, this NBT data will be applied to the entity that will be spawned.
 `entity_action` | Entity Action Type | *optional* | If specified, this entity action will be executed on the spawned entity.
-
 
 ##	Examples
 
@@ -32,4 +31,3 @@ Field | Type | Default | Description
 ```
 
 This example will summon a Vex with the power `apoli:arcane_skin` power with the source as the ID of the example power at the position of the block.
-

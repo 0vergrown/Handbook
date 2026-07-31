@@ -1,6 +1,7 @@
 ---
-title: "apoli:projectile"
+title: "Projectile (Damage Condition Type)"
 description: "Checks whether the damage source was projectile damage, and optionally the type of projectile it was (if specified)."
+navigation_title: "Projectile"
 ---
 
 Checks whether the damage source was projectile damage, and optionally the type of projectile it was (if specified).

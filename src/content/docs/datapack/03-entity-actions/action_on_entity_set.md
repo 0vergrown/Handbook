@@ -1,6 +1,8 @@
 ---
-title: "apoli:action_on_entity_set"
+title: "Action On Entity Set (Entity Action Type)"
 description: "Executes an action on entities stored within the power that uses the Entity Set."
+navigation_title: "Action On Entity Set"
+aliases: ["action_on_set"]
 ---
 
 Executes an action on entities stored within the power that uses the [apoli:entity_set](/docs/datapack/powers/entity_set).
@@ -18,7 +20,6 @@ Field | Type | Default | Description
 `bientity_condition` | Bi-entity Condition Type | *optional* | If specified, only execute the bi-entity action if this bi-entity condition is fulfilled by both or either the actor and target.
 `limit` | [Integer](/docs/datapack/data-types/integer) | `0` | Determines the max amount of times the entity action type should iterate and execute the bi-entity action on the entities stored within the power. If the value is less than or equal to `0`, then there will be no limit.
 `reverse` | [Boolean](/docs/datapack/data-types/boolean) | `false` | Determines whether to reverse the order of the entities within the power when processing.
-
 
 ##	Examples
 

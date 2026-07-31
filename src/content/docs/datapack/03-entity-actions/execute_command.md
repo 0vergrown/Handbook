@@ -1,19 +1,18 @@
 ---
-title: "apoli:execute_command"
+title: "Execute Command (Entity Action Type)"
 description: "Executes a command with the entity as the source (i.e."
+navigation_title: "Execute Command"
 ---
 
 Executes a command with the entity as the source (i.e. `@s` will select the entity itself).
 
 Type ID: `apoli:execute_command`
 
-
 ## Fields
 
 Field  | Type | Default | Description
 -------|------|---------|-------------
 `command` | [String](/docs/datapack/data-types/string) |  | The command to execute on the entity.
-
 
 ## Examples
 

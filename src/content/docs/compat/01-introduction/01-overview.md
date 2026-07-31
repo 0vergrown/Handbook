@@ -14,12 +14,15 @@ Apoli ships integrations with a handful of other mods. Each one is a **gated mod
 | [Figura](https://modrinth.com/mod/figura) | [Figura](/docs/compat/figura/overview) | Point `apoli:modify_player_model` at a Figura avatar. |
 | [Icarus](https://modrinth.com/mod/icarus) | [Icarus](/docs/compat/icarus/overview) | The `apoli:wings` flight power. |
 | [Hardcore Revival](https://modrinth.com/mod/hardcore-revival) | [Hardcore Revival](/docs/compat/hardcore-revival/overview) | Knockout / revive triggers, actions and a condition. |
+| [Not Enough Recipe Book](https://modrinth.com/mod/nerb) | [Not Enough Recipe Book](/docs/compat/not-enough-recipe-book/overview) | No new types — keeps power-gated recipes working with the recipe book removed. |
 
 ## Two kinds of gating
 
 **Registration-gated.** The type is only registered when the other mod is loaded. Using it in a data pack without that mod is a load error for that power, exactly like a typo'd type id. Everything under Accessories, Icarus and Hardcore Revival works this way.
 
 **Behaviour-gated.** The type is always registered and always loads, but does nothing useful without the other mod — conditions read `false`, triggers never fire. The Simple Voice Chat types work this way, so a pack that uses them stays loadable on a server without voice chat.
+
+Not Enough Recipe Book is neither: it adds no types at all. It only changes how existing types behave when it is installed.
 
 > Check the section for the mod you're targeting — each type page says which kind it is.
 

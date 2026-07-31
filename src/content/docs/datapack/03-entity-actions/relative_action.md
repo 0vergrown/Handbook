@@ -1,6 +1,7 @@
 ---
-title: "apoli:relative_action"
+title: "Relative Action (Entity Action Type)"
 description: "Runs an action on a related entity such as a rider or vehicle (aliases passenger_action, riding_action)."
+navigation_title: "Relative Action"
 ---
 
 Runs an action on a related entity such as a rider or vehicle (aliases `passenger_action`, `riding_action`).

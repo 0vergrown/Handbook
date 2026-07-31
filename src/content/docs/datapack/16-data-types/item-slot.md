@@ -1,12 +1,12 @@
 ---
-title: "Item Slot"
+title: "Item Slot (Data Type)"
 description: "A String that represents a slot from an entity or container's inventory."
+navigation_title: "Item Slot"
 ---
 
 A [String](/docs/datapack/data-types/string) that represents a slot from an entity or container's inventory.
 
 > It's recommended to use the `container.<slot_number>` item slots for representing the slots of a power that uses the [apoli:inventory](/docs/datapack/powers/inventory)
-
 
 ## Table
 
@@ -51,4 +51,3 @@ This example represents the mainhand slot of the entity.
 ```
 
 This example represents slots 0 to 8 of a container. It may be used to represent the hotbar slots 0 to 8 of a player, considering that the mappings have the same mapped index.
-

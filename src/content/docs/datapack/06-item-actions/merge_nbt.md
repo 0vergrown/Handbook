@@ -1,6 +1,7 @@
 ---
-title: "apoli:merge_nbt"
+title: "Merge NBT (Item Action Type)"
 description: "Merges the specified NBT to the item's NBT."
+navigation_title: "Merge NBT"
 ---
 
 Merges the specified NBT to the item's NBT.
@@ -23,4 +24,3 @@ Field | Type | Default | Description
 ```
 
 This example will merge the `{custom_stuff: 1b}` NBT to the item's NBT.
-

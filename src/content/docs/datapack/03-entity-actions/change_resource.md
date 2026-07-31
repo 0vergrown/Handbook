@@ -1,6 +1,7 @@
 ---
-title: "apoli:change_resource"
+title: "Change Resource (Entity Action Type)"
 description: "Legacy action that changes the value of a Resource or Cooldown."
+navigation_title: "Change Resource"
 ---
 
 Legacy action that changes the value of a [apoli:resource](/docs/datapack/powers/resource) or [apoli:cooldown](/docs/datapack/powers/cooldown). **Use [apoli:modify_resource](/docs/datapack/entity-actions/modify_resource) for new packs** — Change Resource is preserved only for back-compat.
@@ -18,7 +19,7 @@ The runtime treats `apoli:change_resource` as a type-alias of `apoli:modify_reso
 | Field | Type | Default | Description |
 |-------|------|---------|-------------|
 | `resource` | [Identifier](/docs/datapack/data-types/identifier) | | The target Resource/Cooldown power. |
-| `change` | [Integer](/docs/datapack/data-types/integer) | | The amount; never exceeds the resource's `min`/`max` when `enforce_limits` is true. |
+| `change` | [Integer](/docs/datapack/data-types/integer) OR [Expression](/docs/datapack/data-types/expression) | | The amount; never exceeds the resource's `min`/`max` when `enforce_limits` is true. As an Expression it is evaluated each time the action runs, with `value` bound to the resource's current value. |
 | `operation` | [String](/docs/datapack/data-types/string) — `"add"` or `"set"` | `"add"` | `"add"` translates to `add_base_early`; `"set"` translates to `set_base`. |
 
 ## Example (kept verbatim from Apace's docs — still valid)
@@ -33,8 +34,15 @@ The runtime treats `apoli:change_resource` as a type-alias of `apoli:modify_reso
 
 This adds 1 to the `namespace:example` (`data/namespace/powers/example.json`) [apoli:resource](/docs/datapack/powers/resource).
 
-## See also
+`change` also accepts an [Expression](/docs/datapack/data-types/expression):
 
-- [apoli:modify_resource](/docs/datapack/entity-actions/modify_resource) — the canonical action and richer schema.
-- [apoli:resource](/docs/datapack/powers/resource), [apoli:cooldown](/docs/datapack/powers/cooldown) — the targets.
+```json
+"entity_action": {
+    "type": "apoli:change_resource",
+    "resource": "namespace:example",
+    "change": "namespace:example_max / 10",
+    "operation": "add"
+}
+```
 
+This tops the resource up by a tenth of its own maximum. `value` is bound to the resource's current value, and `<id>_max` / `<id>_min` read any resource's bounds.

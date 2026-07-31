@@ -1,12 +1,12 @@
 ---
-title: "apoli:enchantable"
+title: "Enchantable (Item Condition Type)"
 description: "Checks if the item is enchantable."
+navigation_title: "Enchantable"
 ---
 
 Checks if the item is enchantable.
 
 Type ID: `apoli:enchantable`
-
 
 ## Fields
 
@@ -19,4 +19,3 @@ _None._
     "type": "apoli:enchantable"
 }
 ```
-

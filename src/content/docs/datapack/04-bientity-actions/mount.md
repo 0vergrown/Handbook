@@ -1,6 +1,7 @@
 ---
-title: "apoli:mount"
+title: "Mount (Bi-Entity Action Type)"
 description: "Mounts the actor entity onto the target entity."
+navigation_title: "Mount"
 ---
 
 Mounts the actor entity onto the target entity.

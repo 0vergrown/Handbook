@@ -1,19 +1,16 @@
 ---
-title: "origins:prevent_being_used"
-description: "[Power Type](../powertypes.md)"
+title: "Prevent Being Used (Power Type)"
+description: "Prevents other players from being able to 'use' (right-click) the entity that has the power and executes a bi-entity action, item action and/or give an item upon being prevented."
+navigation_title: "Prevent Being Used"
 ---
-
-Power Type
 
 Prevents other players from being able to "use" (right-click) the entity that has the power and executes a bi-entity action, item action and/or give an item upon being prevented.
 
-Type ID: `origins:prevent_being_used`
-
+Type ID: `apoli:prevent_being_used`
 
 !!! note
 
     In the context of this power type, the '**actor**' entity is the entity that did the "usage" action (right-click) while the '**target**' entity is the entity that has the power.
-
 
 ## Fields
 
@@ -27,16 +24,15 @@ Field | Type | Default | Description
 `hands` | Array of Strings | `["off_hand", "main_hand"]` | Determines if the power should be activated if the '**actor**' entity used the specified hand(s). Accepts `"off_hand"`, `"main_hand"` or both.
 `result_stack` | Item Stack | _optional_ | If specified, this item stack will be given to the '**actor**' entity.
 
-
 ## Examples
 
 ```json
 {
-    "type": "origins:prevent_being_used",
+    "type": "apoli:prevent_being_used",
     "bientity_action": {
-        "type": "origins:actor_action",
+        "type": "apoli:actor_action",
         "action": {
-            "type": "origins:execute_command",
+            "type": "apoli:execute_command",
             "command": "title @s actionbar {\"text\": \"Entity cannot be interacted with!\", \"color\": \"red\"}"
         }
     }
@@ -44,4 +40,3 @@ Field | Type | Default | Description
 ```
 
 This example will prevent other players from "using" (right-clicking) the entity that has the power and inform them that the 'entity cannot be interacted with'.
-

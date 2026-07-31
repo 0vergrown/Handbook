@@ -1,6 +1,7 @@
 ---
-title: "apoli:pose"
+title: "Pose (Power Type)"
 description: "Forces the entity into an entity pose (body animation state) and/or forces an arm pose (how the arms are held/rendered), while the power is active."
+navigation_title: "Pose"
 ---
 
 Forces the entity into an entity pose (body animation state) and/or forces an arm pose (how the arms are held/rendered), while the power is active.
@@ -41,4 +42,3 @@ Holds only the main-hand arm in the crossbow-hold pose; the off hand stays vanil
 ```
 
 Forces the swimming (crawling) pose while sneaking.
-

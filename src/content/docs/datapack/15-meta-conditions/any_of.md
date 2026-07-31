@@ -1,6 +1,8 @@
 ---
-title: "apoli:any_of"
+title: "Any Of (Meta Condition Type)"
 description: "Passes when any listed condition passes (alias or)."
+navigation_title: "Any Of"
+aliases: ["or"]
 ---
 
 Passes when any listed condition passes (alias `or`).

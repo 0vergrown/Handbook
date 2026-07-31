@@ -1,6 +1,7 @@
 ---
-title: "apoli:action_on_wake_up"
+title: "Action On Wake Up (Power Type)"
 description: "Executes an Entity Action Type or a Block Action type when the player wakes up after sleeping."
+navigation_title: "Action On Wake Up"
 ---
 
 Executes an Entity Action Type or a Block Action type when the player wakes up after sleeping.

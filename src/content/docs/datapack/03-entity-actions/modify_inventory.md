@@ -1,9 +1,8 @@
 ---
-title: "apoli:modify_inventory"
-description: "[Entity Action Type](../entityactiontypes.md)"
+title: "Modify Inventory (Entity Action Type)"
+description: "Runs an item action on each matching slot of the entity's inventory (or a power's inventory)."
+navigation_title: "Modify Inventory"
 ---
-
-Entity Action Type
 
 Runs an item action on each matching slot of the entity's inventory (or a power's inventory).
 
@@ -19,4 +18,3 @@ Type ID: `apoli:modify_inventory`
 ```
 
 Equivalent to `{ "type": "apoli:inventory_action", "operation": "modify", "item_action": { "type": "apoli:consume" } }`.
-
