@@ -11,7 +11,7 @@ export const SITE = {
 	// Social / community
 	github: 'https://github.com/0vergrown',
 	x: 'https://x.com/OvergrownMC',
-	discord: 'https://discord.gg/', // TODO: replace with the real invite
+	discord: 'https://discord.gg/Th7q5BXPjG',
 
 	// Download destinations.
 	downloads: {
