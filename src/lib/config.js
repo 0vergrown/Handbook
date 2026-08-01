@@ -15,7 +15,7 @@ export const SITE = {
 
 	// Download destinations.
 	downloads: {
-		modrinth: 'https://modrinth.com/user/Overgrown/mods',
+		modrinth: 'https://modrinth.com/collection/P0Z8iLdQ',
 		curseforge: 'https://www.curseforge.com/members/overgrownmc/projects',
 		mods: [
 			{
