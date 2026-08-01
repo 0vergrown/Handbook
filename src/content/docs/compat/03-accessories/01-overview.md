@@ -25,3 +25,23 @@ Legacy `trinket` ids are aliased, so packs written for the older Apace types kee
 ## Slots
 
 Anywhere a `slots` field appears it takes a list of accessory slots. Leaving it out (or empty) means "every slot".
+
+A slot is written either as a string or as an object, and a single slot may be given on its own instead of in an array:
+
+```json
+"slots": "charm"
+"slots": "hand/ring"
+"slots": "hand/ring/1"
+"slots":[
+   {
+      "group":"hand",
+      "slot":"ring",
+      "index":1,
+      "provider":"trinkets"
+   }
+]
+```
+
+The string form is `slot`, `group/slot` or `group/slot/index`. Every part is a filter: anything you leave out matches everything. `provider` (`trinkets`, `accessories` or `curios`) narrows a slot to one framework, which only matters when two are installed at once.
+
+[`apoli:conjure_equipment`](/docs/datapack/entity-actions/conjure_equipment) uses the same format in its `accessory_slot` field, and it is core Apoli rather than a gated type — the field simply does nothing when no accessory framework is installed.
