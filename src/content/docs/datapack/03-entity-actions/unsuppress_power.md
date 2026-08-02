@@ -4,21 +4,33 @@ description: "Re-enables a power previously suppressed."
 navigation_title: "Unsuppress Power"
 ---
 
-Re-enables a power previously suppressed.
+Lifts a suppression applied by [apoli:suppress_power](/docs/datapack/entity-actions/suppress_power). The power resumes with its resources and cooldowns intact.
 
 Type ID: `apoli:unsuppress_power`
 
 ## Fields
 
-| Field | Type | Default |
-|-------|------|---------|
-| `power` | identifier | **required** |
-| `source` | identifier | _optional_ |
+| Field | Type | Default | Purpose |
+| --- | --- | --- | --- |
+| `power` | identifier **or array of identifiers** | **required** | The power(s) to unsuppress. |
+| `source` | identifier **or array of identifiers** | `apoli:suppressed` | The source(s) to lift. Must match what suppressed the power. |
 
-## Example
+Both fields take either a single identifier or an array. Every listed source is lifted from every listed power. `powers` and `sources` are accepted as spellings of the same fields.
+
+## Examples
 
 ```json
 {
-  "type": "apoli:unsuppress_power"
+  "type": "apoli:unsuppress_power",
+  "power": [
+    "example:flight",
+    "example:water_breathing",
+    "example:night_vision"
+  ],
+  "source": "example:power_dampener"
 }
 ```
+
+Lifts the `example:power_dampener` suppression from all three powers.
+
+> The `source` must match the one used to suppress. Unsuppressing with a source that never suppressed that power does nothing — it is not an error, so a typo here fails silently. If a power seems stuck off, check that both actions name the same source.

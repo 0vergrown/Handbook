@@ -35,7 +35,7 @@ Layers live in `data/<namespace>/origin_layers/`.
 | `gui_title` | object | `{}` | `choose_origin` and `view_origin` translation keys for the two screens. |
 | `missing_name` | string | `""` | Translation key shown when the player has no origin in this layer. |
 | `missing_description` | string | `""` | Translation key for that placeholder's description. |
-| `default_origin` | identifier | — | Assigned automatically to any player who has no origin here. |
+| `default_origin` | identifier | — | Fallback for players this layer offers no choice to. |
 | `auto_choose` | boolean | `false` | Skip the screen when the layer offers exactly one choosable origin. |
 | `hidden` | boolean | `false` | Hide the layer from the origin-viewing screen. |
 | `random` | object | — | Random-roll settings — see [Randomised layers](#randomised-layers). |
@@ -50,29 +50,33 @@ An entry in `origins` is either a plain identifier, or an object that gates a gr
 
 ```json
 {
-  "order": 2,
-  "auto_choose": true,
-  "hidden": true,
-  "name": "layer.my_pack.evolved.name",
-  "origins": [
-    {
-      "condition": {
-        "type": "origins:origin",
-        "layer": "origins:origin",
-        "origin": "my_pack:ember"
+   "order":2,
+   "auto_choose":true,
+   "hidden":true,
+   "name":"layer.my_pack.evolved.name",
+   "origins":[
+      {
+         "condition":{
+            "type":"origins:origin",
+            "layer":"origins:origin",
+            "origin":"my_pack:ember"
+         },
+         "origins":[
+            "my_pack:ember_evolved"
+         ]
       },
-      "origins": ["my_pack:ember_evolved"]
-    },
-    {
-      "condition": {
-        "type": "origins:origin",
-        "layer": "origins:origin",
-        "origin": "my_pack:ember",
-        "inverted": true
-      },
-      "origins": ["my_pack:unevolved"]
-    }
-  ]
+      {
+         "condition":{
+            "type":"origins:origin",
+            "layer":"origins:origin",
+            "origin":"my_pack:ember",
+            "inverted":true
+         },
+         "origins":[
+            "my_pack:unevolved"
+         ]
+      }
+   ]
 }
 ```
 
@@ -85,7 +89,7 @@ The condition is re-evaluated every time the layer's options are listed, so a la
 These are how a conditioned layer grants an origin without ever showing a screen — the pattern above needs one of them, or the player is asked to "choose" from a list of one.
 
 - **`auto_choose`** — when the layer offers **exactly one** choosable origin for that player, it is assigned silently and no screen opens. With two or more options the player still chooses normally.
-- **`default_origin`** — assigned to any player with no origin in the layer, regardless of how many options exist. Applied on join and on data-pack reload.
+- **`default_origin`** — the fallback for a layer the player is **never asked about**. It is applied only when the layer offers them nothing choosable and no random roll, on join and on data-pack reload. A layer that *can* be chosen always shows its screen — `default_origin` never pre-empts a real choice.
 
 Both are re-checked on join, on data-pack reload, after every origin the player picks, and on Orb of Origin use — so a layer whose condition only becomes true *after* an earlier layer is chosen resolves in the same breath as that choice.
 
@@ -96,7 +100,10 @@ To drop your origins into the vanilla Origins screen, define a layer with the **
 ```json
 // data/origins/origin_layers/origin.json  (in your pack)
 {
-  "origins": [ "my_pack:merling", "my_pack:ember" ]
+   "origins":[
+      "my_pack:merling",
+      "my_pack:ember"
+   ]
 }
 ```
 
@@ -117,12 +124,17 @@ Layers can hand out a **random** origin instead of letting the player choose —
 
 ```json
 {
-  "origins": ["my_pack:merling", "my_pack:ember"],
-  "random": {
-    "allow": true,
-    "style": "weighted",
-    "weights": { "my_pack:ember": 3 }
-  }
+   "origins":[
+      "my_pack:merling",
+      "my_pack:ember"
+   ],
+   "random":{
+      "allow":true,
+      "style":"weighted",
+      "weights":{
+         "my_pack:ember":3
+      }
+   }
 }
 ```
 

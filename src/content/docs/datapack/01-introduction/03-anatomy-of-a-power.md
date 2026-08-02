@@ -10,7 +10,10 @@ Apoli looks big — hundreds of types — but it's built from one repeating shap
 A **power**, an **action**, and a **condition** are all JSON objects with a `type`:
 
 ```json
-{ "type": "apoli:heal", "amount": 4 }
+{
+   "type":"apoli:heal",
+   "amount":4
+}
 ```
 
 The `type` is an [identifier](/docs/datapack/introduction/data-types) (`namespace:path`). It selects *which* thing this is; the remaining fields configure it. Apoli looks the type up, and if it doesn't recognise it, the power fails to load with an error in the log.
@@ -68,6 +71,35 @@ Any condition can be flipped by adding `"inverted": true`. There's no separate "
    "inverted":true
 }
 ```
+
+## When an optional field is wrong
+
+A **missing** optional field falls back to its default. A field that is *present but malformed* — a typo in a nested field name, broken SNBT escaping — is **dropped**, and the rest of the definition loads without it. The power still works; it just quietly stops doing the part you got wrong.
+
+That is the single most common way a power "ignores" something. A typo inside a `condition` drops the whole condition, and a power with no condition is **always active**:
+
+```json
+// "condtions" is a typo for "conditions", so apoli:all_of has no required
+// field, the whole condition is dropped, and this power runs unconditionally.
+"condition":{
+   "type":"apoli:all_of",
+   "condtions":[
+      {
+         "type":"apoli:sneaking"
+      }
+   ]
+}
+```
+
+Apoli logs a warning naming the field and the power whenever it drops one, so check the server log first:
+
+```txt
+[Apoli] Ignoring the 'condition' field of my_pack:example — it is present but
+failed to parse, so it was dropped and everything else loaded.
+No key conditions in MapLike[{"type":"apoli:all_of","condtions":[...]}]
+```
+
+> Malformed SNBT in a `tag`/`nbt` string is the other frequent one — the warning gives you the exact character offset (`Invalid SNBT: Expected '}' at position 81`). Remember the string is inside JSON, so every quote the SNBT needs has to be escaped: `"tag": "{display:{Name:'[{\"text\":\"Hi\"}]'}}"`.
 
 ## How to read the rest of these docs
 

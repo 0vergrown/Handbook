@@ -25,4 +25,12 @@ Field | Type | Default | Description
 
 Passes for players whose skin uses the three-pixel (Alex) arms.
 
-> The skin model is a client-side fact, so each client reports it to the server on join and whenever it changes. Non-players always fail this condition, and a player on a client without Apoli — or one that has not reported yet — counts as `wide`.
+The model is resolved from the first of these that is available:
+
+1. **What the client reports.** Sent on join and whenever it changes — the only source that sees client-side skin-replacement mods.
+2. **The player's signed profile**, read server-side. Works for players on a vanilla client, or one without Apoli.
+3. **Vanilla's default-skin rule for the player's UUID**, matching the skin the game itself would draw.
+
+Non-players always fail this condition.
+
+> Pairing a `wide` power with a `slim` power is the usual way to use this, and it relies on the two being mutually exclusive — they are, for every player, on every path above.

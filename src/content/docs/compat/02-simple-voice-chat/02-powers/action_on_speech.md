@@ -17,6 +17,8 @@ Type ID: `apoli:action_on_speech`
 1. Enable it: set `"speechToAction": true` in `config/apoli-client.json`.
 2. Install a model: download one from [alphacephei.com/vosk/models](https://alphacephei.com/vosk/models) (the ~40 MB `small` models are plenty) and unpack it into `<game folder>/apoli/vosk-model/`.
 
+> The recogniser ships with the mod on **both** loaders. On NeoForge it is unpacked to `<game folder>/apoli/runtime/` the first time you enable speech-to-action and loaded in isolation, so it cannot clash with the copy of JNA other mods ship.
+
 **With Simple Voice Chat installed**, that is all — Apoli reads the audio Simple Voice Chat has already captured,
 on your machine, before it is encoded. You just talk on voice chat as normal, and your own push-to-talk (or voice
 activation) is the gate. Apoli never opens the microphone itself, so there is no device to fight over.
