@@ -14,11 +14,13 @@ Type ID: `apoli:inventory_action`
 
 ## Operations
 
-| `operation`         | Per-slot behaviour                                                                                 |
-| ------------------- | -------------------------------------------------------------------------------------------------- |
-| `modify` *(default)* | Runs `item_action` on the stack.                                                                  |
-| `replace`           | Swaps the stack for `stack`, then runs `item_action` (if any) on the replacement.                  |
-| `drop`              | Drops the stack into the world, then runs `item_action` (if any) on the dropped stack first.       |
+| `operation`         | Per-slot behaviour                                                                                 | Empty slots |
+| ------------------- | -------------------------------------------------------------------------------------------------- | ----------- |
+| `modify` *(default)* | Runs `item_action` on the stack.                                                                  | skipped |
+| `replace`           | Swaps the stack for `stack`, then runs `item_action` (if any) on the replacement.                  | **included** |
+| `drop`              | Drops the stack into the world, then runs `item_action` (if any) on the dropped stack first.       | skipped |
+
+> `replace` deliberately visits **empty** slots, so it can put an item *into* an empty slot — that is how you keep an item pinned in the offhand. It also means a `replace` with no `slot`/`slots` and no `item_condition` fills the entity's whole inventory with `stack`. Always scope it.
 
 ## Fields
 
@@ -70,7 +72,7 @@ Slightly damages every armour-valued item in the entity's inventory.
 }
 ```
 
-Replaces the entity's offhand item with a Barrier. *(Equivalent to the legacy `apoli:replace_inventory`.)*
+Replaces the entity's offhand item with a Barrier — including when the offhand is empty. *(Equivalent to the legacy `apoli:replace_inventory`.)*
 
 ```json
 "entity_action": {
