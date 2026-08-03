@@ -43,3 +43,20 @@ Suppresses one power under the default `apoli:suppressed` source.
 Suppresses three powers under one source — a single `apoli:unsuppress_power` naming `example:power_dampener` lifts all three.
 
 > **Sources are a counter, not a switch.** A power stays suppressed until *every* source that suppressed it has been lifted, so two effects can suppress the same power without one cancelling the other. Give each effect its own source and unsuppress with that same source; if you omit `source` on both, they share `apoli:suppressed` and the first unsuppress re-enables the power for both.
+
+## Suppression follows granted powers
+
+Suppressing a power also suppresses everything **that power granted**. This is what makes it useful on an [`apoli:multiple`](/docs/datapack/powers/multiple): a `multiple` does nothing itself — all the behaviour lives in the sub-powers it grants — so naming the parent turns the whole bundle off in one action.
+
+```json
+{
+  "type": "apoli:suppress_power",
+  "power": "example:phantom"
+}
+```
+
+If `example:phantom` is a `multiple`, its sub-powers (`example:phantom_phasing`, `example:phantom_invisibility`, …) all stop too, and they come back when the parent is unsuppressed. The rule is general — anything granted with a suppressed power as its source is suppressed with it, and it nests through several levels of `multiple`.
+
+A sub-power suppressed **directly** keeps its own suppression: lifting the parent does not re-enable it until its own source is lifted as well.
+
+> Powers that install lasting state — [`apoli:attribute`](/docs/datapack/powers/attribute) modifiers, [`apoli:creative_flight`](/docs/datapack/powers/creative_flight), [`apoli:game_event_listener`](/docs/datapack/powers/game_event_listener) — undo that state while suppressed and re-apply it when lifted. Resources, cooldowns and stored NBT are left alone.

@@ -1,7 +1,3 @@
-/**
- * Site-wide configuration. Fill in the URLs marked TODO once they exist.
- * Everything user-facing that isn't documentation content lives here.
- */
 export const SITE = {
 	name: 'Handbook',
 	tagline: 'The manual for the Apoli power engine and the Origins addon.',

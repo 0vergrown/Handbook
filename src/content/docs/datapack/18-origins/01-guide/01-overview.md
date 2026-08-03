@@ -69,10 +69,10 @@ The first two are an item id and a full [Item Stack](/docs/datapack/data-types/i
 | Field | Type | Default | Description |
 |-------|------|---------|-------------|
 | `texture` | [Identifier](/docs/datapack/data-types/identifier) | **required** for the texture form | Path to the PNG, relative to `assets/<namespace>/`. |
-| `width` | [Integer](/docs/datapack/data-types/integer) | `16` | Width of the source image in pixels. |
-| `height` | [Integer](/docs/datapack/data-types/integer) | `16` | Height of the source image in pixels. |
+| `width` | [Integer](/docs/datapack/data-types/integer) | whole file | Width in pixels of the region to draw, measured from the top-left of the file. |
+| `height` | [Integer](/docs/datapack/data-types/integer) | whole file | Height in pixels of the region to draw, measured from the top-left of the file. |
 
-`width` and `height` describe the **file**, not the drawn size — the image is always scaled into the 16×16 icon slot. A 32×32 PNG needs `"width": 32, "height": 32` or it will be drawn cropped.
+**You normally don't need `width`/`height`.** The file's real size is read from the PNG, and the whole image is scaled into the 16×16 icon slot — a 16×16, 64×64 or 256×256 icon all just work. Set them only to draw a *sub-region* of a larger file, e.g. the top-left 32×32 of a sprite sheet:
 
 ```json
 {
@@ -85,6 +85,8 @@ The first two are an item id and a full [Item Stack](/docs/datapack/data-types/i
 ```
 
 > A texture icon is a plain image: no enchantment glint, no item tooltip, no durability bar. Use the item form when you want those.
+
+> Icons larger than the slot are downscaled with smoothing, so fine detail and thin lines survive instead of dropping out. An icon authored at exactly 16×16 is drawn pixel-for-pixel.
 
 ## Powers come from Apoli
 

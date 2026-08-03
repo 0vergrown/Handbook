@@ -4,7 +4,7 @@ description: "Makes an item edible."
 navigation_title: "Edible Item"
 ---
 
-Makes an item edible.
+Makes an item edible for the holder — either an item that isn't food at all, or an item whose vanilla food values you want to replace. Only the holder can eat it; nobody else's stack changes.
 
 Type ID: `apoli:edible_item`
 
@@ -22,6 +22,22 @@ Field | Type | Default | Description
 `consume_sound` | [Identifier](/docs/datapack/data-types/identifier) | `"minecraft:entity.generic.eat"`  | If specified, the sound event with this namespace and ID will be played when the item is eaten.
 `consuming_time_modifier` | [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) | *optional* | If specified, this modifier will be applied on the maximum time the item is being consumed (in ticks).
 `consuming_time_modifiers` | [Array](/docs/datapack/data-types/array) of Attribute Modifier | *optional* | If specified, these modifiers will be applied on the the maximum time the item is being consumed (in ticks).
+
+## How it behaves
+
+Right-clicking a matching stack starts the eating animation, exactly as if the item were food. When it finishes:
+
+1. `consume_sound` plays (`minecraft:entity.generic.eat` unless you change it).
+2. `food_component`'s hunger and saturation are applied, and its effects roll.
+3. `item_action` runs on the stack being eaten, then `entity_action` on the eater.
+4. One item is consumed.
+5. If `result_stack` is set, `result_item_action` runs on it and it is given to the player — replacing the stack in hand if that stack is now empty, otherwise going to the inventory (or dropping if the inventory is full).
+
+`item_condition` is what limits the power to particular items. **Omit it and every item in the game becomes edible** for the holder, which is almost never what you want.
+
+`always_edible` on the food component controls whether you can eat on a full hunger bar; `snack` halves the eating time (16 ticks instead of 32) before `consuming_time_modifier` is applied.
+
+> This power takes priority over vanilla food, so it can be used to *replace* an existing food's values. It does not affect other players or mobs eating the same item.
 
 ## Examples
 ```json

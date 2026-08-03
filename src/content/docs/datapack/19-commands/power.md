@@ -103,6 +103,8 @@ power unsuppress @s all
 
 Like grants, suppressions are tracked per source (default `apoli:suppressed`), so two systems can suppress the same power and it only wakes up when both let go.
 
+Suppressing a power also suppresses everything that power granted, so naming an [`apoli:multiple`](/docs/datapack/powers/multiple) switches off its whole bundle of sub-powers — which is what you want, since a `multiple` has no behaviour of its own. `power has <targets>` marks the cascaded sub-powers as suppressed too; `unsuppress … all` lifts the suppressions that were applied directly.
+
 ### By keybind
 
 ```mcfunction

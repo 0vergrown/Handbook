@@ -34,3 +34,5 @@ Both fields take either a single identifier or an array. Every listed source is 
 Lifts the `example:power_dampener` suppression from all three powers.
 
 > The `source` must match the one used to suppress. Unsuppressing with a source that never suppressed that power does nothing — it is not an error, so a typo here fails silently. If a power seems stuck off, check that both actions name the same source.
+
+Name the same power you suppressed. Sub-powers of an [`apoli:multiple`](/docs/datapack/powers/multiple) are suppressed *through* their parent, so lifting the parent brings the whole bundle back — you cannot lift one sub-power out of a suppressed parent, and unsuppressing a sub-power directly does nothing while the parent is still off.
