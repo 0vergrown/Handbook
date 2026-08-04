@@ -26,6 +26,7 @@ Field  | Type | Default | Description
 `break_beyond` | [Float](/docs/datapack/data-types/float) | `0.0` | If greater than 0, the rope snaps (auto-detaches) once its two ends are pulled farther apart than this many blocks. `0` never breaks. (Ropes also always break when an entity end dies or unloads.)
 `min_length` | [Float](/docs/datapack/data-types/float) | `1.0` | Shortest the rope can reel to.
 `max_length` | [Float](/docs/datapack/data-types/float) | `30.0` | Longest the rope can be.
+`start_length` | [Float](/docs/datapack/data-types/float) | _see below_ | The length the rope is created at, clamped to `min_length`–`max_length`. Left out, a `controllable` rope starts **taut** — exactly as far apart as its two ends already are, so a grapple bites the moment it lands — and a rope that is not `controllable` starts at `max_length`, so a tether has its full slack immediately. Set it explicitly when you want a taut tether or a slack grapple.
 `stiffness` | [Float](/docs/datapack/data-types/float) | `0.1` | How hard the rope yanks an end back once it passes its length. Higher = snappier.
 `radial_damping` | [Float](/docs/datapack/data-types/float) | `0.85` | How much outward speed is bled off at the length limit.
 `spring_scaling` | [Float](/docs/datapack/data-types/float) | `0.65` | Extra softening while swinging inward.
@@ -69,7 +70,7 @@ A grappling hook that swings a little faster than default — fire it at a wall 
    "max_length":8
 }
 ```
-Used as a `bientity_action`, this tethers the target entity to a point so it can't wander more than 8 blocks from it.
+Used as a `bientity_action`, this tethers the target entity to a point so it can't wander more than 8 blocks from it. It is not `controllable`, so it is created at its full 8-block length no matter where the target was standing.
 
 ```json
 {

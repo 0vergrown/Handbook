@@ -22,7 +22,7 @@ Type ID: `apoli:custom_model_render`
 | `red` / `green` / `blue` / `alpha` | Float                                                      | `1.0`         | Colour/opacity multipliers (0.0 – 1.0).                                                                                                                                                        |
 | `scale`                            | Float                                                      | `1.0`         | Scales the drawn geometry outward from the model origin (aura/shell effect above 1.0).                                                                                                         |
 | `hidden_slots`                     | Array of Equipment Slot | _none_        | Hide this render whenever any listed slot is occupied — e.g. `["head"]` hides a custom hat model when a real helmet is worn.                                                                   |
-| `show_first_person`                | Boolean                                                  | `false`       | Texture mode only: also apply to the holder's own arm in first person.                                                                                                                         |
+| `show_first_person`                | Boolean                                                  | `false`       | Also draw on the holder's own arm in first person. In texture mode that is the overlay texture; in geometry mode it is the model's `right_arm` / `left_arm` bones (and everything nested under them), posed onto the vanilla first-person arm. |
 
 ## Texture-mode fields (`mode: texture`)
 
@@ -71,9 +71,11 @@ Names are matched loosely, so you rarely have to rename anything Blockbench gave
 | `right_arm` / `left_arm` | `arm_right` / `arm_left`, `right_sleeve` / `left_sleeve`, `right_arm_layer` / `left_arm_layer` |
 | `right_leg` / `left_leg` | `leg_right` / `leg_left`, `right_pants` / `left_pants`, `right_leg_layer` / `left_leg_layer` |
 
+**Every** bone whose name matches a body part binds to it, not just the first one. So a rig with `right_arm` *and* `right_sleeve` — or `head` and `hat_layer`, or `body` and `jacket` — animates all of them together. A second-layer bone that only bound at rest used to stay behind while the limb it sat on moved, which read as the model coming apart on any pose that moves a part rather than only rotating it: sneaking, blocking with a shield, winding up a trident.
+
 Nesting is fine: a body-part bone animates from the player whether it sits at the top level, inside a wrapper group like `bb_main`, or under your `Body` bone. It always swings the way the player's own limb swings, never twice over.
 
-> One exception. If you give a **group above** a body-part bone a rotation of its own in Blockbench, that bone stays inside the tilted group and animates within it, rather than in the player's frame. That is almost always what you want for a tilted model — but if a limb looks like it is swinging in the wrong plane, a rotated parent group is the thing to check.
+> A body-part bone always animates in the **player's** frame, so it is lifted out of any parent group when the model loads. If that parent group has a rotation of its own in Blockbench, the rotation stops applying to that bone — the load log names the bone and the group when this happens. Rotate the bone itself, or give the group a non-body-part name so it stays a plain group.
 
 ### Geometry mode on minions
 
@@ -109,7 +111,8 @@ The minion's `texture` field still applies to the minion's own model, so it only
 
 - Multiple active `custom_model_render` powers stack; each is drawn. On a minion, one non-overlay geometry power is enough to hide the base model, and the rest still draw.
 - Conditions on the power gate the whole render dynamically (combine with `hidden_slots` for equipment-based hiding).
-- Geometry mode has no first-person hand model — you never see it on your own arm in first person. It **does** draw wherever the game renders a whole player body, including the inventory preview and other entity-preview screens, regardless of which camera mode you are in, and when your body is visible in first person (while sleeping, for instance).
+- Geometry mode draws in first person with `show_first_person: true`, but only the arm bones — first person draws one arm, so that is all there is to draw on. It **does** draw in full wherever the game renders a whole player body, including the inventory preview and other entity-preview screens, regardless of which camera mode you are in, and when your body is visible in first person (while sleeping, for instance).
+- The first-person arm is drawn from the same bones as the third-person model, so the vanilla arm underneath it is still there. Hide it with [apoli:modify_model_parts](/docs/datapack/powers/modify_model_parts) if your model is meant to replace it rather than sit over it.
 - If `model_location` fails to load, the minion falls back to its normal model rather than turning invisible.
 - The Bedrock parser supports box UV **and** per-face UV (including per-cube mixing), per-cube and per-bone `pivot`/`rotation`, `inflate`, `mirror` and bone parenting. Only `minecraft:geometry[0]` is read, and `uv_rotation` (Bedrock format 1.21.0+) is not supported — a model using it logs a warning and draws that face unrotated.
 - A cube with a zero-size axis is a flat plane in Bedrock too, and both of its faces land on the same plane. Blockbench shows this as z-fighting and so does the game; give the cube a small `inflate` or a non-zero thickness if it flickers.
@@ -152,3 +155,18 @@ A custom cape model that follows the body, hidden when a chestplate is worn:
   "hidden_slots": ["chest"]
 }
 ```
+
+Clawed gauntlets you can also see on your own hands:
+
+```json
+{
+  "type": "apoli:custom_model_render",
+  "mode": "geometry",
+  "model_location": "example:gauntlets",
+  "texture_location": "example:textures/entity/gauntlets.png",
+  "render_type": "cutout_no_cull",
+  "show_first_person": true
+}
+```
+
+The model's `right_arm` and `left_arm` bones sit on the vanilla arm pivots, so they follow the arm in third person and are drawn onto the first-person hand as well.
