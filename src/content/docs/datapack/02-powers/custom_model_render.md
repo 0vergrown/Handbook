@@ -49,6 +49,18 @@ On resource (re)load, the log prints `Loaded N custom model(s) for custom_model_
 
 **How geometry follows the player:** bones named `head`, `body`, `right_arm`, `left_arm`, `right_leg`, `left_leg`, `hat` pick up the matching vanilla body part's animation, so the model bends with the arms and turns with the head. Any other bone (a `cape`, a `backpack`, a `tail`…) rides along with its parent bone.
 
+> **Put your body-part bones on the vanilla pivots.** This is the one rule that decides whether a model animates convincingly, and it is the first thing to check if a limb looks like it is swinging in the wrong direction. Apoli rotates each bone about **its own pivot**, by the angle the vanilla part is turning through. So a bone gets the player's *motion*, but it swings around the point **you** chose in Blockbench — and if that point isn't where the player's joint is, the limb sweeps through an arc the player's limb never takes. Name the bone correctly *and* place its pivot here:
+>
+> | Bone | Bedrock pivot |
+> | --- | --- |
+> | `head`, `hat`, `body` | `[0, 24, 0]` |
+> | `right_arm` / `left_arm` | `[-5, 22, 0]` / `[5, 22, 0]` |
+> | `right_leg` / `left_leg` | `[-1.9, 12, 0]` / `[1.9, 12, 0]` |
+>
+> Only the pivot has to match — the cubes hanging off the bone can be any shape or size you like. The easiest way to get this right is to start from the vanilla player template in Blockbench and rebuild the geometry on top of it, leaving the bones where they are.
+
+Deliberately off-pivot bones still work, and are the right call for anything that isn't a limb: an aura ring pivoted at the feet, or a floating orb pivoted at the head, will orbit the player instead of tracking a joint.
+
 Names are matched loosely, so you rarely have to rename anything Blockbench gave you. Case, spaces, `_` and `-` are ignored (`Head`, `RightArm` and `right arm` all work), and these spellings bind to the same body part:
 
 | Body part | Also accepted |
@@ -58,14 +70,6 @@ Names are matched loosely, so you rarely have to rename anything Blockbench gave
 | `body` | `torso`, `waist`, `jacket`, `body_layer` |
 | `right_arm` / `left_arm` | `arm_right` / `arm_left`, `right_sleeve` / `left_sleeve`, `right_arm_layer` / `left_arm_layer` |
 | `right_leg` / `left_leg` | `leg_right` / `leg_left`, `right_pants` / `left_pants`, `right_leg_layer` / `left_leg_layer` |
-
-The animation is applied **on top of** the pose you authored, not instead of it — a bone rotates about its own pivot and stays where you put it. To attach geometry directly to a body part, build it around that part's pivot in Bedrock coordinates:
-
-| Bone | Bedrock pivot |
-| --- | --- |
-| `head`, `hat`, `body` | `[0, 24, 0]` |
-| `right_arm` / `left_arm` | `[-5, 22, 0]` / `[5, 22, 0]` |
-| `right_leg` / `left_leg` | `[-1.9, 12, 0]` / `[1.9, 12, 0]` |
 
 Nesting is fine: a body-part bone animates from the player whether it sits at the top level, inside a wrapper group like `bb_main`, or under your `Body` bone. It always swings the way the player's own limb swings, never twice over.
 
@@ -105,7 +109,7 @@ The minion's `texture` field still applies to the minion's own model, so it only
 
 - Multiple active `custom_model_render` powers stack; each is drawn. On a minion, one non-overlay geometry power is enough to hide the base model, and the rest still draw.
 - Conditions on the power gate the whole render dynamically (combine with `hidden_slots` for equipment-based hiding).
-- Geometry mode renders in third person only (no first-person hand model yet).
+- Geometry mode has no first-person hand model — you never see it on your own arm in first person. It **does** draw wherever the game renders a whole player body, including the inventory preview and other entity-preview screens, regardless of which camera mode you are in, and when your body is visible in first person (while sleeping, for instance).
 - If `model_location` fails to load, the minion falls back to its normal model rather than turning invisible.
 - The Bedrock parser supports box UV **and** per-face UV (including per-cube mixing), per-cube and per-bone `pivot`/`rotation`, `inflate`, `mirror` and bone parenting. Only `minecraft:geometry[0]` is read, and `uv_rotation` (Bedrock format 1.21.0+) is not supported — a model using it logs a warning and draws that face unrotated.
 - A cube with a zero-size axis is a flat plane in Bedrock too, and both of its faces land on the same plane. Blockbench shows this as z-fighting and so does the game; give the cube a small `inflate` or a non-zero thickness if it flickers.

@@ -77,7 +77,7 @@ The first two are an item id and a full [Item Stack](/docs/datapack/data-types/i
 ```json
 {
   "icon": {
-    "texture": "example:textures/gui/origins/merling.png",
+    "texture": "example:textures/gui/origins/sheet.png",
     "width": 32,
     "height": 32
   }
