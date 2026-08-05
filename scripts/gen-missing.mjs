@@ -17,7 +17,6 @@ const COMPAT = {
 	action_on_speak: 'compat/02-simple-voice-chat',
 	action_on_reply: 'compat/02-simple-voice-chat',
 	action_on_speech: 'compat/02-simple-voice-chat',
-	action_on_sending_message: 'compat/02-simple-voice-chat',
 	voice_speaking: 'compat/02-simple-voice-chat',
 	voice_disabled: 'compat/02-simple-voice-chat',
 	voice_loudness: 'compat/02-simple-voice-chat',

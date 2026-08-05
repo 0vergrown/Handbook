@@ -30,7 +30,7 @@ Origins live in `data/<namespace>/origins/`. The file name is the origin's id.
 | Field | Type | Default | Purpose |
 | --- | --- | --- | --- |
 | `powers` | list of identifier | `[]` | The Apoli powers this origin grants. |
-| `icon` | [Origin Icon](#the-icon-field) | — | Shown in the selection screen. An item or a texture. |
+| `icon` | [Icon](/docs/datapack/data-types/icon) | — | Shown in the selection screen. An item or a texture. |
 | `impact` | 0–3 | `0` | The "impact" dots — how strong the origin is. |
 | `name` | [text](/docs/datapack/data-types/text-component) | auto | The origin's display name. |
 | `description` | [text](/docs/datapack/data-types/text-component) | auto | The lore shown when selecting. |
@@ -64,7 +64,7 @@ Origins live in `data/<namespace>/origins/`. The file name is the origin's id.
 }
 ```
 
-The first two are an item id and a full [Item Stack](/docs/datapack/data-types/item-stack); the third draws a texture instead, so you don't have to register a throwaway item just to have a custom icon.
+The first two are an item id and a full [Item Stack](/docs/datapack/data-types/item-stack); the third draws a texture instead, so you don't have to register a throwaway item just to have a custom icon. This is the shared [Icon](/docs/datapack/data-types/icon) data type — Apoli's skill trees take exactly the same shapes.
 
 | Field | Type | Default | Description |
 |-------|------|---------|-------------|
