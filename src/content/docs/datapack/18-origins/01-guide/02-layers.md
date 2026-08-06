@@ -38,6 +38,7 @@ Layers live in `data/<namespace>/origin_layers/`.
 | `default_origin` | identifier | — | Fallback for players this layer offers no choice to. |
 | `auto_choose` | boolean | `false` | Skip the screen when the layer offers exactly one choosable origin. |
 | `hidden` | boolean | `false` | Hide the layer from the origin-viewing screen. |
+| `revalidate` | boolean | `false` | Take the origin back when its group's condition stops being true — see [Keeping vs. offering](#keeping-vs-offering). |
 | `random` | object | — | Random-roll settings — see [Randomised layers](#randomised-layers). |
 | `randomiser` | object | — | Re-roll-over-a-life settings — see [Lifecycle & re-rolls](#lifecycle--re-rolls). |
 | `replace` | boolean | `false` | Discard lower-priority packs' version of this layer instead of merging into it. |
@@ -83,6 +84,66 @@ An entry in `origins` is either a plain identifier, or an object that gates a gr
 The condition is re-evaluated every time the layer's options are listed, so a layer can react to what the player picked in an earlier layer, to a [resource](/docs/datapack/powers/resource) value, or to anything else an entity condition can see.
 
 > The origins in a gated group must be **choosable** (`"unchoosable": true` excludes them). An unchoosable origin never appears as an option and `auto_choose` will not pick it.
+
+### Combining conditions
+
+Groups take any [entity condition](/docs/datapack/entity-conditions), so `origins:and` / `origins:or` nest normally and `"inverted": true` works on the whole group or on any condition inside it.
+
+Watch the logic. "Neither ember nor frost" is an **and** of two inverted checks — an `or` of two inverted checks is true for every player, because nobody has two origins in the same layer at once:
+
+```json
+"condition":{
+   "type":"origins:and",
+   "conditions":[
+      { "type":"origins:origin", "layer":"origins:origin", "origin":"my_pack:ember", "inverted":true },
+      { "type":"origins:origin", "layer":"origins:origin", "origin":"my_pack:frost", "inverted":true }
+   ]
+}
+```
+
+Inverting the whole `or` says the same thing, if you prefer it that way:
+
+```json
+"condition":{
+   "type":"origins:or",
+   "inverted":true,
+   "conditions":[
+      { "type":"origins:origin", "layer":"origins:origin", "origin":"my_pack:ember" },
+      { "type":"origins:origin", "layer":"origins:origin", "origin":"my_pack:frost" }
+   ]
+}
+```
+
+> A group whose condition is accidentally always true keeps its origins permanently on the offer list. If that pushes the layer to two options, `auto_choose` stops firing and the player gets a choose screen instead — the usual symptom of a mixed-up `and`/`or`.
+
+## Keeping vs. offering
+
+By default a condition only gates what the layer **offers**. Once a player has an origin, it is theirs — the condition going false later never takes it away. This matches upstream Origins, and it is what you want for a one-time gate like "you may only pick Vampire at night".
+
+Set `"revalidate": true` when the layer is meant to *track* something instead. Then, whenever origins are reconciled — on join, on data-pack reload, and after every origin the player picks — the layer checks that the player's current origin is still on their offer list; if it isn't, it is revoked and `auto_choose` / `default_origin` pick the replacement.
+
+That is what makes a mirror layer work: a hidden layer that follows the main layer's choice.
+
+```json
+{
+   "auto_choose":true,
+   "hidden":true,
+   "revalidate":true,
+   "order":30,
+   "origins":[
+      {
+         "condition":{ "type":"origins:origin", "layer":"origins:origin", "origin":"my_pack:ember" },
+         "origins":[ "my_pack:ember_marker" ]
+      },
+      {
+         "condition":{ "type":"origins:origin", "layer":"origins:origin", "origin":"my_pack:ember", "inverted":true },
+         "origins":[ "my_pack:no_marker" ]
+      }
+   ]
+}
+```
+
+> Revalidation runs on those reconcile points, not every tick, and each group must resolve to exactly one choosable origin for `auto_choose` to swap silently. Groups that can both be true at once leave two options and open the screen.
 
 ## `auto_choose` and `default_origin`
 

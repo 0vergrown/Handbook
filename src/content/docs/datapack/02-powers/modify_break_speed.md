@@ -18,6 +18,8 @@ Field  | Type | Default | Description
 `hardness_modifier` | Attribute Modifier | *optional* | If specified, this modifier will be applied to the *effective* hardness value of the block while calculating the block's break speed.
 `hardness_modifiers` | Array of Attribute Modifiers | *optional* | If specified, these modifiers will be applied to the *effective* hardness value of the block while calculating the block's break speed.
 
+> `hardness_modifier` is applied to the block's hardness before vanilla divides by it, and `modifier` is applied to the resulting progress-per-tick. Both run on the client as well, so the crack animation matches the server.
+
 ## Examples
 
 ```json

@@ -23,6 +23,8 @@ Field | Type | Default | Description
 `result_item_action` | Item Action Type | _optional_ | If specified, this action will be executed on the item that is given to the 'actor' (the player that has the power) entity.
 `action_result` | [Action Result](/docs/datapack/data-types/action-result) | `"success"` | Determines the result of the 'use' action.
 
+> `entity_action`, `block_action` and the item actions run on the server only; `action_result` is returned on both sides so the client's prediction matches. `hands` and `directions` are checked before the conditions, so restricting them is the cheap way to narrow a power down.
+
 ## Examples
 
 ```json

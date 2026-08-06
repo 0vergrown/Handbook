@@ -24,6 +24,8 @@ Field | Type | Default | Description
 `result_stack` | Item Stack | *optional* | If specified, this item stack will be given to the player upon trying to place a block.
 `result_item_action` | Item Action Type | *optional* | If specified, this item action will be executed on the item that will be given to the player upon trying to place a block.
 
+> This runs **before** the block is placed, so `place_to_condition` matches whatever is currently in that space — air, or the replaceable block being overwritten — not the block being placed.
+
 ##	Examples
 
 ```json

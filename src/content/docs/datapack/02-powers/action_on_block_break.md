@@ -17,6 +17,10 @@ Field  | Type | Default | Description
 `block_condition` | Block Condition Type | _optional_ | If set, the specified actions will only trigger when this block condition is met by the broken block.
 `only_when_harvested` | [Boolean](/docs/datapack/data-types/boolean) | `true` | If this is true, the specified actions will only execute when the player succeeds in harvesting the block (e.g. they will not trigger when stone is broken by hand).
 
+> The power fires **after** the block is removed, but `block_condition` is tested against the state captured beforehand — so conditions on the broken block work, while a `block_action` that places something acts on the now-empty space.
+>
+> "Harvested" means the player had the right tool (`hasCorrectToolForDrops`), which is the same test vanilla uses to decide whether the block drops. [apoli:modify_harvest](/docs/datapack/powers/modify_harvest) therefore changes what counts as harvested here too.
+
 ## Examples
 
 ```json

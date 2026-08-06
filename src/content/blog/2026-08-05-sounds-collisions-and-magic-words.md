@@ -1,11 +1,11 @@
 ---
 title: Rewriting sound, colliding with things, and what a magic word actually matches
-description: Apoli 1.23.0 adds two sound-replacement powers, action_on_collision, three new play_sound fields, texture icons for skill trees, and makes the chat magic-word trigger say what it means.
+description: Apoli 1.23.1 adds two sound-replacement powers, action_on_collision, three new play_sound fields, texture icons for skill trees, and fixes the chat magic-word trigger properly.
 date: 2026-08-05
 author: Overgrown
 ---
 
-Apoli **1.23.0** (Origins **1.11.1**) is a sound update, a collision trigger, and a long-overdue clarification of how chat filters match.
+Apoli **1.23.1** (Origins **1.11.1**) is a sound update, a collision trigger, and a long-overdue fix for the chat magic-word trigger.
 
 ## Sound, rewritten in both directions
 
@@ -138,9 +138,86 @@ So the trigger most people were actually reaching for is:
 
 `case_insensitive` replaces hand-writing `(?i)`, `literal: true` turns off regex entirely for words containing `(` or `[`, and a filter can now be written as a bare string when you don't need any of that. Existing packs are untouched — `contains` is still the default and `(?i)` still works.
 
-Two related fixes while in there. `message_type` never worked: the chat hook didn't pass a chat type, so any power that set the field could never match and simply never fired. And `priority` was parsed and then never read. Both do what they say now.
+> `(?i)` is regex for *ignore case*. It is not "not this" — a surprising number of packs were using it that way. For "not this", see `inverted` below.
 
-Also: an invalid regex in a filter used to fall back to a literal match silently, which meant a typo left you with a filter that quietly matched nothing you expected. It still falls back — but it says so in the log.
+### One match, one action
+
+Filters are a gate, not a loop. Each filter used to run the power's `entity_action` when it matched, so a message matching two filters ran the action twice — and with the default substring matching that is easy to hit without noticing. `"stone"` and `"smooth stone"` *both* match the message `smooth stone`.
+
+Now the list is evaluated first and `entity_action` runs **once**. Per-filter `before_action`, `after_action`, `replacement` and `prevent` still run for every filter that matched, because those are deliberately per-filter — a `filters` list used as a dispatch table, one `after_action` per magic word, keeps working exactly as before.
+
+### `inverted`, for carving out exceptions
+
+A filter can now be marked `"inverted": true`, which turns it into a veto: it never triggers the power by itself, it only stops the power when it matches.
+
+```json
+{
+  "type": "apoli:action_on_sending_message",
+  "filters": [
+    {
+      "filter": "stone",
+      "prevent": true
+    },
+    {
+      "filter": "smooth stone",
+      "inverted": true
+    },
+    {
+      "filter": "mossy cobblestone",
+      "inverted": true
+    }
+  ]
+}
+```
+
+That fires on `stone` and `stonecutter`, but not on `smooth stone` or `mossy cobblestone`.
+
+Before reaching for it, though: if the words are simply *different messages*, `match_mode` already says that, and says it more clearly.
+
+```json
+{
+  "filter": "stone",
+  "match_mode": "full",
+  "literal": true,
+  "case_insensitive": true,
+  "prevent": true
+}
+```
+
+`inverted` earns its keep when the pattern genuinely has to stay loose and you only want a few holes in it.
+
+### …and three reasons it wasn't firing at all
+
+`message_type` never worked: the chat hook didn't pass a chat type, so any power that set the field could never match and simply never fired. `priority` was parsed and then never read. And **only typed chat was hooked** — `/say`, `/me` and `/msg` went straight past the filters, so a magic word sent as a command did nothing at all. All three work now.
+
+An invalid regex in a filter also used to fall back to a literal match silently, leaving you with a filter that quietly matched nothing you expected. It still falls back — but it says so in the log.
+
+Worse, a failing action *inside* the power could break chat with no usable error. Chat broadcast runs inside a future chain whose exception handler logs a generic "Chain link failed" and moves on, never naming the mod. The power now catches its own failures, names itself and the message, and lets the message through.
+
+### Rewriting instead of blocking
+
+A filter can now carry a `replacement`, which rewrites the message rather than swallowing it — capture groups and all:
+
+```json
+{
+  "type": "apoli:action_on_sending_message",
+  "filter": {
+    "filter": "heck",
+    "replacement": "****",
+    "case_insensitive": true
+  }
+}
+```
+
+### And a way to see what's happening
+
+`/apoli:message <text>` tests `<text>` as if you'd typed it and tells you which powers are active, which filters matched, whether the power ends up inert, and what would have happened to the message. If a magic word isn't firing, start there — it will tell you whether the power is even active before you start rewriting regex.
+
+It is a dry run: no `entity_action` is executed. Debugging a power that hands out items no longer fills your inventory with the evidence.
+
+### Translation keys got much cheaper
+
+`#{some.translation.key}` in a filter expands to every translation of that key, so one filter catches a phrase in any language. It used to index **every** translation key of **every** installed mod at startup — tens of thousands of strings held for the whole session to serve a couple of lookups. Now only the keys your filters actually name are read, once, the first time such a filter is tested. A pack with no `#{...}` never opens a language file at all.
 
 ## Smaller things
 

@@ -16,6 +16,8 @@ Field  | Type | Default | Description
 `block_action` | Block Action Type | _optional_ | If specified, this action will be executed on the bed block.
 `block_condition` | Block Condition Type | _optional_ | If specified, the specified actions will only execute if this condition is fulfilled by the bed block.
 
+> Fires as the player leaves the bed, while the bed position is still known, so `block_condition` can test the bed they slept in. It runs server-side only.
+
 ## Examples
 
 ```json

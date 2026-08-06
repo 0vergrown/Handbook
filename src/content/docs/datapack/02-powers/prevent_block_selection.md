@@ -18,6 +18,10 @@ Field  | Type | Default | Description
 -------|------|---------|-------------
 `block_condition` | Block Condition Type | _optional_ | If specified, only blocks that fulfill this condition are affected.
 
+> Implemented by emptying the block's **outline** shape for that player, which is what a picking raycast tests — so the ray carries on to whatever is behind, exactly as described above. The *collision* shape is untouched, so the block is still solid; walking through things is [apoli:phasing](/docs/datapack/powers/phasing).
+>
+> With no `block_condition` at all, every block becomes unselectable.
+
 ## Examples
 
 ```json

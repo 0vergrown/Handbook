@@ -24,6 +24,8 @@ Field | Type | Default | Description
 `result_stack` | [Item Stack](/docs/datapack/data-types/item-stack) | *optional* | If specified, this item stack will be given to the player upon placing a block.
 `result_item_action` | Item Action Type | *optional* | If specified, this item action will be executed on the item that will be given to the player upon placing a block.
 
+> This fires **after** the block goes down, so `place_to_condition` matches the block that was just placed. Use [apoli:prevent_block_place](/docs/datapack/powers/prevent_block_place) if you need to inspect the space *before* it is filled.
+
 ##	Examples
 
 ```json

@@ -18,6 +18,8 @@ Field  | Type | Default | Description
 -------|------|---------|-------------
 `block_condition` | Block Condition Type | | If specified, only blocks that fulfill this condition are affected.
 
+> Covers both halves of a right-click: using the block itself (opening a chest) and using an item on it (bonemealing a crop). It applies on the client too, so the interaction is never even predicted — nothing flickers.
+
 ## Examples
 
 ```json
