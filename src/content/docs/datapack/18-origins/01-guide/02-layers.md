@@ -38,7 +38,7 @@ Layers live in `data/<namespace>/origin_layers/`.
 | `default_origin` | identifier | — | Fallback for players this layer offers no choice to. |
 | `auto_choose` | boolean | `false` | Skip the screen when the layer offers exactly one choosable origin. |
 | `hidden` | boolean | `false` | Hide the layer from the origin-viewing screen. |
-| `revalidate` | boolean | `false` | Take the origin back when its group's condition stops being true — see [Keeping vs. offering](#keeping-vs-offering). |
+| `revalidate` | boolean | = `auto_choose` | Take the origin back when its group's condition stops being true — see [Keeping vs. offering](#keeping-vs-offering). |
 | `random` | object | — | Random-roll settings — see [Randomised layers](#randomised-layers). |
 | `randomiser` | object | — | Re-roll-over-a-life settings — see [Lifecycle & re-rolls](#lifecycle--re-rolls). |
 | `replace` | boolean | `false` | Discard lower-priority packs' version of this layer instead of merging into it. |
@@ -83,7 +83,7 @@ An entry in `origins` is either a plain identifier, or an object that gates a gr
 
 The condition is re-evaluated every time the layer's options are listed, so a layer can react to what the player picked in an earlier layer, to a [resource](/docs/datapack/powers/resource) value, or to anything else an entity condition can see.
 
-> The origins in a gated group must be **choosable** (`"unchoosable": true` excludes them). An unchoosable origin never appears as an option and `auto_choose` will not pick it.
+> An `"unchoosable": true` origin never appears as a button, so a gated group made of them offers the player nothing to pick. That is exactly what a [derived layer](#derived-layers) wants — with `auto_choose` set they are still assigned — but on a layer the player is meant to choose in, it means the layer is skipped entirely.
 
 ### Combining conditions
 
@@ -93,11 +93,21 @@ Watch the logic. "Neither ember nor frost" is an **and** of two inverted checks 
 
 ```json
 "condition":{
-   "type":"origins:and",
-   "conditions":[
-      { "type":"origins:origin", "layer":"origins:origin", "origin":"my_pack:ember", "inverted":true },
-      { "type":"origins:origin", "layer":"origins:origin", "origin":"my_pack:frost", "inverted":true }
-   ]
+  "type": "origins:and",
+  "conditions": [
+    {
+      "type": "origins:origin",
+      "layer": "origins:origin",
+      "origin": "my_pack:ember",
+      "inverted": true
+    },
+    {
+      "type": "origins:origin",
+      "layer": "origins:origin",
+      "origin": "my_pack:frost",
+      "inverted": true
+    }
+  ]
 }
 ```
 
@@ -105,12 +115,20 @@ Inverting the whole `or` says the same thing, if you prefer it that way:
 
 ```json
 "condition":{
-   "type":"origins:or",
-   "inverted":true,
-   "conditions":[
-      { "type":"origins:origin", "layer":"origins:origin", "origin":"my_pack:ember" },
-      { "type":"origins:origin", "layer":"origins:origin", "origin":"my_pack:frost" }
-   ]
+  "type": "origins:or",
+  "inverted": true,
+  "conditions": [
+    {
+      "type": "origins:origin",
+      "layer": "origins:origin",
+      "origin": "my_pack:ember"
+    },
+    {
+      "type": "origins:origin",
+      "layer": "origins:origin",
+      "origin": "my_pack:frost"
+    }
+  ]
 }
 ```
 
@@ -118,32 +136,114 @@ Inverting the whole `or` says the same thing, if you prefer it that way:
 
 ## Keeping vs. offering
 
-By default a condition only gates what the layer **offers**. Once a player has an origin, it is theirs — the condition going false later never takes it away. This matches upstream Origins, and it is what you want for a one-time gate like "you may only pick Vampire at night".
+There are two kinds of conditioned layer, and they want opposite things:
 
-Set `"revalidate": true` when the layer is meant to *track* something instead. Then, whenever origins are reconciled — on join, on data-pack reload, and after every origin the player picks — the layer checks that the player's current origin is still on their offer list; if it isn't, it is revoked and `auto_choose` / `default_origin` pick the replacement.
+- A layer the **player chooses in** should keep whatever they picked. A gate like "you may only pick Vampire at night" is about the moment of choosing; taking the origin back at sunrise would be absurd.
+- A layer the pack **derives** — one group per state, each yielding a single origin, granted rather than picked — has to keep tracking, or it goes stale the moment the thing it mirrors changes.
 
-That is what makes a mirror layer work: a hidden layer that follows the main layer's choice.
+`auto_choose` already tells the two apart, so it is the default for `revalidate`. A layer that auto-chooses re-checks its conditions at every reconcile point (join, data-pack reload, orb, and every origin the player picks) and **swaps itself over** when they change; a layer with a real choice never revokes. Set `revalidate` explicitly to override either way.
+
+A revalidating layer only ever switches from one origin to another — it is never emptied. If its conditions stop naming a single origin (none of the groups match, or two do), the player keeps what they already had, falling back to `default_origin` when the layer defines one. Losing a layer's powers with nothing to replace them is always a bug, so the engine will not do it.
+
+### Derived layers
+
+This is the pattern — a hidden layer that follows the main layer's choice:
 
 ```json
 {
-   "auto_choose":true,
-   "hidden":true,
-   "revalidate":true,
-   "order":30,
-   "origins":[
-      {
-         "condition":{ "type":"origins:origin", "layer":"origins:origin", "origin":"my_pack:ember" },
-         "origins":[ "my_pack:ember_marker" ]
+  "auto_choose": true,
+  "hidden": true,
+  "order": 30,
+  "origins": [
+    {
+      "condition": {
+        "type": "origins:origin",
+        "layer": "origins:origin",
+        "origin": "my_pack:ember"
       },
-      {
-         "condition":{ "type":"origins:origin", "layer":"origins:origin", "origin":"my_pack:ember", "inverted":true },
-         "origins":[ "my_pack:no_marker" ]
-      }
-   ]
+      "origins": [
+        "my_pack:ember_marker"
+      ]
+    },
+    {
+      "condition": {
+        "type": "origins:origin",
+        "layer": "origins:origin",
+        "origin": "my_pack:ember",
+        "inverted": true
+      },
+      "origins": [
+        "my_pack:no_marker"
+      ]
+    }
+  ]
 }
 ```
 
-> Revalidation runs on those reconcile points, not every tick, and each group must resolve to exactly one choosable origin for `auto_choose` to swap silently. Groups that can both be true at once leave two options and open the screen.
+Three things make that work, and all three are easy to get wrong:
+
+- **Each group must resolve to exactly one origin.** Groups that can both be true at once leave the layer with two options, which is a choice — so `auto_choose` stops and the player gets a screen. This is the usual symptom of a mixed-up `and`/`or`.
+- **`unchoosable` origins are fine here.** A derived layer normally marks its origins `"unchoosable": true` so they never show up in any GUI. A layer with `auto_choose` still assigns them, because there was never a choice to skip.
+- **It waits for what it reads.** A layer whose groups test [origins:origin](/docs/datapack/origins/origin) is not decided until *that* layer has been settled — otherwise "the player has neither X nor Y" would be vacuously true during the very first choose screen and the layer would commit to the wrong branch. Only the layers it actually names hold it up; an unrelated layer the player has yet to pick does not. (An origin check with no `layer` field matches against every layer, so it waits for all of them.)
+
+> Revalidation runs on reconcile points, not every tick. A condition on something transient (weather, health, time of day) will not track it live — it settles on the next join, reload, orb use or origin choice.
+
+#### One branch per state, not one per origin
+
+The two groups of a derived layer are each other's complement. Write the condition **once**, as a list, and invert it for the other branch — that way adding a new origin later means editing one list, not rebalancing an `and`/`or` on both sides:
+
+```json
+{
+  "auto_choose": true,
+  "hidden": true,
+  "order": 30,
+  "origins": [
+    {
+      "condition": {
+        "type": "origins:origin",
+        "layer": "origins:origin",
+        "origin": [
+          "my_pack:base",
+          "my_pack:aliens/*"
+        ]
+      },
+      "origins": [
+        "my_pack:has_device"
+      ]
+    },
+    {
+      "condition": {
+        "type": "origins:origin",
+        "layer": "origins:origin",
+        "origin": [
+          "my_pack:base",
+          "my_pack:aliens/*"
+        ],
+        "inverted": true
+      },
+      "origins": [
+        "my_pack:no_device"
+      ]
+    }
+  ]
+}
+```
+
+The `*` wildcard is what keeps this from becoming a list of every origin in the pack. See [origins:origin](/docs/datapack/origins/origin) for the pattern syntax.
+
+### Overriding a derived layer by hand
+
+`/origin set` **pins** the layer it touches: an origin an operator, a GUI pick, an [Orb of Origin](/docs/datapack/origins/overview), or a power's action puts there is not re-derived, even on a `revalidate` layer whose conditions disagree. Without that, setting a derived layer by command would appear to succeed and be undone in the same tick.
+
+To hand the layer back to its conditions, clear it:
+
+```
+/origin set @s my_pack:device origins:empty
+```
+
+The pin is also dropped if a data-pack change removes the pinned origin from the layer entirely.
+
+> Only `origins:origin` names a layer, so that is the only dependency the game can see. A derived layer gated on something *downstream* of another layer — a power that origin grants, say — is decided immediately and then corrected by revalidation on the next reconcile, rather than waiting. Condition it on the origin directly if you want it right first time.
 
 ## `auto_choose` and `default_origin`
 

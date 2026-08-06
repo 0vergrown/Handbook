@@ -14,8 +14,10 @@ Type ID: `origins:origin` — an [entity condition](/docs/datapack/entity-condit
 
 | Field | Type | Default | Purpose |
 | --- | --- | --- | --- |
-| `origin` | [Identifier](/docs/datapack/data-types/identifier) | _required_ | The origin to look for. |
-| `layer` | [Identifier](/docs/datapack/data-types/identifier) | _optional_ | Only check this layer. Omit to pass if the origin is held on **any** layer. |
+| `origin` | origin pattern, or a list of them | _required_ | The origin(s) to look for. Passes if **any** of them matches. |
+| `layer` | [Identifier](/docs/datapack/data-types/identifier) | _optional_ | Only check this layer. Omit to pass if a match is held on **any** layer. |
+
+An **origin pattern** is an [identifier](/docs/datapack/data-types/identifier) that may use `*` as a wildcard in its namespace or its path — `my_pack:aliens/*` matches every origin whose path starts with `aliens/`, at any depth. Without a `*` it is an ordinary identifier and must match exactly.
 
 ## Examples
 
@@ -37,6 +39,21 @@ Anywhere at all — including a copy layer they picked it up on:
   "origin": "origins:merling"
 }
 ```
+
+Any of a whole family, without listing them one by one:
+
+```json
+{
+  "type": "origins:origin",
+  "layer": "origins:origin",
+  "origin": [
+    "my_pack:base",
+    "my_pack:aliens/*"
+  ]
+}
+```
+
+> Use the list form instead of wrapping several `origins:origin` checks in an `origins:or`. It reads better, and — since `"inverted": true` applies to the whole condition — one inverted copy of it gives you the exact complement, which is what a [derived layer](/docs/datapack/origins/layers#derived-layers) needs for its other branch.
 
 ## Gating one power on several origins
 

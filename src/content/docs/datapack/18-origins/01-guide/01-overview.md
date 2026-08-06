@@ -27,17 +27,17 @@ Origins live in `data/<namespace>/origins/`. The file name is the origin's id.
 
 ## Fields
 
-| Field | Type | Default | Purpose |
-| --- | --- | --- | --- |
-| `powers` | list of identifier | `[]` | The Apoli powers this origin grants. |
-| `icon` | [Icon](/docs/datapack/data-types/icon) | — | Shown in the selection screen. An item or a texture. |
-| `impact` | 0–3 | `0` | The "impact" dots — how strong the origin is. |
-| `name` | [text](/docs/datapack/data-types/text-component) | auto | The origin's display name. |
-| `description` | [text](/docs/datapack/data-types/text-component) | auto | The lore shown when selecting. |
-| `order` | number | `0` | Sort position in the screen. |
-| `loading_priority` | number | `0` | Higher wins when packs define the same id. |
-| `unchoosable` | boolean | `false` | Exists but can't be picked (e.g. an admin origin). |
-| `name_scroll_speed` | number | — | Speed a long name marquees at. |
+| Field               | Type                                             | Default | Purpose                                              |
+|---------------------|--------------------------------------------------|---------|------------------------------------------------------|
+| `powers`            | list of [power entry](#hiding-powers-in-the-gui) | `[]`    | The Apoli powers this origin grants.                 |
+| `icon`              | [Icon](/docs/datapack/data-types/icon)           | —       | Shown in the selection screen. An item or a texture. |
+| `impact`            | 0–3                                              | `0`     | The "impact" dots — how strong the origin is.        |
+| `name`              | [text](/docs/datapack/data-types/text-component) | auto    | The origin's display name.                           |
+| `description`       | [text](/docs/datapack/data-types/text-component) | auto    | The lore shown when selecting.                       |
+| `order`             | number                                           | `0`     | Sort position in the screen.                         |
+| `loading_priority`  | number                                           | `0`     | Higher wins when packs define the same id.           |
+| `unchoosable`       | boolean                                          | `false` | Exists but can't be picked (e.g. an admin origin).   |
+| `name_scroll_speed` | number                                           | —       | Speed a long name marquees at.                       |
 
 ## The `icon` field
 
@@ -66,11 +66,11 @@ Origins live in `data/<namespace>/origins/`. The file name is the origin's id.
 
 The first two are an item id and a full [Item Stack](/docs/datapack/data-types/item-stack); the third draws a texture instead, so you don't have to register a throwaway item just to have a custom icon. This is the shared [Icon](/docs/datapack/data-types/icon) data type — Apoli's skill trees take exactly the same shapes.
 
-| Field | Type | Default | Description |
-|-------|------|---------|-------------|
-| `texture` | [Identifier](/docs/datapack/data-types/identifier) | **required** for the texture form | Path to the PNG, relative to `assets/<namespace>/`. |
-| `width` | [Integer](/docs/datapack/data-types/integer) | whole file | Width in pixels of the region to draw, measured from the top-left of the file. |
-| `height` | [Integer](/docs/datapack/data-types/integer) | whole file | Height in pixels of the region to draw, measured from the top-left of the file. |
+| Field     | Type                                               | Default                           | Description                                                                     |
+|-----------|----------------------------------------------------|-----------------------------------|---------------------------------------------------------------------------------|
+| `texture` | [Identifier](/docs/datapack/data-types/identifier) | **required** for the texture form | Path to the PNG, relative to `assets/<namespace>/`.                             |
+| `width`   | [Integer](/docs/datapack/data-types/integer)       | whole file                        | Width in pixels of the region to draw, measured from the top-left of the file.  |
+| `height`  | [Integer](/docs/datapack/data-types/integer)       | whole file                        | Height in pixels of the region to draw, measured from the top-left of the file. |
 
 **You normally don't need `width`/`height`.** The file's real size is read from the PNG, and the whole image is scaled into the 16×16 icon slot — a 16×16, 64×64 or 256×256 icon all just work. Set them only to draw a *sub-region* of a larger file, e.g. the top-left 32×32 of a sprite sheet:
 
@@ -92,6 +92,41 @@ The first two are an item id and a full [Item Stack](/docs/datapack/data-types/i
 
 The `powers` list is just Apoli power ids. There's nothing Origins-specific about them — they're the same powers you'd write in any data pack. A good origin is usually **one [`apoli:multiple`](/docs/datapack/powers/multiple)** that bundles the traits, plus a couple of standalone powers, so the selection screen stays readable.
 
+## Hiding powers in the GUI
+
+Each entry in `powers` is either a bare power id, or an object grouping several ids behind an [entity condition](/docs/datapack/entity-conditions). The two forms mix freely in one list.
+
+| Field       | Type                                                 | Default | Purpose                                                                                                          |
+|-------------|------------------------------------------------------|---------|------------------------------------------------------------------------------------------------------------------|
+| `condition` | [entity condition](/docs/datapack/entity-conditions) | —       | While this fails, the group's powers are **hidden from the origin's power list** in the choose and view screens. |
+| `powers`    | list of identifier                                   | `[]`    | The power ids in this group.                                                                                     |
+
+```json
+{
+  "name": "Aviator",
+  "powers": [
+    "example:flight",
+    "example:slow_falling",
+    {
+      "condition": {
+        "type": "apoli:advancement",
+        "advancement": "example:mastery"
+      },
+      "powers": [
+        "example:double_jump",
+        "example:air_dash"
+      ]
+    }
+  ]
+}
+```
+
+Flight and slow-falling always show. The double-jump and air-dash group stays hidden until the player earns `example:mastery`, then appears — an "unlockable powers" reveal that needs no change to the origin itself.
+
+> **The condition is a display filter, not a gate.** Every power in the list is granted the moment the origin is chosen, condition or not. To make a power *inert* until something is true, put a `condition` on the power's own JSON — Apoli already gates a power's activity that way at no runtime cost. Use both together if you want a power that is neither visible nor active yet.
+
+> The condition is evaluated **on the client**, so it can only read state the client knows about — the same limitation as a layer's [conditioned origins](/docs/datapack/origins/layers#conditioned-origins).
+
 ## Origins need a layer
 
 An origin file alone doesn't appear in-game. It has to be placed into a **layer** — the slot the player chooses from. See [Layers](/docs/datapack/origins/layers).
@@ -101,11 +136,19 @@ An origin file alone doesn't appear in-game. It has to be placed into a **layer*
 Installing Origins registers a **namespace alias**: every type Apoli provides also answers to `origins:` as well as `apoli:`. `origins:health` *is* `apoli:health` — same class, same fields, same behaviour. There is no separate Origins version of it.
 
 ```json
-{ "type": "origins:health", "comparison": "<", "compare_to": 6 }
+{
+  "type": "origins:health",
+  "comparison": "<",
+  "compare_to": 6
+}
 ```
 
 ```json
-{ "type": "apoli:health", "comparison": "<", "compare_to": 6 }
+{
+  "type": "apoli:health",
+  "comparison": "<",
+  "compare_to": 6
+}
 ```
 
 Those two are the same condition. The alias exists because years of packs were written for the original Origins mod, before powers were split out into Apoli — so that JSON keeps working untouched.
@@ -124,16 +167,16 @@ What this means when reading these docs:
 
 Origins is an Apoli addon, so as well as origins and layers it registers a handful of Apoli types in the `origins:` namespace. Use them in any power's JSON, exactly like the built-in Apoli types — but a power that uses one **fails to load without Origins installed**.
 
-| Type | Kind | What it does |
-| --- | --- | --- |
-| [`origins:origin`](/docs/datapack/origins/origin) | Entity condition | Does this player have a given origin? |
-| [`origins:copy_origin`](/docs/datapack/origins/copy_origin) | Bi-entity action | Copy the target's origin onto the actor's copy layer. |
-| [`origins:transfer_origin`](/docs/datapack/origins/transfer_origin) | Bi-entity action | Steal, give or copy a whole origin between two players. |
-| [`origins:store_origin`](/docs/datapack/origins/store_origin) | Entity action | Remember an origin under a named key. |
-| [`origins:store_origin` (bi-entity)](/docs/datapack/origins/store_origin_bientity) | Bi-entity action | Remember the *target's* origin on the actor. |
-| [`origins:apply_stored_origin`](/docs/datapack/origins/apply_stored_origin) | Entity action | Put a remembered origin back. |
-| [`origins:store_value`](/docs/datapack/origins/store_value) | Entity action | Remember a piece of text. |
-| [`origins:stored_origin`](/docs/datapack/origins/stored_origin) | Entity condition | Is an origin remembered? |
-| [`origins:stored_value`](/docs/datapack/origins/stored_value) | Entity condition | Is this text remembered? |
+| Type                                                                               | Kind             | What it does                                            |
+|------------------------------------------------------------------------------------|------------------|---------------------------------------------------------|
+| [`origins:origin`](/docs/datapack/origins/origin)                                  | Entity condition | Does this player have a given origin?                   |
+| [`origins:copy_origin`](/docs/datapack/origins/copy_origin)                        | Bi-entity action | Copy the target's origin onto the actor's copy layer.   |
+| [`origins:transfer_origin`](/docs/datapack/origins/transfer_origin)                | Bi-entity action | Steal, give or copy a whole origin between two players. |
+| [`origins:store_origin`](/docs/datapack/origins/store_origin)                      | Entity action    | Remember an origin under a named key.                   |
+| [`origins:store_origin` (bi-entity)](/docs/datapack/origins/store_origin_bientity) | Bi-entity action | Remember the *target's* origin on the actor.            |
+| [`origins:apply_stored_origin`](/docs/datapack/origins/apply_stored_origin)        | Entity action    | Put a remembered origin back.                           |
+| [`origins:store_value`](/docs/datapack/origins/store_value)                        | Entity action    | Remember a piece of text.                               |
+| [`origins:stored_origin`](/docs/datapack/origins/stored_origin)                    | Entity condition | Is an origin remembered?                                |
+| [`origins:stored_value`](/docs/datapack/origins/stored_value)                      | Entity condition | Is this text remembered?                                |
 
 The last six are the [origin storage](/docs/datapack/origins/storage) system. Origins also adds four [badge](/docs/datapack/origins/badges) types, and two fields to [`apoli:action_on_callback`](/docs/datapack/powers/action_on_callback) — that power is core Apoli, but its `entity_action_chosen` only fires when Origins is there to report the choice.

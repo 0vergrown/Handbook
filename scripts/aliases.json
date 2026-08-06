@@ -162,6 +162,9 @@
 	"powers/modify_label_render": [
 		"sync:modify_label_render"
 	],
+	"powers/modify_type_tag": [
+		"entity_group"
+	],
 	"powers/prevent_accessory_equip": [
 		"prevent_trinket_equip"
 	],

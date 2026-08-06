@@ -27,7 +27,13 @@ origin set @a origins:origin origins:empty
 
 Applies the origin's powers immediately, syncs it to every client, and fires the origin-chosen callbacks. It refuses layers and origins that do not exist, and origins that are not part of the given layer — unless the origin is marked `special`.
 
-Use `origins:empty` to clear a layer's origin while leaving the layer chosen.
+The origin is **pinned** to that layer: a [`revalidate` layer](/docs/datapack/origins/layers#keeping-vs-offering) will not re-derive it from its conditions afterwards. `origins:empty` clears the layer and drops the pin, handing it back to its conditions:
+
+```mcfunction
+origin set @s my_pack:device origins:empty
+```
+
+The return value is the number of targets that ended up on the requested origin, and any target that did not is named in a failure message — so a pack can tell a real assignment from one a layer's conditions overrode.
 
 ## has / get
 

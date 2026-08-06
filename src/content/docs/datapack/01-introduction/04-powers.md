@@ -55,6 +55,40 @@ Writing a power file doesn't do anything on its own. Something has to give the p
 
 - a `/power grant` command,
 - an **Origins** origin (via a [layer](/docs/datapack/origins/layers)),
-- an [action](/docs/datapack/introduction/actions) like `Grant Power (Entity Action Type)`.
+- an [action](/docs/datapack/introduction/actions) like `Grant Power (Entity Action Type)`,
+- a [global power set](#global-powers), which grants to whole entity types automatically.
 
 Once granted, Apoli applies the power's effect and if it has a top-level `condition`, it keeps it active only while that condition holds.
+
+## Global powers
+
+A file in `data/<namespace>/global_powers/<name>.json` grants powers to entities **by entity type**, with no origin and no command. Every matching entity gets them when it loads into the world.
+
+```json
+{
+  "entity_types": [
+    "minecraft:pig",
+    "#minecraft:undead"
+  ],
+  "powers": [
+    "example:tough"
+  ],
+  "order": 0
+}
+```
+
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `entity_types` | [Identifier](/docs/datapack/data-types/identifier), or an array of them | all entities | Which entity types get the powers. `#`-prefixed entries are entity type tags. Omit the field entirely to match **everything**. |
+| `powers` | [Array](/docs/datapack/data-types/array) of [Identifier](/docs/datapack/data-types/identifier) | _required_ | The powers to grant. |
+| `replace` | [Boolean](/docs/datapack/data-types/boolean) | `false` | Discard the powers every earlier-ordered set contributed to this entity type, then add these. |
+| `order` | [Integer](/docs/datapack/data-types/integer) | `0` | Sets which sets are applied first. Ties break by file id. |
+| `loading_priority` | [Integer](/docs/datapack/data-types/integer) | `0` | Higher wins when two data packs define the same file id. |
+
+The powers arrive under the source `apoli:global`, so they sit alongside anything an origin or a command granted and are revoked cleanly when a set stops matching.
+
+> **This is the most expensive feature in Apoli if you misuse it.** A set with no `entity_types` grants to *every* entity in the world — arrows, item drops, area-effect clouds — and each one then ticks each power. Scope by type or tag, and think hard before putting an [`apoli:action_over_time`](/docs/datapack/powers/action_over_time) in one.
+
+> Which powers a given entity type receives is worked out **once per entity type per data-pack load** and cached, so spawning a thousand zombies does not re-evaluate a thousand times. When no global power sets exist at all, the whole system costs a single boolean check per entity load.
+
+> Sets are re-evaluated on `/reload`, and every already-loaded entity is reconciled against the new result — powers whose set no longer matches are revoked in the same pass.

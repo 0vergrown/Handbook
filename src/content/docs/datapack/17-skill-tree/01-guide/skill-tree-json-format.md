@@ -5,7 +5,7 @@ description: "The format of a JSON file that defines a skill tree, placed in the
 
 The format of a JSON file that **defines a skill tree**, placed in the `skill_trees` folder of your namespace (`data/<namespace>/skill_trees/<name>.json`). A skill tree file only defines the tree itself. Its tab, background, and the powers every holder of the tree gets by default. The individual skills that appear in the tree are **not** defined here; each skill lives in the power file it unlocks, via [Skill Tree Power Data](/docs/datapack/skill-tree/skill-tree-power-data) (the same way Origins badges live on their powers).
 
-> **How a tree reaches a player:** by default (`auto_grant: true`) every player has the tree. Set `auto_grant: false` to hide it until it is explicitly granted with **[Grant Skill Tree (Entity Action Type)](/docs/datapack/skill-tree/grant_skill_tree)** from an origin's power, an item, another power's action, or any other entity-action source. **[Revoke Skill Tree (Entity Action Type)](/docs/datapack/skill-tree/revoke_skill_tree)** takes it away again (purchased skills are remembered and come back if the tree is re-granted). Because grants are stored per player and only change on those actions, there is **no per-tick condition checking** for tree visibility anymore.
+> **How a tree reaches a player:** by default (`auto_grant: true`) every player has the tree. Set `auto_grant: false` to hide it until it is explicitly granted with **[Grant Skill Tree (Entity Action Type)](/docs/datapack/skill-tree/grant_skill_tree)** from an origin's power, an item, another power's action, or any other entity-action source. **[Revoke Skill Tree (Entity Action Type)](/docs/datapack/skill-tree/revoke_skill_tree)** takes it away again (purchased skills are remembered and come back if the tree is re-granted). Because grants are stored per player and only change on those actions, there is **no per-tick condition checking**. A tree can additionally carry a `condition` for the cases a stored grant can't express — see [Tying a tree to an origin](#tying-a-tree-to-an-origin).
 
 ## Fields
 
@@ -18,7 +18,29 @@ The format of a JSON file that **defines a skill tree**, placed in the `skill_tr
 | `default_powers` | [Array](/docs/datapack/data-types/array) of [Identifier](/docs/datapack/data-types/identifier) | _optional_                          | Powers granted to every player who has the tree (e.g. a point-earning power). Removed when the tree is revoked.                                                                                                                                                                                    |             |
 | `order`          | [Integer](/docs/datapack/data-types/integer)                         | `0`                                 | Tab order among trees — lower values come first; ties keep load order.                                                                                                                                                                                                                             |             |
 | `auto_grant`     | [Boolean](/docs/datapack/data-types/boolean)                         | `true`                              | If `true`, every player automatically has this tree (revoking has no lasting effect). If `false`, the tree is hidden until granted via the grant action.                                                                                                                                           |             |
+| `condition`      | [Entity Condition Type](/docs/datapack/entity-conditions)   | _optional_                          | If set, the tree only counts for players who fulfil it — see [Tying a tree to an origin](#tying-a-tree-to-an-origin).                                                                                                                                        |             |
 | `refundable`     | [Boolean](/docs/datapack/data-types/boolean)                         | `true`                              | If `true`, players can shift-click a purchased skill in the tree screen to un-buy it — the power is removed and its point cost returned (only allowed while no purchased skill depends on it). Set `false` to make purchases permanent (admins can still `unbuy` via the [Skill Tree](/docs/datapack/skill-tree/skill-tree). |             |
+
+## Tying a tree to an origin
+
+`auto_grant` and the grant/revoke actions are *stored* state: once a player has a tree, they keep it until something takes it away. `condition` is the live half — a tree whose condition is false still remembers everything the player bought, but **none of its powers apply** and its tab is hidden. When the condition becomes true again, the purchases come straight back.
+
+That is what ties a tree to an origin, so its skills don't follow the player into their next one:
+
+```json
+{
+	"name": "Pyromancy",
+	"condition": {
+		"type": "origins:origin",
+		"layer": "origins:origin",
+		"origin": "my_pack:ember"
+	}
+}
+```
+
+A tree with **no** `condition` is global — every player keeps its powers through any number of origin changes, which is what you want for something like a server-wide progression tree.
+
+> The condition is re-evaluated whenever Origins reconciles a player's origins (join, data-pack reload, orb, and every origin choice) — not every tick. A condition on something that changes constantly, like health or the time of day, will not track it in real time; gate on an origin, an advancement or a power instead.
 
 ## Tree file or skill file?
 

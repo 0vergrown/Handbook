@@ -56,7 +56,7 @@ Push away hostile mobs that get within a block and a half of you, at most twice 
     "type": "apoli:target_condition",
     "condition": {
       "type": "apoli:entity_group",
-      "group": "monster"
+      "group": "illager"
     }
   },
   "bientity_action": {
