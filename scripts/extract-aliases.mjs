@@ -1,4 +1,4 @@
-// Alias extractor for Apoli — a docs maintenance aid.
+// Alias extractor for Apoli: A docs maintenance aid.
 //
 // Walks the mod's registration classes and records, for every registered type,
 // the legacy ids it also answers to (`AliasingOptions.addTypeAlias`). These are
