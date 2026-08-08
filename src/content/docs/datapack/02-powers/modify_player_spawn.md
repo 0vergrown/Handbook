@@ -26,6 +26,13 @@ Field  | Type | Default | Description
 `spawn_strategy` | String | `"default"` | Determines whether the player should spawn near the world spawnpoint (0, 0) of the dimension (`"center"`) or near the coordinates of the Overworld spawnpoint (whilst considering the value of the `dimension_distance_multiplier` field) (`"default"`).
 `dimension_distance_multiplier` | Float | _optional_ | Defines the ratio of Overworld blocks to blocks in the specified dimension. e.g: for The Nether dimension, this would be set to `0.125`. **This needs to be set when `spawn_strategy` is set to `"default"`**
 
+## When it applies
+
+- **On choosing an origin** that grants the power, the player is teleported to the located spawn straight away.
+- **On death**, if the player has no respawn point, or their bed or respawn anchor is gone.
+
+A player who has slept in a bed keeps that bed — the power only fills the gap vanilla would fill with the world spawn. The located spawn is stored as a forced respawn point, so the search runs once rather than on every death, and it is cleared again if the player loses the power.
+
 ## Examples
 
 ```json

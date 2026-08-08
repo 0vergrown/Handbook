@@ -17,6 +17,12 @@ Field  | Type | Default | Description
 `legs` | Item Condition Type | _optional_ | If specified, items which fulfills this condition cannot be equipped in the legs equipment slot.
 `feet` | Item Condition Type | _optional_ | If specified, items which fulfills this condition cannot be equipped in the feet equipment slot.
 
+## What "restricted" means
+
+The armor never goes on in the first place: right-clicking it, dragging it into the slot, and shift-clicking it into the slot all refuse. Nothing is thrown on the ground for doing it.
+
+Armor that is *already* worn when the power is gained — or when its [`condition`](/docs/datapack/introduction/anatomy-of-a-power) turns on — is taken off and put back in the holder's own inventory, and only dropped at their feet if the inventory is full.
+
 ## Examples
 
 ```json

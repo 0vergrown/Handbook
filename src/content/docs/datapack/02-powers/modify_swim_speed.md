@@ -28,3 +28,7 @@ Field  | Type | Default | Description
 ```
 
 This power will make the entity that has the power swim/walk significantly faster in water.
+
+> The modifier applies to how much momentum you keep each tick in water, which is `0.8` when wading and `0.9` while actually swimming (swimming counts as sprinting). Both cases are modified, so the power works in the swimming pose too.
+
+> The result is clamped to `0.96` — the value vanilla's own Dolphin's Grace uses. Momentum retention closer to `1.0` sends terminal velocity through the roof and trips the server's "moved too quickly" check.

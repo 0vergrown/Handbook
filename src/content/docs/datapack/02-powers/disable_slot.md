@@ -33,7 +33,9 @@ Anything else (`enderchest.*`, `horse.*`, `villager.*`) is ignored, with a warni
 
 1. The inventory screen refuses an item dropped into the slot, and shift-clicking skips it.
 2. Item pickup routes around the slot — picked-up items land somewhere else.
-3. Anything already in the slot when the power turns on is removed and dropped at the holder's feet on the next tick, exactly like `apoli:restrict_armor` does for armor.
+3. Anything already in the slot is moved back into the holder's own inventory **once**, when the power is gained or unsuppressed — exactly like `apoli:restrict_armor` does for armor. It is only dropped at their feet if there is nowhere left to put it.
+
+> The relocation is a one-shot, not a per-tick sweep. A slot that a `condition` disables later keeps whatever is already in it; it just will not accept anything new. If you need the slot emptied the moment the condition flips, pair the power with [apoli:action_over_time](/docs/datapack/powers/action_over_time).
 
 ## Examples
 
