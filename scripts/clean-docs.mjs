@@ -37,7 +37,11 @@ const ORIGINS_TYPES = new Set([
 	'apply_stored_origin',
 	'store_value',
 	'stored_origin',
-	'stored_value'
+	'stored_value',
+	'action_on_swap',
+	'force_swap',
+	'open_swap_menu',
+	'swapped'
 ]);
 // Badge ids collide with core Apoli power ids (`tooltip`), so they only count
 // as Origins types on the pages that document badges.

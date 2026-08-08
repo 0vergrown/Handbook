@@ -76,11 +76,13 @@ Any condition can be flipped by adding `"inverted": true`. There's no separate "
 
 A **missing** optional field falls back to its default. A field that is *present but malformed* — a typo in a nested field name, broken SNBT escaping — is **dropped**, and the rest of the definition loads without it. The power still works; it just quietly stops doing the part you got wrong.
 
-That is the single most common way a power "ignores" something. A typo inside a `condition` drops the whole condition, and a power with no condition is **always active**:
+That is the single most common way a power "ignores" something.
+
+**The power's own top-level `condition` is the exception.** Dropping a gate would leave the power *always active*, which is the dangerous direction to fail in, so since Apoli 1.29.1 a `condition` that is present but unparseable **fails the whole power** instead. The power does not load at all, and the log says why:
 
 ```json
-// "condtions" is a typo for "conditions", so apoli:all_of has no required
-// field, the whole condition is dropped, and this power runs unconditionally.
+// "condtions" is a typo for "conditions", so apoli:all_of is missing its
+// required field and the condition cannot be parsed — this power is rejected.
 "condition":{
    "type":"apoli:all_of",
    "condtions":[
@@ -91,12 +93,19 @@ That is the single most common way a power "ignores" something. A typo inside a 
 }
 ```
 
-Apoli logs a warning naming the field and the power whenever it drops one, so check the server log first:
+Check the server log first — it names the field and the power either way:
 
 ```txt
-[Apoli] Ignoring the 'condition' field of my_pack:example — it is present but
-failed to parse, so it was dropped and everything else loaded.
+[Apoli] Failed to parse power my_pack:example: The 'condition' field of
+my_pack:example is present but failed to parse:
 No key conditions in MapLike[{"type":"apoli:all_of","condtions":[...]}]
+```
+
+Every *other* optional field is still dropped rather than fatal, and Apoli logs a warning naming the field and the power:
+
+```txt
+[Apoli] Ignoring the 'description' field of my_pack:example — it is present but
+failed to parse, so it was dropped and everything else loaded.
 ```
 
 > Malformed SNBT in a `tag`/`nbt` string is the other frequent one — the warning gives you the exact character offset (`Invalid SNBT: Expected '}' at position 81`). Remember the string is inside JSON, so every quote the SNBT needs has to be escaped: `"tag": "{display:{Name:'[{\"text\":\"Hi\"}]'}}"`.

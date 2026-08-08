@@ -20,8 +20,19 @@
 	"block conditions/slipperiness": [
 		"slipperness"
 	],
+	"damage conditions/attack_charge": [
+		"spam_attack",
+		"attack_cooldown"
+	],
 	"entity actions/action_on_entity_set": [
 		"action_on_set"
+	],
+	"entity actions/change_selected_slot": [
+		"set_selected_slot"
+	],
+	"entity actions/change_slot": [
+		"swap_slot",
+		"move_slot"
 	],
 	"entity actions/disguise_as": [
 		"disguise_as_player"
@@ -72,6 +83,10 @@
 	],
 	"entity conditions/accessory_slot_count": [
 		"trinket_slot_count"
+	],
+	"entity conditions/attack_charge": [
+		"spam_attack",
+		"attack_cooldown"
 	],
 	"entity conditions/entity_set_size": [
 		"set_size"
@@ -139,6 +154,9 @@
 	],
 	"powers/attribute": [
 		"conditioned_attribute"
+	],
+	"powers/disable_slot": [
+		"restrict_slot"
 	],
 	"powers/entity_glow": [
 		"self_glow"

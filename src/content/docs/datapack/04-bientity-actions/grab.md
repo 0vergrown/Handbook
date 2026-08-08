@@ -4,7 +4,9 @@ description: "Makes the actor grab the target: the target entity is held in fron
 navigation_title: "Grab"
 ---
 
-Makes the actor grab the target: the target entity is held in front of the actor's face and follows the actor's camera as they look and move around, like carrying something at arm's length. The hold is enforced server-side every tick (velocity zeroed, fall distance reset), so the grabbed entity cannot walk, fall or knockback away. The target's hitbox collides with the world while held: looking down presses it against the ground (never into it), and it cannot be pushed through walls or ceilings, so a grab can't suffocate the target in blocks.
+Makes the actor grab the target: the target entity is held in front of the actor's face and follows the actor's camera as they look and move around, like carrying something at arm's length. The hold is enforced server-side every tick (velocity zeroed, fall distance reset), so the grabbed entity cannot walk, fall or knockback away. The target's hitbox still collides with the world while held, so it cannot be pushed through walls or ceilings and a grab can never suffocate the target in blocks.
+
+The hold point never drops below half a block above the actor's own feet, so looking down swings the target around the actor at that height instead of scraping it along the floor.
 
 Type ID: `apoli:grab`
 
@@ -22,6 +24,8 @@ Type ID: `apoli:grab`
 | `vertical_only`   | Boolean | `false`      | The target only moves **up/down** with the actor's camera: the horizontal direction is frozen to where the actor faced when the grab started, and only pitch moves it. |
 
 Setting both booleans holds the target at a fixed point: eye height, in the direction the actor faced when the grab began.
+
+> Looking far enough down puts the raw hold point below the actor's feet, so it bottoms out at the clearance floor. Aiming a target *downwards* — including with `vertical_only` — moves it toward the actor rather than pressing it into the ground.
 
 ## Example
 

@@ -15,6 +15,18 @@ Type ID: `apoli:modify_model_parts`
 Field  | Type | Default | Description
 -------|------|---------|-------------
 `transformations` | [Array](/docs/datapack/data-types/array) of [Model Part Transformation](/docs/datapack/data-types/model-part-transformation) | — | The list of edits to apply. Each entry targets one part and one property.
+`override_pose` | Array of String | `[]` | Poses whose vanilla animation is thrown away before `transformations` run, so the edits start from the standing pose. Takes the same vanilla `Pose` names as [`apoli:pose`](/docs/datapack/powers/pose)'s `entity_pose`.
+
+## Overriding a pose
+
+A transformation is normally layered on top of whatever vanilla is already doing, which makes animating one *specific* pose awkward: to write your own swimming animation you first have to cancel out vanilla's swim stroke. Listing a pose in `override_pose` resets it to standing first, so your edits are authored against a neutral base.
+
+While the holder is in a listed pose:
+
+- the swim stroke, crouch offsets, elytra lean and riding leg pose are cleared from the model, and
+- the body rotation the renderer applies for `swimming`, `fall_flying`, `spin_attack`, `crouching` and `sleeping` is skipped, so the entity stays upright.
+
+Poses you don't list are untouched, so a power can take over swimming and leave crouching alone.
 
 ## Examples
 
@@ -95,33 +107,51 @@ The body leans forward over 6 ticks when the holder starts sneaking and unwinds 
 
 ```json
 {
-   "type":"apoli:modify_model_parts",
-   "transformations":[
-      {
-         "model_part":"right_arm",
-         "type":"pitch",
-         "override_animation":true,
-         "loop":true,
-         "easing":"catmullrom",
-         "keyframes":[
-            { "time":0,  "value":0 },
-            { "time":10, "value":-2.4 },
-            { "time":20, "value":0 }
-         ]
-      },
-      {
-         "model_part":"left_arm",
-         "type":"pitch",
-         "override_animation":true,
-         "loop":true,
-         "easing":"catmullrom",
-         "keyframes":[
-            { "time":0,  "value":-2.4 },
-            { "time":10, "value":0 },
-            { "time":20, "value":-2.4 }
-         ]
-      }
-   ]
+  "type": "apoli:modify_model_parts",
+  "transformations": [
+    {
+      "model_part": "right_arm",
+      "type": "pitch",
+      "override_animation": true,
+      "loop": true,
+      "easing": "catmullrom",
+      "keyframes": [
+        {
+          "time": 0,
+          "value": 0
+        },
+        {
+          "time": 10,
+          "value": -2.4
+        },
+        {
+          "time": 20,
+          "value": 0
+        }
+      ]
+    },
+    {
+      "model_part": "left_arm",
+      "type": "pitch",
+      "override_animation": true,
+      "loop": true,
+      "easing": "catmullrom",
+      "keyframes": [
+        {
+          "time": 0,
+          "value": -2.4
+        },
+        {
+          "time": 10,
+          "value": 0
+        },
+        {
+          "time": 20,
+          "value": -2.4
+        }
+      ]
+    }
+  ]
 }
 ```
 
@@ -133,25 +163,77 @@ Leave `loop` at `false` and the timeline plays once, then holds the last keyfram
 
 ```json
 {
-   "type":"apoli:modify_model_parts",
-   "condition":{
-      "type":"apoli:power_active",
-      "power":"example:charging"
-   },
-   "transformations":[
-      {
-         "model_part":"right_arm",
-         "type":"pitch",
-         "override_animation":true,
-         "fade_out_duration":5,
-         "keyframes":[
-            { "time":0, "value":0 },
-            { "time":3, "value":0.5,  "easing":"ease_in_quad" },
-            { "time":9, "value":-2.2, "easing":"ease_out_back" }
-         ]
-      }
-   ]
+  "type": "apoli:modify_model_parts",
+  "condition": {
+    "type": "apoli:power_active",
+    "power": "example:charging"
+  },
+  "transformations": [
+    {
+      "model_part": "right_arm",
+      "type": "pitch",
+      "override_animation": true,
+      "fade_out_duration": 5,
+      "keyframes": [
+        {
+          "time": 0,
+          "value": 0
+        },
+        {
+          "time": 3,
+          "value": 0.5,
+          "easing": "ease_in_quad"
+        },
+        {
+          "time": 9,
+          "value": -2.2,
+          "easing": "ease_out_back"
+        }
+      ]
+    }
+  ]
 }
 ```
 
 The arm winds back, then throws forward past its target and settles — and when the condition stops holding, it releases back to the vanilla animation over 5 ticks.
+
+```json
+{
+  "type": "apoli:modify_model_parts",
+  "override_pose": [
+    "swimming"
+  ],
+  "transformations": [
+    {
+      "model_part": "body",
+      "type": "pitch",
+      "value": 1.5708,
+      "override_animation": true
+    },
+    {
+      "model_part": "left_arm",
+      "type": "pitch",
+      "override_animation": true,
+      "loop": true,
+      "keyframes": [
+        {
+          "time": 0,
+          "value": -1.2
+        },
+        {
+          "time": 10,
+          "value": 0.6,
+          "easing": "ease_in_out_sine"
+        },
+        {
+          "time": 20,
+          "value": -1.2,
+          "easing": "ease_in_out_sine"
+        }
+      ]
+    }
+  ]
+}
+```
+
+A hand-written swimming animation. Because `swimming` is listed in `override_pose`, vanilla's swim stroke and horizontal body flip are gone, so the body pitch is authored from scratch instead of fighting the stroke that would otherwise still be running underneath.

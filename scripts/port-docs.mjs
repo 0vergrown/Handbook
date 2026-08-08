@@ -40,7 +40,11 @@ const ORIGINS_PAGES = {
 	'origins:apply_stored_origin': 'apply_stored_origin',
 	'origins:store_value': 'store_value',
 	'origins:stored_origin': 'stored_origin',
-	'origins:stored_value': 'stored_value'
+	'origins:stored_value': 'stored_value',
+	'origins:action_on_swap': 'action_on_swap',
+	'origins:force_swap': 'force_swap',
+	'origins:open_swap_menu': 'open_swap_menu',
+	'origins:swapped': 'swapped'
 };
 
 // Concept pages that are linked but live elsewhere on the site

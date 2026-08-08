@@ -39,6 +39,7 @@ Layers live in `data/<namespace>/origin_layers/`.
 | `auto_choose` | boolean | `false` | Skip the screen when the layer offers exactly one choosable origin. |
 | `hidden` | boolean | `false` | Hide the layer from the origin-viewing screen. |
 | `revalidate` | boolean | = `auto_choose` | Take the origin back when its group's condition stops being true — see [Keeping vs. offering](#keeping-vs-offering). |
+| `swappable` | boolean or object | `false` | Make this layer a *pool* the player can temporarily swap their main origin for, rather than a layer they choose in — see [Swappable layers](/docs/datapack/origins/swapping). |
 | `random` | object | — | Random-roll settings — see [Randomised layers](#randomised-layers). |
 | `randomiser` | object | — | Re-roll-over-a-life settings — see [Lifecycle & re-rolls](#lifecycle--re-rolls). |
 | `replace` | boolean | `false` | Discard lower-priority packs' version of this layer instead of merging into it. |
@@ -93,7 +94,7 @@ Watch the logic. "Neither ember nor frost" is an **and** of two inverted checks 
 
 ```json
 "condition":{
-  "type": "origins:and",
+  "type": "apoli:and",
   "conditions": [
     {
       "type": "origins:origin",
@@ -115,7 +116,7 @@ Inverting the whole `or` says the same thing, if you prefer it that way:
 
 ```json
 "condition":{
-  "type": "origins:or",
+  "type": "apoli:or",
   "inverted": true,
   "conditions": [
     {

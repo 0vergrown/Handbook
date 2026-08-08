@@ -36,6 +36,7 @@ Aliases: `apoli:text_bar`, `apoli:show_text`
 ## Notes
 
 - Each `bar` position holds **one** text per player — sending to the same bar replaces what is there. Sending an empty `text` (or a list where no entry passes) **clears** that bar, so conditioned entries naturally disappear when nothing applies.
+- Every bar draws **above the chat overlay**, so `bottom_left` and `left` stay readable while chat is open or scrolled.
 - The action is built for `interval: 1` loops: the composed text is **only sent when it changes** (timed texts are silently refreshed about halfway through their stay so they never flicker out while the action keeps firing). This replaces `/title` `execute_command` spam and its per-tick command parsing cost.
 - `title` and `subtitle` render at vanilla title scale in the screen center through Apoli's own overlay, so they never fight vanilla `/title` output; `top_center` sits just below the boss bar area.
 - Only works on players (the target must be a player to have a screen). Segment conditions are evaluated on the server.

@@ -15,6 +15,7 @@ Apoli ships integrations with a handful of other mods. Each one is a **gated mod
 | [Icarus](https://modrinth.com/mod/icarus) | [Icarus](/docs/compat/icarus/overview) | The `apoli:wings` flight power. |
 | [Hardcore Revival](https://modrinth.com/mod/hardcore-revival) | [Hardcore Revival](/docs/compat/hardcore-revival/overview) | Knockout / revive triggers, actions and a condition. |
 | [Not Enough Recipe Book](https://modrinth.com/mod/nerb) | [Not Enough Recipe Book](/docs/compat/not-enough-recipe-book/overview) | No new types — keeps power-gated recipes working with the recipe book removed. |
+| [3D Skin Layers](https://modrinth.com/mod/3dskinlayers) / [Ears](https://modrinth.com/mod/ears) | [Skin Rendering](/docs/compat/skin-rendering/overview) | No new types — makes their skin geometry follow the model and colour powers. |
 
 ## Two kinds of gating
 
@@ -22,7 +23,7 @@ Apoli ships integrations with a handful of other mods. Each one is a **gated mod
 
 **Behaviour-gated.** The type is always registered and always loads, but does nothing useful without the other mod — conditions read `false`, triggers never fire. The Simple Voice Chat types work this way, so a pack that uses them stays loadable on a server without voice chat.
 
-Not Enough Recipe Book is neither: it adds no types at all. It only changes how existing types behave when it is installed.
+Not Enough Recipe Book and Skin Rendering are neither: they add no types at all. They only change how existing types behave when the other mod is installed.
 
 > Check the section for the mod you're targeting — each type page says which kind it is.
 
