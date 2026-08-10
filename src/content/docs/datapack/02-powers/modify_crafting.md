@@ -43,7 +43,7 @@ Field | Type | Default | Description
 }
 ```
 
-This example will replace the result item stack from the `minecraft:wooden_sword` (`data/minecraft/recipes/wooden_sword.json`) vanilla recipe with a Diamond Sword only for the player that has the power.
+This example will replace the result item stack from the `minecraft:wooden_sword` (`data/minecraft/recipe/wooden_sword.json` on 1.21.1, `recipes/` on 1.20.1) vanilla recipe with a Diamond Sword only for the player that has the power.
 
 ```json
 {

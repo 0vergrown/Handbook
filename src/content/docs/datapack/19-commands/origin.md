@@ -35,6 +35,8 @@ origin set @s my_pack:device origins:empty
 
 The return value is the number of targets that ended up on the requested origin, and any target that did not is named in a failure message — so a pack can tell a real assignment from one a layer's conditions overrode.
 
+On a [swappable layer](/docs/datapack/origins/swapping) there is no origin to set, so `set` adds the origin to that player's granted pool instead, and `origins:empty` clears their whole granted list for that layer.
+
 ## has / get
 
 ```mcfunction
@@ -59,7 +61,7 @@ origin random @a
 origin random @a origins:origin
 ```
 
-`gui` reopens the choose-origin screen; `random` rolls one immediately, honouring the layer's `random_allows_unchoosable` setting. Both default to every unchosen layer when no layer is given, and to the command's own player when no targets are given.
+`gui` reopens the choose-origin screen; `random` rolls one immediately, honouring the layer's `random_allows_unchoosable` setting. Both default to every unchosen layer when no layer is given, and to the command's own player when no targets are given. `random` skips [swappable layers](/docs/datapack/origins/swapping) — a pool is not a choice; roll one with [`origins:force_swap`](/docs/datapack/origins/force_swap) instead.
 
 ## storage
 

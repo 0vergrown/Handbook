@@ -20,7 +20,11 @@ Field | Type | Default | Description
 `on_item_action` | Item Action Type | _optional_ | If specified, this action will be executed on the item that has been right-clicked.
 `result_item_action` | Item Action Type | _optional_ | If specified, this action will be executed on the item that is given to the player.
 `entity_action` | Entity Action Type | _optional_ | If specified, this action will be executed on the player after they used an item on an item.
-`click_type` | String or Integer | `"secondary"` | Determines whether to execute the actions if the player does a right-click (`0` or `"primary"`) or left-click (`1` or `"secondary"`) action.
+`click_type` | String or Integer | `"secondary"` | Which click runs the actions: `"primary"` (or `0`) is a left-click, `"secondary"` (or `1`) is a right-click.
+
+The "using" item is the stack on your cursor; the "on" item is the stack in the slot you click. A matching power replaces the normal pick-up/swap for that click — but items with their own stack-click behaviour still go first, so a Bundle on the cursor wins over the power.
+
+`result` and `result_item_action` deliver the result stack into the clicked slot if `on_item_action` (or `result_from_on_stack`) emptied it; otherwise it goes into the player's inventory, and drops at their feet if there is no room.
 
 ## Examples
 
@@ -56,7 +60,7 @@ This example will smelt smeltable items by using a Coal item on it.
 }
 ```
 
-This example being the contents of the `example:furnace_smelt` (`data/example/item_modifiers/furnace_smelt.json`) item modifier.
+This example being the contents of the `example:furnace_smelt` item modifier — `data/example/item_modifier/furnace_smelt.json` on 1.21.1, `data/example/item_modifiers/…` (plural) on 1.20.1.
 
 ```json
 {

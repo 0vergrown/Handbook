@@ -67,7 +67,9 @@ This means you do not need a separate "granting" system. Gate each origin on a c
 }
 ```
 
-Set `example:stolen/acid` to 1 and Acid appears in the pool; set it back to 0 and it disappears — and if the player was wearing it, they are returned to their main origin automatically.
+Set `example:stolen/acid` to 1 and Acid appears in the pool; set it back to 0 and it disappears — and if the player was wearing it, they are returned to their main origin automatically. The same happens if the whole swappable layer closes: once no swappable layer aimed at the target offers the player anything, and they have nothing in their granted list for it either, they go back to their main origin.
+
+Changing the main origin also ends the swap. Choosing, being auto-chosen, having a derived layer re-derive, losing the origin, and using an Orb of Origin all return the player to their (new) main origin first, so they can never be left wearing a pool origin on top of one.
 
 ### Filling the pool with Copy and Transfer Origin
 
@@ -83,9 +85,11 @@ Conditions can't express "whatever origin I just copied off that player", so a s
 
 This means a swappable layer can ship with an **empty** `origins` list and be filled entirely at runtime — the player ends up with a pool they had no way to reach when they started. The granted list is saved with the player and survives death and relogging.
 
-`/origin set <player> <swappable layer> origins:empty` clears a player's granted list for that layer. Origins removed from the list are dropped from the pool immediately, and a player wearing one is returned to their main origin.
+`/origin set <player> <swappable layer> <origin>` adds an origin to that player's granted list, and `/origin set <player> <swappable layer> origins:empty` clears the list. Origins removed from the list are dropped from the pool immediately, and a player wearing one is returned to their main origin.
 
 The pool is the granted list plus the condition-driven origins, listed in alphabetical order by origin display name.
+
+> A swappable layer is a pool, never a choice, so it holds no origin of its own. Anything that would normally *set* a layer's origin — `/origin set`, `apply_stored_origin`, `copy_origin`, `transfer_origin` — adds to the granted list instead when the layer is swappable. The randomiser and `/origin random` skip swappable layers entirely; use [`origins:force_swap`](/docs/datapack/origins/force_swap) with `"mode": "random"` to roll a pool.
 
 ## Swapping
 
@@ -102,6 +106,8 @@ It depends on whether you swapped away from your **main** origin or from a **poo
 **Your main origin goes dormant.** Its powers stop completely — no ticking, no attributes, no flags, no activation — but they are **not** taken away. Resource values, cooldown counters and skill purchases are all preserved exactly as they were, and come back untouched the moment you swap home.
 
 **A pool origin is revoked.** When you move from one pool origin to another, or back to your main, the one you were wearing is removed outright, exactly as if the power had been revoked — its resource values and cooldowns are discarded and start fresh next time you swap into it.
+
+**A power both origins have stays awake.** If your main origin and the pool origin you swap into both provide the same power — directly, or through the same [`apoli:multiple`](/docs/datapack/powers/multiple) — it is not dormant, because the origin you are wearing is still providing it. It keeps its resource values and cooldowns straight through the swap, and swapping home leaves it exactly where it was.
 
 > Pool origins have to be revoked rather than made dormant, because dormancy only stops a power *running*: it does not undo anything the power installed when it was granted. Leaving them dormant meant swapping Smoke → Frost left you holding both. If you need a pool origin to remember something across swaps, keep that value on a power in your **main** origin, which does stay dormant.
 

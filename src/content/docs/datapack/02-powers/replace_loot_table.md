@@ -38,7 +38,7 @@ Field | Type | Default | Description
 
 ## Examples
 
-`data/example/loot_tables/double_drops.json`
+`data/example/loot_table/double_drops.json` (1.21.1; `loot_tables/` on 1.20.1)
 
 ```json
 {
@@ -70,7 +70,7 @@ Field | Type | Default | Description
 
 This example will essentially double the drops of Ore blocks except for Diamond Ore block, as indicated in the specified regular expression. The `apoli:replaced_loot_table` loot table contains the contents of the replaced loot table, which is in this case would be the loot tables for Ore blocks except for the Diamond Ore block.
 
-`data/example/loot_tables/entities/custom_creeper_loot.json`
+`data/example/loot_table/entities/custom_creeper_loot.json` (1.21.1; `loot_tables/` on 1.20.1)
 
 ```json
 {
