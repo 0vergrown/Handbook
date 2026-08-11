@@ -3,7 +3,7 @@ title: Not Enough Recipe Book
 description: How power-gated recipes and crafting modifications behave when NERB has removed the vanilla recipe book.
 ---
 
-[Not Enough Recipe Book](https://modrinth.com/mod/nerb) (NERB) is an optimization mod that strips out the vanilla recipe book: it stops the book being saved to and loaded from player data, stops the server sending recipe-unlock packets, and makes `awardRecipes` a no-op. On a busy server that removes a meaningful amount of per-player save data and network traffic.
+[Not Enough Recipe Book](https://modrinth.com/mod/notenoughrecipebook) (NERB) is an optimization mod that strips out the vanilla recipe book: it stops the book being saved to and loaded from player data, stops the server sending recipe-unlock packets, and makes `awardRecipes` a no-op. On a busy server that removes a meaningful amount of per-player save data and network traffic.
 
 Apoli registers **no types** for NERB. This compat is **behaviour-gated**: everything below happens automatically when NERB is installed, and nothing changes when it is not.
 
