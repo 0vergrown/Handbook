@@ -12,7 +12,7 @@ A **Key** tells an [active power](/docs/datapack/powers/action_on_key_press) whi
 
 ```json
 "key": {
-    "key": "key.apoli.primary_active",
+    "key": "key.origins.primary_active",
     "continuous": true
 }
 ```
@@ -30,8 +30,8 @@ You can point at any keybinding the game knows about:
 
 | Key string | Bound to |
 | --- | --- |
-| `key.apoli.primary_active` | Apoli's primary active-power key (default: unbound) |
-| `key.apoli.secondary_active` | Apoli's secondary active-power key (default: unbound) |
+| `key.origins.primary_active` | Origins's primary active-power key (default: unbound) |
+| `key.origins.secondary_active` | Origins's secondary active-power key (default: unbound) |
 | `key.attack` | attack / left click |
 | `key.use` | use / right click |
 | `key.jump` | jump |
@@ -72,7 +72,7 @@ Trigger once each time Apoli's secondary active key is pressed:
 
 ```json
 "key": {
-    "key": "key.apoli.secondary_active"
+    "key": "key.origins.secondary_active"
 }
 ```
 
