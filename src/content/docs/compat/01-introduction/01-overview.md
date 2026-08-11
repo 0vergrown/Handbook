@@ -14,7 +14,7 @@ Apoli ships integrations with a handful of other mods. Each one is a **gated mod
 | [Figura](https://modrinth.com/mod/figura) | [Figura](/docs/compat/figura/overview) | Point `apoli:modify_player_model` at a Figura avatar. |
 | [Icarus](https://modrinth.com/mod/icarus) | [Icarus](/docs/compat/icarus/overview) | The `apoli:wings` flight power. |
 | [Hardcore Revival](https://modrinth.com/mod/hardcore-revival) | [Hardcore Revival](/docs/compat/hardcore-revival/overview) | Knockout / revive triggers, actions and a condition. |
-| [Not Enough Recipe Book](https://modrinth.com/mod/nerb) | [Not Enough Recipe Book](/docs/compat/not-enough-recipe-book/overview) | No new types — keeps power-gated recipes working with the recipe book removed. |
+| [Not Enough Recipe Book](https://modrinth.com/mod/notenoughrecipebook) | [Not Enough Recipe Book](/docs/compat/not-enough-recipe-book/overview) | No new types — keeps power-gated recipes working with the recipe book removed. |
 | [3D Skin Layers](https://modrinth.com/mod/3dskinlayers) / [Ears](https://modrinth.com/mod/ears) | [Skin Rendering](/docs/compat/skin-rendering/overview) | No new types — makes their skin geometry follow the model and colour powers. |
 
 ## Two kinds of gating
