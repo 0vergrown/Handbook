@@ -68,7 +68,7 @@ Now an active power keyed to `key.my_pack.dash` fires when the player presses wh
 
 ## Examples
 
-Trigger once each time Apoli's secondary active key is pressed:
+Trigger once each time Origins' secondary active key is pressed:
 
 ```json
 "key": {
