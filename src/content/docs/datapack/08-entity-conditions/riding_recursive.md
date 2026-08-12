@@ -10,7 +10,6 @@ Type ID: `apoli:riding_recursive`
 
 > In the context of this entity condition type, the '**actor**' entity is the passenger and the entity that invoked the condition whilst the '**target**' entities are the entity that is being directly ridden and the passenger(s) of the said entity.
 
-
 ## Fields
 
 Field | Type | Default | Description

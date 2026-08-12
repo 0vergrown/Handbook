@@ -10,7 +10,6 @@ Type ID: `apoli:relative_health`
 
 > The percentage of the health value can be calculated with the `currentHealth / maxHealth` formula.
 
-
 ## Fields
 
 Field  | Type | Default | Description

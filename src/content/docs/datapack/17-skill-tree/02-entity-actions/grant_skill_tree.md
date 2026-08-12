@@ -10,6 +10,12 @@ Type ID: `apoli:grant_skill_tree`
 
 > Granting a tree the player already has (or that has `auto_grant: true`) does nothing. Skills the player had purchased before a [apoli:revoke_skill_tree](/docs/datapack/skill-tree/revoke_skill_tree) come back when the tree is granted again.
 
+## Pufferfish's Skills categories
+
+If `skill_tree` names an id that is **not** a loaded Apoli skill tree and [Pufferfish's Skills](/docs/compat/pufferfishs-skills/overview) is installed, the id is looked up as a Skills **category** instead and that category is unlocked for the player. This is the same fall-through the [apoli:modify_player_model](/docs/datapack/powers/modify_player_model) power uses for Figura avatars: Apoli's own registry wins, the other mod only gets ids Apoli does not know.
+
+[apoli:revoke_skill_tree](/docs/datapack/skill-tree/revoke_skill_tree) locks the category again.
+
 ## Fields
 
 | Field        | Type                   | Default      | Description                        |

@@ -10,7 +10,6 @@ Type ID: `apoli:fall_distance`
 
 > This entity condition type will return `0` if the entity has the Slow Falling status effect.
 
-
 ## Fields
 
 Field  | Type | Default | Description

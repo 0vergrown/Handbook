@@ -10,9 +10,7 @@ Type ID: `apoli:selector_action`
 
 > See [Minecraft Wiki: Target selectors](https://minecraft.wiki/w/Target_selectors) for more information about target selectors.
 
-
 > This entity action type has a bi-entity action context, where the '**actor**' entity is the entity that invoked the entity action while the '**target**' entities are the entities that were selected by the specified `selector`.
-
 
 ## Fields
 

@@ -10,7 +10,6 @@ Type ID: `apoli:replace_loot_table`
 
 > The keys in the `replace` object field are formatted as a regular expression, where matching loot table namespace, path and IDs will be replaced with the specified value. See [Wikipedia: Regular expression](https://en.wikipedia.org/wiki/Regular_expression) for more information about regular expressions and [RegExr](https://regexr.com/) to test regular expressions online.
 
-
 > In the context of this power type, the '**actor**' entity is the entity that has the power while the '**target**' entity depends on the context of the loot tables that'll be replaced.
 >
 > Here's a table for possible instances the '**target**' entity could be:
@@ -22,7 +21,6 @@ Type ID: `apoli:replace_loot_table`
 > Chest      | The '**actor**' entity that opened the Chest.
 > Entity     | The entity that died.
 > Fishing    | The '**actor**' entity's fishing bobber.
-
 
 ## Fields
 

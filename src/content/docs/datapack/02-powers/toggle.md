@@ -10,7 +10,6 @@ Type ID: `apoli:toggle`
 
 > This power type provides a state that can be toggled with the [Toggle (Entity Action Type)](/docs/datapack/powers/toggle) and check the state of with the [Power Active (Entity Condition Type)](/docs/datapack/entity-conditions/power_active).
 
-
 ## Fields
 
 Field  | Type | Default | Description

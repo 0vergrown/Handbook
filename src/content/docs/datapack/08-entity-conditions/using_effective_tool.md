@@ -10,7 +10,6 @@ Type ID: `apoli:using_effective_tool`
 
 > **This entity condition type will only work on players.**
 
-
 ## Fields
 
 _None._

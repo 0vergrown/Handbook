@@ -10,7 +10,6 @@ Type ID: `apoli:advancement`
 
 > **This entity condition type will only work on players.**
 
-
 ## Fields
 
 Field  | Type | Default | Description

@@ -15,7 +15,6 @@ Type ID: `apoli:armor_value`
 > * [Leggings](https://minecraft.wiki/w/Leggings#Defense_points)
 > * [Boots](https://minecraft.wiki/w/Boots#Defense_points)
 
-
 ## Fields
 
 Field  | Type | Default | Description

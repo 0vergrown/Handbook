@@ -56,7 +56,6 @@ through `A C B`.
 > completes, the shorter one is cancelled; if the longer one breaks, or `timeout` ticks pass with no input,
 > the shorter one fires after all.
 
-
 - A success resets progress to zero; matches never overlap themselves.
 - All of a player's key-sequence powers are matched in one pass per tick, so arbitration between them is consistent.
 - `cooldown` starts on success and suppresses input (and per-key actions) until it expires.

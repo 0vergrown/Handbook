@@ -10,7 +10,6 @@ Type ID: `apoli:riding_root`
 
 > In the context for this entity condition type, the '**actor**' entity is the passenger and the entity that invoked the condition while the '**target**' is the entity that is being indirectly ridden (at the start of the riding chain).
 
-
 ## Fields
 
 Field | Type | Default | Description

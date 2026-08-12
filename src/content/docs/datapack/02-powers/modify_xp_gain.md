@@ -10,7 +10,6 @@ Type ID: `apoli:modify_xp_gain`
 
 > Be careful not to make this go too high, as then the player would be able to gain more experience from dying.
 
-
 ## Fields
 
 Field  | Type | Default | Description

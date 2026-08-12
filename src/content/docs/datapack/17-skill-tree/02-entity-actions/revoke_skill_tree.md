@@ -10,6 +10,8 @@ Type ID: `apoli:revoke_skill_tree`
 
 > Trees with `auto_grant: true` cannot be meaningfully revoked — every player has them automatically. Set `auto_grant: false` on trees you want to manage with grant/revoke.
 
+If `skill_tree` names an id that is not a loaded Apoli skill tree and [Pufferfish's Skills](/docs/compat/pufferfishs-skills/overview) is installed, the id is looked up as a Skills **category** and that category is locked instead — the mirror of [apoli:grant_skill_tree](/docs/datapack/skill-tree/grant_skill_tree).
+
 ## Fields
 
 | Field        | Type                   | Default      | Description                         |

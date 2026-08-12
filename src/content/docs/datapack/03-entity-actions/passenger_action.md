@@ -10,7 +10,6 @@ Type ID: `apoli:passenger_action`
 
 > Not to be confused with [Riding Action](/docs/datapack/entity-actions/riding_action)
 
-
 ## Fields
 
 Field | Type | Default | Description

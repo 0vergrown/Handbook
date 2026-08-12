@@ -12,7 +12,6 @@ Type ID: `apoli:air`
 >
 > In order to get the value of a single bubble, you can divide the max value by 10. (`max / 10 = value`)
 
-
 ## Fields
 
 Field  | Type | Default | Description

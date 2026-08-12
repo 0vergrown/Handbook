@@ -10,7 +10,6 @@ Type ID: `apoli:prevent_block_use`
 
 > Preventing the "usage" of a block means that the player won't be able to interact (right-click) with the said block.
 
-
 ## Fields
 
 Field  | Type | Default | Description

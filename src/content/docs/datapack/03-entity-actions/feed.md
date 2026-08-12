@@ -10,9 +10,7 @@ Type ID: `apoli:feed`
 
 > The actual food saturation level is determined by the `food * saturation * 2` formula.
 
-
 > **This entity action type will only work on players.**
-
 
 ## Fields
 

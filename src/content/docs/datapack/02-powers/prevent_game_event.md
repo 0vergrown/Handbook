@@ -10,7 +10,6 @@ Type ID: `apoli:prevent_game_event`
 
 > See [Minecraft Wiki: Sculk Sensor (Vibration amplitudes)](https://minecraft.wiki/w/Sculk_Sensor?oldid=2099339#Vibration_amplitudes) for a list of vanilla game events you can check for.
 
-
 ## Fields
 
 Field | Type | Default | Description

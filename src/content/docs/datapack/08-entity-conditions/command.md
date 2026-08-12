@@ -10,7 +10,6 @@ Type ID: `apoli:command`
 
 > This entity condition type only operates on the **server-side**, meaning that it cannot be used in fields that are evaluated on the client-side.
 
-
 ## Fields
 
 Field  | Type | Default | Description

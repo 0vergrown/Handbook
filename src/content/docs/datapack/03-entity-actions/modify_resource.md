@@ -13,8 +13,20 @@ Type ID: `apoli:modify_resource` (type-aliases: `apoli:change_resource`, `origin
 
 | Field | Type | Default | Description |
 |-------|------|---------|-------------|
-| `resource` | [Identifier](/docs/datapack/data-types/identifier) | | The [apoli:resource](/docs/datapack/powers/resource) or [apoli:cooldown](/docs/datapack/powers/cooldown) power to modify. |
+| `resource` | [Identifier](/docs/datapack/data-types/identifier) | | The [apoli:resource](/docs/datapack/powers/resource) or [apoli:cooldown](/docs/datapack/powers/cooldown) power to modify. Any power with a built-in `cooldown` also works — see below. |
 | `modifier` | [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) | | The modifier to apply to the current value of the target power. |
+
+## Modifying a power's cooldown
+
+`resource` accepts any power type that carries a `cooldown` field, not just Resource and Cooldown powers — the value it reads and writes is the **remaining ticks** (`0` = ready). The full list is on the [apoli:resource condition](/docs/datapack/entity-conditions/resource) page. Writes are clamped to `0 … cooldown`, so this is how a data pack shortens or clears an ability's cooldown:
+
+```json
+"entity_action": {
+    "type": "apoli:modify_resource",
+    "resource": "example:dash",
+    "modifier": { "operation": "set_base", "value": 0 }
+}
+```
 
 ## Legacy field schema (Change Resource compat)
 

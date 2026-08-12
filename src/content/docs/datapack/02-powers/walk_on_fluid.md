@@ -10,7 +10,6 @@ Type ID: `apoli:walk_on_fluid`
 
 > It is suggested to use the [Fluid Height (Entity Condition Type)](/docs/datapack/entity-conditions/fluid_height) entity condition type to check if the height of the fluid the player is currently on/in is less or equal to 0.4, otherwise, the entity that has the power may have problems getting out of the fluid once they are submerged.
 
-
 ## Fields
 
 Field  | Type | Default | Description

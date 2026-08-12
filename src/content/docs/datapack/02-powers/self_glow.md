@@ -10,12 +10,9 @@ Type ID: `apoli:self_glow` *(alias of [`apoli:entity_glow`](/docs/datapack/power
 
 > The power works on **any entity**, including non-living ones such as projectiles — grant it to an arrow or a custom projectile and the projectile glows.
 
-
 > You can use a color picker website and divide the RGB values by 255 to get the values *(e.g: ranging from 0.0 to 1.0)* to be used for the power type.
 
-
 > The conditions specified in the `entity_condition` and `bientity_condition` fields are only evaluated on the **client-side**, therefore, using any condition types that only work on the server-side will not work.
-
 
 ## Fields
 

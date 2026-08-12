@@ -17,6 +17,8 @@ Reads and writes the value behind an [`apoli:resource`](/docs/datapack/powers/re
 
 `<power>` tab-completes to the resource and cooldown powers the **targets actually hold**, falling back to every loaded one when the targets cannot be resolved yet.
 
+`<power>` also accepts any power type with a built-in `cooldown` field — [`apoli:action_on_key_press`](/docs/datapack/powers/action_on_key_press), [`apoli:action_on_key_sequence`](/docs/datapack/powers/action_on_key_sequence), [`apoli:fire_projectile`](/docs/datapack/powers/fire_projectile), [`apoli:action_on_hit`](/docs/datapack/powers/action_on_hit), [`apoli:action_when_hit`](/docs/datapack/powers/action_when_hit), [`apoli:action_on_kill`](/docs/datapack/powers/action_on_kill), [`apoli:action_on_collision`](/docs/datapack/powers/action_on_collision) and [`apoli:game_event_listener`](/docs/datapack/powers/game_event_listener). The value is the **remaining cooldown in ticks**, so `set <power> 0` clears the cooldown and puts the ability back on line.
+
 ## Examples
 
 ```mcfunction

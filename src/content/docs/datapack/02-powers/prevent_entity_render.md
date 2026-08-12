@@ -10,7 +10,6 @@ Type ID: `apoli:prevent_entity_render`
 
 > The conditions specified in the `entity_condition` and `bientity_condition` fields are only evaluated on the **client-side**, therefore, using any condition types that only work on the server-side will not work.
 
-
 ## Fields
 
 Field  | Type | Default | Description

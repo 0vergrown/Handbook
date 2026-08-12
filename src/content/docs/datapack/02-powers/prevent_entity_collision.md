@@ -14,7 +14,6 @@ Type ID: `apoli:prevent_entity_collision`
 
 > Currently, this power type does not prevent collisions of certain entities that have solid hitboxes, such as Boats and Shulkers.
 
-
 ## Fields
 
 Field  | Type | Default | Description

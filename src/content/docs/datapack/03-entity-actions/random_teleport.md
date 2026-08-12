@@ -10,7 +10,6 @@ Type ID: `apoli:random_teleport`
 
 > The actual width and height of the available teleportation area is double the respective provided value, +1 for the block the player stands on in the very center.
 
-
 ##	Fields
 
 Field | Type | Default | Description

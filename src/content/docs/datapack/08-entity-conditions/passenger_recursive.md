@@ -10,7 +10,6 @@ Type ID: `apoli:passenger_recursive`
 
 > In the context of this entity condition type, the '**actor**' entity/entities is/are the passenger(s) (and its passengers' passengers) and the '**target**' is the entity that invoked the condition.
 
-
 ## Fields
 
 Field | Type | Default | Description

@@ -10,7 +10,6 @@ Type ID: `apoli:prevent_entity_use`
 
 > In the context of this power type, the '**actor**' entity is the entity that has the power whilst the '**target**' entity is the entity that was "used" (right-clicked).
 
-
 ## Fields
 
 Field | Type | Default | Description

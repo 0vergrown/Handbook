@@ -47,4 +47,3 @@ On any team at all:
 ```
 
 > Coming from Eggolib's `eggolib:in_team`: the field names and the string-or-object shape are the same, but a multi-field object here means **all** of those properties must match, where Eggolib passed if *any single* property matched. Split the object across `teams` to get the old behaviour.
-

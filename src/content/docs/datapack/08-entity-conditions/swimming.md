@@ -10,7 +10,6 @@ Type ID: `apoli:swimming`
 
 > **This entity condition type will only work on players.**
 
-
 ## Fields
 
 _None._

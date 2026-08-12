@@ -100,6 +100,10 @@ const PAGE_KIND = {
 		knock_out: ['Entity Action Type', 'entity actions'],
 		revive: ['Entity Action Type', 'entity actions'],
 		knocked_out: ['Entity Condition Type', 'entity conditions']
+	},
+	'compat/11-pufferfishs-skills': {
+		power: ['Reward Type', null],
+		modify_resource: ['Reward Type', null]
 	}
 };
 

@@ -10,7 +10,6 @@ Type ID: `apoli:stacking_status_effect`
 
 > The actual duration of the specified status effect(s) is determined by the `stacks * duration_per_stack` formula.
 
-
 ## Fields
 
 Field  | Type | Default | Description

@@ -39,5 +39,7 @@ export const SECTION_TITLES = {
 	'simple-voice-chat': 'Simple Voice Chat',
 	'hardcore-revival': 'Hardcore Revival',
 	'not-enough-recipe-book': 'Not Enough Recipe Book',
-	'writing-compat': 'Writing Compat'
+	'writing-compat': 'Writing Compat',
+	'pufferfishs-skills': "Pufferfish's Skills",
+	'better-combat': 'Better Combat'
 };

@@ -10,7 +10,6 @@ Type ID: `apoli:toggle`
 
 > Not to be confused with [Toggle (Power Type)](/docs/datapack/powers/toggle).
 
-
 ## Fields
 
 Field | Type | Default | Description

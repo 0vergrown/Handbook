@@ -56,7 +56,7 @@ That holds for [`apoli:block`](/docs/datapack/block-conditions/block),
 [`apoli:entity_type`](/docs/datapack/entity-conditions/entity_type),
 [`apoli:type`](/docs/datapack/damage-conditions/type),
 [`apoli:prevent_game_event`](/docs/datapack/powers/prevent_game_event)'s `event` and `events`,
-`entity_types` on a [global power set](/docs/datapack/powers/global_powers), and every
+`entity_types` on a [global power set](/docs/datapack/introduction/powers), and every
 [Ingredient](/docs/datapack/data-types/ingredient) entry.
 
 ### 2. A field that *is* a tag takes the tag id, with `#` optional

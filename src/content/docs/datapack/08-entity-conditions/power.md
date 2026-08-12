@@ -10,7 +10,6 @@ Type ID: `apoli:power`
 
 > Make sure to use the [apoli:living](/docs/datapack/entity-conditions/living) to check if the entity is a "living entity", otherwise, the game will crash since only living entities can have powers.
 
-
 ## Fields
 
 Field  | Type | Default | Description

@@ -10,7 +10,6 @@ Type ID: `apoli:entity_group`
 
 > See [Minecraft Wiki: Mob (Classification)](https://minecraft.wiki/w/Mob#Classification) for more information about entity groups.
 
-
 ## Fields
 
 Field  | Type | Default | Description
