@@ -8,9 +8,8 @@ Applies a post-processing shader to the vision of the entity that has the power.
 
 Type ID: `apoli:shader`
 
-!!! note
+> For more information about post-processing shaders, visit [Minecraft Wiki: Shaders (Before 1.9)](https://minecraft.wiki/w/Shaders/Before_1.9)
 
-    For more information about post-processing shaders, visit [Minecraft Wiki: Shaders (Before 1.9)](https://minecraft.wiki/w/Shaders/Before_1.9)
 
 ## Fields
 

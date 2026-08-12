@@ -51,12 +51,11 @@ not list in its own `keys` — the matcher sees every Apoli-tracked key the play
 combos share a prefix therefore no longer trigger each other: `A B` will not fire while you are half-way
 through `A C B`.
 
-!!! note
+> Only the **longest** matching combo fires. If one sequence is a prefix of another — `A B` and `A B C` —
+> finishing `A B` does not fire it while `A B C` is still reachable; it waits. As soon as the longer combo
+> completes, the shorter one is cancelled; if the longer one breaks, or `timeout` ticks pass with no input,
+> the shorter one fires after all.
 
-    Only the **longest** matching combo fires. If one sequence is a prefix of another — `A B` and `A B C` —
-    finishing `A B` does not fire it while `A B C` is still reachable; it waits. As soon as the longer combo
-    completes, the shorter one is cancelled; if the longer one breaks, or `timeout` ticks pass with no input,
-    the shorter one fires after all.
 
 - A success resets progress to zero; matches never overlap themselves.
 - All of a player's key-sequence powers are matched in one pass per tick, so arbitration between them is consistent.

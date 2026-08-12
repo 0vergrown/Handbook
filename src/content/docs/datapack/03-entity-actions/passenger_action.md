@@ -8,9 +8,8 @@ Executes an action on the passengers of the entity.
 
 Type ID: `apoli:passenger_action`
 
-!!! note
+> Not to be confused with [Riding Action](/docs/datapack/entity-actions/riding_action)
 
-    Not to be confused with [Riding Action](/docs/datapack/entity-actions/riding_action)
 
 ## Fields
 

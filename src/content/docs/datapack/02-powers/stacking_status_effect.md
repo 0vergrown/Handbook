@@ -8,9 +8,8 @@ Provides a system where the entity that has the power gains/loses a stack per sp
 
 Type ID: `apoli:stacking_status_effect`
 
-!!! note
+> The actual duration of the specified status effect(s) is determined by the `stacks * duration_per_stack` formula.
 
-    The actual duration of the specified status effect(s) is determined by the `stacks * duration_per_stack` formula.
 
 ## Fields
 

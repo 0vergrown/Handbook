@@ -8,9 +8,8 @@ Teleports the entity to a random location within the specified area.
 
 Type ID: `apoli:random_teleport`
 
-!!! note
+> The actual width and height of the available teleportation area is double the respective provided value, +1 for the block the player stands on in the very center.
 
-    The actual width and height of the available teleportation area is double the respective provided value, +1 for the block the player stands on in the very center.
 
 ##	Fields
 

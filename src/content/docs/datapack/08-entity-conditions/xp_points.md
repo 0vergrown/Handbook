@@ -8,9 +8,8 @@ Checks the experience points of the entity.
 
 Type ID: `apoli:xp_points`
 
-!!! note
+> **This entity condition type will only work on players.**
 
-    **This entity condition type will only work on players.**
 
 ## Fields
 

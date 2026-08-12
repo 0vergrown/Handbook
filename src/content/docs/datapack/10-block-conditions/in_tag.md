@@ -12,7 +12,7 @@ Type ID: `apoli:in_tag`
 
 Field  | Type | Default | Description
 -------|------|---------|-------------
-`tag` | [Identifier](/docs/datapack/data-types/identifier) | | The namespace and ID of the tag which the block should be in to pass the check.
+`tag` | [Identifier](/docs/datapack/data-types/identifier) | | The namespace and ID of the tag which the block should be in to pass the check. The leading `#` is optional.
 
 ## Examples
 

@@ -8,9 +8,8 @@ Checks the current experience level of the entity.
 
 Type ID: `apoli:xp_levels`
 
-!!! note
+> **This entity condition type will only work on players.**
 
-    **This entity condition type will only work on players.**
 
 ## Fields
 

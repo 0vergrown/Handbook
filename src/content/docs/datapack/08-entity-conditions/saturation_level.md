@@ -8,9 +8,8 @@ Checks the entity's saturation level, which is the invisible value that determin
 
 Type ID: `apoli:saturation_level`
 
-!!! note
+> **This entity condition type will only work on players.**
 
-    **This entity condition type will only work on players.**
 
 ## Fields
 

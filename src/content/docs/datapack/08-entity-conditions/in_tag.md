@@ -12,7 +12,7 @@ Type ID: `apoli:in_tag`
 
 Field  | Type | Default | Description
 -------|------|---------|-------------
-`tag` | Identifier | | The namespace and ID of the entity type tag the entity type needs to be in to pass the check.
+`tag` | Identifier | | The namespace and ID of the entity type tag the entity type needs to be in to pass the check. The leading `#` is optional.
 
 ## Examples
 

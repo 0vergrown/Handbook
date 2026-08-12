@@ -8,9 +8,8 @@ Checks how much blocks the entity has been falling.
 
 Type ID: `apoli:fall_distance`
 
-!!! note
+> This entity condition type will return `0` if the entity has the Slow Falling status effect.
 
-    This entity condition type will return `0` if the entity has the Slow Falling status effect.
 
 ## Fields
 

@@ -8,9 +8,8 @@ Checks how many passengers (including the passengers' passengers) are currently 
 
 Type ID: `apoli:passenger_recursive`
 
-!!! note
+> In the context of this entity condition type, the '**actor**' entity/entities is/are the passenger(s) (and its passengers' passengers) and the '**target**' is the entity that invoked the condition.
 
-    In the context of this entity condition type, the '**actor**' entity/entities is/are the passenger(s) (and its passengers' passengers) and the '**target**' is the entity that invoked the condition.
 
 ## Fields
 

@@ -12,7 +12,7 @@ Type ID: `apoli:entity_type`
 
 Field  | Type | Default | Description
 -------|------|---------|-------------
-`entity_type` | [Identifier](/docs/datapack/data-types/identifier) | | The namespace and ID of the entity type the entity needs to have to pass the check.
+`entity_type` | [Identifier](/docs/datapack/data-types/identifier) | | The entity type the entity needs to have. Prefix with `#` to match an entity type tag instead — `"#minecraft:skeletons"`.
 
 ## Examples
 
@@ -24,3 +24,12 @@ Field  | Type | Default | Description
 ```
 
 This example will check if the entity is a Creeper.
+
+```json
+"condition": {
+    "type": "apoli:entity_type",
+    "entity_type": "#minecraft:skeletons"
+}
+```
+
+This example passes for any entity in the `minecraft:skeletons` tag.

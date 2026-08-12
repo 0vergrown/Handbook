@@ -8,13 +8,11 @@ Compares the score of the entity from a specified scoreboard objective to a spec
 
 Type ID: `apoli:scoreboard`
 
-!!! note
+> If the player does not have the scoreboard objective, this condition would always return false (even if `"!="` is used). You can then use the `"!="` comparison in combination with the `"=="` comparison to test if the player does not have this objective set (for example, if a player has newly joined a world or had their objectives reset).
 
-    If the player does not have the scoreboard objective, this condition would always return false (even if `"!="` is used). You can then use the `"!="` comparison in combination with the `"=="` comparison to test if the player does not have this objective set (for example, if a player has newly joined a world or had their objectives reset).
 
-!!! caution
+> This entity condition type only operates on the **server-side**, meaning that it cannot be used in fields that are evaluated on the client-side.
 
-    This entity condition type only operates on the **server-side**, meaning that it cannot be used in fields that are evaluated on the client-side.
 
 ## Fields
 

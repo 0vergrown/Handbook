@@ -8,9 +8,8 @@ Checks whether the entity is currently sprinting.
 
 Type ID: `apoli:sprinting`
 
-!!! note
+> **This entity condition type will only work on players.**
 
-    **This entity condition type will only work on players.**
 
 ## Fields
 

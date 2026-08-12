@@ -24,6 +24,10 @@ A **Key** tells an [active power](/docs/datapack/powers/action_on_key_press) whi
 | `key` | [String](/docs/datapack/data-types/string) | | The keybinding's translation key (see below). |
 | `continuous` | [Boolean](/docs/datapack/data-types/boolean) | `false` | If `false`, the power activates once when the key is first pressed. If `true`, it tries to activate every tick the key is held (still respecting cooldown and conditions). |
 
+> With `continuous: false` the power fires on the **press**, and holding the key does nothing more —
+> including when a `cooldown` expires while the key is still down. To fire again, release the key
+> and press it again.
+
 ## Built-in keys
 
 You can point at any keybinding the game knows about:

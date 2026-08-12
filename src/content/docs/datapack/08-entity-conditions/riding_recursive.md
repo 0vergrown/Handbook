@@ -8,9 +8,8 @@ Checks whether the '**actor**' entity is directly riding the '**target**' entity
 
 Type ID: `apoli:riding_recursive`
 
-!!! note
+> In the context of this entity condition type, the '**actor**' entity is the passenger and the entity that invoked the condition whilst the '**target**' entities are the entity that is being directly ridden and the passenger(s) of the said entity.
 
-    In the context of this entity condition type, the '**actor**' entity is the passenger and the entity that invoked the condition whilst the '**target**' entities are the entity that is being directly ridden and the passenger(s) of the said entity.
 
 ## Fields
 

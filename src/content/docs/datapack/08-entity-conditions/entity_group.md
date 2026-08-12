@@ -8,9 +8,8 @@ Checks whether the entity is of a specific entity group.
 
 Type ID: `apoli:entity_group`
 
-!!! note
+> See [Minecraft Wiki: Mob (Classification)](https://minecraft.wiki/w/Mob#Classification) for more information about entity groups.
 
-    See [Minecraft Wiki: Mob (Classification)](https://minecraft.wiki/w/Mob#Classification) for more information about entity groups.
 
 ## Fields
 

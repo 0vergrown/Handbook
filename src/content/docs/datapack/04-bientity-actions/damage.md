@@ -8,13 +8,13 @@ Applies damage to the target entity as if the actor entity has attacked it.
 
 Type ID: `apoli:damage`
 
-> The max health of the target entity will be used as the base value for the modifier(s).
+> **`amount` is optional, and omitting it deals damage equal to the target's max health.** That is intended — it is how you write "damage a fraction of max health" by supplying only `modifier`/`modifiers`. But it also means a **misspelled or unknown field name silently becomes a one-shot**, because unknown keys are ignored. If a power always deals exactly the target's max health, check the spelling of `amount` first.
 
 ## Fields
 
 Field | Type | Default | Description
 ------|------|---------|------------
-`amount` | [Float](/docs/datapack/data-types/float) | | The amount of damage to deal.
+`amount` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | _optional_ | The amount of damage to deal. Also accepted under the legacy name `damage`. If omitted, the target's max health is used as the base value for the modifier(s).
 `damage_type` | [Identifier](/docs/datapack/data-types/identifier) | | Defines the properties of the damage source that will be dealt, such as part of its death message, and whether it can bypass armor, shield, etc. (via damage type tags.)
 `modifier` | [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) | _optional_ | If specified, this modifier will be applied to the damage taken by the '**target**' entity.
 `modifiers` | [Array](/docs/datapack/data-types/array) of Attribute Modifiers | _optional_ | If specified, these modifiers will be applied to the damage taken by the '**target**' entity.

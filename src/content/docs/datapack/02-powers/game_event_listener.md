@@ -25,7 +25,7 @@ Field | Type | Default | Description
 `hud_render` | Hud Render | `{"should_render": false}` | Determines how the cooldown of this power is visualized on the HUD.
 `event` | Identifier | _optional_ | If specified, will make the power only listen for the game events with this namespace and IDs.
 `events` | Array of Identifiers | _optional_ | If specified, will make the power only listen for the game events with these namespace and IDs.
-`event_tag` | Identifier | _optional_ | If specified, will make the power only listen for the game events inside game event tag.
+`event_tag` | Identifier | _optional_ | If specified, will make the power only listen for the game events inside game event tag. The leading `#` is optional.
 `show_particle` | Boolean | `true` | Determines whether the vibration should emit a particle effect.
 
 ## Examples

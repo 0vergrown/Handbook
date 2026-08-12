@@ -8,6 +8,8 @@ Prevents status effects from being applied to the entity that has the power.
 
 Type ID: `apoli:effect_immunity`
 
+> Immunity is not only checked when an effect is applied — while the power is active it also **strips any matching effect the entity already has**. That is what makes a `condition` on this power observable: when the condition starts holding, an effect the entity picked up beforehand is removed rather than being allowed to run out.
+
 ## Fields
 
 Field  | Type | Default | Description

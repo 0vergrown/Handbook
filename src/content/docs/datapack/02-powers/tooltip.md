@@ -8,9 +8,8 @@ Applies the specified tooltip(s) to an item that is only visible to the entity t
 
 Type ID: `apoli:tooltip`
 
-!!! warning
+> Currently, this power type is not able to "resolve" certain JSON text components. See [Minecraft Wiki: Raw JSON text format (Component resolution)](https://minecraft.wiki/w/Raw_JSON_text_format#Component_resolution) for more information.
 
-    Currently, this power type is not able to "resolve" certain JSON text components. See [Minecraft Wiki: Raw JSON text format (Component resolution)](https://minecraft.wiki/w/Raw_JSON_text_format#Component_resolution) for more information.
 
 ## Fields
 

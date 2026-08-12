@@ -8,13 +8,11 @@ Modifies the location of the player's spawnpoint to the specified dimension, bio
 
 Type ID: `apoli:modify_player_spawn`
 
-!!! note
+> See [Minecraft Wiki: Generated structures (IDs)](https://minecraft.wiki/w/Generated_structures#ID) and [Minecraft Wiki: Biome (Biome IDs)](https://minecraft.wiki/w/Biome#Biome_IDs) for a list of structure IDs and biome IDs respectively.
 
-    See [Minecraft Wiki: Generated structures (IDs)](https://minecraft.wiki/w/Generated_structures#ID) and [Minecraft Wiki: Biome (Biome IDs)](https://minecraft.wiki/w/Biome#Biome_IDs) for a list of structure IDs and biome IDs respectively.
 
-!!! warning
+> Keep in mind that structure location is costly and it might take one or two seconds (or longer) before the player gets teleported when choosing the power.
 
-    Keep in mind that structure location is costly and it might take one or two seconds (or longer) before the player gets teleported when choosing the power.
 
 ## Fields
 

@@ -8,9 +8,8 @@ Checks whether the entity has a specified power. Mostly used for Origin conditio
 
 Type ID: `apoli:power`
 
-!!! caution
+> Make sure to use the [apoli:living](/docs/datapack/entity-conditions/living) to check if the entity is a "living entity", otherwise, the game will crash since only living entities can have powers.
 
-    Make sure to use the [apoli:living](/docs/datapack/entity-conditions/living) to check if the entity is a "living entity", otherwise, the game will crash since only living entities can have powers.
 
 ## Fields
 

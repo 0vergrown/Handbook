@@ -8,15 +8,14 @@ Allows the entity that has the power to walk on fluid.
 
 Type ID: `apoli:walk_on_fluid`
 
-!!! note
+> It is suggested to use the [Fluid Height (Entity Condition Type)](/docs/datapack/entity-conditions/fluid_height) entity condition type to check if the height of the fluid the player is currently on/in is less or equal to 0.4, otherwise, the entity that has the power may have problems getting out of the fluid once they are submerged.
 
-    It is suggested to use the [Fluid Height (Entity Condition Type)](/docs/datapack/entity-conditions/fluid_height) entity condition type to check if the height of the fluid the player is currently on/in is less or equal to 0.4, otherwise, the entity that has the power may have problems getting out of the fluid once they are submerged.
 
 ## Fields
 
 Field  | Type | Default | Description
 -------|------|---------|-------------
-`fluid` | Identifier | | The namespace and ID of the fluid tag on which the player should be able to walk onto. Most important examples: `minecraft:water` and `minecraft:lava`.
+`fluid` | Identifier | | The namespace and ID of the fluid tag on which the player should be able to walk onto. Most important examples: `minecraft:water` and `minecraft:lava`. The leading `#` is optional.
 
 ## Examples
 

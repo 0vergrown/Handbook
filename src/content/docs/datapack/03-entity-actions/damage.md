@@ -8,19 +8,15 @@ Applies damage to an entity.
 
 Type ID: `apoli:damage`
 
-!!! info
+> **`amount` is optional, and omitting it deals damage equal to the entity's max health.** That is intended — it is how the second example below works, supplying only `modifier`/`modifiers` to damage a fraction of max health. But it also means a **misspelled or unknown field name silently becomes a one-shot**, because unknown keys are ignored. If a power always deals exactly the entity's max health, check the spelling of `amount` first.
 
-    The max health of the entity will be used as the base value for the modifier(s).
-
-!!! info
-
-    See [Minecraft Wiki: Damage type](https://minecraft.wiki/w/Damage_type) and [Minecraft Wiki: Damage type tag (Java Edition)](https://minecraft.wiki/w/Damage_type_tag_(Java_Edition)) for more information about vanilla damage types and damage type tags.
+> See [Minecraft Wiki: Damage type](https://minecraft.wiki/w/Damage_type) and [Minecraft Wiki: Damage type tag (Java Edition)](https://minecraft.wiki/w/Damage_type_tag_(Java_Edition)) for more information about vanilla damage types and damage type tags.
 
 ## Fields
 
 Field  | Type | Default | Description
 -------|------|---------|-------------
-`amount` | Float or [Expression](/docs/datapack/data-types/expression) |  | The amount of damage to deal.
+`amount` | Float or [Expression](/docs/datapack/data-types/expression) | _optional_ | The amount of damage to deal. Also accepted under the legacy name `damage`. If omitted, the entity's max health is used as the base value for the modifier(s).
 `damage_type` | Identifier | | Defines the properties of the damage source that will be dealt, such as part of its death message, and whether it can bypass armor, shield, etc. (via damage type tags.)
 `modifier` | Attribute Modifier | _optional_ | If specified, this modifier will be applied to the damage taken by the entity.
 `modifiers` | Array of Attribute Modifiers | _optional_ | If specified, these modifiers will be applied to the damage taken by the entity.

@@ -8,9 +8,8 @@ Prevents the selection of blocks for the player that has the power.
 
 Type ID: `apoli:prevent_block_selection`
 
-!!! note
+> Preventing the "selection" of a block means that the player won't be able to mine or interact with the said block; meaning that actions will pass through the block to whatever is behind the said block.
 
-    Preventing the "selection" of a block means that the player won't be able to mine or interact with the said block; meaning that actions will pass through the block to whatever is behind the said block.
 
 ## Fields
 

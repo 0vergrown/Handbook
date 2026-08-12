@@ -12,7 +12,7 @@ Type ID: `apoli:fluid_height`
 
 Field  | Type | Default | Description
 -------|------|---------|-------------
-`fluid` | Identifier | | The namespace and ID of the fluid tag of which the height should be checked. Most important examples: `minecraft:water` and `minecraft:lava`.
+`fluid` | Identifier | | The namespace and ID of the fluid tag of which the height should be checked. Most important examples: `minecraft:water` and `minecraft:lava`. The leading `#` is optional.
 `comparison` | Comparison | | Determines how the height of the fluid should be compared to the specified value.
 `compare_to` | Float | | The value at which the height of the fluid will be compared to.
 

@@ -62,6 +62,5 @@ Turn off friendly fire on the team the holder is already on:
 }
 ```
 
-!!! caution
+> Teams are server state shared by everyone. `delete` and `empty` affect all members, not just the entity running the action.
 
-    Teams are server state shared by everyone. `delete` and `empty` affect all members, not just the entity running the action.

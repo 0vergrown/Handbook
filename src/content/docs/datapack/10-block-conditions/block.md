@@ -12,7 +12,7 @@ Type ID: `apoli:block`
 
 Field  | Type | Default | Description
 -------|------|---------|-------------
-`block` | [Identifier](/docs/datapack/data-types/identifier) | | The namespace and ID of the block that this block needs to be to pass the check.
+`block` | [Identifier](/docs/datapack/data-types/identifier) | | The block this block needs to be. Prefix with `#` to match a block tag instead — `"#minecraft:logs"`.
 
 ## Examples
 
@@ -42,3 +42,14 @@ This example checks if the block is a Diamond Block.
 ```
 
 This example will check if the block is either a Diamond Block or an Emerald Block.
+
+```json
+"block_condition": {
+    "type": "apoli:block",
+    "block": "#minecraft:logs"
+}
+```
+
+This example passes for any block in the `minecraft:logs` tag. It is the same check as
+[`apoli:in_tag`](/docs/datapack/block-conditions/in_tag) with that tag — use whichever reads
+better where you are.

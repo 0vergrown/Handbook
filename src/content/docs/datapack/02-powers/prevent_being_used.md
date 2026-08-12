@@ -8,9 +8,8 @@ Prevents other players from being able to "use" (right-click) the entity that ha
 
 Type ID: `apoli:prevent_being_used`
 
-!!! note
+> In the context of this power type, the '**actor**' entity is the entity that did the "usage" action (right-click) while the '**target**' entity is the entity that has the power.
 
-    In the context of this power type, the '**actor**' entity is the entity that did the "usage" action (right-click) while the '**target**' entity is the entity that has the power.
 
 ## Fields
 

@@ -8,9 +8,8 @@ Checks whether the entity is currently using the effective tool of the block the
 
 Type ID: `apoli:using_effective_tool`
 
-!!! note
+> **This entity condition type will only work on players.**
 
-    **This entity condition type will only work on players.**
 
 ## Fields
 

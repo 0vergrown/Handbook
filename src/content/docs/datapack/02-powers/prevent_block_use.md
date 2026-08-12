@@ -8,9 +8,8 @@ Prevents the usage of blocks for the player that has the power.
 
 Type ID: `apoli:prevent_block_use`
 
-!!! note
+> Preventing the "usage" of a block means that the player won't be able to interact (right-click) with the said block.
 
-    Preventing the "usage" of a block means that the player won't be able to interact (right-click) with the said block.
 
 ## Fields
 

@@ -8,14 +8,13 @@ Checks whether the item has a certain armor value. Non-armor items are considere
 
 Type ID: `apoli:armor_value`
 
-!!! note
+> You can visit these pages to get the armor values for each armor item piece:
+>
+> * [Helmet](https://minecraft.wiki/w/Helmet#Defense_points)
+> * [Chestplate](https://minecraft.wiki/w/Chestplate#Defense_points)
+> * [Leggings](https://minecraft.wiki/w/Leggings#Defense_points)
+> * [Boots](https://minecraft.wiki/w/Boots#Defense_points)
 
-    You can visit these pages to get the armor values for each armor item piece:
-
-    * [Helmet](https://minecraft.wiki/w/Helmet#Defense_points)
-    * [Chestplate](https://minecraft.wiki/w/Chestplate#Defense_points)
-    * [Leggings](https://minecraft.wiki/w/Leggings#Defense_points)
-    * [Boots](https://minecraft.wiki/w/Boots#Defense_points)
 
 ## Fields
 

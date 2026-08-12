@@ -12,6 +12,8 @@ Type ID: `apoli:multiple`
 > 
 > You can reference sub-powers by using the ID of the super-power and the ID of the sub-power, split by an underscore (`_`). (e.g: `namespace:super-power_sub-power`)
 > 
+> Inside a sub-power, `*:*` expands to the **super-power's** id, which is why `"*:*_set"` in the example below names the `set` sub-power. `*` on its own in the namespace position — `"*:some/other_power"` — expands to just the file's namespace, so it works for referring to any power in your pack, in any folder. See [Identifier](/docs/datapack/data-types/identifier).
+> 
 > If you wish to check for an entity condition for the entire super-power, you would have to check for the said entity condition in every sub-power of the super-power.
 
 ## Fields

@@ -8,9 +8,8 @@ Prevents an entity from being rendered to the entity that has the power, includi
 
 Type ID: `apoli:prevent_entity_render`
 
-!!! caution
+> The conditions specified in the `entity_condition` and `bientity_condition` fields are only evaluated on the **client-side**, therefore, using any condition types that only work on the server-side will not work.
 
-    The conditions specified in the `entity_condition` and `bientity_condition` fields are only evaluated on the **client-side**, therefore, using any condition types that only work on the server-side will not work.
 
 ## Fields
 

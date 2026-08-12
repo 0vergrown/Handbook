@@ -8,9 +8,8 @@ Compares the result of the specified command to the specified value.
 
 Type ID: `apoli:command`
 
-!!! caution
+> This entity condition type only operates on the **server-side**, meaning that it cannot be used in fields that are evaluated on the client-side.
 
-    This entity condition type only operates on the **server-side**, meaning that it cannot be used in fields that are evaluated on the client-side.
 
 ## Fields
 

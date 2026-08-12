@@ -8,13 +8,11 @@ Feeds the entity, filling up their hunger bar as if they had eaten a food item w
 
 Type ID: `apoli:feed`
 
-!!! note
+> The actual food saturation level is determined by the `food * saturation * 2` formula.
 
-    The actual food saturation level is determined by the `food * saturation * 2` formula.
 
-!!! note
+> **This entity action type will only work on players.**
 
-    **This entity action type will only work on players.**
 
 ## Fields
 

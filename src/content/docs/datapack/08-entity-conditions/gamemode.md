@@ -8,9 +8,8 @@ Checks the gamemode of the entity.
 
 Type ID: `apoli:gamemode`
 
-!!! note
+> **This entity condition type will only work on players.**
 
-    **This entity condition type will only work on players.**
 
 ## Fields
 

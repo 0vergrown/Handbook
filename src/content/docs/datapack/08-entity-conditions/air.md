@@ -8,11 +8,10 @@ Checks how much breath / air / bubble the entity has at the moment.
 
 Type ID: `apoli:air`
 
-!!! note
+> Players (and most mobs) have a max value of 300 ticks, whilst dolphins have a max value of 4800 ticks. Axolotls, on the other hand, have a max value of 6000 ticks.
+>
+> In order to get the value of a single bubble, you can divide the max value by 10. (`max / 10 = value`)
 
-    Players (and most mobs) have a max value of 300 ticks, whilst dolphins have a max value of 4800 ticks. Axolotls, on the other hand, have a max value of 6000 ticks.
-
-    In order to get the value of a single bubble, you can divide the max value by 10. (`max / 10 = value`)
 
 ## Fields
 

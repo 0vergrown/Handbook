@@ -19,6 +19,8 @@ Field  | Type | Default | Description
 `entity_action_added` | Entity Action Type | _optional_ | If specified, this action will be executed on the player when the power is added to the entity. Joining a world adds each power back.
 `entity_action_removed` | Entity Action Type | _optional_ | If specified, this action will be executed on the player when the power is removed from the entity and right after the player respawns. Leaving a world removes each power.
 `entity_action_respawned` | Entity Action Type | _optional_ | If specified, this action will be executed on the player right after the player respawns. This action will be executed after the action in `entity_action_removed`.
+
+> `entity_action_added` and `entity_action_respawned` both run on the tick **after** the respawn completes, not during it. That is deliberate: the respawn sequence rewrites the player's position, health and inventory last, so an action that ran mid-respawn would be silently undone.
 `entity_action_chosen` | Entity Action Type | _optional_ | If specified, this action will be executed on the player once they have chosen an origin on **every** layer. Requires the Origins mod — see below.
 `execute_chosen_when_orb` | Boolean | `true` | Whether `entity_action_chosen` also fires when the origin was picked via an Orb of Origin rather than the first-join screen. Set it to `false` for a "welcome" action that should only run once.
 

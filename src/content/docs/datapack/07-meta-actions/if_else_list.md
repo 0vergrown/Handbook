@@ -1,12 +1,14 @@
 ---
 title: "If Else List (Meta Action Type)"
-description: "Checks a list of actions associated with conditions, and executes the first one in the list for which the condition holds."
+description: "Checks a list of actions associated with conditions, and executes every one whose condition holds."
 navigation_title: "If Else List"
 ---
 
-Checks a list of actions associated with conditions, and executes the first one in the list for which the condition holds. Basically a less indentation-heavy way to represent a deeply nested [apoli:if_else](/docs/datapack/meta-actions/if_else)
+Checks a list of actions associated with conditions, and executes **every** one whose condition holds — not just the first. Basically a less indentation-heavy way to represent a deeply nested [apoli:if_else](/docs/datapack/meta-actions/if_else), except that more than one branch may fire in a single run.
 
 Type ID: `apoli:if_else_list`
+
+> **Every condition is evaluated before any action runs.** Each branch is tested against the state as it was when the list started, so an earlier branch's action cannot make a later branch's condition start matching. Without that, a list whose branches read a resource its own actions write would cascade straight down the whole list in one tick.
 
 > Depending on the condition type, a different action type is expected:
 > 

@@ -8,9 +8,8 @@ Checks the current (and the percentage) health value of the entity.
 
 Type ID: `apoli:relative_health`
 
-!!! note
+> The percentage of the health value can be calculated with the `currentHealth / maxHealth` formula.
 
-    The percentage of the health value can be calculated with the `currentHealth / maxHealth` formula.
 
 ## Fields
 

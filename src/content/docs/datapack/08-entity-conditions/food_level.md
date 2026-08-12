@@ -8,9 +8,8 @@ Checks the entity's food level (chicken legs / hunger meter / whatever you wanna
 
 Type ID: `apoli:food_level`
 
-!!! note
+> **This entity condition type will only work on players.**
 
-    **This entity condition type will only work on players.**
 
 ## Fields
 

@@ -12,7 +12,7 @@ Type ID: `apoli:submerged_in`
 
 Field  | Type | Default | Description
 -------|------|---------|-------------
-`fluid` | Identifier | | The namespace and ID of the fluid tag that should be checked. Most important examples: `minecraft:water` and `minecraft:lava`.
+`fluid` | Identifier | | The namespace and ID of the fluid tag that should be checked. Most important examples: `minecraft:water` and `minecraft:lava`. The leading `#` is optional.
 
 ## Examples
 

@@ -8,9 +8,8 @@ Checks whether the entity has completed a specified advancement.
 
 Type ID: `apoli:advancement`
 
-!!! note
+> **This entity condition type will only work on players.**
 
-    **This entity condition type will only work on players.**
 
 ## Fields
 

@@ -8,9 +8,8 @@ Plays a sound event at the entity's position.
 
 Type ID: `apoli:play_sound`
 
-!!! note
+> The value of the `volume` field is used to multiply the base distance of the sound event, which is 16 blocks (`1.0`).
 
-    The value of the `volume` field is used to multiply the base distance of the sound event, which is 16 blocks (`1.0`).
 
 ## Fields
 

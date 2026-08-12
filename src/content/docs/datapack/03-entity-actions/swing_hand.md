@@ -8,9 +8,8 @@ Swings the specified hand.
 
 Type ID: `apoli:swing_hand`
 
-!!! note
+> This action is purely cosmetic, and will not interact with the world in any way. This means you can't use this to break, or place blocks, hit or use entities, or any other action that involves swinging your hand.
 
-    This action is purely cosmetic, and will not interact with the world in any way. This means you can't use this to break, or place blocks, hit or use entities, or any other action that involves swinging your hand.
 
 ## Fields
 

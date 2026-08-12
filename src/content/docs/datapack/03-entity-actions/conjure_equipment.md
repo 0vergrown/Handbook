@@ -17,7 +17,7 @@ Type ID: `apoli:conjure_equipment`
 | `slot` | String  | *optional* | The vanilla equipment slot: `mainhand`, `offhand`, `head`, `chest`, `legs` or `feet` (the command-style `slot.` prefix is also accepted, e.g. `slot.mainhand`). |
 | `accessory_slot` | [Accessory slot](/docs/compat/accessories/overview#slots), or an array of them | *optional* | An accessory slot to conjure into. Requires Trinkets, Accessories or Curios; without one of those installed this does nothing. |
 | `item` | Item Stack | **required** | The item to conjure — item id, amount and components/NBT.                                                       |
-| `lock` | Boolean | `false`     | While `true`, the item cannot be moved out of its slot via inventory clicking (shift-click included), and cannot be unequipped from an accessory slot.                |
+| `lock` | Boolean | `false`     | While `true`, the item cannot be moved out of its slot via inventory clicking (shift-click included), cannot be dropped with the drop key, and cannot be unequipped from an accessory slot.                |
 
 At least one of `slot` and `accessory_slot` must be present; the power fails to load otherwise. Giving both conjures the item into both.
 

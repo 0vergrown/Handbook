@@ -12,9 +12,9 @@ Type ID: `apoli:add_velocity`
 
 | Field       | Type                                | Default      | Description                                                                                                                                         |
 | ----------- | ----------------------------------- | ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `x`         | Float     | `0.0`        | The amount of velocity to add on the x-axis.                                                                                                        |
-| `y`         | Float     | `0.0`        | The amount of velocity to add on the y-axis.                                                                                                        |
-| `z`         | Float     | `0.0`        | The amount of velocity to add on the z-axis.                                                                                                        |
+| `x`         | Float or [Expression](/docs/datapack/data-types/expression) | `0.0`        | The amount of velocity to add on the x-axis.                                                                                                        |
+| `y`         | Float or [Expression](/docs/datapack/data-types/expression) | `0.0`        | The amount of velocity to add on the y-axis.                                                                                                        |
+| `z`         | Float or [Expression](/docs/datapack/data-types/expression) | `0.0`        | The amount of velocity to add on the z-axis.                                                                                                        |
 | `reference` | String   | `"position"` | Determines whether to use the target entity's `"position"` or `"rotation"` when calculating the velocity that will be applied to the target entity. |
 | `set`       | Boolean | `false`      | If this is true, the action will act as a "set" velocity action, overriding the entity's current velocity instead of adding to it.                  |
 ## Examples

@@ -8,13 +8,11 @@ Executes an action on entities selected by a target selector.
 
 Type ID: `apoli:selector_action`
 
-!!! note
+> See [Minecraft Wiki: Target selectors](https://minecraft.wiki/w/Target_selectors) for more information about target selectors.
 
-    See [Minecraft Wiki: Target selectors](https://minecraft.wiki/w/Target_selectors) for more information about target selectors.
 
-!!! note
+> This entity action type has a bi-entity action context, where the '**actor**' entity is the entity that invoked the entity action while the '**target**' entities are the entities that were selected by the specified `selector`.
 
-    This entity action type has a bi-entity action context, where the '**actor**' entity is the entity that invoked the entity action while the '**target**' entities are the entities that were selected by the specified `selector`.
 
 ## Fields
 
