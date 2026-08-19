@@ -39,6 +39,10 @@ When `min`, `max`, or `start_value` are written as [Expression](/docs/datapack/d
 - `health`, `max_health`, `food`, `air`, `xp_level`, `xp_progress`: Common entity stats.
 - `world_time`, `day_time`: Long ticks from the entity's level.
 
+> **A `min_action` or `max_action` that fails to parse is dropped, not silently ignored.** Since Apoli 1.38.0 the log carries a warning naming the power and the field — `Ignoring the 'max_action' field of <power id> — it is present but failed to parse` — followed by the underlying reason. The rest of the resource still loads, so the bar works and only the boundary action is missing. Before 1.38.0 the drop was completely silent, which is why a mistyped action read as "the power does not parse and nothing is logged".
+
+> The most common cause is a legacy damage source: [apoli:damage](/docs/datapack/entity-actions/damage) takes `damage_type` (a damage type ID), not the pre-1.19.4 `source` object.
+
 ## Examples
 
 A binary flag (boolean-like resource):

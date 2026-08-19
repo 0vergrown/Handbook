@@ -12,7 +12,13 @@ Type ID: `apoli:self_glow` *(alias of [`apoli:entity_glow`](/docs/datapack/power
 
 > You can use a color picker website and divide the RGB values by 255 to get the values *(e.g: ranging from 0.0 to 1.0)* to be used for the power type.
 
-> The conditions specified in the `entity_condition` and `bientity_condition` fields are only evaluated on the **client-side**, therefore, using any condition types that only work on the server-side will not work.
+> The conditions specified in the `entity_condition` and `bientity_condition` fields are only evaluated on the **client-side**, therefore, using any condition types that only work on the server-side will not work. Since Apoli 1.38.0 your own [apoli:inventory](/docs/datapack/powers/inventory) power containers are readable there; `apoli:command`, `apoli:advancement`, `apoli:scoreboard`, `apoli:stat` and `apoli:predicate` still are not.
+
+> **`actor` is the glowing holder and `target` is the viewer** in `bientity_condition` — so `apoli:actor_condition` tests the entity with the power, and `apoli:target_condition` tests whoever is looking. Before Apoli 1.38.0 these were swapped.
+
+> A `bientity_condition` or `entity_condition` that fails to parse now fails the **whole power** with a log line naming it, instead of being dropped silently and leaving the glow permanently on.
+
+> **You cannot see your own `apoli:self_glow` in first person.** Minecraft never renders the camera entity, so the glow only shows in third person (F5) or to other players.
 
 ## Fields
 

@@ -23,16 +23,20 @@ Field  | Type | Default | Description
 `min_length` | [Float](/docs/datapack/data-types/float) | `1.0` | Shortest the rope can reel to.
 `max_length` | [Float](/docs/datapack/data-types/float) | `30.0` | Longest the rope can be.
 `start_length` | [Float](/docs/datapack/data-types/float) | _see below_ | The length the rope is created at, clamped to `min_length`–`max_length`. Left out, a `controllable` rope starts taut at the current distance between its ends, and a rope that is not `controllable` starts at `max_length`.
-`stiffness` | [Float](/docs/datapack/data-types/float) | `0.1` | How hard the rope yanks an end back once it passes its length.
-`radial_damping` | [Float](/docs/datapack/data-types/float) | `0.85` | How much outward speed is bled off at the length limit.
-`spring_scaling` | [Float](/docs/datapack/data-types/float) | `0.65` | Extra softening while swinging inward.
-`swing_boost` | [Float](/docs/datapack/data-types/float) | `1.08` | Speed multiplier applied to a sprinting player's swing.
+`stiffness` | [Float](/docs/datapack/data-types/float) | `0.1` | How hard the rope yanks an end back once it passes its length. Range `0.0`–`1.0`.
+`radial_damping` | [Float](/docs/datapack/data-types/float) | `0.85` | How much outward speed is bled off at the length limit. Range `0.0`–`1.0`; it is a *damping* factor, so above `1.0` it would amplify instead.
+`spring_scaling` | [Float](/docs/datapack/data-types/float) | `0.65` | Extra softening while swinging inward. Range `0.0`–`1.0`.
+`swing_boost` | [Float](/docs/datapack/data-types/float) | `1.08` | Speed multiplier applied to a sprinting player's swing. Range `0.0`–`2.0`.
 `max_swing_speed` | [Float](/docs/datapack/data-types/float) | `0.7` | Cap on the sprint swing boost.
 `control_accel` | [Float](/docs/datapack/data-types/float) | `0.08` | How hard the WASD swing keys push a controllable rope.
 `reel_step` | [Float](/docs/datapack/data-types/float) | `0.2` | Blocks per tick the length changes while a reel key is held.
 `slack_pull_rate` | [Float](/docs/datapack/data-types/float) | `5.0` | Multiplier applied to reeling in while there is slack.
 `constrain_from` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Whether the physics may pull the `from` end.
 `constrain_to` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Whether the physics may pull the `to` end.
+
+> **The physics fields are clamped to a stable range at load time**, and a value outside it is clamped with a warning naming the field. `stiffness`, `radial_damping` and `spring_scaling` must be `0.0`–`1.0`; `swing_boost` must be `0.0`–`2.0`. Above those, the per-tick spring integrator diverges instead of settling: `radial_damping` above `1.0` multiplies outward speed every tick, and `stiffness` above `1.0` overshoots further each correction — which is what threw players hundreds of blocks. The rope also refuses to apply more than 4 blocks/tick of correction, so no combination of settings can launch an endpoint across the world.
+
+> Physics settings are captured **when the rope is cast**. Editing them and reloading the data pack does not change ropes that already exist — re-cast the rope to pick up new values.
 
 ## Example
 

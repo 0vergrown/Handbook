@@ -78,7 +78,7 @@ A **missing** optional field falls back to its default. A field that is *present
 
 That is the single most common way a power "ignores" something.
 
-**The power's own top-level `condition` is the exception.** Dropping a gate would leave the power *always active*, which is the dangerous direction to fail in, so since Apoli 1.29.1 a `condition` that is present but unparseable **fails the whole power** instead. The power does not load at all, and the log says why:
+**Every condition field is the exception.** Dropping a gate would leave the power *always active* — or a glow, an area-of-effect or a teleport unfiltered — which is the dangerous direction to fail in. So a condition that is present but unparseable **fails the whole power** instead: the power's own top-level `condition` since Apoli 1.29.1, and since 1.38.0 every nested `entity_condition`, `bientity_condition`, `block_condition`, `item_condition`, `damage_condition`, `biome_condition` and `fluid_condition` on any power, action or condition. The power does not load at all, and the log says why:
 
 ```json
 // "condtions" is a typo for "conditions", so apoli:all_of is missing its
@@ -101,11 +101,12 @@ my_pack:example is present but failed to parse:
 No key conditions in MapLike[{"type":"apoli:all_of","condtions":[...]}]
 ```
 
-Every *other* optional field is still dropped rather than fatal, and Apoli logs a warning naming the field and the power:
+Every *other* optional field — including nested **action** fields such as a resource's `min_action` and `max_action` — is still dropped rather than fatal, because losing one makes a power do *less*, which is visible rather than dangerous. Since Apoli 1.38.0 every one of those drops is logged with a warning naming the field and the power:
 
 ```txt
-[Apoli] Ignoring the 'description' field of my_pack:example — it is present but
+[Apoli] Ignoring the 'max_action' field of my_pack:example — it is present but
 failed to parse, so it was dropped and everything else loaded.
+Missing damage_type in MapLike[{"type":"apoli:damage","amount":4,"source":{...}}]
 ```
 
 > Malformed SNBT in a `tag`/`nbt` string is the other frequent one — the warning gives you the exact character offset (`Invalid SNBT: Expected '}' at position 81`). Remember the string is inside JSON, so every quote the SNBT needs has to be escaped: `"tag": "{display:{Name:'[{\"text\":\"Hi\"}]'}}"`.

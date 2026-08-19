@@ -1,14 +1,16 @@
 ---
 title: "If Else List (Meta Action Type)"
-description: "Checks a list of actions associated with conditions, and executes every one whose condition holds."
+description: "Checks a list of actions associated with conditions, and executes the first one whose condition holds."
 navigation_title: "If Else List"
 ---
 
-Checks a list of actions associated with conditions, and executes **every** one whose condition holds — not just the first. Basically a less indentation-heavy way to represent a deeply nested [apoli:if_else](/docs/datapack/meta-actions/if_else), except that more than one branch may fire in a single run.
+Checks a list of actions associated with conditions, and executes the **first** one whose condition holds. A less indentation-heavy way to write a deeply nested [apoli:if_else](/docs/datapack/meta-actions/if_else) chain.
 
 Type ID: `apoli:if_else_list`
 
-> **Every condition is evaluated before any action runs.** Each branch is tested against the state as it was when the list started, so an earlier branch's action cannot make a later branch's condition start matching. Without that, a list whose branches read a resource its own actions write would cascade straight down the whole list in one tick.
+> **Only one branch ever runs.** Conditions are tested top to bottom and the list stops at the first match, exactly like an `if / else if / else if` chain — later branches are not evaluated at all. Order your branches from most specific to least: with three `apoli:health` branches at `>= 6`, `>= 12` and `>= 18`, a full-health entity still only takes the `>= 6` one, because that is the first that matches.
+
+> To run several actions unconditionally, use [apoli:and](/docs/datapack/meta-actions/and). To run **every** matching branch instead of just the first, use [apoli:if_case](/docs/datapack/meta-actions/if_case) — it takes the same list under `cases` (and still accepts `actions`), so switching between the two is a one-word change.
 
 > Depending on the condition type, a different action type is expected:
 > 
@@ -80,4 +82,4 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will apply a stronger Speed status effect the lower the entity's health is, in three stages (&lt;= 3 hearts, &lt;= 6 hearts or &lt;= 9 hearts).
+This example will apply a stronger Speed status effect the lower the entity's health is, in three stages (&lt;= 3 hearts, &lt;= 6 hearts or &lt;= 9 hearts). The branches are ordered lowest-threshold first, so an entity on 2 hearts matches the `<= 6` branch and stops there — it does not also get the weaker two.

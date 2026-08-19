@@ -1,6 +1,6 @@
 ---
 title: Sable
-description: How apoli:phasing behaves on blocks that Sable has assembled into a moving sub-level.
+description: How apoli:phasing and ropes behave on blocks that Sable has assembled into a moving sub-level.
 ---
 
 [Sable](https://github.com/ryanhcode/sable) turns a region of blocks into a **sub-level**: the
@@ -11,6 +11,24 @@ Apoli registers **no types** for Sable. This compat is **behaviour-gated** — i
 automatically when Sable is installed, and nothing changes when it is not.
 
 ## What it fixes
+
+### Ropes anchor to the structure
+
+[`apoli:attach_rope`](/docs/datapack/entity-actions/attach_rope) resolves a `raycast` endpoint by
+firing a ray and keeping the point it hit. Sable answers that ray in the sub-level's **own**
+coordinates — the plot's, not the world's — so the anchor used to be stored tens of thousands of
+blocks away in the reserved plot region, and the rope was drawn stretching off to nowhere.
+
+An endpoint that lands on a sub-level is now stored as *(which sub-level, where on it)* and
+converted back to a world position every tick, on both the server and the client. The result is a
+rope that stays welded to the block it hit: swing off a moving airship and you move with it, and the
+rope's length constraint, its `break_beyond` distance and its rendering all use the tracked
+position. When the sub-level is unloaded or disassembled the anchor stops resolving and the rope is
+released, exactly as it is when an entity anchor dies.
+
+Endpoints of type `self`, `target` and `position` are unaffected — they were never plot-space.
+
+### Phasing applies to assembled blocks
 
 [`apoli:phasing`](/docs/datapack/powers/phasing) did not apply to assembled blocks. Everything
 else — block conditions, [`apoli:action_on_block_use`](/docs/datapack/powers/action_on_block_use),
@@ -32,6 +50,12 @@ context-free question the same way it answers the vanilla one.
 | `block_condition` / `blacklist` filtering | Applies | Applies |
 | `render_type` | Applies | Applies |
 | `phase_down_condition` | Applies | **Ignored** — you always pass through |
+| [`apoli:grab`](/docs/datapack/bientity-actions/grab) hold position | World space | World space — already correct |
+
+[`apoli:grab`](/docs/datapack/bientity-actions/grab) needed no fix: it holds the grabbed entity at
+an offset from the grabber's eyes, and entities standing on a sub-level already report world
+positions. The one gap is that the grabbed entity is swept against *world* collision only, so it can
+be dragged through an assembled hull — Sable's oriented-box pass is not consulted.
 
 `phase_down_condition` exists to stop you sinking through the floor you are standing on, and it
 decides that by comparing your height against the top of the block. A sub-level can be rotated to

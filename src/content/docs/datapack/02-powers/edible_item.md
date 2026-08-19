@@ -39,6 +39,8 @@ Right-clicking a matching stack starts the eating animation, exactly as if the i
 
 > This power takes priority over vanilla food, so it can be used to *replace* an existing food's values. It does not affect other players or mobs eating the same item.
 
+> To *scale* food values rather than replace them — doubling the nutrition of a whole tag, say — use [apoli:modify_food](/docs/datapack/powers/modify_food). It also applies on top of anything `apoli:edible_item` makes edible, so the two compose.
+
 ## Examples
 ```json
 {

@@ -13,6 +13,12 @@ Type ID: `apoli:entity_glow`
 
 > Both the holder of the power and the glowing entity can be **any entity**, not just living ones — granting `apoli:self_glow` to a projectile (e.g. an arrow or a custom projectile) makes the projectile itself glow.
 
+> `entity_condition` and `bientity_condition` are evaluated **client-side**, so only conditions the client can answer will work: world and time, entity flags and pose, equipment, `apoli:power_active`, resources and cooldowns, and — since Apoli 1.38.0 — your own [apoli:inventory](/docs/datapack/powers/inventory) power containers. `apoli:command`, `apoli:advancement`, `apoli:scoreboard`, `apoli:stat` and `apoli:predicate` still read as `false` there. Nothing glows in first person either — Minecraft does not render the camera entity, so test `apoli:self_glow` in third person (F5).
+
+> **In `bientity_condition`, `actor` is always the entity that holds the power.** For `apoli:entity_glow` that is the viewer and `target` is the entity that would glow; for `apoli:self_glow` it is the other way round — `actor` is the glowing holder and `target` is the viewer deciding whether they can see it. Before Apoli 1.38.0 `self_glow` had these swapped, so its `apoli:actor_condition` tested the viewer.
+
+> A `bientity_condition` or `entity_condition` that fails to parse now fails the **whole power** with a log line naming it. Until Apoli 1.38.0 the malformed condition was dropped silently and the power glowed everything unconditionally, which reads exactly like "the condition is being ignored".
+
 ## Fields
 
 Field  | Type | Default | Description
@@ -37,7 +43,7 @@ Field  | Type | Default | Description
           		"type": "apoli:in_block_anywhere",
           		"block_condition": {
             		"type": "apoli:in_tag",
-            		"tag": "apoli:cobwebs"
+            		"tag": "apoli:material/cobweb"
           		}
         	},
         	{

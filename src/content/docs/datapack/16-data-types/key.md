@@ -34,13 +34,19 @@ You can point at any keybinding the game knows about:
 
 | Key string | Bound to |
 | --- | --- |
-| `key.origins.primary_active` | Origins's primary active-power key (default: unbound) |
-| `key.origins.secondary_active` | Origins's secondary active-power key (default: unbound) |
+| `key.apoli.primary_active` | Apoli's primary active-power key (default: **unbound**) |
+| `key.apoli.secondary_active` | Apoli's secondary active-power key (default: **unbound**) |
+| `key.origins.primary_active` | Origins's primary active-power key (default: `G`) |
+| `key.origins.secondary_active` | Origins's secondary active-power key (default: `H`) |
 | `key.attack` | attack / left click |
 | `key.use` | use / right click |
 | `key.jump` | jump |
 | `key.sneak` | sneak |
 | `key.forward`, `key.left`, … | movement |
+
+`key.apoli.primary_active` is the **default** for every Key field — omit `key` entirely and the power listens to it. Apoli ships it (and its secondary) unbound so it never collides with a mod's or a player's existing binding; both appear in the Controls menu under **Apoli** for the player to bind. A power that relies on the default therefore does nothing until the player binds that key, which is why packs that want a working key out of the box name a bound one such as `key.origins.primary_active`.
+
+Both are ordinary [data-driven keybinds](#data-driven-keybinds) — they live in Apoli's own `data/apoli/keybinds/`, and a data pack can override either by shipping a file at the same path with a different default `key`.
 
 ## Data-driven keybinds
 

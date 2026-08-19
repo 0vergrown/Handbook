@@ -3,14 +3,16 @@ import { base } from '$app/paths';
 import {
 	getPage,
 	getFirstPage,
-	firstPageOfSection,
+	getSection,
 	allSlugs,
 	allSectionPaths
 } from '$lib/content/index.js';
 import { TOPIC_ORDER } from '$lib/content/topics.js';
 
 export async function load({ params }) {
-	const path = params.path;
+	// trailingSlash is 'always' (see src/routes/+layout.js), so the rest param
+	// arrives with an empty final segment — strip it before matching a slug.
+	const path = params.path.replace(/\/+$/, '');
 	const parts = path.split('/');
 
 	// /docs/<topic> -> redirect to the topic's first page
@@ -20,10 +22,10 @@ export async function load({ params }) {
 		error(404, 'Unknown documentation section');
 	}
 
-	// /docs/<topic>/<section> -> redirect to that section's first page
+	// /docs/<topic>/<section> -> the category's own landing page
 	if (parts.length === 2) {
-		const first = firstPageOfSection(parts[0], parts[1]);
-		if (first) redirect(307, `${base}/docs/${first}`);
+		const section = getSection(parts[0], parts[1]);
+		if (section) return { section };
 		error(404, 'Unknown documentation section');
 	}
 

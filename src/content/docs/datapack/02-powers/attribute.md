@@ -21,6 +21,36 @@ Type ID: `apoli:attribute` (type-alias: `apoli:conditioned_attribute` for back-c
 
 At least one of `modifier` or `modifiers` must be present; the `attribute` field inside each modifier is required when the modifier is used by this power (otherwise the codec rejects it with a clear error).
 
+## Reach on 1.20.1
+
+`minecraft:player.block_interaction_range` and `minecraft:player.entity_interaction_range` are the attributes that control how far a player can reach. They were added to the game in 1.20.5, so on **1.20.1** they do not exist and a power naming them used to do nothing at all — silently, because a modifier on an unknown attribute is skipped.
+
+Since Apoli 1.38.0 the 1.20.1 build **registers both of them itself** (as `apoli:player.block_interaction_range` and `apoli:player.entity_interaction_range`, with vanilla's `4.5` and `3.0` defaults) and answers to the `minecraft:` names as aliases, so the same power JSON works unchanged on 1.20.1, 1.21.1 and NeoForge:
+
+```json
+{
+    "type": "apoli:attribute",
+    "modifiers": [
+        {
+            "name": "Extra Reach block reach",
+            "attribute": "minecraft:player.block_interaction_range",
+            "value": 1.5,
+            "operation": "addition"
+        },
+        {
+            "name": "Extra Reach entity reach",
+            "attribute": "minecraft:player.entity_interaction_range",
+            "value": 1.5,
+            "operation": "addition"
+        }
+    ]
+}
+```
+
+> The backport drives the same four places vanilla 1.21 does: the client's block raycast, the client's entity pick range, and the server's block-use, block-break and entity-interaction distance checks. Server checks keep vanilla's leniency (block reach + 1.5, entity reach + 3.0), so with no modifier applied the limits are byte-for-byte vanilla's `36.0`.
+>
+> One 1.20.1-only limit: the client finds candidate entities inside the block raycast, so entity reach is effectively capped by block reach. Raise both together — as the example does — and it behaves as expected.
+
 ## Examples
 
 Single modifier:

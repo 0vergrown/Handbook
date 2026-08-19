@@ -281,11 +281,50 @@ export function firstPageOfSection(topic, section) {
 	return pages[0]?.slug ?? null;
 }
 
-/** All `topic/section` paths — prerendered as redirects to their first page. */
+/** All `topic/section` paths — each gets its own prerendered landing page. */
 export function allSectionPaths() {
 	const set = new Set();
 	for (const e of ALL) set.add(`${e.topic}/${e.section}`);
 	return [...set];
+}
+
+/**
+ * A section landing page: every page in the category, in sidebar order, split
+ * into the section's ungrouped pages and its sub-groups. This is what
+ * `/docs/datapack/entity-conditions` renders — a category is a linkable page,
+ * not a redirect to whichever type happens to sort first.
+ */
+export function getSection(topic, section) {
+	const pages = orderedPages(topic).filter((e) => e.section === section);
+	if (pages.length === 0) return null;
+
+	const loose = [];
+	const groups = [];
+	for (const e of pages) {
+		const item = { title: e.title, navTitle: e.navTitle, slug: e.slug, description: e.description };
+		if (!e.group) {
+			loose.push(item);
+			continue;
+		}
+		let group = groups.find((g) => g.key === e.group);
+		if (!group) {
+			group = { key: e.group, title: e.groupTitle, pages: [] };
+			groups.push(group);
+		}
+		group.pages.push(item);
+	}
+
+	const title = pages[0].sectionTitle;
+	return {
+		topic,
+		section,
+		title,
+		count: pages.length,
+		pages: loose,
+		groups,
+		breadcrumbs: [{ title: TOPICS[topic]?.title ?? topic }, { title }],
+		first: pages[0].slug
+	};
 }
 
 /** Everything the docs route needs to render one page. */
@@ -336,6 +375,22 @@ export function allSlugs() {
 export const searchBlocks = (() => {
 	const blocks = [];
 	let id = 0;
+	const sections = new Map();
+	for (const e of ALL) {
+		const key = `${e.topic}/${e.section}`;
+		if (!sections.has(key)) {
+			sections.set(key, {
+				id: String(id++),
+				topic: e.topic,
+				title: e.sectionTitle,
+				breadcrumb: TOPICS[e.topic]?.title ?? e.topic,
+				href: `/docs/${key}`,
+				content: '',
+				keywords: [e.section, e.section.replace(/-/g, ' ')]
+			});
+		}
+	}
+	blocks.push(...sections.values());
 	for (const e of ALL) {
 		const topicTitle = TOPICS[e.topic]?.title ?? e.topic;
 		const breadcrumb = e.groupTitle

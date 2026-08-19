@@ -8,6 +8,8 @@ Modifies the amount of health you get from all sources of healing _(e.g natural 
 
 Type ID: `apoli:modify_healing`
 
+> Applies to every source that routes through the game's healing path — natural regeneration, Regeneration and Instant Health, golden apples, feeding a tamed animal, and the [apoli:heal](/docs/datapack/entity-actions/heal) action. The result is clamped at `0`, so a modifier that drives healing negative stops it entirely rather than dealing damage.
+
 ## Fields
 
 Field  | Type | Default | Description
@@ -39,3 +41,15 @@ This example will double the effectiveness of all healing used on you.
 ```
 
 This example will half the effectiveness of all healing used on you.
+
+```json
+{
+    "type": "apoli:modify_healing",
+    "modifier": {
+        "operation": "multiply_total",
+        "value": -1
+    }
+}
+```
+
+This example stops the holder from being healed at all.

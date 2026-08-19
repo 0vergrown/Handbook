@@ -67,3 +67,5 @@ Both arms stay visible while `example:combat_stance` is active, including the ma
 ```
 
 A punch barrage: while `example:rush_attack` is on, both fists are visible and each swing drags six translucent copies of itself behind it. Pair it with a power that swings the hands several times a second.
+
+> To make both arms swing at once, run [apoli:swing_hand](/docs/datapack/entity-actions/swing_hand) twice in the same tick, once for each hand. This power only decides which arms are *drawn* in first person — the swing itself comes from the action.

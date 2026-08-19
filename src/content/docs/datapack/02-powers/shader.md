@@ -22,7 +22,13 @@ Field  | Type | Default | Description
 
 Only one post-processing shader can be active at a time, so Apoli picks the highest-`priority` Shader power whose `condition` currently passes and loads that one. The choice is re-evaluated every tick, so a shader gated behind a `condition` switches on and off with it, and removing the last matching power restores the normal view.
 
+The choice is made **on the server** and sent to the client, so any [entity condition](/docs/datapack/introduction/conditions) works here — including ones that read state the client does not have, like [apoli:inventory](/docs/datapack/entity-conditions/inventory) over a [power inventory](/docs/datapack/powers/inventory), [apoli:advancement](/docs/datapack/entity-conditions/advancement), [apoli:scoreboard](/docs/datapack/entity-conditions/scoreboard) or [apoli:command](/docs/datapack/entity-conditions/command).
+
+If the entity is spectating something else, the shader comes from whatever it is spectating, not from the spectator.
+
 A shader file that fails to load (missing file, malformed JSON) is reported once and then ignored, so a typo does not spam the log every frame. Fix the file and reload resources (F3+T) to retry it.
+
+> Both sides need Apoli 1.36.2 or newer. A client on an older build is simply never told about the shader — nothing crashes, the effect just never appears.
 
 ## Examples
 
