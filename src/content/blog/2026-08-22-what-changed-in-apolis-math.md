@@ -255,6 +255,29 @@ There is no limit on `size` either, because slots cost nothing until you write t
 
 What you actually pay for is the highest slot you write. Write slot 999999 and you get a million slots' worth of memory for that player, saved to disk and sent to their client along with everything else. So the number you declare is free; the slots you touch are not.
 
+### What about the HUD bar?
+
+A bar shows how far a value has got between empty and full. An uncapped resource has no full, so there is nothing to draw.
+
+If you ask for one anyway, Apoli does not draw the bar and logs one warning naming the power. That is on purpose — a bar with no scale would otherwise sit stuck at one end and look like a different bug.
+
+If you want a bar on an uncapped resource, put a `max` on the `hud_render` instead of on the resource:
+
+```json
+{
+  "type": "apoli:resource",
+  "min": 0,
+  "start_value": 0,
+  "hud_render": {
+    "should_render": true,
+    "bar_index": 2,
+    "max": "100 * (1 + example:level)"
+  }
+}
+```
+
+The resource still has no ceiling. The bar fills toward 100, then toward 200 once the level goes up, and so on. It is an expression, so the target can be anything you can work out.
+
 `size` doubles as a safety rail. A write to a slot at or above it is refused, so a `position` expression that goes wrong can never allocate past the number you declared. That only helps if the number means something, so pick one that matches the table you want rather than a huge one to be safe. If you declare more than 65536 slots, Apoli logs one warning naming the power, in case it was a typo.
 
 ### From the console
