@@ -213,7 +213,12 @@ Writing works the same way. `apoli:modify_resource` with a `position` changes on
 In an expression, put the slot in square brackets:
 
 ```json
-{ "type": "apoli:add_velocity", "x": "example:pos[0]", "y": "example:pos[1]", "z": "example:pos[2]" }
+{
+  "type": "apoli:add_velocity",
+  "x": "example:pos[0]",
+  "y": "example:pos[1]",
+  "z": "example:pos[2]"
+}
 ```
 
 The thing in brackets is a full expression, not just a number. So one resource can point into another:
@@ -243,6 +248,14 @@ A single slot was already copyable with an expression — `{ "operation": "set_b
 ### Bounds are optional now
 
 `min` and `max` used to be required. Both are optional. Leave `max` out and the resource has no ceiling, which is what you want for a score or a running total that should just keep climbing.
+
+### So is the size
+
+There is no limit on `size` either, because slots cost nothing until you write to them. A resource with `"size": 1000000` stores one number until you write to a second slot. A slot you have never written reads back as `start_value`, so it behaves as though the whole table is already there.
+
+What you actually pay for is the highest slot you write. Write slot 999999 and you get a million slots' worth of memory for that player, saved to disk and sent to their client along with everything else. So the number you declare is free; the slots you touch are not.
+
+`size` doubles as a safety rail. A write to a slot at or above it is refused, so a `position` expression that goes wrong can never allocate past the number you declared. That only helps if the number means something, so pick one that matches the table you want rather than a huge one to be safe. If you declare more than 65536 slots, Apoli logs one warning naming the power, in case it was a typo.
 
 ### From the console
 
