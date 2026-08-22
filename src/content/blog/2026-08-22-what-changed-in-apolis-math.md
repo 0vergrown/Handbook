@@ -213,7 +213,12 @@ Writing works the same way. `apoli:modify_resource` with a `position` changes on
 In an expression, put the slot in square brackets:
 
 ```json
-{ "type": "apoli:add_velocity", "x": "example:pos[0]", "y": "example:pos[1]", "z": "example:pos[2]" }
+{
+  "type": "apoli:add_velocity",
+  "x": "example:pos[0]",
+  "y": "example:pos[1]",
+  "z": "example:pos[2]"
+}
 ```
 
 The thing in brackets is a full expression, not just a number. So one resource can point into another:
