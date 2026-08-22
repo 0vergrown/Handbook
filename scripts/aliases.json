@@ -246,6 +246,9 @@
 	"powers/entity_glow": [
 		"self_glow"
 	],
+	"powers/fluid_vision": [
+		"lava_vision"
+	],
 	"powers/ignore_fluid": [
 		"ignore_water"
 	],

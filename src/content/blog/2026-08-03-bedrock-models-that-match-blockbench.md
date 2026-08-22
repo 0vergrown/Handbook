@@ -37,7 +37,59 @@ Only the pivot has to match. The cubes hanging off the bone can be any shape or 
 
 Bones deliberately placed off-pivot still work, and are the right call for anything that isn't a limb: an aura ring pivoted at the feet, or an orb pivoted at the head, will orbit the player rather than track a joint.
 
-Names are forgiving — case, spaces, `_` and `-` are ignored, and `arm_right`, `right_sleeve`, `jacket`, `headwear` and friends all bind to the part you'd expect. The [power's page](/docs/datapack/powers/custom_model_render) has the full table, along with the current limits: `uv_rotation` isn't supported yet, only the first geometry in a file is read, and geometry mode is third-person only.
+Names are forgiving — case, spaces, `_` and `-` are ignored, and `arm_right`, `right_sleeve`, `jacket`, `headwear` and friends all bind to the part you'd expect. The [power's page](/docs/datapack/powers/custom_model_render) has the full table, along with the current limits: `uv_rotation` isn't supported yet, and only the first geometry in a file is read.
+
+> **Since this was written:** geometry mode was third-person only at 1.21.1. Apoli **1.22.0** added `show_first_person` for it, and **1.42.0** added [Blockbench animations](/blog/blockbench-animations-on-a-custom-model).
+
+## It isn't only players
+
+Geometry mode also draws on the minions summoned by [`Summon Minion (Entity Action Type)`](/docs/datapack/entity-actions/summon_minion). A minion is normally a little orb of nested flat quads; give it a `custom_model_render` power through the action's `powers` list and it is drawn as your Blockbench model instead. That is a data-pack-only way to give a summon any shape you like — a familiar, a drone, a floating sword — without a line of Java or a custom entity type.
+
+```json
+{
+  "type": "apoli:summon_minion",
+  "follow_owner": true,
+  "follow_offset": [0.0, 1.0, -1.0],
+  "max_life_ticks": 0,
+  "powers": ["example:minion_wisp_model"]
+}
+```
+
+```json
+{
+  "type": "apoli:custom_model_render",
+  "mode": "geometry",
+  "model_location": "example:wisp",
+  "texture_location": "example:textures/entity/wisp.png",
+  "render_type": "cutout_no_cull"
+}
+```
+
+The power goes on **the minion**, not on the summoner. Everything that follows from that is worth being deliberate about: the power's `condition` is evaluated against the minion, and a `custom_model_render` on the *player* draws on the player, never on their summons.
+
+### The minion skeleton
+
+Where a player has seven body-part bones, a minion has three, and only one of them moves:
+
+| Bone | Bedrock pivot | Behaviour |
+| --- | --- | --- |
+| `main` | `[0, 4, 0]` | The root. Turns to face wherever the minion is looking. |
+| `flat2`, `flat3` | — | The two inner quads. Fixed; a bone naming them inherits nothing. |
+
+So the pivot rule above has a one-line version here: **name your root bone `main` and pivot it at `[0, 4, 0]`**, and the model turns with the minion the way the orb does. Everything else in your rig rides along with it, keeping whatever pose you gave it in Blockbench. Any bone that isn't one of the three keeps its authored pose too — which, before animations existed, meant a minion model was a static shape that happened to point at things.
+
+### Replace or layer
+
+`render_as_overlay` means something different on a minion than it does on a player, and this is the one field to get right:
+
+- `false` (the default) — **your model replaces the orb.** Apoli returns no render type for the minion's own model, so nothing of the default shape is drawn.
+- `true` — your model is drawn *on top of* the orb, which is still there underneath.
+
+On a player, geometry is always drawn over the player model and the field does nothing.
+
+The minion's own `texture` field on `summon_minion` therefore only matters when you are layering, since it skins the orb and never your geometry — yours always comes from `texture_location`. The summon's `scale` still applies and scales your model with it, and if `model_location` fails to load the minion quietly falls back to its normal orb rather than turning invisible.
+
+It's worth saying plainly: this is a **render** power. A minion wearing a wolf model does not behave like a wolf. Its behaviour comes entirely from `summon_minion` and the powers you give it.
 
 ## Getting it
 

@@ -40,6 +40,7 @@ Field | Type | Default | Description
 `model_location` | Identifier | _required_ | The Blockbench model. `mymod:cape` resolves to `assets/mymod/geo/cape.geo.json` (the standard Blockbench/GeckoLib folder) — `assets/mymod/models/apoli/cape.geo.json` also works. Export from Blockbench as **Bedrock geometry** (`.geo.json`).
 `texture_location` | Identifier | _required_ | The texture that UV-maps onto the model, e.g. `mymod:textures/entity/cape.png`.
 `render_as_overlay` | Boolean | `false` | **Minions only.** `false` replaces the minion's own model with yours; `true` draws yours on top of it. Ignored on players, where geometry is always drawn over the player model.
+`animations` | [Model Animation](/docs/datapack/data-types/model-animation) or Array of them | _none_ | Bedrock animations to play on the model. The first entry whose `condition` passes is the one that plays.
 
 On resource (re)load, the log prints `Loaded N custom model(s) for custom_model_render.` — if your model isn't drawing, check `N` and confirm the file sits at one of the two paths above with the `.geo.json` extension.
 
@@ -77,11 +78,55 @@ Nesting is fine: a body-part bone animates from the player whether it sits at th
 
 > A body-part bone always animates in the **player's** frame, so it is lifted out of any parent group when the model loads. If that parent group has a rotation of its own in Blockbench, the rotation stops applying to that bone — the load log names the bone and the group when this happens. Rotate the bone itself, or give the group a non-body-part name so it stays a plain group.
 
+### Animations
+
+Blockbench animations export as a `.animation.json` next to your model. Drop it at `assets/<namespace>/animations/<path>.animation.json` and name it in `animations`:
+
+```json
+{
+  "type": "apoli:custom_model_render",
+  "mode": "geometry",
+  "model_location": "example:wings",
+  "texture_location": "example:textures/entity/wings.png",
+  "render_type": "cutout_no_cull",
+  "animations": {
+    "animation": "example:wings",
+    "name": "animation.wings.idle"
+  }
+}
+```
+
+`animations` takes an array as well, and works exactly like [hud_render](/docs/datapack/data-types/hud-render) does: the entries are read top to bottom and the **first** one whose `condition` passes is the one that plays. That is how you drive a model from the holder's state without writing any Java:
+
+```json
+"animations": [
+  {
+    "animation": "example:wings",
+    "name": "animation.wings.flap",
+    "condition": {
+      "type": "apoli:fall_flying"
+    }
+  },
+  {
+    "animation": "example:wings",
+    "name": "animation.wings.idle"
+  }
+]
+```
+
+Playback time restarts whenever the selected entry changes, so a non-looping animation replays each time its condition flips back on. `speed` scales the playback rate and `loop` overrides the file's own loop flag — see [Model Animation](/docs/datapack/data-types/model-animation) for the full field list.
+
+The animation is applied **on top of** the pose the player's body already gives the model, so a bone named `right_arm` gets the player's arm swing *and* your keyframes, added together. Bones that are not body parts get the keyframes alone. Position keyframes are in Bedrock units and rotation keyframes in degrees, exactly as Blockbench writes them.
+
+On resource (re)load the log prints `Loaded N custom model animation(s) from M file(s).` — check it if nothing moves.
+
+> Only the `position`, `rotation` and `scale` channels are read, with linear interpolation between keyframes (`pre`/`post` values on a keyframe are honoured, which is how Blockbench's stepped keyframes come across). **Molang expressions are not evaluated** — a keyframe whose value is a formula rather than a number reads as `0`. Sound and particle effect keyframes are ignored.
+
 ### Geometry mode on minions
 
 Give the power to a [apoli:summon_minion](/docs/datapack/entity-actions/summon_minion) minion through that action's `powers` list and the minion is drawn as your Blockbench model instead of the default orb — a data-pack-only way to give a summon any shape you like.
 
-The minion skeleton is `main` (the root bone) with `flat2` and `flat3` under it. A bone in your model with one of those names picks up that part's animation; every other bone keeps the pose you gave it in Blockbench. The minion never animates today, so in practice every bone keeps its authored pose — build the model standing on the Blockbench floor and it will be drawn there.
+The minion skeleton is `main` (the root bone, Bedrock pivot `[0, 4, 0]`) with `flat2` and `flat3` under it. A bone named `main` turns to face wherever the minion is looking, which is the minion's only vanilla animation; `flat2` and `flat3` hold fixed poses, so a bone naming them inherits nothing. Every other bone keeps the pose you gave it in Blockbench and rides along with the root.
 
 The minion's `texture` field still applies to the minion's own model, so it only matters when `render_as_overlay` is `true`. Your geometry always uses `texture_location`. `scale` on the summon still applies — the custom model is scaled with the minion.
 
@@ -89,9 +134,15 @@ The minion's `texture` field still applies to the minion's own model, so it only
 {
   "type": "apoli:summon_minion",
   "follow_owner": true,
-  "follow_offset": [0.0, 1.0, -1.0],
+  "follow_offset": [
+    0,
+    1,
+    -1
+  ],
   "max_life_ticks": 0,
-  "powers": ["example:minion_wisp_model"]
+  "powers": [
+    "example:minion_wisp_model"
+  ]
 }
 ```
 
@@ -152,7 +203,9 @@ A custom cape model that follows the body, hidden when a chestplate is worn:
   "model_location": "example:cape",
   "texture_location": "example:textures/entity/cape.png",
   "render_type": "cutout_no_cull",
-  "hidden_slots": ["chest"]
+  "hidden_slots": [
+    "chest"
+  ]
 }
 ```
 
