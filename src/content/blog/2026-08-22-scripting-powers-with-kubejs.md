@@ -26,24 +26,26 @@ Register a handler under an id in `kubejs/server_scripts/`, then reference that 
 ```js
 // kubejs/server_scripts/vampire.js
 ApoliEvents.entityAction('vampire:drain', event => {
-  const player = event.entity
-  const level = event.level
+    const player = event.entity
+    const level = event.level
 
-  const victims = level.getEntitiesWithin(player.boundingBox.inflate(4))
-    .filter(e => e.living && e !== player)
+    const victims = level.getEntitiesWithin(player.boundingBox.inflate(4))
+        .filter(e => e.living && e !== player)
 
-  if (victims.length === 0) return
+    if (victims.length === 0) return
 
-  const target = victims[0]
-  target.attack(2)
-  player.heal(1)
+    const target = victims[0]
+    target.attack(2)
+    player.heal(1)
 })
 ```
 
 ```json
 {
   "type": "apoli:action_on_key_press",
-  "key": { "key": "key.origins.primary_active" },
+  "key": {
+    "key": "key.origins.primary_active"
+  },
   "cooldown": 60,
   "entity_action": {
     "type": "apoli:script",
@@ -56,7 +58,7 @@ Conditions return a value:
 
 ```js
 ApoliEvents.entityCondition('vampire:is_starving', event => {
-  return event.entity.foodLevel < 6
+    return event.entity.foodLevel < 6
 })
 ```
 
@@ -100,14 +102,21 @@ There is deliberately no `powerTick` and no `powerActive`. Ticking is [`apoli:ac
 `params` is how you write one script and use it from several powers:
 
 ```json
-{ "type": "apoli:script", "script": "vampire:drain", "params": { "radius": 6, "heal": 2 } }
+{
+  "type": "apoli:script",
+  "script": "vampire:drain",
+  "params": {
+    "radius": 6,
+    "heal": 2
+  }
+}
 ```
 
 ```js
 ApoliEvents.entityAction('vampire:drain', event => {
-  const radius = event.params.getInt('radius')
-  const heal = event.params.getInt('heal')
-  // ...
+    const radius = event.params.getInt('radius')
+    const heal = event.params.getInt('heal')
+    // ...
 })
 ```
 
