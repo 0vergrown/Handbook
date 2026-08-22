@@ -13,8 +13,40 @@ Type ID: `apoli:resource`
 Field  | Type | Default | Description
 -------|------|---------|-------------
 `resource` | Identifier | | The namespace and ID of a power that will be evaluated.
+`position` | [Integer](/docs/datapack/data-types/integer) OR [Expression](/docs/datapack/data-types/expression) | _optional_ | Which slot of a table resource to read. Omit it and the condition passes if **any** slot satisfies the comparison. Also aliased as `index` and `slot`.
 `comparison` | [Comparison](/docs/datapack/data-types/comparison) | | Determines how the value of the specified power should be compared to the specified value.
-`compare_to` | [Integer](/docs/datapack/data-types/integer) OR [Expression](/docs/datapack/data-types/expression) | | The value the resource is compared against. As an Expression it is re-evaluated every time the condition is tested, so you can compare a resource against another resource, an entity stat, or any math over them.
+`compare_to` | [Integer](/docs/datapack/data-types/integer) OR [Expression](/docs/datapack/data-types/expression) | | The value the resource is compared against. Also aliased as `check`. As an Expression it is re-evaluated every time the condition is tested, so you can compare a resource against another resource, an entity stat, or any math over them.
+
+## Checking one slot of a table
+
+When `resource` names a [apoli:resource](/docs/datapack/powers/resource) with a `size` above `1`, `position` picks the slot to read:
+
+```json
+"condition": {
+    "type": "apoli:resource",
+    "resource": "example:table",
+    "position": 2,
+    "comparison": "==",
+    "compare_to": 5
+}
+```
+
+That reads the value at position 2 and passes when it is `5`.
+
+Leave `position` out and the condition becomes "is this value anywhere in the table?":
+
+```json
+"condition": {
+    "type": "apoli:resource",
+    "resource": "example:table",
+    "comparison": "==",
+    "compare_to": 5
+}
+```
+
+`position` is itself an [Expression](/docs/datapack/data-types/expression), so the slot can be computed — `"position": "example:cursor"` reads whichever slot another resource is pointing at.
+
+> On a scalar resource (no `size`, or `size` of `1`) an omitted `position` behaves exactly as it always has: it reads the single value.
 
 ## Cooldowns as resources
 

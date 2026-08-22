@@ -11,6 +11,7 @@ Manages which origin each player has in each [layer](/docs/datapack/origins/laye
 | Sub-command | What it does |
 |-------------|--------------|
 | `set <targets> <layer> <origin>` | Assigns an origin. |
+| `revoke <targets> <layer> [origin]` | Takes an origin back. Without `<origin>`, clears the layer and its granted pool. |
 | `has <targets> <layer> <origin>` | Reports how many targets have it. |
 | `get` | Prints every online player's origins. |
 | `get <target> <layer>` | Prints one player's origin in a layer. |
@@ -35,7 +36,16 @@ origin set @s my_pack:device origins:empty
 
 The return value is the number of targets that ended up on the requested origin, and any target that did not is named in a failure message — so a pack can tell a real assignment from one a layer's conditions overrode.
 
-On a [swappable layer](/docs/datapack/origins/swapping) there is no origin to set, so `set` adds the origin to that player's granted pool instead, and `origins:empty` clears their whole granted list for that layer.
+On a [swappable layer](/docs/datapack/origins/swapping) there is no origin to set, so `set` adds the origin to that player's granted pool instead, and `origins:empty` clears their whole granted list for that layer. A pool grant is not checked against the layer's `origins` list, so any loaded origin can be handed out this way.
+
+## revoke
+
+```mcfunction
+origin revoke @s origins:origin example:wolf_form
+origin revoke @s origins:origin
+```
+
+The first line takes one origin out of the player's granted pool for that layer, or clears the layer if that origin was their pick. The second takes everything — the pick and the whole pool. A player currently swapped into a revoked origin is dropped back to their own origin.
 
 ## has / get
 
@@ -85,4 +95,4 @@ origin storage list @s
 
 ## Permissions
 
-`set`, `gui`, `random` and `storage` need permission level 2 (nodes `origins.command.origin.set`, `.gui`, `.random`, `.storage`). `has` and `get` are open to everyone.
+`set`, `revoke`, `gui`, `random` and `storage` need permission level 2 (nodes `origins.command.origin.set` — shared by `revoke` — `.gui`, `.random`, `.storage`). `has` and `get` are open to everyone.

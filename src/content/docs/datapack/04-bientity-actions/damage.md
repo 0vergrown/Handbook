@@ -57,3 +57,19 @@ This example will deal 25% `generic` damage to the target entity. If the max hea
 ```
 
 This example will deal `minecraft:magic` damage to the target entity, with its damage value depending on the value of the `example:magic_damage` (`data/example/powers/magic_damage.json`) power from the actor entity.
+
+## Which entity the Expression reads
+
+`amount` is an [Expression](/docs/datapack/data-types/expression), and in this bi-entity action a bare variable reads the **actor** — the entity whose power fired the action — not the entity taking the damage. Prefix with `target_` for the victim:
+
+```json
+"bientity_action": {
+    "type": "apoli:damage",
+    "damage_type": "minecraft:player_attack",
+    "amount": "5 + ((max_health - health) * 0.35)"
+}
+```
+
+That deals more damage the more health the **actor** is missing. `"5 + ((target_max_health - target_health) * 0.35)"` would scale off the victim instead.
+
+> Before Apoli 1.40.0 the expression was evaluated against the target and there was no way to reach the actor, so an actor-based formula silently collapsed to its constant term. Packs that relied on the old binding need `target_` added.

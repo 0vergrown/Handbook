@@ -52,3 +52,7 @@ This example will deal 2 hearts of `on_fire` damage, which by its tags in vanill
 ```
 
 This example will deal `2 * (1 + example:damage_multiplier)` amount of `out_of_world` damage to the entity, with `2` used for overriding the base value for the modifiers, and the value of the `example:damage_multiplier` (`data/example/powers/damage_multipler.json`) power as the "multiplier". If the value of the said power is `3`, the amount of damage that will be dealt will be `8` (`2 * (1 + 3) = 8`.)
+
+## Which entity the Expression reads
+
+`amount` is an [Expression](/docs/datapack/data-types/expression) evaluated against the entity being damaged, which in this entity action is also the entity in scope. The `target_` and `actor_` prefixes both resolve to that same entity here; they only differ in a bi-entity context — see [apoli:damage (Bi-Entity Action Type)](/docs/datapack/bientity-actions/damage).

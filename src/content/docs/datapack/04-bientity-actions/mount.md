@@ -49,3 +49,7 @@ Plain mount, at the vehicle's usual seat.
 ```
 
 Sits the actor on the target's right shoulder, turning with the target rather than staying pinned to a compass direction.
+
+## Which entity the Expressions read
+
+`x`, `y` and `z` are [Expressions](/docs/datapack/data-types/expression) evaluated against the **actor** — the entity doing the riding. `target_` reads the mount instead.

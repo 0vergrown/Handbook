@@ -14,7 +14,52 @@ Type ID: `apoli:modify_resource` (type-aliases: `apoli:change_resource`, `origin
 | Field | Type | Default | Description |
 |-------|------|---------|-------------|
 | `resource` | [Identifier](/docs/datapack/data-types/identifier) | | The [apoli:resource](/docs/datapack/powers/resource) or [apoli:cooldown](/docs/datapack/powers/cooldown) power to modify. Any power with a built-in `cooldown` also works — see below. |
-| `modifier` | [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) | | The modifier to apply to the current value of the target power. |
+| `modifier` | [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) | `set_base` of `0` | The modifier to apply to the current value of the target power. When `from` is set, only the modifier's `operation` is used, and the incoming value is the source slot. |
+| `position` | [Integer](/docs/datapack/data-types/integer) OR [Expression](/docs/datapack/data-types/expression) | _optional_ | Which slot of a table resource to modify. Omit it on a table and **every** slot is modified. Also aliased as `index` and `slot`. |
+| `from` | [Identifier](/docs/datapack/data-types/identifier) | _optional_ | Copy from this resource instead of computing a value from the modifier. Also aliased as `from_resource`. |
+| `from_position` | [Integer](/docs/datapack/data-types/integer) OR [Expression](/docs/datapack/data-types/expression) | _optional_ | Which slot of `from` to read. Also aliased as `from_index` and `from_slot`. |
+
+## Working on a table resource
+
+When `resource` names a [apoli:resource](/docs/datapack/powers/resource) with a `size` above `1`:
+
+| What you write | What happens |
+| --- | --- |
+| `position` set | only that slot is modified |
+| `position` omitted | the modifier runs on **every** slot |
+
+```json
+"entity_action": {
+  "type": "apoli:modify_resource",
+  "resource": "example:table",
+  "position": 2,
+  "modifier": {
+    "operation": "set_base",
+    "value": 5
+  }
+}
+```
+
+`position` is an [Expression](/docs/datapack/data-types/expression), so the slot can be computed at run time — `"position": "example:cursor"` writes wherever another resource points.
+
+## Copying resources
+
+`from` copies a value across instead of computing one:
+
+```json
+"entity_action": {
+    "type": "apoli:modify_resource",
+    "resource": "example:backup",
+    "from": "example:live"
+}
+```
+
+- With neither `position` nor `from_position`, the **whole table** is copied slot for slot (stopping at whichever of the two is shorter). On scalar resources that is a plain copy of the single value.
+- With `from_position` only, that source slot is copied into the same-numbered destination slot.
+- With both, the copy goes from `from_position` to `position`.
+- The modifier's `operation` still applies, so `add_base_early` adds the source value into the destination instead of overwriting it. The default is `set_base` — a straight copy.
+
+> A single-slot copy is also expressible as an [Expression](/docs/datapack/data-types/expression) — `{ "operation": "set_base", "value": "example:live[2]" }`. `from` exists because a whole-table copy would otherwise need one action per slot.
 
 ## Modifying a power's cooldown
 
@@ -22,9 +67,12 @@ Type ID: `apoli:modify_resource` (type-aliases: `apoli:change_resource`, `origin
 
 ```json
 "entity_action": {
-    "type": "apoli:modify_resource",
-    "resource": "example:dash",
-    "modifier": { "operation": "set_base", "value": 0 }
+  "type": "apoli:modify_resource",
+  "resource": "example:dash",
+  "modifier": {
+    "operation": "set_base",
+    "value": 0
+  }
 }
 ```
 
@@ -46,9 +94,12 @@ Add 1 to a resource (canonical):
 
 ```json
 "entity_action": {
-    "type": "apoli:modify_resource",
-    "resource": "example:1st_resource",
-    "modifier": { "operation": "add_base_early", "value": 1 }
+  "type": "apoli:modify_resource",
+  "resource": "example:1st_resource",
+  "modifier": {
+    "operation": "add_base_early",
+    "value": 1
+  }
 }
 ```
 

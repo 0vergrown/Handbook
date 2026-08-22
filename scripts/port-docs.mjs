@@ -38,6 +38,8 @@ const ORIGINS_PAGES = {
 	'origins:transfer_origin': 'transfer_origin',
 	'origins:store_origin': 'store_origin', // bi-entity flavour: store_origin_bientity
 	'origins:apply_stored_origin': 'apply_stored_origin',
+	'origins:grant_origin': 'grant_origin',
+	'origins:revoke_origin': 'revoke_origin',
 	'origins:store_value': 'store_value',
 	'origins:stored_origin': 'stored_origin',
 	'origins:stored_value': 'stored_value',

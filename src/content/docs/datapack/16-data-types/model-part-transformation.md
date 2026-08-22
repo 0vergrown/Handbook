@@ -14,7 +14,7 @@ By default the edit snaps on and off with the power. Add `duration` to make it e
 | -------------------- | --------------------------------------------------------------------------------------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `model_part`         | [String](/docs/datapack/data-types/string)                                                     | —         | The part to edit. One of `head`, `hat`, `body`, `right_arm`, `left_arm`, `right_leg`, `left_leg`. Matching ignores case and separators (`right_arm` = `rightArm` = `rightarm`). On players the matching skin-overlay layer is edited together with the base part. |
 | `type`               | [String](/docs/datapack/data-types/string)                                                     | —         | Which property to change. See the table below.                                                                                                                                                                                                                  |
-| `value`              | [Float](/docs/datapack/data-types/float)                                                       | —         | The amount. Its meaning depends on `type` (see below). Required unless `keyframes` is set, in which case it is ignored.                                                                                                                                          |
+| `value`              | [Float](/docs/datapack/data-types/float) OR [Expression](/docs/datapack/data-types/expression)  | —         | The amount. Its meaning depends on `type` (see below). Required unless `keyframes` is set, in which case it is ignored. As an Expression it is re-evaluated as the model renders — see [Driving a part from a value](#driving-a-part-from-a-value).                |
 | `override_animation` | [Boolean](/docs/datapack/data-types/boolean)                                                   | `false`   | For `pitch`/`yaw`/`roll` only: if `true`, the value becomes the absolute rotation and the vanilla animation for that axis is ignored ("locked"). If `false`, it is added on top of the animation.                                                                 |
 | `keyframes`          | [Array](/docs/datapack/data-types/array) of [Model Part Keyframe](/docs/datapack/data-types/model-part-keyframe) | `[]`      | A timeline of values. When set, this replaces `value` and the part animates instead of holding still. The clock starts at 0 the moment the power becomes active.                                                                                                 |
 | `loop`               | [Boolean](/docs/datapack/data-types/boolean)                                                   | `false`   | If `true`, the keyframe timeline repeats forever. If `false`, it plays once and holds the last keyframe's value.                                                                                                                                                 |
@@ -101,3 +101,25 @@ A blink, using `step` so the value never lands between visible and invisible:
   ]
 }
 ```
+
+## Driving a part from a value
+
+`value` accepts a full [Expression](/docs/datapack/data-types/expression), not just a number, and so does each keyframe's `value`. The expression is evaluated against the entity being rendered, once per transformation per frame, so the part follows whatever it reads:
+
+```json
+{
+   "type":"apoli:modify_model_parts",
+   "transformations":[
+      {
+         "model_part":"head",
+         "type":"x_scale",
+         "value":"example:charge / 10"
+      }
+   ]
+}
+```
+
+Two things to know:
+
+- This runs on the **client**, so it can only read values the client knows. Resources are synced, so resource ids and their `[n]` slots work; anything server-only reads `0`.
+- A constant `value` costs nothing extra — it is folded at load time. Keep genuinely per-frame maths small.

@@ -11,7 +11,7 @@ One point on a [Model Part Transformation](/docs/datapack/data-types/model-part-
 | Field    | Type                                             | Default            | Purpose                                                                                                                       |
 | -------- | ------------------------------------------------ | ------------------ | ----------------------------------------------------------------------------------------------------------------------------- |
 | `time`   | [Float](/docs/datapack/data-types/float)          | —                  | When this keyframe is reached, in ticks from the start of the animation. Fractional values are allowed.                        |
-| `value`  | [Float](/docs/datapack/data-types/float)          | —                  | The value at this instant, meaning the same thing as the transformation's `type` (radians, scale offset, pivot offset, …).      |
+| `value`  | [Float](/docs/datapack/data-types/float) OR [Expression](/docs/datapack/data-types/expression) | —                  | The value at this instant, meaning the same thing as the transformation's `type` (radians, scale offset, pivot offset, …). As an Expression it is re-evaluated as the model renders. |
 | `easing` | [Easing](/docs/datapack/data-types/easing)        | the transformation's `easing` | The curve used to travel **into** this keyframe from the previous one. The first keyframe's `easing` is never used. |
 
 Keyframes are sorted by `time` when the power loads, so the order you write them in does not matter.

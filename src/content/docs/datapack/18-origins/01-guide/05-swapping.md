@@ -89,7 +89,7 @@ This means a swappable layer can ship with an **empty** `origins` list and be fi
 
 The pool is the granted list plus the condition-driven origins, listed in alphabetical order by origin display name.
 
-> A swappable layer is a pool, never a choice, so it holds no origin of its own. Anything that would normally *set* a layer's origin — `/origin set`, `apply_stored_origin`, `copy_origin`, `transfer_origin` — adds to the granted list instead when the layer is swappable. The randomiser and `/origin random` skip swappable layers entirely; use [`origins:force_swap`](/docs/datapack/origins/force_swap) with `"mode": "random"` to roll a pool.
+> A swappable layer is a pool, never a choice, so it holds no origin of its own. Anything that would normally *set* a layer's origin — `/origin set`, `apply_stored_origin`, `copy_origin`, `transfer_origin`, [`origins:grant_origin`](/docs/datapack/origins/grant_origin) — adds to the granted list instead when the layer is swappable. The randomiser and `/origin random` skip swappable layers entirely; use [`origins:force_swap`](/docs/datapack/origins/force_swap) with `"mode": "random"` to roll a pool.
 
 ## Swapping
 
@@ -118,3 +118,16 @@ The view-origin screen follows the swap: while you are wearing a pool origin, th
 ## Reacting to a swap
 
 [`origins:action_on_swap`](/docs/datapack/origins/action_on_swap) runs an entity action whenever the player swaps, optionally filtered by which origin they swapped from or to. [`origins:swapped`](/docs/datapack/origins/swapped) tests whether the player is currently wearing a pool origin.
+
+## Filling and emptying a pool from data
+
+A swappable layer can ship with an empty `origins` list and be filled entirely at run time. Four ways in:
+
+| Tool | Use it for |
+| --- | --- |
+| [`origins:grant_origin`](/docs/datapack/origins/grant_origin) | handing a player one named origin — the direct "unlock this form" action. On a normal layer, `"to_pool": true` puts it in that layer's pool instead of replacing their pick. |
+| [`origins:revoke_origin`](/docs/datapack/origins/revoke_origin) | taking one back, or wiping the layer and pool together |
+| [`origins:transfer_origin`](/docs/datapack/origins/transfer_origin) | moving one between two players. `selection` says which of the donor's origins to take — `main`, `active`, `pool` or `all` — and `origin` names one explicitly. |
+| `/origin revoke <targets> <layer> [origin]` | the operator-side equivalent, paired with `/origin set` |
+
+Reading a pool back is the [`origins:origin`](/docs/datapack/origins/origin) condition with `"selection": "pool"`, or the `in_origin_pool(<id>)` [Expression](/docs/datapack/data-types/expression) function. `"selection": "active"` asks what the player is actually wearing right now, swapped in or not.

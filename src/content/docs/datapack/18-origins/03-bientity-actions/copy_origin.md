@@ -51,3 +51,7 @@ Used inside an `action_on_entity_use` so sneaking + using a player copies their 
   }
 }
 ```
+
+## Picking which origin to copy
+
+Like [`origins:transfer_origin`](/docs/datapack/origins/transfer_origin), this action accepts `origin` (copy exactly this one) and `selection` (`main`, `active`, `pool` or `all` — which of the target's origins on `from_layer` to read). Both default to the same behaviour as before: the target's chosen origin on `from_layer`, or that layer's swap pool when `from_layer` is itself swappable.

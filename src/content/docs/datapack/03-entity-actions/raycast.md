@@ -78,6 +78,37 @@ Placed in a `bientity_action` slot, this draws a line of particles from the acto
 
 Set `aim_at_target: false` to keep the actor's look direction, or `stop_at_target: false` to let the ray keep going past the target out to its normal `distance`. Supplying an explicit `direction` also wins over the automatic aim.
 
+## Values the hooks can read
+
+While this action runs, it binds [Expression](/docs/datapack/data-types/expression) variables that the hooks — and anything nested inside them — can read:
+
+| Variable | In `hit_action` / `miss_action` | In `bientity_action` | In `block_action` |
+| --- | --- | --- | --- |
+| `distance` | to where the ray stopped | to that entity's hit point | to that block's hit point |
+| `hit_x`, `hit_y`, `hit_z` | where the ray stopped | that entity's hit point | that block's hit point |
+| `count` | `1` if anything was hit, else `0` | how many entities the ray hit | `1` |
+| `index` | `0` | the zero-based order of this entity along the ray | the pierce step |
+
+So the hit distance can go straight into a resource, instead of being approximated by a table of hard-coded bands:
+
+```json
+"hit_action": {
+    "type": "apoli:modify_resource",
+    "resource": "example:last_shot_distance",
+    "modifier": { "operation": "set_base", "value": "distance" }
+}
+```
+
+Or scale the damage by how far the shot travelled:
+
+```json
+"bientity_action": {
+    "type": "apoli:damage",
+    "damage_type": "minecraft:player_attack",
+    "amount": "max(1, 20 - distance)"
+}
+```
+
 ## Examples
 
 ```json

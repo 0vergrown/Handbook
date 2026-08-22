@@ -16,7 +16,7 @@ Type ID: `apoli:entity_in_radius`
 | `shape`              | Shape                             | `cube`     | Determines the shape of the area used for checking entities: `cube`, `sphere`, `star` or `cone`.      |
 | `radius`             | Float                             | **required** | Radius/distance for detection, in blocks.                                                           |
 | `comparison`         | Comparison                   | `>=`       | How to compare the count.                                                                             |
-| `compare_to`         | Integer                         | `1`        | The value to compare the count against.                                                               |
+| `compare_to`         | [Integer](/docs/datapack/data-types/integer) OR [Expression](/docs/datapack/data-types/expression)                         | `1`        | The value to compare the count against.                                                               |
 
 ## Notes
 
@@ -44,3 +44,16 @@ Type ID: `apoli:entity_in_radius`
 }
 ```
 This example checks if there are at least 3 other players within 10 blocks.
+
+## An Expression threshold
+
+`compare_to` accepts a full [Expression](/docs/datapack/data-types/expression), so the threshold does not have to be a literal. It is evaluated against the entity holding the power each time the condition is tested:
+
+```json
+"condition": {
+    "type": "apoli:entity_in_radius",
+    "radius": 8,
+    "comparison": ">=",
+    "compare_to": "example:crowd_threshold"
+}
+```

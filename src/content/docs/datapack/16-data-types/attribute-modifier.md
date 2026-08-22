@@ -19,13 +19,14 @@ Apace's Apoli had `AttributeModifier` for the `apoli:attribute` power and a sepa
 | `attribute` | [Identifier](/docs/datapack/data-types/identifier)                      | _optional_            | The vanilla attribute id this modifier targets. **Required** by apoli:attribute; ignored by apoli:modify_resource (since that targets a resource, not an attribute). |
 | `name`      | [String](/docs/datapack/data-types/string)                          | derived from power id | The vanilla AttributeModifier name (used for the modifier's UUID seed).                                                                                              |
 | `resource`  | [Identifier](/docs/datapack/data-types/identifier)                      | _optional_            | If set, use the value of this Resource (or Cooldown) power as the modifier value instead of `value`/`value`-as-Expression.                                           |
+| `position`  | [Integer](/docs/datapack/data-types/integer) OR [Expression](/docs/datapack/data-types/expression) | _optional_ | Which slot of `resource` to read, when it names a table [apoli:resource](/docs/datapack/powers/resource). Ignored without `resource`. _Also accepts the aliases `index` and `slot`._ |
 | `modifier`  | [Attribute Modifier](/docs/datapack/data-types/attribute-modifier)              | _optional_            | A nested modifier applied to **the value of this modifier** before it acts. Lets you scale a resource-driven value, etc.                                             |
 
 ## Order of precedence for the input value
 
 When the modifier is applied to a current base/total, the "modifier value" fed into the operation is computed as:
 
-1. If `resource` is set, start with that resource's current value.
+1. If `resource` is set, start with that resource's current value — the value in slot `position` when one is given.
 2. Otherwise, evaluate `value` (Float or Expression).
 3. If `modifier` (nested) is set, run that modifier against the value from step 1 or 2 and use the result.
 

@@ -35,6 +35,8 @@ const ORIGINS_TYPES = new Set([
 	'transfer_origin',
 	'store_origin',
 	'apply_stored_origin',
+	'grant_origin',
+	'revoke_origin',
 	'store_value',
 	'stored_origin',
 	'stored_value',

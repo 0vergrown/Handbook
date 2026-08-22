@@ -26,3 +26,16 @@ Type ID: `apoli:add_velocity`
 }
 ```
 This example will "pull" the target entity to the actor entity.
+
+## Which entity the Expressions read
+
+`x`, `y` and `z` are [Expressions](/docs/datapack/data-types/expression), and a bare variable reads the **actor** — the entity whose power fired the action — while the velocity itself is applied to the target. Use the `target_` prefix to read the entity being pushed:
+
+```json
+"bientity_action": {
+    "type": "apoli:add_velocity",
+    "y": "0.4 + (target_max_health / 40)"
+}
+```
+
+> Before Apoli 1.40.0 these expressions were evaluated against the target and the actor was unreachable. Packs that read entity stats here should add `target_` to keep the old meaning.

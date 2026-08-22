@@ -54,6 +54,8 @@ const PAGE_KIND = {
 	},
 	'datapack/18-origins': {
 		apply_stored_origin: ['Entity Action Type', null],
+		grant_origin: ['Entity Action Type', null],
+		revoke_origin: ['Entity Action Type', null],
 		store_origin: ['Entity Action Type', null],
 		store_value: ['Entity Action Type', null],
 		force_swap: ['Entity Action Type', null],
