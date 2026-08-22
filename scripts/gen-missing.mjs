@@ -134,7 +134,6 @@ const D = {
 	night_vision: 'Brightens the world for the holder, like night vision without the effect (alias `toggle_night_vision`).',
 	lava_vision: 'Replaces the lava fog so the holder can see while submerged in lava.',
 	modify_camera_submersion: 'Swaps one camera submersion type for another, e.g. water for none.',
-	status_bar_texture: 'Remaps HUD sprites such as hearts, armour and hunger.',
 	has_command_tag: 'Passes when the entity carries one of the given `/tag` command tags.',
 	meat: 'Passes when the item is meat.',
 	relative_item_cooldown: 'Compares the item cooldown as a fraction of its total.',
