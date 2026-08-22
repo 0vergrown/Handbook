@@ -34,7 +34,19 @@ const COMPAT = {
 	action_on_revive: 'compat/06-hardcore-revival',
 	knock_out: 'compat/06-hardcore-revival',
 	revive: 'compat/06-hardcore-revival',
-	knocked_out: 'compat/06-hardcore-revival'
+	knocked_out: 'compat/06-hardcore-revival',
+	can_use_shape_ability: 'compat/13-woodwalkers',
+	has_shape_ability: 'compat/13-woodwalkers',
+	shape_ability_cooldown: 'compat/13-woodwalkers',
+	shape_condition: 'compat/13-woodwalkers',
+	change_shape_ability_cooldown: 'compat/13-woodwalkers',
+	shape_action: 'compat/13-woodwalkers',
+	switch_shape: 'compat/13-woodwalkers',
+	use_shape_ability: 'compat/13-woodwalkers',
+	action_on_shape_change: 'compat/13-woodwalkers',
+	action_on_shape_ability_use: 'compat/13-woodwalkers',
+	prevent_shape_change: 'compat/13-woodwalkers',
+	prevent_shape_ability_use: 'compat/13-woodwalkers'
 };
 
 // Types that are documented outside their flavour's reference section because
@@ -50,9 +62,14 @@ const SECTION = {
 	powers: '02-powers',
 	'entity actions': '03-entity-actions',
 	'bientity actions': '04-bientity-actions',
+	'block actions': '05-block-actions',
+	'item actions': '06-item-actions',
 	'meta actions': '07-meta-actions',
 	'entity conditions': '08-entity-conditions',
+	'bientity conditions': '09-bientity-conditions',
+	'block conditions': '10-block-conditions',
 	'item conditions': '11-item-conditions',
+	'damage conditions': '12-damage-conditions',
 	'meta conditions': '15-meta-conditions'
 };
 
@@ -106,7 +123,50 @@ const D = {
 	// meta conditions
 	all_of: 'Passes when every listed condition passes (alias `and`).',
 	any_of: 'Passes when any listed condition passes (alias `or`).',
-	offset: 'Tests a block condition at an offset from this position (block conditions only).'
+	offset: 'Tests a block condition at an offset from this position (block conditions only).',
+	// backwards compatibility with the original Apoli
+	damage_over_time: 'Damages the entity on an interval while its condition holds.',
+	burn: 'Sets the entity on fire on an interval while its condition holds.',
+	modify_air_speed: 'Modifies how fast the entity moves through the air.',
+	modify_attribute: 'Applies a modifier to one attribute (the single-attribute form of `apoli:attribute`).',
+	modify_status_effect_amplifier: 'Modifies the amplifier of status effects as they are applied.',
+	modify_status_effect_duration: 'Modifies the duration of status effects as they are applied.',
+	night_vision: 'Brightens the world for the holder, like night vision without the effect (alias `toggle_night_vision`).',
+	lava_vision: 'Replaces the lava fog so the holder can see while submerged in lava.',
+	modify_camera_submersion: 'Swaps one camera submersion type for another, e.g. water for none.',
+	status_bar_texture: 'Remaps HUD sprites such as hearts, armour and hunger.',
+	has_command_tag: 'Passes when the entity carries one of the given `/tag` command tags.',
+	meat: 'Passes when the item is meat.',
+	relative_item_cooldown: 'Compares the item cooldown as a fraction of its total.',
+	is_block: 'Passes when the item places a block (alias `block`).',
+	holder_condition: 'Tests an entity condition against whoever is holding the item (alias `holder`).',
+	bypasses_armor: 'Passes when the damage bypasses armour.',
+	unblockable: 'Passes when the damage bypasses shields.',
+	out_of_world: 'Passes when the damage bypasses invulnerability, such as the void.',
+	explosive: 'Passes when the damage came from an explosion.',
+	fire: 'Passes when the damage is fire damage.',
+	from_falling: 'Passes when the damage came from a fall.',
+	// scripting
+	difficulty: 'Passes when the world difficulty is one of the listed values.',
+	script: 'Runs a script registered from KubeJS or shipped as a data pack `.js` file.',
+	receive_action: 'Receives actions sent by `apoli:send_action` from another power.',
+	receive_condition: 'Answers condition checks sent by `apoli:send_condition` from another power.',
+	send_action: 'Sends this action to a `apoli:receive_action` power on the same entity.',
+	send_condition: 'Asks a `apoli:receive_condition` power on the same entity.',
+	self_bientity_action: 'Runs a bi-entity action with the entity as both actor and target.',
+	// WoodWalkers
+	can_use_shape_ability: 'Passes when the player can use their shape ability right now (needs WoodWalkers).',
+	has_shape_ability: 'Passes when the current shape has an ability (needs WoodWalkers).',
+	shape_ability_cooldown: 'Compares the shape ability cooldown in ticks (needs WoodWalkers).',
+	shape_condition: 'Tests a bi-entity condition between the player and their shape (alias `shape`).',
+	change_shape_ability_cooldown: 'Adds to or sets the shape ability cooldown (needs WoodWalkers).',
+	shape_action: 'Runs a bi-entity action between the player and their shape (alias `action_on_shape`).',
+	switch_shape: 'Changes the player\'s shape (aliases `change_shape`, `morph`).',
+	use_shape_ability: 'Triggers the current shape\'s ability (needs WoodWalkers).',
+	action_on_shape_change: 'Runs an action when the player changes shape (alias `action_on_morph`).',
+	action_on_shape_ability_use: 'Runs an action when the player uses their shape ability.',
+	prevent_shape_change: 'Stops the player from changing shape (alias `prevent_morph`).',
+	prevent_shape_ability_use: 'Stops the player from using their shape ability.'
 };
 
 function fmtDefault(f) {

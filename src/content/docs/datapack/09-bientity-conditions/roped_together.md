@@ -1,20 +1,53 @@
 ---
 title: "Roped Together (Bi-Entity Condition Type)"
-description: "Checks whether the actor and the target are connected by a rope (in either direction) — see the Attach…"
+description: Passes when the two entities are connected by an Apoli rope.
 navigation_title: "Roped Together"
 ---
 
-Checks whether the actor and the target are connected by a rope (in either direction) — see the [Attach Rope](/docs/datapack/entity-actions/attach_rope) action. Useful for logic like a captured entity checking whether it is still tied to its captor, or a whip user checking they still hold their target.
+Passes when the actor and the target are joined by a rope created with [`apoli:attach_rope`](/docs/datapack/entity-actions/attach_rope). Direction does not matter — it is true from either end.
 
 Type ID: `apoli:roped_together`
 
-This condition takes no fields.
+## Fields
 
-## Example
+_None._
+
+## Examples
+
+Glow for whoever you are tied to:
+
 ```json
 {
+  "type": "apoli:entity_glow",
+  "bientity_condition": {
     "type": "apoli:roped_together"
+  }
 }
 ```
 
-True while a rope has the actor as one end and the target as the other.
+Do not damage the person on the other end of your rope:
+
+```json
+{
+  "type": "apoli:modify_damage_dealt",
+  "bientity_condition": { "type": "apoli:roped_together" },
+  "modifier": {
+    "operation": "multiply_base_multiplicative",
+    "value": -1.0
+  }
+}
+```
+
+Pull them along when you use an ability:
+
+```json
+{
+  "type": "apoli:area_of_effect",
+  "radius": 32,
+  "bientity_condition": { "type": "apoli:roped_together" },
+  "bientity_action": {
+    "type": "apoli:rope_pull",
+    "speed": 0.4
+  }
+}
+```

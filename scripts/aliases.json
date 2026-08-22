@@ -8,11 +8,22 @@
 	"bientity actions/remove_from_entity_set": [
 		"remove_from_set"
 	],
+	"bientity actions/send_action": [
+		"shappoli:send_action"
+	],
+	"bientity actions/switch_shape": [
+		"change_shape",
+		"morph",
+		"shappoli:switch_shape"
+	],
 	"bientity conditions/in_entity_set": [
 		"in_set"
 	],
 	"bientity conditions/same_team": [
 		"allied"
+	],
+	"bientity conditions/send_condition": [
+		"shappoli:send_condition"
 	],
 	"block conditions/replacable": [
 		"replaceable"
@@ -29,6 +40,9 @@
 	],
 	"entity actions/change_selected_slot": [
 		"set_selected_slot"
+	],
+	"entity actions/change_shape_ability_cooldown": [
+		"shappoli:change_shape_ability_cooldown"
 	],
 	"entity actions/change_slot": [
 		"swap_slot",
@@ -66,8 +80,29 @@
 	"entity actions/radial_menu": [
 		"sync:radial_menu"
 	],
+	"entity actions/self_bientity_action": [
+		"self_bientity",
+		"bientity_action",
+		"shappoli:self_bientity_action",
+		"shappoli:self_bientity"
+	],
+	"entity actions/send_action": [
+		"shappoli:send_action"
+	],
 	"entity actions/set_summon_max_life": [
 		"set_summon_max_life_ticks"
+	],
+	"entity actions/shape_action": [
+		"action_on_shape",
+		"shappoli:shape_action",
+		"shappoli:action_on_shape"
+	],
+	"entity actions/switch_shape": [
+		"change_shape",
+		"morph",
+		"shappoli:switch_shape",
+		"shappoli:change_shape",
+		"shappoli:morph"
 	],
 	"entity actions/team": [
 		"modify_team",
@@ -77,6 +112,9 @@
 	"entity actions/text": [
 		"text_bar",
 		"show_text"
+	],
+	"entity actions/use_shape_ability": [
+		"shappoli:use_shape_ability"
 	],
 	"entity conditions/accessory_equipped_count": [
 		"equipped_trinket_count"
@@ -98,6 +136,14 @@
 		"key_held",
 		"held_key"
 	],
+	"entity conditions/send_condition": [
+		"shappoli:send_condition"
+	],
+	"entity conditions/shape_condition": [
+		"shape",
+		"shappoli:shape_condition",
+		"shappoli:shape"
+	],
 	"entity conditions/stat": [
 		"stats",
 		"status",
@@ -109,11 +155,36 @@
 	"item actions/holder_action": [
 		"holder"
 	],
+	"item actions/send_action": [
+		"shappoli:send_action"
+	],
 	"item conditions/accessory": [
 		"trinket"
 	],
+	"item conditions/fireproof": [
+		"fire_resistant"
+	],
+	"item conditions/holder_condition": [
+		"holder",
+		"shappoli:holder_condition",
+		"shappoli:holder"
+	],
+	"item conditions/is_block": [
+		"block",
+		"shappoli:is_block",
+		"shappoli:block"
+	],
+	"item conditions/is_damageable": [
+		"damageable"
+	],
 	"item conditions/is_equippable": [
 		"equippable"
+	],
+	"item conditions/nbt": [
+		"custom_data"
+	],
+	"item conditions/send_condition": [
+		"shappoli:send_condition"
 	],
 	"meta actions/random_chance": [
 		"chance"
@@ -143,9 +214,22 @@
 	"powers/action_on_kill": [
 		"self_action_on_kill"
 	],
+	"powers/action_on_shape_ability_use": [
+		"shappoli:action_on_shape_ability_use"
+	],
+	"powers/action_on_shape_change": [
+		"action_on_morph",
+		"shappoli:action_on_shape_change",
+		"shappoli:action_on_morph"
+	],
 	"powers/action_on_use": [
 		"action_on_entity_use",
 		"action_on_being_used"
+	],
+	"powers/action_over_time": [
+		"damage_over_time",
+		"burn",
+		"exhaust"
 	],
 	"powers/action_when_hit": [
 		"self_action_when_hit",
@@ -153,7 +237,8 @@
 		"action_when_damage_taken"
 	],
 	"powers/attribute": [
-		"conditioned_attribute"
+		"conditioned_attribute",
+		"modify_attribute"
 	],
 	"powers/disable_slot": [
 		"restrict_slot"
@@ -164,9 +249,15 @@
 	"powers/ignore_fluid": [
 		"ignore_water"
 	],
+	"powers/invulnerability": [
+		"fire_immunity"
+	],
 	"powers/modify_accessory_slots": [
 		"modify_trinket_slot",
 		"modify_trinket_slots"
+	],
+	"powers/modify_camera_submersion": [
+		"modify_camera_submersion_type"
 	],
 	"powers/modify_cursor_speed": [
 		"modify_mouse_sensitivity",
@@ -183,14 +274,37 @@
 	"powers/modify_type_tag": [
 		"entity_group"
 	],
+	"powers/night_vision": [
+		"toggle_night_vision"
+	],
 	"powers/prevent_accessory_equip": [
 		"prevent_trinket_equip"
 	],
 	"powers/prevent_accessory_unequip": [
 		"prevent_trinket_unequip"
 	],
+	"powers/prevent_shape_ability_use": [
+		"shappoli:prevent_shape_ability_use"
+	],
+	"powers/prevent_shape_change": [
+		"prevent_morph",
+		"shappoli:prevent_shape_change",
+		"shappoli:prevent_morph"
+	],
 	"powers/prevent_use": [
 		"prevent_entity_use",
 		"prevent_being_used"
+	],
+	"powers/receive_action": [
+		"shappoli:receive_action"
+	],
+	"powers/receive_condition": [
+		"shappoli:receive_condition"
+	],
+	"powers/restrict_armor": [
+		"conditioned_restrict_armor"
+	],
+	"powers/simple": [
+		"dummy"
 	]
 }

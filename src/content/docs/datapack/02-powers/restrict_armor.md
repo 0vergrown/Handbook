@@ -2,6 +2,7 @@
 title: "Restrict Armor (Power Type)"
 description: "Restricts the entity that has the power from equipping items as armor (via right-click, dispensing or by dragging and dropping the item in the equipment…"
 navigation_title: "Restrict Armor"
+aliases: ["conditioned_restrict_armor"]
 ---
 
 Restricts the entity that has the power from equipping items as armor (via right-click, dispensing or by dragging and dropping the item in the equipment slot(s)) in the specified equipment slot(s).
@@ -72,3 +73,5 @@ This example will prevent the entity from equipping any armor which has more def
 ```
 
 This example will prevent the entity from equipping a Turtle Shell or an Elytra.
+
+> **`apoli:conditioned_restrict_armor` is this power.** It is an alias for packs ported from the original Apoli, where the conditioned variant was a separate type. Every power in this version already accepts a top-level `condition`, so there is nothing the alias can do that this type cannot. A `tick_rate` field on an old power is ignored.

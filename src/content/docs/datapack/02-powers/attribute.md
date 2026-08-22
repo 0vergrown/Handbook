@@ -2,7 +2,7 @@
 title: "Attribute (Power Type)"
 description: "Modifies one or more attributes on the entity for as long as the power is held."
 navigation_title: "Attribute"
-aliases: ["conditioned_attribute"]
+aliases: ["conditioned_attribute", "modify_attribute"]
 ---
 
 Modifies one or more attributes on the entity for as long as the power is held.
@@ -103,3 +103,7 @@ Modifier driven by a resource value (links a vanilla attribute to a [apoli:resou
     }
 }
 ```
+
+> **`apoli:modify_attribute` is this power** with the attribute hoisted out of the modifiers and written once at the top level. It is an alias kept for packs ported from the original Apoli — see [its page](/docs/datapack/powers/modify_attribute) for the shape it takes. Prefer `apoli:attribute` in new packs, because each modifier naming its own attribute means one power can touch several at once.
+>
+> `apoli:conditioned_attribute` is the same type as well; the `condition` field it implies is available on every power.

@@ -2,6 +2,7 @@
 title: "Is Damageable (Item Condition Type)"
 description: "Checks if the item is damageable."
 navigation_title: "Is Damageable"
+aliases: ["damageable"]
 ---
 
 Checks if the item is damageable.
@@ -19,3 +20,5 @@ _None._
     "type": "apoli:is_damageable"
 }
 ```
+
+> **`apoli:damageable` is this condition,** kept as an alias for packs ported from the original Apoli.

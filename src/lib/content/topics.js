@@ -41,5 +41,7 @@ export const SECTION_TITLES = {
 	'not-enough-recipe-book': 'Not Enough Recipe Book',
 	'writing-compat': 'Writing Compat',
 	'pufferfishs-skills': "Pufferfish's Skills",
-	'better-combat': 'Better Combat'
+	'better-combat': 'Better Combat',
+	woodwalkers: 'WoodWalkers',
+	kubejs: 'KubeJS'
 };

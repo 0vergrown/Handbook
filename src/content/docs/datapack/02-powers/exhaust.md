@@ -1,34 +1,30 @@
 ---
 title: "Exhaust (Power Type)"
-description: "Applies exhaustion to the player over time."
+description: "Legacy alias of apoli:action_over_time with an apoli:exhaust action pre-filled."
 navigation_title: "Exhaust"
 ---
 
-Applies exhaustion to the player over time.
+Drains hunger on an interval. This is a **legacy alias** — it resolves to [`apoli:action_over_time`](/docs/datapack/powers/action_over_time) with an [`apoli:exhaust`](/docs/datapack/entity-actions/exhaust) action built for you.
 
 Type ID: `apoli:exhaust`
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`interval` | Integer | `20` | Duration of ticks to wait between applying exhaustion.
-`exhaustion` | Float | | How much exhaustion will be applied each interval.
+Field | Type | Default | Description
+------|------|---------|-------------
+`exhaustion` | [Float](/docs/datapack/data-types/float) | **required** | Exhaustion added each interval.
+`interval` | [Integer](/docs/datapack/data-types/integer) | `20` | Ticks between applications.
 
-## Examples
+## The composed form
 
 ```json
 {
-  	"type": "apoli:exhaust",
-  	"interval": 20,
-  	"exhaustion": 4.0,
-	"condition": {
-		"type": "apoli:fluid_height",
-		"fluid": "minecraft:water",
-		"comparison": ">",
-		"compare_to": 0.0
-	}
+  "type": "apoli:action_over_time",
+  "interval": 20,
+  "entity_action": {
+    "type": "apoli:exhaust",
+    "amount": 0.05
+  },
+  "condition": { "type": "apoli:sprinting" }
 }
 ```
-
-This example will apply 4.0 exhaustion to the player if the player is touching water.
