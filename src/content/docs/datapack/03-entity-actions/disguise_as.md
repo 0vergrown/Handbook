@@ -9,7 +9,7 @@ Makes the entity appear as another entity — a mob type, or a player. Ported fr
 
 Type ID: `apoli:disguise_as`
 
-> **Alias:** `apoli:disguise_as_player` is the same action (use whichever reads better). Provide `entity_type` for a mob disguise, or `player_name`/`player_uuid` for a player disguise. Player disguises currently show the target's skin when that player is **online**; offline players and slim/wide model-swap are not yet supported.
+> **Alias:** `apoli:disguise_as_player` is the same action (use whichever reads better). Provide `entity_type` for a mob disguise, or `player_name`/`player_uuid` for a player disguise. A player disguise shows the target's skin when that player is **online**; an offline target falls back to the default skin for their UUID.
 
 ## Fields
 
@@ -61,6 +61,18 @@ That copy is kept in step with the entity it is hiding:
 
 Disguising as something that is **not** a living entity — an arrow, a boat, an item — renders correctly but
 stays still; only living disguises are animated.
+
+### Player disguises
+
+A **player disguise on a mob** builds the same kind of hidden copy, this time a player built from the target's
+profile — so a disguised zombie walks, sneaks and swings as a player, wearing the target's skin and their slim
+or wide arm model. The mob's own held item and armour are mirrored onto the copy, so a zombie carrying an iron
+sword still carries it while disguised.
+
+A **player disguised as another player** is the one case that does not use a copy: the real player is still
+drawn and only the skin texture is swapped, which keeps first-person hands, capes and every other
+player-render power working. The trade-off is that the arm model stays the disguised player's own rather than
+the target's.
 
 > An action that damages without a swing (a bare [apoli:damage](/docs/datapack/bientity-actions/damage), say)
 > produces no attack animation, because nothing tells the client an attack happened.

@@ -359,13 +359,14 @@ Geometry mode works on the minions from [`Summon Minion (Entity Action Type)`](/
 }
 ```
 
-The conditions on a minion's entries are evaluated against **the minion**, not its owner — it is the minion that holds the power.
+The conditions on a minion's entries are evaluated against **the minion**, not its owner — it is the minion that holds the power. That is why `apoli:sneaking` on a minion entry never fires: it is asking whether the *minion* is sneaking. Since **1.44.0** wrap it in [`apoli:owner`](/docs/datapack/entity-conditions/owner) to ask about the summoner instead.
 
 ## What is not supported
 
 - **Molang is not evaluated.** A keyframe whose value is a formula rather than a number reads as `0`. If Blockbench's variable-placeholder panel appeared when you imported an animation, that animation uses Molang and the affected channels will sit at zero. Bake the motion into keyframes.
 - **Sound, particle and timeline keyframes are ignored.** They are server-side effects, and this is a render layer with no authority to fire them. Drive them from the same condition that selects the clip, with an [`Action Over Time (Power Type)`](/docs/datapack/powers/action_over_time).
 - **`relative_to` is ignored** — every bone animates in its own frame.
+- Keyframe easing *is* supported as of **1.43.0** — `lerp_mode: catmullrom` and the GeckoLib `easing`/`easingArgs` family. This bullet used to say interpolation was linear-only.
 - The model-side limits are unchanged: only the first geometry in a `.geo.json` is read, and `uv_rotation` is not supported.
 
 ## When it does not work
@@ -373,11 +374,15 @@ The conditions on a minion's entries are evaluated against **the minion**, not i
 | What you see | Usually |
 | --- | --- |
 | Nothing moves, and the log says `Loaded 0 custom model animation(s)` | The file is not under `assets/<ns>/animations/`, or the resource pack is not enabled. |
-| The log counts the file but nothing moves | The `name` does not match a key under `animations` in the file. Leave `name` out to test with the first clip. |
+| The log counts the file but nothing moves | The `name` does not match a key under `animations` in the file. Since **1.42.2** the log says so outright — `Animation file 'x' has no clip called 'y'` — and lists the clips the file does contain. |
+| Every clip loads, every bone binds, and nothing moves at all | Apoli **1.42.1 and earlier** only read keyframes written as a bare `[x, y, z]` array. The GeckoLib Blockbench plugin writes them as `{"vector": [x, y, z]}` instead, and every one of those read as zero. Fixed in **1.42.2**. |
 | Some bones move, others do not | Bone names differ between the `.geo.json` and the `.animation.json`. Matching ignores case, spaces, `_` and `-`, but nothing else. |
 | A limb moves *twice as far* as it should | The bone is named after a body part, so it is getting the player's motion plus the animation. Rename it if you meant to replace the motion. |
-| A clip plays once and never again | Working as intended — see [Timing](#timing-and-the-rule-about-one-shots). |
-| A clip never plays, and its condition is `apoli:scoreboard` / `apoli:advancement` / `apoli:command` / `apoli:stat` / `apoli:predicate` | Those are server-only and read false in a render layer. |
+| The model takes a pose and then never moves | The clip has no keyframes **over time**. A channel written as a bare value — `"rotation": [-12.5, 0, -5]` — is one keyframe at 0:00, which Blockbench writes whenever a bone was only posed on the first frame. The clip is a static pose, and `loop` cannot change that. A moving channel looks like `"rotation": {"0.0": [...], "0.5": [...]}`. Apoli applies the pose and says so in the log. |
+| A clip plays once and never again — or you never see it play at all | **The most common report, and it is the loop flag.** Blockbench's loop mode defaults to *Play Once*, and it writes no `loop` key for that, so Apoli plays the clip once and then applies nothing. Playback only restarts when the *selected entry* changes, and a single entry with no `condition` never changes — so on an always-on power the clip runs once at login, before you are looking, and the model sits in its bind pose forever after. Set the clip to **Loop** in Blockbench, or put `"loop": true` on the entry. Since **1.42.2** the log says so by name. See [Timing](#timing-and-the-rule-about-one-shots). |
+| A clip never plays, and its condition is `apoli:scoreboard` / `apoli:advancement` / `apoli:command` / `apoli:stat` / `apoli:predicate` | Those are server-only and read false in a render layer. Since **1.43.1** one that *throws* is caught and skipped with a named warning rather than breaking the render. |
+| Adding conditions broke the whole `animations` block | Before **1.43.1** a single unparseable entry — a mistyped condition type — dropped the entire list, fallback included. It now skips just that entry and names it. |
+| A conditioned pose snaps back while the condition is still true | The clip is Play Once, so it applies nothing after its last frame. Use `"loop": "hold_on_last_frame"` to freeze there instead. |
 | Everything sits in a bind pose | No entry matched. Add a fallback entry with no `condition`, last. |
 | It works for you and not for anyone else | They do not have the resource pack. |
 

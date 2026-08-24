@@ -17,6 +17,8 @@ Manages which origin each player has in each [layer](/docs/datapack/origins/laye
 | `get <target> <layer>` | Prints one player's origin in a layer. |
 | `gui [<targets>] [<layer>]` | Reopens the choose-origin screen. |
 | `random [<targets>] [<layer>]` | Rerolls to a random origin. |
+| `cap [list] [<layer>]` | Lists every capped origin with its holders. |
+| `cap clear [<layer>] [<origin>]` | Releases recorded origin claims. |
 | `storage …` | Stores and re-applies origins and values. |
 
 ## set
@@ -73,6 +75,22 @@ origin random @a origins:origin
 
 `gui` reopens the choose-origin screen; `random` rolls one immediately, honouring the layer's `random_allows_unchoosable` setting. Both default to every unchosen layer when no layer is given, and to the command's own player when no targets are given. `random` skips [swappable layers](/docs/datapack/origins/swapping) — a pool is not a choice; roll one with [`origins:force_swap`](/docs/datapack/origins/force_swap) instead.
 
+## cap
+
+Inspects and edits the ledger behind [origin caps](/docs/datapack/origins/overview#capping-an-origin) — the record of who holds which capped origin, kept in the world save so offline players keep their slot.
+
+```mcfunction
+origin cap
+origin cap list origins:origin
+origin cap clear origins:origin example:dragonborn
+origin cap clear origins:origin
+origin cap clear
+```
+
+`list` prints one line per capped origin — `<layer> / <origin>: taken/limit [names]` — in red when it is full. It only lists origins that actually declare a cap, so an empty result means nothing on that layer is capped. The return value is the number of lines printed.
+
+`clear` releases claims: with no arguments the whole ledger, with a layer that layer, with a layer and an origin just that one. Every online player's claims are re-recorded immediately afterwards, so **clearing only frees the slots held by players who are offline** — an online holder keeps theirs until they change origin. That is what makes it the tool for reclaiming an origin from someone who has left the server for good.
+
 ## storage
 
 Origin storage is a per-player key/value store, used to stash an origin now and re-apply it later — body-swap powers, "remember what I was" mechanics, and the like. It is the command-side of [`origins:store_origin`](/docs/datapack/origins/store_origin) and [`origins:apply_stored_origin`](/docs/datapack/origins/apply_stored_origin).
@@ -95,4 +113,4 @@ origin storage list @s
 
 ## Permissions
 
-`set`, `revoke`, `gui`, `random` and `storage` need permission level 2 (nodes `origins.command.origin.set` — shared by `revoke` — `.gui`, `.random`, `.storage`). `has` and `get` are open to everyone.
+`set`, `revoke`, `gui`, `random`, `cap` and `storage` need permission level 2 (nodes `origins.command.origin.set` — shared by `revoke` — `.gui`, `.random`, `.cap`, `.storage`). `has` and `get` are open to everyone.

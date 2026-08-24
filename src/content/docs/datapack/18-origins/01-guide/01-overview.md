@@ -38,6 +38,34 @@ Origins live in `data/<namespace>/origins/`. The file name is the origin's id.
 | `loading_priority`  | number                                           | `0`     | Higher wins when packs define the same id.           |
 | `unchoosable`       | boolean                                          | `false` | Exists but can't be picked (e.g. an admin origin).   |
 | `name_scroll_speed` | number                                           | —       | Speed a long name marquees at.                       |
+| `max_players`       | number                                           | `-1`    | How many players may hold this origin at once — see [Capping an origin](#capping-an-origin). |
+
+## Capping an origin
+
+`max_players` locks an origin to a limited number of players. Once that many hold it, nobody else can take it: it disappears from the choose screen, the random roll never lands on it, `auto_choose` and derived layers skip it, and a client that picks it anyway is refused with a message and shown the screen again.
+
+| Value | Meaning |
+|---|---|
+| `-1` (default) | Inherit the layer's `max_players_per_origin`. |
+| `0` | Unlimited — takes the origin out of a capped layer. |
+| `n > 0` | At most `n` players. `1` makes the origin exclusive to whoever takes it first. |
+
+```json
+{
+  "icon": { "item": "minecraft:dragon_egg" },
+  "impact": 3,
+  "max_players": 1,
+  "powers": ["example:dragon_flight"]
+}
+```
+
+A cap is counted across the **whole server, including offline players** — the ledger lives in the world save, so a player who logs off keeps their slot. It is per layer *and* origin, so the same origin offered in two layers is capped separately in each.
+
+The origin's current holder keeps it: a cap never revokes an origin someone already has, and being at the cap does not stop that holder from seeing it in the view screen. Swap pools count too — an origin granted into a [swappable layer's](/docs/datapack/origins/swapping) pool claims a slot.
+
+> Explicit grants are not capped. `/origin set`, [origins:grant_origin](/docs/datapack/origins/grant_origin), [origins:transfer_origin](/docs/datapack/origins/transfer_origin) and [origins:copy_origin](/docs/datapack/origins/copy_origin) all go through regardless, so an operator or a datapack can always hand out an origin. Only player-driven selection is limited.
+
+Layer-wide defaults live on the layer as [`max_players_per_origin`](/docs/datapack/origins/layers#capping-a-whole-layer), and `/origin cap` inspects and clears the ledger — see [the command](/docs/datapack/commands/origin#cap).
 
 ## The `icon` field
 

@@ -17,8 +17,18 @@ Field  | Type | Default | Description
 `x` | Float, or [Expression](/docs/datapack/data-types/expression) | `0.0` | Sideways offset added to the rider's seat position.
 `y` | Float, or [Expression](/docs/datapack/data-types/expression) | `0.0` | Vertical offset added to the rider's seat position.
 `z` | Float, or [Expression](/docs/datapack/data-types/expression) | `0.0` | Forward offset added to the rider's seat position.
-`space` | [Space](/docs/datapack/data-types/space) | `world` | How `x`/`y`/`z` are interpreted. `world` is absolute; `local` and `local_horizontal` rotate the offset with the **vehicle**, so a shoulder stays a shoulder when the vehicle turns.
+`space` | [Space](/docs/datapack/data-types/space) | `world` | How `x`/`y`/`z` are interpreted. `world` is absolute; the `local` spaces rotate the offset with the **vehicle**, so a shoulder stays a shoulder when the vehicle turns.
+`rotation` | String — `head` or `body` | `head` | Which of the vehicle's rotations the `local` spaces turn with. `head` is the direction it is looking; `body` is its body yaw, which ignores pitch entirely.
 `force` | Boolean | `true` | Whether to mount even when the target already has a passenger or would normally refuse the rider.
+
+### Picking a space
+
+`local` and `local_horizontal` both carry the *length* of the vehicle's look direction into the offset, so looking up or down pulls the rider in toward the vehicle — at straight up or straight down they collapse to zero. That is the defined behaviour of those spaces, not a bug. For a rider that should keep its distance no matter where the vehicle looks, use **`local_horizontal_normalized`**: it is a pure yaw rotation, unaffected by pitch.
+
+`rotation` decides *whose* yaw that is, and only affects the three `local` spaces (`world` and the `velocity` spaces ignore it):
+
+- **`head`** (default) — the vehicle's look direction. On a player that is the camera, so the rider swings around as the player looks about.
+- **`body`** — the vehicle's body yaw (`yBodyRot` on any living entity, the plain yaw on anything else). The rider stays put on the model while the player's head turns freely, which is what you want for a Figura or geometry centaur that carries a passenger on its back. Because body yaw has no pitch, `local`, `local_horizontal` and `local_horizontal_normalized` all behave the same under `rotation: "body"`.
 
 > The offset is remembered per rider until it dismounts, and is applied on both sides — the server for hit detection and the client for rendering and the rider's own camera. It is runtime state: it does not survive a server restart, and re-running `apoli:mount` replaces it.
 
@@ -49,6 +59,18 @@ Plain mount, at the vehicle's usual seat.
 ```
 
 Sits the actor on the target's right shoulder, turning with the target rather than staying pinned to a compass direction.
+
+```json
+"bientity_action": {
+    "type": "apoli:mount",
+    "y": 0.6,
+    "z": -0.9,
+    "space": "local_horizontal_normalized",
+    "rotation": "body"
+}
+```
+
+Seats the actor on the target's back, behind it. The rider turns with the target's body and stays exactly 0.9 blocks back however the target's head moves — the setup for a centaur or any custom model whose seat is not on the head.
 
 ## Which entity the Expressions read
 

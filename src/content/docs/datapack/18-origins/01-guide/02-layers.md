@@ -42,6 +42,7 @@ Layers live in `data/<namespace>/origin_layers/`.
 | `swappable` | boolean or object | `false` | Make this layer a *pool* the player can temporarily swap their main origin for, rather than a layer they choose in — see [Swappable layers](/docs/datapack/origins/swapping). |
 | `random` | object | — | Random-roll settings — see [Randomised layers](#randomised-layers). |
 | `randomiser` | object | — | Re-roll-over-a-life settings — see [Lifecycle & re-rolls](#lifecycle--re-rolls). |
+| `max_players_per_origin` | integer | `0` | Default player cap for every origin in this layer — see [Capping a whole layer](#capping-a-whole-layer). |
 | `replace` | boolean | `false` | Discard lower-priority packs' version of this layer instead of merging into it. |
 
 > `name`, `missing_name`, `missing_description` and both `gui_title` entries are **translation keys**, not literal text. Put the display string in your pack's language file. A raw string still "works" — an unknown key renders as itself — but it will not translate.
@@ -320,3 +321,26 @@ The `randomiser` object controls what happens over a life:
 | `broadcast_messages` | boolean | `true` | Announce re-rolls in chat. |
 
 > These options are how "hardcore origins", "randomiser", and "one life per origin" servers are configured — all in JSON, no code.
+
+## Capping a whole layer
+
+`max_players_per_origin` sets a default player cap for every origin the layer offers, so an "everybody unique" layer needs one field instead of one per origin:
+
+```json
+{
+  "order": 0,
+  "max_players_per_origin": 1,
+  "origins": [
+    "example:pyromancer",
+    "example:tidecaller",
+    "example:stormwright",
+    "example:human"
+  ]
+}
+```
+
+`0` (the default) means unlimited. An origin overrides the layer with its own [`max_players`](/docs/datapack/origins/overview#capping-an-origin): `"max_players": 3` raises it, `"max_players": 0` opts out entirely — which is how you keep a fallback origin like `example:human` available to everyone on an otherwise exclusive layer.
+
+The cap is per layer *and* per origin. Offering the same origin in two layers gives it a separate cap in each, and the counts are tracked separately.
+
+> Leave at least one origin uncapped on any layer a player must choose in. If every option fills up, the layer stops offering anything and is skipped the way an all-`unchoosable` layer is — new players simply never get an origin there.

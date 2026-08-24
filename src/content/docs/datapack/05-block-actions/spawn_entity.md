@@ -16,6 +16,8 @@ Field | Type | Default | Description
 `tag` | NBT | *optional* | If specified, this NBT data will be applied to the entity that will be spawned.
 `entity_action` | Entity Action Type | *optional* | If specified, this entity action will be executed on the spawned entity.
 
+> The action runs on **any** spawned entity, living or not — markers, arrows, item frames, armour stands. Before Apoli 1.45.0 it was silently skipped unless the spawned entity was a `LivingEntity`, which made `entity_action` look broken for exactly those types.
+
 ##	Examples
 
 ```json

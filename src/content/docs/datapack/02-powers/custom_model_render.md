@@ -116,13 +116,18 @@ Blockbench animations export as a `.animation.json` next to your model. Drop it 
 
 Playback time restarts whenever the selected entry changes, so a non-looping animation replays each time its condition flips back on. `speed` scales the playback rate and `loop` overrides the file's own loop flag — see [Model Animation](/docs/datapack/data-types/model-animation) for the full field list.
 
+> **Conditions here run on the client, every frame, against the state the client knows.** Anything the server never sends — a `apoli:command`, `apoli:predicate`, `apoli:scoreboard`, `apoli:advancement` or `apoli:stat` condition — cannot be answered in a render layer and the entry is skipped with a warning in the log. Everything the client already tracks works: pose, sneaking, sprinting, fall flying, held items, equipment, and, since Apoli 1.45.0, [apoli:resource](/docs/datapack/entity-conditions/resource) on **any** power holder. Before 1.45.0 a resource on a non-player holder (a summoned minion, say) only reached the client once, when the entity came into view, so a condition on it appeared to be stuck at the value it had then — the unconditional fallback entry played instead. Nothing in the data pack changes; rebuild against 1.45.0 and the conditional entries start switching.
+
 The animation is applied **on top of** the pose the player's body already gives the model, so a bone named `right_arm` gets the player's arm swing *and* your keyframes, added together. Bones that are not body parts get the keyframes alone. Position keyframes are in Bedrock units and rotation keyframes in degrees, exactly as Blockbench writes them.
 
 On resource (re)load the log prints `Loaded N custom model animation(s) from M file(s).` — check it if nothing moves.
 
-> Only the `position`, `rotation` and `scale` channels are read, with linear interpolation between keyframes (`pre`/`post` values on a keyframe are honoured, which is how Blockbench's stepped keyframes come across). **Molang expressions are not evaluated** — a keyframe whose value is a formula rather than a number reads as `0`. Sound and particle effect keyframes are ignored.
+> Only the `position`, `rotation` and `scale` channels are read, with linear interpolation between keyframes (`pre`/`post` values on a keyframe are honoured, which is how Blockbench's stepped keyframes come across). Both keyframe spellings work — a bare `[x, y, z]`, which is what Blockbench's Bedrock exporter writes, and the `{"vector": [x, y, z]}` wrapper the GeckoLib plugin writes. Keyframe **easing** is honoured: `lerp_mode: "catmullrom"` (Blockbench's *smooth* keyframes) interpolates along a Catmull-Rom spline, and GeckoLib's `easing` / `easingArgs` — the full `easeInOutSine`, `easeOutBack`, `easeOutElastic`, `easeOutBounce` family — shape the curve between keyframes. An easing sits on the keyframe you are moving *toward*. **Molang expressions are not evaluated** — a keyframe whose value is a formula rather than a number reads as `0`. Sound and particle effect keyframes are ignored.
 
 ### Geometry mode on minions
+
+> **A power on a minion is held by the minion.** Every condition in it — including the ones on `animations` entries — is tested against the *minion*, never its summoner, so `apoli:sneaking` asks whether the minion is sneaking. Wrap it in [apoli:owner](/docs/datapack/entity-conditions/owner) to ask about the player who summoned it.
+
 
 Give the power to a [apoli:summon_minion](/docs/datapack/entity-actions/summon_minion) minion through that action's `powers` list and the minion is drawn as your Blockbench model instead of the default orb — a data-pack-only way to give a summon any shape you like.
 
