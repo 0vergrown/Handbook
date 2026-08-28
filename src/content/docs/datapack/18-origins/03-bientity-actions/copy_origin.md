@@ -54,4 +54,6 @@ Used inside an `action_on_entity_use` so sneaking + using a player copies their 
 
 ## Picking which origin to copy
 
-Like [`origins:transfer_origin`](/docs/datapack/origins/transfer_origin), this action accepts `origin` (copy exactly this one) and `selection` (`main`, `active`, `pool` or `all` — which of the target's origins on `from_layer` to read). Both default to the same behaviour as before: the target's chosen origin on `from_layer`, or that layer's swap pool when `from_layer` is itself swappable.
+Like [`origins:transfer_origin`](/docs/datapack/origins/transfer_origin), this action accepts `origin` (copy exactly this one) and a [`selection`](/docs/datapack/data-types/selection) (`main`, `active`, `pool` or `all` — which of the target's origins on `from_layer` to read). Both default to the target's chosen origin on `from_layer`, or that layer's swap pool when `from_layer` is itself swappable.
+
+The copy carries the target's **resource values** with it: a resource bar, cooldown or toggle arrives at the value the target is holding it at, not at its starting value. Stored `apoli:inventory` contents are left behind, since copying those would duplicate items.

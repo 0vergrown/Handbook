@@ -39,6 +39,57 @@ Origins live in `data/<namespace>/origins/`. The file name is the origin's id.
 | `unchoosable`       | boolean                                          | `false` | Exists but can't be picked (e.g. an admin origin).   |
 | `name_scroll_speed` | number                                           | —       | Speed a long name marquees at.                       |
 | `max_players`       | number                                           | `-1`    | How many players may hold this origin at once — see [Capping an origin](#capping-an-origin). |
+| `upgrades`          | list of [upgrade](#upgrading-into-another-origin) | `[]`    | Conditions that turn this origin into another one — see [Upgrading into another origin](#upgrading-into-another-origin). |
+
+## Upgrading into another origin
+
+`upgrades` lets an origin **become** another one when the player meets a condition. Each entry names an
+[entity condition](/docs/datapack/entity-conditions) and the origin to change into; the moment the
+condition holds, the player's origin on that layer is swapped for the new one and its powers are
+reconciled in place.
+
+| Field | Type | Default | Purpose |
+|---|---|---|---|
+| `condition` | [Entity Condition](/docs/datapack/entity-conditions) | **required** | Tested against the holder. When it passes, the upgrade fires. |
+| `origin` | [Identifier](/docs/datapack/data-types/identifier) | **required** | The origin to change into. |
+| `announcement` | [text](/docs/datapack/data-types/text-component) | _optional_ | A message sent to that player when the upgrade fires. Left out, nothing is said. |
+
+```json
+{
+  "icon": {
+    "item": "minecraft:phantom_membrane"
+  },
+  "impact": 2,
+  "powers": [
+    "example:gliding"
+  ],
+  "upgrades": [
+    {
+      "condition": {
+        "type": "apoli:advancement",
+        "advancement": "minecraft:end/kill_dragon"
+      },
+      "origin": "origins:elytrian",
+      "announcement": "You have slain the dragon. Your wings are whole."
+    }
+  ]
+}
+```
+
+Entries are tested in order and the first one that passes wins, so put the most specific condition
+first. An entry naming the origin it is written in is ignored, and so is one naming an origin no pack
+defines.
+
+Powers the two origins share are left alone, so a resource, cooldown or stored inventory that both
+sides grant survives the upgrade untouched; only the powers that differ are revoked and granted.
+
+An origin sitting in a [swap pool](/docs/datapack/origins/swapping) upgrades too — the old entry
+leaves the pool and the new one takes its place, without disturbing whatever is swapped in.
+
+> The check runs on the server, once a second per player, and only while at least one loaded origin
+> declares `upgrades` — a pack that uses none pays nothing. Conditions that are expensive to evaluate
+> are still evaluated at that rate, so prefer cheap ones (an advancement, a resource, a tag) over a
+> raycast.
 
 ## Capping an origin
 
@@ -52,10 +103,14 @@ Origins live in `data/<namespace>/origins/`. The file name is the origin's id.
 
 ```json
 {
-  "icon": { "item": "minecraft:dragon_egg" },
+  "icon": {
+    "item": "minecraft:dragon_egg"
+  },
   "impact": 3,
   "max_players": 1,
-  "powers": ["example:dragon_flight"]
+  "powers": [
+    "example:dragon_flight"
+  ]
 }
 ```
 

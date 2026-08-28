@@ -12,8 +12,8 @@ Type ID: `apoli:can_see`
 
 Field | Type | Default | Description
 ------|------|---------|------------
-`shape_type` | [Shape Type](/docs/datapack/data-types/shape-type) | `"visual"` | Determines how the ray-cast will handle blocks.
-`fluid_handling` | [Fluid Handling](/docs/datapack/data-types/fluid-handling) | `"none"` | Determines how the ray-cast will handle fluids. 
+`shape_type` | [Shape Type](/docs/datapack/data-types/shape-type) | `"visual"` | Determines how the raycast will handle blocks.
+`fluid_handling` | [Fluid Handling](/docs/datapack/data-types/fluid-handling) | `"none"` | Determines how the raycast will handle fluids. 
 
 ## Examples
 

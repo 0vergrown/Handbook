@@ -14,7 +14,7 @@ Field  | Type | Default | Description
 -------|------|---------|-------------
 `adjacent_condition` | Block Condition Type (Data Type) | | The block condition that needs to be fulfilled by adjacent blocks to count towards this condition.
 `comparison` | [Comparison](/docs/datapack/data-types/comparison) | | Determines how the number of adjacent blocks which fulfill the `adjacent_condition` block condition should be compared to the specified value.
-`compare_to` | [Float](/docs/datapack/data-types/float) | | The value at which the number of adjacent blocks which fulfill `adjacent_condition` will be compared to.
+`compare_to` | [Integer](/docs/datapack/data-types/integer) | **required** | The number of matching neighbours to compare against. A block has six neighbours, so this is `0`–`6`.
 
 ## Examples
 

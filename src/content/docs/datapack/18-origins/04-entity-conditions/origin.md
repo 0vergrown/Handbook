@@ -16,7 +16,7 @@ Type ID: `origins:origin` — an [entity condition](/docs/datapack/entity-condit
 | --- | --- | --- | --- |
 | `origin` | origin pattern, or a list of them | _required_ | The origin(s) to look for. Passes if **any** of them matches. |
 | `layer` | [Identifier](/docs/datapack/data-types/identifier) | _optional_ | Only check this layer. Omit to pass if a match is held on **any** layer. |
-| `selection` | [String](/docs/datapack/data-types/string) | `main` | Where to look: `main` (the chosen origin), `active` (the swapped-in origin, falling back to the chosen one), `pool` (origins sitting in a [swap pool](/docs/datapack/origins/swapping)) or `all` (any of the three). |
+| `selection` | [Selection](/docs/datapack/data-types/selection) | `main` | Where to look: `main` (the chosen origin), `active` (the swapped-in origin, falling back to the chosen one), `pool` (origins sitting in a [swap pool](/docs/datapack/origins/swapping)) or `all` (any of the three). |
 
 An **origin pattern** is an [identifier](/docs/datapack/data-types/identifier) that may use `*` as a wildcard in its namespace or its path — `my_pack:aliens/*` matches every origin whose path starts with `aliens/`, at any depth. Without a `*` it is an ordinary identifier and must match exactly.
 

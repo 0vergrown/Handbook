@@ -14,14 +14,14 @@ Type ID: `apoli:swing_hand`
 
 Field  | Type | Default | Description
 -------|------|---------|-------------
-`hand` | String | `"MAIN_HAND"` | Determines which hand is swung. Accepts either `"MAIN_HAND"`, `"OFF_HAND"`
+`hand` | [Hand](/docs/datapack/data-types/hand) | `"main_hand"` | Which hand is swung: `"main_hand"` or `"off_hand"`. `"mainhand"`/`"offhand"` and the upper-case spellings are also accepted.
 
 ## Examples
 
 ```json
 "entity_action": {
     "type": "apoli:swing_hand",
-    "hand": "OFF_HAND"
+    "hand": "off_hand"
 }
 ```
 
@@ -33,11 +33,17 @@ Run the action twice in the same tick, once per hand, and both arms swing togeth
 
 ```json
 "entity_action": {
-    "type": "apoli:and",
-    "actions": [
-        { "type": "apoli:swing_hand", "hand": "MAIN_HAND" },
-        { "type": "apoli:swing_hand", "hand": "OFF_HAND" }
-    ]
+  "type": "apoli:and",
+  "actions": [
+    {
+      "type": "apoli:swing_hand",
+      "hand": "main_hand"
+    },
+    {
+      "type": "apoli:swing_hand",
+      "hand": "off_hand"
+    }
+  ]
 }
 ```
 

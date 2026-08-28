@@ -11,7 +11,8 @@ Type ID: `apoli:add_skill_points`
 
 | Field        | Type                   | Default | Description                                                                               |
 |--------------|------------------------|---------|-------------------------------------------------------------------------------------------|
-| `skill_tree` | [Identifier](/docs/datapack/data-types/identifier) |         | ID of the skill tree that the point will be given to (MUST BE THE ROOT OF THE SKILL TREE) |
+| `skill_tree` | [Identifier](/docs/datapack/data-types/identifier) | **required** | ID of the skill tree the points are given to. This must be the **root** of the tree. |
+| `points`     | [Integer](/docs/datapack/data-types/integer) | `1` | How many points to add. Negative values take points away, down to zero. |
 
 ## Example
 ```json

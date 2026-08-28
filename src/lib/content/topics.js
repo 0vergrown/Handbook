@@ -43,5 +43,6 @@ export const SECTION_TITLES = {
 	'pufferfishs-skills': "Pufferfish's Skills",
 	'better-combat': 'Better Combat',
 	woodwalkers: 'WoodWalkers',
-	kubejs: 'KubeJS'
+	kubejs: 'KubeJS',
+	'performance-mods': 'Performance Mods'
 };

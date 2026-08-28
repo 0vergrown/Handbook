@@ -16,7 +16,7 @@ Field | Type | Default | Description
 ------|------|---------|-------------
 `bientity_condition` | Bi-entity Condition Type | _optional_ | If specified, this condition type will only evaluate to true if this condition is fulfilled by either or both the '**actor**' and '**target**' entities.
 `comparison` | Comparison | `">="` | Determines how the amount of entities currently being ridden should be compared to the specified value.
-`compare_to` | Integer | `1` | The value at which the amoutn of entities currently being ridden will be compared to.
+`compare_to` | Integer | `1` | The value at which the amount of entities currently being ridden will be compared to.
 
 ## Examples
 

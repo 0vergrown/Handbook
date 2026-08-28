@@ -21,6 +21,7 @@ Field | Type | Default | Description
 Field | Type | Default | Description
 ------|------|---------|-------------
 `entity_action` | [Entity Action](/docs/datapack/entity-actions) | **required** | What picking this slice does.
+`condition` | [Entity Condition](/docs/datapack/entity-conditions) | _optional_ | Checked when the menu opens. A slice whose condition fails is left out of the menu entirely, so the remaining slices close up around it.
 `item` | [Item Stack](/docs/datapack/data-types/item-stack) | _optional_ | An item drawn as the slice's icon.
 `icon` | [Identifier](/docs/datapack/data-types/identifier) | _optional_ | A texture drawn as the icon instead of an item.
 `highlight_icon_texture` | [Identifier](/docs/datapack/data-types/identifier) | _optional_ | Icon used while the slice is hovered.

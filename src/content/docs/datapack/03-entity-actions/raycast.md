@@ -55,6 +55,7 @@ Registered as **both an entity action and a bi-entity action**. As a bi-entity a
 - Particles and `command_along_ray` both trace up to the hit position (or the full range on a miss).
 - `block_action` respects `block_condition`; `bientity_action` respects `bientity_condition`.
 - **`radius`** only affects which entities the beam catches; a wide beam still stops on the first block along its centre line. Use `{ "x": w, "y": h, "z": d }` for a rectangular cross-section (x = left/right, y = up/down, z = forward/back).
+- An entity already **inside** the radius of the caster's eye is hit at distance `0`, so a beam that is `3` wide catches whatever is standing on top of you. That is the point of a radius — it is a volume around the ray, not just a longer reach.
 - **`cone_angle`** replaces `radius` for entity hits with a directional cone in front of the caster (e.g. `30` gives a 60°-wide cone). Ideal for shout/breath attacks. Pair with `pierce_entities` to hit every entity in the cone; without it, only the nearest is hit. Occlusion is approximate — entities past the centre-line block are still culled.
 - **`chain`** re-casts a full raycast from the previous ray's end point. Every level runs its own `before_action`/`hit_action`/`particle`/etc., so you can trace a multi-segment beam. `reflect` uses the hit block's face normal to bounce; if the parent ray hit an entity or nothing, `reflect` falls back to `forward`. Chaining is capped at 32 levels as a safety limit.
 

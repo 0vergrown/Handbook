@@ -8,7 +8,9 @@ A particle Apoli builds from a texture you ship yourself, with its colour, size,
 
 Type ID: `apoli:custom`
 
-> The texture is a **resource pack** file, referenced by its full path (`example:textures/particle/spark.png` → `assets/example/textures/particle/spark.png`). It does not go through the vanilla particle atlas, so it needs no `particles/*.json` and can be any size.
+> The texture is a **resource pack** file, referenced by its full path (`example:textures/particle/spark.png` → `assets/example/textures/particle/spark.png`). A short id works too — `example:spark` is looked up as `assets/example/textures/particle/spark.png`. It does not go through the vanilla particle atlas, so it needs no `particles/*.json` and can be any size.
+>
+> A particle drawn as a black-and-magenta checker means the texture is not in any loaded resource pack. Apoli logs the id it looked for and the file it expected, so check that line first — the usual cause is the pack being off, or its `pack_format` being too old for the game version to enable it.
 
 ## Fields
 
@@ -18,6 +20,7 @@ Field | Type | Default | Description
 `lifetime` | [Integer](/docs/datapack/data-types/integer) | `20` | How many ticks the particle lives.
 `lifetime_variation` | [Integer](/docs/datapack/data-types/integer) | `0` | A random `0`–`n` extra ticks added per particle, so a burst does not vanish all at once.
 `size` | [Float](/docs/datapack/data-types/float) | `0.2` | Size of the quad when it spawns.
+`size_variation` | [Float](/docs/datapack/data-types/float) | `0.0` | A random `0`–`n` added to `size` per particle, so a burst is not all one size. `end_size` is scaled by the same amount, so each particle keeps the shape of its own size curve.
 `end_size` | [Float](/docs/datapack/data-types/float) | `size` | Size at the end of its life. Interpolated with `easing`; set `0.0` to shrink away.
 `color` | Colour | `#FFFFFFFF` | Tint at spawn. Multiplies the texture, so a white texture takes the colour exactly.
 `end_color` | Colour | `color` | Tint at the end of its life, interpolated with `easing` — the `dust_color_transition` behaviour, on your own texture.
@@ -25,14 +28,52 @@ Field | Type | Default | Description
 `friction` | [Float](/docs/datapack/data-types/float) | `0.98` | Velocity kept each tick. `1.0` never slows down, `0.9` drags hard.
 `roll` | [Float](/docs/datapack/data-types/float) | `0.0` | Starting rotation of the quad, in degrees.
 `roll_speed` | [Float](/docs/datapack/data-types/float) | `0.0` | Degrees added to the rotation each tick.
-`frames` | [Integer](/docs/datapack/data-types/integer) | `1` | Number of animation frames stacked **vertically** in the texture, like a vanilla animated texture.
-`frame_time` | [Integer](/docs/datapack/data-types/integer) | `0` | Ticks per frame. `0` spreads all frames evenly across `lifetime`.
-`loop_frames` | [Boolean](/docs/datapack/data-types/boolean) | `false` | If `true` the frame strip repeats; if `false` it holds the last frame.
+`frames` | [Integer](/docs/datapack/data-types/integer) | `0` | Number of animation frames in the texture. `0` reads the count from the texture itself; `1` forces a single static frame.
+`frame_time` | [Integer](/docs/datapack/data-types/integer) | `0` | Ticks per frame. `0` uses the `frametime` from the texture's animation metadata, or — if the texture has none — spreads all frames evenly across `lifetime`.
+`frame_layout` | [String](/docs/datapack/data-types/string) | `auto` | How the frames are arranged: `vertical` (a column, the vanilla layout), `horizontal` (a row), `grid` (square cells, left to right then top to bottom), or `auto` to work it out from the image.
+`loop_frames` | [Boolean](/docs/datapack/data-types/boolean) | from the texture | If `true` the animation repeats; if `false` it holds the last frame. Left out, an animation that came from the texture's metadata loops and a hand-numbered one holds.
 `physics` | [Boolean](/docs/datapack/data-types/boolean) | `false` | Whether the particle collides with blocks instead of passing through them.
 `emissive` | [Boolean](/docs/datapack/data-types/boolean) | `false` | Draw at full brightness, ignoring the light level at its position.
 `blend` | [String](/docs/datapack/data-types/string) | `translucent` | `translucent` for normal alpha blending, `additive` for a glow that brightens whatever is behind it.
 `facing` | [String](/docs/datapack/data-types/string) | `camera` | `camera` turns the quad to face the viewer on every axis; `vertical` keeps it upright and only turns it around Y.
 `easing` | [Easing](/docs/datapack/data-types/easing) | `linear` | The curve used for the colour and size interpolation over the particle's life.
+
+### Animated textures
+
+Apoli reads the same `.png.mcmeta` file the game uses for animated block and item textures, so a
+texture that already animates in vanilla animates here with nothing else written:
+
+```json
+{
+  "type": "apoli:custom",
+  "texture": "minecraft:textures/block/fire_0.png",
+  "lifetime": 32,
+  "size": 0.18
+}
+```
+
+`fire_0.png` ships a 32-frame strip and an `.mcmeta` naming the frame order, and that order, the
+frame count and the `frametime` are all taken from it. `frame_time` still overrides the speed, and
+`frames: 1` pins it to the first frame.
+
+For a strip **without** an `.mcmeta` — your own sheet — say how many frames it holds:
+
+```json
+{
+  "type": "apoli:custom",
+  "texture": "example:textures/particle/spark.png",
+  "frames": 4,
+  "frame_time": 2,
+  "loop_frames": true
+}
+```
+
+`auto` reads a taller-than-wide image as a vertical strip and a wider-than-tall one as a horizontal
+one, in both cases only when the long side divides evenly by the short one. Anything else — a grid,
+or a sheet whose cells are not square — needs `frame_layout` written out.
+
+> A texture with neither an `.mcmeta` nor a `frames` value is drawn whole, as one frame. That is
+> what you want for a plain particle sprite, and it is why `frames` matters on a hand-made sheet.
 
 ### Colour
 
@@ -89,7 +130,8 @@ A four-frame spark burst on hit, spinning as it falls:
       "end_color": "#00FFFFFF",
       "gravity": 0.6,
       "roll_speed": 14.0,
-      "frames": 4
+      "frames": 4,
+      "frame_time": 3
     },
     "count": 12,
     "speed": 0.25

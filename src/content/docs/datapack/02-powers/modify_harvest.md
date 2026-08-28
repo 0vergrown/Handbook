@@ -13,7 +13,7 @@ Type ID: `apoli:modify_harvest`
 Field  | Type | Default | Description
 -------|------|---------|-------------
 `block_condition` | Block Condition Type | _optional_ | If specified, only blocks that fulfill this condition are affected.
-`allow` | Boolean | | Determines whether the player is be able to harvest the block.
+`allow` | [Boolean](/docs/datapack/data-types/boolean) | **required** | Whether the player can harvest the block. `true` grants drops regardless of the tool, `false` denies them even with the right one.
 
 ## Examples
 

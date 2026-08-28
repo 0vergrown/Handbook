@@ -19,7 +19,7 @@ Field  | Type | Default | Description
 `from_layer` | [Identifier](/docs/datapack/data-types/identifier) | `origins:origin` | The layer the origin is read from on the **donor**.
 `to_layer` | [Identifier](/docs/datapack/data-types/identifier) | `origins:origin` | The layer the origin is written to on the **recipient**. Use a dedicated layer (e.g. `origins:copy`) to add the origin alongside the recipient's own, or the same layer to replace it.
 `origin` | [Identifier](/docs/datapack/data-types/identifier) | *optional* | Transfer exactly this origin instead of searching the donor's layer. Overrides `selection`.
-`selection` | [String](/docs/datapack/data-types/string) | see below | Which of the donor's origins on `from_layer` to take: `main`, `active`, `pool` or `all`.
+`selection` | [Selection](/docs/datapack/data-types/selection) | see below | Which of the donor's origins on `from_layer` to take: `main`, `active`, `pool` or `all`.
 `random` | [Boolean](/docs/datapack/data-types/boolean) | `false` | When the selection yields more than one candidate, pick one at random rather than the first.
 `actor_action` | Entity Action | *optional* | Action run on the actor after the transfer (e.g. a sound or particle).
 `target_action` | Entity Action | *optional* | Action run on the target after the transfer.
@@ -46,8 +46,13 @@ Handing an origin **to** a swappable layer adds it to the recipient's pool rathe
 An origin choice is stored as `layer → origin` plus the powers granted under that layer's source (`layer/<path>`). `transfer_origin`:
 
 1. Resolves which of the donor's origins to move (see above).
-2. Reconciles the recipient's `to_layer` to that origin (the same power-grant path a normal choose uses — resources start fresh, `apoli:inventory` contents aren't disturbed).
-3. On a **move** (`copy: false`), removes it from the donor — clearing the layer if it was the layer's pick, or revoking that pool entry if it came from a swap pool.
+2. Reconciles the recipient's `to_layer` to that origin (the same power-grant path a normal choose uses).
+3. Copies the donor's **resource values** for that origin's powers onto the recipient, so a half-spent
+   resource bar, a cooldown or a toggle arrives in the state the donor had it in rather than at its
+   starting value. Powers the recipient already held keep their own values only if the donor does not
+   have that power; stored `apoli:inventory` contents are never copied, because that would duplicate
+   items.
+4. On a **move** (`copy: false`), removes it from the donor — clearing the layer if it was the layer's pick, or revoking that pool entry if it came from a swap pool.
 4. Broadcasts both players so the view-origin GUIs re-sync.
 
 Removing an origin can gate off a dependent layer (e.g. a `copy`/one-for-all layer conditioned on holding it); those are revalidated automatically on both sides.

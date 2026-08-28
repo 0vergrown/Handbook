@@ -14,7 +14,7 @@ Field | Type | Default | Description
 ------|------|---------|-------------
 `comparison` | [Comparison](/docs/datapack/data-types/comparison) | **required** | `<`, `<=`, `>`, `>=`, `==`, `!=`.
 `compare_to` | [Integer](/docs/datapack/data-types/integer) | **required** | The value to compare against.
-`unit` | [String](/docs/datapack/data-types/string) | `levels` | `levels` or `points`. Filled in by the aliases.
+`unit` | [Unit](/docs/datapack/data-types/unit) | `levels` | `levels` or `points`. Filled in by the aliases.
 
 ## Examples
 

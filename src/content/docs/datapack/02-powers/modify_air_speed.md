@@ -39,8 +39,8 @@ The opposite — a heavy origin that cannot steer once it leaves the ground:
     "value": -0.4
   },
   "condition": {
-    "type": "apoli:not",
-    "condition": { "type": "apoli:fall_flying" }
+    "type": "apoli:fall_flying",
+    "inverted": true
   }
 }
 ```
