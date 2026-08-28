@@ -14,6 +14,7 @@ A [String](/docs/datapack/data-types/string) representing a mathematical express
 | [Status Effect Instance](/docs/datapack/data-types/status-effect-instance) | `duration`, `amplifier` (evaluated against the entity receiving the effect) |
 | [apoli:chance](/docs/datapack/meta-actions/chance) | `chance` |
 | [apoli:resource](/docs/datapack/powers/resource) / [apoli:cooldown](/docs/datapack/powers/cooldown) | `min`, `max`, `start_value` / `cooldown` |
+| [apoli:action_on_key_press](/docs/datapack/powers/action_on_key_press), [apoli:action_on_key_sequence](/docs/datapack/powers/action_on_key_sequence), [apoli:action_on_hit](/docs/datapack/powers/action_on_hit), [apoli:action_when_hit](/docs/datapack/powers/action_when_hit), [apoli:action_on_kill](/docs/datapack/powers/action_on_kill), [apoli:action_on_collision](/docs/datapack/powers/action_on_collision), [apoli:fire_projectile](/docs/datapack/powers/fire_projectile), [apoli:game_event_listener](/docs/datapack/powers/game_event_listener) | `cooldown` |
 | Resource | `compare_to`, `position` |
 | [apoli:modify_resource](/docs/datapack/entity-actions/modify_resource) | `position`, `from_position` |
 | [Model Part Transformation](/docs/datapack/data-types/model-part-transformation) | `value`, and each keyframe's `value` |

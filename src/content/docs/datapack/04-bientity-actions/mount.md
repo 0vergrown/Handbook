@@ -8,8 +8,6 @@ Mounts the actor entity onto the target entity, optionally holding the rider at 
 
 Type ID: `apoli:mount`
 
-> Since July 2026 the mount is properly synced to the clients involved: when the target (or actor) is a player, that player's client is sent the updated passenger list directly — previously the ridden player never saw the rider (the entity appeared frozen in place and "teleported" on dismount). apoli:dismount got the matching fix.
-
 ## Fields
 
 Field  | Type | Default | Description
@@ -30,13 +28,17 @@ Field  | Type | Default | Description
 - **`head`** (default) — the vehicle's look direction. On a player that is the camera, so the rider swings around as the player looks about.
 - **`body`** — the vehicle's body yaw (`yBodyRot` on any living entity, the plain yaw on anything else). The rider stays put on the model while the player's head turns freely, which is what you want for a Figura or geometry centaur that carries a passenger on its back. Because body yaw has no pitch, `local`, `local_horizontal` and `local_horizontal_normalized` all behave the same under `rotation: "body"`.
 
+> **`body` tracks the model, not a fixed direction.** Vanilla's body yaw is not independent of the head — it is exactly the rotation the player *model's* torso is drawn at, which is the point, but it means the rider still moves in three ordinary situations: the body is dragged along whenever the head goes more than **50°** off it (**15°** while the player is blocking with a shield), it slews toward the direction of travel while the player walks, and it snaps toward the head during an attack swing. All three are the torso genuinely turning, so a rider glued to it should turn too. Standing still and looking around within 50° is the case where `head` and `body` differ visibly — that is the test to use if you are checking whether the option is taking effect at all.
+
+> Under `body` the rider is drawn against the *interpolated* body yaw, the same figure the player model's torso is drawn at, so it stays welded to the back through a fast turn instead of stepping once per tick. `head` resolves once per tick instead.
+
 > The offset is remembered per rider until it dismounts, and is applied on both sides — the server for hit detection and the client for rendering and the rider's own camera. It is runtime state: it does not survive a server restart, and re-running `apoli:mount` replaces it.
 
-> The offset is applied on top of whatever seat the vehicle would normally use, so it works on every vehicle — plain mobs, players, and the vanilla mounts that define their own seat position (horses, camels, llamas, striders, boats, minecarts). Before Apoli 1.38.1 those vanilla mounts silently ignored it, because the hook sat on the seat-position method they override.
+> The offset is applied on top of whatever seat the vehicle would normally use, so it works on every vehicle — plain mobs, players, and the vanilla mounts that define their own seat position (horses, camels, llamas, striders, boats, minecarts).
 
-> If the actor is **already** riding the target, `apoli:mount` no longer does nothing — it applies (or replaces) the offset without re-mounting. That makes it usable to re-position a rider that climbed on by ordinary means.
+> If the actor is **already** riding the target, `apoli:mount` still applies (or replaces) the offset without re-mounting. That makes it usable to re-position a rider that climbed on by ordinary means.
 
-> **1.20.1 only:** riders of a *player* already sit on top of that player's head rather than at vanilla's shoulder height — that predates this action and is unchanged. The offset is added on top of it, so `y: -0.8` brings a rider back down to roughly where 1.21.1 puts them.
+> **1.20.1 only:** riders of a *player* already sit on top of that player's head rather than at vanilla's shoulder height. The offset is added on top of that, so `y: -0.8` brings a rider back down to roughly where 1.21.1 puts them.
 
 ## Examples
 

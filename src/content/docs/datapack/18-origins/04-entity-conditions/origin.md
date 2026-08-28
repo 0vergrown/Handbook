@@ -80,7 +80,7 @@ This is how a power behaves differently depending on which origin the player pic
 
 ## Checking a swap pool
 
-`selection` decides which of a player's origins count. By default only their **chosen** origin does, which is why a swapped-in origin used to read as absent:
+`selection` decides which of a player's origins count. By default only their **chosen** origin does, so a swapped-in origin reads as absent unless you widen it:
 
 ```json
 {

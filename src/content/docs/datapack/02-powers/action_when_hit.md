@@ -27,7 +27,7 @@ Every field below works under **every** ID this power type answers to. The legac
 | `attacker_condition`  | Entity Condition Type    | _optional_                 | Gates firing on the attacker. Fails if there is no attacker.                    |
 | `target_condition`    | Entity Condition Type    | _optional_                 | Gates firing on the target (the holder).                                        |
 | `damage_condition`    | Damage Condition Type    | _optional_                 | Gates firing on the damage that was dealt.                                      |
-| `cooldown`            | Integer                  | `1`                        | Ticks the power needs to recharge between fires.                                |
+| `cooldown`            | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | `1`                        | Ticks the power needs to recharge between fires.                                |
 | `hud_render`          | Hud Render               | `{"should_render": false}` | How the cooldown is shown on the HUD.                                           |
 
 If the damage source has no living attacker (environmental, `/kill`, etc.) the `bientity_condition` and `attacker_condition` gates fail, and `bientity_action` / `attacker_action` (and `entity_action` when it is bound to the attacker) are skipped. `self_action` and `target_action` still fire.
@@ -45,7 +45,7 @@ This power type absorbs four legacy Apace types into one schema, and JSON author
 | `apoli:action_when_damage_taken` | the target (holder) | Older name for the same thing. |
 | `apoli:attacker_action_when_hit` | the attacker | Apace's variant that ran the action on the attacker. |
 
-The legacy IDs are **aliases only**. They no longer rename or consume fields, so a power written as `apoli:attacker_action_when_hit` can still use `bientity_action`, `self_action` and `target_action` alongside its `entity_action`. Neither legacy variant accepted `bientity_condition` in Apace; this unified type does, under every ID. If you want `entity_action` on a side the alias does not imply, set `entity_action_target` explicitly.
+The legacy IDs are **aliases only**. They do not rename or consume fields, so a power written as `apoli:attacker_action_when_hit` can still use `bientity_action`, `self_action` and `target_action` alongside its `entity_action`. Neither legacy variant accepted `bientity_condition` in Apace; this unified type does, under every ID. If you want `entity_action` on a side the alias does not imply, set `entity_action_target` explicitly.
 
 ## Examples
 

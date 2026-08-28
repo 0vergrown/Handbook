@@ -16,10 +16,10 @@ automatically when Sable is installed, and nothing changes when it is not.
 
 [`apoli:attach_rope`](/docs/datapack/entity-actions/attach_rope) resolves a `raycast` endpoint by
 firing a ray and keeping the point it hit. Sable answers that ray in the sub-level's **own**
-coordinates — the plot's, not the world's — so the anchor used to be stored tens of thousands of
-blocks away in the reserved plot region, and the rope was drawn stretching off to nowhere.
+coordinates — the plot's, not the world's — so a raw hit point would land tens of thousands of
+blocks away in the reserved plot region, with the rope drawn stretching off to nowhere.
 
-An endpoint that lands on a sub-level is now stored as *(which sub-level, where on it)* and
+An endpoint that lands on a sub-level is instead stored as *(which sub-level, where on it)* and
 converted back to a world position every tick, on both the server and the client. The result is a
 rope that stays welded to the block it hit: swing off a moving airship and you move with it, and the
 rope's length constraint, its `break_beyond` distance and its rendering all use the tracked

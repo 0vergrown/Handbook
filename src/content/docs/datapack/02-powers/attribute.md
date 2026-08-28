@@ -23,9 +23,9 @@ At least one of `modifier` or `modifiers` must be present; the `attribute` field
 
 ## Reach on 1.20.1
 
-`minecraft:player.block_interaction_range` and `minecraft:player.entity_interaction_range` are the attributes that control how far a player can reach. They were added to the game in 1.20.5, so on **1.20.1** they do not exist and a power naming them used to do nothing at all — silently, because a modifier on an unknown attribute is skipped.
+`minecraft:player.block_interaction_range` and `minecraft:player.entity_interaction_range` are the attributes that control how far a player can reach. They were added to the game in 1.20.5, so on **1.20.1** vanilla does not have them.
 
-Since Apoli 1.38.0 the 1.20.1 build **registers both of them itself** (as `apoli:player.block_interaction_range` and `apoli:player.entity_interaction_range`, with vanilla's `4.5` and `3.0` defaults) and answers to the `minecraft:` names as aliases, so the same power JSON works unchanged on 1.20.1, 1.21.1 and NeoForge:
+The 1.20.1 build **registers both of them itself** (as `apoli:player.block_interaction_range` and `apoli:player.entity_interaction_range`, with vanilla's `4.5` and `3.0` defaults) and answers to the `minecraft:` names as aliases, so the same power JSON works unchanged on 1.20.1, 1.21.1 and NeoForge:
 
 ```json
 {

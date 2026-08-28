@@ -28,7 +28,7 @@ If the entity is spectating something else, the shader comes from whatever it is
 
 A shader file that fails to load (missing file, malformed JSON) is reported once and then ignored, so a typo does not spam the log every frame. Fix the file and reload resources (F3+T) to retry it.
 
-> Both sides need Apoli 1.36.2 or newer. A client on an older build is simply never told about the shader — nothing crashes, the effect just never appears.
+> Both sides need Apoli: the server decides which shader applies and the client binds it. A client that is never told about the shader simply does not show it — nothing crashes, the effect just never appears.
 
 ## Examples
 

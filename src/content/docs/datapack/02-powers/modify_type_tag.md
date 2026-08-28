@@ -9,7 +9,7 @@ Changes whether the entity counts as a member of an entity type tag, for every c
 
 Type ID: `apoli:modify_type_tag` (type-alias: `apoli:entity_group`)
 
-This replaces the old `apoli:entity_group` power, which could only pick from five hard-coded groups and — in this rewrite — never did anything at all. Tags are the system Minecraft itself uses: `#minecraft:undead` drives Smite damage and healing from Instant Damage, `#minecraft:arthropod` drives Bane of Arthropods, and a data pack's own tags work exactly the same way.
+This supersedes `apoli:entity_group`, which could only pick from five hard-coded groups. Tags are the system Minecraft itself uses: `#minecraft:undead` drives Smite damage and healing from Instant Damage, `#minecraft:arthropod` drives Bane of Arthropods, and a data pack's own tags work exactly the same way.
 
 ## Fields
 

@@ -37,5 +37,3 @@ This example will "pull" the target entity to the actor entity.
     "y": "0.4 + (target_max_health / 40)"
 }
 ```
-
-> Before Apoli 1.40.0 these expressions were evaluated against the target and the actor was unreachable. Packs that read entity stats here should add `target_` to keep the old meaning.

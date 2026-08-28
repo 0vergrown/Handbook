@@ -27,7 +27,7 @@ Every field below works under **every** ID this power type answers to. The legac
 | `target_condition` | Entity Condition Type | _optional_ | Gates firing on the entity that died. |
 | `attacker_condition` | Entity Condition Type | _optional_ | Gates firing on the killer. |
 | `damage_condition` | Damage Condition Type | _optional_ | Gates firing on the killing damage. |
-| `cooldown` | Integer | `1` | Ticks the power needs to recharge between fires. |
+| `cooldown` | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | `1` | Ticks the power needs to recharge between fires. |
 | `hud_render` | Hud Render | `{"should_render": false}` | How the cooldown is shown on the HUD. |
 
 ## Apace compatibility
@@ -37,7 +37,7 @@ Every field below works under **every** ID this power type answers to. The legac
 | `apoli:action_on_kill` | the killer (holder) |
 | `apoli:self_action_on_kill` | the killer (holder) |
 
-`apoli:self_action_on_kill` is an **alias only**. It no longer renames or consumes fields, so a power written under it can use `bientity_action`, `self_action` and `target_action` alongside its `entity_action`.
+`apoli:self_action_on_kill` is an **alias only**. It does not rename or consume fields, so a power written under it can use `bientity_action`, `self_action` and `target_action` alongside its `entity_action`.
 
 ## Examples
 

@@ -22,7 +22,7 @@ This is checked once per tick against every entity whose bounding box intersects
 | `bientity_condition` | [Bi-entity Condition Type](/docs/datapack/bientity-conditions) | _optional_ | Gates firing on the (actor, target) pair. |
 | `target_condition` | [Entity Condition Type](/docs/datapack/entity-conditions) | _optional_ | Gates firing on the target. |
 | `radius` | [Float](/docs/datapack/data-types/float) | `0.0` | Extra blocks to inflate the holder's bounding box by before looking for overlaps. `0.0` means the boxes must actually touch. |
-| `cooldown` | [Integer](/docs/datapack/data-types/integer) | `0` | Ticks the power needs to recharge between fires. `0` fires every tick, for **every** colliding entity. |
+| `cooldown` | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | `0` | Ticks the power needs to recharge between fires. `0` fires every tick, for **every** colliding entity. |
 | `include_riding` | [Boolean](/docs/datapack/data-types/boolean) | `false` | Whether to also fire for the entity the holder is riding, its passengers, and entities sharing its vehicle. |
 | `hud_render` | [Hud Render](/docs/datapack/data-types/hud-render) | `{"should_render": false}` | How the cooldown is shown on the HUD. |
 

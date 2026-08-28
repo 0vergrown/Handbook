@@ -16,6 +16,8 @@ Field  | Type | Default | Description
 `render_outline` | Boolean | `false` | Determines whether the glowing outline should be shown or not.
 `bientity_condition` | Bi-entity Condition Type | _optional_ | If specified, the '**target**' will only be invisible to '**actors**' (either the player or mobs that may see the target) if the bi-entity condition is fulfilled by either or both of them.
 
+> `render_armor` and `render_outline` only take effect while the entity is actually invisible to the viewer. With a `bientity_condition`, a viewer who still sees the entity sees its armor and outline normally.
+
 ## Examples
 
 ```json

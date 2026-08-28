@@ -16,6 +16,45 @@ Field  | Type | Default | Description
 -------|------|---------|-------------
 `transformations` | [Array](/docs/datapack/data-types/array) of [Model Part Transformation](/docs/datapack/data-types/model-part-transformation) | — | The list of edits to apply. Each entry targets one part and one property.
 `override_pose` | Array of String | `[]` | Poses whose vanilla animation is thrown away before `transformations` run, so the edits start from the standing pose. Takes the same vanilla `Pose` names as [`apoli:pose`](/docs/datapack/powers/pose)'s `entity_pose`.
+`perspectives` | String OR Array of String | `["third_person"]` | Which views the transformations are drawn in: `first_person`, `third_person`, or both. See [First person and third person](#first-person-and-third-person).
+
+## First person and third person
+
+The held-item view draws the player's arm through the same model this power edits, so a body animation authored for the third-person view lands on the first-person hand too — where a scaled or rotated arm reads as broken rather than animated. `perspectives` decides which views an edit is drawn in:
+
+- `third_person` (the default) — the world view: your own body in third person or in an inventory preview, and every other player or humanoid mob.
+- `first_person` — only the arm drawn by the held-item view.
+
+Listing both draws the edit everywhere — write `"perspectives": ["first_person", "third_person"]` out in full if that is what you want.
+
+Each entry in `transformations` may carry its own `perspectives`, which overrides the power-level value for that entry. That is how one power drives two different animations:
+
+```json
+{
+  "type": "apoli:modify_model_parts",
+  "perspectives": ["first_person", "third_person"],
+  "transformations": [
+    {
+      "model_part": "right_arm",
+      "type": "pitch",
+      "value": -1.2,
+      "override_animation": true,
+      "perspectives": "third_person"
+    },
+    {
+      "model_part": "right_arm",
+      "type": "pitch",
+      "value": -0.35,
+      "override_animation": true,
+      "perspectives": "first_person"
+    }
+  ]
+}
+```
+
+The arm is raised sharply on the visible body and only nudged in the holder's own view.
+
+> The check is the render pass, not the camera setting. An inventory or GUI preview of the player is a third-person pass even while the camera is in first person, so previews keep showing the third-person animation.
 
 ## Overriding a pose
 

@@ -14,9 +14,11 @@ Type ID: `apoli:action_on_key_press` (but can use it's old `active_self` type id
 Field  | Type | Default | Description
 -------|------|---------|-------------
 `entity_action` | Entity Action Type | | The action to execute on the player.
-`cooldown` | [Integer](/docs/datapack/data-types/integer) | `1` | Interval of ticks this power needs to recharge before the power can be triggered again.
+`cooldown` | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | `1` | Interval of ticks this power needs to recharge before the power can be triggered again.
 `hud_render` | [Hud Render](/docs/datapack/data-types/hud-render) | `{"should_render": false}` | Determines how the cooldown of this power is visualized on the HUD.
 `key` | [Key](/docs/datapack/data-types/key) | `{"key": "key.apoli.primary_active"}` | Which active key this power should respond to.
+
+> `cooldown` is evaluated at the moment the power fires, on the holder — so `"cooldown": "20 - mypack:haste * 2"` shortens the recharge as a resource grows. The HUD bar and the [apoli:resource](/docs/datapack/entity-conditions/resource) `max` read the same expression, so both follow the current value.
 
 ## Examples
 

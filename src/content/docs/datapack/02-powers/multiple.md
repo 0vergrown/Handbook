@@ -15,6 +15,8 @@ Type ID: `apoli:multiple`
 > Inside a sub-power, `*:*` expands to the **super-power's** id, which is why `"*:*_set"` in the example below names the `set` sub-power. `*` on its own in the namespace position — `"*:some/other_power"` — expands to just the file's namespace, so it works for referring to any power in your pack, in any folder. See [Identifier](/docs/datapack/data-types/identifier).
 > 
 > If you wish to check for an entity condition for the entire super-power, you would have to check for the said entity condition in every sub-power of the super-power.
+> 
+> `/reload` reconciles what an entity is already holding: a sub-power you add to the file is granted to everyone who already has the super-power, and one you delete is revoked from them. You do not have to re-grant the super-power.
 
 ## Fields
 

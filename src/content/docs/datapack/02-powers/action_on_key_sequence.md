@@ -15,7 +15,7 @@ Type ID: `apoli:action_on_key_sequence`
 |-------|------|---------|-------------|
 | `success_action` | entity action | _optional_ | Run when the whole sequence has been entered. |
 | `fail_action` | entity action | _optional_ | Run when a key press breaks a partial match. |
-| `cooldown` | integer | `0` | Ticks to ignore input for after a success. |
+| `cooldown` | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | `0` | Ticks to ignore input for after a success. |
 | `timeout` | integer | `20` | Ticks of no tracked key press before a partial combo is forgotten. `0` never expires. |
 | `hud_render` | HUD render | _optional_ | Cooldown display. |
 | `keys` | list of [Functional Key](/docs/datapack/data-types/key) | **required** | The keys this power watches. Each may carry its own action, run on every press. |
@@ -48,7 +48,7 @@ positioned rather than resetting to nothing.
 
 **Any tracked key press that is not the expected next key breaks the run.** That includes keys this power does
 not list in its own `keys` — the matcher sees every Apoli-tracked key the player presses. Two powers whose
-combos share a prefix therefore no longer trigger each other: `A B` will not fire while you are half-way
+combos share a prefix therefore do not trigger each other: `A B` will not fire while you are half-way
 through `A C B`.
 
 > Only the **longest** matching combo fires. If one sequence is a prefix of another — `A B` and `A B C` —

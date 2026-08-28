@@ -71,5 +71,3 @@ This example will deal `minecraft:magic` damage to the target entity, with its d
 ```
 
 That deals more damage the more health the **actor** is missing. `"5 + ((target_max_health - target_health) * 0.35)"` would scale off the victim instead.
-
-> Before Apoli 1.40.0 the expression was evaluated against the target and there was no way to reach the actor, so an actor-based formula silently collapsed to its constant term. Packs that relied on the old binding need `target_` added.

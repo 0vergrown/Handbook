@@ -14,7 +14,7 @@ Type ID: `apoli:particle`
 
 Field  | Type | Default | Description
 -------|------|---------|-------------
-`particle` | Particle Effect | | The particle type that will be spawned.
+`particle` | [Particle Effect](/docs/datapack/data-types/particle-effect) | | The particle type that will be spawned. Use [`apoli:custom`](/docs/datapack/data-types/custom-particle) for a particle built from your own texture.
 `bientity_condition` | Bi-entity Condition Type | *optional* | If specified, the particle will only be visible if this bi-entity condition is fulfilled by either or both the entity that has the power and the entity looking at the entity that has the power.
 `count` | Integer | `1` | Determines the amount of particles to spawn.
 `speed` | Float | `0.0` | Determines the speed of the specified particle type.

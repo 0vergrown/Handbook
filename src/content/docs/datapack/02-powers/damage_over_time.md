@@ -38,4 +38,4 @@ Write this instead in new packs — it is what the alias expands to, and it lets
 
 When `damage_easy` differs from `damage`, the alias wraps the action in [`apoli:if_else`](/docs/datapack/meta-actions/if_else) against the new [`apoli:difficulty`](/docs/datapack/entity-conditions/difficulty) condition — you can write that yourself for finer control, such as a separate Hard value.
 
-> **Removed:** `protection_enchantment` and `protection_effectiveness` no longer scale the onset delay. Track the protection level in an [`apoli:resource`](/docs/datapack/powers/resource) and use an expression instead — `"onset_delay": "20 + mypack:protection * 26"` — which is both clearer and not limited to enchantments. Apoli logs a warning once if a pack still sets those fields.
+> `protection_enchantment` and `protection_effectiveness` are not supported — they do not scale the onset delay, and Apoli logs a warning once if a pack sets them. Track the protection level in an [`apoli:resource`](/docs/datapack/powers/resource) and use an expression instead — `"onset_delay": "20 + mypack:protection * 26"` — which is both clearer and not limited to enchantments.

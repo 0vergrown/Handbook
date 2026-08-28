@@ -73,7 +73,7 @@ Anything else is rejected with a message telling you so, rather than silently do
 
 `revokeall` also removes powers held under a literal source of that name, so it still works for sources you invented yourself in `grant`.
 
-> `grantall` used to mean "every power in the pack". It no longer does — it always needs a source to draw from. The [`apoli:grant_all_powers`](/docs/datapack/entity-actions/grant_all_powers) action has the same `from` field for JSON.
+> `grantall` always needs a source to draw from; there is no "every power in the pack" form. The [`apoli:grant_all_powers`](/docs/datapack/entity-actions/grant_all_powers) action has the same `from` field for JSON.
 
 ## has
 

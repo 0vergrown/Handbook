@@ -27,7 +27,7 @@ Every field below works under **every** ID this power type answers to. The legac
 | `target_condition`    | Entity Condition Type    | _optional_                 | Gates firing on the target.                                                        |
 | `attacker_condition`  | Entity Condition Type    | _optional_                 | Gates firing on the attacker (the holder).                                         |
 | `damage_condition`    | Damage Condition Type    | _optional_                 | Gates firing on the damage that was dealt.                                         |
-| `cooldown`            | Integer                  | `1`                        | Ticks the power needs to recharge between fires.                                   |
+| `cooldown`            | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | `1`                        | Ticks the power needs to recharge between fires.                                   |
 | `hud_render`          | Hud Render               | `{"should_render": false}` | How the cooldown is shown on the HUD.                                              |
 
 All action and condition fields are optional. Specifying several actions runs all of them, in the order listed above.
@@ -44,7 +44,7 @@ This power type absorbs three legacy Apace types into one schema, and JSON autho
 | `apoli:self_action_on_hit` | the actor (holder) | Apace's variant that ran the action on the actor. |
 | `apoli:target_action_on_hit` | the target | Apace's variant that ran the action on the target. |
 
-The legacy IDs are **aliases only**. They no longer rename or consume fields, so a power written as `apoli:target_action_on_hit` can still use `bientity_action`, `self_action` and `target_action` alongside its `entity_action`, and the canonical `apoli:action_on_hit` accepts `entity_action` too. If you want `entity_action` on a side the alias does not imply, set `entity_action_target` explicitly.
+The legacy IDs are **aliases only**. They do not rename or consume fields, so a power written as `apoli:target_action_on_hit` can still use `bientity_action`, `self_action` and `target_action` alongside its `entity_action`, and the canonical `apoli:action_on_hit` accepts `entity_action` too. If you want `entity_action` on a side the alias does not imply, set `entity_action_target` explicitly.
 
 ## Examples
 

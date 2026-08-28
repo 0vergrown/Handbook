@@ -8,7 +8,7 @@ Renders a custom look on a player: either re-skinning the vanilla model with a t
 
 Type ID: `apoli:custom_model_render`
 
-> **Breaking change:** this power replaces the old `apoli:entity_texture_overlay`. The `mode: texture` fields below are the direct successors of that power's fields; the multi-`layers` field was removed (use one power per layer instead). Rename `apoli:entity_texture_overlay` → `apoli:custom_model_render` in existing JSON.
+> This power supersedes `apoli:entity_texture_overlay`, which is not a registered type — rename it to `apoli:custom_model_render` in any JSON that still uses it. The `mode: texture` fields below are the direct equivalents of its fields, except that there is no multi-`layers` field: use one power per layer.
 
 > This is a client-side rendering power. **Texture mode** applies to players only. **Geometry mode** works on players and on the minions summoned by [apoli:summon_minion](/docs/datapack/entity-actions/summon_minion). Textures and models must be present in every viewer's resource pack.
 

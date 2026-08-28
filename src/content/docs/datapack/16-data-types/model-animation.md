@@ -23,7 +23,7 @@ An [Object](/docs/datapack/data-types/object) or [Array](/docs/datapack/data-typ
 > reaches its end it applies *nothing*, so a "blocking" pose snaps back to the bind pose while the condition is
 > still true. `"loop": "hold_on_last_frame"` keeps the last frame for as long as the entry stays selected.
 
-> One bad entry no longer takes the rest down with it. If an entry fails to load — a mistyped condition type,
+> One bad entry does not take the rest down with it. If an entry fails to load — a mistyped condition type,
 > say — Apoli logs that entry and keeps every other one, so your unconditional fallback still plays.
 
 ## Interpolation
