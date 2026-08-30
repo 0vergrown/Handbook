@@ -36,8 +36,9 @@ You can point at any keybinding the game knows about:
 | --- | --- |
 | `key.apoli.primary_active` | Apoli's primary active-power key (default: **unbound**) |
 | `key.apoli.secondary_active` | Apoli's secondary active-power key (default: **unbound**) |
-| `key.origins.primary_active` | Origins's primary active-power key (default: `G`) |
-| `key.origins.secondary_active` | Origins's secondary active-power key (default: `H`) |
+| `key.origins.primary_active` | Origins' 1st active-power key (default: `G`) |
+| `key.origins.secondary_active` | Origins' 2nd active-power key (default: `H`) |
+| `key.origins.ternary_active` … `key.origins.denary_active` | Origins' 3rd through 10th active-power keys (default: **unbound**) |
 | `key.attack` | attack / left click |
 | `key.use` | use / right click |
 | `key.jump` | jump |
@@ -67,6 +68,10 @@ Create the keybind in `data/<namespace>/keybinds/<name>.json`:
 | `key` | [String](/docs/datapack/data-types/string) | | The default physical key, e.g. `key.keyboard.g`, `key.mouse.left`. |
 | `category` | [String](/docs/datapack/data-types/string) | `key.categories.apoli` | The Controls-menu group it's listed under. |
 | `name` | [String](/docs/datapack/data-types/string) | *optional* | Display name. Falls back to an automatic translation key. |
+
+> The Controls screen sorts each category alphabetically by the **displayed** name, so a set of keys
+> with a natural sequence needs names that sort into it. Origins' ten ability keys are called
+> "1st Active Power (Primary)" through "10th Active Power (Denary)" for exactly that reason.
 
 The keybind's **id** is its file path `data/my_pack/keybinds/dash.json` becomes `my_pack:dash` and its keybinding string is `key.<namespace>.<path>`. So reference the example above with:
 

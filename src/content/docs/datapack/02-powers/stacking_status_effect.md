@@ -10,12 +10,17 @@ Type ID: `apoli:stacking_status_effect`
 
 > The actual duration of the specified status effect(s) is determined by the `stacks * duration_per_stack` formula.
 
+While the power is **active**, the stack count climbs by one every `tick_rate` ticks up to
+`max_stacks`, and never sits below `min_stacks`. While it is **inactive** it falls by one every
+`tick_rate` ticks down to **zero** — `min_stacks` is a floor for the active state only, not a
+permanent one, so an inactive power stops applying its effects entirely.
+
 ## Fields
 
 Field  | Type | Default | Description
 -------|------|---------|-------------
-`min_stacks` | Integer | | The minimum number of stacks. Negative numbers are allowed.
-`max_stacks` | Integer | | The maximum number of stacks.
+`min_stacks` | Integer | | The stack count the power jumps to the moment it becomes active. Set it above `1` for an effect that starts part-way up instead of ticking there one stack at a time. Negative numbers are allowed.
+`max_stacks` | Integer | | The stack count it climbs to and stops at while active.
 `duration_per_stack` | Integer | | Determines the duration of the specified status effect(s) for each stack.
 `tick_rate` | Integer | `10` | Determines how fast the power will gain/lose stacks in ticks.
 `effect` | Status Effect Instance | _optional_ | If specified, this status effect will be applied on the entity that has the power.

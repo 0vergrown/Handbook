@@ -13,7 +13,7 @@ Type ID: `apoli:fire_projectile`
 | Field                                 | Type                   | Default    | Description                                                                                                                                                                      |
 |---------------------------------------|------------------------|------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `entity_type`                         | [Identifier](/docs/datapack/data-types/identifier) |            | The ID of the entity type that will be fired.                                                                                                                                    |
-| `texture_location`                    | [Identifier](/docs/datapack/data-types/identifier) | *optional* | If specified, the texture used for the projectile and the `entity_type` will be ignored.                                                                                         |
+| `texture_location`                    | [Identifier](/docs/datapack/data-types/identifier) | *optional* | If specified, the texture used for the projectile and the `entity_type` will be ignored. The projectile is then Apoli's own entity, which can also wear a [Bedrock model](#giving-the-projectile-a-model). |
 | `cooldown`                            | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression)    | `1`        | Interval of ticks this power needs to recharge before the power can be triggered again.                                                                                          |
 | `hud_render`                          | [Hud Render](/docs/datapack/data-types/hud-render) | _optional_ | Determines how the cooldown of this power is visualized on the HUD.                                                                                                              |
 | `count`                               | [Integer](/docs/datapack/data-types/integer)    | `1`        | The amount of projectiles to fire each use.                                                                                                                                      |
@@ -78,3 +78,44 @@ This example will let the player fire arrows very rapidly by holding the left mo
 ```
 
 This example will let the player fire 4 snow balls disguised as slime balls consecutively, with an interval of 5 ticks upon pressing the right mouse button.
+
+## Giving the projectile a model
+
+A projectile spawned by `texture_location` is Apoli's own entity, and like a minion or a clone it
+renders whatever [`apoli:custom_model_render`](/docs/datapack/powers/custom_model_render) geometry it
+is holding. Grant the model power to the projectile from `projectile_action` and it wears the model
+instead of the flat texture:
+
+```json
+{
+  "type": "apoli:fire_projectile",
+  "texture_location": "example:textures/projectile/blank.png",
+  "speed": 1.8,
+  "projectile_action": {
+    "type": "apoli:grant_power",
+    "power": "example:shuriken_model",
+    "source": "example:shuriken"
+  }
+}
+```
+
+```json
+{
+  "type": "apoli:custom_model_render",
+  "mode": "geometry",
+  "model": "example:geo/shuriken.geo.json",
+  "texture": "example:textures/entity/shuriken.png",
+  "animations": {
+    "animation": "example:animations/shuriken.animation.json",
+    "name": "animation.shuriken.spin",
+    "loop": true
+  }
+}
+```
+
+The model faces the projectile's direction of travel, and its animations play from the moment it is
+granted, so a spin or a flame flicker runs for the projectile's whole flight.
+
+> `texture_location` is what selects Apoli's projectile entity in the first place, so it stays
+> required even when a model covers it — point it at a blank texture. A vanilla `entity_type`
+> projectile renders the way vanilla renders it and ignores model powers.

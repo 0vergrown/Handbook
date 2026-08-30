@@ -20,6 +20,7 @@ Type ID: `apoli:rope_pull`
 | `speed` | [Float](/docs/datapack/data-types/float)     | `1.0`      | Magnitude of the velocity applied along the rope. This is your "launch speed".                                              |
 | `set`   | [Boolean](/docs/datapack/data-types/boolean) | `false`    | If `true`, replaces the pushed entity's velocity instead of adding to it.                                                   |
 | `reel`  | [Float](/docs/datapack/data-types/float)     | `0.0`      | Also shorten the rope by this amount each time the action runs (a scripted reel-in).                                        |
+| `sublevel_force` | [Float](/docs/datapack/data-types/float) | `1.0` | Multiplier on the impulse used when the far end is anchored to a [Sable](/docs/compat/sable) sub-level. `speed` is scaled by the structure's own mass first, so `speed` reads as a change in the structure's velocity and this is the knob for making it heavier or lighter to drag. Ignored without Sable. |
 
 ## Examples
 ```json
@@ -39,7 +40,7 @@ Launches the actor toward the far end of every rope they own — the pull half o
     "speed": 1.5
 }
 ```
-Drags whatever is tied to the actor's `grab` rope toward them.
+Drags whatever is tied to the actor's `grab` rope toward them. If that end is a [Sable](/docs/compat/sable) sub-level rather than an entity, the impulse goes into the structure's rigid body instead, at the exact block the rope is tied to — so a rope on the edge of a ship swings it as well as pulling it.
 
 ```json
 {

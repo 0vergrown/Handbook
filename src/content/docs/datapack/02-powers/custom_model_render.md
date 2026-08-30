@@ -128,7 +128,6 @@ On resource (re)load the log prints `Loaded N custom model animation(s) from M f
 
 > **A power on a minion is held by the minion.** Every condition in it — including the ones on `animations` entries — is tested against the *minion*, never its summoner, so `apoli:sneaking` asks whether the minion is sneaking. Wrap it in [apoli:owner](/docs/datapack/entity-conditions/owner) to ask about the player who summoned it.
 
-
 Give the power to a [apoli:summon_minion](/docs/datapack/entity-actions/summon_minion) minion through that action's `powers` list and the minion is drawn as your Blockbench model instead of the default orb — a data-pack-only way to give a summon any shape you like.
 
 The minion skeleton is `main` (the root bone, Bedrock pivot `[0, 4, 0]`) with `flat2` and `flat3` under it. A bone named `main` turns to face wherever the minion is looking, which is the minion's only vanilla animation; `flat2` and `flat3` hold fixed poses, so a bone naming them inherits nothing. Every other bone keeps the pose you gave it in Blockbench and rides along with the root.
@@ -228,3 +227,17 @@ Clawed gauntlets you can also see on your own hands:
 ```
 
 The model's `right_arm` and `left_arm` bones sit on the vanilla arm pivots, so they follow the arm in third person and are drawn onto the first-person hand as well.
+
+## On something other than a player
+
+The power renders on whatever entity holds it, so granting it to a summon, a clone or a projectile
+puts the model on that entity rather than on you:
+
+- a [minion](/docs/datapack/entity-actions/summon_minion) or a
+  [clone](/docs/datapack/commands/clone) that holds the power renders with the geometry, with its
+  humanoid bones driven by the entity's own pose;
+- a projectile fired by [`apoli:fire_projectile`](/docs/datapack/powers/fire_projectile) with a
+  `texture_location` renders the geometry instead of its flat texture, oriented along its flight
+  path. Grant the power from that power's `projectile_action`.
+
+`hidden_slots` only applies to entities that wear equipment; on a projectile it is ignored.

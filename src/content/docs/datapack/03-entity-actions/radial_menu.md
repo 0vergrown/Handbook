@@ -33,6 +33,9 @@ Field | Type | Default | Description
 `button_width`, `button_height` | [Integer](/docs/datapack/data-types/integer) | `16`, `20` | Slice size in pixels.
 `icon_width`, `icon_height` | [Integer](/docs/datapack/data-types/integer) | `16` | Icon size.
 `item_width`, `item_height` | [Integer](/docs/datapack/data-types/integer) | `16` | Item icon size.
+`offset_x` | [Integer](/docs/datapack/data-types/integer) | `0` | Pixels to shift the slice right of where the ring puts it. Negative moves it left.
+`offset_y` | [Integer](/docs/datapack/data-types/integer) | `0` | Pixels to shift the slice **down**. Negative moves it up. This is the one that lets a menu be something other than a flat circle.
+`angle` | [Float](/docs/datapack/data-types/float) | evenly spaced | The slice's own angle around the centre, in degrees, `0` pointing right and increasing clockwise. Set it on every entry to build an arc, a column or a cross instead of a full ring.
 
 ## Example
 
@@ -63,6 +66,29 @@ One keybind, three elemental choices:
       }
     ]
   }
+}
+```
+
+### Laying the menu out by hand
+
+`distance` moves a slice away from the centre along its own spoke; `offset_x` /
+`offset_y` move it anywhere afterwards, and `angle` decides which spoke it sits on
+in the first place. The offsets ride the same bloom animation as `distance`, so a
+displaced slice still flies out from the middle rather than snapping into place.
+
+A three-slice arc across the top of the screen, each one a little higher than the last:
+
+```json
+{
+  "type": "apoli:radial_menu",
+  "entries": [
+    { "angle": 225, "distance": 60, "offset_y": -10, "item": {"id": "minecraft:blaze_powder"},
+      "entity_action": {"type": "apoli:set_on_fire", "duration": 4} },
+    { "angle": 270, "distance": 60, "offset_y": -24, "item": {"id": "minecraft:snowball"},
+      "entity_action": {"type": "apoli:freeze", "amount": 140} },
+    { "angle": 315, "distance": 60, "offset_y": -10, "item": {"id": "minecraft:feather"},
+      "entity_action": {"type": "apoli:add_velocity", "y": 1.2, "space": "local"} }
+  ]
 }
 ```
 

@@ -21,8 +21,10 @@ Field | Type | Default | Description
 `lifetime_variation` | [Integer](/docs/datapack/data-types/integer) | `0` | A random `0`–`n` extra ticks added per particle, so a burst does not vanish all at once.
 `size` | [Float](/docs/datapack/data-types/float) | `0.2` | Size of the quad when it spawns.
 `size_variation` | [Float](/docs/datapack/data-types/float) | `0.0` | A random `0`–`n` added to `size` per particle, so a burst is not all one size. `end_size` is scaled by the same amount, so each particle keeps the shape of its own size curve.
+`color_variation` | [Float](/docs/datapack/data-types/float) | `0.0` | A random `-n`–`+n` added to each of the red, green and blue channels per particle. `0.05` is a subtle shimmer, `0.2` is a visibly mixed burst.
+`hue_variation` | [Float](/docs/datapack/data-types/float) | `0.0` | A random `-n`–`+n` degrees of hue rotation per particle, out of 360. `15` keeps a burst recognisably one colour, `180` scatters it across the whole wheel.
 `end_size` | [Float](/docs/datapack/data-types/float) | `size` | Size at the end of its life. Interpolated with `easing`; set `0.0` to shrink away.
-`color` | Colour | `#FFFFFFFF` | Tint at spawn. Multiplies the texture, so a white texture takes the colour exactly.
+`color` | Colour | `#FFFFFF` | Tint at spawn. Multiplies the texture, so a white texture takes the colour exactly.
 `end_color` | Colour | `color` | Tint at the end of its life, interpolated with `easing` — the `dust_color_transition` behaviour, on your own texture.
 `gravity` | [Float](/docs/datapack/data-types/float) | `0.0` | Downward pull per tick. Negative values make the particle rise.
 `friction` | [Float](/docs/datapack/data-types/float) | `0.98` | Velocity kept each tick. `1.0` never slows down, `0.9` drags hard.
@@ -77,13 +79,44 @@ or a sheet whose cells are not square — needs `frame_layout` written out.
 
 ### Colour
 
-`color` and `end_color` accept three spellings:
+`color` and `end_color` accept four spellings:
 
-- a hex string, `"#RRGGBB"` or `"#AARRGGBB"` — `"#FF8800"`, `"#80FFFFFF"`
+- a hex string, `"#RRGGBB"` or `"#RRGGBBAA"` — `"#FF8800"`, `"#FFFFFF80"`. **Alpha is the last
+  pair**, the same order a colour picker or CSS writes it in.
+- a `0x`-prefixed hex string, `"0xAARRGGBB"` — `"0x80FFFFFF"`. This is Java's packed-integer
+  order, alpha first, and it is the one spelling where alpha comes at the front.
 - a list of floats from `0.0` to `1.0`, `[r, g, b]` or `[r, g, b, a]`
-- a packed integer, `16750848`
+- a packed integer, `16750848` — also alpha-first (`0xAARRGGBB`)
 
 Alpha is part of the colour, so fading a particle out means moving alpha to `0` in `end_color`.
+
+> The vanilla particle shader discards any pixel below about 10% alpha, so a particle fading to
+> `0` alpha disappears a little before the fade finishes rather than dissolving completely. Fading
+> `end_size` to `0.0` alongside it hides the pop.
+
+### Variation
+
+`lifetime_variation`, `size_variation`, `color_variation` and `hue_variation` are rolled once per
+particle when it spawns, which is what turns one `spawn_particles` call into something that looks
+like smoke rather than a stamp. The colour rolls are applied to `color` and `end_color` identically,
+so each particle still runs the same fade — just from its own starting shade.
+
+```json
+{
+  "type": "apoli:custom",
+  "texture": "example:textures/particle/spark.png",
+  "lifetime": 20,
+  "lifetime_variation": 10,
+  "size": 0.15,
+  "size_variation": 0.1,
+  "color": "#FFC24B",
+  "end_color": "#FF3B1E00",
+  "color_variation": 0.06,
+  "hue_variation": 12.0,
+  "blend": "additive",
+  "emissive": true
+}
+```
 
 ## Examples
 
@@ -100,7 +133,7 @@ An ember that rises, cools from orange to red and shrinks away:
     "size": 0.18,
     "end_size": 0.0,
     "color": "#FFC24B",
-    "end_color": "#80FF3B1E",
+    "end_color": "#FF3B1E80",
     "gravity": -0.04,
     "friction": 0.92,
     "emissive": true,
@@ -127,7 +160,7 @@ A four-frame spark burst on hit, spinning as it falls:
       "lifetime": 12,
       "size": 0.25,
       "color": "#FFFFFF",
-      "end_color": "#00FFFFFF",
+      "end_color": "#FFFFFF00",
       "gravity": 0.6,
       "roll_speed": 14.0,
       "frames": 4,
