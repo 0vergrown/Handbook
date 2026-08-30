@@ -76,6 +76,7 @@ const SECTION = {
 // one-line, accurate descriptions for each missing type
 const D = {
 	action_on_key_sequence: 'Runs an action when a sequence of keys is entered, like a combo.',
+	action_on_scroll_wheel: 'Runs an action when the holder scrolls the mouse wheel.',
 	modify_damage: 'Modifies the damage this entity deals or takes (aliases `modify_damage_dealt`, `modify_damage_taken`).',
 	prevent_use: 'Prevents the general use / right-click interaction.',
 	action_on_kill: 'Runs an action when this entity kills another.',

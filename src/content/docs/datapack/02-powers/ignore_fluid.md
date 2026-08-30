@@ -15,7 +15,9 @@ Type ID: `apoli:ignore_fluid` (aliased from `apoli:ignore_water`)
 
 | Field             | Type                 | Default | Description                                                        |
 |-------------------|----------------------|---------|--------------------------------------------------------------------|
-| `fluid_condition` | Fluid Condition Type |         | The fluid condition type to check the fluid state at the position. |
+| `fluid_condition` | [Fluid Condition Type](/docs/datapack/fluid-conditions) |         | The fluid condition type to check the fluid state at the entity's position. |
+
+A matching fluid stops pushing the entity and stops counting as "touching" it, so the entity neither floats nor swims in it — it walks along the bottom and sinks under its own weight.
 
 ## Examples
 

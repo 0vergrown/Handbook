@@ -214,6 +214,9 @@
 	"powers/action_on_kill": [
 		"self_action_on_kill"
 	],
+	"powers/action_on_scroll_wheel": [
+		"action_on_scroll"
+	],
 	"powers/action_on_shape_ability_use": [
 		"shappoli:action_on_shape_ability_use"
 	],

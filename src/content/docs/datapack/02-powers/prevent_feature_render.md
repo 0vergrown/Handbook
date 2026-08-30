@@ -14,6 +14,7 @@ Field | Type | Default | Description
 ------|------|---------|------------
 `feature` | String | _optional_ | A single feature name to hide. Merged into `features`.
 `features` | Array of String | _optional_ | Feature names to hide. **Omit both fields to hide every feature layer.**
+`bientity_condition` | [Bi-entity Condition Type](/docs/datapack/bientity-conditions) | _optional_ | If specified, the layers are only hidden from viewers that fulfil the condition. The **actor** is the viewer, the **target** is the entity that has the power.
 
 ## Feature names
 
@@ -76,6 +77,22 @@ Hide the worn armor, held item and elytra:
         "held_item",
         "elytra"
     ]
+}
+```
+
+Hide the armor and held item from everyone *except* scoreboard teammates:
+
+```json
+{
+    "type": "apoli:prevent_feature_render",
+    "features": [
+        "armor",
+        "held_item"
+    ],
+    "bientity_condition": {
+        "type": "apoli:same_team",
+        "inverted": true
+    }
 }
 ```
 

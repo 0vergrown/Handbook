@@ -56,13 +56,9 @@ reconciled in place.
 
 ```json
 {
-  "icon": {
-    "item": "minecraft:phantom_membrane"
-  },
+  "icon": { "item": "minecraft:phantom_membrane" },
   "impact": 2,
-  "powers": [
-    "example:gliding"
-  ],
+  "powers": ["example:gliding"],
   "upgrades": [
     {
       "condition": {
@@ -103,14 +99,10 @@ leaves the pool and the new one takes its place, without disturbing whatever is 
 
 ```json
 {
-  "icon": {
-    "item": "minecraft:dragon_egg"
-  },
+  "icon": { "item": "minecraft:dragon_egg" },
   "impact": 3,
   "max_players": 1,
-  "powers": [
-    "example:dragon_flight"
-  ]
+  "powers": ["example:dragon_flight"]
 }
 ```
 

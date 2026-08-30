@@ -33,17 +33,11 @@ Run the action twice in the same tick, once per hand, and both arms swing togeth
 
 ```json
 "entity_action": {
-  "type": "apoli:and",
-  "actions": [
-    {
-      "type": "apoli:swing_hand",
-      "hand": "main_hand"
-    },
-    {
-      "type": "apoli:swing_hand",
-      "hand": "off_hand"
-    }
-  ]
+    "type": "apoli:and",
+    "actions": [
+        { "type": "apoli:swing_hand", "hand": "main_hand" },
+        { "type": "apoli:swing_hand", "hand": "off_hand" }
+    ]
 }
 ```
 

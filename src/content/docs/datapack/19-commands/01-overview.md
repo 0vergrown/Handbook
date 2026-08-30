@@ -14,6 +14,8 @@ Apoli and Origins add a handful of commands for granting powers, poking at resou
 | [`/apoli:skill_tree`](/docs/datapack/commands/skill-tree) | `/skills` | Buy and refund skills, hand out points, grant and revoke trees. |
 | [`/apoli:disguise`](/docs/datapack/commands/disguise) | `/disguise` | Make an entity render as another entity or player. |
 | [`/apoli:clone`](/docs/datapack/commands/clone) | — | Summon, list and remove player clones. |
+| [`/apoli:mount`](/docs/datapack/commands/mount) | — | Inspect and clear the rider offsets `apoli:mount` stores. |
+| [`/apoli:key`](/docs/datapack/commands/key) | — | Hold, release and inspect keys on any entity, and fake a scroll wheel. |
 | [`/origin`](/docs/datapack/commands/origin) | — | Set, query and reroll a player's origin. Origins only. |
 
 Apoli also adds [entity selector options](/docs/datapack/commands/selectors) so `@a[origin=…]` and `@e[power=…]` work anywhere a selector is accepted.
@@ -22,7 +24,7 @@ Apoli also adds [entity selector options](/docs/datapack/commands/selectors) so 
 
 Every command is registered under its full `apoli:` name, with a short alias pointing at the same tree. `/power grant @s example:flight` and `/apoli:power grant @s example:flight` are the same command. Use the namespaced form in functions if another mod might claim the short name.
 
-`/apoli:clone` has no short alias on purpose — `/clone` is a vanilla command.
+`/apoli:clone` has no short alias on purpose — `/clone` is a vanilla command. `/apoli:mount` and `/apoli:key` have none either, for the same reason: `/mount` and `/key` are names other mods are likely to want.
 
 ## Permissions
 
@@ -35,6 +37,8 @@ Each command needs permission level 2 (the same as `/give`) by default. If [fabr
 | `apoli.command.skill_tree` | `/apoli:skill_tree` |
 | `apoli.command.disguise` | `/apoli:disguise` |
 | `apoli.command.clone` | `/apoli:clone` |
+| `apoli.command.mount` | `/apoli:mount` |
+| `apoli.command.key` | `/apoli:key` |
 | `origins.command.origin.set` | `/origin set` |
 | `origins.command.origin.gui` | `/origin gui` |
 | `origins.command.origin.random` | `/origin random` |
