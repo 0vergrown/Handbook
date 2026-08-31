@@ -19,8 +19,8 @@ Field  | Type | Default | Description
 `count` | Integer | `1` | Determines the amount of particles to spawn.
 `speed` | [Float](/docs/datapack/data-types/float), [Expression](/docs/datapack/data-types/expression) or [Vector](/docs/datapack/data-types/vector) | `0.0` | A number is vanilla's random speed multiplier — every particle flies off in a random direction at up to that speed. A **vector** instead gives every particle that exact velocity, which is the version you want when the particles should go somewhere. Read through `space`.
 `velocity_x`, `velocity_y`, `velocity_z` | [Float](/docs/datapack/data-types/float) | `0` | The same explicit velocity, written per axis. Takes priority over a vector `speed`. Read through `space`.
-`space` | [Space](/docs/datapack/data-types/space) | `world` | How `offset_*` and the velocity are read. `world` uses the world axes; `local` is relative to the entity's facing, so `offset_z: 2` is two blocks in front of them and `velocity_z: 0.5` fires the particles the way they are looking.
-`model_part` | [String](/docs/datapack/data-types/string) | _optional_ | Anchor the particles to a body part instead of the entity's feet: `head`, `body`, `right_arm`, `left_arm`, `right_leg`, `left_leg`. The same names [`apoli:model_color`](/docs/datapack/powers/model_color) and [`apoli:modify_model_parts`](/docs/datapack/powers/modify_model_parts) use. `offset_*` is then measured from that part.
+`space` | [Space](/docs/datapack/data-types/space) | `world` | How `offset_*` and the velocity are read. `world` uses the world axes; `local` is relative to the entity's facing, so `offset_z: 2` is two blocks in front of them and `velocity_z: 0.5` fires the particles the way they are looking. With `model_part` set and no `space` written, both are read in the **part's own frame** instead — see below.
+`model_part` | [String](/docs/datapack/data-types/string) | _optional_ | Anchor the particles to a body part instead of the entity's feet, and read `offset_*` and the velocity along that part. See [Particles on a body part](#particles-on-a-body-part) for the names.
 `force` | Boolean | `false` | Determines whether to display the emitted particles within 512 blocks (`true`) or 32 blocks (`false`).
 `spread` | Vector | `{"x": 0.5, "y": 0.5, "z": 0.5}` | Determines the size of the three-dimensional cuboid volume to spawn the specified particle type in.
 `offset_x` | Float | `0.0` | The offset of where the particle will be centered in the X axis.
@@ -59,10 +59,31 @@ are facing. `spread` still scatters the **spawn positions**; the velocity is the
 
 ### Particles on a body part
 
-`model_part` moves the anchor point to a limb, so `right_arm` puts the particles at the entity's
-hand and `head` at its eyes. The anchor follows the entity's body rotation, its size and its
-crouching pose; it does **not** follow swing or walk animations, so it is a place on the body rather
-than a point on the animated bone.
+`model_part` moves the anchor point onto a limb and reads `offset_*` and the velocity **in that
+limb's frame**, so the particles follow the part as it moves.
+
+The axes are measured from the anchor: `+y` runs back along the part towards its pivot, `+z` out of
+the part's front and `+x` out of its left. A **negative** `offset_y` from a hand or foot anchor
+therefore carries on past the fingertips or toes, whichever way the limb happens to be pointing —
+that is the one you want for "just in front of the hand".
+
+Anchor | Where it sits
+-------|---------------
+`head`, `hat` | the neck pivot, at eye level
+`body` | the top of the torso
+`right_arm`, `left_arm` | the shoulder
+`right_hand`, `left_hand`, `main_hand`, `off_hand` | the end of that arm, where a held item is
+`right_leg`, `left_leg` | the hip
+`right_foot`, `left_foot` | the end of that leg
+
+`head` through `left_leg` are the same names [`apoli:model_color`](/docs/datapack/powers/model_color)
+and [`apoli:modify_model_parts`](/docs/datapack/powers/modify_model_parts) use; the hand and foot
+anchors are extras that only this field understands.
+
+The anchor tracks the pose the entity is actually in — walking and attack swings, crouching, riding,
+swimming, gliding — and the rotations, pivots and scales that
+[`apoli:modify_model_parts`](/docs/datapack/powers/modify_model_parts) applies on top of them. Raise
+an arm with a `modify_model_parts` power and a particle anchored to `right_hand` rises with it.
 
 ```json
 {
@@ -70,11 +91,21 @@ than a point on the animated bone.
   "particle": "minecraft:flame",
   "count": 6,
   "frequency": 4,
-  "model_part": "right_arm",
-  "space": "local",
-  "velocity_y": 0.1
+  "model_part": "main_hand",
+  "offset_x": 0,
+  "offset_y": -0.25,
+  "offset_z": 0,
+  "spread": {"x": 0.05, "y": 0.05, "z": 0.05},
+  "velocity_y": -0.15
 }
 ```
+
+Flames a quarter of a block past the fingertips, drifting further out — and they stay past the
+fingertips when the arm swings, or when a `modify_model_parts` power raises it.
+
+> Writing `space` explicitly opts back out: the anchor still moves to the part, but `offset_*` and
+> the velocity are then read in that space (`world` axes, the entity's facing, its velocity) rather
+> than along the limb.
 
 ## Examples
 

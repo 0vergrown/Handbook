@@ -2,7 +2,7 @@
 title: "Simple (Power Type)"
 description: "Does nothing on its own, which makes it useful as a flag other powers can test."
 navigation_title: "Simple"
-aliases: ["dummy"]
+aliases: ["dummy", "nothing"]
 ---
 
 Does nothing on its own. That is the point: because a power's presence and its `condition` are visible to every other power, a `apoli:simple` power is the cheapest way to model a piece of state that other powers ask about.
@@ -62,4 +62,4 @@ As a **granted marker**, with no condition at all. Grant it with [`apoli:grant_p
 }
 ```
 
-> **`apoli:dummy` is this power.** An alias kept so packs written for the original Apoli load unchanged.
+> **`apoli:dummy` and `apoli:nothing` are this power.** `apoli:dummy` is an alias kept so packs written for the original Apoli load unchanged. `apoli:nothing` is the power-shaped end of the meta type that also exists as an [action](/docs/datapack/meta-actions/nothing) and a [condition](/docs/datapack/meta-conditions/nothing), so "nothing happens here" reads the same wherever you write it.

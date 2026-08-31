@@ -58,7 +58,7 @@ Common meta-actions:
 - `apoli:and` — run a list of actions in order.
 - `apoli:if_else` / `apoli:if_else_list` — branch on a [condition](/docs/datapack/introduction/conditions).
 - `apoli:chance` — run an action with some probability.
-- `apoli:choice` / `apoli:nothing` — pick one, or do nothing.
+- `apoli:choice` / `apoli:nothing` — pick one, or do nothing (`apoli:nothing` is a meta type, so it also works as a condition and as a power).
 - `apoli:delay` — run an action after a number of ticks.
 
 ## Firing an action from a power

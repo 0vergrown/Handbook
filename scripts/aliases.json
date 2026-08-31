@@ -311,6 +311,7 @@
 		"conditioned_restrict_armor"
 	],
 	"powers/simple": [
-		"dummy"
+		"dummy",
+		"nothing"
 	]
 }
