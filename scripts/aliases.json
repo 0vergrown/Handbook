@@ -109,6 +109,9 @@
 		"join_team",
 		"leave_team"
 	],
+	"entity actions/teleport": [
+		"teleport_to"
+	],
 	"entity actions/text": [
 		"text_bar",
 		"show_text"

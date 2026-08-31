@@ -19,7 +19,7 @@ Field | Type | Default | Description
 `heightmap` | Heightmap Type | *optional* | If specified, the location will be anchored above the highest Y level of the world determined by this heightmap type.
 `attempts` | Integer | *optional* | Determines how many attempts the entity should be teleported to a random location. Defaults to `area_width` * 2 + `area_height` * 2.
 `landing_block_condition` | Block Condition Type | *optional* | If specified, the entity will only be teleported on top of a block that fulfills this block condition. Otherwise, the entity will only be teleported on blocks that blocks movement/have solid collision.
-`landing_condition` | Entity Condition Type | *optional* | If specified, the entity will only be teleported to a location if the entity fulfills this entity condition. Otherwise, the entity will only be teleported to a location that is empty (e.g: no blocks and fluids.)
+`landing_condition` | Entity Condition Type | *optional* | If specified, the entity will only be teleported to a candidate location where it would fulfill this entity condition — it is tested as though the entity were already standing there, once per attempt. Otherwise, the entity will only be teleported to a location that is empty (e.g: no blocks and fluids.)
 `landing_offset` | Vector | `{"x": 0, "y": 0, "z": 0}` | Determines the offset of the location of where the entity will be teleported. If the X and Z offsets are specified, the X and Z coordinates of the location will be divided (floored) before applying the offset.
 `loaded_chunks_only` | Boolean | `true` | Determines whether the entity should only be teleported in loaded chunks. **It is recommended to keep this set to `true` for performance reasons.**
 `success_action` | Entity Action Type | *optional* | If specified, this entity action will be executed on the entity after it's been successfully teleported to a random location.
@@ -63,3 +63,5 @@ This example will teleport the entity to a random location within a 17x17x17 are
 ```
 
 This example will teleport the entity on top of the center of a random block included in the `minecraft:wools` block tag within a 9x17x9 area.
+
+> The teleport is refused outright when the entity has [apoli:prevent_teleport](/docs/datapack/powers/prevent_teleport), so `fail_action` runs.
