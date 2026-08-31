@@ -1,6 +1,6 @@
 ---
 title: "Keys, colours, and a rope to a ship"
-description: "Apoli 1.53.0 puts alpha where you expect it in a hex colour, adds particle colour variation, gives radial-menu slices a vertical offset, places and sizes overlays, puts Bedrock models on fired projectiles, lets a rope drag a Sable structure, and adds apoli:prevent_key_press."
+description: "Apoli 1.54.0 puts alpha where you expect it in a hex colour, aims particles and anchors them to body parts, places and sizes overlays, puts Bedrock models on fired projectiles, gives radial-menu slices a vertical offset, lets a rope drag a Sable structure, and adds apoli:prevent_key_press."
 date: 2026-08-30
 author: Overgrown
 ---
@@ -208,6 +208,52 @@ or a clone does — grant the power to the projectile from `projectile_action`:
 ```
 
 The model faces the direction of travel and its animations run for the projectile's whole flight.
+
+## Particles that go where you point them
+
+`apoli:particle` and `apoli:spawn_particles` spawned along the world axes, so `offset_z: 2` put the
+particles two blocks due south instead of two blocks in front of the player, and there was no way to
+give them a direction at all. Both now take a `space`, explicit `velocity_x`/`velocity_y`/`velocity_z`,
+and a `speed` that accepts a vector as well as a number:
+
+```json
+{
+  "type": "apoli:spawn_particles",
+  "particle": {"type": "apoli:custom", "texture": "example:textures/particle/spark.png"},
+  "count": 12,
+  "space": "local",
+  "offset_y": 1.4,
+  "offset_z": 1.5,
+  "velocity_z": 0.6
+}
+```
+
+`space: "local"` turns both the offset and the velocity with the entity, so that is a cone of sparks
+in front of the eyes, travelling the way they are looking.
+
+They also take a `model_part`, using the same names
+[`apoli:model_color`](/docs/datapack/powers/model_color) and
+[`apoli:modify_model_parts`](/docs/datapack/powers/modify_model_parts) use — `head`, `body`,
+`right_arm`, `left_arm`, `right_leg`, `left_leg` — so particles can come off a hand rather than out
+of the ground at your feet. The anchor follows body rotation, entity size and the crouching pose; it
+does not follow swing animations.
+
+## Cannons need a muzzle
+
+`apoli:fire_projectile` now takes `offset_x` / `offset_y` / `offset_z` and a `space` for where the
+projectile appears, which matters a lot more now that it can wear a model:
+
+```json
+{
+  "type": "apoli:fire_projectile",
+  "texture_location": "example:textures/projectile/blank.png",
+  "space": "local",
+  "offset_y": -0.4,
+  "offset_z": 1.6,
+  "speed": 2.0,
+  "projectile_action": { "type": "apoli:grant_power", "power": "example:cannonball_model", "source": "example:cannon" }
+}
+```
 
 ## A fix worth knowing about
 

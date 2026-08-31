@@ -20,6 +20,8 @@ Type ID: `apoli:fire_projectile`
 | `interval`                            | [Integer](/docs/datapack/data-types/integer)    | `0`        | Determines the interval for firing multiple projectiles consecutively (in ticks). If set to 0, it will fire all the projectiles at the same tick.                                |
 | `start_delay`                         | [Integer](/docs/datapack/data-types/integer)    | `0`        | Determines how long the start of the firing process is delayed (in ticks).                                                                                                       |
 | `speed`                               | [Float](/docs/datapack/data-types/float)      | `1.5`      | The speed applied to the fired projectile.                                                                                                                                       |
+| `offset_x`, `offset_y`, `offset_z`    | [Float](/docs/datapack/data-types/float) | `0` | Where the projectile spawns, relative to the shooter's eyes. Read through `space`, so `local` puts `offset_z: 1.5` a block and a half in front of wherever they are looking — the muzzle of a cannon rather than a point due south of it. |
+| `space`                               | [Space](/docs/datapack/data-types/space) | `world` | How the spawn offset is read. `local` is relative to the shooter's facing, `world` to the world axes. |
 | `divergence`                          | [Float](/docs/datapack/data-types/float)      | `1.0`      | How much each projectile fired is affected by random spread.                                                                                                                     |
 | `sound`                               | [Identifier](/docs/datapack/data-types/identifier) | _optional_ | If set, the sound with this ID will be played when the power is used.                                                                                                            |
 | `tag`                                 | [NBT](/docs/datapack/data-types/nbt)        | _optional_ | NBT data of the entity.                                                                                                                                                          |
@@ -115,6 +117,25 @@ instead of the flat texture:
 
 The model faces the projectile's direction of travel, and its animations play from the moment it is
 granted, so a spin or a flame flicker runs for the projectile's whole flight.
+
+The power is resolved at spawn and the projectile carries it in its own entity data, so it arrives
+with the spawn packet and every viewer sees the model on the very first frame. Granting or revoking a
+model power mid-flight still works — the live power is checked when the projectile is not carrying a
+stamped one.
+
+Pair it with the spawn offset to line the projectile up with whatever fired it:
+
+```json
+{
+  "type": "apoli:fire_projectile",
+  "texture_location": "example:textures/projectile/blank.png",
+  "space": "local",
+  "offset_y": -0.4,
+  "offset_z": 1.6,
+  "speed": 2.0,
+  "projectile_action": { "type": "apoli:grant_power", "power": "example:cannonball_model", "source": "example:cannon" }
+}
+```
 
 > `texture_location` is what selects Apoli's projectile entity in the first place, so it stays
 > required even when a model covers it — point it at a blank texture. A vanilla `entity_type`
