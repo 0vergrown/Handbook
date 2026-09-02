@@ -20,6 +20,8 @@ Field | Type | Default | Description
 `bientity_condition` | Bi-entity Condition Type | *optional* | If specified, the specified bi-entity action will only be executed on either or both the '**actor**' or '**target(s)**' that fulfill this bi-entity condition.
 `include_actor` | Boolean | `false` | Determines whether the '**actor**' should be included as a target.
 `after_action` | Entity Action Type | *optional* | Run once on the '**actor**' after the sweep, with `count` bound to how many entities matched.
+`offset` | [Vector](/docs/datapack/data-types/vector) | `0.0` | Moves the centre of the area away from the '**actor**' by this much before the sweep runs.
+`space` | [Space](/docs/datapack/data-types/space) | `"world"` | The frame `offset` is read in. `"local"` follows the actor's full look direction; `"local_horizontal_normalized"` follows only their yaw, keeping `y` as world-up.
 
 ## Counting what it found
 
@@ -53,6 +55,29 @@ That turns "how many mobs are near me?" into a number you can store, instead of 
 ```
 
 With `bientity_action` omitted, nothing happens to the entities themselves — the sweep is only there to produce `count`.
+
+## Putting the area somewhere else
+
+By default the sweep is centred on the actor. `offset` moves that centre, and `space` says which way the offset points — so a small sphere placed a few blocks along the player's look is a "grab what is in front of my face" check, without the single-ray limits of [apoli:raycast](/docs/datapack/entity-actions/raycast):
+
+```json
+"entity_action": {
+  "type": "apoli:area_of_effect",
+  "shape": "sphere",
+  "radius": 1.5,
+  "offset": {
+    "x": 0,
+    "y": 1.5,
+    "z": 2.5
+  },
+  "space": "local_horizontal_normalized",
+  "bientity_action": {
+    "type": "apoli:grab"
+  }
+}
+```
+
+`local_horizontal_normalized` rotates the offset by the actor's yaw only, so `z` is "forward" and `y` stays world-up — the sphere sits in front of the player's head and does not dive into the floor when they look down. Use `"local"` instead when the area should follow pitch as well.
 
 ## Examples
 

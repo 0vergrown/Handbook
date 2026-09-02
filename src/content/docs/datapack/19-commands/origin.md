@@ -15,7 +15,8 @@ Manages which origin each player has in each [layer](/docs/datapack/origins/laye
 | `has <targets> <layer> <origin>` | Reports how many targets have it. |
 | `get` | Prints every online player's origins. |
 | `get <target> <layer>` | Prints one player's origin in a layer. |
-| `gui [<targets>] [<layer>]` | Reopens the choose-origin screen. |
+| `gui [<targets>] [<layer>]` | Clears every layer and reopens the choose-origin screen. |
+| `gui unchosen [<targets>]` | Opens the screen only for layers that are still unchosen, changing nothing else. |
 | `random [<targets>] [<layer>]` | Rerolls to a random origin. |
 | `cap [list] [<layer>]` | Lists every capped origin with its holders. |
 | `cap clear [<layer>] [<origin>]` | Releases recorded origin claims. |
@@ -69,11 +70,16 @@ execute as @a[origin=example:phoenix] run say I am reborn
 origin gui
 origin gui @a
 origin gui @a origins:origin
+origin gui unchosen @a
 origin random @a
 origin random @a origins:origin
 ```
 
-`gui` reopens the choose-origin screen; `random` rolls one immediately, honouring the layer's `random_allows_unchoosable` setting. Both default to every unchosen layer when no layer is given, and to the command's own player when no targets are given. `random` skips [swappable layers](/docs/datapack/origins/swapping) — a pool is not a choice; roll one with [`origins:force_swap`](/docs/datapack/origins/force_swap) instead.
+`gui` **clears every layer first**, then opens the screen on the first layer that has anything to choose — the same reset the [Orb of Origin](/docs/datapack/origins/overview) performs, so it works on a player who already has an origin everywhere. Name a `<layer>` and only that layer's screen is opened, leaving the rest alone.
+
+`gui unchosen` is the non-destructive form: it opens the screen only when a layer is still unchosen and does nothing if the player has already picked on every layer. That is the right one for "finish setting up", and `gui` is the right one for "start over".
+
+`random` rolls an origin immediately, honouring the layer's `random_allows_unchoosable` setting. It defaults to every unchosen layer when no layer is given, and to the command's own player when no targets are given. `random` skips [swappable layers](/docs/datapack/origins/swapping) — a pool is not a choice; roll one with [`origins:force_swap`](/docs/datapack/origins/force_swap) instead.
 
 ## cap
 

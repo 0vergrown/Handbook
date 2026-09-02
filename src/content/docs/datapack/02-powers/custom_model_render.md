@@ -28,8 +28,8 @@ Type ID: `apoli:custom_model_render`
 
 Field | Type | Default | Description
 ------|------|---------|-------------
-`wide_texture_location` | Identifier | _required_ | Texture for the wide (Steve) model.
-`slim_texture_location` | Identifier | = wide | Texture for the slim (Alex) model.
+`wide_texture_location` | Identifier or keyword | _required_ | Texture for the wide (Steve) model. Also takes a [live keyword](#live-textures).
+`slim_texture_location` | Identifier or keyword | = wide | Texture for the slim (Alex) model.
 `render_as_overlay` | Boolean | `false` | `false` replaces the skin; `true` draws the texture as an overlay layer honouring `render_type`, `body_parts` and the tint.
 `hide_cape` | Boolean | `false` | Hide the holder's cape while active.
 
@@ -38,9 +38,32 @@ Field | Type | Default | Description
 Field | Type | Default | Description
 ------|------|---------|-------------
 `model_location` | Identifier | _required_ | The Blockbench model. `mymod:cape` resolves to `assets/mymod/geo/cape.geo.json` (the standard Blockbench/GeckoLib folder) — `assets/mymod/models/apoli/cape.geo.json` also works. Export from Blockbench as **Bedrock geometry** (`.geo.json`).
-`texture_location` | Identifier | _required_ | The texture that UV-maps onto the model, e.g. `mymod:textures/entity/cape.png`.
+`texture_location` | Identifier or keyword | _required_ | The texture that UV-maps onto the model, e.g. `mymod:textures/entity/cape.png`. Also takes a [live keyword](#live-textures).
 `render_as_overlay` | Boolean | `false` | **Minions only.** `false` replaces the minion's own model with yours; `true` draws yours on top of it. Ignored on players, where geometry is always drawn over the player model.
 `animations` | [Model Animation](/docs/datapack/data-types/model-animation) or Array of them | _none_ | Bedrock animations to play on the model. The first entry whose `condition` passes is the one that plays.
+
+## Live textures
+
+Every texture field here takes a keyword instead of a texture id, resolved per frame against the entity being drawn:
+
+| Keyword | Resolves to |
+| --- | --- |
+| `player` | That entity's skin file, if it is a player. |
+| `player_cape` | That entity's cape. |
+| `entity` | Whatever texture that entity's renderer normally uses — so a model can be skinned with the mob it is attached to. |
+
+```json
+{
+  "type": "apoli:custom_model_render",
+  "mode": "geometry",
+  "model_location": "example:wings",
+  "texture_location": "player"
+}
+```
+
+That draws the wings model UV-mapped onto the wearer's own skin, so it recolours itself per player without a texture per player.
+
+> Keywords resolve on the client, from the entity being rendered. `held_item` and `offhand_item` are item models, not textures, so they do nothing here — use them on [apoli:overlay](/docs/datapack/powers/overlay) or [apoli:fire_projectile](/docs/datapack/powers/fire_projectile) instead.
 
 On resource (re)load, the log prints `Loaded N custom model(s) for custom_model_render.` — if your model isn't drawing, check `N` and confirm the file sits at one of the two paths above with the `.geo.json` extension.
 

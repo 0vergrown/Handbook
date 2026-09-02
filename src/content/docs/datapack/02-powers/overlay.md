@@ -14,7 +14,7 @@ Write the fields directly on the power for a single overlay, or put a list of ov
 
 Field | Type | Default | Description
 ------|------|---------|-------------
-`texture` | [Identifier](/docs/datapack/data-types/identifier) | **required** | The texture to draw.
+`texture` | [Identifier](/docs/datapack/data-types/identifier) or keyword | **required** | The texture to draw. Besides a texture id it takes a live keyword — see [Live textures](#live-textures).
 `strength` | [Float](/docs/datapack/data-types/float) | `1.0` | In `texture` mode, the alpha the texture is drawn at. In `nausea` mode, how far it is stretched (`1.0` = screen size). Range 0.0–1.0.
 `red`, `green`, `blue` | [Float](/docs/datapack/data-types/float) | `1.0` | Multiplied into the matching colour channel. Range 0.0–1.0.
 `draw_mode` | [String](/docs/datapack/data-types/string) | `texture` | `texture` draws it as-is; `nausea` uses the additive, stretching blend the vanilla nausea overlay uses, which treats black as transparent.
@@ -26,12 +26,61 @@ Field | Type | Default | Description
 `anchor` | [String](/docs/datapack/data-types/string) | `top_left` | Which point of the screen `x`/`y` are measured from: `top_left`, `top_center`, `top_right`, `left`, `center`, `right`, `bottom_left`, `bottom_center`, `bottom_right`.
 `u`, `v` | [Expression](/docs/datapack/data-types/expression) | `0` | Top-left corner **inside the texture** to start drawing from — how you pick one sprite out of a sheet.
 `texture_width`, `texture_height` | [Integer](/docs/datapack/data-types/integer) | `width`, `height` | The full size of the texture file. Needed whenever `u`/`v` are used, so the game knows how to map the sheet.
+`region_width`, `region_height` | [Integer](/docs/datapack/data-types/integer) | `width`, `height` | The size of the patch cut out of the texture, when it differs from the size it is drawn at. This is what scales an 8×8 sprite up to a 64×64 quad.
+`selector` | [String](/docs/datapack/data-types/string) | `"@s"` | Whose texture a live keyword resolves to: `@s` (the power holder) or `@p` (the player looking at the screen).
+`set` | [Identifier](/docs/datapack/data-types/identifier) | _optional_ | An [apoli:entity_set](/docs/datapack/powers/entity_set) power. Draws the overlay once per member of that set — see [Live textures](#live-textures).
 `condition` | [Entity Condition](/docs/datapack/entity-conditions) | _optional_ | Per-overlay condition, **inside `overlays` only**. Checked every frame; an overlay whose condition fails is skipped while the rest keep drawing. On the single-overlay spelling the power's own `condition` already does this job.
 `overlays` | array of overlay objects | _optional_ | Several overlays in one power. **All** of them whose condition passes are drawn, in order, so this is a stack of layers rather than a pick-one.
 
 The power's own top-level `condition` still gates the whole thing; the per-overlay `condition` decides each layer inside `overlays`. Writing both `overlays` and the flat fields on one power is not an error, but only `overlays` is used.
 
 `x`, `y`, `width`, `height`, `u` and `v` are [Expressions](/docs/datapack/data-types/expression), so they can read resources and entity state. That is what makes counters and meters possible without a power per digit.
+
+## Live textures
+
+`texture` also accepts a keyword instead of a texture id, and the game resolves it per frame against a real entity:
+
+| Keyword | Draws |
+| --- | --- |
+| `player` | The subject's skin file. |
+| `player_face` | The subject's face — the 8×8 head patch, with the hat layer over it. `u`, `v`, `region_width`, `region_height` and the texture size all default to the right values for a skin, so you only give it a size and a place. |
+| `player_cape` | The subject's cape, if they have one. |
+| `entity` | Whatever texture that entity's renderer uses — works on mobs, not just players. |
+| `held_item` / `offhand_item` | The item in that hand, drawn as an item icon rather than a flat texture. |
+
+`selector` says who the subject is. `@s` is the power holder; `@p` is the player whose screen this is, which is the same thing for a normal power and differs only inside `set`.
+
+A 215×215 portrait of your own face in the middle of the screen:
+
+```json
+{
+  "type": "apoli:overlay",
+  "texture": "player_face",
+  "selector": "@s",
+  "anchor": "center",
+  "x": 0,
+  "y": 0,
+  "width": 215,
+  "height": 215
+}
+```
+
+`set` turns one overlay into one-per-member. Name an [apoli:entity_set](/docs/datapack/powers/entity_set) power and the overlay is drawn once for every entity in that set, with the [Expression](/docs/datapack/data-types/expression) variables `index` (zero-based) and `count` bound — so `x` or `y` can lay them out in a row:
+
+```json
+{
+  "type": "apoli:overlay",
+  "texture": "player_face",
+  "set": "*:*_set",
+  "anchor": "top_left",
+  "x": "8 + index * 24",
+  "y": 8,
+  "width": 20,
+  "height": 20
+}
+```
+
+> Live textures resolve on the client, so `selector` only takes `@s` and `@p` — a full entity selector cannot be evaluated there. Members of a `set` resolve to players; a member that is not a player, or is not on the server any more, is skipped.
 
 ## Examples
 

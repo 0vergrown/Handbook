@@ -13,7 +13,7 @@ Type ID: `apoli:fire_projectile`
 | Field                                 | Type                   | Default    | Description                                                                                                                                                                      |
 |---------------------------------------|------------------------|------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `entity_type`                         | [Identifier](/docs/datapack/data-types/identifier) |            | The ID of the entity type that will be fired.                                                                                                                                    |
-| `texture_location`                    | [Identifier](/docs/datapack/data-types/identifier) | *optional* | If specified, the texture used for the projectile and the `entity_type` will be ignored. The projectile is then Apoli's own entity, which can also wear a [Bedrock model](#giving-the-projectile-a-model). |
+| `texture_location`                    | [Identifier](/docs/datapack/data-types/identifier) or keyword | *optional* | If specified, the texture used for the projectile and the `entity_type` will be ignored. The projectile is then Apoli's own entity, which can also wear a [Bedrock model](#giving-the-projectile-a-model). The keywords `held_item` and `offhand_item` throw the shooter's item instead — see [Throwing what you are holding](#throwing-what-you-are-holding). |
 | `cooldown`                            | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression)    | `1`        | Interval of ticks this power needs to recharge before the power can be triggered again.                                                                                          |
 | `hud_render`                          | [Hud Render](/docs/datapack/data-types/hud-render) | _optional_ | Determines how the cooldown of this power is visualized on the HUD.                                                                                                              |
 | `count`                               | [Integer](/docs/datapack/data-types/integer)    | `1`        | The amount of projectiles to fire each use.                                                                                                                                      |
@@ -80,6 +80,20 @@ This example will let the player fire arrows very rapidly by holding the left mo
 ```
 
 This example will let the player fire 4 snow balls disguised as slime balls consecutively, with an interval of 5 ticks upon pressing the right mouse button.
+
+## Throwing what you are holding
+
+Set `texture_location` to `held_item` (or `offhand_item`) and the projectile carries the shooter's stack, rendering its real item model — blocks come out as blocks, items as their sprite, exactly the way a thrown snowball or ender pearl renders:
+
+```json
+{
+  "type": "apoli:fire_projectile",
+  "texture_location": "held_item",
+  "speed": 1.5
+}
+```
+
+The stack is read when the projectile spawns, so it keeps looking like that item even if the shooter swaps hands mid-flight. It is a copy for rendering only — nothing is taken from the shooter's inventory, so pair it with an [apoli:consume](/docs/datapack/item-actions/consume) or [apoli:change_slot](/docs/datapack/entity-actions/change_slot) if the throw should cost the item.
 
 ## Giving the projectile a model
 
