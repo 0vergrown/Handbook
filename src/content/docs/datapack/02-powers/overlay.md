@@ -80,7 +80,9 @@ A 215×215 portrait of your own face in the middle of the screen:
 }
 ```
 
-> Live textures resolve on the client, so `selector` only takes `@s` and `@p` — a full entity selector cannot be evaluated there. Members of a `set` resolve to players; a member that is not a player, or is not on the server any more, is skipped.
+`set` names the [apoli:entity_set](/docs/datapack/powers/entity_set) **power id**, and `*:*` expands to the id of the file it is written in — so `"*:*_set"` inside `powers/party_hud.json` means `example:party_hud_set`, and the entity-set power must actually have that id. If the ids do not line up, the overlay draws nothing and Apoli logs one line naming the id it could not find.
+
+> Live textures resolve on the client, so `selector` only takes `@s` and `@p` — a full entity selector cannot be evaluated there. A `set` overlay reads only the **viewing player's own** sets: if the set is owned by someone else, that viewer sees nothing. Members resolve to players (their skin is available even out of render range); a member that is not a player is skipped.
 
 ## Examples
 

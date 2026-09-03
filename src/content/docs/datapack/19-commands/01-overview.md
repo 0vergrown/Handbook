@@ -16,6 +16,7 @@ Apoli and Origins add a handful of commands for granting powers, poking at resou
 | [`/apoli:clone`](/docs/datapack/commands/clone) | — | Summon, list and remove player clones. |
 | [`/apoli:mount`](/docs/datapack/commands/mount) | — | Inspect and clear the rider offsets `apoli:mount` stores. |
 | [`/apoli:key`](/docs/datapack/commands/key) | — | Hold, release and inspect keys on any entity, and fake a scroll wheel. |
+| [`/apoli:dev_mode`](/docs/datapack/commands/dev-mode) | — | Toggle the debugging view: resources as text, shapes outlined in particles, no cooldowns. |
 | [`/origin`](/docs/datapack/commands/origin) | — | Set, query and reroll a player's origin. Origins only. |
 
 Apoli also adds [entity selector options](/docs/datapack/commands/selectors) so `@a[origin=…]` and `@e[power=…]` work anywhere a selector is accepted.

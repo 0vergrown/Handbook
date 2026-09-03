@@ -13,7 +13,7 @@ Type ID: `apoli:execute_command`
 Field  | Type | Default | Description
 -------|------|---------|-------------
 `command` | [String](/docs/datapack/data-types/string) |  | The command to execute on the entity.
-`arguments` | Macro Arguments | *optional* | Values for `$(key)` placeholders in `command`. See [Macro arguments](#macro-arguments).
+`arguments` | Macro Arguments | *optional* | Values for `$(key)` placeholders in `command`, including live resource values. See [Macro arguments](#macro-arguments).
 
 ## Examples
 
@@ -34,9 +34,44 @@ This example will execute a `/tellraw` command that will print a green-colored "
 | --- | --- | --- | --- |
 | `storage` | [Identifier](/docs/datapack/data-types/identifier) | *optional* | Read the values from this command storage. |
 | `path` | [String](/docs/datapack/data-types/string) | `""` | A dot-separated key path inside that storage. |
-| `values` | NBT Compound | *optional* | Inline values. Applied after `storage`, so they win on a key clash. |
+| `resources` | Resource map | *optional* | Resource values read live off the entity the command runs as. See [Resources in a command](#resources-in-a-command). |
+| `values` | NBT Compound | *optional* | Inline values. Applied last, so they win on a key clash. |
 
-Values are written out the way a function macro writes them: strings bare, numbers as numbers, compounds and lists as SNBT. If a `$(key)` in the command has no matching value, the command is skipped rather than run malformed.
+Values are written out the way a function macro writes them: strings bare, numbers as numbers, compounds and lists as SNBT. If a `$(key)` in the command has no matching value, the command is skipped rather than run malformed — and Apoli logs one line naming the key that was missing, so a typo or an absent resource does not fail silently.
+
+## Resources in a command
+
+`resources` puts [`apoli:resource`](/docs/datapack/powers/resource) and [`apoli:cooldown`](/docs/datapack/powers/cooldown) values straight into the command, read at the moment it runs. Write it as `key: id`:
+
+```json
+"arguments": {
+  "resources": {
+    "mana": "example:mana"
+  }
+}
+```
+
+or as a plain list, which keys each resource by the last segment of its path — `example:mana` becomes `$(mana)`:
+
+```json
+"arguments": {
+  "resources": ["example:mana"]
+}
+```
+
+Each key also gets `_max` and `_min` companions wherever the resource declares those bounds, so a readout needs no second lookup:
+
+```json
+"entity_action": {
+  "type": "apoli:execute_command",
+  "command": "say mana: $(mana)/$(mana_max)",
+  "arguments": {
+    "resources": ["example:mana"]
+  }
+}
+```
+
+That prints `mana: 7/10` in chat — which is the quickest way to watch a resource move while you are building the power that changes it. Turn on [`/apoli:dev_mode`](/docs/datapack/commands/dev-mode) and every `apoli:execute_command` also echoes its finished command to you, macros already expanded, so you can see exactly what ran.
 
 [apoli:store_data](/docs/datapack/entity-actions/store_data) is the usual way to fill that storage — it writes `id`, `pos`, `x`/`y`/`z` and, for blocks, a `state` string that `/setblock` accepts as-is:
 
