@@ -17,10 +17,41 @@ Field  | Type | Default | Description
 `mode` | [String](/docs/datapack/data-types/string) | `steal` | `steal` moves powers **target → actor**; `give` moves them **actor → target**.
 `copy` | [Boolean](/docs/datapack/data-types/boolean) | `false` | If `false`, powers are **moved** (removed from the donor). If `true`, they are **copied** (the donor keeps them).
 `sources` | [Array](/docs/datapack/data-types/array) of [Identifier](/docs/datapack/data-types/identifier) | *optional* | Only transfer powers granted by these sources. If omitted, every source on the donor is transferred (except `new_source`). This is how you copy one specific origin/layer — filter to the source it was granted under.
+`tags` | string or array of strings | *optional* | Only transfer powers carrying one of these [power tags](/docs/datapack/introduction/powers#tagging-powers). This is how you copy "one move from every origin" without listing a single power id.
+`powers` | [Identifier](/docs/datapack/data-types/identifier) or array | *optional* | Only transfer these exact powers, if the donor has them.
 `new_source` | [Identifier](/docs/datapack/data-types/identifier) | `apoli:transferred` | The source the powers are granted under on the **recipient**. Grouping under one source lets you later remove them all in one call (see *Losing / restoring* below).
 `preserve_source` | [Boolean](/docs/datapack/data-types/boolean) | `false` | If `true`, powers keep their **original** source id on the recipient instead of `new_source`.
 `actor_action` | Entity Action | *optional* | Action run on the actor after the transfer (e.g. a sound or particle).
 `target_action` | Entity Action | *optional* | Action run on the target after the transfer.
+
+`sources`, `tags` and `powers` all narrow the same set and stack: a power must pass every filter that is present.
+
+## Copying by tag
+
+Tag the moves you are willing to have copied, once, on the powers themselves:
+
+```json
+{
+    "type": "apoli:action_on_key_press",
+    "tags": ["copyable_move"],
+    "entity_action": { "type": "apoli:execute_command", "command": "say hi" }
+}
+```
+
+Then one action copies whichever of them the target happens to have, whatever origin they came from
+and however many packs added more later:
+
+```json
+{
+    "type": "apoli:transfer",
+    "mode": "steal",
+    "copy": true,
+    "tags": ["copyable_move"],
+    "new_source": "example:mimicked"
+}
+```
+
+Strip `example:mimicked` later and the copy goes away.
 
 ## Why sources matter (dupe-safety)
 

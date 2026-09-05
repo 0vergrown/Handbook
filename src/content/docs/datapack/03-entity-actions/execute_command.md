@@ -85,4 +85,3 @@ That prints `mana: 7/10` in chat — which is the quickest way to watch a resour
   }
 }
 ```
-

@@ -19,10 +19,10 @@ Field  | Type | Default | Description
 `count` | Integer | `1` | Determines the amount of particles to spawn.
 `speed` | [Float](/docs/datapack/data-types/float), [Expression](/docs/datapack/data-types/expression) or [Vector](/docs/datapack/data-types/vector) | `0.0` | A number is vanilla's random speed multiplier — every particle flies off in a random direction at up to that speed. A **vector** instead gives every particle that exact velocity, which is the version you want when the particles should go somewhere. Read through `space`.
 `velocity_x`, `velocity_y`, `velocity_z` | [Float](/docs/datapack/data-types/float) | `0` | The same explicit velocity, written per axis. Takes priority over a vector `speed`. Read through `space`.
-`space` | [Space](/docs/datapack/data-types/space) | `world` | How `offset_*` and the velocity are read. `world` uses the world axes; `local` is relative to the entity's facing, so `offset_z: 2` is two blocks in front of them and `velocity_z: 0.5` fires the particles the way they are looking. With `model_part` set and no `space` written, both are read in the **part's own frame** instead — see below.
+`space` | [Space](/docs/datapack/data-types/space) | `world` | How `offset_*`, `spread` and the velocity are read. `world` uses the world axes; `local` is relative to the entity's facing, so `offset_z: 2` is two blocks in front of them and `velocity_z: 0.5` fires the particles the way they are looking. With `model_part` set and no `space` written, both are read in the **part's own frame** instead — see below.
 `model_part` | [String](/docs/datapack/data-types/string) | _optional_ | Anchor the particles to a body part instead of the entity's feet, and read `offset_*` and the velocity along that part. See [Particles on a body part](#particles-on-a-body-part) for the names.
 `force` | Boolean | `false` | Determines whether to display the emitted particles within 512 blocks (`true`) or 32 blocks (`false`).
-`spread` | Vector | `{"x": 0.5, "y": 0.5, "z": 0.5}` | Determines the size of the three-dimensional cuboid volume to spawn the specified particle type in.
+`spread` | Vector | `{"x": 0.5, "y": 0.5, "z": 0.5}` | The size of the volume the particles scatter through, per axis. Read through `space` like the offset is, so `space: "local"` with `{"x": 0, "y": 0, "z": 3}` draws a line running away from the entity's face rather than along world south.
 `offset_x` | Float | `0.0` | The offset of where the particle will be centered in the X axis.
 `offset_y` | Float | `0.5` | The offset of where the particle will be centered in the Y axis.
 `offset_z` | Float | `0.0` | The offset of where the particle will be centered in the Z axis.
@@ -51,7 +51,9 @@ puts the particles ten blocks due south rather than ten blocks in front of the p
 ```
 
 That is a cone of sparks a block and a half in front of the entity's eyes, travelling the way they
-are facing. `spread` still scatters the **spawn positions**; the velocity is the same for all of them.
+are facing. `spread` scatters the **spawn positions** and the velocity is the same for all of them, so
+the shape of the cloud is the shape of the spread: with `space` set, a spread of `{"x": 0, "y": 0, "z": 3}`
+is a line pointing where the entity looks, and `{"x": 3, "y": 0, "z": 0}` is a line across their shoulders.
 
 > An explicit velocity is sent as one packet per particle, because the vanilla particle packet can
 > only carry a direction when its count is zero. Apoli caps that at 64 packets per call — keep

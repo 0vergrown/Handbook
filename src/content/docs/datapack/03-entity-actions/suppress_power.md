@@ -12,10 +12,11 @@ Type ID: `apoli:suppress_power`
 
 | Field | Type | Default | Purpose |
 | --- | --- | --- | --- |
-| `power` | identifier **or array of identifiers** | **required** | The power(s) to suppress. |
+| `power` | identifier **or array of identifiers** | *optional* | The power(s) to suppress by id. |
+| `tags` | string **or array of strings** | *optional* | Suppresss every power the entity holds that carries one of these [power tags](/docs/datapack/introduction/powers#tagging-powers). |
 | `source` | identifier **or array of identifiers** | `apoli:suppressed` | The tag(s) the suppression is filed under. Unsuppressing must name the same source. |
 
-Both fields take either a single identifier or an array, so one action can suppress several powers at once. Every listed power is suppressed under every listed source. `powers` and `sources` are accepted as spellings of the same fields.
+Give `power`, `tags` or both — everything named by either is acted on. Each field takes either a single value or an array, so one action can suppress several powers at once. Every listed power is suppressed under every listed source. `powers` and `sources` are accepted as spellings of the same fields.
 
 ## Examples
 

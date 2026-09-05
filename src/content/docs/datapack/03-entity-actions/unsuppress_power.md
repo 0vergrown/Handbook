@@ -12,10 +12,11 @@ Type ID: `apoli:unsuppress_power`
 
 | Field | Type | Default | Purpose |
 | --- | --- | --- | --- |
-| `power` | identifier **or array of identifiers** | **required** | The power(s) to unsuppress. |
+| `power` | identifier **or array of identifiers** | *optional* | The power(s) to unsuppress by id. |
+| `tags` | string **or array of strings** | *optional* | Unsuppress every power the entity holds that carries one of these [power tags](/docs/datapack/introduction/powers#tagging-powers). |
 | `source` | identifier **or array of identifiers** | `apoli:suppressed` | The source(s) to lift. Must match what suppressed the power. |
 
-Both fields take either a single identifier or an array. Every listed source is lifted from every listed power. `powers` and `sources` are accepted as spellings of the same fields.
+Give `power`, `tags` or both — everything named by either is acted on. Each field takes either a single value or an array. Every listed source is lifted from every listed power. `powers` and `sources` are accepted as spellings of the same fields.
 
 ## Examples
 

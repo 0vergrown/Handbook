@@ -16,6 +16,8 @@ Type ID: `apoli:explode`
 | `destruction_type` | [String](/docs/datapack/data-types/string)                             | `"destroy"` | How the explosion affects blocks. Accepted values: `"none"`, `"break"`, `"destroy"`                           |
 | `create_fire`      | [Boolean](/docs/datapack/data-types/boolean)                           | `false`     | Whether the explosion places fire in the blast area                                                            |
 | `at_target`        | [Boolean](/docs/datapack/data-types/boolean)                          | `false`     | If `true`, the explosion originates at the **target's** position; otherwise it originates at the **actor's**  |
+| `damage_self`      | [Boolean](/docs/datapack/data-types/boolean)                          | `true`      | Whether the **actor** takes damage from its own explosion                                                      |
+| `damage_targets`   | [Boolean](/docs/datapack/data-types/boolean)                          | `true`      | Whether everything other than the actor takes damage. `false` keeps the blocks and the knockback, drops the damage |
 | `indestructible`   | Block Condition                 | *optional*  | Block condition for blocks that are protected from the explosion regardless of `destruction_type`              |
 | `destructible`     | Block Condition                 | *optional*  | Block condition for blocks that are explicitly allowed to be destroyed, taking priority over `indestructible`  |
 

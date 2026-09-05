@@ -14,6 +14,7 @@ Field | Type | Default | Description
 ------|------|---------|-------------
 `power` | Float | | Determines the power of the explosion.
 `destruction_type` | Destruction Type | `"break"` | Determines the effect of the explosion to the terrain.
+`damage_targets` | Boolean | `true` | Determines if entities caught in the blast take damage. `false` still breaks blocks and applies knockback.
 `indestructible` | Block Condition Type | _optional_ | If specified, the blocks that fulfill this condition will not be destroyed by the summoned explosion.
 `destructible` | Block Condition Type | _optional_ | If specified, only the blocks that fulfill this condition will be destroyed by the summoned explosion.
 `create_fire` | Boolean | `false` | Determines if the summoned explosion should create fire.

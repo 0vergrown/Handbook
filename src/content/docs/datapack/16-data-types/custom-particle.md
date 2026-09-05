@@ -28,8 +28,8 @@ Field | Type | Default | Description
 `end_color` | Colour | `color` | Tint at the end of its life, interpolated with `easing` — the `dust_color_transition` behaviour, on your own texture.
 `gravity` | [Float](/docs/datapack/data-types/float) | `0.0` | Downward pull per tick. Negative values make the particle rise.
 `friction` | [Float](/docs/datapack/data-types/float) | `0.98` | Velocity kept each tick. `1.0` never slows down, `0.9` drags hard.
-`roll` | [Float](/docs/datapack/data-types/float) | `0.0` | Starting rotation of the quad, in degrees.
-`roll_speed` | [Float](/docs/datapack/data-types/float) | `0.0` | Degrees added to the rotation each tick.
+`roll` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | `0.0` | Starting rotation of the quad, in degrees. Evaluated once per particle.
+`roll_speed` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | `0.0` | Degrees added to the rotation each tick. Evaluated once per particle.
 `frames` | [Integer](/docs/datapack/data-types/integer) | `0` | Number of animation frames in the texture. `0` reads the count from the texture itself; `1` forces a single static frame.
 `frame_time` | [Integer](/docs/datapack/data-types/integer) | `0` | Ticks per frame. `0` uses the `frametime` from the texture's animation metadata, or — if the texture has none — spreads all frames evenly across `lifetime`.
 `frame_layout` | [String](/docs/datapack/data-types/string) | `auto` | How the frames are arranged: `vertical` (a column, the vanilla layout), `horizontal` (a row), `grid` (square cells, left to right then top to bottom), or `auto` to work it out from the image.
@@ -100,6 +100,26 @@ Alpha is part of the colour, so fading a particle out means moving alpha to `0` 
 particle when it spawns, which is what turns one `spawn_particles` call into something that looks
 like smoke rather than a stamp. The colour rolls are applied to `color` and `end_color` identically,
 so each particle still runs the same fade — just from its own starting shade.
+
+`roll` and `roll_speed` get their randomness a different way: they take a full
+[Expression](/docs/datapack/data-types/expression), evaluated **once per particle** as it spawns.
+The random functions are what you want here — `rUni(a, b)` for a uniform draw, `rNor(mean, sd)` for
+a normal one, `rList(…)` to pick from a set. There is no entity to read from at that point, so
+entity variables come out as `0`; these expressions are for randomness and arithmetic, not context.
+
+```json
+{
+  "type": "apoli:custom",
+  "texture": "example:textures/particle/leaf.png",
+  "lifetime": 60,
+  "size": 0.25,
+  "gravity": 0.02,
+  "roll": "rUni(0, 360)",
+  "roll_speed": "rNor(0, 4)"
+}
+```
+
+Every leaf starts at its own angle and tumbles at its own rate, most of them slowly and a few fast.
 
 ```json
 {

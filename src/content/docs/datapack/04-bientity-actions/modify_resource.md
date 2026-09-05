@@ -2,6 +2,7 @@
 title: "Modify Resource (Bi-Entity Action Type)"
 description: "Modifies a resource on one side of a bi-entity pair, optionally reading the incoming value from the other side."
 navigation_title: "Modify Resource"
+aliases: ["change_resource", "origins:change_resource"]
 ---
 
 Modifies a [apoli:resource](/docs/datapack/powers/resource) or [apoli:cooldown](/docs/datapack/powers/cooldown) on one side of a bi-entity pair, and can take the incoming value from the resource of the *other* side — the part that the entity-action [apoli:modify_resource](/docs/datapack/entity-actions/modify_resource) cannot do on its own.

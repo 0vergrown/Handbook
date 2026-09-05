@@ -21,6 +21,32 @@ Field  | Type | Default | Description
 `order` | [Integer](/docs/datapack/data-types/integer) | *optional* | If specified, this determines the position of the HUD render when being rendered. The higher the `order` value is, the higher it is on the rendered HUD render stack.
 `max` | [Integer](/docs/datapack/data-types/integer) OR [Expression](/docs/datapack/data-types/expression) | *optional* | The value at which the bar reads full, overriding whatever the power itself would use. Required to draw a bar for a resource that has no `max` of its own — see below.
 
+## Where the bars sit
+
+Bars stack upward in the right-hand status column, starting on the first free row above whatever the HUD already
+draws there — the hunger bar, mount health, the air bubbles, and rows other mods add such as a thirst meter. Apoli
+claims the rows it fills, so a HUD element drawn after it stacks on top rather than through it. Within Apoli's own
+bars, a higher `order` sits higher up.
+
+There is nothing to configure for this in a data pack. It reads the HUD as it is actually drawn, so a mod that
+hides the hunger bar, keeps the air bubbles up permanently, or adds a row of its own moves the bars without either
+of you knowing about the other.
+
+> On NeoForge every HUD element advances a shared row counter, and Apoli reads and advances the same one. Fabric has
+> no such shared counter, so Apoli measures the column instead: anything drawn on the status-bar row grid inside it
+> counts as a row. An element that draws itself some other way — off the 10-pixel grid, or wider than the column —
+> is not seen, and the offsets below are there for that case.
+
+### Client options
+
+These live in `config/apoli-client.json`, and on the **Apoli Settings** screen. They only affect the player who sets them.
+
+Option | Default | What it does
+-------|---------|--------------
+`hudAutoStack` | `true` | Position the bars above whatever the HUD already draws. `false` pins them to the vanilla position — one row above the hunger bar — and leaves the rest to the offsets.
+`hudOffsetX` | `0` | Moves the bars sideways. Positive is right.
+`hudOffsetY` | `0` | Moves the bars down. Negative is up.
+
 ## Examples
 
 ```json

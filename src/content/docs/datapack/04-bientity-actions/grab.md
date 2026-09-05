@@ -16,8 +16,8 @@ Type ID: `apoli:grab`
 
 | Field             | Type                                     | Default      | Description                                                                                                   |
 | ----------------- | ---------------------------------------- | ------------ | ------------------------------------------------------------------------------------------------------------- |
-| `duration`        | Integer | _continuous_ | How long the grab lasts, in ticks. Omit (or use a value ≤ 0) for a continuous grab that lasts until released. |
-| `distance`        | Double   | `2.0`        | How far in front of the actor's eyes the target is held, in blocks.                                           |
+| `duration`        | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | _continuous_ | How long the grab lasts, in ticks. Omit (or use a value ≤ 0) for a continuous grab that lasts until released. Evaluated once, when the grab starts. |
+| `distance`        | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression)   | `2.0`        | How far in front of the actor's eyes the target is held, in blocks. Re-evaluated **every tick** against the grabber, so an expression makes the hold reach in and out while the grab is running. |
 | `disable_grabber` | Boolean | `false`      | While the grab is active, the **actor** cannot use Apoli power keybinds (active powers, toggles).             |
 | `disable_grabbed` | Boolean | `false`      | While the grab is active, the **target** cannot use Apoli power keybinds.                                     |
 | `horizontal_only` | Boolean | `false`      | The target only moves **left/right** with the actor's camera: it stays at eye height and ignores looking up or down (pitch is treated as level). |
@@ -26,6 +26,17 @@ Type ID: `apoli:grab`
 Setting both booleans holds the target at a fixed point: eye height, in the direction the actor faced when the grab began.
 
 > Looking far enough down puts the raw hold point below the actor's feet, so it bottoms out at the clearance floor. Aiming a target *downwards* — including with `vertical_only` — moves it toward the actor rather than pressing it into the ground.
+
+> `distance` is the one field that keeps listening. Give it an expression and the target is reeled in or pushed out live — off a resource, off how long the grab has run, off anything the [Expression](/docs/datapack/data-types/expression) engine can read.
+
+```json
+{
+    "type": "apoli:grab",
+    "distance": "1 + 4 * resource('example:pull_charge') / 10"
+}
+```
+
+Holds the target between one and five blocks out, following a charge resource as it fills.
 
 ## Example
 

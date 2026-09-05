@@ -31,6 +31,7 @@ Five fields are shared by **every** power type. Everything else is type-specific
 | `description` | [Text Component](/docs/datapack/data-types/text-component) | auto     | Description shown in menus. Falls back to a translation key. |
 | `condition`   | [Entity Condition](/docs/datapack/introduction/conditions) | optional | The power is only *active* while this passes.                |
 | `hidden`      | [Boolean](/docs/datapack/data-types/boolean)               | `false`  | Hide the power from origin/power screens.                    |
+| `tags`        | string or list of strings                                  | `[]`     | Free-form labels for this power. Actions that work on powers can select by tag instead of by id — see [Tagging powers](#tagging-powers). |
 
 The top-level `condition` is worth remembering: it's how you make a power conditional without changing its type. A `condition` of `apoli:sneaking` means the power only works while sneaking.
 
@@ -92,3 +93,34 @@ The powers arrive under the source `apoli:global`, so they sit alongside anythin
 > Which powers a given entity type receives is worked out **once per entity type per data-pack load** and cached, so spawning a thousand zombies does not re-evaluate a thousand times. When no global power sets exist at all, the whole system costs a single boolean check per entity load.
 
 > Sets are re-evaluated on `/reload`, and every already-loaded entity is reconciled against the new result — powers whose set no longer matches are revoked in the same pass.
+
+## Tagging powers
+
+`tags` puts one or more free-form labels on a power. Nothing reads them on its own — they exist so
+that actions which operate on powers can name a *group* of powers instead of listing every id:
+
+```json
+{
+    "type": "apoli:action_on_key_press",
+    "tags": ["copyable_move"],
+    "entity_action": {
+        "type": "apoli:execute_command",
+        "command": "say hi"
+    }
+}
+```
+
+Three actions take a `tags` list and act on every power the entity holds that carries one of them:
+
+- [apoli:transfer](/docs/datapack/bientity-actions/transfer) — steal or copy the tagged powers.
+- [apoli:suppress_power](/docs/datapack/entity-actions/suppress_power) — switch them off.
+- [apoli:unsuppress_power](/docs/datapack/entity-actions/unsuppress_power) — switch them back on.
+
+That is what makes "copy one move from whatever origin you touched" a single action rather than a
+list that has to be updated whenever a pack adds a power: tag the moves once, and the action finds
+them.
+
+Tags are plain strings, matched exactly and case-sensitively. They are not
+[identifiers](/docs/datapack/data-types/identifier) and are not namespaced for you, so on a server
+running several packs, prefix them with something of your own (`mypack.copyable`) to avoid two packs
+meaning different things by the same word.

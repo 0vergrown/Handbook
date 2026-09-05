@@ -264,3 +264,37 @@ puts the model on that entity rather than on you:
   path. Grant the power from that power's `projectile_action`.
 
 `hidden_slots` only applies to entities that wear equipment; on a projectile it is ignored.
+
+## While disguised
+
+An [`apoli:disguise_as`](/docs/datapack/entity-actions/disguise_as) disguise swaps out the whole
+player renderer, so the power has to be drawn onto the disguise instead. It is, whenever the
+disguise's model is **humanoid** — zombie, husk, drowned, skeleton, stray, wither skeleton, piglin
+and the rest of the two-arms-two-legs family. Texture overlays paint onto the disguise's limbs, and
+geometry bound to `head`, `body`, `right_arm`, `left_arm`, `right_leg` or `left_leg` tracks the
+disguise's live pose.
+
+```json
+{
+  "type": "apoli:multiple",
+  "skeleton_body": {
+    "type": "apoli:disguise_as",
+    "entity_type": "minecraft:skeleton"
+  },
+  "armor": {
+    "type": "apoli:custom_model_render",
+    "mode": "texture",
+    "render_as_overlay": true,
+    "wide_texture_location": "example:textures/models/armor/plate_wide.png",
+    "slim_texture_location": "example:textures/models/armor/plate_slim.png"
+  }
+}
+```
+
+The armour is painted over the skeleton. Which of the two textures is used still follows the
+**player's** own skin model, not the disguise's — a slim-armed player gets the slim sheet.
+
+> A disguise whose model is *not* humanoid — a creeper, a bee, a horse — has no limbs to bind to,
+> and the power is skipped for as long as that disguise is up. A disguise as another **player** is
+> already drawn by the player renderer, so nothing special happens there: the power works exactly
+> as it does undisguised.

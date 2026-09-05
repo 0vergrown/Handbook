@@ -12,7 +12,7 @@ Type ID: `apoli:elytra_flight`
 
 Field  | Type | Default | Description
 -------|------|---------|-------------
-`render_elytra` | Boolean |  | Determines whether an Elytra should render on the player's back while this power is active.
+`render_elytra` | Boolean |  | Determines whether an Elytra should render on the player's back while this power is active. A rendered Elytra hides the player's cape, the same way a worn one does.
 `texture_location` | Identifier | _optional_ | If specified, this will be the texture used by the Elytra granted by this power.
 
 ## Examples

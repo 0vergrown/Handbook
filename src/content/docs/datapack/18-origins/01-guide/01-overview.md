@@ -40,6 +40,7 @@ Origins live in `data/<namespace>/origins/`. The file name is the origin's id.
 | `name_scroll_speed` | number                                           | —       | Speed a long name marquees at.                       |
 | `max_players`       | number                                           | `-1`    | How many players may hold this origin at once — see [Capping an origin](#capping-an-origin). |
 | `upgrades`          | list of [upgrade](#upgrading-into-another-origin) | `[]`    | Conditions that turn this origin into another one — see [Upgrading into another origin](#upgrading-into-another-origin). |
+| `tags`              | string or list of strings                        | `[]`    | Free-form labels on this origin. [origins:origin_tag](/docs/datapack/origins/origin_tag) tests them, so a condition can name a *group* of origins instead of listing ids. |
 
 ## Upgrading into another origin
 
