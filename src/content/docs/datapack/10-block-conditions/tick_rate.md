@@ -12,7 +12,7 @@ Type ID: `apoli:tick_rate`
 
 | Field | Type | Default | Description |
 | --- | --- | --- | --- |
-| `scope` | `chunk` or `dimension` | `chunk` | Which rate to read. |
+| `scope` | `chunk`, `dimension` or `server` | `chunk` | Which rate to read. |
 | `comparison` | [Comparison](/docs/datapack/data-types/comparison) | _optional_ | How to compare the rate. Omit it to test only `frozen`. |
 | `compare_to` | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | `0` | The value the rate is compared against. |
 | `frozen` | [Boolean](/docs/datapack/data-types/boolean) | _optional_ | When set, the scope must (or must not) be frozen. |

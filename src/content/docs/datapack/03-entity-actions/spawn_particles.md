@@ -14,16 +14,16 @@ Field | Type | Default | Description
 ------|------|---------|------------
 `particle` | [Particle Effect](/docs/datapack/data-types/particle-effect) | | The particle type that will be spawned. Use [`apoli:custom`](/docs/datapack/data-types/custom-particle) for a particle built from your own texture.
 `bientity_condition` | Bi-entity Condition Type | *optional* | If specified, the particle will only be visible if this bi-entity condition is fulfilled by either or both the entity that has the power and the entity looking at the entity that has the power.
-`count` | Integer | | How much of the specified particle type will be spawned.
+`count` | Integer or [Expression](/docs/datapack/data-types/expression) | | How much of the specified particle type will be spawned.
 `speed` | [Float](/docs/datapack/data-types/float), [Expression](/docs/datapack/data-types/expression) or [Vector](/docs/datapack/data-types/vector) | `0.0` | A number is vanilla's random speed multiplier — every particle flies off in a random direction at up to that speed. A **vector** instead gives every particle that exact velocity, which is the version you want when the particles should go somewhere. Read through `space`.
-`velocity_x`, `velocity_y`, `velocity_z` | [Float](/docs/datapack/data-types/float) | `0` | The same explicit velocity, written per axis. Takes priority over a vector `speed`. Read through `space`.
+`velocity_x`, `velocity_y`, `velocity_z` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | `0` | The same explicit velocity, written per axis. Takes priority over a vector `speed`. Read through `space`.
 `space` | [Space](/docs/datapack/data-types/space) | `world` | How `offset_*`, `spread` and the velocity are read. `world` uses the world axes; `local` is relative to the entity's facing, so `offset_z: 2` is two blocks in front of them and `velocity_z: 0.5` fires the particles the way they are looking. With `model_part` set and no `space` written, both are read in the **part's own frame** instead — see below.
 `model_part` | [String](/docs/datapack/data-types/string) | _optional_ | Anchor the particles to a body part instead of the entity's feet, and read `offset_*` and the velocity along that part. See [Particles on a body part](#particles-on-a-body-part) for the names.
 `force` | Boolean | `false` | If set to `true`, the specified particle type that will be spawned can be seen from a far distance.
-`spread` | Vector | `{"x": 0.5, "y": 0.5, "z": 0.5}` | The size of the volume the particles scatter through, per axis. Read through `space` like the offset is, so `space: "local"` with `{"x": 0, "y": 0, "z": 3}` draws a line running away from the entity's face rather than along world south.
-`offset_x` | Float | `0.0` | The offset of where the particle will be centered in the X axis.
-`offset_y` | Float | `0.5` | The offset of where the particle will be centered in the Y axis.
-`offset_z` | Float | `0.0` | The offset of where the particle will be centered in the Z axis.
+`spread` | [Float](/docs/datapack/data-types/float), [Vector](/docs/datapack/data-types/vector) or [Expression](/docs/datapack/data-types/expression) | `{"x": 0.5, "y": 0.5, "z": 0.5}` | The size of the volume the particles scatter through. A single number is the same figure on all three axes; a vector is per axis. Every component may be an expression. Read through `space` like the offset is, so `space: "local"` with `{"x": 0, "y": 0, "z": 3}` draws a line running away from the entity's face rather than along world south.
+`offset_x` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | `0.0` | The offset of where the particle will be centered in the X axis.
+`offset_y` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | `0.5` | The offset of where the particle will be centered in the Y axis.
+`offset_z` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | `0.0` | The offset of where the particle will be centered in the Z axis.
 
 ### Aiming particles
 

@@ -89,6 +89,10 @@ or as a plain list, which keys each resource by the last segment of its path —
 }
 ```
 
+> `resources` takes **either** an object of `key: id` pairs **or** a plain list of ids — never a mix. `"resources": ["mana": "example:mana"]` is not valid JSON, and a data pack file that contains it fails to parse in full, so the power never loads at all. Check the log for `Couldn't parse data file` if a power seems to do nothing.
+
+When a `$(key)` cannot be filled the command is skipped and one line is logged naming the key and the reason — the power id is not loaded, the holder does not have it, or the power it names is not a resource. Turn on [`/apoli:dev_mode`](/docs/datapack/commands/dev-mode) and that line is also sent to you in chat, every time, rather than once to the log.
+
 Each key also gets `_max` and `_min` companions wherever the resource declares those bounds, so a readout needs no second lookup:
 
 ```json

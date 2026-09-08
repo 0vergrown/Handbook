@@ -17,6 +17,7 @@ Apoli and Origins add a handful of commands for granting powers, poking at resou
 | [`/apoli:mount`](/docs/datapack/commands/mount) | — | Inspect and clear the rider offsets `apoli:mount` stores. |
 | [`/apoli:key`](/docs/datapack/commands/key) | — | Hold, release and inspect keys on any entity, and fake a scroll wheel. |
 | [`/apoli:dev_mode`](/docs/datapack/commands/dev-mode) | — | Toggle the debugging view: resources as text, shapes outlined in particles, no cooldowns. |
+| [`/tick entity`, `/tick chunk`](/docs/datapack/commands/tick) | — | Two extra branches on Minecraft's own `/tick`, so a rate, freeze, step or sprint can be pointed at particular entities or chunks. |
 | [`/origin`](/docs/datapack/commands/origin) | — | Set, query and reroll a player's origin. Origins only. |
 
 Apoli also adds [entity selector options](/docs/datapack/commands/selectors) so `@a[origin=…]` and `@e[power=…]` work anywhere a selector is accepted.
@@ -40,6 +41,7 @@ Each command needs permission level 2 (the same as `/give`) by default. If [fabr
 | `apoli.command.clone` | `/apoli:clone` |
 | `apoli.command.mount` | `/apoli:mount` |
 | `apoli.command.key` | `/apoli:key` |
+| `apoli.command.tick` | `/tick entity`, `/tick chunk` (1.20.1 only — on 1.21 they inherit vanilla `/tick`'s level 3) |
 | `origins.command.origin.set` | `/origin set` |
 | `origins.command.origin.gui` | `/origin gui` |
 | `origins.command.origin.random` | `/origin random` |

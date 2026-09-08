@@ -6,7 +6,7 @@ navigation_title: "Origin Tag"
 
 Checks whether the player's origin carries one of the given tags, rather than naming origins by id. Tag the origins once and a condition written against the tag keeps working when a pack adds more of them.
 
-Type ID: `apoli:origin_tag`
+Type ID: `origins:origin_tag`
 
 ## Fields
 
@@ -35,7 +35,7 @@ Tags are plain strings, matched exactly and case-sensitively.
 
 ```json
 {
-    "type": "apoli:origin_tag",
+    "type": "origins:origin_tag",
     "tag": "universeLevel",
     "inverted": true
 }
@@ -45,7 +45,7 @@ Passes for anyone whose origin is **not** tagged `universeLevel` — the usual s
 
 ```json
 {
-    "type": "apoli:origin_tag",
+    "type": "origins:origin_tag",
     "tag": ["undead", "construct"],
     "selection": "all"
 }

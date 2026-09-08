@@ -16,8 +16,13 @@ Field | Type | Default | Description
 `hands` | array of [Hand](/docs/datapack/data-types/hand) | both | Which hands are blocked — `main_hand`, `off_hand`, or both.
 `result_stack` | [Item Stack](/docs/datapack/data-types/item-stack) | _optional_ | Replace the used stack with this when the use is blocked.
 `target_used` | [Boolean](/docs/datapack/data-types/boolean) | `false` | `false` blocks the holder using others; `true` blocks others using the holder. Filled in by the aliases.
-`bientity_condition` | [Bi-Entity Condition](/docs/datapack/bientity-conditions) | _optional_ | Only block for this pairing.
+`bientity_condition` | [Bi-Entity Condition](/docs/datapack/bientity-conditions) | _optional_ | Only block for this pairing. The actor is the entity doing the interacting, the target is the one being interacted with — on both aliases.
 `item_condition` | [Item Condition](/docs/datapack/item-conditions) | _optional_ | Only block when the held item matches.
+`bientity_action` | [Bi-Entity Action](/docs/datapack/bientity-actions) | _optional_ | Runs on the pair when a use is blocked.
+`held_item_action` | [Item Action](/docs/datapack/item-actions) | _optional_ | Runs on the held stack when a use is blocked.
+`result_item_action` | [Item Action](/docs/datapack/item-actions) | _optional_ | Runs on the stack the hand is holding after `result_stack` has been handed over.
+
+> The block is applied on both sides, so the client never plays the interaction it is about to lose. Actions run on the server only, once per interaction.
 
 ## Examples
 

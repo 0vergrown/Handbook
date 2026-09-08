@@ -12,7 +12,7 @@ Type ID: `apoli:tick_rate`
 
 | Field | Type | Default | Description |
 | --- | --- | --- | --- |
-| `scope` | `entity`, `chunk` or `dimension` | `entity` | Which rate to read: the entity's own effective rate, the rate of the chunk it stands in, or the dimension's. |
+| `scope` | `entity`, `chunk`, `dimension` or `server` | `entity` | Which rate to read: the entity's own effective rate, the rate of the chunk it stands in, the dimension's, or Minecraft's own server tick rate. |
 | `comparison` | [Comparison](/docs/datapack/data-types/comparison) | _optional_ | How to compare the rate. Omit it to test only `frozen`. |
 | `compare_to` | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | `0` | The value the rate is compared against. |
 | `frozen` | [Boolean](/docs/datapack/data-types/boolean) | _optional_ | When set, the scope must (or must not) be frozen — a frozen scope reads as rate `0`. |

@@ -13,12 +13,12 @@ Type ID: `apoli:spawn_particles`
 | Field | Type | Default | Description |
 | --- | --- | --- | --- |
 | `particle` | [Particle Effect](/docs/datapack/data-types/particle-effect) | — | The particle to spawn. |
-| `count` | [Integer](/docs/datapack/data-types/integer) | `1` | How many particles to spawn. |
+| `count` | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | `1` | How many particles to spawn. |
 | `speed` | [Float](/docs/datapack/data-types/float), [Expression](/docs/datapack/data-types/expression) or [Vector](/docs/datapack/data-types/vector) | `0` | Vanilla's particle speed parameter, or a vector used as the velocity when `velocity_x`/`y`/`z` are all zero. |
 | `force` | [Boolean](/docs/datapack/data-types/boolean) | `false` | Sends the particles to players up to 512 blocks away instead of 32, and ignores their particle setting. |
-| `spread` | [Vector](/docs/datapack/data-types/vector) | `0.25` on each axis | How far the particles scatter from the origin. |
-| `offset_x`, `offset_y`, `offset_z` | [Float](/docs/datapack/data-types/float) | `0` | Moves the spawn point, in blocks, along the world axes. |
-| `velocity_x`, `velocity_y`, `velocity_z` | [Float](/docs/datapack/data-types/float) | `0` | Gives every particle this world-space velocity. Setting any of them spawns one particle per packet so each one is aimed. |
+| `spread` | [Float](/docs/datapack/data-types/float), [Vector](/docs/datapack/data-types/vector) or [Expression](/docs/datapack/data-types/expression) | `0.25` on each axis | How far the particles scatter from the origin. A single number is the same figure on all three axes; every component may be an expression. |
+| `offset_x`, `offset_y`, `offset_z` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | `0` | Moves the spawn point, in blocks, along the world axes. |
+| `velocity_x`, `velocity_y`, `velocity_z` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | `0` | Gives every particle this world-space velocity. Setting any of them spawns one particle per packet so each one is aimed. |
 | `anchor` | `hit`, `center` or `corner` | `hit` | Where in the block the particles start. `hit` uses the exact impact point when the action was run from something that has one — a raycast's `block_action`, or a projectile's `block_action_on_hit` — and falls back to the block centre otherwise. `center` and `corner` always use the block centre and its lower corner. |
 
 ## Examples

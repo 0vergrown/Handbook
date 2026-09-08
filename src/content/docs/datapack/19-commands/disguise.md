@@ -12,11 +12,23 @@ A disguise is client-side rendering only: hitbox, AI, drops and everything else 
 
 | Sub-command | What it does |
 |-------------|--------------|
+| `<targets> <disguise> [<nbt>]` | Shorthand — resolves `<disguise>` as an entity type, or as a player name if no such type exists. |
 | `entity <targets> <entity_type> [<nbt>]` | Renders the targets as that entity type. |
 | `player <targets> <player_name>` | Renders the targets as that player. |
 | `random <targets> [player\|entity\|any]` | Picks a random disguise. |
 | `clear <targets>` | Removes the disguise. |
 | `query <target>` | Prints the target's current disguise. |
+
+## Shorthand
+
+```mcfunction
+disguise @s minecraft:creeper
+disguise @s creeper
+disguise @s notch
+disguise @e[type=zombie] minecraft:villager {Profession:"minecraft:librarian"}
+```
+
+`<disguise>` is tried as an entity type first (an unqualified id means `minecraft:`), then as a player name. Player names are matched without regard to case, so `notch` finds `Notch` — spell it any way you like, but a name that is not lowercase has to go through `disguise player` if you want tab-completion to offer it.
 
 ## entity
 

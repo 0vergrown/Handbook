@@ -12,7 +12,7 @@ Type ID: `apoli:tick_rate`
 
 | Field | Type | Default | Description |
 | --- | --- | --- | --- |
-| `scope` | `chunk` or `dimension` | `chunk` | Whether the change covers the block's chunk or the whole dimension. |
+| `scope` | `chunk`, `dimension` or `server` | `chunk` | Whether the change covers the block's chunk, the whole dimension, or the server. `server` drives Minecraft's own tick rate, exactly as `/tick` does — see [the entity action](/docs/datapack/entity-actions/tick_rate#server-scope-is-vanillas-tick). |
 | `rate` | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | _unchanged_ | Logical ticks per second. `20` is normal speed, `0` stops everything. |
 | `frozen` | [Boolean](/docs/datapack/data-types/boolean) | _unchanged_ | Stops ticking entirely, regardless of `rate`. |
 | `step` | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | _unchanged_ | Lets a frozen scope run this many ticks and then freeze again. |

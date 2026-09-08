@@ -17,21 +17,21 @@ Type ID: `apoli:custom`
 Field | Type | Default | Description
 ------|------|---------|------------
 `texture` | [Identifier](/docs/datapack/data-types/identifier) | — | Path to the PNG in a resource pack. Required.
-`lifetime` | [Integer](/docs/datapack/data-types/integer) | `20` | How many ticks the particle lives.
-`lifetime_variation` | [Integer](/docs/datapack/data-types/integer) | `0` | A random `0`–`n` extra ticks added per particle, so a burst does not vanish all at once.
-`size` | [Float](/docs/datapack/data-types/float) | `0.2` | Size of the quad when it spawns.
-`size_variation` | [Float](/docs/datapack/data-types/float) | `0.0` | A random `0`–`n` added to `size` per particle, so a burst is not all one size. `end_size` is scaled by the same amount, so each particle keeps the shape of its own size curve.
-`color_variation` | [Float](/docs/datapack/data-types/float) | `0.0` | A random `-n`–`+n` added to each of the red, green and blue channels per particle. `0.05` is a subtle shimmer, `0.2` is a visibly mixed burst.
-`hue_variation` | [Float](/docs/datapack/data-types/float) | `0.0` | A random `-n`–`+n` degrees of hue rotation per particle, out of 360. `15` keeps a burst recognisably one colour, `180` scatters it across the whole wheel.
-`end_size` | [Float](/docs/datapack/data-types/float) | `size` | Size at the end of its life. Interpolated with `easing`; set `0.0` to shrink away.
+`lifetime` | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | `20` | How many ticks the particle lives.
+`lifetime_variation` | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | `0` | A random `0`–`n` extra ticks added per particle, so a burst does not vanish all at once.
+`size` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | `0.2` | Size of the quad when it spawns.
+`size_variation` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | `0.0` | A random `0`–`n` added to `size` per particle, so a burst is not all one size. `end_size` is scaled by the same amount, so each particle keeps the shape of its own size curve.
+`color_variation` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | `0.0` | A random `-n`–`+n` added to each of the red, green and blue channels per particle. `0.05` is a subtle shimmer, `0.2` is a visibly mixed burst.
+`hue_variation` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | `0.0` | A random `-n`–`+n` degrees of hue rotation per particle, out of 360. `15` keeps a burst recognisably one colour, `180` scatters it across the whole wheel.
+`end_size` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | `size` | Size at the end of its life. Interpolated with `easing`; set `0.0` to shrink away.
 `color` | Colour | `#FFFFFF` | Tint at spawn. Multiplies the texture, so a white texture takes the colour exactly.
 `end_color` | Colour | `color` | Tint at the end of its life, interpolated with `easing` — the `dust_color_transition` behaviour, on your own texture.
-`gravity` | [Float](/docs/datapack/data-types/float) | `0.0` | Downward pull per tick. Negative values make the particle rise.
-`friction` | [Float](/docs/datapack/data-types/float) | `0.98` | Velocity kept each tick. `1.0` never slows down, `0.9` drags hard.
+`gravity` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | `0.0` | Downward pull per tick. Negative values make the particle rise.
+`friction` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | `0.98` | Velocity kept each tick. `1.0` never slows down, `0.9` drags hard.
 `roll` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | `0.0` | Starting rotation of the quad, in degrees. Evaluated once per particle.
 `roll_speed` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | `0.0` | Degrees added to the rotation each tick. Evaluated once per particle.
-`frames` | [Integer](/docs/datapack/data-types/integer) | `0` | Number of animation frames in the texture. `0` reads the count from the texture itself; `1` forces a single static frame.
-`frame_time` | [Integer](/docs/datapack/data-types/integer) | `0` | Ticks per frame. `0` uses the `frametime` from the texture's animation metadata, or — if the texture has none — spreads all frames evenly across `lifetime`.
+`frames` | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | `0` | Number of animation frames in the texture. `0` reads the count from the texture itself; `1` forces a single static frame.
+`frame_time` | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | `0` | Ticks per frame. `0` uses the `frametime` from the texture's animation metadata, or — if the texture has none — spreads all frames evenly across `lifetime`.
 `frame_layout` | [String](/docs/datapack/data-types/string) | `auto` | How the frames are arranged: `vertical` (a column, the vanilla layout), `horizontal` (a row), `grid` (square cells, left to right then top to bottom), or `auto` to work it out from the image.
 `loop_frames` | [Boolean](/docs/datapack/data-types/boolean) | from the texture | If `true` the animation repeats; if `false` it holds the last frame. Left out, an animation that came from the texture's metadata loops and a hand-numbered one holds.
 `physics` | [Boolean](/docs/datapack/data-types/boolean) | `false` | Whether the particle collides with blocks instead of passing through them.
@@ -39,6 +39,13 @@ Field | Type | Default | Description
 `blend` | [String](/docs/datapack/data-types/string) | `translucent` | `translucent` for normal alpha blending, `additive` for a glow that brightens whatever is behind it.
 `facing` | [String](/docs/datapack/data-types/string) | `camera` | `camera` turns the quad to face the viewer on every axis; `vertical` keeps it upright and only turns it around Y.
 `easing` | [Easing](/docs/datapack/data-types/easing) | `linear` | The curve used for the colour and size interpolation over the particle's life.
+
+> Every numeric field above may be written as an [expression](/docs/datapack/data-types/expression)
+> instead of a number. Those are evaluated **once, on the server, at the moment the particle is
+> spawned**, against the entity that spawned it — so `"size": "health / 10"` sizes the burst to
+> whoever set it off, and every particle in that burst is the same size. `roll` and `roll_speed` are
+> the exception: they run on the client, once per particle, which is what makes `"roll": "rUni(0, 360)"`
+> give each particle its own angle.
 
 ### Animated textures
 

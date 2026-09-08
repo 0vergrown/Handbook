@@ -1,6 +1,6 @@
 ---
 title: "Tags, gestures, and armour over a skeleton"
-description: "Apoli 1.68.0 tags powers so actions can name a group instead of a list, adds apoli:action_on_mouse_movement, and draws custom_model_render onto humanoid disguises; Origins 1.31.0 tags origins and adds origins:origin_tag."
+description: "Apoli 1.68.0 tags powers so actions can name a group instead of a list, adds apoli:action_on_mouse_movement, draws custom_model_render onto humanoid disguises, and rebuilds tick rates on Minecraft's own /tick; Origins 1.31.0 tags origins and adds origins:origin_tag."
 date: 2026-09-04
 author: Overgrown
 ---
@@ -99,3 +99,28 @@ the way it reads:
 
 A disguise with no limbs to bind to — a creeper, a bee — still skips the power, and a disguise as
 another player never needed the change.
+
+## Tick rates now sit on top of `/tick`
+
+[apoli:tick_rate](/docs/datapack/entity-actions/tick_rate) gained a **`server` scope**, and it is not
+Apoli's own machinery — it calls the same code the `/tick` command does. `rate` is `/tick rate`,
+`frozen` is `/tick freeze`, `step` is `/tick step`, `sprint` is `/tick sprint`. Minecraft syncs that
+state to every client itself, so rendering, particles and sounds all slow down together and nothing
+stutters. For a global slow-motion effect that is now the scope to reach for.
+
+```json
+{
+    "type": "apoli:tick_rate",
+    "scope": "server",
+    "rate": 5
+}
+```
+
+Per-entity and per-chunk rates are still Apoli's own, but they no longer stop at the server: an
+entity that ends up slower than the server tells its viewers, and their clients stretch the movement
+interpolation to match, so a slowed mob or projectile glides instead of lurching between updates.
+A rate on a **player** now slows that player's own tick, movement included — which it did not
+before, because player movement is client-authoritative and there was nothing on the client to
+listen.
+
+> `scope: server` needs the `/tick` command, so it is 1.21 and later. On 1.20.1 use `dimension`.

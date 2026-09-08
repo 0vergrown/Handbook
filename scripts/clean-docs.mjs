@@ -40,6 +40,7 @@ const ORIGINS_TYPES = new Set([
 	'store_value',
 	'stored_origin',
 	'stored_value',
+	'origin_tag',
 	'action_on_swap',
 	'force_swap',
 	'open_swap_menu',
