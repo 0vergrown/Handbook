@@ -18,6 +18,7 @@ Manages which origin each player has in each [layer](/docs/datapack/origins/laye
 | `gui [<targets>] [<layer>]` | Clears every layer and reopens the choose-origin screen. |
 | `gui unchosen [<targets>]` | Opens the screen only for layers that are still unchosen, changing nothing else. |
 | `random [<targets>] [<layer>]` | Rerolls to a random origin. |
+| `orb [<targets>] <layer> [<origin>]` | Gives an Orb of Origin bound to that layer. |
 | `cap [list] [<layer>]` | Lists every capped origin with its holders. |
 | `cap clear [<layer>] [<origin>]` | Releases recorded origin claims. |
 | `storage …` | Stores and re-applies origins and values. |
@@ -81,6 +82,22 @@ origin random @a origins:origin
 
 `random` rolls an origin immediately, honouring the layer's `random_allows_unchoosable` setting. It defaults to every unchosen layer when no layer is given, and to the command's own player when no targets are given. `random` skips [swappable layers](/docs/datapack/origins/swapping) — a pool is not a choice; roll one with [`origins:force_swap`](/docs/datapack/origins/force_swap) instead.
 
+## orb
+
+Gives an [Orb of Origin](/docs/datapack/origins/overview) that is bound to one layer, instead of the plain orb that wipes every layer at once.
+
+```mcfunction
+origin orb origins:origin
+origin orb @a my_pack:device
+origin orb @a my_pack:device example:phoenix
+```
+
+With a layer alone, using the orb clears **only that layer** and opens its choose-origin screen — every other layer the player has is left untouched. Add an `<origin>` and the orb sets that layer to that origin directly, with no screen: a one-use ticket for a specific origin, which is otherwise not obtainable as an item.
+
+The orb carries the layer and origin in its item data, so it stacks to one, keeps working after being dropped or traded, and shows what it does in its tooltip. Targets default to the player running the command; an orb that does not fit in the inventory is dropped at the player's feet.
+
+Swappable layers are refused — there is no origin to choose on a pool. The layer and, when given, the origin must both be loaded.
+
 ## cap
 
 Inspects and edits the ledger behind [origin caps](/docs/datapack/origins/overview#capping-an-origin) — the record of who holds which capped origin, kept in the world save so offline players keep their slot.
@@ -119,4 +136,4 @@ origin storage list @s
 
 ## Permissions
 
-`set`, `revoke`, `gui`, `random`, `cap` and `storage` need permission level 2 (nodes `origins.command.origin.set` — shared by `revoke` — `.gui`, `.random`, `.cap`, `.storage`). `has` and `get` are open to everyone.
+`set`, `revoke`, `gui`, `random`, `orb`, `cap` and `storage` need permission level 2 (nodes `origins.command.origin.set` — shared by `revoke` — `.gui`, `.random`, `.orb`, `.cap`, `.storage`). `has` and `get` are open to everyone.
