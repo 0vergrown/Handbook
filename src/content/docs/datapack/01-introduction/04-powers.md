@@ -22,7 +22,7 @@ A **power** is the top-level unit in Apoli: the thing an entity *has*. Every pow
 }
 ```
 
-Five fields are shared by **every** power type. Everything else is type-specific.
+Seven fields are shared by **every** power type. Everything else is type-specific.
 
 | Field         | Type                                                       | Default  | Purpose                                                      |
 |---------------|------------------------------------------------------------|----------|--------------------------------------------------------------|
@@ -32,8 +32,48 @@ Five fields are shared by **every** power type. Everything else is type-specific
 | `condition`   | [Entity Condition](/docs/datapack/introduction/conditions) | optional | The power is only *active* while this passes.                |
 | `hidden`      | [Boolean](/docs/datapack/data-types/boolean)               | `false`  | Hide the power from origin/power screens.                    |
 | `tags`        | string or list of strings                                  | `[]`     | Free-form labels for this power. Actions that work on powers can select by tag instead of by id — see [Tagging powers](#tagging-powers). |
+| `load_condition` | [Meta condition](/docs/datapack/meta-conditions/constant) | optional | Checked during the reload; the power is skipped before it parses if it fails — see [Gating a power at load time](#gating-a-power-at-load-time). |
 
 The top-level `condition` is worth remembering: it's how you make a power conditional without changing its type. A `condition` of `apoli:sneaking` means the power only works while sneaking.
+
+## Gating a power at load time
+
+`condition` decides whether an already-loaded power is *active*. A seventh field, `load_condition`, decides whether the power is **read at all**.
+
+| Field | Type | Default | Purpose |
+|-------|------|---------|---------|
+| `load_condition` | [Meta condition](/docs/datapack/meta-conditions/constant) | optional | Checked once, during the reload, before the rest of the power reaches a codec. If it does not hold, the power is skipped entirely. |
+
+That ordering is the whole point. A power whose `load_condition` fails is dropped *before* its other fields are parsed, so it does not matter whether they would have parsed on this version of the game or with this set of mods. A `condition` cannot do that — the power has to load successfully first, and a field the codec rejects takes the whole power with it.
+
+Only **context-free** condition types are allowed there, because there is no entity, item or block to test against during a reload:
+
+- [`apoli:minecraft_version`](/docs/datapack/meta-conditions/minecraft_version)
+- [`apoli:mod_loaded`](/docs/datapack/meta-conditions/mod_loaded)
+- [`apoli:constant`](/docs/datapack/meta-conditions/constant) and [`apoli:nothing`](/docs/datapack/meta-conditions/nothing)
+- [`apoli:all_of`](/docs/datapack/meta-conditions/all_of) / [`apoli:any_of`](/docs/datapack/meta-conditions/any_of) over those
+
+`inverted` works as it does on any other condition. Anything else is rejected with a log line and the power is **kept**, so a typo never silently deletes a power.
+
+```json
+{
+  "type": "apoli:multiple",
+  "dragon_wings": {
+    "type": "apoli:wings",
+    "wings_type": "icarus:purple_dragon_wings",
+    "load_condition": { "type": "apoli:mod_loaded", "mod": "icarus" }
+  },
+  "elytra": {
+    "type": "apoli:elytra_flight",
+    "render_elytra": false,
+    "load_condition": { "type": "apoli:mod_loaded", "mod": "icarus", "inverted": true }
+  }
+}
+```
+
+Written on [`apoli:multiple`](/docs/datapack/powers/multiple), `load_condition` works on each sub-power independently — a dropped sub-power is left out of the parent's `sub_powers` list, so nothing goes looking for it. Put it at the top level of the `apoli:multiple` instead and it gates the whole bundle.
+
+Origins reads the same field on `origins/` and `origin_layers/` files, so an origin can exist only where its powers do.
 
 ## Categories of power
 

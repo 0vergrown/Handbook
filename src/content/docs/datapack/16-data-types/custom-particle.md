@@ -11,6 +11,8 @@ Type ID: `apoli:custom`
 > The texture is a **resource pack** file, referenced by its full path (`example:textures/particle/spark.png` → `assets/example/textures/particle/spark.png`). A short id works too — `example:spark` is looked up as `assets/example/textures/particle/spark.png`. It does not go through the vanilla particle atlas, so it needs no `particles/*.json` and can be any size.
 >
 > A particle drawn as a black-and-magenta checker means the texture is not in any loaded resource pack. Apoli logs the id it looked for and the file it expected, so check that line first — the usual cause is the pack being off, or its `pack_format` being too old for the game version to enable it.
+>
+> A particle that draws as a dark blob, worse the closer you get to it, is the other texture problem. It happens when the PNG's **semi-transparent** pixels carry no colour — a black RGB under a feathered edge, which several exporters and most "remove the background" tools leave behind. Those pixels are half-visible, so they paint half-black over whatever is behind them, and the fringe covers more of the screen the bigger the particle gets. Every vanilla particle texture is fully opaque or fully transparent with nothing in between, so nothing in the game exercises this until you bring your own soft texture. Apoli logs a line naming the texture when it spots this; fill the colour in under the transparency, or set `"alpha_bleed": true` and Apoli fills it in as the texture loads.
 
 ## Fields
 
@@ -36,6 +38,7 @@ Field | Type | Default | Description
 `loop_frames` | [Boolean](/docs/datapack/data-types/boolean) | from the texture | If `true` the animation repeats; if `false` it holds the last frame. Left out, an animation that came from the texture's metadata loops and a hand-numbered one holds.
 `physics` | [Boolean](/docs/datapack/data-types/boolean) | `false` | Whether the particle collides with blocks instead of passing through them.
 `emissive` | [Boolean](/docs/datapack/data-types/boolean) | `false` | Draw at full brightness, ignoring the light level at its position.
+`alpha_bleed` | [Boolean](/docs/datapack/data-types/boolean) | `false` | Fill the texture's colour in under its semi-transparent pixels when it is loaded, so a soft edge that lost its colour does not draw as a dark fringe. The PNG on disk is not modified.
 `blend` | [String](/docs/datapack/data-types/string) | `translucent` | `translucent` for normal alpha blending, `additive` for a glow that brightens whatever is behind it.
 `facing` | [String](/docs/datapack/data-types/string) | `camera` | `camera` turns the quad to face the viewer on every axis; `vertical` keeps it upright and only turns it around Y.
 `easing` | [Easing](/docs/datapack/data-types/easing) | `linear` | The curve used for the colour and size interpolation over the particle's life.

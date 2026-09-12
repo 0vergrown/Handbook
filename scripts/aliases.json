@@ -151,6 +151,10 @@
 		"shappoli:shape_condition",
 		"shappoli:shape"
 	],
+	"entity conditions/sound_playing": [
+		"playing_sound",
+		"hearing_sound"
+	],
 	"entity conditions/stat": [
 		"stats",
 		"status",
@@ -201,6 +205,13 @@
 	],
 	"meta conditions/any_of": [
 		"or"
+	],
+	"meta conditions/minecraft_version": [
+		"game_version",
+		"mc_version"
+	],
+	"meta conditions/mod_loaded": [
+		"mod_installed"
 	],
 	"meta conditions/random_chance": [
 		"chance"

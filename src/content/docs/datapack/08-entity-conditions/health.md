@@ -8,6 +8,8 @@ Checks the current health value of the entity.
 
 Type ID: `apoli:health`
 
+> `compare_to` is an **absolute** health value in half-hearts, not a fraction — a full-health player is `20`. For a fraction of maximum health use [apoli:relative_health](/docs/datapack/entity-conditions/relative_health).
+
 ## Fields
 
 Field  | Type | Default | Description

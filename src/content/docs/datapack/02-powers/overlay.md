@@ -15,12 +15,13 @@ Write the fields directly on the power for a single overlay, or put a list of ov
 Field | Type | Default | Description
 ------|------|---------|-------------
 `texture` | [Identifier](/docs/datapack/data-types/identifier) or keyword | **required** | The texture to draw. Besides a texture id it takes a live keyword — see [Live textures](#live-textures).
-`strength` | [Float](/docs/datapack/data-types/float) | `1.0` | In `texture` mode, the alpha the texture is drawn at. In `nausea` mode, how far it is stretched (`1.0` = screen size). Range 0.0–1.0.
-`red`, `green`, `blue` | [Float](/docs/datapack/data-types/float) | `1.0` | Multiplied into the matching colour channel. Range 0.0–1.0.
+`strength` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | `1.0` | In `texture` mode, the alpha the texture is drawn at. In `nausea` mode, how far it is stretched (`1.0` = screen size). Range 0.0–1.0.
+`red`, `green`, `blue` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | `1.0` | Multiplied into the matching colour channel. Range 0.0–1.0.
 `draw_mode` | [String](/docs/datapack/data-types/string) | `texture` | `texture` draws it as-is; `nausea` uses the additive, stretching blend the vanilla nausea overlay uses, which treats black as transparent.
 `draw_phase` | [String](/docs/datapack/data-types/string) | `above_hud` | `below_hud` or `above_hud`.
 `hide_with_hud` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Hide it when the HUD is hidden with F1.
 `visible_in_third_person` | [Boolean](/docs/datapack/data-types/boolean) | `false` | Keep drawing it in third person.
+`gui_scale_lock` | [Integer](/docs/datapack/data-types/integer) | `0` | Draw at this fixed GUI scale instead of the viewer's. `0` follows the viewer's setting.
 `x`, `y` | [Expression](/docs/datapack/data-types/expression) | `0` | Offset in GUI pixels from the anchor. `y` grows downward.
 `width`, `height` | [Expression](/docs/datapack/data-types/expression) | the whole screen | Size of the drawn quad in GUI pixels. Leave both out for the full-screen behaviour.
 `anchor` | [String](/docs/datapack/data-types/string) | `top_left` | Which point of the screen `x`/`y` are measured from: `top_left`, `top_center`, `top_right`, `left`, `center`, `right`, `bottom_left`, `bottom_center`, `bottom_right`.
@@ -34,7 +35,28 @@ Field | Type | Default | Description
 
 The power's own top-level `condition` still gates the whole thing; the per-overlay `condition` decides each layer inside `overlays`. Writing both `overlays` and the flat fields on one power is not an error, but only `overlays` is used.
 
-`x`, `y`, `width`, `height`, `u` and `v` are [Expressions](/docs/datapack/data-types/expression), so they can read resources and entity state. That is what makes counters and meters possible without a power per digit.
+`x`, `y`, `width`, `height`, `u`, `v`, `strength`, `red`, `green` and `blue` are [Expressions](/docs/datapack/data-types/expression), so they can read resources and entity state. That is what makes counters, meters and fading tints possible without a power per step.
+
+A plain number in any of those fields is folded once when the pack loads and costs nothing to draw, so `"strength": 0.6` is a constant, not an evaluation. A real expression is evaluated once per overlay entry per frame, which is a handful of arithmetic — fine for a tint that follows a resource, but the usual rule applies: keep it to arithmetic on resources and entity state, and do the expensive thinking in the power's `condition`.
+
+## Locking the GUI scale
+
+By default an overlay is laid out in the viewer's GUI-scale units, so the same power fills a different amount of screen depending on each player's video settings. `gui_scale_lock` pins it to one scale instead: the overlay is positioned and sized as if the GUI scale were that number, whatever the viewer has chosen.
+
+```json
+{
+    "type": "apoli:overlay",
+    "texture": "example:textures/gui/crosshair_ring.png",
+    "gui_scale_lock": 2,
+    "anchor": "center",
+    "width": 48,
+    "height": 48
+}
+```
+
+At `gui_scale_lock: 2` that ring is 96 real pixels across on every client. Lower numbers give a smaller, sharper overlay on a big monitor; higher numbers give a chunkier one. It applies to the whole entry — `x`, `y`, `width`, `height` and `anchor` are all measured in the locked units.
+
+Use it for anything that has to be a consistent physical size — a reticle, a vignette that must not swallow the screen at GUI scale 4, a frame designed against a fixed pixel grid. Leave it at `0` for HUD elements that should sit alongside the vanilla hotbar and hearts, which do follow the viewer's scale.
 
 ## Live textures
 

@@ -71,7 +71,9 @@ const PAGE_KIND = {
 		badge_crafting_recipe: ['Badge Type', null],
 		badge_keybind: ['Badge Type', null],
 		badge_sprite: ['Badge Type', null],
-		badge_tooltip: ['Badge Type', null]
+		badge_tooltip: ['Badge Type', null],
+		impact: ['Entity Condition Type', null],
+		impact_bientity: ['Bi-Entity Condition Type', null]
 	},
 	'compat/02-simple-voice-chat': {
 		action_on_reply: ['Power Type', 'powers'],

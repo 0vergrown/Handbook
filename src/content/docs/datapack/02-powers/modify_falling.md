@@ -23,6 +23,11 @@ Field | Type | Default | Description
 gathered and applied to the result, so a power with only modifiers scales vanilla gravity directly. A
 power with neither field does nothing but still honours `take_fall_damage`.
 
+`take_fall_damage: false` cancels the damage on the landing tick, and only then. The fall distance
+keeps counting up all the way down, so [apoli:fall_distance](/docs/datapack/entity-conditions/fall_distance),
+the `fall_distance` expression variable and
+[apoli:action_on_land](/docs/datapack/powers/action_on_land) all still see a real fall.
+
 ## Examples
 
 ```json

@@ -21,11 +21,12 @@ Field  | Type | Default | Description
 
 ## Built-in models
 
-Five models ship with Apoli itself, so `model` can name them without any addon:
+Six models ship with Apoli itself, so `model` can name them without any addon:
 
 Id | What it is
 ---|---
 `apoli:four_arms` | A second pair of arms below the first. Both pairs follow the vanilla arm animation.
+`apoli:six_arms` | Two extra pairs of arms below the first, fanned out from the shoulder. All three pairs follow the vanilla arm animation.
 `apoli:stinkfly` | An insect stance: a two-segment abdomen, a forward-set head, and a second pair of legs that mirror the first.
 `apoli:digi_legs` | Digitigrade legs — each leg becomes a thigh, shin and paw that fold like an animal's.
 `apoli:centaur` | A centaur: the player's own head, torso and arms raised onto a four-legged horse body. The player's legs are hidden and the horse's legs walk in a trot driven by the player's own movement.
@@ -40,12 +41,13 @@ The extra limbs each one adds can be targeted by name from [apoli:modify_model_p
 Model | Extra part names
 ---|---
 `apoli:four_arms` | `right_second_arm`, `left_second_arm`, `right_second_sleeve`, `left_second_sleeve`
+`apoli:six_arms` | `right_second_arm`, `left_second_arm`, `right_third_arm`, `left_third_arm`, and each one's `_sleeve`
 `apoli:stinkfly` | `right_second_leg`, `left_second_leg`, `right_second_pants`, `left_second_pants`
 `apoli:centaur` | `horse_body`, `horse_mane`, `horse_tail`, `front_left_leg`, `front_right_leg`, `back_left_leg`, `back_right_leg`, plus `horse_legs` for all four and `horse` for the whole lower half
 
 `apoli:digi_legs` adds no new top-level parts — its thigh, shin and paw live inside `right_leg` and `left_leg`, so hiding or colouring a leg covers the whole limb.
 
-> Armour is drawn by vanilla's own armour model, which only knows the seven humanoid parts. It follows the swapped model's head, body, arms and legs, but it is not reshaped: leg armour on `apoli:digi_legs` keeps its straight vanilla shape, and the second pair of limbs on `apoli:four_arms` and `apoli:stinkfly` wears nothing. Hide the pieces you don't want with [apoli:prevent_feature_render](/docs/datapack/powers/prevent_feature_render).
+> Armour is drawn by vanilla's own armour model, which only knows the seven humanoid parts. It follows the swapped model's head, body, arms and legs, but it is not reshaped: leg armour on `apoli:digi_legs` keeps its straight vanilla shape, and the extra limbs on `apoli:four_arms`, `apoli:six_arms` and `apoli:stinkfly` wear nothing. Hide the pieces you don't want with [apoli:prevent_feature_render](/docs/datapack/powers/prevent_feature_render).
 
 ## Textures
 
@@ -84,7 +86,7 @@ Two powers gated on [apoli:player_model_type](/docs/datapack/entity-conditions/p
 
 > **Every entry after the first conditional one is a fallback, and a fallback plays.** If the only clip that does anything visible carries a `condition`, then whenever that condition is false the *next* entry plays instead — and if that one is a subtle idle sway, the power looks completely dead. Put the conditional entries first and make the last, unconditional entry the one you want as the resting state, or gate the whole power with its own `condition` field instead.
 
-Bone names are the vanilla part names — `head`, `body`, `right_arm`, `left_arm`, `right_leg`, `left_leg`, and the overlay names — matched case- and underscore-insensitively, so a clip authored against `RightArm` binds without renaming. The extra limbs of `apoli:four_arms` and `apoli:stinkfly` are addressable by their own names too.
+Bone names are the vanilla part names — `head`, `body`, `right_arm`, `left_arm`, `right_leg`, `left_leg`, and the overlay names — matched case- and underscore-insensitively, so a clip authored against `RightArm` binds without renaming. The extra limbs of `apoli:four_arms`, `apoli:six_arms` and `apoli:stinkfly` are addressable by their own names too.
 
 A pose that never changes is usually better baked into a model than animated. Reach for `animations` when the pose has to *move* or has to switch on a condition.
 

@@ -43,7 +43,9 @@ const META = {
 	'meta actions/random_chance': ['chance'],
 	'meta conditions/all_of': ['and'],
 	'meta conditions/any_of': ['or'],
-	'meta conditions/random_chance': ['chance']
+	'meta conditions/random_chance': ['chance'],
+	'meta conditions/mod_loaded': ['mod_installed'],
+	'meta conditions/minecraft_version': ['game_version', 'mc_version']
 };
 
 const ID_ARG = /(?:Apoli\.id\(\s*"([^"]+)"\s*\)|"([a-z0-9_]+:[a-z0-9_/.]+)")/;

@@ -46,7 +46,8 @@ const ORIGINS_PAGES = {
 	'origins:action_on_swap': 'action_on_swap',
 	'origins:force_swap': 'force_swap',
 	'origins:open_swap_menu': 'open_swap_menu',
-	'origins:swapped': 'swapped'
+	'origins:swapped': 'swapped',
+	'origins:impact': 'impact' // bi-entity flavour: impact_bientity
 };
 
 // Concept pages that are linked but live elsewhere on the site

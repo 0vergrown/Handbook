@@ -4,11 +4,13 @@ description: "Fires a power held in an apoli:power_storage as though a key had b
 navigation_title: "Run Stored Power"
 ---
 
-Fires a power held in an [`apoli:power_storage`](/docs/datapack/powers/power_storage) as though a key had been pressed on it. The stored power does not have to be granted, and it does not have to be bound to the key you name — whatever keybind it declares, this action runs it with the one you pass instead.
+Fires a power held in an [`apoli:power_storage`](/docs/datapack/powers/power_storage) as though a key had been pressed on it. The stored power does not have to be granted, and it does not have to be bound to the key you name — whatever keybind it declares, this action runs it with the one you pass instead. A storage left on its default `grant: true` already gives the stored power its own keybind, so this action is for firing it from somewhere else.
 
 Type ID: `apoli:run_stored_power`
 
 It fires the key-driven half of a stored power: [`apoli:action_on_key_press`](/docs/datapack/powers/action_on_key_press), [`apoli:toggle`](/docs/datapack/powers/toggle), [`apoli:fire_projectile`](/docs/datapack/powers/fire_projectile) and [`apoli:inventory`](/docs/datapack/powers/inventory). Their own cooldowns, conditions and activation packets all apply exactly as if the holder had pressed the key themselves.
+
+A stored [`apoli:multiple`](/docs/datapack/powers/multiple) fires every key-driven sub-power it holds, each still gated by its own `condition` and cooldown — so a spell written as one bundle stores and casts as one unit.
 
 ## Fields
 

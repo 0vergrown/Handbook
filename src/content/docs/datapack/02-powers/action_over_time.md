@@ -18,6 +18,43 @@ Field  | Type | Default | Description
 `entity_action` | Entity Action Type | _optional_ | The action to execute on the entity that has the power each interval.
 `rising_action` | Entity Action Type | _optional_ | The action to execute on the first interval tick in which the condition became true.
 `falling_action` | Entity Action Type | _optional_ | The action to execute on the first interval tick in which the condition became false.
+`actions` | array of step objects | _optional_ | Extra actions on their own intervals, all driven by the same condition. See [Several intervals in one power](#several-intervals-in-one-power).
+
+## Several intervals in one power
+
+`actions` takes a list of steps, each with its own `interval`. The power's `condition` is still tested once per `interval` tick and its result is shared by every step, so three effects on three different beats cost one condition evaluation instead of three.
+
+| Field | Type | Default | Description |
+|---|---|---|---|
+| `interval` | [Integer](/docs/datapack/data-types/integer) | `20` | Ticks between executions of this step. |
+| `entity_action` | Entity Action Type | **required** | The action this step runs. |
+| `onset_delay` | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | `0` | Ticks to wait after the condition first became true before this step starts. |
+| `condition` | [Entity Condition](/docs/datapack/entity-conditions) | _optional_ | An extra gate for this step only, checked on the ticks the step is due. |
+
+```json
+{
+  "type": "apoli:action_over_time",
+  "interval": 20,
+  "condition": { "type": "apoli:in_rain" },
+  "entity_action": { "type": "apoli:damage", "amount": 1, "damage_type": "minecraft:drown" },
+  "actions": [
+    {
+      "interval": 5,
+      "entity_action": { "type": "apoli:spawn_particles", "particle": "minecraft:falling_water", "count": 2 }
+    },
+    {
+      "interval": 200,
+      "entity_action": { "type": "apoli:apply_effect", "effect": { "effect": "minecraft:slowness", "duration": 200 } }
+    }
+  ]
+}
+```
+
+Particles every 5 ticks, a point of damage every 20, slowness every 200 — one power, one `apoli:in_rain` check per second.
+
+The top-level `interval` stays the condition's heartbeat: it decides how often the power re-checks whether it is active, and `rising_action` / `falling_action` still fire on those edges. Steps use the last known result in between, so a step faster than the top-level `interval` can run up to one `interval` after the condition stopped being true.
+
+> The power wakes on the greatest common divisor of all the intervals involved. `20` with steps at `5` and `40` wakes every 5 ticks; `20` with a step at `7` wakes every tick, because nothing smaller divides both. Pick intervals that share factors — `5`, `10`, `20`, `40` — and the power stays as cheap as one plain `action_over_time`.
 
 ## Examples
 ```json

@@ -14,6 +14,13 @@ Field  | Type | Default | Description
 -------|------|---------|-------------
 `entity_action` | Entity Action Type | | The action to execute on the player.
 
+The action runs on the tick the entity touches the ground after an actual fall, just before any fall
+damage is dealt. Anything that only cancels the *damage* — `take_fall_damage: false` on
+[apoli:modify_falling](/docs/datapack/powers/modify_falling), a Slow Falling effect, feather falling —
+leaves the landing intact, so this still fires. Something that resets the fall distance mid-air
+(entering water, a [apoli:set_fall_distance](/docs/datapack/entity-actions/set_fall_distance) of `0`,
+climbing a ladder) means there was no fall left to land from, and it does not.
+
 ## Examples
 
 ```json

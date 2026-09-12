@@ -31,7 +31,7 @@ Origins live in `data/<namespace>/origins/`. The file name is the origin's id.
 |---------------------|--------------------------------------------------|---------|------------------------------------------------------|
 | `powers`            | list of [power entry](#hiding-powers-in-the-gui) | `[]`    | The Apoli powers this origin grants.                 |
 | `icon`              | [Icon](/docs/datapack/data-types/icon)           | —       | Shown in the selection screen. An item or a texture. |
-| `impact`            | 0–3                                              | `0`     | The "impact" dots — how strong the origin is.        |
+| `impact`            | 0–3                                              | `0`     | The "impact" dots — how strong the origin is. [origins:impact](/docs/datapack/origins/impact) reads it back. |
 | `name`              | [text](/docs/datapack/data-types/text-component) | auto    | The origin's display name.                           |
 | `description`       | [text](/docs/datapack/data-types/text-component) | auto    | The lore shown when selecting.                       |
 | `order`             | number                                           | `0`     | Sort position in the screen.                         |

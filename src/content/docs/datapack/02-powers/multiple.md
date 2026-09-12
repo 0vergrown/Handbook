@@ -20,7 +20,11 @@ Type ID: `apoli:multiple`
 
 ## Fields
 
-Arbitrary fields. Any "key", except for `type`, `loading_priority`, `name`, `description`, `hidden`, `condition`, is considered a sub-power and takes a fully-defined power type as the value.
+Arbitrary fields. Any "key", except for `type`, `loading_priority`, `name`, `description`, `hidden`, `condition`, `tags`, `skill`, `sub_powers` and `load_condition`, is considered a sub-power and takes a fully-defined power type as the value.
+
+Those reserved fields belong to the bundle itself, not to its sub-powers — `tags` on an `apoli:multiple` tags the **bundle**, so [`apoli:store_power`](/docs/datapack/entity-actions/store_power) and anything else that selects powers by tag picks up the whole thing rather than one piece of it. A field that is neither reserved nor an object cannot be a sub-power, and Apoli logs one line naming it at load rather than ignoring it silently.
+
+Each sub-power takes its own [`load_condition`](/docs/datapack/introduction/powers#gating-a-power-at-load-time), checked before that sub-power is parsed — a sub-power that is gated off is left out of the bundle entirely. A `load_condition` on the `apoli:multiple` itself gates every sub-power with it.
 
 ## Examples
 

@@ -4,7 +4,7 @@ description: "Puts powers into the entity's own apoli:power_storage, or takes th
 navigation_title: "Store Power"
 ---
 
-Puts powers into the entity's own [`apoli:power_storage`](/docs/datapack/powers/power_storage), takes them out, or empties it. Storing a power does not grant it — use [`apoli:run_stored_power`](/docs/datapack/entity-actions/run_stored_power) to fire it later.
+Puts powers into the entity's own [`apoli:power_storage`](/docs/datapack/powers/power_storage), takes them out, or empties it. A stored power is granted to the holder unless the storage sets `grant: false`, in which case it sits there inert until [`apoli:run_stored_power`](/docs/datapack/entity-actions/run_stored_power) fires it.
 
 Type ID: `apoli:store_power`
 
