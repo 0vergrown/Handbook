@@ -4,7 +4,7 @@ description: "Checks what an entity is carrying in its apoli:power_storage."
 navigation_title: "Stored Power"
 ---
 
-Checks what an entity is carrying in its [`apoli:power_storage`](/docs/datapack/powers/power_storage). With no filters it is simply "is anything stored?"; with `power` or `tags` it counts only matching entries.
+Checks what an entity is carrying in its [`apoli:power_storage`](/docs/datapack/powers/power_storage). With no filters it is simply "is anything stored?"; with `power` or `tags` it counts only matching entries. An entry whose power is no longer loaded is not counted, so this agrees with the number [`apoli:resource`](/docs/datapack/entity-conditions/resource) reads from the same storage.
 
 Type ID: `apoli:stored_power`
 

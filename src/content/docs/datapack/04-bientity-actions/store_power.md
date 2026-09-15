@@ -8,7 +8,7 @@ Puts powers into the **target's** [`apoli:power_storage`](/docs/datapack/powers/
 
 Type ID: `apoli:store_power`
 
-The fields are the same as the entity form, [`apoli:store_power`](/docs/datapack/entity-actions/store_power); only which side owns the storage differs.
+The fields are the same as the entity form, [`apoli:store_power`](/docs/datapack/entity-actions/store_power); only which side owns the storage differs. Getting those two the wrong way round is the usual reason nothing is stored, so with [`/apoli:dev_mode`](/docs/datapack/commands/dev-mode) on each attempt names the entity whose storage was written and, for `from_held`, the entity it read the powers from.
 
 ## Fields
 

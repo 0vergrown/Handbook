@@ -4,7 +4,7 @@ description: "Fires a power held in an apoli:power_storage as though a key had b
 navigation_title: "Run Stored Power"
 ---
 
-Fires a power held in an [`apoli:power_storage`](/docs/datapack/powers/power_storage) as though a key had been pressed on it. The stored power does not have to be granted, and it does not have to be bound to the key you name — whatever keybind it declares, this action runs it with the one you pass instead. A storage left on its default `grant: true` already gives the stored power its own keybind, so this action is for firing it from somewhere else.
+Fires a power held in an [`apoli:power_storage`](/docs/datapack/powers/power_storage) as though a key had been pressed on it. The stored power does not have to be granted, and it does not have to be bound to the key you name — whatever keybind it declares, this action runs it with the one you pass instead. A storage left on its defaults already gives the stored power its own keybind, so this action is for firing it from somewhere else; a storage with `own_key: false` makes it the only way in, which is what a steal-an-ability mechanic usually wants.
 
 Type ID: `apoli:run_stored_power`
 
@@ -60,3 +60,5 @@ Run everything in the book at once:
 ```
 
 > When `key` is set, [`apoli:prevent_key_press`](/docs/datapack/powers/prevent_key_press) can still block the cast, the same as a real press of that key. Leave `key` out and nothing can block it.
+
+A stored power that is not key-driven has nothing for this action to run, and a stored power's own `condition`, cooldown and [`apoli:prevent_key_press`](/docs/datapack/powers/prevent_key_press) all still apply. With [`/apoli:dev_mode`](/docs/datapack/commands/dev-mode) on, a cast that does nothing says whether the storage was empty, whether the filters matched nothing, or whether something matched and refused to fire.

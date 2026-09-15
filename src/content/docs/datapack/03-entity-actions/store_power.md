@@ -20,7 +20,7 @@ Field | Type | Default | Description
 `from_held` | [Boolean](/docs/datapack/data-types/boolean) | `false` | Take the ids from the powers the entity actually holds, narrowed by `power` and `tags`, instead of from the ids themselves.
 `operation` | `add`, `remove` or `clear` | `add` | What to do. `clear` empties the storage and ignores the filters.
 
-A power is refused if the storage is full (unless it sets `replace_oldest`), if it is already stored, if the storage's own `powers` / `tags` whitelist rejects it, or if no power with that id is loaded.
+A power is refused if the storage is full (unless it sets `replace_oldest`), if it is already stored, if the storage's own `powers` / `tags` whitelist rejects it, or if no power with that id is loaded. A storage can never hold another storage. With [`/apoli:dev_mode`](/docs/datapack/commands/dev-mode) on, each attempt names the storage, the power and which of those happened.
 
 ## Examples
 

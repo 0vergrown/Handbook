@@ -1,6 +1,6 @@
 ---
 title: "Dev Mode (Command)"
-description: "Toggles a debugging view that draws resource values as text, outlines every radius and raycast with particles, explains skipped commands, and removes cooldowns."
+description: "Toggles a debugging view that draws resource values as text, outlines every radius and raycast with particles, explains skipped commands and refused stores, and removes cooldowns."
 navigation_title: "Dev Mode"
 ---
 
@@ -23,6 +23,7 @@ Without arguments it toggles for the player running the command. With `<targets>
 | **Raycasts** | Every [`apoli:raycast`](/docs/datapack/entity-actions/raycast) draws its path in red dust, out to where it actually stopped, with the `radius` tube or the `cone_angle` spread drawn at the far end. |
 | **Commands** | Every [`apoli:execute_command`](/docs/datapack/entity-actions/execute_command) run by you echoes its finished command into your chat with `$(…)` macros already expanded, so you can see what actually ran rather than what was written. When a command is *skipped* because a `$(key)` had no value, you get a red line naming the key and saying why — the power is not loaded, the holder does not have it, or it is not a resource. |
 | **Keys** | Every change to the set of keys your client reports as held prints a red line: `held keys +key.origins.primary_active` when one goes down, `-key.origins.primary_active` when it comes up, both on one line when they change together. This is the exact stream the server drives [`apoli:key_pressed`](/docs/datapack/entity-conditions/key_pressed) from, so a condition that flickers when you did not touch the key shows up here as a stray `-`/`+` pair. |
+| **Power storage** | Every [`apoli:store_power`](/docs/datapack/entity-actions/store_power) and [`apoli:run_stored_power`](/docs/datapack/entity-actions/run_stored_power) prints a red line saying what it did, naming the storage and the power: `stored`, or the reason it was refused — the target holds no storage at all, no storage has that id, `from_held` found nothing matching on the actor, the power carries none of the storage's tags, it is already stored, or every slot is full. `run_stored_power` says whether the storage was empty, whether the filters matched nothing, or whether something matched but nothing fired. |
 | **Cooldowns** | Every cooldown reads as `0`, so abilities can be spammed. This applies to [`apoli:cooldown`](/docs/datapack/powers/cooldown) and to the `cooldown` field built into power types like [`apoli:action_on_key_press`](/docs/datapack/powers/action_on_key_press) and [`apoli:fire_projectile`](/docs/datapack/powers/fire_projectile). |
 
 The particles are sent **forced**, so they draw at any distance and through the particle-count setting, and only to players who have dev mode on. They are drawn per dev-mode player in the same dimension, whoever the actor was — so you can watch a mob's raycast, not just your own.
