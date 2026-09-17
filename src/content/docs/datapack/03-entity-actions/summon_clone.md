@@ -4,7 +4,7 @@ description: "Summons a clone that fights for the player who has the power."
 navigation_title: "Summon Clone"
 ---
 
-Summons a **clone** that fights for the player who has the power. The clone is player-shaped, attacks with melee, a bow, or a crossbow (whatever it holds), defends/assists its owner, and can be told to sit by right-clicking it. It mirrors the owner's `entity_texture_overlay` so they look the same. Only works when the action's entity is a player.
+Summons a **clone** that fights for the player who has the power. The clone is player-shaped, attacks with melee, a bow, or a crossbow (whatever it holds), defends/assists its owner, and can be told to sit by right-clicking it. It mirrors the owner's [apoli:custom_model_render](/docs/datapack/powers/custom_model_render) texture overlays so they look the same. Only works when the action's entity is a player.
 
 Type ID: `apoli:summon_clone`
 
@@ -20,7 +20,7 @@ Type ID: `apoli:summon_clone`
 | `slim`                 | [Boolean](/docs/datapack/data-types/boolean)              | `false`    | Forces the slim arm model. Only used when custom textures are set; otherwise the owner's model is mirrored. |
 | `wide_texture`         | [Identifier](/docs/datapack/data-types/identifier)           | _optional_ | Custom texture for the wide model. If unset, the owner's skin is used.                                      |
 | `slim_texture`         | [Identifier](/docs/datapack/data-types/identifier)           | _optional_ | Custom texture for the slim model. If unset, the owner's skin is used.                                      |
-| `max_life_ticks`       | [Integer](/docs/datapack/data-types/integer)              | `1200`     | Ticks before the clone vanishes. `0` or less = permanent until killed.                                      |
+| `max_life_ticks`       | [Integer](/docs/datapack/data-types/integer)              | `1200`     | Ticks before the clone dies of its own accord. `0` or less = permanent until killed.                                      |
 | `summon_id`            | [Identifier](/docs/datapack/data-types/identifier)           | _optional_ | A tag used by [apoli:set_summon_max_life](/docs/datapack/entity-actions/set_summon_max_life) to target this clone.                                |
 | `powers`               | [Array](/docs/datapack/data-types/array) of Identifiers | _optional_ | Powers to grant the clone on spawn.                                                                         |
 | `bientity_action`      | Bi-entity Action Type            | _optional_ | Runs once after the clone spawns, with the owner as actor and the clone as target.                          |
@@ -36,3 +36,5 @@ Type ID: `apoli:summon_clone`
 ```
 
 Summons a clone that looks like the player, inherits their gear, fights for them, and disappears after 30 seconds.
+
+> Running out of `max_life_ticks` **kills** the clone rather than deleting it, so an [apoli:action_on_death](/docs/datapack/powers/action_on_death) granted through `powers` fires and bookkeeping — returning a summon slot, clearing an [apoli:entity_set](/docs/datapack/powers/entity_set) — runs exactly as it does when something kills the clone. Losing its owner (they log out or change dimension) ends it the same way. It drops nothing either way.

@@ -4,7 +4,7 @@ description: "Selects how a texture is drawn onto the model — the blend/cull/l
 navigation_title: "Render Type"
 ---
 
-Selects how a texture is drawn onto the model — the blend/cull/lighting style of a render layer. Used by the `render_type` field of Entity Texture Overlay and Overlay Layer. Given as a String; matching ignores case and separators.
+Selects how a texture is drawn onto the model — the blend/cull/lighting style of a render layer. Used by the `render_type` field of [apoli:custom_model_render](/docs/datapack/powers/custom_model_render). Given as a String; matching ignores case and separators.
 
 ## Values
 
@@ -17,14 +17,15 @@ Selects how a texture is drawn onto the model — the blend/cull/lighting style 
 | `solid`            | Fully opaque draw; the alpha channel is ignored.                                                                                                                                   |
 | `emissive`         | Glowing: drawn unlit (full-bright) and alpha-blended, but still tinted. Aliases: `glow`, `translucent_emissive`. Great for auras and energy effects that should shine in the dark. |
 | `eyes`             | The vanilla "eyes" style — always full-bright and **untinted** (the tint fields are ignored). Classic glowing-eyes / mob-eyes look.                                                |
+| `energy_swirl`     | The charged-creeper and wither-armour aura: added on top of what is underneath so it glows, tinted, with the texture sliding across the model at the power's `scroll_speed`. Alias: `swirl`. |
 
-> `emissive` keeps your `red`/`green`/`blue`/`alpha` tint while glowing; `eyes` is brighter and additive but ignores tint. Pick `emissive` when you want a coloured glow, `eyes` for a pure overlay glow.
+> `emissive` keeps your `red`/`green`/`blue`/`alpha` tint while glowing; `eyes` is brighter and additive but ignores tint. Pick `emissive` when you want a coloured glow, `eyes` for a pure overlay glow, and `energy_swirl` for a moving shimmer.
 
 ## Example
 
 ```json
 {
-  "type": "apoli:entity_texture_overlay",
+  "type": "apoli:custom_model_render",
   "wide_texture_location": "example:textures/entity/visor.png",
   "render_as_overlay": true,
   "render_type": "emissive",

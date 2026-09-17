@@ -12,7 +12,7 @@ Type ID: `apoli:teleport_to_spawn`
 
 Field  | Type | Default | Description
 -------|------|---------|-------------
-`player_spawn` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Whether to use the player's own respawn point. Falls back to the world spawn when the entity is not a player, has no respawn point set, or its respawn dimension is not loaded. `false` always uses the world spawn.
+`player_spawn` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Whether to use the player's own respawn point. Falls back to the world spawn when the entity is not a player, has no respawn point set, its respawn dimension is not loaded, or the respawn point no longer works. `false` always uses the world spawn.
 `success_action` | Entity Action Type | _optional_ | Runs on the entity once it has arrived.
 `fail_action` | Entity Action Type | _optional_ | Runs on the entity when the teleport is refused, which for this action means [apoli:prevent_teleport](/docs/datapack/powers/prevent_teleport).
 
@@ -43,4 +43,4 @@ Sends the player home the way a bed would.
 
 An origin that cannot use portals: standing in one throws them back to the world spawn.
 
-> This does not consume or check a bed the way dying does — it is a move, not a respawn.
+> The respawn point is checked the same way dying checks it: the bed or respawn anchor has to still be there, be usable in that dimension, and have room to stand. If it was broken, buried or blocked, the action goes to the world spawn instead of dropping the player into the obstruction. A respawn anchor is **not** drained — this is a move, not a respawn.

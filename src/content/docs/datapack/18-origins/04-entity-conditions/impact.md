@@ -6,7 +6,7 @@ navigation_title: "Impact"
 
 Compares the impact of the origins a player currently has against a value you choose. Impact is the one-to-three-flame rating every [origin](/docs/datapack/origins/overview) carries, so this is how a power asks "is this player playing something powerful?" without listing every origin by name.
 
-Type ID: `origins:impact`
+Type ID: `apoli:impact`
 
 ## Fields
 
@@ -27,7 +27,7 @@ Only let high-impact origins take the shortcut:
 
 ```json
 {
-    "type": "origins:impact",
+    "type": "apoli:impact",
     "comparison": ">=",
     "compare_to": "high"
 }
@@ -41,7 +41,7 @@ Give low-impact players a leg up — a regeneration power that only applies whil
     "interval": 60,
     "entity_action": { "type": "apoli:heal", "amount": 1 },
     "condition": {
-        "type": "origins:impact",
+        "type": "apoli:impact",
         "comparison": "<=",
         "compare_to": "low"
     }
@@ -52,7 +52,7 @@ With several layers, `aggregate` decides what "their impact" means. `sum` is the
 
 ```json
 {
-    "type": "origins:impact",
+    "type": "apoli:impact",
     "aggregate": "sum",
     "comparison": ">",
     "compare_to": 4
@@ -63,7 +63,7 @@ Scoped to one layer, so a strong secondary origin does not count:
 
 ```json
 {
-    "type": "origins:impact",
+    "type": "apoli:impact",
     "layer": "origins:origin",
     "comparison": "==",
     "compare_to": "medium"

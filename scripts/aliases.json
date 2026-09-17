@@ -261,6 +261,9 @@
 		"conditioned_attribute",
 		"modify_attribute"
 	],
+	"powers/custom_model_render": [
+		"energy_swirl"
+	],
 	"powers/disable_slot": [
 		"restrict_slot"
 	],

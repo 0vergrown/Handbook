@@ -6,7 +6,7 @@ navigation_title: "Impact"
 
 The bi-entity form of [`origins:impact`](/docs/datapack/origins/impact). Compares the impact of one side's origins against the **other side's**, so a power can behave differently when it is punching up or punching down.
 
-Type ID: `origins:impact`
+Type ID: `apoli:impact`
 
 ## Fields
 
@@ -34,7 +34,7 @@ Deal bonus damage only to someone weaker than you:
         "damage_type": "minecraft:player_attack"
     },
     "bientity_condition": {
-        "type": "origins:impact",
+        "type": "apoli:impact",
         "comparison": ">"
     }
 }
@@ -46,7 +46,7 @@ A guard that only triggers when the attacker outclasses you by a full step:
 
 ```json
 {
-    "type": "origins:impact",
+    "type": "apoli:impact",
     "subject": "target",
     "comparison": ">=",
     "offset": 1
@@ -59,7 +59,7 @@ Used as a plain check on one side, by giving it a fixed value — here the targe
 
 ```json
 {
-    "type": "origins:impact",
+    "type": "apoli:impact",
     "subject": "target",
     "comparison": "<=",
     "compare_to": "low"

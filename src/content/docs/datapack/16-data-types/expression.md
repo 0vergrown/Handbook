@@ -97,7 +97,7 @@ Constants: `pi`, `e`.
 | Random uniform `[0, 1]` | `[Uni]` | Random uniform real in `[0, 1]`. |
 | Standard normal | `[Nor]` | Drawn from `N(0, 1)`. |
 
-> `[` only starts a random generator when the brackets contain one of the names above. Everywhere else it indexes a table resource, so `example:table[Nat]` is a resource times a random natural, while `example:table[2]` is slot 2.
+> `[` only starts a random generator when the brackets contain one of the names above. After `enchantment`, `nbt` or `data` it holds that function's arguments (see [Enchantment levels](#enchantment-levels) and [Reading NBT](#reading-nbt)). Everywhere else it indexes a table resource, so `example:table[Nat]` is a resource times a random natural, while `example:table[2]` is slot 2.
 
 ## Bound variables
 
@@ -149,7 +149,7 @@ As a bi-entity action that deals more damage the more health the **actor** is mi
 
 The binding covers the **whole** bi-entity action, including anything nested inside it — so an [apoli:actor_action](/docs/datapack/bientity-actions/actor_action) wrapping a [apoli:modify_resource](/docs/datapack/entity-actions/modify_resource) can still read `target_health`, and a bare variable inside an `apoli:target_action` reads the target because that is the entity in scope there while `actor_` still reaches back to the actor.
 
-Outside a bi-entity context there is no second entity, so `target_` and `actor_` both fall back to the one entity in scope. The prefixes work on the plain variables above, not on resource ids — use `target_resource(...)` for those.
+Outside a bi-entity context there is no second entity, so `target_` and `actor_` both fall back to the one entity in scope. The prefixes work on the plain variables above, not on resource ids — use `target_resource(...)` and `actor_resource(...)` for those. That matters when an [apoli:target_action](/docs/datapack/bientity-actions/target_action) runs a coordinate-taking action such as [apoli:teleport](/docs/datapack/entity-actions/teleport): a bare `my_pack:aim_x` there reads the **target's** resource, which is `0` if the target does not have it, so write `actor_resource(my_pack:aim_x)` to read the number the caster stored.
 
 > Bi-entity **conditions** do not set the binding; only actions do. That keeps the per-candidate condition path free of the extra bookkeeping.
 
@@ -161,11 +161,12 @@ A few functions take a bare `namespace:path` id as their **first** argument. Any
 | --- | --- |
 | `resource(id)` / `resource(id, n)` | The resource's value, or the value in slot `n`. The explicit form of `id` and `id[n]`. |
 | `target_resource(id)` / `target_resource(id, n)` | The same, read from the **target** in a bi-entity context. |
+| `actor_resource(id)` / `actor_resource(id, n)` | The same, read from the **actor** in a bi-entity context. |
 | `resource_size(id)` | How many slots the resource has. |
 | `resource_contains(id, v)` | `1` if any slot of the resource holds `v`, else `0`. |
 | `resource_index_of(id, v)` | The first slot holding `v`, or `-1`. |
 | `has_resource(id)` | `1` if the entity has that resource at all, else `0`. |
-| `has_power(id)` / `target_has_power(id)` | `1` if the entity holds that power, else `0`. |
+| `has_power(id)` / `target_has_power(id)` / `actor_has_power(id)` | `1` if the entity holds that power, else `0`. |
 
 With the Origins mod installed, five more are registered:
 
@@ -211,6 +212,58 @@ Suffixing a resource id with `_max` or `_min` reads that resource's limit rather
 The bound is evaluated at the same moment as the expression around it, so a resource whose `max` is itself an Expression (`"max": "20 + 5 * xp_level"`) reports its *current* ceiling, not a stale one.
 
 If there is no resource power at the stripped id, the name is treated as an ordinary resource id — so a resource genuinely called `example:mana_max` still resolves to its own value. Bound lookups nest up to 8 deep; beyond that they read `0`, which stops a cycle (a `max` referring to its own `_max`) from hanging the server.
+
+## Enchantment levels
+
+`enchantment[...]` reads the level of an enchantment on the entity's gear:
+
+```json
+{
+  "type": "apoli:heal",
+  "amount": "10 + enchantment[minecraft:mending, weapon.mainhand, sum]"
+}
+```
+
+The arguments, separated by commas:
+
+Argument | Values | Default
+---------|--------|--------
+Enchantment | An enchantment id such as `minecraft:sharpness`. The namespace can be left out. | _required_
+Where | An [Item Slot](/docs/datapack/data-types/item-slot) such as `weapon.mainhand`, `armor.chest` or `hotbar.3`; `armor` for the four armour slots; `hands` for both hands; `equipment` (also `any` or `all`) for every equipment slot. | `equipment`
+Calculation | `sum` adds the levels found in each slot, `max` takes the highest — the same choice as [apoli:enchantment](/docs/datapack/entity-conditions/enchantment)'s `calculation`. | `sum`
+
+Everything after the id is optional and can come in either order, so `enchantment[minecraft:mending, weapon.mainhand]`, `enchantment[minecraft:protection, armor, max]` and `enchantment[minecraft:feather_falling]` all work. On a single slot `sum` and `max` give the same number.
+
+An enchantment that is not installed reads `0` rather than failing to load, so an expression can mention an enchantment from another mod. Hotbar, inventory and ender chest slots read players only; on any other entity they read `0`. In a bi-entity context, `target_enchantment[...]` and `actor_enchantment[...]` read the target's and the actor's gear, like the `target_` and `actor_` variables.
+
+## Reading NBT
+
+`nbt[...]` reads a number out of NBT data, the same way `/data get` does. `data[...]` is another name for it.
+
+```json
+{
+  "type": "apoli:modify_resource",
+  "resource": "example:ammo",
+  "modifier": {
+    "operation": "set_total",
+    "amount": "nbt[Inventory[{id:\"minecraft:arrow\"}].count, sum]"
+  }
+}
+```
+
+The arguments, separated by commas:
+
+Argument | Values | Default
+---------|--------|--------
+Source | `self` (also `entity`) — the entity the expression runs on; `target` or `actor` — the other entity in a bi-entity context; an [Item Slot](/docs/datapack/data-types/item-slot) — the item in that slot; `block, <x>, <y>, <z>` — the block entity at a position, where each coordinate is an expression of its own; `storage, <id>` — a command storage, as in `/data get storage`. | `self`
+Path | An NBT path, written exactly as in `/data get`: `Health`, `Inventory[0].count`, `Items[{Slot:0b}].count`. | _required_
+Aggregate | What to do when the path matches more than one value: `first`, `sum`, `max`, `min`, or `count` (also `size`) for how many values matched. | `first`
+
+So `nbt[Health]`, `nbt[Inventory[].count, sum]`, `nbt[weapon.mainhand, components."minecraft:damage"]`, `nbt[storage, example:vars, counter]` and `nbt[block, x, y - 1, z, Items[].count, sum]` are all valid. The value is read the way `/data get` reports it: a number as itself, a string as its length, a list or compound as how many entries it holds, and a path that matches nothing as `0`.
+
+The paths are whatever `/data get` shows on your version of the game — item data lives under `components` on 1.21.1 and under `tag` on 1.20.1.
+
+> Writing an entity out to NBT is not free. Apoli does it at most once per entity per tick and shares the result between every `nbt[...]` that reads that entity during the tick, and caches items and block entities the same way — so a change made earlier in a tick shows up from the next tick. Where a plain variable exists (`health`, `food`, `xp_level`), use it: it reads the value directly. Expressions that run on the client see the client's copy of the entity, which carries much less data, and `storage` reads `0` there.
 
 ## NaN policy
 

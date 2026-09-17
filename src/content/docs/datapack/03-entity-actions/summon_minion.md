@@ -17,7 +17,7 @@ Type ID: `apoli:summon_minion`
 | `follow_offset`   | [Vector](/docs/datapack/data-types/vector)               | _optional_                                  | Position offset from the owner when following (and the spawn offset).                |
 | `scale`           | [Float](/docs/datapack/data-types/float)                | `1.0`                                       | Render/hitbox scale.                                                                 |
 | `invulnerable`    | [Boolean](/docs/datapack/data-types/boolean)              | `false`                                     | Whether the minion is invulnerable.                                                  |
-| `max_life_ticks`  | [Integer](/docs/datapack/data-types/integer)              | `1200`                                      | Ticks before the minion vanishes. `0` or less = permanent until killed.              |
+| `max_life_ticks`  | [Integer](/docs/datapack/data-types/integer)              | `1200`                                      | Ticks before the minion dies of its own accord. `0` or less = permanent until killed.              |
 | `summon_id`       | [Identifier](/docs/datapack/data-types/identifier)           | _optional_                                  | A tag used by [apoli:set_summon_max_life](/docs/datapack/entity-actions/set_summon_max_life) to target this minion.        |
 | `powers`          | [Array](/docs/datapack/data-types/array) of Identifiers | _optional_                                  | Powers to grant the minion on spawn. Granting it a geometry-mode [apoli:custom_model_render](/docs/datapack/powers/custom_model_render) replaces the minion's model with a Blockbench one. |
 | `bientity_action` | Bi-entity Action Type            | _optional_                                  | Runs once after the minion spawns, with the owner as actor and the minion as target. |
@@ -35,3 +35,5 @@ Type ID: `apoli:summon_minion`
 ```
 
 Summons a permanent minion that floats above and behind the owner.
+
+> Running out of `max_life_ticks` **kills** the minion rather than deleting it, so an [apoli:action_on_death](/docs/datapack/powers/action_on_death) granted through `powers` fires and bookkeeping — returning a summon slot, clearing an [apoli:entity_set](/docs/datapack/powers/entity_set) — runs exactly as it does when something kills the minion. Losing its owner (they log out or change dimension) ends it the same way. It drops nothing either way.

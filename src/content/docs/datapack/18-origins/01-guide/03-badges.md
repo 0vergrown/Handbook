@@ -70,7 +70,7 @@ A power with **no** `badges` array gets one for free when its type implies an ob
 | Power type | Badge you get |
 | --- | --- |
 | [`apoli:toggle`](/docs/datapack/powers/toggle) | keybind badge, using the power's own `key` |
-| [`apoli:action_on_key_press`](/docs/datapack/powers/action_on_key_press) | keybind badge, using the power's own `key` |
+| Any power type with a `key` field — [`apoli:action_on_key_press`](/docs/datapack/powers/action_on_key_press), [`apoli:fire_projectile`](/docs/datapack/powers/fire_projectile), [`apoli:inventory`](/docs/datapack/powers/inventory), [`apoli:action_on_key_sequence`](/docs/datapack/powers/action_on_key_sequence) | "Active" keybind badge, using the power's own `key` (for a sequence, the first key in it) |
 | [`apoli:recipe`](/docs/datapack/powers/recipe) | crafting-recipe badge, built from the power's recipe |
 
 Writing your own `badges` array replaces the automatic one — it does not add to it.

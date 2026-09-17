@@ -12,7 +12,8 @@ By default the edit snaps on and off with the power. Add `duration` to make it e
 
 | Field                | Type                                                                                          | Default   | Description                                                                                                                                                                                                                                                     |
 | -------------------- | --------------------------------------------------------------------------------------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `model_part`         | [String](/docs/datapack/data-types/string)                                                     | —         | The part to edit. One of `head`, `hat`, `body`, `right_arm`, `left_arm`, `right_leg`, `left_leg`. Matching ignores case and separators (`right_arm` = `rightArm` = `rightarm`). On players the matching skin-overlay layer is edited together with the base part. |
+| `model_part`         | [Body Part](/docs/datapack/data-types/body-part)                                               | —         | The part to edit: a limb such as `head` or `right_arm`, a layer such as `jacket`, or a group — `arms`, `legs`, `upper`, `lower` or `whole` — which moves as one piece (see [Moving a group](#moving-a-group)). Matching ignores case and separators (`right_arm` = `rightArm` = `rightarm`). On players the matching skin-overlay layer is edited together with the base part. |
+| `pivot`              | [Vector](/docs/datapack/data-types/vector)                                                     | _the group's own pivot_ | Groups only: the point the group rotates and scales around, in model units — `[0, 0, 0]` is the neck, `y` grows downwards and the feet are at `[0, 24, 0]`. Ignored for a single part. |
 | `type`               | [String](/docs/datapack/data-types/string)                                                     | —         | Which property to change. See the table below.                                                                                                                                                                                                                  |
 | `value`              | [Float](/docs/datapack/data-types/float) OR [Expression](/docs/datapack/data-types/expression)  | —         | The amount. Its meaning depends on `type` (see below). Required unless `keyframes` is set, in which case it is ignored. As an Expression it is re-evaluated as the model renders — see [Driving a part from a value](#driving-a-part-from-a-value).                |
 | `override_animation` | [Boolean](/docs/datapack/data-types/boolean)                                                   | `false`   | For `pitch`/`yaw`/`roll` only: if `true`, the value becomes the absolute rotation and the vanilla animation for that axis is ignored ("locked"). If `false`, it is added on top of the animation.                                                                 |
@@ -38,6 +39,47 @@ By default the edit snaps on and off with the power. Add `duration` to make it e
 `pivot_z` | Added to the part's Z pivot offset.
 `visible` | Sets visibility: `0` hides the part (and its children), any other value shows it. `override_animation` is ignored.
 `hidden` | Sets the "skip draw" flag: non-`0` skips drawing this part's own cubes while still drawing its children. `override_animation` is ignored.
+
+## Moving a group
+
+A group edits every part in it together, as one rigid piece. The parts keep their places relative to each other and the whole group turns around a single pivot:
+
+`model_part` | Parts | Default pivot
+-------------|-------|--------------
+`arms` | both arms | halfway between the shoulders
+`legs` | both legs | halfway between the hips
+`upper` | head, torso, both arms | the waist, following the torso when it leans
+`lower` | torso, both legs | the neck
+`whole` | everything, including extra limbs | the feet
+
+What each `type` does to a group:
+
+- `pitch`, `yaw` and `roll` swing the group around its pivot. With `override_animation`, the vanilla animation of each part on that axis is dropped first, so the parts line up before the group turns.
+- `x_scale`, `y_scale` and `z_scale` stretch the group away from its pivot, moving the parts apart as well as scaling each one — a `y_scale` of `1.0` on `whole` doubles the model's height with its feet still on the ground.
+- `pivot_x`, `pivot_y` and `pivot_z` shift every part in the group by the same amount.
+- `visible` and `hidden` apply to every part in the group.
+
+Transformations run in list order, so a group edit moves the parts wherever earlier entries left them. Put per-part tweaks before a group rotation to have the group carry them round.
+
+```json
+{
+  "type": "apoli:modify_model_parts",
+  "transformations": [
+    {
+      "model_part": "whole",
+      "type": "pitch",
+      "value": -1.5708,
+      "pivot": [0, 12, 0],
+      "duration": 10,
+      "easing": "ease_out_cubic"
+    }
+  ]
+}
+```
+
+The whole model tips over backwards around its middle, easing into place over half a second. Without `pivot` it would fall around its feet like a plank.
+
+Group transformations apply wherever the model does — held items, armour and anything else drawn on a limb follow along — and the server sees the same pose, so particles anchored to a part and [body part hits](/docs/datapack/damage-conditions/body_part) land where the part has moved to.
 
 ## Animating a part
 

@@ -26,11 +26,12 @@ Field  | Type | Default | Description
 
 Field  | Type | Default | Description
 -------|------|---------|-------------
-`part` | String | — | The model part to tint. One of `head`, `hat`, `body`, `right_arm`, `left_arm`, `right_leg`, `left_leg` (and, for players, `right_sleeve`, `left_sleeve`, `right_pants`, `left_pants`, `jacket`). Matching ignores case and separators, so `right_arm`, `rightArm` and `rightarm` are equivalent. `head` also covers the hat layer, `body` covers the jacket, each arm covers its sleeve and each leg covers its trousers.
+`part` | [Body Part](/docs/datapack/data-types/body-part) | — | The model part to tint: a limb such as `head` or `right_arm`, a skin layer such as `jacket`, or a group such as `arms`, `legs`, `upper`, `lower` or `whole`. `head` also covers the hat layer, `body` covers the jacket, each arm covers its sleeve and each leg covers its trousers. Where two entries cover the same part, their colours multiply.
 `red` | Float | `1.0` | Red multiplier for this part. Range: 0.0 - 1.0.
 `green` | Float | `1.0` | Green multiplier for this part. Range: 0.0 - 1.0.
 `blue` | Float | `1.0` | Blue multiplier for this part. Range: 0.0 - 1.0.
 `alpha` | Float | `1.0` | Alpha multiplier for this part. Range: 0.0 - 1.0.
+`condition` | [Entity Condition Type](/docs/datapack/entity-conditions) | _optional_ | If set, this entry only tints while the holder fulfils the condition.
 
 ## Examples
 

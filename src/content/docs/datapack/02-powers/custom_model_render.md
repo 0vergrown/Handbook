@@ -2,6 +2,7 @@
 title: "Custom Model Render (Power Type)"
 description: "Renders a custom look on a player: either re-skinning the vanilla model with a texture (texture mode) or drawing a separate 3D model made in Blockbench that…"
 navigation_title: "Custom Model Render"
+aliases: ["energy_swirl"]
 ---
 
 Renders a custom look on a player: either re-skinning the vanilla model with a texture (**texture mode**) or drawing a separate 3D model made in Blockbench that follows the player's pose (**geometry mode**). Geometry mode is a JSON-defined feature renderer — no Java, no extra mods.
@@ -10,15 +11,16 @@ Type ID: `apoli:custom_model_render`
 
 > This power supersedes `apoli:entity_texture_overlay`, which is not a registered type — rename it to `apoli:custom_model_render` in any JSON that still uses it. The `mode: texture` fields below are the direct equivalents of its fields, except that there is no multi-`layers` field: use one power per layer.
 
-> This is a client-side rendering power. **Texture mode** applies to players only. **Geometry mode** works on players and on the minions summoned by [apoli:summon_minion](/docs/datapack/entity-actions/summon_minion). Textures and models must be present in every viewer's resource pack.
+> This is a client-side rendering power. **Texture mode** draws its overlays on any living entity that holds the power; replacing the skin outright (`render_as_overlay: false`) is for players only. **Geometry mode** works on players and on the minions summoned by [apoli:summon_minion](/docs/datapack/entity-actions/summon_minion). Textures and models must be present in every viewer's resource pack.
 
 ## Shared fields (both modes)
 
 | Field                              | Type                                                                                 | Default       | Description                                                                                                                                                                                    |
 | ---------------------------------- | ------------------------------------------------------------------------------------ | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `mode`                             | String                                                    | `texture`     | `texture` (re-skin the vanilla model) or `geometry` (draw a custom Blockbench model).                                                                                                          |
-| `render_type`                      | Render Type                                          | `translucent` | Draw style — `translucent`, `cutout`, `cutout_no_cull`, `solid`, `emissive`/`glow`, `eyes`.                                                                                                    |
-| `body_parts`                       | String or Array of String       | _whole model_ | In texture mode, restrict an overlay to these parts: `head`, `hat`, `body`, `right_arm`, `left_arm`, `right_leg`, `left_leg` on a player, `main`, `flat2`, `flat3` on a minion. In geometry mode, render only the bones with these names — **any** bone name in your own model, not just the vanilla ones. Every bone you do not name is hidden, and hiding a bone hides everything nested under it. |
+| `render_type`                      | [Render Type](/docs/datapack/data-types/render-type) | `translucent` | Draw style — `translucent`, `cutout`, `cutout_no_cull`, `solid`, `emissive`/`glow`, `eyes`, `energy_swirl`.                                                                                  |
+| `scroll_speed`                     | Float                                                      | `0.0`         | With `render_type: energy_swirl`, how fast the texture scrolls, in texture-heights per tick. `0.0` holds the texture still. See [Energy swirl](#energy-swirl).                                    |
+| `body_parts`                       | [Body Part](/docs/datapack/data-types/body-part) or Array of Body Part | _whole model_ | In texture mode, restrict an overlay to these parts — limbs, layers or groups such as `arms` and `upper` on a humanoid model; `main`, `flat2`, `flat3` on a minion. On a model with neither, the whole model is drawn. In geometry mode, render only the bones with these names — **any** bone name in your own model, not just the vanilla ones; a group name shows every bone bound to its limbs. Every bone you do not name is hidden, and hiding a bone hides everything nested under it. |
 | `red` / `green` / `blue` / `alpha` | Float                                                      | `1.0`         | Colour/opacity multipliers (0.0 – 1.0).                                                                                                                                                        |
 | `scale`                            | Float                                                      | `1.0`         | Scales the drawn geometry outward from the model origin (aura/shell effect above 1.0).                                                                                                         |
 | `hidden_slots`                     | Array of Equipment Slot | _none_        | Hide this render whenever any listed slot is occupied — e.g. `["head"]` hides a custom hat model when a real helmet is worn.                                                                   |
@@ -28,8 +30,9 @@ Type ID: `apoli:custom_model_render`
 
 Field | Type | Default | Description
 ------|------|---------|-------------
-`wide_texture_location` | Identifier or keyword | _required_ | Texture for the wide (Steve) model. Also takes a [live keyword](#live-textures).
+`wide_texture_location` | Identifier or keyword | = `texture_location` | Texture for the wide (Steve) model, and for every entity that is not a player. Also takes a [live keyword](#live-textures).
 `slim_texture_location` | Identifier or keyword | = wide | Texture for the slim (Alex) model.
+`texture_location` | Identifier or keyword | _optional_ | One texture for every model. Used when `wide_texture_location` is left out; one of the two is required.
 `render_as_overlay` | Boolean | `false` | `false` replaces the skin; `true` draws the texture as an overlay layer honouring `render_type`, `body_parts` and the tint.
 `hide_cape` | Boolean | `false` | Hide the holder's cape while active.
 
@@ -184,6 +187,37 @@ The minion's `texture` field still applies to the minion's own model, so it only
 ```
 
 > `custom_model_render` is a client-side render power, so the minion never *behaves* differently — only its appearance changes.
+
+## Energy swirl
+
+`render_type: energy_swirl` draws the texture the way a charged creeper's aura and a wither's armour are drawn: additively, so it glows over the model, with the texture sliding across it. The sideways drift is fixed; `scroll_speed` adds a steady scroll along the model on top, and `0.0` holds the texture completely still. Pair it with `scale` above `1.0` to lift the swirl off the body into a shell.
+
+```json
+{
+  "type": "apoli:custom_model_render",
+  "texture_location": "minecraft:textures/entity/creeper/creeper_armor.png",
+  "render_as_overlay": true,
+  "render_type": "energy_swirl",
+  "scroll_speed": 0.01,
+  "scale": 1.1,
+  "red": 0.5,
+  "green": 0.5,
+  "blue": 0.5
+}
+```
+
+A charged-creeper aura on whoever holds the power — a player, a zombie, anything alive.
+
+The type id `apoli:energy_swirl` loads as this power with the swirl already set up. It reads `texture_location`, `size` (as `scale`) and `speed` (as `scroll_speed`), and fills in whatever is left out with `render_as_overlay: true`, `render_type: energy_swirl`, `texture_location` set to the wither's armour texture, `scroll_speed: 0.01` and a `0.5` grey tint:
+
+```json
+{
+  "type": "apoli:energy_swirl",
+  "texture_location": "example:textures/entity/rewind.png",
+  "size": 1.05,
+  "speed": 0.02
+}
+```
 
 ## Behaviour & limits
 

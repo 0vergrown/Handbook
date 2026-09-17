@@ -6,7 +6,7 @@ navigation_title: "Tooltip"
 
 An icon in the origin-selection screen that shows a line of text when hovered. The everyday [badge](/docs/datapack/origins/badges) type for explaining a power.
 
-Type ID: `origins:tooltip` — a badge type.
+Type ID: `apoli:tooltip` — a badge type.
 
 > **Needs the Origins mod.** Badges are an Origins concept; core Apoli has no equivalent. Not to be confused with the [`apoli:tooltip`](/docs/datapack/powers/tooltip) *power*, which adds a line to an item's tooltip in-world.
 
@@ -25,7 +25,7 @@ A plain literal:
 
 ```json
 {
-  "type": "origins:tooltip",
+  "type": "apoli:tooltip",
   "sprite": "my_pack:textures/gui/badge/water.png",
   "text": "You breathe water, but drown in air."
 }
@@ -35,7 +35,7 @@ A translated one, so the badge follows the player's language:
 
 ```json
 {
-  "type": "origins:tooltip",
+  "type": "apoli:tooltip",
   "sprite": "my_pack:textures/gui/badge/water.png",
   "text": { "translate": "badge.my_pack.aquatic" }
 }

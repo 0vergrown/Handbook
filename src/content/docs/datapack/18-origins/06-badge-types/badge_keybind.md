@@ -6,7 +6,7 @@ navigation_title: "Keybind"
 
 An icon in the origin-selection screen whose hover text has the player's **actual bound key** substituted into it, so an active power advertises the right key even after the player rebinds it.
 
-Type ID: `origins:keybind` — a badge type, and the one an inline badge entry defaults to when it has no `type`.
+Type ID: `apoli:keybind` — a badge type, and the one an inline badge entry defaults to when it has no `type`.
 
 > **Needs the Origins mod.** Badges are an Origins concept; core Apoli has no equivalent.
 
@@ -33,7 +33,7 @@ The power and its badge, bound to the same key:
   "entity_action": { "type": "apoli:add_velocity", "y": 1.0 },
   "badges": [
     {
-      "type": "origins:keybind",
+      "type": "apoli:keybind",
       "sprite": "origins:textures/gui/badge/active.png",
       "text": "badge.my_pack.leap",
       "key": "key.apoli.primary_active"

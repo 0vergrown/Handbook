@@ -6,7 +6,7 @@ navigation_title: "Crafting Recipe"
 
 An icon in the origin-selection screen that hovers out a **rendered crafting grid**, so a player can see the recipe an origin unlocks before choosing it.
 
-Type ID: `origins:crafting_recipe` — a badge type.
+Type ID: `apoli:crafting_recipe` — a badge type.
 
 > **Needs the Origins mod.** Badges are an Origins concept; core Apoli has no equivalent.
 
@@ -34,7 +34,7 @@ Only **crafting** recipes render — shaped and shapeless. An id that resolves t
   },
   "badges": [
     {
-      "type": "origins:crafting_recipe",
+      "type": "apoli:crafting_recipe",
       "sprite": "origins:textures/gui/badge/recipe.png",
       "recipe": "my_pack:sea_bread",
       "prefix": "Only you can make this:"

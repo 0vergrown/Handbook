@@ -18,7 +18,7 @@ Field | Type | Default | Description
 `speed` | [Float](/docs/datapack/data-types/float), [Expression](/docs/datapack/data-types/expression) or [Vector](/docs/datapack/data-types/vector) | `0.0` | A number is vanilla's random speed multiplier — every particle flies off in a random direction at up to that speed. A **vector** instead gives every particle that exact velocity, which is the version you want when the particles should go somewhere. Read through `space`.
 `velocity_x`, `velocity_y`, `velocity_z` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | `0` | The same explicit velocity, written per axis. Takes priority over a vector `speed`. Read through `space`.
 `space` | [Space](/docs/datapack/data-types/space) | `world` | How `offset_*`, `spread` and the velocity are read. `world` uses the world axes; `local` is relative to the entity's facing, so `offset_z: 2` is two blocks in front of them and `velocity_z: 0.5` fires the particles the way they are looking. With `model_part` set and no `space` written, both are read in the **part's own frame** instead — see below.
-`model_part` | [String](/docs/datapack/data-types/string) | _optional_ | Anchor the particles to a body part instead of the entity's feet, and read `offset_*` and the velocity along that part. See [Particles on a body part](#particles-on-a-body-part) for the names.
+`model_part` | [Body Part](/docs/datapack/data-types/body-part) | _optional_ | Anchor the particles to a body part instead of the entity's feet, and read `offset_*` and the velocity along that part. See [Particles on a body part](#particles-on-a-body-part) for the names.
 `force` | Boolean | `false` | If set to `true`, the specified particle type that will be spawned can be seen from a far distance.
 `spread` | [Float](/docs/datapack/data-types/float), [Vector](/docs/datapack/data-types/vector) or [Expression](/docs/datapack/data-types/expression) | `{"x": 0.5, "y": 0.5, "z": 0.5}` | The size of the volume the particles scatter through. A single number is the same figure on all three axes; a vector is per axis. Every component may be an expression. Read through `space` like the offset is, so `space: "local"` with `{"x": 0, "y": 0, "z": 3}` draws a line running away from the entity's face rather than along world south.
 `offset_x` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | `0.0` | The offset of where the particle will be centered in the X axis.
@@ -67,14 +67,25 @@ Anchor | Where it sits
 -------|---------------
 `head`, `hat` | the neck pivot, at eye level
 `body` | the top of the torso
+`chest` | the front of the chest
+`back` | the middle of the back
 `right_arm`, `left_arm` | the shoulder
 `right_hand`, `left_hand`, `main_hand`, `off_hand` | the end of that arm, where a held item is
 `right_leg`, `left_leg` | the hip
 `right_foot`, `left_foot` | the end of that leg
+`arms` | halfway between the shoulders
+`hands` | halfway between the hands
+`legs` | halfway between the hips
+`feet` | halfway between the feet
+`achilles_heel` | halfway between the backs of the heels
+`upper` | the waist
+`lower` | the neck
+`whole` | the feet, on the ground
 
-`head` through `left_leg` are the same names [`apoli:model_color`](/docs/datapack/powers/model_color)
-and [`apoli:modify_model_parts`](/docs/datapack/powers/modify_model_parts) use; the hand and foot
-anchors are extras that only this field understands.
+These are the [body part](/docs/datapack/data-types/body-part) names every other body-part field
+uses. An anchor that sits between two limbs — the groups, `hands`, `feet` and `achilles_heel` — has no
+single limb to follow, so its axes are the entity's own instead: `+y` up, `+z` forward and `+x` to its
+left.
 
 The anchor tracks the pose the entity is actually in — walking and attack swings, crouching, riding,
 swimming, gliding — and the rotations, pivots and scales that
