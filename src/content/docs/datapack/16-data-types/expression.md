@@ -153,6 +153,24 @@ Outside a bi-entity context there is no second entity, so `target_` and `actor_`
 
 > Bi-entity **conditions** do not set the binding; only actions do. That keeps the per-candidate condition path free of the extra bookkeeping.
 
+### Inside a damage modifier
+
+The `amount` of an [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) on [apoli:modify_damage_dealt](/docs/datapack/powers/modify_damage_dealt), [apoli:modify_damage_taken](/docs/datapack/powers/modify_damage_taken) and [apoli:modify_projectile_damage](/docs/datapack/powers/modify_projectile_damage) is an expression, and it is bound the same way: a bare variable reads the **power holder**, `actor_` reads the attacker and `target_` reads the entity being hit. `resource(...)` reads the holder's resource; `actor_resource(...)` and `target_resource(...)` reach the other side.
+
+So on a `modify_damage_dealt`, `health` is the attacker's health and `target_health` is the victim's:
+
+```json
+{
+    "type": "apoli:modify_damage_dealt",
+    "modifier": {
+        "operation": "set_total",
+        "amount": "health"
+    }
+}
+```
+
+hits for exactly as much as the attacker currently has, and `"amount": "target_health"` hits for exactly the victim's remaining health. `nbt[...]` follows the same rule — `nbt[Health]` is the holder, `nbt[target, Health]` the other side.
+
 ### Functions that take an id
 
 A few functions take a bare `namespace:path` id as their **first** argument. Any remaining arguments are ordinary expressions.
