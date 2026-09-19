@@ -2,6 +2,7 @@
 title: "Prevent Entity Selection (Power Type)"
 description: "Prevents the player from targeting entities with their crosshair."
 navigation_title: "Prevent Entity Selection"
+aliases: ["apugli:prevent_entity_selection"]
 ---
 
 Prevents the player from targeting entities with their crosshair. Attacks and interactions pass straight through the entity to whatever is behind it, the same way [`apoli:prevent_block_selection`](/docs/datapack/powers/prevent_block_selection) works for blocks.

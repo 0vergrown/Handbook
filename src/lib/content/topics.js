@@ -44,5 +44,6 @@ export const SECTION_TITLES = {
 	'better-combat': 'Better Combat',
 	woodwalkers: 'WoodWalkers',
 	kubejs: 'KubeJS',
-	'performance-mods': 'Performance Mods'
+	'performance-mods': 'Performance Mods',
+	'advancement-triggers': 'Advancement Triggers'
 };

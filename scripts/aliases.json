@@ -250,7 +250,8 @@
 	"powers/action_over_time": [
 		"damage_over_time",
 		"burn",
-		"exhaust"
+		"exhaust",
+		"freeze"
 	],
 	"powers/action_when_hit": [
 		"self_action_when_hit",
@@ -283,6 +284,9 @@
 		"modify_trinket_slot",
 		"modify_trinket_slots"
 	],
+	"powers/modify_bounciness": [
+		"modify_block_bounciness"
+	],
 	"powers/modify_camera_submersion": [
 		"modify_camera_submersion_type"
 	],
@@ -294,6 +298,9 @@
 	"powers/modify_damage": [
 		"modify_damage_dealt",
 		"modify_damage_taken"
+	],
+	"powers/modify_fog": [
+		"blindness"
 	],
 	"powers/modify_label_render": [
 		"sync:modify_label_render"
@@ -309,6 +316,9 @@
 	],
 	"powers/prevent_accessory_unequip": [
 		"prevent_trinket_unequip"
+	],
+	"powers/prevent_entity_selection": [
+		"apugli:prevent_entity_selection"
 	],
 	"powers/prevent_shape_ability_use": [
 		"shappoli:prevent_shape_ability_use"

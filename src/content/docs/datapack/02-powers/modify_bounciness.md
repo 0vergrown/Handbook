@@ -2,6 +2,7 @@
 title: "Modify Bounciness (Power Type)"
 description: "Makes the entity bounce off blocks it lands on, and decides whether that landing still hurts."
 navigation_title: "Modify Bounciness"
+aliases: ["modify_block_bounciness"]
 ---
 
 Makes the entity bounce off blocks it lands on. The speed it hits the ground with is run through the [attribute modifiers](/docs/datapack/data-types/attribute-modifier) and becomes upward speed; a result of `0.125` or less is too small to bounce and is ignored.

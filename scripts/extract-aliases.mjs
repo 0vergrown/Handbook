@@ -59,6 +59,18 @@ function constantIds(src) {
 	return map;
 }
 
+function collectAliases(line, category, current, out) {
+	if (!current) return;
+	const re = /\.addTypeAlias\(\s*(?:Apoli\.id\(\s*"([^"]+)"\s*\)|"([^"]+)")/g;
+	let m;
+	while ((m = re.exec(line))) {
+		const id = (m[1] || m[2]).replace(/^apoli:/, '');
+		const key = `${category}/${current}`;
+		if (!out[key]) out[key] = [];
+		if (!out[key].includes(id)) out[key].push(id);
+	}
+}
+
 function scan(src, category, out) {
 	const constants = constantIds(src);
 	let current = null;
@@ -72,6 +84,8 @@ function scan(src, category, out) {
 			else if (constant && constants.has(constant[1])) current = constants.get(constant[1]);
 			else if (direct) current = direct[1] || direct[2];
 			else current = null; // id is on the next line
+			// a one-line registration carries its whole builder chain here
+			collectAliases(line, category, current, out);
 			continue;
 		}
 		// a bare `Apoli.id("x"),` line directly after a wrapped register(
@@ -82,13 +96,7 @@ function scan(src, category, out) {
 				continue;
 			}
 		}
-		const alias = /\.addTypeAlias\(\s*(?:Apoli\.id\(\s*"([^"]+)"\s*\)|"([^"]+)")/.exec(line);
-		if (alias && current) {
-			const id = (alias[1] || alias[2]).replace(/^apoli:/, '');
-			const key = `${category}/${current}`;
-			if (!out[key]) out[key] = [];
-			if (!out[key].includes(id)) out[key].push(id);
-		}
+		collectAliases(line, category, current, out);
 	}
 }
 

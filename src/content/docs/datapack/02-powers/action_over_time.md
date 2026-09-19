@@ -2,7 +2,7 @@
 title: "Action Over Time (Power Type)"
 description: "Executes an Entity Action Type on the entity that has the power within the specified interval."
 navigation_title: "Action Over Time"
-aliases: ["damage_over_time", "burn", "exhaust"]
+aliases: ["damage_over_time", "burn", "exhaust", "freeze"]
 ---
 
 Executes an Entity Action Type on the entity that has the power within the specified interval.
@@ -13,7 +13,7 @@ Type ID: `apoli:action_over_time`
 
 Field  | Type | Default | Description
 -------|------|---------|-------------
-`interval` | [Integer](/docs/datapack/data-types/integer) | `20` | Interval of ticks between subsequent executions of the specified actions. Must be a value of at least 1.
+`interval` | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | `20` | Ticks between subsequent executions of the specified actions. At least 1. An expression is re-read every time the action fires, so the gap can change while the power runs — see [A changing interval](#a-changing-interval).
 `onset_delay` | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | `0` | Ticks to wait after the condition first becomes true before `entity_action` starts running. `rising_action` still fires immediately.
 `entity_action` | Entity Action Type | _optional_ | The action to execute on the entity that has the power each interval.
 `rising_action` | Entity Action Type | _optional_ | The action to execute on the first interval tick in which the condition became true.
@@ -26,7 +26,7 @@ Field  | Type | Default | Description
 
 | Field | Type | Default | Description |
 |---|---|---|---|
-| `interval` | [Integer](/docs/datapack/data-types/integer) | `20` | Ticks between executions of this step. |
+| `interval` | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | `20` | Ticks between executions of this step. An expression is re-read each time the step fires. |
 | `entity_action` | Entity Action Type | **required** | The action this step runs. |
 | `onset_delay` | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | `0` | Ticks to wait after the condition first became true before this step starts. |
 | `condition` | [Entity Condition](/docs/datapack/entity-conditions) | _optional_ | An extra gate for this step only, checked on the ticks the step is due. |
@@ -54,7 +54,42 @@ Particles every 5 ticks, a point of damage every 20, slowness every 200 — one 
 
 The top-level `interval` stays the condition's heartbeat: it decides how often the power re-checks whether it is active, and `rising_action` / `falling_action` still fire on those edges. Steps use the last known result in between, so a step faster than the top-level `interval` can run up to one `interval` after the condition stopped being true.
 
+## A changing interval
+
+Write `interval` as an [Expression](/docs/datapack/data-types/expression) and the wait between firings is recomputed from scratch each time the action runs, so it can follow a resource, an enchantment level, the time of day — anything an expression can read.
+
+```json
+{
+  "type": "apoli:action_over_time",
+  "interval": "20 + min(enchantment[origins:water_protection, armor, sum], 8) * 6",
+  "condition": { "type": "apoli:in_rain" },
+  "entity_action": { "type": "apoli:damage", "amount": 2, "damage_type": "origins:hurt_by_water" }
+}
+```
+
+One point of damage a second bare, one every 3.4 seconds in four pieces of the enchantment — and the delay changes the moment the armour does, because the next gap is measured when the current hit lands.
+
+Two things behave differently from a fixed number, both in your favour:
+
+- **The first hit is immediate.** The power checks its condition every tick instead of once per interval, so the action runs on the tick the condition becomes true rather than up to one interval later.
+- **The gap is measured from the last firing**, not from a fixed beat, so shortening the interval speeds the power up straight away.
+
+> That per-tick check is the price. A fixed `interval` evaluates the power's `condition` once per interval; an expression evaluates it every tick. Keep the condition cheap — a fluid or weather check is nothing, a scan over nearby entities is not — or leave `interval` a plain number. Mixing the two is fine: a fixed top-level `interval` with one expression step still re-checks every tick, so the same advice applies.
+
 > The power wakes on the greatest common divisor of all the intervals involved. `20` with steps at `5` and `40` wakes every 5 ticks; `20` with a step at `7` wakes every tick, because nothing smaller divides both. Pick intervals that share factors — `5`, `10`, `20`, `40` — and the power stays as cheap as one plain `action_over_time`.
+
+## Legacy shapes
+
+Four older power ids are read as an `apoli:action_over_time`, so packs that use them keep working and get every field this power has:
+
+| Legacy id | Read as |
+| --- | --- |
+| `apoli:damage_over_time` | an `apoli:damage` entity action on an interval |
+| `apoli:burn` | an `apoli:set_on_fire` entity action on an interval |
+| `apoli:exhaust` | an `apoli:exhaust` entity action on an interval |
+| `apoli:freeze` | an [apoli:freeze](/docs/datapack/entity-actions/freeze) entity action every tick |
+
+Write the action form in new packs — it takes a duration, can be fired from anything, and can be combined with the rest of the `actions` list.
 
 ## Examples
 ```json

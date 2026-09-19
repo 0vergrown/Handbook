@@ -20,7 +20,7 @@ Each type multiplies the ones listed under **Built from**, so `apoli:base` is th
 | `apoli:hitbox_width` | Hitbox width only — collision, not what you see. | `width` |
 | `apoli:hitbox_height` | Hitbox height only. | `height` |
 | `apoli:eye_height` | Where the camera and line of sight sit inside the hitbox. | `height` |
-| `apoli:model_width` | Rendered model width only. | `width` |
+| `apoli:model_width` | Rendered model width only — every entity, players included. | `width` |
 | `apoli:model_height` | Rendered model height only. | `height` |
 | `apoli:third_person` | How far the third-person camera sits behind the entity. | `height` |
 | `apoli:motion` | Walking and swimming speed. | `base` |
@@ -32,9 +32,11 @@ Each type multiplies the ones listed under **Built from**, so `apoli:base` is th
 | `apoli:knockback` | Knockback the entity **receives**; above `1` means it is shoved less. | — |
 | `apoli:attack` | Damage the entity deals. | — |
 | `apoli:defense` | Damage the entity takes; above `1` means it takes less. | — |
-| `apoli:held_item` | Size of the item rendered in first person. | `base` |
+| `apoli:held_item` | Size of the item the entity is holding, in first and third person. | — |
 
 Because `apoli:falling` is built from 1 ÷ `apoli:motion`, a bigger entity takes more fall damage and a smaller one takes less, without you wiring anything up.
+
+`apoli:held_item` is deliberately not built from `apoli:base`. In third person the item is drawn inside the entity's model, so it already follows `apoli:model_width` / `apoli:model_height`; `apoli:held_item` is the extra multiplier on top, and it is the only thing that sizes the item in first person.
 
 ## Easings
 

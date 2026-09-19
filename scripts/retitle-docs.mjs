@@ -40,7 +40,8 @@ const SECTION_KIND = {
 	'datapack/14-fluid-conditions': ['Fluid Condition Type', 'fluid conditions'],
 	'datapack/15-meta-conditions': ['Meta Condition Type', 'meta conditions'],
 	'datapack/16-data-types': ['Data Type', null],
-	'datapack/19-commands': ['Command', null]
+	'datapack/19-commands': ['Command', null],
+	'datapack/20-advancement-triggers': ['Advancement Trigger', null]
 };
 
 // Sections that mix concept pages with several type flavours, so the kind has to
@@ -73,7 +74,8 @@ const PAGE_KIND = {
 		badge_sprite: ['Badge Type', null],
 		badge_tooltip: ['Badge Type', null],
 		impact: ['Entity Condition Type', null],
-		impact_bientity: ['Bi-Entity Condition Type', null]
+		impact_bientity: ['Bi-Entity Condition Type', null],
+		chose_origin: ['Advancement Trigger', null]
 	},
 	'compat/02-simple-voice-chat': {
 		action_on_reply: ['Power Type', 'powers'],

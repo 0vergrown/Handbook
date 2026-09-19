@@ -38,6 +38,36 @@ Type ID: `apoli:fire_projectile`
 | `tick_bientity_action`                | Bi-entity Action       | *optional* | If specified, the bi-entity action with the projectile owner as the actor, and the projectile as the target that is run each tick of the projectile's lifespan.                  |
 | `projectile_action`                   | Entity Action Type     | _optional_ | If specified, this entity action will be executed on the projectile or entity that will be launched.                                                                             |
 | `shooter_action`                      | Entity Action Type     | _optional_ | If specified, this entity action will be executed on the entity firing the projectile.                                                                                           |
+| `reflective`                          | [Boolean](/docs/datapack/data-types/boolean)    | `false`    | When `true`, the projectile bounces off blocks instead of stopping on them. See [Bouncing off walls](#bouncing-off-walls).                                                       |
+| `max_bounces`                         | [Integer](/docs/datapack/data-types/integer)    | `4`        | How many times a `reflective` projectile may bounce before the next block hit stops it. `-1` bounces forever, which needs `max_distance` or a `tick_bientity_action` to end the shot. |
+| `bounce_speed`                        | [Float](/docs/datapack/data-types/float)      | `1.0`      | The fraction of its speed the projectile keeps after each bounce. `1.0` loses nothing, `0.6` is a rubber ball, values above `1` accelerate it.                                  |
+| `bientity_action_on_bounce`           | Bi-entity Action       | *optional* | If specified, the bi-entity action to execute with the projectile owner as the actor and the projectile as the target every time it bounces.                                     |
+
+## Bouncing off walls
+
+`reflective` turns a block hit into a rebound: the projectile's velocity is mirrored through the face it struck, scaled by `bounce_speed`, and it carries on flying. Entity hits are unaffected — a reflective projectile still hits the first entity it reaches, subject to `bientity_condition`.
+
+Each bounce still runs `block_action_on_hit` (honouring `block_condition`), so a bouncing shot can leave a mark on every wall it kisses. `bientity_action_on_miss` is held back until the projectile actually stops, so "it missed" means what it says.
+
+Once `max_bounces` is used up the next block hit ends the shot normally. Give a forever-bouncing projectile (`max_bounces: -1`) a `max_distance` so it cannot outlive the player who fired it.
+
+```json
+{
+  "type": "apoli:fire_projectile",
+  "texture_location": "example:textures/entity/bouncy_orb.png",
+  "speed": 1.2,
+  "reflective": true,
+  "max_bounces": 6,
+  "bounce_speed": 0.85,
+  "max_distance": 64,
+  "bientity_action_on_bounce": {
+    "type": "apoli:play_sound",
+    "sound": "minecraft:entity.slime.squish"
+  }
+}
+```
+
+> `bounce_speed` above `1.0` compounds — at `1.3` a projectile is travelling nearly four times its launch speed after six bounces, fast enough to tunnel through a one-block wall between ticks. Pair it with a low `max_bounces`.
 
 ## Examples
 
