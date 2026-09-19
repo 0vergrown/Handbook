@@ -78,6 +78,37 @@ Two things behave differently from a fixed number, both in your favour:
 
 > The power wakes on the greatest common divisor of all the intervals involved. `20` with steps at `5` and `40` wakes every 5 ticks; `20` with a step at `7` wakes every tick, because nothing smaller divides both. Pick intervals that share factors — `5`, `10`, `20`, `40` — and the power stays as cheap as one plain `action_over_time`.
 
+## Gating an expensive condition
+
+Because `interval` is how often the condition is re-checked, this power is also the way to stop an expensive condition from being tested every tick. Put the expensive condition here, write a resource on the edges, and let the costly power read the resource:
+
+```json
+{
+  "type": "apoli:action_over_time",
+  "interval": 10,
+  "condition": {
+    "type": "apoli:block_in_radius",
+    "radius": 5,
+    "shape": "sphere",
+    "block_condition": { "type": "apoli:in_tag", "tag": "minecraft:campfires" }
+  },
+  "rising_action": {
+    "type": "apoli:modify_resource",
+    "resource": "mypack:near_smoke",
+    "modifier": { "operation": "set_base", "value": 1 }
+  },
+  "falling_action": {
+    "type": "apoli:modify_resource",
+    "resource": "mypack:near_smoke",
+    "modifier": { "operation": "set_base", "value": 0 }
+  }
+}
+```
+
+Anything that needs the answer now tests `{"type": "apoli:resource", "resource": "mypack:near_smoke", "comparison": "==", "compare_to": 1}`, which costs nothing. That matters most for [apoli:shader](/docs/datapack/powers/shader), whose condition Apoli re-resolves once per player every tick.
+
+> The trade is latency: the answer can be up to one `interval` out of date. Pick the interval from how quickly the thing you are watching can change.
+
 ## Legacy shapes
 
 Four older power ids are read as an `apoli:action_over_time`, so packs that use them keep working and get every field this power has:

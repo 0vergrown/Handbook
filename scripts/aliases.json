@@ -81,6 +81,10 @@
 		"change_stat",
 		"set_stat"
 	],
+	"entity actions/print": [
+		"log",
+		"logger"
+	],
 	"entity actions/radial_menu": [
 		"sync:radial_menu"
 	],

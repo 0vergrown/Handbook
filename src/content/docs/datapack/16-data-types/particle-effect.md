@@ -44,7 +44,9 @@ A red dust particle at double size.
 
 A block particle that uses the Ice texture.
 
-> A legacy `params` string (`{"type": "minecraft:dust", "params": "0.92 0.31 0.31 2"}`) is still accepted and parsed as a `/particle` command argument, but the fields above are the supported form.
+> A `params` string (`{"type": "minecraft:dust", "params": "0.92 0.31 0.31 2"}`) is parsed as a `/particle` command argument, and the argument syntax is **not the same on both versions**. On 1.20.1 it is the space-separated form shown here; on 1.21.1 the game reads it as SNBT using the same field names as the object form, so a space-separated string cannot be read there and no particle is spawned. Write the fields out instead — the object form above is read identically on every version.
+
+> A particle Apoli cannot build is named in the log the first time it is used, and nothing is spawned where it is used. If a power that should emit particles is silent, that line is the first place to look.
 
 ## Apoli's own particle
 
