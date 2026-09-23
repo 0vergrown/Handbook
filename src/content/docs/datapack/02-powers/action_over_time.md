@@ -67,7 +67,7 @@ Write `interval` as an [Expression](/docs/datapack/data-types/expression) and th
 }
 ```
 
-One point of damage a second bare, one every 3.4 seconds in four pieces of the enchantment — and the delay changes the moment the armour does, because the next gap is measured when the current hit lands.
+Two damage a second bare, the same two every 3.4 seconds in four pieces of the enchantment — and the delay changes the moment the armour does, because the next gap is measured when the current hit lands.
 
 Two things behave differently from a fixed number, both in your favour:
 

@@ -49,7 +49,7 @@ const ORIGINS_TYPES = new Set([
 // Badge ids collide with core Apoli power ids (`tooltip`), so they only count
 // as Origins types on the pages that document badges.
 const BADGE_TYPES = new Set(['sprite', 'tooltip', 'keybind', 'crafting_recipe']);
-const BADGE_PAGES = /18-origins\/(05-badge-types|01-guide\/03-badges)/;
+const BADGE_PAGES = /18-origins\/(0\d-badge-types|01-guide\/03-badges)/;
 // The page that explains the alias has to be able to show both spellings.
 const NAMESPACE_EXEMPT = /18-origins\/01-guide\/01-overview\.md$/;
 

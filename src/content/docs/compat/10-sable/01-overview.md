@@ -1,6 +1,6 @@
 ---
 title: Sable
-description: How apoli:phasing and ropes behave on blocks that Sable has assembled into a moving sub-level.
+description: How apoli:phasing, apoli:walk_on_fluid and ropes behave with Sable installed.
 ---
 
 [Sable](https://github.com/ryanhcode/sable) turns a region of blocks into a **sub-level**: the
@@ -73,6 +73,22 @@ collision context**. There was no entity in the question, so phasing never got a
 
 With Sable installed, Apoli scopes the moving entity across its own movement and answers the
 context-free question the same way it answers the vanilla one.
+
+### Walking on fluid still holds you up
+
+[`apoli:walk_on_fluid`](/docs/datapack/powers/walk_on_fluid) does not add a shape of its own. It
+answers a question vanilla asks the fluid block — *can the entity colliding with you stand on this
+fluid?* — and a source block that hears "yes" hands back a solid top surface to walk on.
+
+Sable replaces vanilla's collision context for every entity in the world, not just the ones near an
+assembled structure, and its version reads the fluid **above** the block where vanilla reads the
+block's own fluid. An ocean surface has air above it, so the answer comes back "no" and the surface
+stops existing. That is worse than simply falling in: `walk_on_fluid` also puts the holder on land
+movement rather than swimming, so they sink to the seabed and cannot swim back up.
+
+With Sable installed, Apoli re-asks the question the vanilla way whenever a source fluid block would
+otherwise return nothing, and the surface is solid again. Anything else that stands on fluid —
+striders on lava, for instance — is fixed by the same hook.
 
 ## What still differs on a sub-level
 

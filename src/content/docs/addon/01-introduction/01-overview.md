@@ -13,7 +13,7 @@ This side of the docs is for mod authors writing an **Apoli addon**. Origins is 
 | --- | --- |
 | Combine existing behaviours | [Data pack](/docs/datapack) |
 | A new power *type* with custom logic | `PowerType` subclass |
-| A new action or condition | `EntityAction`, `EntityCondition`, … factories |
+| A new action or condition | An `ActionType` / `ConditionType` implementation |
 | A new [data type](/docs/datapack/introduction/data-types) usable from JSON | A `Codec` + registration |
 | Compat with another mod | A gated compat module |
 
@@ -67,8 +67,8 @@ Then declare it in `fabric.mod.json` (or the NeoForge equivalent) so the game en
 ## Next
 
 - [Getting started](/docs/addon/introduction/getting-started) — set up a project and register your first type.
+- [Cookbook](/docs/addon/cookbook/overview) — worked answers to the things people actually ask.
 - [Registering power types](/docs/addon/api/registering-power-types) — the core of an addon.
-- [Contexts](/docs/addon/api/contexts) — how you reach the entity, level and target.
 - [Performance](/docs/addon/systems/performance) — the rules for code on a live server.
 
 ### Reference map
@@ -80,10 +80,22 @@ Then declare it in `fabric.mod.json` (or the NeoForge equivalent) so the game en
 | Contexts | [Contexts](/docs/addon/api/contexts) |
 | Legacy JSON | [Aliasing](/docs/addon/api/aliasing) |
 | Custom value types | [Custom data types](/docs/addon/api/data-types) |
+| Origins from Java | [The Origins API](/docs/addon/api/origins-api) |
 | Where powers live | [The power container](/docs/addon/systems/power-container) |
+| Detecting & granting powers | [Reading powers](/docs/addon/systems/reading-powers) |
 | Saved state | [Aux & persistence](/docs/addon/systems/aux-and-persistence) |
 | Client sync | [Networking](/docs/addon/systems/networking) |
 | Math fields | [Expressions](/docs/addon/systems/expressions) |
 | Hot-path rules | [Performance](/docs/addon/systems/performance) |
 | Other-mod support | [Compatibility](/docs/compat/writing-compat/gated-modules) |
 | Loader/version gaps | [Loaders & versions](/docs/addon/loaders/per-loader) |
+
+### Worked recipes
+
+| Scenario | Recipe |
+| --- | --- |
+| Detect, grant, revoke or suppress a power | [Powers on an entity](/docs/addon/cookbook/powers-on-an-entity) |
+| Get an origin's powers, or a player's origin | [Origins from Java](/docs/addon/cookbook/origins-from-java) |
+| Write an action in any flavour | [Writing actions](/docs/addon/cookbook/writing-actions) |
+| Write a condition in any flavour | [Writing conditions](/docs/addon/cookbook/writing-conditions) |
+| Mixin into vanilla without conflicts | [Hooking the game](/docs/addon/cookbook/hooking-the-game) |

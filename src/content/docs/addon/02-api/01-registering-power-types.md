@@ -39,16 +39,33 @@ public void onAdded(ResourceLocation id, Cfg cfg, PowerContainer holder, Resourc
 
 @Override
 public void onRemoved(ResourceLocation id, Cfg cfg, PowerContainer holder, ResourceLocation source) {
-    // undo it — remember a power can be granted by more than one source
+    if (holder.hasPower(id)) return;   // another source still holds it
+    // now it is really gone — undo the effect
 }
+
+@Override
+public void onSuppressed(ResourceLocation id, Cfg cfg, PowerContainer holder) { }
+@Override
+public void onUnsuppressed(ResourceLocation id, Cfg cfg, PowerContainer holder) { }
 
 @Override
 public void tick(ResourceLocation id, Cfg cfg, PowerContainer holder) {
     // runs every tick while the power is active
 }
+
+@Override
+public boolean ticksNonLivingEntities() {
+    return true;   // default false — opt in to ticking on projectiles, items, armour stands
+}
 ```
 
-> `tick` is a **hot path** — it runs every tick for every holder of the power. Don't allocate, don't do registry lookups, don't stream. Cache anything expensive. A careless `tick` scales straight into server lag.
+The full set is `onAdded`, `onRemoved`, `onSuppressed`, `onUnsuppressed`, `tick` and `tickStored`, plus the `readResource` / `writeResource` family for types that behave like a [resource](/docs/datapack/powers/resource). Override only what you need; every one has a no-op default.
+
+> **`tick` is a hot path.** It runs every tick for every holder of the power. Don't allocate, don't do registry lookups, don't stream, don't build a `ResourceLocation`. A careless `tick` scales straight into server lag.
+
+> **`onAdded` does not fire on login.** It runs from `addPower` only, on the transition to the first source — a container loaded from NBT fills itself through its codec and never passes through it. Any `static` set or map you populate in `onAdded` is therefore **empty for every player after a restart**: it works in the session the power was granted in and is dead thereafter. Keep per-entity state on the [container](/docs/addon/systems/power-container#auxiliary-data), and derive "everyone who has this power" from `PoweredEntities.forEach(...)`, which is maintained on load as well.
+
+> **Suppression does not undo `onAdded`.** A suppressed power keeps whatever `onAdded` applied unless you implement `onSuppressed` to take it back down. If your type adds an attribute modifier or registers a render flag, it needs both hooks.
 
 ## Registering it
 

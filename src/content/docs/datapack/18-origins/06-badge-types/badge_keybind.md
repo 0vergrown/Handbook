@@ -6,7 +6,7 @@ navigation_title: "Keybind"
 
 An icon in the origin-selection screen whose hover text has the player's **actual bound key** substituted into it, so an active power advertises the right key even after the player rebinds it.
 
-Type ID: `apoli:keybind` — a badge type, and the one an inline badge entry defaults to when it has no `type`.
+Type ID: `origins:keybind` — a badge type, and the one an inline badge entry defaults to when it has no `type`.
 
 > **Needs the Origins mod.** Badges are an Origins concept; core Apoli has no equivalent.
 
@@ -14,7 +14,7 @@ Type ID: `apoli:keybind` — a badge type, and the one an inline badge entry def
 
 | Field | Type | Default | Purpose |
 | --- | --- | --- | --- |
-| `sprite` | [Identifier](/docs/datapack/data-types/identifier) | _required_ | Full path to the texture to draw, e.g. `origins:textures/gui/badge/active.png`. |
+| `sprite` | [Identifier](/docs/datapack/data-types/identifier) | _required_ | Full path to the texture to draw, e.g. `origins:textures/gui/badge/isaacfanta/active.png`. |
 | `text` | [String](/docs/datapack/data-types/string) | _required_ | A **translation key**, not a literal. Its first argument (`%s`) is filled with the bound key name. |
 | `key` | [String](/docs/datapack/data-types/string) | `key.apoli.primary_active` | Which [key](/docs/datapack/data-types/key) to report. Match it to the power's own `key`. |
 
@@ -33,8 +33,8 @@ The power and its badge, bound to the same key:
   "entity_action": { "type": "apoli:add_velocity", "y": 1.0 },
   "badges": [
     {
-      "type": "apoli:keybind",
-      "sprite": "origins:textures/gui/badge/active.png",
+      "type": "origins:keybind",
+      "sprite": "origins:textures/gui/badge/isaacfanta/active.png",
       "text": "badge.my_pack.leap",
       "key": "key.apoli.primary_active"
     }

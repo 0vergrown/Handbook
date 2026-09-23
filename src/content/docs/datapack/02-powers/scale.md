@@ -33,6 +33,20 @@ Twice as big while the power is held:
 }
 ```
 
+Several scales at once — every type in the list gets the same factor, measured against its own current
+value, so this makes the model five times bigger in every direction and leaves the hitbox alone:
+
+```json
+{
+    "type": "apoli:scale",
+    "scale_types": [
+        "apoli:model_width",
+        "apoli:model_height"
+    ],
+    "scale": 5
+}
+```
+
 Shrink as you lose health, using an expression:
 
 ```json

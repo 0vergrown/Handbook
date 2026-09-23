@@ -20,7 +20,25 @@ Type ID: `apoli:scale`
 
 `scale_type` is accepted as a spelling of `scale_types`.
 
+Every type in the list gets the **same** operation and the same `scale`, each measured against its own
+current value. They are independent: `apoli:model_width` and `apoli:model_height` at `5` makes a model
+five times bigger in every direction, while `apoli:model_height` alone stretches it upwards only.
+
 ## Examples
+
+Five times bigger, model only — the hitbox is untouched:
+
+```json
+{
+    "type": "apoli:scale",
+    "scale_types": [
+        "apoli:model_width",
+        "apoli:model_height"
+    ],
+    "operation": "set",
+    "scale": 5
+}
+```
 
 Shrink to a quarter over two seconds:
 

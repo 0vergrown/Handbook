@@ -88,6 +88,8 @@ On resource (re)load, the log prints `Loaded N custom model(s) for custom_model_
 
 Deliberately off-pivot bones still work, and are the right call for anything that isn't a limb: an aura ring pivoted at the feet, or a floating orb pivoted at the head, will orbit the player instead of tracking a joint.
 
+A bone follows the body part as it is actually posed, so a resource pack that replaces the player model through [Entity Model Features](/docs/compat/custom-entity-models) — Fresh Animations and the like — carries the model with it.
+
 Names are matched loosely, so you rarely have to rename anything Blockbench gave you. Case, spaces, `_` and `-` are ignored (`Head`, `RightArm` and `right arm` all work), and these spellings bind to the same body part:
 
 | Body part | Also accepted |

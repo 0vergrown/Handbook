@@ -6,7 +6,7 @@ navigation_title: "Sprite"
 
 The simplest [badge](/docs/datapack/origins/badges): an icon next to the power in the origin-selection screen, with no hover text at all.
 
-Type ID: `apoli:sprite` — a badge type.
+Type ID: `origins:sprite` — a badge type.
 
 > **Needs the Origins mod.** Badges are an Origins concept; core Apoli has no equivalent.
 
@@ -25,7 +25,7 @@ Inline on a power:
   "type": "apoli:swimming",
   "badges": [
     {
-      "type": "apoli:sprite",
+      "type": "origins:sprite",
       "sprite": "my_pack:textures/gui/badge/water.png"
     }
   ]
@@ -36,7 +36,7 @@ As a standalone badge at `data/my_pack/badges/aquatic.json`, referenced by id fr
 
 ```json
 {
-  "type": "apoli:sprite",
+  "type": "origins:sprite",
   "sprite": "my_pack:textures/gui/badge/water.png"
 }
 ```

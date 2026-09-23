@@ -28,7 +28,7 @@ Add a top-level `badges` array to the power file itself (`data/<namespace>/power
   "badges": [
     {
       "type": "origins:tooltip",
-      "sprite": "origins:textures/gui/badge/active.png",
+      "sprite": "origins:textures/gui/badge/isaacfanta/active.png",
       "text": "Leap into the air."
     }
   ]
@@ -62,6 +62,46 @@ Powers then reference it by id, as a plain string in their `badges` array:
 ```
 
 Use this when the same note belongs on several powers. A standalone badge that no power references shows up nowhere — defining the file is not enough.
+
+## Sprites Origins ships
+
+`sprite` is a **full texture path** — namespace, `textures/`, the folders under it, and `.png`. It is not a sprite-atlas name, and there is no implicit folder: `origins:textures/gui/badge/active.png` does not exist, because every shipped icon sits in a set folder.
+
+Origins ships two sets you can point at from any pack, no resource pack needed.
+
+### `isaacfanta` — the power-role set
+
+`origins:textures/gui/badge/isaacfanta/<name>.png`
+
+| | | | |
+| --- | --- | --- | --- |
+| `active` | `passive` | `toggle` | `holdable` |
+| `charge` | `cycle` | `swap` | `recipe` |
+| `m1` | `m2` | `bar` | `info` |
+| `star` | `extra` | `support` | `ultimate` |
+| `plus_ultra` | `arrow_up` | `increase_decrease` | |
+
+`active`, `toggle` and `recipe` are the three the [automatic badges](#automatic-badges) below use, so reusing them keeps a hand-written badge visually consistent with the free ones.
+
+### `silent` — the building-block set
+
+`origins:textures/gui/badge/silent/<folder>/<name>.png`
+
+| Folder | Names |
+| --- | --- |
+| `colors` | `black`, `blue`, `brown`, `cyan`, `dark_gray`, `green`, `light_gray`, `magenta`, `pink`, `red`, `white`, `yellow` |
+| `icons` | `armor`, `pickaxe`, `shield`, `sword` |
+| `icons/sky` | `sun`, `sun_icon`, `moon_icon`, `moon_full`, `moon_new`, `moon_first_quarter`, `moon_third_quarter`, `moon_waxing_crescent`, `moon_waxing_gibbous`, `moon_waning_crescent`, `moon_waning_gibbous` |
+| `math` | `number_0` … `number_9`, `expression_add`, `expression_subtract`, `expression_multiply`, `expression_multiply_alt`, `expression_divide`, `expression_equals` |
+| `shapes` | `shape_circle`, `shape_square`, `shape_triangle`, `shape_heart`, `star`, `arrow_up`, `arrow_down`, `arrow_left`, `arrow_right`, `triangle_up`, `triangle_down`, `triangle_left`, `triangle_right` |
+
+So a "costs 3" badge is `origins:textures/gui/badge/silent/math/number_3.png`, and a moon-phase note is `origins:textures/gui/badge/silent/icons/sky/moon_full.png`.
+
+### Your own
+
+Drop a 16×16 PNG in a resource pack at `assets/<namespace>/textures/gui/badge/<name>.png` and write `<namespace>:textures/gui/badge/<name>.png`. Any size loads, but the slot is drawn at 16×16 — anything else is scaled.
+
+> A sprite path that resolves to nothing draws the missing-texture checkerboard. The badge still works; only the icon is wrong. Check the namespace and the folder first.
 
 ## Automatic badges
 

@@ -23,6 +23,8 @@ The air bar runs backwards, at exactly vanilla's underwater rates:
 - **In rain** — the drain pauses, so a downpour keeps you going without refilling you.
 - **Water Breathing or Conduit Power** — either effect stops the drain entirely, which is what makes a potion (or [apoli:gain_air](/docs/datapack/entity-actions/gain_air)) a usable stopgap on land.
 
+An active **conduit** counts a `suffocate_outside_water` entity as being in the water, so it hands out Conduit Power to one standing dry on land anywhere in its range — vanilla only reaches players who are wet. Together with the bullet above, that turns a conduit into a base of operations: its range is 32 blocks for the smallest activating frame and 96 for a full one, and the holder can stay out of the water for as long as they stay inside it.
+
 Air set by [apoli:gain_air](/docs/datapack/entity-actions/gain_air) is respected — it simply drains away again at 1 per tick.
 
 > On 1.21 the `minecraft:aquatic` entity type tag does **not** grant underwater breathing; vanilla decides that per entity class. Adding that tag with [apoli:modify_type_tag](/docs/datapack/powers/modify_type_tag) changes what counts as an aquatic mob for *other* game rules, not whether you can breathe — use this power for breathing.

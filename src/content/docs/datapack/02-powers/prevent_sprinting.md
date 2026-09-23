@@ -1,10 +1,10 @@
 ---
 title: "Prevent Sprinting (Power Type)"
-description: "Prevents the player that has the power from sprinting."
+description: "Stops the entity that has the power from sprinting."
 navigation_title: "Prevent Sprinting"
 ---
 
-Prevents the player that has the power from sprinting.
+Stops the entity that has the power from sprinting. Every attempt to start a sprint is turned into a stop, and a sprint already in progress ends the tick the power becomes active.
 
 Type ID: `apoli:prevent_sprinting`
 
@@ -25,4 +25,6 @@ _None._
 }
 ```
 
-This example will prevent the player from sprinting if their food level is at, or below 6 hunger shanks
+This example will prevent the player from sprinting if their food level is at, or below 6 hunger shanks.
+
+> It works on any living entity, not only players, and it holds on both sides — the client never starts the sprint, and a sprint packet that arrives anyway is refused by the server.

@@ -6,7 +6,7 @@ navigation_title: "Crafting Recipe"
 
 An icon in the origin-selection screen that hovers out a **rendered crafting grid**, so a player can see the recipe an origin unlocks before choosing it.
 
-Type ID: `apoli:crafting_recipe` — a badge type.
+Type ID: `origins:crafting_recipe` — a badge type.
 
 > **Needs the Origins mod.** Badges are an Origins concept; core Apoli has no equivalent.
 
@@ -14,7 +14,7 @@ Type ID: `apoli:crafting_recipe` — a badge type.
 
 | Field | Type | Default | Purpose |
 | --- | --- | --- | --- |
-| `sprite` | [Identifier](/docs/datapack/data-types/identifier) | _required_ | Full path to the texture to draw, e.g. `origins:textures/gui/badge/recipe.png`. |
+| `sprite` | [Identifier](/docs/datapack/data-types/identifier) | _required_ | Full path to the texture to draw, e.g. `origins:textures/gui/badge/isaacfanta/recipe.png`. |
 | `recipe` | [Identifier](/docs/datapack/data-types/identifier) | _required_ | The id of the recipe to display. It is looked up at data-pack load and its grid is drawn from the real recipe. |
 | `prefix` | [Text Component](/docs/datapack/data-types/text-component) | _optional_ | A line shown above the grid. |
 | `suffix` | [Text Component](/docs/datapack/data-types/text-component) | _optional_ | A line shown below the grid. |
@@ -34,8 +34,8 @@ Only **crafting** recipes render — shaped and shapeless. An id that resolves t
   },
   "badges": [
     {
-      "type": "apoli:crafting_recipe",
-      "sprite": "origins:textures/gui/badge/recipe.png",
+      "type": "origins:crafting_recipe",
+      "sprite": "origins:textures/gui/badge/isaacfanta/recipe.png",
       "recipe": "my_pack:sea_bread",
       "prefix": "Only you can make this:"
     }
