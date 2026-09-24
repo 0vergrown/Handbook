@@ -53,3 +53,5 @@ This example will make items in the hotbar slots persist.
 This example keeps every sword wherever it sits in the inventory, and drops everything else.
 
 > The kept stacks are pulled out of the inventory just before the rest of it drops and put straight back afterwards, so they survive the death and are already in place on the respawned player. Curse of Vanishing still destroys an item first, and the `keepInventory` gamerule already keeps everything, which makes this power inert.
+
+> Grave mods respect it too: kept items stay with the player instead of going into the grave with [You're in Grave Danger](/docs/compat/youre-in-grave-danger/overview), [Gravestones](/docs/compat/gravestones/overview) and the [GraveStone Mod](/docs/compat/gravestone-mod/overview).

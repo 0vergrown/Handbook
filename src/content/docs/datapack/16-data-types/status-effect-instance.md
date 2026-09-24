@@ -13,7 +13,7 @@ An [Object](/docs/datapack/data-types/object) used to define a status effect wit
 ## Fields
 Field  | Type | Default | Description
 -------|-----|---------------|-------------
-`effect` | [Identifier](/docs/datapack/data-types/identifier) | | The identifier of the status effect. _Alias: `id`._
+`effect` | [Identifier](/docs/datapack/data-types/identifier) | | The identifier of the status effect. [Custom status effects](/docs/datapack/introduction/custom-status-effects) from a data pack work here too. _Alias: `id`._
 `duration` | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | `100` | Determines the duration of the status effect (in ticks). An Expression is evaluated against the entity the effect is applied to, at application time.
 `amplifier` | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | `0` | Determines the strength of the status effect (0 being level 1). Accepts an Expression like `duration`.
 `is_ambient` | [Boolean](/docs/datapack/data-types/boolean) | `false` | Determines whether the particle effects of the status effect is less noticeable. _Alias: `ambient`._

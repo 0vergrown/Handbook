@@ -37,7 +37,7 @@ Layers live in `data/<namespace>/origin_layers/`.
 | `missing_description` | string | `""` | Translation key for that placeholder's description. |
 | `default_origin` | identifier | — | Fallback for players this layer offers no choice to. |
 | `auto_choose` | boolean | `false` | Skip the screen when the layer offers exactly one choosable origin. |
-| `hidden` | boolean | `false` | Hide the layer from the origin-viewing screen. |
+| `hidden` | boolean | `false` | Hide the layer from the origin-viewing screen. A hidden layer's origin is also left off [grave inscriptions](/docs/addon/api/grave-inscriptions). |
 | `revalidate` | boolean | = `auto_choose` | Take the origin back when its group's condition stops being true — see [Keeping vs. offering](#keeping-vs-offering). |
 | `swappable` | boolean or object | `false` | Make this layer a *pool* the player can temporarily swap their main origin for, rather than a layer they choose in — see [Swappable layers](/docs/datapack/origins/swapping). |
 | `random` | object | — | Random-roll settings — see [Randomised layers](#randomised-layers). |

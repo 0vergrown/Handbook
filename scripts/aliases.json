@@ -348,5 +348,9 @@
 	"powers/simple": [
 		"dummy",
 		"nothing"
+	],
+	"powers/sprinting": [
+		"force_sprint",
+		"forced_sprinting"
 	]
 }

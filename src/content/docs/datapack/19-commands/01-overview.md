@@ -56,3 +56,5 @@ Every command returns a count so it composes with `/execute store`:
 execute store result score @s power_count run power has @s
 execute if entity @a[origin=example:phoenix] run say someone is a phoenix
 ```
+
+It works the other way round too: `/execute store result resource` and `/execute store success resource` write any command's result straight into a resource. See [Resource](/docs/datapack/commands/resource#storing-with-execute).

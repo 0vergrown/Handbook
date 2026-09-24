@@ -20,6 +20,8 @@ A [String](/docs/datapack/data-types/string) representing a mathematical express
 | [Model Part Transformation](/docs/datapack/data-types/model-part-transformation) | `value`, and each keyframe's `value` |
 | [apoli:entity_in_radius](/docs/datapack/entity-conditions/entity_in_radius), [apoli:block_in_radius](/docs/datapack/entity-conditions/block_in_radius) | `compare_to` |
 | [apoli:change_resource](/docs/datapack/entity-actions/change_resource) | `change` |
+| [apoli:cooldown](/docs/datapack/item-actions/cooldown) (item action) | `ticks` (evaluated against the player holding the item) |
+| [apoli:aggro_at](/docs/datapack/bientity-actions/aggro_at) | `duration` (evaluated against the actor) |
 | Entity actions | `add_velocity` (`x`/`y`/`z`), `damage` (`amount`), `heal`, `exhaust`, `feed` (`food`/`saturation`), `gain_air`, `add_xp` (`points`/`levels`), `set_on_fire` (`duration`) |
 
 ## Operators

@@ -46,3 +46,5 @@ This example will allow the player to open an inventory similar to a Hopper; con
 ```
 
 This example will allow the player to open a 9-slots inventory of which only non-food items will drop on death.
+
+> With a grave mod installed, the items that would drop go into the grave instead: [You're in Grave Danger](/docs/compat/youre-in-grave-danger/overview), [Gravestones](/docs/compat/gravestones/overview) and the [GraveStone Mod](/docs/compat/gravestone-mod/overview). With the first two, collecting the grave puts them back into this power.

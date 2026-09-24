@@ -42,6 +42,8 @@ export const SECTION_TITLES = {
 	'writing-compat': 'Writing Compat',
 	'pufferfishs-skills': "Pufferfish's Skills",
 	'better-combat': 'Better Combat',
+	'youre-in-grave-danger': "You're in Grave Danger",
+	'gravestone-mod': 'GraveStone Mod',
 	woodwalkers: 'WoodWalkers',
 	kubejs: 'KubeJS',
 	'performance-mods': 'Performance Mods',
