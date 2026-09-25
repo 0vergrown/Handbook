@@ -57,11 +57,39 @@ A group names several limbs at once. In [apoli:modify_model_parts](/docs/datapac
 
 Each pivot is the joint that holds the group to the rest of the body, so a rotated group stays attached: `upper` swings around the waist the legs hang from, and `lower` around the neck the head sits on. `whole` turns around the feet, which keeps the model standing on the ground when it is scaled. A transformation can move the pivot with its `pivot` field — see [Moving a group](/docs/datapack/data-types/model-part-transformation#moving-a-group).
 
+## Wings and Ears features
+
+These name the extra geometry that [Icarus](/docs/compat/icarus/overview) and [Ears](/docs/compat/skin-rendering/overview) draw on a player. They only do anything with that mod installed, and nothing at all without it.
+
+| Name | Also accepts | Covers |
+| --- | --- | --- |
+| `right_wing` / `left_wing` | `wing_right` / `wing_left` | That Icarus wing, and the wing on that side of an Ears wing pair. |
+| `wings` | | Both Icarus wings and every Ears wing, including a single or flat one. |
+| `ears` | | Every ear Ears draws. |
+| `right_ear` / `left_ear` | `ear_right` / `ear_left` | That ear, in the Ears ear modes that draw each ear on its own. |
+| `horns` | `horn` | The Ears horn. |
+| `snout` | | The Ears snout. |
+| `tail` | | The Ears tail. |
+| `claws` | | All four Ears claws. |
+| `right_arm_claw` / `left_arm_claw` | `claw_right_arm` / `claw_left_arm` | The claw on that arm. |
+| `right_leg_claw` / `left_leg_claw` | `claw_right_leg` / `claw_left_leg` | The claw on that leg. |
+| `ears_chest` | | The chest piece Ears draws. |
+| `ears_cape` | | The cape Ears draws from the skin file. |
+
+They work in `model_part` of [apoli:modify_model_parts](/docs/datapack/powers/modify_model_parts) and `part` of [apoli:model_color](/docs/datapack/powers/model_color):
+
+- **Icarus wings** are real model parts, so every transformation type applies — `pitch`, `yaw` and `roll` swing the wing about its root on the back, the scales grow it from there, and `visible` / `hidden` take it away. This covers wings from an equipped item and from [apoli:wings](/docs/compat/icarus/wings) alike.
+- **Ears features** are drawn by Ears itself, not as model parts, so they answer to `visible` and `hidden` and to colour, but not to rotation, scale or pivot. They already follow the part they hang from: bend `head` and the ears and horns go with it.
+
+Ears draws both ears as one shape in its `above`, `cross`, `tall` and `tall_cross` ear modes. `right_ear` and `left_ear` cannot reach that shape on their own; `ears` does, and so does hiding both `right_ear` and `left_ear` at once. Wings work the same way: a single or flat Ears wing answers to `wings`, or to hiding both `right_wing` and `left_wing`.
+
+None of these are part of a group — `whole` and `upper` leave wings and Ears features alone. They have no hitbox, so the [apoli:body_part](/docs/datapack/damage-conditions/body_part) condition refuses them, and particles and `body_parts` have nothing to attach to.
+
 ## Other names
 
-A name that is not in the lists above is passed through unchanged. That is how the extra limbs of the built-in models are reached — `right_second_arm` on `apoli:four_arms`, `right_second_leg` on `apoli:stinkfly`, `horse_body` on `apoli:centaur` — and how a minion's `main`, `flat2` and `flat3` parts are named in `body_parts`. On those models the groups pick up the extra limbs too: `arms` covers all four arms of `apoli:four_arms`, and `legs` covers all four legs of `apoli:stinkfly`.
+A name that is not in the lists above is passed through unchanged, and so are the wing and Ears names — `tail` reaches `apoli:centaur`'s horse tail as well as an Ears tail. That is how the extra limbs of the built-in models are reached — `right_second_arm` on `apoli:four_arms`, `right_second_leg` on `apoli:stinkfly`, `horse_body` on `apoli:centaur` — and how a minion's `main`, `flat2` and `flat3` parts are named in `body_parts`. On those models the groups pick up the extra limbs too: `arms` covers all four arms of `apoli:four_arms`, and `legs` covers all four legs of `apoli:stinkfly`.
 
-The [apoli:body_part](/docs/datapack/damage-conditions/body_part) condition only accepts the names on this page, and fails to load with an unknown one, because it can only ever narrow down which hits it matches.
+The [apoli:body_part](/docs/datapack/damage-conditions/body_part) condition only accepts the limbs, layers, regions and groups on this page, and fails to load with an unknown name or a wing or Ears name, because it can only ever narrow down which hits it matches.
 
 ## Example
 

@@ -26,7 +26,7 @@ Field  | Type | Default | Description
 
 Field  | Type | Default | Description
 -------|------|---------|-------------
-`part` | [Body Part](/docs/datapack/data-types/body-part) | — | The model part to tint: a limb such as `head` or `right_arm`, a skin layer such as `jacket`, or a group such as `arms`, `legs`, `upper`, `lower` or `whole`. `head` also covers the hat layer, `body` covers the jacket, each arm covers its sleeve and each leg covers its trousers. Where two entries cover the same part, their colours multiply.
+`part` | [Body Part](/docs/datapack/data-types/body-part) | — | The model part to tint: a limb such as `head` or `right_arm`, a skin layer such as `jacket`, or a group such as `arms`, `legs`, `upper`, `lower` or `whole`. `head` also covers the hat layer, `body` covers the jacket, each arm covers its sleeve and each leg covers its trousers. It can also name an Icarus wing or an Ears feature — `left_wing`, `wings`, `horns`, `tail` and the rest of the [wing and Ears names](/docs/datapack/data-types/body-part#wings-and-ears-features). Where two entries cover the same part, their colours multiply.
 `red` | Float | `1.0` | Red multiplier for this part. Range: 0.0 - 1.0.
 `green` | Float | `1.0` | Green multiplier for this part. Range: 0.0 - 1.0.
 `blue` | Float | `1.0` | Blue multiplier for this part. Range: 0.0 - 1.0.

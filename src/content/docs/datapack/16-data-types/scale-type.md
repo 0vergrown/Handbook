@@ -33,10 +33,12 @@ Each type multiplies the ones listed under **Built from**, so `apoli:base` is th
 | `apoli:attack` | Damage the entity deals. | — |
 | `apoli:defense` | Damage the entity takes; above `1` means it takes less. | — |
 | `apoli:held_item` | Size of the item the entity is holding, in first and third person. | — |
+| `apoli:held_item_mainhand` | Size of the item in the entity's main hand only. | `held_item` |
+| `apoli:held_item_offhand` | Size of the item in the entity's off hand only. | `held_item` |
 
 Because `apoli:falling` is built from 1 ÷ `apoli:motion`, a bigger entity takes more fall damage and a smaller one takes less, without you wiring anything up.
 
-`apoli:held_item` is deliberately not built from `apoli:base`. In third person the item is drawn inside the entity's model, so it already follows `apoli:model_width` / `apoli:model_height`; `apoli:held_item` is the extra multiplier on top, and it is the only thing that sizes the item in first person.
+`apoli:held_item` is deliberately not built from `apoli:base`. In third person the item is drawn inside the entity's model, so it already follows `apoli:model_width` / `apoli:model_height`; `apoli:held_item` is the extra multiplier on top, and it is the only thing that sizes the item in first person. `apoli:held_item_mainhand` and `apoli:held_item_offhand` narrow it to one hand: a left-handed player's main-hand item is the one in their left hand, and a mob that carries its item in its mouth uses `apoli:held_item_mainhand`.
 
 ## Easings
 
@@ -54,4 +56,4 @@ Three sources multiply together:
 
 Scales are clamped to the range `0.0001`–`10000`.
 
-> When **Pehkui** is installed, Apoli hands its values to Pehkui rather than applying them itself, so the two mods agree on one size instead of multiplying each other.
+> When **Pehkui** is installed, Apoli hands its values to Pehkui rather than applying them itself, so the two mods agree on one size instead of multiplying each other. Pehkui has no per-hand type, so `apoli:held_item_mainhand` and `apoli:held_item_offhand` are still applied by Apoli, on top of the held item size Pehkui draws.

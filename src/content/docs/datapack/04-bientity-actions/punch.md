@@ -4,7 +4,7 @@ description: "Makes the actor hit the target as if it had attacked with its held
 navigation_title: "Punch"
 ---
 
-Makes the actor hit the target as if it had attacked it in melee with the item in its main hand. Unlike [`apoli:damage`](/docs/datapack/bientity-actions/damage), which deals a number you choose, this one runs the same attack the game would: the attack damage attribute, the held item's modifiers and enchantments, knockback, the sweep, sounds, and the enchantment effects that fire on hit.
+Makes the actor hit the target as if it had attacked it in melee with the item in its main hand — or its off hand, with `hand`. Unlike [`apoli:damage`](/docs/datapack/bientity-actions/damage), which deals a number you choose, this one runs the same attack the game would: the attack damage attribute, the held item's modifiers and enchantments, knockback, the sweep, sounds, and the enchantment effects that fire on hit.
 
 Type ID: `apoli:punch`
 
@@ -12,9 +12,10 @@ Type ID: `apoli:punch`
 
 Field  | Type | Default | Description
 -------|------|---------|-------------
-`stack` | [Item Stack](/docs/datapack/data-types/item-stack) | _optional_ | Punch with this item instead of whatever is in the actor's main hand. The item is held for the duration of the attack only — its attribute modifiers and enchantments count, the actor's real inventory is untouched, and the item takes no durability damage from the swap itself.
+`hand` | [Hand](/docs/datapack/data-types/hand) | `"main_hand"` | Which hand the punch is thrown with. With `"off_hand"` the attack uses the off-hand item — its damage, attribute modifiers and enchantments — and the off-hand item takes any durability cost; the actor's hands are exactly as they were afterwards.
+`stack` | [Item Stack](/docs/datapack/data-types/item-stack) | _optional_ | Punch with this item instead of whatever is in the actor's `hand`. The item is held for the duration of the attack only — its attribute modifiers and enchantments count, the actor's real inventory is untouched, and the item takes no durability damage from the swap itself.
 `damage_type` | [Identifier](/docs/datapack/data-types/identifier) | _optional_ | Deal the punch's damage under this damage type instead of `minecraft:player_attack` / `minecraft:mob_attack`. Doing so takes the direct route — the amount is still the attack damage the item would have dealt, but the knockback, sweep and on-hit enchantment effects of a real attack are skipped.
-`swing_hand` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Whether the actor visibly swings its main arm.
+`swing_hand` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Whether the actor visibly swings the arm of `hand`.
 `ignore_cooldown` | [Boolean](/docs/datapack/data-types/boolean) | `false` | Land the punch at full attack strength no matter where the actor's attack-strength cooldown currently sits.
 `reset_cooldown` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Whether the punch resets the actor's attack-strength cooldown, the way a real swing does. Set to `false` to leave the actor's own melee timing untouched.
 
@@ -42,6 +43,15 @@ The actor hits the target with whatever it is holding, for exactly what a normal
 ```
 
 The actor hits as though it were swinging a netherite axe, whether or not it owns one.
+
+```json
+"bientity_action": {
+    "type": "apoli:punch",
+    "hand": "off_hand"
+}
+```
+
+The actor strikes with whatever is in its off hand and swings its off arm — a sword there hits for sword damage, enchantments included, where a normal attack would only ever use the main hand.
 
 ```json
 {

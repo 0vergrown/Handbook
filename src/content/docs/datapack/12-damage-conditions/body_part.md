@@ -12,7 +12,7 @@ Type ID: `apoli:body_part`
 
 Field  | Type | Default | Description
 -------|------|---------|-------------
-`body_part` | [Body Part](/docs/datapack/data-types/body-part) or Array of Body Part | _any part_ | Passes when the hit landed on one of these parts. Limbs, regions such as `hands`, `chest` or `achilles_heel`, and groups such as `arms` or `upper` all work. An unknown name is a load error.
+`body_part` | [Body Part](/docs/datapack/data-types/body-part) or Array of Body Part | _any part_ | Passes when the hit landed on one of these parts. Limbs, regions such as `hands`, `chest` or `achilles_heel`, and groups such as `arms` or `upper` all work. An unknown name is a load error, and so is a [wing or Ears name](/docs/datapack/data-types/body-part#wings-and-ears-features) — those have no hitbox for a hit to land on.
 `x_min` / `x_max` | Float | `-1.0` / `1.0` | Side to side across the target's hitbox: `-1` is its right edge, `1` its left.
 `y_min` / `y_max` | Float | `0.0` / `1.0` | Bottom to top: `0` is the feet, `1` the top of the head. `0.88` always sits at eye level, so a head band starting there follows eye height on tall and short entities alike.
 `z_min` / `z_max` | Float | `-1.0` / `1.0` | Front to back: `-1` is the front, `1` the back.

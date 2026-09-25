@@ -14,7 +14,7 @@ Type ID: `apoli:modify_model_parts`
 
 Field  | Type | Default | Description
 -------|------|---------|-------------
-`transformations` | [Array](/docs/datapack/data-types/array) of [Model Part Transformation](/docs/datapack/data-types/model-part-transformation) | — | The list of edits to apply. Each entry targets one [body part](/docs/datapack/data-types/body-part) and one property — a single limb, or a group such as `arms`, `upper` or `whole` that moves as one piece.
+`transformations` | [Array](/docs/datapack/data-types/array) of [Model Part Transformation](/docs/datapack/data-types/model-part-transformation) | — | The list of edits to apply. Each entry targets one [body part](/docs/datapack/data-types/body-part) and one property — a single limb, a group such as `arms`, `upper` or `whole` that moves as one piece, or an Icarus wing or Ears feature by one of the [wing and Ears names](/docs/datapack/data-types/body-part#wings-and-ears-features).
 `override_pose` | Array of String | `[]` | Poses whose vanilla animation is thrown away before `transformations` run, so the edits start from the standing pose. Takes the same vanilla `Pose` names as [`apoli:pose`](/docs/datapack/powers/pose)'s `entity_pose`.
 `perspectives` | String OR Array of String | `["third_person"]` | Which views the transformations are drawn in: `first_person`, `third_person`, or both. See [First person and third person](#first-person-and-third-person).
 

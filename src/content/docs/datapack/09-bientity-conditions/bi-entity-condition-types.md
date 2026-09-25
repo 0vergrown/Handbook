@@ -11,6 +11,7 @@ Bi-entity Condition Types operate on a `Pair<Entity, Entity>`, or in simpler ter
 - [apoli:distance](/docs/datapack/bientity-conditions/distance)
 - [apoli:in_entity_set](/docs/datapack/bientity-conditions/in_entity_set)
 - [apoli:owner](/docs/datapack/bientity-conditions/owner)
+- [apoli:projectile_owner](/docs/datapack/bientity-conditions/projectile_owner)
 - [apoli:riding](/docs/datapack/bientity-conditions/riding)
 - [apoli:roped_together](/docs/datapack/bientity-conditions/roped_together)
 

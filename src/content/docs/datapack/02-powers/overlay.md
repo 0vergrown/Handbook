@@ -58,6 +58,24 @@ At `gui_scale_lock: 2` that ring is 96 real pixels across on every client. Lower
 
 Use it for anything that has to be a consistent physical size — a reticle, a vignette that must not swallow the screen at GUI scale 4, a frame designed against a fixed pixel grid. Leave it at `0` for HUD elements that should sit alongside the vanilla hotbar and hearts, which do follow the viewer's scale.
 
+## Animated textures
+
+An overlay texture animates the same way a block or item texture does: stack the frames vertically in one PNG and put a `.png.mcmeta` file with an `animation` section next to it. Nothing changes in the power itself.
+
+```json
+{
+  "animation": {
+    "frametime": 4
+  }
+}
+```
+
+Saved as `assets/mypack/textures/overlay/pulse.png.mcmeta` beside a 64×256 `pulse.png`, this plays its four 64×64 frames in order, each held for 4 ticks. Every vanilla `animation` option works — `frames` for a custom order or per-frame timing, `interpolate` to blend between frames, `width` and `height` for frames that are not square.
+
+Each frame counts as the whole texture: `u`, `v`, `region_width`, `region_height`, `texture_width` and `texture_height` are all measured within one frame, so a sprite sheet laid out for a still image keeps working when it becomes a frame. Like vanilla animations, frames advance on game ticks — 20 per second. A couple of seconds after an animated overlay leaves the screen it stops advancing, and it carries on from the same frame when it is shown again.
+
+> Every frame change uploads one frame to the graphics card, the same work a vanilla animated block does. A full-screen overlay with a `frametime` of `1` does that every tick, so keep large animations small in pixels or slow.
+
 ## Live textures
 
 `texture` also accepts a keyword instead of a texture id, and the game resolves it per frame against a real entity:

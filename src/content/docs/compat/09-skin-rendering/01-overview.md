@@ -12,16 +12,41 @@ This integration is **behaviour-gated and adds no types**. Nothing to enable, no
 | Apoli feature | 3D Skin Layers | Ears |
 | --- | --- | --- |
 | [`apoli:model_color`](/docs/datapack/powers/model_color) — whole model | tinted, alpha included | tinted, alpha included |
-| `apoli:model_color` — `parts` entries | tinted per matching body part | whole-model colour only |
+| `apoli:model_color` — `parts` entries | tinted per matching body part | tinted per Ears feature named in `parts` |
 | [`apoli:modify_model_parts`](/docs/datapack/powers/modify_model_parts) rotation / scale / pivot | followed | followed |
 | `apoli:modify_model_parts` `visible` | followed | followed |
 | `apoli:modify_model_parts` `hidden` | followed | — |
+| `apoli:modify_model_parts` `visible` / `hidden` on an Ears feature name | — | that feature hidden |
 | [`apoli:custom_model_render`](/docs/datapack/powers/custom_model_render) replacing the skin or model | hidden | hidden |
 | [`apoli:modify_player_model`](/docs/datapack/powers/modify_player_model) | hidden | hidden |
 | [`apoli:prevent_feature_render`](/docs/datapack/powers/prevent_feature_render) | `skin_layers_3d` | `ears`, or one feature at a time |
 | Fully transparent model (alpha 0) | hidden | hidden |
 
 A `render_as_overlay` custom model does **not** hide either mod — an overlay is drawn on top of the vanilla skin, so the extra geometry still belongs there.
+
+## Body part names
+
+Ears features have their own [body part names](/docs/datapack/data-types/body-part#wings-and-ears-features) — `ears`, `right_ear`, `left_ear`, `horns`, `snout`, `tail`, `claws` and one per claw, `wings`, `right_wing`, `left_wing`, `ears_chest` and `ears_cape`. Name one in [`apoli:model_color`](/docs/datapack/powers/model_color) `parts` to tint just that feature, or hide it with a `visible` or `hidden` transformation in [`apoli:modify_model_parts`](/docs/datapack/powers/modify_model_parts):
+
+```json
+{
+    "type": "apoli:multiple",
+    "horns": {
+        "type": "apoli:modify_model_parts",
+        "transformations": [
+            {"model_part": "horns", "type": "visible", "value": 0}
+        ]
+    },
+    "tail": {
+        "type": "apoli:model_color",
+        "parts": [
+            {"part": "tail", "red": 0.3, "green": 0.3, "blue": 1.0}
+        ]
+    }
+}
+```
+
+Hides the horns and tints the tail blue, leaving every other feature and the rest of the skin as it was. Rotation, scale and pivot transformations do nothing to an Ears feature — Ears draws them itself, following the limb they hang from.
 
 ## Feature names
 
