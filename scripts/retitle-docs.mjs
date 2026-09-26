@@ -82,6 +82,7 @@ const PAGE_KIND = {
 		action_on_sending_message: ['Power Type', 'powers'],
 		action_on_speak: ['Power Type', 'powers'],
 		action_on_speech: ['Power Type', 'powers'],
+		modify_speaking_range: ['Power Type', 'powers'],
 		voice_disabled: ['Entity Condition Type', 'entity conditions'],
 		voice_listeners: ['Entity Condition Type', 'entity conditions'],
 		voice_loudness: ['Entity Condition Type', 'entity conditions'],

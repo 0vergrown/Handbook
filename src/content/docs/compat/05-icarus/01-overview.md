@@ -9,7 +9,7 @@ This type is **registration-gated**: it only exists when Icarus is loaded. A dat
 
 ## Wings as body parts
 
-Icarus wings answer to the [body part names](/docs/datapack/data-types/body-part#wings-and-ears-features) `right_wing`, `left_wing` and `wings`, whether they come from an equipped item or from `apoli:wings`. That part is **behaviour-gated**: the names parse without Icarus and simply have nothing to act on.
+Icarus wings answer to the [body part names](/docs/datapack/data-types/body-part#wings-and-ears-features) `right_wing`, `left_wing` and `wings` — or `icarus_right_wing`, `icarus_left_wing` and `icarus_wings`, the names Figura uses for them — whether they come from an equipped item or from `apoli:wings`. That part is **behaviour-gated**: the names parse without Icarus and simply have nothing to act on.
 
 ```json
 {

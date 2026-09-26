@@ -47,7 +47,7 @@ Without `bientity_condition` this power changes one number: how far its holder h
 }
 ```
 
-Voice ranges are worked out once a tick, for each listener who holds one of these powers against each player who is actually talking, so the cost scales with conversations rather than with players. That pass is also where [apoli:modify_speaking_range](/docs/datapack/powers/modify_speaking_range) is folded in: the speaker's range is the base the listener's modifiers are applied to, so a shout heard by keen ears really does compound.
+Voice ranges are worked out once a tick, for each listener who holds one of these powers against each player who is actually talking, so the cost scales with conversations rather than with players. That pass is also where [apoli:modify_speaking_range](/docs/compat/simple-voice-chat/modify_speaking_range) is folded in: the speaker's range is the base the listener's modifiers are applied to, so a shout heard by keen ears really does compound.
 
 A power with a `bientity_condition` is skipped entirely for game sounds, because a sound has no speaker to test against — split it into two powers if you want both halves.
 

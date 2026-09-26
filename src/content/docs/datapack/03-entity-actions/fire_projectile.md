@@ -19,7 +19,7 @@ Type ID: `apoli:fire_projectile`
 | `interval`                            | [Integer](/docs/datapack/data-types/integer)    | `0`        | Ticks between consecutive shots. `0` fires the whole `count` on the same tick.                                                                                                    |
 | `start_delay`                         | [Integer](/docs/datapack/data-types/integer)    | `0`        | Ticks to wait before the first shot.                                                                                                                                             |
 | `speed`                               | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression)      | `1.5`      | The speed applied to the fired projectile.                                                                                                                                       |
-| `max_distance`                        | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression)      | `0`        | Removes the projectile once it has travelled this far, in blocks. `0` leaves it to fly until it hits something or expires.                                                        |
+| `max_distance`                        | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression)      | `0`        | Removes the projectile once it has travelled this far, in blocks — or turns it around, when `return` is set. `0` leaves it to fly until it hits something or expires.                                                        |
 | `offset_x`, `offset_y`, `offset_z`    | [Float](/docs/datapack/data-types/float) | `0` | Where the projectile spawns, relative to the shooter's eyes. Read through `space`, so `local` puts `offset_z: 1.5` a block and a half in front of wherever they are looking. |
 | `space`                               | [Space](/docs/datapack/data-types/space) | `world` | How the spawn offset is read. `local` is relative to the shooter's facing, `world` to the world axes. |
 | `divergence`                          | [Float](/docs/datapack/data-types/float)      | `1.0`      | How much each projectile fired is affected by random spread.                                                                                                                     |
@@ -42,6 +42,7 @@ Type ID: `apoli:fire_projectile`
 | `max_bounces`                         | [Integer](/docs/datapack/data-types/integer)    | `4`        | How many times a `reflective` projectile may bounce before the next block hit stops it. `-1` bounces forever, which needs `max_distance` or a `tick_bientity_action` to end the shot. |
 | `bounce_speed`                        | [Float](/docs/datapack/data-types/float)      | `1.0`      | The fraction of its speed the projectile keeps after each bounce. `1.0` loses nothing, `0.6` is a rubber ball, values above `1` accelerate it.                                  |
 | `bientity_action_on_bounce`           | Bi-entity Action       | *optional* | If specified, the bi-entity action to execute with the projectile owner as the actor and the projectile as the target every time it bounces.                                     |
+| `return`                              | [Projectile Return](/docs/datapack/data-types/projectile-return) | *optional* | Makes the projectile fly back to the shooter, like a trident with Loyalty. See [Coming back](#coming-back). |
 
 ## Bouncing off walls
 
@@ -69,6 +70,27 @@ Once `max_bounces` is used up the next block hit ends the shot normally. Give a 
 
 > `bounce_speed` above `1.0` compounds — at `1.3` a projectile is travelling nearly four times its launch speed after six bounces, fast enough to tunnel through a one-block wall between ticks. Pair it with a low `max_bounces`.
 
+## Coming back
+
+`return` turns the projectile around after it hits something, reaches `max_distance`, or has been in the air for a set time, and pulls it back to the shooter on a curve, through blocks — a boomerang. It disappears when it reaches them, and `bientity_action_on_catch` runs as it does. Only the projectile drawn from `texture_location` comes back. The fields are on [Projectile Return](/docs/datapack/data-types/projectile-return).
+
+```json
+{
+  "type": "apoli:fire_projectile",
+  "texture_location": "held_item",
+  "speed": 1.2,
+  "divergence": 0,
+  "max_distance": 12,
+  "bientity_action_on_hit": {
+    "type": "apoli:damage",
+    "amount": 5,
+    "damage_type": "minecraft:thrown"
+  },
+  "return": {
+    "speed": 2
+  }
+}
+```
 ## Examples
 
 ```json

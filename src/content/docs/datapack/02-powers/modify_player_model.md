@@ -15,8 +15,8 @@ Type ID: `apoli:modify_player_model`
 Field  | Type | Default | Description
 -------|------|---------|-------------
 `model` | [Identifier](/docs/datapack/data-types/identifier) | — | Which model to apply. Resolved against the built-in and addon-registered models first, then as a Figura avatar (see below). `apoli:vanilla` keeps the player's normal shape.
-`texture_location` | [Identifier](/docs/datapack/data-types/identifier) | the holder's own skin | Texture to draw the model with, first-person hand included.
-`model_texture_location` | [Identifier](/docs/datapack/data-types/identifier) | the model's own | Texture for the parts of a model that are **not** drawn from the player skin — the horse half of `apoli:centaur`, for instance.
+`texture_location` | [Identifier](/docs/datapack/data-types/identifier) | the model's own | Texture for the parts of a model that are **not** drawn from the player's skin — the horse half of `apoli:centaur`, for instance. The skin itself is never replaced; see [Textures](#textures).
+`model_texture_location` | [Identifier](/docs/datapack/data-types/identifier) | — | Another name for `texture_location`. When both are set, this one is used.
 `animations` | [Model Animation](/docs/datapack/data-types/model-animation) | — | Bedrock clips played on top of the model's vanilla pose.
 
 ## Built-in models
@@ -30,11 +30,11 @@ Id | What it is
 `apoli:stinkfly` | An insect stance: a two-segment abdomen, a forward-set head, and a second pair of legs that mirror the first.
 `apoli:digi_legs` | Digitigrade legs — each leg becomes a thigh, shin and paw that fold like an animal's.
 `apoli:centaur` | A centaur: the player's own head, torso and arms raised onto a four-legged horse body. The player's legs are hidden and the horse's legs walk in a trot driven by the player's own movement.
-`apoli:vanilla` | The player's ordinary model, unchanged. Use it when you only want `texture_location` or `animations`.
+`apoli:vanilla` | The player's ordinary model, unchanged. Use it when you only want `animations`.
 
 They are real player models, so the holder's own skin is drawn on them (wide and slim are both baked), and armour, held items, the cape and every vanilla animation keep working.
 
-The horse half of `apoli:centaur` is drawn from its own texture, `apoli:textures/entity/centaur/horse.png` — a standard 64 × 64 horse skin, so any horse texture drops straight in. Override it globally with a resource pack, or per power with `model_texture_location`.
+The horse half of `apoli:centaur` is drawn from its own texture, `apoli:textures/entity/centaur/horse.png` — a standard 64 × 64 horse skin, so any horse texture drops straight in. Override it globally with a resource pack, or per power with `texture_location`.
 
 The extra limbs each one adds can be targeted by name from [apoli:modify_model_parts](/docs/datapack/powers/modify_model_parts) and from the `body_parts` list of [apoli:custom_model_render](/docs/datapack/powers/custom_model_render):
 
@@ -51,23 +51,38 @@ Model | Extra part names
 
 ## Textures
 
-Leave `texture_location` out and the model wears the holder's own skin — that is what the built-in models are UV-mapped for, and it is why a player keeps their identity while transformed.
-
-Set it when the model reaches past what a 64 × 64 skin covers:
+The parts of a model that come from the player — the head, body, arms and legs of every built-in model — always wear the holder's own skin, which is why a player keeps their identity while transformed. `texture_location` paints only the parts a model adds that are **not** drawn from the skin, such as the horse half of `apoli:centaur`:
 
 ```json
 {
     "type": "apoli:modify_player_model",
-    "model": "example:chimera",
-    "texture_location": "example:textures/entity/chimera.png"
+    "model": "apoli:centaur",
+    "texture_location": "example:textures/entity/zebra_centaur.png"
 }
 ```
 
-The texture applies to the third-person model and to the first-person hand. It does **not** resize the skin layout — a model whose UVs run past 64 × 64 needs a texture that matches, and the vanilla parts of that model still read from the vanilla skin regions.
+The texture only has to cover those parts — for the centaur that is a standard 64 × 64 horse skin. Models without such parts (`apoli:vanilla`, `apoli:four_arms`, `apoli:six_arms`, `apoli:stinkfly` and `apoli:digi_legs`) have nothing for it to paint.
 
-Two powers gated on [apoli:player_model_type](/docs/datapack/entity-conditions/player_model_type) give you separate wide and slim textures, since the slim arms sample a narrower strip.
+To give the player a different skin, pair the model with an [apoli:custom_model_render](/docs/datapack/powers/custom_model_render) in `texture` mode. It paints whichever model is being drawn, extra limbs included, and `show_first_person` carries it onto the first-person hand:
 
-> A [apoli:custom_model_render](/docs/datapack/powers/custom_model_render) in `texture` mode with `render_as_overlay: false`, and an active disguise from [apoli:disguise_as](/docs/datapack/entity-actions/disguise_as), both replace the skin outright and win over `texture_location`.
+```json
+{
+    "type": "apoli:multiple",
+    "model": {
+        "type": "apoli:modify_player_model",
+        "model": "apoli:four_arms"
+    },
+    "skin": {
+        "type": "apoli:custom_model_render",
+        "texture_location": "example:textures/entity/four_armed_yeti.png",
+        "show_first_person": true
+    }
+}
+```
+
+`custom_model_render` also takes separate `wide_texture_location` and `slim_texture_location` textures, since the slim arms sample a narrower strip of the skin.
+
+> An active disguise from [apoli:disguise_as](/docs/datapack/entity-actions/disguise_as) replaces the whole appearance and wins over both.
 
 ## Animations
 

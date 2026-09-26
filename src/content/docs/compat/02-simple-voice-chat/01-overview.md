@@ -3,17 +3,19 @@ title: Simple Voice Chat
 description: Powers and conditions that react to who is talking, how loudly, and what they say.
 ---
 
-Three trigger powers and four entity conditions that react to voice activity from [Simple Voice Chat](https://modrinth.com/plugin/simple-voice-chat).
+Three trigger powers, two range powers and four entity conditions that react to — or reshape — voice activity from [Simple Voice Chat](https://modrinth.com/plugin/simple-voice-chat).
 
-All of them are **behaviour-gated**: the types are always registered, so a pack that uses them loads on any server. Without Simple Voice Chat installed the conditions read `false` and the trigger powers never fire.
+All of them are **behaviour-gated**: the types are always registered, so a pack that uses them loads on any server. Without Simple Voice Chat installed the conditions read `false`, the trigger powers never fire and the range powers leave voice alone.
 
 ## Types
 
 | Type | Kind | Fires / passes when |
 | --- | --- | --- |
-| [`apoli:action_on_speak`](/docs/compat/simple-voice-chat/action_on_speak) | Power | The holder starts or stops talking. |
+| [`apoli:action_on_speak`](/docs/compat/simple-voice-chat/action_on_speak) | Power | The holder starts or stops talking — optionally acting on everyone who can hear them. |
 | [`apoli:action_on_reply`](/docs/compat/simple-voice-chat/action_on_reply) | Power | Someone talks back to the holder shortly after they spoke. |
 | [`apoli:action_on_speech`](/docs/compat/simple-voice-chat/action_on_speech) | Power | The holder *says a specific phrase* out loud. |
+| [`apoli:modify_speaking_range`](/docs/compat/simple-voice-chat/modify_speaking_range) | Power | Changes how far the holder's voice carries, for everyone or per listener. |
+| [`apoli:modify_hearing_range`](/docs/datapack/powers/modify_hearing_range) | Power | Changes how far the holder hears voice chat, for everyone or per speaker. It also covers ordinary game sounds, so its page lives with the other power types. |
 | [`apoli:voice_speaking`](/docs/compat/simple-voice-chat/voice_speaking) | Entity condition | The entity is talking right now. |
 | [`apoli:voice_disabled`](/docs/compat/simple-voice-chat/voice_disabled) | Entity condition | The entity has voice chat off or isn't connected. |
 | [`apoli:voice_loudness`](/docs/compat/simple-voice-chat/voice_loudness) | Entity condition | The entity's current loudness passes a comparison. |

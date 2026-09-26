@@ -21,6 +21,7 @@ const COMPAT = {
 	voice_disabled: 'compat/02-simple-voice-chat',
 	voice_loudness: 'compat/02-simple-voice-chat',
 	voice_listeners: 'compat/02-simple-voice-chat',
+	modify_speaking_range: 'compat/02-simple-voice-chat',
 	action_on_accessory_change: 'compat/03-accessories',
 	prevent_accessory_equip: 'compat/03-accessories',
 	prevent_accessory_unequip: 'compat/03-accessories',

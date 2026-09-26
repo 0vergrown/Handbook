@@ -134,6 +134,43 @@ Variables are resolved when the expression is compiled and read live from the en
 | `world_time`                             | The level's game time (ticks).                                                                                                                                        |
 | `day_time`                               | The level's time-of-day (`# 24000` for the clock time).                                                                                                               |
 | `moon_phase`                             | Moon phase, 0–7.                                                                                                                                                      |
+| `attack_charge`                          | How charged the entity's attack is, `0.0`–`1.0`. During a melee hit it is the charge of that swing, read before the game resets it. Players only, else `0`.           |
+| `biome_temperature`                      | Temperature of the biome at the entity's feet — `0.8` in plains, `2.0` in a desert, `0.0` on snowy plains, `-0.7` on frozen peaks. The same value [apoli:temperature](/docs/datapack/biome-conditions/temperature) compares. |
+| `brightness`                             | How bright it is where the entity stands, `0.0`–`1.0`, following the dimension's light curve and the time of day. The same value [apoli:brightness](/docs/datapack/entity-conditions/brightness) compares. |
+| `light`                                  | Light level at the entity's feet, 0–15: the higher of block light and sky light, with sky light dimmed at night.                                                      |
+| `block_light`                            | Block light at the entity's feet, 0–15 — torches, lava, glowstone.                                                                                                    |
+| `sky_light`                              | Sky light at the entity's feet, 0–15, whatever the time of day.                                                                                                       |
+| `night_vision`                           | Strength of the entity's Night Vision effect: `0` without it, `1` while it has more than 10 seconds left, then flickering between `0.4` and `1` as it runs out — the value the game renders with. |
+
+### Reading the surroundings
+
+`biome_temperature`, `brightness` and the light levels turn the world into numbers, so a power can scale smoothly instead of switching between a ladder of conditioned copies. Feed one into a [Resource](/docs/datapack/powers/resource) a step at a time and the power ramps up and down rather than jumping at a biome border. This `heat` resource drifts toward `50 − 25 × temperature` — `30` in plains, `0` in a desert, `50` on snowy plains, `68` on frozen peaks — by at most one point a tick:
+
+```json
+{
+  "type": "apoli:action_over_time",
+  "interval": 1,
+  "entity_action": {
+    "type": "apoli:modify_resource",
+    "resource": "example:heat",
+    "modifier": {
+      "operation": "add_base_early",
+      "value": "clamp(round(50 - 25 * biome_temperature) - value, -1, 1)"
+    }
+  }
+}
+```
+
+`value` is the resource's current value, so the step is always toward the target and stops once it arrives. Anything else can then read `example:heat` — an [attribute](/docs/datapack/powers/attribute) modifier, a damage multiplier, a HUD bar.
+
+The same idea flattens the dark. This [apoli:night_vision](/docs/datapack/powers/night_vision) fades in as the light fades out, so the world never looks darker than a dim evening:
+
+```json
+{
+  "type": "apoli:night_vision",
+  "strength": "clamp((0.5 - brightness) * 1.6, 0, 0.8)"
+}
+```
 
 ### Actor and target
 

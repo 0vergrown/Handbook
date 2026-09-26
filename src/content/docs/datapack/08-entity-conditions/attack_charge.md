@@ -5,7 +5,7 @@ navigation_title: "Attack Charge"
 aliases: ["spam_attack", "attack_cooldown"]
 ---
 
-Checks how far the player's attack-strength meter has currently recharged — the same meter the vanilla crosshair indicator shows. Unlike the [damage condition of the same name](/docs/datapack/damage-conditions/attack_charge), this reads the live value at any time, not the value recorded for a specific hit.
+Checks how far the player's attack-strength meter has currently recharged — the same meter the vanilla crosshair indicator shows. Unlike the [damage condition of the same name](/docs/datapack/damage-conditions/attack_charge), it works at any time, not only for a hit. While the player's own melee hit is being dealt — in the actions of [apoli:action_on_hit](/docs/datapack/powers/action_on_hit), for instance — it reads the charge of that swing, before the game resets the meter. The `attack_charge` [Expression](/docs/datapack/data-types/expression#bound-variables) variable reads the same value.
 
 Type ID: `apoli:attack_charge`
 

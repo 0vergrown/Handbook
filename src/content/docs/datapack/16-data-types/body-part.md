@@ -59,12 +59,12 @@ Each pivot is the joint that holds the group to the rest of the body, so a rotat
 
 ## Wings and Ears features
 
-These name the extra geometry that [Icarus](/docs/compat/icarus/overview) and [Ears](/docs/compat/skin-rendering/overview) draw on a player. They only do anything with that mod installed, and nothing at all without it.
+These name the extra geometry that [Icarus](/docs/compat/icarus/overview) and [Ears](/docs/compat/skin-rendering/overview) draw on a player. They only do anything with that mod installed, and nothing at all without it. Both Ears 1.4 and Ears 2 are supported.
 
 | Name | Also accepts | Covers |
 | --- | --- | --- |
-| `right_wing` / `left_wing` | `wing_right` / `wing_left` | That Icarus wing, and the wing on that side of an Ears wing pair. |
-| `wings` | | Both Icarus wings and every Ears wing, including a single or flat one. |
+| `right_wing` / `left_wing` | `wing_right` / `wing_left`, `icarus_right_wing` / `icarus_left_wing` | That Icarus wing, and the wing on that side of an Ears wing pair. |
+| `wings` | `icarus_wings` | Both Icarus wings and every Ears wing, including a single or flat one. |
 | `ears` | | Every ear Ears draws. |
 | `right_ear` / `left_ear` | `ear_right` / `ear_left` | That ear, in the Ears ear modes that draw each ear on its own. |
 | `horns` | `horn` | The Ears horn. |
@@ -75,6 +75,9 @@ These name the extra geometry that [Icarus](/docs/compat/icarus/overview) and [E
 | `right_leg_claw` / `left_leg_claw` | `claw_right_leg` / `claw_left_leg` | The claw on that leg. |
 | `ears_chest` | | The chest piece Ears draws. |
 | `ears_cape` | | The cape Ears draws from the skin file. |
+| `halo` | | The Ears halo, single or double. Ears 2 only. |
+| `right_digitigrade_leg` / `left_digitigrade_leg` | `digitigrade_right_leg` / `digitigrade_left_leg` | That digitigrade leg, trousers included. Ears 2 only. |
+| `digitigrade_legs` | | Both digitigrade legs. Ears 2 only. |
 
 They work in `model_part` of [apoli:modify_model_parts](/docs/datapack/powers/modify_model_parts) and `part` of [apoli:model_color](/docs/datapack/powers/model_color):
 
@@ -82,6 +85,8 @@ They work in `model_part` of [apoli:modify_model_parts](/docs/datapack/powers/mo
 - **Ears features** are drawn by Ears itself, not as model parts, so they answer to `visible` and `hidden` and to colour, but not to rotation, scale or pivot. They already follow the part they hang from: bend `head` and the ears and horns go with it.
 
 Ears draws both ears as one shape in its `above`, `cross`, `tall` and `tall_cross` ear modes. `right_ear` and `left_ear` cannot reach that shape on their own; `ears` does, and so does hiding both `right_ear` and `left_ear` at once. Wings work the same way: a single or flat Ears wing answers to `wings`, or to hiding both `right_wing` and `left_wing`.
+
+Sides are always the player's own: `right_wing` is the wing on the player's right, including in an asymmetric Ears wing pair whose skin layout names that wing the left one.
 
 None of these are part of a group — `whole` and `upper` leave wings and Ears features alone. They have no hitbox, so the [apoli:body_part](/docs/datapack/damage-conditions/body_part) condition refuses them, and particles and `body_parts` have nothing to attach to.
 

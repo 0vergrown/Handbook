@@ -5,7 +5,7 @@ description: Making 3D Skin Layers and Ears follow Apoli's model and colour powe
 
 [3D Skin Layers](https://modrinth.com/mod/3dskinlayers) and [Ears](https://modrinth.com/mod/ears) both draw extra geometry from the player's skin file rather than from the vanilla player model, so out of the box they ignore what Apoli does to that model — a player faded to 10% alpha still had a fully opaque hat layer floating around their head. Apoli hooks both so their geometry follows the render powers.
 
-This integration is **behaviour-gated and adds no types**. Nothing to enable, no new JSON syntax; install either mod and the powers you already have start applying to it.
+This integration is **behaviour-gated and adds no types**. Nothing to enable, no new JSON syntax; install either mod and the powers you already have start applying to it. Ears 1.4 and Ears 2 are both supported.
 
 ## What follows what
 
@@ -18,7 +18,7 @@ This integration is **behaviour-gated and adds no types**. Nothing to enable, no
 | `apoli:modify_model_parts` `hidden` | followed | — |
 | `apoli:modify_model_parts` `visible` / `hidden` on an Ears feature name | — | that feature hidden |
 | [`apoli:custom_model_render`](/docs/datapack/powers/custom_model_render) replacing the skin or model | hidden | hidden |
-| [`apoli:modify_player_model`](/docs/datapack/powers/modify_player_model) | hidden | hidden |
+| [`apoli:modify_player_model`](/docs/datapack/powers/modify_player_model) with any model but `apoli:vanilla` | hidden | hidden |
 | [`apoli:prevent_feature_render`](/docs/datapack/powers/prevent_feature_render) | `skin_layers_3d` | `ears`, or one feature at a time |
 | Fully transparent model (alpha 0) | hidden | hidden |
 
@@ -26,7 +26,7 @@ A `render_as_overlay` custom model does **not** hide either mod — an overlay i
 
 ## Body part names
 
-Ears features have their own [body part names](/docs/datapack/data-types/body-part#wings-and-ears-features) — `ears`, `right_ear`, `left_ear`, `horns`, `snout`, `tail`, `claws` and one per claw, `wings`, `right_wing`, `left_wing`, `ears_chest` and `ears_cape`. Name one in [`apoli:model_color`](/docs/datapack/powers/model_color) `parts` to tint just that feature, or hide it with a `visible` or `hidden` transformation in [`apoli:modify_model_parts`](/docs/datapack/powers/modify_model_parts):
+Ears features have their own [body part names](/docs/datapack/data-types/body-part#wings-and-ears-features) — `ears`, `right_ear`, `left_ear`, `horns`, `snout`, `tail`, `claws` and one per claw, `wings`, `right_wing`, `left_wing`, `ears_chest` and `ears_cape`, plus `halo` and the digitigrade legs on Ears 2. Name one in [`apoli:model_color`](/docs/datapack/powers/model_color) `parts` to tint just that feature, or hide it with a `visible` or `hidden` transformation in [`apoli:modify_model_parts`](/docs/datapack/powers/modify_model_parts):
 
 ```json
 {
@@ -64,6 +64,8 @@ Alongside the vanilla feature-layer names, [`apoli:prevent_feature_render`](/doc
 | `ears_cape` | the Ears cape |
 | `ears_chest` | the chest piece |
 | `ears_claw_left_arm` · `ears_claw_right_arm` · `ears_claw_left_leg` · `ears_claw_right_leg` | the matching claws |
+| `ears_halo` | the halo (Ears 2) |
+| `ears_digitigrade_left_leg` · `ears_digitigrade_right_leg` | the matching digitigrade leg (Ears 2) |
 
 An `apoli:prevent_feature_render` with no `feature`/`features` at all means "every feature layer", and that includes both mods.
 
