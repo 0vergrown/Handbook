@@ -9,6 +9,8 @@ Checks whether the target entity is within a power that uses the [apoli:entity_s
 
 Type ID: `apoli:in_entity_set` (but can use it's old `in_set` type id as an alias)
 
+To ask from the member's side — is this entity in anyone's set, and how many — use the [entity condition of the same name](/docs/datapack/entity-conditions/in_entity_set).
+
 ##	Fields
 
 Field | Type | Default | Description

@@ -4,7 +4,7 @@ description: "Provides a 'set' (a storage) for storing entities that can be used
 navigation_title: "Entity Set"
 ---
 
-Provides a "set" (a storage) for storing entities that can be used for executing actions on the entities within the set, or checking whether an entity is stored within the set.
+Provides a "set" (a storage) for storing entities that can be used for executing actions on the entities within the set, or checking whether an entity is stored within the set — [from the owner's side](/docs/datapack/bientity-conditions/in_entity_set) or [from the member's](/docs/datapack/entity-conditions/in_entity_set).
 
 Type ID: `apoli:entity_set`
 

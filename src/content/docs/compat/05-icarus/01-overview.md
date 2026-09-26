@@ -25,6 +25,8 @@ Icarus wings answer to the [body part names](/docs/datapack/data-types/body-part
 
 Hides the right wing and draws the left one at half size, still rooted to the back. Every transformation type works on a wing, and [`apoli:model_color`](/docs/datapack/powers/model_color) can tint one through its `parts`.
 
+Wings drawn by the [Icarus: Re-Winged](https://modrinth.com/mod/icarus-rewinged) add-on take the same edits and tints, both its own wing items and the Icarus wings it redraws. The edits happen while the model is drawn, so they need Apoli on the viewing player's client.
+
 ## Types
 
 | Type | Kind | What it does |

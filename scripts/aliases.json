@@ -140,6 +140,9 @@
 	"entity conditions/entity_set_size": [
 		"set_size"
 	],
+	"entity conditions/in_entity_set": [
+		"in_set"
+	],
 	"entity conditions/in_team": [
 		"team"
 	],

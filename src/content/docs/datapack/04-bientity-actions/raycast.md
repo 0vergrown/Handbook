@@ -18,6 +18,8 @@ This is the same action as the entity-action [`Raycast (Entity Action Type)`](/d
 
 Setting an explicit `direction` overrides the automatic aim.
 
+To only test whether the target is inside the actor's ray, beam or cone, without casting anything, use the [raycast bi-entity condition](/docs/datapack/bientity-conditions/raycast).
+
 ## Example
 
 Draw a beam between two entities and break whatever is between them:

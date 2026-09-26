@@ -12,6 +12,8 @@ Type ID: `apoli:grab`
 
 > A grab ends when its `duration` runs out, when either entity dies, unloads or changes dimension, when the grabbed entity is grabbed by someone else, or when [apoli:release_grab](/docs/datapack/entity-actions/release_grab) runs on either entity. Grabs are not persisted across relogs or server restarts.
 
+To check a grab from data, [apoli:grabbed](/docs/datapack/entity-conditions/grabbed) asks whether an entity is being held, and the [bi-entity form](/docs/datapack/bientity-conditions/grabbed) whether the actor is the one holding the target.
+
 ## Fields
 
 | Field             | Type                                     | Default      | Description                                                                                                   |

@@ -21,6 +21,8 @@ Selects how a texture is drawn onto the model — the blend/cull/lighting style 
 
 > `emissive` keeps your `red`/`green`/`blue`/`alpha` tint while glowing; `eyes` is brighter and additive but ignores tint. Pick `emissive` when you want a coloured glow, `eyes` for a pure overlay glow, and `energy_swirl` for a moving shimmer.
 
+On a [geometry-mode model](/docs/datapack/powers/custom_model_render#geometry-mode-fields-mode-geometry), which stands on its own, `emissive` and `eyes` hide whatever is behind them like any solid model does — water, stained glass and other see-through blocks behind a glowing model stay behind it instead of showing through. As an overlay on the entity's own model they don't block anything themselves; the model underneath already does.
+
 ## Example
 
 ```json
