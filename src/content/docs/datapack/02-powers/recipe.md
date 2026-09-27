@@ -4,7 +4,7 @@ description: "Allows a player with this power to craft the defined crafting reci
 navigation_title: "Recipe"
 ---
 
-Allows a player with this power to craft the defined crafting recipe. The recipe is injected server-side and only players holding the power can use it.
+Allows a player with this power to craft the defined crafting recipe. The recipe is injected server-side and only players holding the power can use it. When several recipes fit the same grid, each player gets one they are allowed to craft, so a power recipe they lack never blocks one they can make.
 
 Type ID: `apoli:recipe` (alias: `origins:recipe`)
 
@@ -12,7 +12,16 @@ Type ID: `apoli:recipe` (alias: `origins:recipe`)
 
 Field  | Type | Default | Description
 -------|------|---------|-------------
-`recipe` | Crafting Recipe | | The recipe to craft, including an `id` field which can be any arbitrary (but unique) identifier. Any vanilla crafting recipe type works (`minecraft:crafting_shaped`, `minecraft:crafting_shapeless`, ...).
+`recipe` | [Crafting Recipe](/docs/datapack/data-types/crafting-recipe) | | The recipe to craft. Any vanilla crafting recipe type works (`minecraft:crafting_shaped`, `minecraft:crafting_shapeless`, ...). Its `id` names the recipe; without one, the power's own id is used.
+
+## Sharing an `id`
+
+Several powers can write the same recipe `id`:
+
+- **Identical recipes** (the whole `recipe` object matches) are registered once, and holding any one of those powers unlocks it.
+- **Different recipes** all still work, each for the holders of its own power. The first power by id (namespace, then path) keeps the `id`; every other one is registered under its own power id, and Apoli logs a warning naming it. [`apoli:modify_crafting`](/docs/datapack/powers/modify_crafting) matches all of them by the `id` you wrote.
+
+Give different recipes different ids anyway: vanilla features that name a recipe, such as `/recipe` and the `recipe_unlocked` advancement trigger, only know the registered id.
 
 ## Granting powers with the crafted item
 
@@ -44,7 +53,7 @@ Field  | Type | Default | Description
         	}
       	],
       	"result": {
-        	"item": "minecraft:cobweb"
+        	"id": "minecraft:cobweb"
       	}
     }
 }
@@ -67,7 +76,7 @@ This example will allow the player that has the power to craft Cobwebs by combin
             "S": { "item": "minecraft:iron_sword" }
         },
         "result": {
-            "item": "minecraft:iron_sword",
+            "id": "minecraft:iron_sword",
             "powers": [
                 {
                     "power": "example:fire_touch",

@@ -11,8 +11,8 @@ An [Object](/docs/datapack/data-types/object) specifying a shapeless or shaped c
 Field  | Type | Default | Description
 -------|------|---------|-------------
 `type` | Identifier | | The type of recipe. Either `minecraft:crafting_shaped` or `minecraft:crafting_shapeless`. Other recipe types are not supported.
-`id` | Identifier | | An ID for this recipe. Has to be unique among all recipes, otherwise there will be a conflict.
-`result` | Object with an `item` ID and `count` Integer | | The result of the crafting. **Note that vanilla does _not_ support NBT tags in the result.**
+`id` | Identifier | | An ID for this recipe. In [`apoli:recipe`](/docs/datapack/powers/recipe) it is optional (the power's id is used instead) and several powers may share one, see [Sharing an `id`](/docs/datapack/powers/recipe#sharing-an-id). A power's recipe replaces a data-pack recipe with the same id.
+`result` | Object | | The crafted item: `id` (the item), an optional `count` (default `1`) and optional `components`. On 1.20.1 the item is written as `item` instead of `id`, and the result cannot carry NBT.
 
 ## Fields (shapeless)
 
@@ -40,7 +40,7 @@ Field  | Type | Default | Description
 	    ]
 	],
 	"result": {
-	    "item": "minecraft:fire_charge",
+	    "id": "minecraft:fire_charge",
 	    "count": 3
 	}
 }
@@ -72,7 +72,7 @@ Field  | Type | Default | Description
 	    }
   	},
   	"result": {
-    	"item": "minecraft:birch_boat"
+    	"id": "minecraft:birch_boat"
   	}
 }
 ```

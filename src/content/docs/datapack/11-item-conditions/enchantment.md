@@ -13,9 +13,9 @@ Type ID: `apoli:enchantment`
 | Field               | Type                   | Default    | Description                                                                                                                                                                        |
 |---------------------|------------------------|------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `enchantment`       | [Identifier](/docs/datapack/data-types/identifier) | _optional_ | If specified, the level of the enchantment that corresponds to this identifier will be compared. Otherwise, the amount of enchantments in the item stack will be compared instead. |
-| `use_modifications` | [Boolean](/docs/datapack/data-types/boolean)    | `true`     | Determines whether to account for enchantments that were added/modified by unnatural means (e.g: via the [apoli:modify_enchantment_level](/docs/datapack/powers/modify_enchantment_level))                                    |
-| `comparison`        | [Comparison](/docs/datapack/data-types/comparison) |            | Determines how the level of the specified enchantment, or the amount of enchantments in the item stack, should be compared to the specified value.                                 |
-| `compare_to`        | [Integer](/docs/datapack/data-types/integer)    |            | The value at which the level of the specified enchantment, or the amount of the enchantments in the item stack, will be compared to.                                               |
+| `use_modifications` | [Boolean](/docs/datapack/data-types/boolean)    | `true`     | Whether to count levels changed by [`apoli:modify_enchantment_level`](/docs/datapack/powers/modify_enchantment_level). They apply when the item is worn or held by an entity with that power, or when the check runs for an entity with that power (e.g. inside [`apoli:equipped_item`](/docs/datapack/entity-conditions/equipped_item) or [`apoli:inventory`](/docs/datapack/entity-conditions/inventory)). With `false`, only the enchantments stored on the item are read. |
+| `comparison`        | [Comparison](/docs/datapack/data-types/comparison) | `">"`      | Determines how the level of the specified enchantment, or the amount of enchantments in the item stack, should be compared to the specified value.                                 |
+| `compare_to`        | [Integer](/docs/datapack/data-types/integer)    | `0`        | The value at which the level of the specified enchantment, or the amount of the enchantments in the item stack, will be compared to.                                               |
 
 ## Examples
 
@@ -37,3 +37,10 @@ This example will check if the item has the Fortune III enchantment.
 }
 ```
 This example will check if the item has 3 or more enchantments.
+
+```json
+"item_condition": {
+    "type": "apoli:enchantment"
+}
+```
+This example will check if the item has any enchantment at all.
