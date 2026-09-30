@@ -20,7 +20,7 @@ Type ID: `apoli:fire_projectile`
 | `interval`                            | [Integer](/docs/datapack/data-types/integer)    | `0`        | Determines the interval for firing multiple projectiles consecutively (in ticks). If set to 0, it will fire all the projectiles at the same tick.                                |
 | `start_delay`                         | [Integer](/docs/datapack/data-types/integer)    | `0`        | Determines how long the start of the firing process is delayed (in ticks).                                                                                                       |
 | `speed`                               | [Float](/docs/datapack/data-types/float)      | `1.5`      | The speed applied to the fired projectile.                                                                                                                                       |
-| `offset_x`, `offset_y`, `offset_z`    | [Float](/docs/datapack/data-types/float) | `0` | Where the projectile spawns, relative to the shooter's eyes. Read through `space`, so `local` puts `offset_z: 1.5` a block and a half in front of wherever they are looking — the muzzle of a cannon rather than a point due south of it. |
+| `offset_x`, `offset_y`, `offset_z`    | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | `0` | Where the projectile spawns, relative to the shooter's eyes. Read through `space`, so `local` puts `offset_z: 1.5` a block and a half in front of wherever they are looking — the muzzle of a cannon rather than a point due south of it. An expression is evaluated for every projectile, with the shooter as the subject, so `"rUni(-3, 3)"` scatters a volley. |
 | `space`                               | [Space](/docs/datapack/data-types/space) | `world` | How the spawn offset is read. `local` is relative to the shooter's facing, `world` to the world axes. |
 | `max_distance`                        | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression)      | `0`        | Removes the projectile once it has travelled this far, in blocks — or turns it around, when `return` is set. `0` leaves it to fly until it hits something or expires. Apoli's own shots keep drifting on inertia, so `speed` alone does not bound their range. |
 | `divergence`                          | [Float](/docs/datapack/data-types/float)      | `1.0`      | How much each projectile fired is affected by random spread.                                                                                                                     |
@@ -41,15 +41,15 @@ Type ID: `apoli:fire_projectile`
 | `key`                                 | [Key](/docs/datapack/data-types/key)        | _optional_ | Which active key this power should respond to. If none is specified, this power will use the primary active power key.                                                           |
 | `projectile_action`                   | Entity Action Type     | _optional_ | If specified, this entity action will be executed on the projectile or entity that will be launched.                                                                             |
 | `shooter_action`                      | Entity Action Type     | _optional_ | If specified, this entity action will be executed on the entity that has the power.                                                                                              |
-| `reflective`                          | [Boolean](/docs/datapack/data-types/boolean)    | `false`    | When `true`, the projectile bounces off blocks instead of stopping on them. See [Bouncing off walls](#bouncing-off-walls).                                                       |
-| `max_bounces`                         | [Integer](/docs/datapack/data-types/integer)    | `4`        | How many times a `reflective` projectile may bounce before the next block hit stops it. `-1` bounces forever, which needs `max_distance` or a `tick_bientity_action` to end the shot. |
-| `bounce_speed`                        | [Float](/docs/datapack/data-types/float)      | `1.0`      | The fraction of its speed the projectile keeps after each bounce. `1.0` loses nothing, `0.6` is a rubber ball, values above `1` accelerate it.                                  |
+| `reflective`                          | [Projectile Reflection](/docs/datapack/data-types/projectile-reflection) or [Boolean](/docs/datapack/data-types/boolean) | *optional* | Makes the projectile bounce off blocks instead of stopping on them. `true` bounces with the default settings. See [Bouncing off walls](#bouncing-off-walls). |
 | `bientity_action_on_bounce`           | Bi-entity Action       | *optional* | If specified, the bi-entity action to execute with the projectile owner as the actor and the projectile as the target every time it bounces.                                     |
+| `bientity_action_on_expire`           | Bi-entity Action       | *optional* | If specified, the bi-entity action to execute with the projectile owner as the actor and the projectile as the target when the projectile reaches `max_distance` and is removed. It does not run when `return` turns the projectile around instead. |
 | `return`                              | [Projectile Return](/docs/datapack/data-types/projectile-return) | *optional* | Makes the projectile fly back to the shooter, like a trident with Loyalty. See [Coming back](#coming-back). |
+| `homing`                              | [Projectile Homing](/docs/datapack/data-types/projectile-homing) | *optional* | Makes the projectile seek out and curve toward a nearby target. See [Chasing a target](#chasing-a-target). |
 
 ## Bouncing off walls
 
-`reflective` turns a block hit into a rebound: the projectile's velocity is mirrored through the face it struck, scaled by `bounce_speed`, and it carries on flying. Entity hits are unaffected — a reflective projectile still hits the first entity it reaches, subject to `bientity_condition`.
+`reflective` turns a block hit into a rebound: the projectile's velocity is mirrored through the face it struck, scaled by the object's `speed`, and it carries on flying. Entity hits are unaffected — a reflective projectile still hits the first entity it reaches, subject to `bientity_condition`. The fields are on [Projectile Reflection](/docs/datapack/data-types/projectile-reflection).
 
 Each bounce still runs `block_action_on_hit` (honouring `block_condition`), so a bouncing shot can leave a mark on every wall it kisses. `bientity_action_on_miss` is held back until the projectile actually stops, so "it missed" means what it says.
 
@@ -60,9 +60,10 @@ Once `max_bounces` is used up the next block hit ends the shot normally. Give a 
   "type": "apoli:fire_projectile",
   "texture_location": "example:textures/entity/bouncy_orb.png",
   "speed": 1.2,
-  "reflective": true,
-  "max_bounces": 6,
-  "bounce_speed": 0.85,
+  "reflective": {
+    "max_bounces": 6,
+    "speed": 0.85
+  },
   "max_distance": 64,
   "bientity_action_on_bounce": {
     "type": "apoli:play_sound",
@@ -71,7 +72,9 @@ Once `max_bounces` is used up the next block hit ends the shot normally. Give a 
 }
 ```
 
-> `bounce_speed` above `1.0` compounds — at `1.3` a projectile is travelling nearly four times its launch speed after six bounces, fast enough to tunnel through a one-block wall between ticks. Pair it with a low `max_bounces`.
+`"reflective": true` bounces with the defaults. The flat form, with `max_bounces` and `bounce_speed` written next to `"reflective": true` on the projectile itself, reads the same way.
+
+> A `speed` above `1.0` compounds — at `1.3` a projectile is travelling nearly four times its launch speed after six bounces, fast enough to tunnel through a one-block wall between ticks. Pair it with a low `max_bounces`.
 
 ## Coming back
 
@@ -94,6 +97,35 @@ Once `max_bounces` is used up the next block hit ends the shot normally. Give a 
   }
 }
 ```
+
+## Chasing a target
+
+`homing` makes the projectile look for a living entity ahead of it and bend its flight toward it, turning at most `turn_rate` degrees a tick without losing speed. It never picks the shooter, their teammates, or a tamed animal, minion or clone they own, and never an entity the projectile could not hit anyway — `bientity_condition` and `owner_bientity_condition` filter the search as well as the hit. Only the projectile drawn from `texture_location` homes. The fields are on [Projectile Homing](/docs/datapack/data-types/projectile-homing).
+
+```json
+{
+  "type": "apoli:fire_projectile",
+  "texture_location": "example:textures/entity/spirit_orb.png",
+  "speed": 0.4,
+  "divergence": 0,
+  "max_distance": 16,
+  "homing": {
+    "delay": 5,
+    "duration": 60,
+    "range": 8,
+    "angle": 70,
+    "turn_rate": 10
+  },
+  "bientity_action_on_hit": {
+    "type": "apoli:damage",
+    "amount": 4,
+    "damage_type": "minecraft:magic"
+  }
+}
+```
+
+A slow projectile with a high `turn_rate` circles in on its target like a wisp; a fast one with a low `turn_rate` curves like a guided missile and can overshoot. Once `duration` runs out it flies on in a straight line.
+
 ## Examples
 
 ```json
@@ -172,15 +204,17 @@ instead of the flat texture:
 {
   "type": "apoli:custom_model_render",
   "mode": "geometry",
-  "model": "example:geo/shuriken.geo.json",
-  "texture": "example:textures/entity/shuriken.png",
+  "model_location": "example:shuriken",
+  "texture_location": "example:textures/entity/shuriken.png",
   "animations": {
-    "animation": "example:animations/shuriken.animation.json",
+    "animation": "example:shuriken",
     "name": "animation.shuriken.spin",
     "loop": true
   }
 }
 ```
+
+The model is read from `assets/example/geo/shuriken.geo.json` and the animation from `assets/example/animations/shuriken.animation.json`.
 
 The model faces the projectile's direction of travel, and its animations play from the moment it is
 granted, so a spin or a flame flicker runs for the projectile's whole flight.

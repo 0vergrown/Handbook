@@ -47,11 +47,18 @@ A rate below the server's own means the target is skipped on some server ticks, 
 
 A rate **above** the server's own does nothing on its own — the server cannot tick a single entity more often than it ticks at all. To run something faster, raise the whole server with `/tick rate 40` and hold everything else down, either with `tick chunk`/`tick entity` or with [apoli:modify_tick_rate](/docs/datapack/powers/modify_tick_rate) on a `dimension` target.
 
-Every entity running slower than the server is told so, and its client slows it the same way, so the two never disagree about where it is. Mobs are driven by the server's position updates and the client stretches that interpolation. Projectiles, items and other non-living entities would normally run their own physics on the client, so while they are slowed the client stops simulating them and glides them toward each position the server sends instead. Either way the entity glides at its new speed instead of running ahead and getting snapped back. Anything the local player is riding keeps ticking normally on their own client, because skipping it would stutter their camera.
+Every entity running slower than the server is told so, and its client slows it the same way, so the two never disagree about where it is. Mobs are driven by the server's position updates and the client stretches that interpolation. Projectiles, items and other non-living entities would normally run their own physics on the client, so while they are slowed the client stops simulating them and glides them toward each position the server sends instead. Either way the entity glides at its new speed instead of running ahead and getting snapped back.
 
-Scopes fall back to each other: an entity with no rate of its own uses its chunk's, and a chunk with no rate of its own uses its dimension's — which only [apoli:tick_rate](/docs/datapack/entity-actions/tick_rate) and [apoli:modify_tick_rate](/docs/datapack/powers/modify_tick_rate) can set. A passenger always follows its root vehicle.
+Scopes fall back to each other: an entity with no rate of its own uses its chunk's, and a chunk with no rate of its own uses its dimension's — which only [apoli:tick_rate](/docs/datapack/entity-actions/tick_rate) and [apoli:modify_tick_rate](/docs/datapack/powers/modify_tick_rate) can set.
 
-> Freezing a **player** stops their server-side tick — hunger, regeneration, status effects, item cooldowns, block breaking — but not their client's movement, which is client-authoritative.
+> Freezing a **player** stops them on both sides: their server-side tick — hunger, regeneration, status effects, item cooldowns, block breaking — and their own client's tick, so they cannot walk either. Looking around and clicking are not part of the tick, so a frozen player can still look about and use or attack what is in reach.
+
+## Riding
+
+- An entity's own rate or freeze always applies to it, whatever it is riding. A frozen passenger stays frozen in a moving boat — it is carried along, but it does not tick, so it cannot steer or climb out.
+- A passenger with no rate of its own takes its vehicle's.
+- A vehicle never runs faster than whoever is steering it — the player in a boat's front seat, on a saddled horse, on a pig with a carrot on a stick. A frozen rider freezes the boat or mount under them, and the vehicle goes back to its own rate the moment they are off it.
+- Anything the local player is riding keeps ticking normally on their own client while it is only slowed, because skipping ticks would stutter their camera; the server's small corrections are the lesser evil. A frozen vehicle stops for its rider too.
 
 ## Lifetime
 

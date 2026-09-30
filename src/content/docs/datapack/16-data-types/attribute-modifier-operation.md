@@ -6,24 +6,26 @@ navigation_title: "Attribute Modifier Operation"
 
 A [String](/docs/datapack/data-types/string) used to specify the operation in an [Attribute Modifier](/docs/datapack/data-types/attribute-modifier).
 
-> The listed values are ordered by application priority — `add_base_early` (and its `addition` alias) runs first, `set_total` runs last.
+> The listed values are ordered by application priority — `add_base_early` (and its aliases) runs first, `add_total_late` runs last.
 
 ## Quick map: vanilla ↔ Apoli
 
-The three "short" operation names from vanilla Minecraft and the long-named Apoli equivalents are interchangeable. Use whichever reads better in your pack.
+The three vanilla operation names — in both their 1.20 and 1.21 spellings — and the long-named Apoli equivalents are interchangeable. Use whichever reads better in your pack.
 
-| Short (vanilla / Apace alias) | Canonical (Apoli rewrite) |
-|-------------------------------|---------------------------|
-| `addition`                    | `add_base_early`          |
-| `multiply_base`               | `multiply_base_additive`  |
-| `multiply_total`              | `multiply_total_multiplicative` |
+| Vanilla 1.20 / Apace | Vanilla 1.21 | Canonical (Apoli) |
+|----------------------|--------------|-------------------|
+| `addition`           | `add_value`            | `add_base_early`                |
+| `multiply_base`      | `add_multiplied_base`  | `multiply_base_additive`        |
+| `multiply_total`     | `add_multiplied_total` | `multiply_total_multiplicative` |
+
+The 1.21 names are also accepted in upper case (`ADD_VALUE`, `ADD_MULTIPLIED_BASE`, `ADD_MULTIPLIED_TOTAL`), as some packs write them.
 
 ## Values
 
 | Value                                                     | Description                                            |
 | --------------------------------------------------------- | ------------------------------------------------------ |
-| `add_base_early` (alias: `addition`)                      | `NewBase = Base + Modifier` (early in the base phase). |
-| `multiply_base_additive` (alias: `multiply_base`)         | `NewBase = Base + (Base * Modifier)`.                  |
+| `add_base_early` (aliases: `addition`, `add_value`)      | `NewBase = Base + Modifier` (early in the base phase). |
+| `multiply_base_additive` (aliases: `multiply_base`, `add_multiplied_base`) | `NewBase = Base + (Base * Modifier)`.                  |
 | `multiply_base_multiplicative`                            | `NewBase = Base * (1 + Modifier)`.                     |
 | `standard_multiply_base`                                  | `NewBase = Base * Modifier`.                           |
 | `standard_divide_base`                                    | `NewBase = Base / Modifier`.                           |
@@ -31,13 +33,15 @@ The three "short" operation names from vanilla Minecraft and the long-named Apol
 | `min_base`                                                | `NewBase = max(Base, Modifier)` (raise the floor).     |
 | `max_base`                                                | `NewBase = min(Base, Modifier)` (cap the ceiling).     |
 | `set_base`                                                | `NewBase = Modifier`.                                  |
-| `multiply_total_additive`                                 | `NewTotal = Total * (Total * Modifier)`.               |
-| `multiply_total_multiplicative` (alias: `multiply_total`) | `NewTotal = Total * (1 + Modifier)`.                   |
+| `add_total_early`                                         | `NewTotal = Total + Modifier` (early in the total phase). |
+| `multiply_total_additive`                                 | `NewTotal = Total + (Total * Modifier)`.               |
+| `multiply_total_multiplicative` (aliases: `multiply_total`, `add_multiplied_total`) | `NewTotal = Total * (1 + Modifier)`.                   |
 | `standard_multiply_total`                                 | `NewTotal = Total * Modifier`.                         |
 | `standard_divide_total`                                   | `NewTotal = Total / Modifier`.                         |
 | `min_total`                                               | `NewTotal = max(Total, Modifier)`.                     |
 | `max_total`                                               | `NewTotal = min(Total, Modifier)`.                     |
-| `set_total`                                               | `NewTotal = Modifier` (last, overrides everything).    |
+| `set_total`                                               | `NewTotal = Modifier` — overrides everything before it. |
+| `add_total_late`                                          | `NewTotal = Total + Modifier`, after everything else, `set_total` included. |
 
 ## Phases and ordering
 

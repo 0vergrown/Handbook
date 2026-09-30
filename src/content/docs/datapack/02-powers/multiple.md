@@ -24,6 +24,8 @@ Arbitrary fields. Any "key", except for `type`, `loading_priority`, `name`, `des
 
 Those reserved fields belong to the bundle itself, not to its sub-powers — `tags` on an `apoli:multiple` tags the **bundle**, so [`apoli:store_power`](/docs/datapack/entity-actions/store_power) and anything else that selects powers by tag picks up the whole thing rather than one piece of it. A field that is neither reserved nor an object cannot be a sub-power, and Apoli logs one line naming it at load rather than ignoring it silently.
 
+An entry with `"type": "apoli:macro"` defines a [macro](/docs/datapack/introduction/macros) instead of a sub-power, named the way a sub-power would be (`namespace:super-power_key`) and usable from any power in the pack; it is left out of the bundle. With a `macro` field it is a macro *call* instead, and becomes the sub-power the macro expands to.
+
 Each sub-power takes its own [`load_condition`](/docs/datapack/introduction/powers#gating-a-power-at-load-time), checked before that sub-power is parsed — a sub-power that is gated off is left out of the bundle entirely. A `load_condition` on the `apoli:multiple` itself gates every sub-power with it.
 
 ## Examples

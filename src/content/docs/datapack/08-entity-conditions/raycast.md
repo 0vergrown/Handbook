@@ -19,11 +19,13 @@ Field | Type | Default | Description
 `fluid_handling` | Fluid Handling | `"any"` | Determines how the raycast will handle fluids.
 `space` | Space | `"world"` | Determines how the direction will be calculated. **Only used if &lt;code>direction&lt;/code> is specified.**
 `direction` | Vector | _optional_ | If specified, determines the direction of the raycast. Otherwise, defaults to the direction at the entity is facing (as if `space` is `"local"`.)
-`match_bientity_condition` | Bi-entity Condition Type | _optional_ | If specified, the entity condition type will check if this bi-entity condition type is fulfilled by either or both the 'actor' (the entity being checked by the entity condition type) and 'target' (entity that the raycast has gone through). If not, the entity will be ignored.
-`hit_bientity_condition` | Bi-entity Condition Type | _optional_ | If specified, the entity condition type will check if this bi-entity condition type is fulfilled by either or both the 'actor' (the entity being checked by the entity condition type) and 'target' (the entity that has hit by the raycast).
+`match_bientity_condition` | Bi-entity Condition Type | _optional_ | Decides which entities the ray can hit, with the checked entity as the actor and the candidate as the target. An entity that fails it is ignored — the ray passes through it.
+`hit_bientity_condition` | Bi-entity Condition Type | _optional_ | Tested on the entity the ray hits, when that is the nearest hit. The condition passes only if this holds.
 `entity_distance` | Float | _optional_ | Determines the distance of the raycast for entities if `entity` is set to `true`. Overrides `distance`; with neither set, the entity's `minecraft:player.entity_interaction_range` is used (3 for a player without reach bonuses).
-`block_condition` | Block Condition Type | _optional_ | If specified, the entity condition type will check if the block that was hit by the raycast fulfills this block condition type.
+`block_condition` | Block Condition Type | _optional_ | Tested on the block the ray hits, when that is the nearest hit. The condition passes only if this holds.
 `block_distance` | Float | _optional_ | Determines the distance of the raycast for blocks if `block` is set to `true`. Overrides `distance`; with neither set, the entity's `minecraft:player.block_interaction_range` is used (4.5 for a player without reach bonuses).
+
+The condition judges the **nearest** thing the ray hits: the closest entity that passes `match_bientity_condition`, or the first block, whichever comes first. It passes when that hit passes its own test — `hit_bientity_condition` for an entity, `block_condition` for a block — and fails when nothing is hit. A block always stops the ray, whether or not it passes `block_condition`, so an entity behind a wall is never seen.
 
 ## Examples
 

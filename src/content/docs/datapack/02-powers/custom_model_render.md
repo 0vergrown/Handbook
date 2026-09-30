@@ -24,6 +24,7 @@ Type ID: `apoli:custom_model_render`
 | `red` / `green` / `blue` / `alpha` | Float                                                      | `1.0`         | Colour/opacity multipliers (0.0 – 1.0).                                                                                                                                                        |
 | `scale`                            | Float                                                      | `1.0`         | Scales the drawn geometry outward from the model origin (aura/shell effect above 1.0).                                                                                                         |
 | `hidden_slots`                     | Array of Equipment Slot | _none_        | Hide this render whenever any listed slot is occupied — e.g. `["head"]` hides a custom hat model when a real helmet is worn.                                                                   |
+| `hide_cape`                        | Boolean                                                  | `false`       | Hide the holder's cape while the power is active. |
 | `show_first_person`                | Boolean                                                  | `false`       | Also draw on the holder's own arm in first person. In texture mode that is the overlay texture; in geometry mode it is the model's `right_arm` / `left_arm` bones (and everything nested under them), posed onto the vanilla first-person arm. |
 
 ## Texture-mode fields (`mode: texture`)
@@ -34,7 +35,6 @@ Field | Type | Default | Description
 `slim_texture_location` | Identifier or keyword | = wide | Texture for the slim (Alex) model.
 `texture_location` | Identifier or keyword | _optional_ | One texture for every model. Used when `wide_texture_location` is left out; one of the two is required.
 `render_as_overlay` | Boolean | `false` | `false` replaces the skin; `true` draws the texture as an overlay layer honouring `render_type`, `body_parts` and the tint.
-`hide_cape` | Boolean | `false` | Hide the holder's cape while active.
 
 ## Geometry-mode fields (`mode: geometry`)
 
@@ -44,6 +44,8 @@ Field | Type | Default | Description
 `texture_location` | Identifier or keyword | _required_ | The texture that UV-maps onto the model, e.g. `mymod:textures/entity/cape.png`. Also takes a [live keyword](#live-textures).
 `render_as_overlay` | Boolean | `false` | **Minions only.** `false` replaces the minion's own model with yours; `true` draws yours on top of it. Ignored on players, where geometry is always drawn over the player model.
 `animations` | [Model Animation](/docs/datapack/data-types/model-animation) or Array of them | _none_ | Bedrock animations to play on the model. The first entry whose `condition` passes is the one that plays.
+`bind_body_parts` | Boolean | `true` | Whether bones named after body parts follow the holder's limbs. `false` leaves the model to its own animations — see [Rigs that animate themselves](#rigs-that-animate-themselves).
+`offset` | [Vector](/docs/datapack/data-types/vector) or Array of 3 Floats | `[0, 0, 0]` | Moves the whole model, in blocks, before `scale` is applied. The axes turn with the holder, like `local` [Space](/docs/datapack/data-types/space): `x` to its left, `y` up, `z` forward — along the flight path on a projectile. The first-person arm is not moved.
 
 ## Live textures
 
@@ -100,7 +102,7 @@ Names are matched loosely, so you rarely have to rename anything Blockbench gave
 | `right_arm` / `left_arm` | `arm_right` / `arm_left`, `right_sleeve` / `left_sleeve`, `right_arm_layer` / `left_arm_layer` |
 | `right_leg` / `left_leg` | `leg_right` / `leg_left`, `right_pants` / `left_pants`, `right_leg_layer` / `left_leg_layer` |
 
-**Every** bone whose name matches a body part binds to it, not just the first one. So a rig with `right_arm` *and* `right_sleeve` — or `head` and `hat_layer`, or `body` and `jacket` — animates all of them together. A second-layer bone that only bound at rest used to stay behind while the limb it sat on moved, which read as the model coming apart on any pose that moves a part rather than only rotating it: sneaking, blocking with a shield, winding up a trident.
+**Every** bone whose name matches a body part binds to it, not just the first one. So a rig with `right_arm` *and* `right_sleeve` — or `head` and `hat_layer`, or `body` and `jacket` — animates all of them together, and a second-layer bone stays on its limb through poses that move a part rather than only rotating it: sneaking, blocking with a shield, winding up a trident.
 
 Nesting is fine: a body-part bone animates from the player whether it sits at the top level, inside a wrapper group like `bb_main`, or under your `Body` bone. It always swings the way the player's own limb swings, never twice over.
 
@@ -144,13 +146,49 @@ Blockbench animations export as a `.animation.json` next to your model. Drop it 
 
 Playback time restarts whenever the selected entry changes, so a non-looping animation replays each time its condition flips back on. `speed` scales the playback rate and `loop` overrides the file's own loop flag — see [Model Animation](/docs/datapack/data-types/model-animation) for the full field list.
 
-> **Conditions here run on the client, every frame, against the state the client knows.** Anything the server never sends — a `apoli:command`, `apoli:predicate`, `apoli:scoreboard`, `apoli:advancement` or `apoli:stat` condition — cannot be answered in a render layer and the entry is skipped with a warning in the log. Everything the client already tracks works: pose, sneaking, sprinting, fall flying, held items, equipment, and, since Apoli 1.45.0, [apoli:resource](/docs/datapack/entity-conditions/resource) on **any** power holder. Before 1.45.0 a resource on a non-player holder (a summoned minion, say) only reached the client once, when the entity came into view, so a condition on it appeared to be stuck at the value it had then — the unconditional fallback entry played instead. Nothing in the data pack changes; rebuild against 1.45.0 and the conditional entries start switching.
+> **Conditions here run on the client, every frame, against the state the client knows.** Anything the server never sends — a `apoli:command`, `apoli:predicate`, `apoli:scoreboard`, `apoli:advancement` or `apoli:stat` condition — cannot be answered in a render layer and the entry is skipped with a warning in the log. Everything the client already tracks works: pose, sneaking, sprinting, fall flying, held items, equipment, and [apoli:resource](/docs/datapack/entity-conditions/resource) on **any** power holder, a summoned minion included.
 
 The animation is applied **on top of** the pose the player's body already gives the model, so a bone named `right_arm` gets the player's arm swing *and* your keyframes, added together. Bones that are not body parts get the keyframes alone. Position keyframes are in Bedrock units and rotation keyframes in degrees, exactly as Blockbench writes them.
 
 On resource (re)load the log prints `Loaded N custom model animation(s) from M file(s).` — check it if nothing moves.
 
 > Only the `position`, `rotation` and `scale` channels are read, with linear interpolation between keyframes (`pre`/`post` values on a keyframe are honoured, which is how Blockbench's stepped keyframes come across). Both keyframe spellings work — a bare `[x, y, z]`, which is what Blockbench's Bedrock exporter writes, and the `{"vector": [x, y, z]}` wrapper the GeckoLib plugin writes. Keyframe **easing** is honoured: `lerp_mode: "catmullrom"` (Blockbench's *smooth* keyframes) interpolates along a Catmull-Rom spline, and GeckoLib's `easing` / `easingArgs` — the full `easeInOutSine`, `easeOutBack`, `easeOutElastic`, `easeOutBounce` family — shape the curve between keyframes. An easing sits on the keyframe you are moving *toward*. **Molang expressions are not evaluated** — a keyframe whose value is a formula rather than a number reads as `0`. Sound and particle effect keyframes are ignored.
+
+### Rigs that animate themselves
+
+Some models are not meant to move like a player at all: a creature with its own walk cycle, a floating spirit, a mech. Set `bind_body_parts` to `false` and the model is drawn exactly as its animations pose it:
+
+- Bones named `head`, `right_arm` and the rest keep your hierarchy. They are not lifted out of their groups, and they do not pick up the player's limb swing, head turn or sneak — only your keyframes move them.
+- The model still turns with the holder's body and is still placed relative to their feet.
+- `body_parts` still hides and shows bones by name.
+- With `show_first_person`, the `right_arm` and `left_arm` bones (and everything under them) are drawn where the vanilla first-person arm is, carrying the rotation your animation gives them, so the held item and the hand line up.
+
+Drive the model from the holder's state with conditional `animations` entries, and hide the player underneath with [apoli:modify_model_parts](/docs/datapack/powers/modify_model_parts):
+
+```json
+{
+  "type": "apoli:custom_model_render",
+  "mode": "geometry",
+  "model_location": "example:golem",
+  "texture_location": "example:textures/entity/golem.png",
+  "bind_body_parts": false,
+  "show_first_person": true,
+  "hide_cape": true,
+  "animations": [
+    {
+      "animation": "example:golem",
+      "name": "animation.golem.walk",
+      "condition": {
+        "type": "apoli:moving"
+      }
+    },
+    {
+      "animation": "example:golem",
+      "name": "animation.golem.idle"
+    }
+  ]
+}
+```
 
 ### Geometry mode on minions
 
@@ -225,7 +263,7 @@ The type id `apoli:energy_swirl` loads as this power with the swirl already set 
 
 - Multiple active `custom_model_render` powers stack; each is drawn. On a minion, one non-overlay geometry power is enough to hide the base model, and the rest still draw.
 - Conditions on the power gate the whole render dynamically (combine with `hidden_slots` for equipment-based hiding).
-- Geometry mode draws in first person with `show_first_person: true`, but only the arm bones — first person draws one arm, so that is all there is to draw on. It **does** draw in full wherever the game renders a whole player body, including the inventory preview and other entity-preview screens, regardless of which camera mode you are in, and when your body is visible in first person (while sleeping, for instance).
+- Geometry mode draws in first person with `show_first_person: true`, but only the arm bones — first person draws one arm, so that is all there is to draw on. A bound arm bone is posed onto the vanilla arm; an unbound one is drawn at it, with its animated rotation. It **does** draw in full wherever the game renders a whole player body, including the inventory preview and other entity-preview screens, regardless of which camera mode you are in, and when your body is visible in first person (while sleeping, for instance).
 - The first-person arm is drawn from the same bones as the third-person model, so the vanilla arm underneath it is still there. Hide it with [apoli:modify_model_parts](/docs/datapack/powers/modify_model_parts) if your model is meant to replace it rather than sit over it.
 - If `model_location` fails to load, the minion falls back to its normal model rather than turning invisible.
 - The Bedrock parser supports box UV **and** per-face UV (including per-cube mixing), per-cube and per-bone `pivot`/`rotation`, `inflate`, `mirror` and bone parenting. Only `minecraft:geometry[0]` is read, and `uv_rotation` (Bedrock format 1.21.0+) is not supported — a model using it logs a warning and draws that face unrotated.
@@ -297,7 +335,11 @@ puts the model on that entity rather than on you:
   humanoid bones driven by the entity's own pose;
 - a projectile fired by [`apoli:fire_projectile`](/docs/datapack/powers/fire_projectile) with a
   `texture_location` renders the geometry instead of its flat texture, oriented along its flight
-  path. Grant the power from that power's `projectile_action`.
+  path. Grant the power from that power's `projectile_action`. With Flywheel installed, the
+  projectile is drawn with instancing — see
+  [Performance Mods](/docs/compat/performance-mods/overview#custom-projectiles).
+
+Minions and projectiles draw the model the way `bind_body_parts: false` does: bones named after player body parts stay where you nested them. On a minion, `bind_body_parts: false` also stops the `main` bone from turning with the minion's gaze. `offset` applies on both, which is the easy way to centre a model that was built off-origin.
 
 `hidden_slots` only applies to entities that wear equipment; on a projectile it is ignored.
 

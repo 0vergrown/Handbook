@@ -49,18 +49,22 @@ first-person hand are interpolated across the slot too, so slowing yourself look
 rather than a stutter — punching and drawing a bow play out at the slowed speed. A **frozen** entity
 stops dead on both sides.
 
-> Anything the local player is riding keeps ticking normally on their own client. Skipping it would
-> stutter the camera, which is worse than the small correction the server sends instead.
-
 For a global slow-motion effect, prefer `target: server`: it is Minecraft's own tick rate, so
 everything — rendering, particles, sounds, the lot — slows together with no interpolation to patch
 up. Per-entity rates are for singling out one mob or one projectile.
 
 The rate never runs anything *faster* than the server already ticks. To speed the world up, raise the server's own rate with vanilla `/tick rate` (Minecraft 1.21 and later) and use this power — or [`/tick entity` and `/tick chunk`](/docs/datapack/commands/tick) — to hold everything else down at 20.
 
-The scopes fall back to each other: an entity with no rate of its own uses its chunk's, and a chunk with no rate of its own uses its dimension's. A passenger always follows its root vehicle.
+The scopes fall back to each other: an entity with no rate of its own uses its chunk's, and a chunk with no rate of its own uses its dimension's.
 
-> Freezing a **player** stops their server-side tick — hunger, regeneration, status effects, item cooldowns, block breaking. It does not stop their client from walking, because movement is client-authoritative. Pair it with a power that actually immobilises them if you need them held in place.
+> Freezing a **player** stops them on both sides: their server-side tick — hunger, regeneration, status effects, item cooldowns, block breaking — and their own client's tick, so they cannot walk either. Looking around and clicking are not part of the tick, so a frozen player can still look about and use or attack what is in reach.
+
+## Riding
+
+- An entity's own rate or freeze always applies to it, whatever it is riding. A frozen passenger stays frozen in a moving boat — it is carried along, but it does not tick, so it cannot steer or climb out.
+- A passenger with no rate of its own takes its vehicle's.
+- A vehicle never runs faster than whoever is steering it — the player in a boat's front seat, on a saddled horse, on a pig with a carrot on a stick. A frozen rider freezes the boat or mount under them, and the vehicle goes back to its own rate the moment they are off it.
+- Anything the local player is riding keeps ticking normally on their own client while it is only slowed, because skipping ticks would stutter their camera; the server's small corrections are the lesser evil. A frozen vehicle stops for its rider too.
 
 > `target: area` runs an entity query every `interval` ticks for every holder. On a busy server, raise `interval` before raising `radius`.
 

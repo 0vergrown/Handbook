@@ -31,7 +31,52 @@ Type ID: `apoli:resource`
 | `retain_value`   | [Boolean](/docs/datapack/data-types/boolean)                           | `false`        | When `enforce_limits` is `true`: if a modification would push the value outside the bounds, keep the old value instead of clamping.                                                                                                                                                                          |
 | `min_action`     | Entity Action Type                            | _optional_     | Run on the entity whenever the value reaches `min`.                                                                                                                                                                                                                                                          |
 | `max_action`     | Entity Action Type                            | _optional_     | Run on the entity whenever the value reaches `max`.                                                                                                                                                                                                                                                          |
+| `on_change`      | [Array](/docs/datapack/data-types/array) of [Object](/docs/datapack/data-types/object) | `[]` | Actions to run when the value changes, each with an optional test on the new value — see [Reacting to changes](#reacting-to-changes). |
 | `persistent`     | [Boolean](/docs/datapack/data-types/boolean)                           | `true`         | When `true`, the value survives server restart (and survives the entity unloading/reloading). When `false`, the value resets to `start_value` whenever the entity rejoins the world. Useful for resources that semantically should reset, like daily-quest counters or cooldowns you want to clear on login. |
+
+## Reacting to changes
+
+`on_change` is a list of entries. Every time the value changes, each entry is checked in order against the **new** value, and the ones that match run their `entity_action` on the holder.
+
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `entity_action` | Entity Action Type | _optional_ | What to run. An entry without one never runs. |
+| `value` | [Integer](/docs/datapack/data-types/integer) OR [Expression](/docs/datapack/data-types/expression) | _optional_ | The number the new value is compared with. |
+| `values` | [Array](/docs/datapack/data-types/array) of [Integer](/docs/datapack/data-types/integer) OR [Expression](/docs/datapack/data-types/expression) | `[]` | More numbers to compare with. The entry matches if the comparison holds for `value` or for any of these. |
+| `comparison` | [Comparison](/docs/datapack/data-types/comparison) | `"=="` | How the new value is compared. |
+
+An entry with neither `value` nor `values` matches every change. Inside these expressions, `value` is the resource's new value.
+
+```json
+{
+   "type":"apoli:resource",
+   "min":0,
+   "max":10,
+   "on_change":[
+      {
+         "value":3,
+         "comparison":"<=",
+         "entity_action":{
+            "type":"apoli:execute_command",
+            "command":"title @s actionbar {\"text\":\"Low on mana\",\"color\":\"red\"}"
+         }
+      },
+      {
+         "values":[5, 10],
+         "entity_action":{
+            "type":"apoli:play_sound",
+            "sound":"minecraft:block.amethyst_block.chime"
+         }
+      }
+   ]
+}
+```
+
+The warning shows on every change that leaves the value at 3 or below; the chime plays when it lands exactly on 5 or 10.
+
+> Entries run after `min_action` and `max_action`, and only when the value actually changes — setting it to the number it already holds runs nothing. In table mode they run per slot, like `min_action` and `max_action`.
+
+> An action that changes a resource can set off that resource's actions again. Apoli follows up to 64 of these chained changes and then stops running `min_action`, `max_action` and `on_change` for the rest of that chain, logging one warning that names the power. A resource that adds to itself on every change stops there instead of taking the server down.
 
 ## Storing more than one value
 
@@ -68,7 +113,7 @@ That is why there is no cap on `size`. What it costs you is decided by which slo
 
 Apoli logs one warning naming the power if a declared `size` is above 65536, as a check against a typo like an extra zero.
 
-> `min_action` and `max_action` fire **per slot** in table mode, so a write with no `position` — which touches every slot — can fire `max_action` several times in one go.
+> `min_action`, `max_action` and `on_change` fire **per slot** in table mode, so a write with no `position` — which touches every slot — can fire them several times in one go.
 
 > Because slots are ordinary Expression values, a table doubles as a vector store. `example:pos[0]`, `example:pos[1]` and `example:pos[2]` feed straight into any field that takes an Expression — a velocity, a damage amount, a modifier — with no `if_else_list` of hard-coded numbers in between.
 

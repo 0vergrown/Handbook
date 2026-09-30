@@ -15,9 +15,9 @@ It is the data-pack equivalent of an `.mcfunction` with macro arguments: write t
 | Field | Type | Default | Description |
 |-------|------|---------|-------------|
 | `entity_action` | [Entity Action](/docs/datapack/entity-actions) | _required_ | What the function does. Runs on whichever entity called it. |
-| `parameters` | [Array](/docs/datapack/data-types/array) of [String](/docs/datapack/data-types/string) | inferred | The argument names the body uses. Leave it out and it is read from the `[name]` placeholders in the body. |
+| `parameters` | [Array](/docs/datapack/data-types/array) of [String](/docs/datapack/data-types/string) | inferred | The argument names the body uses. Leave it out and it is read from the `[name]` placeholders in the body. Written out, only these names are placeholders. |
 
-A **placeholder** is a parameter name in square brackets — `[amount]` — written anywhere inside `entity_action`. Declaring a parameter the body never uses, or using one that isn't declared, is a load error.
+A **placeholder** is a parameter name in square brackets — `[amount]` — written anywhere inside `entity_action`. Names are letters, digits, `_`, `-` and `.`, starting with a letter or `_`; anything else in square brackets is plain text, so target selectors (`@e[type=minecraft:pig]`), JSON text (`["", {"text": "x"}]`) and table reads (`example:table[0]`) work inside a body. With `parameters` written out, every other `[...]` stays as written — `"parameters": []` makes the whole body literal. Declaring a parameter the body never uses is a load error.
 
 ## Examples
 
@@ -47,7 +47,7 @@ Call it from anywhere:
 }
 ```
 
-Placeholders substitute by **value**, not by text, so `"amount": "[amount]"` with `"amount": 3` yields the number `3` — an int field stays an int. A placeholder that is only *part* of a larger string is spliced in as text instead:
+Placeholders substitute by **value**, not by text, so `"amount": "[amount]"` with `"amount": 3` yields the number `3` — an int field stays an int. A placeholder that is only *part* of a larger string is spliced in as text instead, with numbers written without a trailing `.0` and booleans as `true` or `false`:
 
 ```json
 {
@@ -72,3 +72,5 @@ Because substitution happens before the field is parsed, an argument can be anyt
 > Recursion is capped at 16 nested calls. Past that the call is dropped and the server logs the function's id once. A function that calls itself is a data-pack bug, not a supported loop — use [`apoli:loop`](/docs/datapack/meta-actions/loop) or [`apoli:delay`](/docs/datapack/meta-actions/delay).
 
 > Only `entity_action` is supported. Bi-entity, block and item actions need context an entity action cannot supply, and are reachable anyway through the meta actions that do have it.
+
+> To reuse JSON anywhere else — a condition, a `hud_render`, a whole power — use a [macro](/docs/datapack/introduction/macros). Macros follow the same placeholder rules but are expanded while the data pack loads, so there is nothing left to build at runtime.

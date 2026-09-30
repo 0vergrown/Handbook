@@ -58,6 +58,20 @@ This example will deal 25% `generic` damage to the target entity. If the max hea
 
 This example will deal `minecraft:magic` damage to the target entity, with its damage value depending on the value of the `example:magic_damage` (`data/example/powers/magic_damage.json`) power from the actor entity.
 
+## Who gets the credit
+
+When the actor is a projectile, or a [minion](/docs/datapack/entity-actions/summon_minion) or [clone](/docs/datapack/commands/clone) summoned by Apoli, the damage is credited to whoever owns it. The owner is the attacker: the victim retaliates against them, a kill drops experience and player-only loot, and the death message names them. The projectile or summon stays the direct source, so a damage condition that looks at the projectile still sees it. An actor with no owner takes the credit itself.
+
+That makes a projectile's `bientity_action_on_hit` — whose actor is the projectile — hit as its shooter:
+
+```json
+"bientity_action_on_hit": {
+    "type": "apoli:damage",
+    "amount": 6,
+    "damage_type": "minecraft:magic"
+}
+```
+
 ## Which entity the Expression reads
 
 `amount` is an [Expression](/docs/datapack/data-types/expression), and in this bi-entity action a bare variable reads the **actor** — the entity whose power fired the action — not the entity taking the damage. Prefix with `target_` for the victim:

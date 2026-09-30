@@ -12,8 +12,8 @@ Type ID: `apoli:loop`
 
 | Field           | Type                                         | Default    | Description                                                                                                                                                       |
 |-----------------|----------------------------------------------|------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `value`         | [Integer](/docs/datapack/data-types/integer) | `1`        | Number of times `action` is executed. At `0` or less the whole action is skipped — not even `before_action` and `after_action` fire.                              |
-| `ticks`         | [Integer](/docs/datapack/data-types/integer) | `1`        | Tick interval between iterations. At `0` or less every iteration runs in the firing tick instead (see [Running it all in one tick](#running-it-all-in-one-tick)). |
+| `value`         | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | `1`        | Number of times `action` is executed. At `0` or less the whole action is skipped — not even `before_action` and `after_action` fire.                              |
+| `ticks`         | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | `1`        | Tick interval between iterations. At `0` or less every iteration runs in the firing tick instead (see [Running it all in one tick](#running-it-all-in-one-tick)). |
 | `before_action` | Entity Action                                | *optional* | Fired once, immediately, before the first iteration.                                                                                                              |
 | `action`        | Entity Action                                | *optional* | Fired once per iteration.                                                                                                                                         |
 | `after_action`  | Entity Action                                | *optional* | Fired once, in the same tick as the final iteration, right after it.                                                                                              |
@@ -27,6 +27,8 @@ With `ticks` at `1` or more, timing is measured in ticks from the moment the loo
 - `after_action` runs in the same tick as the final iteration, immediately after it.
 
 A `value: 3`, `ticks: 20` loop therefore runs `action` at ticks `0`, `20`, and `40`, spanning `(value − 1) × ticks` ticks total. If `action` is omitted there is nothing to iterate, so `before_action` and `after_action` (when present) both fire immediately.
+
+`value` and `ticks` can be [Expressions](/docs/datapack/data-types/expression). Both are worked out once, when the loop fires, and their variables read the entity the action runs on — the actor, in a bi-entity action. So `"value": "2 + 2 * example:charges"` repeats more the more charges the entity has when the loop starts, and spending charges mid-loop does not cut it short.
 
 ## Running it all in one tick
 
