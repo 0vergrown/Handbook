@@ -18,6 +18,8 @@ Type ID: `apoli:multiple`
 > 
 > `/reload` reconciles what an entity is already holding: a sub-power you add to the file is granted to everyone who already has the super-power, and one you delete is revoked from them. You do not have to re-grant the super-power.
 
+> A multiple counts every power held under its own id as one of its sub-powers. A power granted to the same entity with the multiple's id as its `source` is therefore revoked again within a tick — give such grants a source of their own (see [apoli:grant_power](/docs/datapack/entity-actions/grant_power#choosing-a-source)).
+
 ## Fields
 
 Arbitrary fields. Any "key", except for `type`, `loading_priority`, `name`, `description`, `hidden`, `condition`, `tags`, `skill`, `sub_powers` and `load_condition`, is considered a sub-power and takes a fully-defined power type as the value.

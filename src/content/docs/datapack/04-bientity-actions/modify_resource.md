@@ -52,3 +52,25 @@ Drains five mana from the target. With no `from`, this is the same as wrapping t
 ```
 
 Adds the **target's** current `example:mana` onto the **actor's** `example:stolen_charge`. `from_side` defaults to the opposite of `side`, so the read comes from the target without being spelled out. Set it explicitly when both halves should come from the same entity.
+
+## Reading the other side in `value`
+
+`from_side` only decides where `from` reads. An Expression in the `modifier`'s `value` reads the
+entity on `side`, the one being written. To use a number from the other entity, name its side
+explicitly with `actor_resource(...)` or `target_resource(...)` (see [Expression](/docs/datapack/data-types/expression)):
+
+```json
+"bientity_action": {
+    "type": "apoli:modify_resource",
+    "side": "target",
+    "resource": "example:minion_speed",
+    "modifier": {
+        "operation": "set_base",
+        "value": "1 + actor_resource(example:haste_upgrade)"
+    }
+}
+```
+
+Run from a [apoli:summon_minion](/docs/datapack/entity-actions/summon_minion) `bientity_action`, this
+copies the summoner's upgrade onto the new minion. A bare `example:haste_upgrade` would be read off
+the minion, which does not have it, and come out as `0`.

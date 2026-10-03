@@ -21,6 +21,17 @@ Field  | Type | Default | Description
 `order` | [Integer](/docs/datapack/data-types/integer) | *optional* | If specified, this determines the position of the HUD render when being rendered. The higher the `order` value is, the higher it is on the rendered HUD render stack.
 `max` | [Integer](/docs/datapack/data-types/integer) OR [Expression](/docs/datapack/data-types/expression) | *optional* | The value at which the bar reads full, overriding whatever the power itself would use. Required to draw a bar for a resource that has no `max` of its own — see below.
 
+## Which powers draw a bar
+
+Every power type with a `hud_render` field draws a bar from it, and the bar always shows the same number the [Resource](/docs/datapack/entity-conditions/resource) condition reads for that power:
+
+| Kind | Power types | The bar |
+| --- | --- | --- |
+| Resource | [apoli:resource](/docs/datapack/powers/resource) | Always shown. Fills from `min` to `max`. |
+| Cooldown | [apoli:cooldown](/docs/datapack/powers/cooldown), [apoli:action_on_key_press](/docs/datapack/powers/action_on_key_press), [apoli:action_on_key_sequence](/docs/datapack/powers/action_on_key_sequence), [apoli:fire_projectile](/docs/datapack/powers/fire_projectile), [apoli:action_on_hit](/docs/datapack/powers/action_on_hit), [apoli:action_when_hit](/docs/datapack/powers/action_when_hit), [apoli:action_on_kill](/docs/datapack/powers/action_on_kill), [apoli:action_on_collision](/docs/datapack/powers/action_on_collision), [apoli:game_event_listener](/docs/datapack/powers/game_event_listener), [apoli:action_on_scroll_wheel](/docs/datapack/powers/action_on_scroll_wheel), [apoli:action_on_mouse_movement](/docs/datapack/powers/action_on_mouse_movement) | Shown only while cooling down. Fills as the cooldown recovers. |
+
+The bar is drawn whether or not the power's own `condition` currently passes, so an ability that needs you on the ground still shows its cooldown while you are in the air. Use the `condition` on the `hud_render` entry to hide it.
+
 ## Where the bars sit
 
 Bars stack upward in the right-hand status column, starting on the first free row above whatever the HUD already

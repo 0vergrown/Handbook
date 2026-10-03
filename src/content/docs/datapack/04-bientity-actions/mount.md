@@ -36,6 +36,8 @@ Field  | Type | Default | Description
 
 > The offset is applied on top of whatever seat the vehicle would normally use, so it works on every vehicle — plain mobs, players, and the vanilla mounts that define their own seat position (horses, camels, llamas, striders, boats, minecarts).
 
+> A rider on a **player** behaves like a rider on any other mount. It gets off with the sneak key or with [`apoli:dismount`](/docs/datapack/entity-actions/dismount), and every client sees it, including the carried player's own. The offset is drawn the same way for everyone: the rider, the carried player and anyone watching.
+
 > If the actor is **already** riding the target, `apoli:mount` still applies (or replaces) the offset without re-mounting. That makes it usable to re-position a rider that climbed on by ordinary means.
 
 > **1.20.1 only:** riders of a *player* already sit on top of that player's head rather than at vanilla's shoulder height. The offset is added on top of that, so `y: -0.8` brings a rider back down to roughly where 1.21.1 puts them.

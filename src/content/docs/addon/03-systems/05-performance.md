@@ -28,6 +28,20 @@ The last three are **hot paths**. The rules below apply to them without exceptio
 5. **Mixin config plugins must not load classes.** `Class.forName` defines the class and its vanilla supertypes too early and breaks other mods' mixins. Use `ClassLoader.getResource("path/To/Class.class") != null` or the loader's `isModLoaded`.
 6. **Profile before and after.** When you touch a tick path, run Spark on a dev server and compare the mod's share of the server thread.
 
+## Gate global hooks on held types
+
+A mixin on a method the whole game calls — a block's collision shape, an entity's fluid update, `onClimbable` — runs for every entity whether or not anyone holds your power. Before looking anything up, ask whether anyone holds the type at all:
+
+```java
+public static final PowerTypeUsage.Handle HELD = PowerTypeUsage.handle(MY_TYPE);
+
+if (!entity.level().isClientSide() && !HELD.isHeld()) return original;
+```
+
+`isHeld()` is one array read. The set of held types is rebuilt on the server once a tick from the powered entities, and opened immediately when a power is granted or an entity with powers loads, so it is never closed while someone holds the type. It describes the server only — on the client, where the entities that matter are the local player and what it controls, skip the gate.
+
+Pair the gate with an allocation-free injector: `@ModifyReturnValue` and `@ModifyExpressionValue` from MixinExtras allocate nothing, while a cancellable `@Inject` allocates a `CallbackInfoReturnable` on every call.
+
 ## Stateless singletons
 
 A `PowerType` / `ActionType` / `ConditionType` is one instance for the whole game. Never store per-entity state in a field on it — every entity would share it. Per-holder state goes in [aux data](/docs/addon/systems/aux-and-persistence), keyed by the entity.

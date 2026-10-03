@@ -22,7 +22,8 @@ Type ID: `apoli:fire_projectile`
 | `speed`                               | [Float](/docs/datapack/data-types/float)      | `1.5`      | The speed applied to the fired projectile.                                                                                                                                       |
 | `offset_x`, `offset_y`, `offset_z`    | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | `0` | Where the projectile spawns, relative to the shooter's eyes. Read through `space`, so `local` puts `offset_z: 1.5` a block and a half in front of wherever they are looking — the muzzle of a cannon rather than a point due south of it. An expression is evaluated for every projectile, with the shooter as the subject, so `"rUni(-3, 3)"` scatters a volley. |
 | `space`                               | [Space](/docs/datapack/data-types/space) | `world` | How the spawn offset is read. `local` is relative to the shooter's facing, `world` to the world axes. |
-| `max_distance`                        | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression)      | `0`        | Removes the projectile once it has travelled this far, in blocks — or turns it around, when `return` is set. `0` leaves it to fly until it hits something or expires. Apoli's own shots keep drifting on inertia, so `speed` alone does not bound their range. |
+| `max_distance`                        | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression)      | `0`        | Removes the projectile once it has travelled this far, in blocks, measured along the path it actually flew — bounces and homing curves count — or turns it around, when `return` is set. `0` leaves it to fly until it hits something or expires. Apoli's own shots keep drifting on inertia, so `speed` alone does not bound their range. |
+| `lifetime`                            | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | `0` | Removes the projectile after this many ticks in the air, whatever it is doing, running `bientity_action_on_expire` first. It is the backstop for a slow projectile that would otherwise hang where it stopped — in water, say. Unlike `max_distance` it also ends a projectile that is on its way back. `0` sets no limit. |
 | `divergence`                          | [Float](/docs/datapack/data-types/float)      | `1.0`      | How much each projectile fired is affected by random spread.                                                                                                                     |
 | `sound`                               | [Identifier](/docs/datapack/data-types/identifier) | _optional_ | If set, the sound with this ID will be played when the power is used.                                                                                                            |
 | `tag`                                 | [NBT](/docs/datapack/data-types/nbt)        | _optional_ | NBT data of the entity.                                                                                                                                                          |
@@ -43,7 +44,7 @@ Type ID: `apoli:fire_projectile`
 | `shooter_action`                      | Entity Action Type     | _optional_ | If specified, this entity action will be executed on the entity that has the power.                                                                                              |
 | `reflective`                          | [Projectile Reflection](/docs/datapack/data-types/projectile-reflection) or [Boolean](/docs/datapack/data-types/boolean) | *optional* | Makes the projectile bounce off blocks instead of stopping on them. `true` bounces with the default settings. See [Bouncing off walls](#bouncing-off-walls). |
 | `bientity_action_on_bounce`           | Bi-entity Action       | *optional* | If specified, the bi-entity action to execute with the projectile owner as the actor and the projectile as the target every time it bounces.                                     |
-| `bientity_action_on_expire`           | Bi-entity Action       | *optional* | If specified, the bi-entity action to execute with the projectile owner as the actor and the projectile as the target when the projectile reaches `max_distance` and is removed. It does not run when `return` turns the projectile around instead. |
+| `bientity_action_on_expire`           | Bi-entity Action       | *optional* | If specified, the bi-entity action to execute with the projectile owner as the actor and the projectile as the target when the projectile runs out of `max_distance` or `lifetime` and is removed. It does not run when `return` turns the projectile around instead. |
 | `return`                              | [Projectile Return](/docs/datapack/data-types/projectile-return) | *optional* | Makes the projectile fly back to the shooter, like a trident with Loyalty. See [Coming back](#coming-back). |
 | `homing`                              | [Projectile Homing](/docs/datapack/data-types/projectile-homing) | *optional* | Makes the projectile seek out and curve toward a nearby target. See [Chasing a target](#chasing-a-target). |
 
@@ -219,10 +220,11 @@ The model is read from `assets/example/geo/shuriken.geo.json` and the animation 
 The model faces the projectile's direction of travel, and its animations play from the moment it is
 granted, so a spin or a flame flicker runs for the projectile's whole flight.
 
-The power is resolved at spawn and the projectile carries it in its own entity data, so it arrives
-with the spawn packet and every viewer sees the model on the very first frame. Granting or revoking a
-model power mid-flight still works — the live power is checked when the projectile is not carrying a
-stamped one.
+Every geometry power the projectile holds when it is fired is resolved then and carried in its own
+entity data, so it arrives with the spawn and every viewer sees the model on the very first frame. A
+projectile can wear several at once — a body plus a glowing-eyes layer, say — and draws them all.
+Granting or revoking a model power mid-flight still works — the live powers are checked when the
+projectile is not carrying stamped ones.
 
 Pair it with the spawn offset to line the projectile up with whatever fired it:
 

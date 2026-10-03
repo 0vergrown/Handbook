@@ -132,7 +132,8 @@ const ACRONYMS = new Map([
 	['json', 'JSON'],
 	['npc', 'NPC'],
 	['id', 'ID'],
-	['ai', 'AI']
+	['ai', 'AI'],
+	['fov', 'FOV']
 ]);
 
 /** `custom_model_render` -> `Custom Model Render`. Every word capitalised. */

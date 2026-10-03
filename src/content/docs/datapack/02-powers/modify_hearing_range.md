@@ -113,7 +113,7 @@ The modifier's `value` accepts an [Expression](/docs/datapack/data-types/express
 
 ## Notes
 
-- Everything is decided **on the server**, so it works for vanilla clients and cannot be tampered with.
+- Whether the power is active is decided **on the server**, so its `condition` can use anything. For game sounds, the server decides which sounds reach the holder at all, and the holder's client — which needs Apoli installed — stretches how far each sound carries, so a far sound is heard and every sound in range is louder. Without Apoli on the client the extra sounds arrive but fade out at the usual distance.
 - Extended voice hearing works by widening how far the speaker's audio is broadcast and then trimming it back per listener, so a distant listener hears the speaker while everyone else's range is unchanged.
 - For the first tick of an utterance the listener hears at the speaker's own range; the listener's modifiers take over from the next tick. At 50 ms it is not audible, but it is why a range change never clips the start of a word.
 - Only **proximity** voice audio is affected. Group chat is a separate channel and is always audible to its members.

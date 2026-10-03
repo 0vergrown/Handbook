@@ -59,6 +59,11 @@ The scopes fall back to each other: an entity with no rate of its own uses its c
 
 > Freezing a **player** stops them on both sides: their server-side tick — hunger, regeneration, status effects, item cooldowns, block breaking — and their own client's tick, so they cannot walk either. Looking around and clicking are not part of the tick, so a frozen player can still look about and use or attack what is in reach.
 
+> **Damage on a frozen entity.** A frozen entity's half-second immunity after a hit never counts
+> down, so while it stays frozen any later hit no stronger than the last one does nothing. Damage that
+> must land on something frozen — a power that holds enemies in place and then hurts them — needs a
+> damage type in `#minecraft:bypasses_cooldown`. The red hurt flash still fades on screen as usual.
+
 ## Riding
 
 - An entity's own rate or freeze always applies to it, whatever it is riding. A frozen passenger stays frozen in a moving boat — it is carried along, but it does not tick, so it cannot steer or climb out.

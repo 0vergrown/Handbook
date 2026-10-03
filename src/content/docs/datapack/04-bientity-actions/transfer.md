@@ -63,6 +63,8 @@ Every power a holder has is tracked by the *sources* that granted it, and a powe
 
 Because it all runs server-side and edits the ref-counted container directly, there is no client authority to desync and no path to duplicate a power in multiplayer.
 
+The recipient does not need to hold any powers already; one that has never had a power receives them the same way.
+
 ## Losing / restoring
 
 To make a transfer temporary (the classic "steal for 5 minutes"), group it under a `new_source` and later strip that source — e.g. with `apoli:revoke_all_powers` sharing the same source, or a resource `min_action` that revokes it. Bringing it back is just running the transfer again.

@@ -62,3 +62,5 @@ Grant a skill tree's powers without the hidden plumbing ones:
 ```
 
 > With `from` omitted this grants **every loaded power in the game**, which is almost never what you want and will happily hand a player every power of every origin in the pack. Always name a source.
+
+The entity does not need to hold any powers already: one that has never had a power — a mob, an item, a projectile — gets them all the same.

@@ -25,7 +25,7 @@ Field | Type | Default | Description
 - Reaching `max_distance` turns the projectile around instead of removing it, so `max_distance` is also how far a boomerang flies before it swings back.
 - On the way back it flies through blocks, ignores gravity and is pulled toward the owner's eyes every tick, curving round rather than snapping back. It disappears once it reaches them.
 - A [reflective](/docs/datapack/powers/fire_projectile#bouncing-off-walls) projectile uses up its bounces first. The block hit after its last bounce turns it around, as long as `on_hit_block` is `true`.
-- It is removed without being caught if the owner dies, leaves, changes dimension or switches to spectator.
+- It is removed without being caught if the owner dies, leaves, changes dimension or switches to spectator, or when the shot's `lifetime` runs out.
 - The pull is worked out on the server and on every client watching, so it looks smooth without extra network traffic.
 
 ## Examples

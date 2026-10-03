@@ -1,17 +1,17 @@
 ---
 title: "Custom Model Render (Power Type)"
-description: "Renders a custom look on a player: either re-skinning the vanilla model with a texture (texture mode) or drawing a separate 3D model made in Blockbench that…"
+description: "Renders a custom look on a player or any mob: re-skinning its own model with a texture (texture mode), or drawing a 3D model made in Blockbench that follows its pose (geometry mode)."
 navigation_title: "Custom Model Render"
 aliases: ["energy_swirl"]
 ---
 
-Renders a custom look on a player: either re-skinning the vanilla model with a texture (**texture mode**) or drawing a separate 3D model made in Blockbench that follows the player's pose (**geometry mode**). Geometry mode is a JSON-defined feature renderer — no Java, no extra mods.
+Renders a custom look on a player or on any mob: either re-skinning the entity's own model with a texture (**texture mode**) or drawing a separate 3D model made in Blockbench that follows its pose (**geometry mode**). Geometry mode is a JSON-defined feature renderer — no Java, no extra mods.
 
 Type ID: `apoli:custom_model_render`
 
 > This power supersedes `apoli:entity_texture_overlay`, which is not a registered type — rename it to `apoli:custom_model_render` in any JSON that still uses it. The `mode: texture` fields below are the direct equivalents of its fields, except that there is no multi-`layers` field: use one power per layer.
 
-> This is a client-side rendering power. **Texture mode** draws its overlays on any living entity that holds the power; replacing the skin outright (`render_as_overlay: false`) is for players only. **Geometry mode** works on players and on the minions summoned by [apoli:summon_minion](/docs/datapack/entity-actions/summon_minion). Textures and models must be present in every viewer's resource pack.
+> This is a client-side rendering power. Both modes work on every living entity that holds the power — players, mobs, armor stands and the minions summoned by [apoli:summon_minion](/docs/datapack/entity-actions/summon_minion) — and geometry also renders on projectiles. See [On mobs](#on-mobs) for how textures and models map onto a mob. Textures and models must be present in every viewer's resource pack.
 
 ## Shared fields (both modes)
 
@@ -20,7 +20,7 @@ Type ID: `apoli:custom_model_render`
 | `mode`                             | String                                                    | `texture`     | `texture` (re-skin the vanilla model) or `geometry` (draw a custom Blockbench model).                                                                                                          |
 | `render_type`                      | [Render Type](/docs/datapack/data-types/render-type) | `translucent` | Draw style — `translucent`, `cutout`, `cutout_no_cull`, `solid`, `emissive`/`glow`, `eyes`, `energy_swirl`.                                                                                  |
 | `scroll_speed`                     | Float                                                      | `0.0`         | With `render_type: energy_swirl`, how fast the texture scrolls, in texture-heights per tick. `0.0` holds the texture still. See [Energy swirl](#energy-swirl).                                    |
-| `body_parts`                       | [Body Part](/docs/datapack/data-types/body-part) or Array of Body Part | _whole model_ | In texture mode, restrict an overlay to these parts — limbs, layers or groups such as `arms` and `upper` on a humanoid model; `main`, `flat2`, `flat3` on a minion. On a model with neither, the whole model is drawn. In geometry mode, render only the bones with these names — **any** bone name in your own model, not just the vanilla ones; a group name shows every bone bound to its limbs. Every bone you do not name is hidden, and hiding a bone hides everything nested under it. |
+| `body_parts`                       | [Body Part](/docs/datapack/data-types/body-part) or Array of Body Part | _whole model_ | In texture mode, restrict an overlay to these parts — limbs, layers or groups such as `arms` and `upper` on a humanoid model; `main`, `flat2`, `flat3` on a minion; on any other mob, the names of its own model parts, such as a spider's `head` or `right_front_leg`. In geometry mode, render only the bones with these names — **any** bone name in your own model, not just the vanilla ones; a group name shows every bone bound to its limbs. Every bone you do not name is hidden, and hiding a bone hides everything nested under it. |
 | `red` / `green` / `blue` / `alpha` | Float                                                      | `1.0`         | Colour/opacity multipliers (0.0 – 1.0).                                                                                                                                                        |
 | `scale`                            | Float                                                      | `1.0`         | Scales the drawn geometry outward from the model origin (aura/shell effect above 1.0).                                                                                                         |
 | `hidden_slots`                     | Array of Equipment Slot | _none_        | Hide this render whenever any listed slot is occupied — e.g. `["head"]` hides a custom hat model when a real helmet is worn.                                                                   |
@@ -34,7 +34,7 @@ Field | Type | Default | Description
 `wide_texture_location` | Identifier or keyword | = `texture_location` | Texture for the wide (Steve) model, and for every entity that is not a player. Also takes a [live keyword](#live-textures).
 `slim_texture_location` | Identifier or keyword | = wide | Texture for the slim (Alex) model.
 `texture_location` | Identifier or keyword | _optional_ | One texture for every model. Used when `wide_texture_location` is left out; one of the two is required.
-`render_as_overlay` | Boolean | `false` | `false` replaces the skin; `true` draws the texture as an overlay layer honouring `render_type`, `body_parts` and the tint.
+`render_as_overlay` | Boolean | `false` | `false` replaces the skin — or a mob's own texture; `true` draws the texture as an overlay layer honouring `render_type`, `body_parts` and the tint.
 
 ## Geometry-mode fields (`mode: geometry`)
 
@@ -42,7 +42,7 @@ Field | Type | Default | Description
 ------|------|---------|-------------
 `model_location` | Identifier | _required_ | The Blockbench model. `mymod:cape` resolves to `assets/mymod/geo/cape.geo.json` (the standard Blockbench/GeckoLib folder) — `assets/mymod/models/apoli/cape.geo.json` also works. Export from Blockbench as **Bedrock geometry** (`.geo.json`).
 `texture_location` | Identifier or keyword | _required_ | The texture that UV-maps onto the model, e.g. `mymod:textures/entity/cape.png`. Also takes a [live keyword](#live-textures).
-`render_as_overlay` | Boolean | `false` | **Minions only.** `false` replaces the minion's own model with yours; `true` draws yours on top of it. Ignored on players, where geometry is always drawn over the player model.
+`render_as_overlay` | Boolean | `false` | On anything but a player: `false` replaces the entity's own model with yours; `true` draws yours on top of it. Ignored on players, where geometry is always drawn over the player model.
 `animations` | [Model Animation](/docs/datapack/data-types/model-animation) or Array of them | _none_ | Bedrock animations to play on the model. The first entry whose `condition` passes is the one that plays.
 `bind_body_parts` | Boolean | `true` | Whether bones named after body parts follow the holder's limbs. `false` leaves the model to its own animations — see [Rigs that animate themselves](#rigs-that-animate-themselves).
 `offset` | [Vector](/docs/datapack/data-types/vector) or Array of 3 Floats | `[0, 0, 0]` | Moves the whole model, in blocks, before `scale` is applied. The axes turn with the holder, like `local` [Space](/docs/datapack/data-types/space): `x` to its left, `y` up, `z` forward — along the flight path on a projectile. The first-person arm is not moved.
@@ -325,7 +325,50 @@ Clawed gauntlets you can also see on your own hands:
 
 The model's `right_arm` and `left_arm` bones sit on the vanilla arm pivots, so they follow the arm in third person and are drawn onto the first-person hand as well.
 
-## On something other than a player
+## On mobs
+
+Grant the power to a mob — with [apoli:grant_power](/docs/datapack/entity-actions/grant_power), the `/apoli:power grant` command or a [global power set](/docs/datapack/introduction/powers#global-powers) — and it renders on that mob. That is how you make mob variants: a red zombie, a crystal spider, a ghast with a crown.
+
+**Texture mode** paints onto the mob's **own model**, through that model's own UV layout. So a texture made for it is simply the mob's vanilla texture repainted: open `minecraft:textures/entity/zombie/zombie.png` (or the spider's, the ghast's…) from the vanilla resources, paint over it, and point `texture_location` at your copy. It fits whatever shape the model has, at any resolution, as long as it keeps the layout — a 128×128 repaint of a 64×64 texture works.
+
+- `render_as_overlay: false` swaps the mob's texture outright. The mob's own extra layers that reuse its texture — a slime's translucent outer shell, for one — take the new texture too.
+- `render_as_overlay: true` draws your texture over the mob's, with `render_type`, the tint and `scale` — glowing markings, an energy shell, a coat of frost.
+
+```json
+{
+  "type": "apoli:custom_model_render",
+  "texture_location": "example:textures/entity/zombie/infernal_zombie.png"
+}
+```
+
+**Geometry mode** draws your Blockbench model on the mob. Bones named after the mob's own **model parts** follow those parts, the same way `head` and `right_arm` follow a player:
+
+| Mob | Some of its part names |
+| --- | --- |
+| Zombie, skeleton, enderman and other humanoids | `head`, `hat`, `body`, `right_arm`, `left_arm`, `right_leg`, `left_leg` |
+| Spider | `head`, `body0`, `body1`, `right_front_leg` … `left_hind_leg`, `right_middle_front_leg` … |
+| Creeper | `head`, `body`, `right_front_leg`, `left_front_leg`, `right_hind_leg`, `left_hind_leg` |
+| Ghast | `body`, `tentacle0` … `tentacle8` |
+| Slime | `cube`, `right_eye`, `left_eye`, `mouth` |
+| Vex | `head`, `body`, and under the body `right_arm`, `left_arm`, `right_wing`, `left_wing` |
+
+The names are the ones Minecraft's own model code gives the parts; case, spaces, `_` and `-` are ignored. Every bone follows its part relative to where that part rests, so put each bone's pivot where the vanilla part's pivot is, and **nest the bones the way the mob's parts are nested** — a vex's `right_arm` under its `body` — so a parent's movement reaches its children once, not twice. Bones that name no part ride along with their parent.
+
+With `render_as_overlay: false` (the default) your model replaces the mob's: the vanilla model is not drawn. The mob's other layers still are — held items, armour, a spider's glowing eyes — so hide those you do not want with [apoli:prevent_feature_render](/docs/datapack/powers/prevent_feature_render). With `render_as_overlay: true` your model is drawn on top of the mob, which is the way to give it a hat, horns or wings.
+
+```json
+{
+  "type": "apoli:custom_model_render",
+  "mode": "geometry",
+  "model_location": "example:crystal_spider",
+  "texture_location": "example:textures/entity/crystal_spider.png",
+  "render_type": "cutout_no_cull"
+}
+```
+
+> The power is drawn on the client of everyone who can see the mob, so its `condition` is evaluated there and can only use what clients know: the mob's pose, health, equipment, resources and other synced values.
+
+## On something other than a player or a mob
 
 The power renders on whatever entity holds it, so granting it to a summon, a clone or a projectile
 puts the model on that entity rather than on you:
@@ -356,8 +399,14 @@ disguise's live pose.
 {
   "type": "apoli:multiple",
   "skeleton_body": {
-    "type": "apoli:disguise_as",
-    "entity_type": "minecraft:skeleton"
+    "type": "apoli:action_on_callback",
+    "entity_action_added": {
+      "type": "apoli:disguise_as",
+      "entity_type": "minecraft:skeleton"
+    },
+    "entity_action_removed": {
+      "type": "apoli:remove_disguise"
+    }
   },
   "armor": {
     "type": "apoli:custom_model_render",

@@ -4,49 +4,97 @@ description: "Provides a cooldown — a count-down timer that can be triggered, 
 navigation_title: "Cooldown"
 ---
 
-Provides a cooldown — a count-down timer that can be triggered, queried, and modified. Useful for power types that don't have a built-in cooldown, or as a simple recurring timer.
+Provides a cooldown — a count-down timer that can be triggered, queried, and modified. Useful for power types that don't have a built-in cooldown, as a recurring timer, or as a loop that runs an action every so many ticks.
 
 Type ID: `apoli:cooldown`
 
-> A Cooldown is implemented as a thin specialization of the [apoli:resource](/docs/datapack/powers/resource) with `min = 0`, `max = cooldown`, and an automatic decrement of `1` each tick. This means **everything that works against a Resource also works against a Cooldown** — the Resource (Entity Condition Type), [apoli:modify_resource](/docs/datapack/entity-actions/modify_resource), [apoli:change_resource](/docs/datapack/entity-actions/change_resource), and [apoli:trigger_cooldown](/docs/datapack/entity-actions/trigger_cooldown) all operate on the same underlying value.
-
-## Why not a separate power type?
-
-Apace's Apoli had `apoli:cooldown` and `apoli:resource` as parallel classes with mostly-duplicated logic, which is why nested cooldowns inside complex power packs got awkward. In this rewrite the two share their state machine — a Cooldown is just a Resource that ticks down — so any composition that works on a Resource works the same on a Cooldown.
+> A Cooldown is a [apoli:resource](/docs/datapack/powers/resource) whose value is the number of ticks left, from `0` (ready) up to `cooldown`. Everything that works against a Resource also works against a Cooldown — the [Resource](/docs/datapack/entity-conditions/resource) condition, [apoli:modify_resource](/docs/datapack/entity-actions/modify_resource), [apoli:change_resource](/docs/datapack/entity-actions/change_resource), [apoli:trigger_cooldown](/docs/datapack/entity-actions/trigger_cooldown), expressions and `/apoli:resource` — and so do the resource's `min_action`, `max_action` and `on_change`.
 
 ## Fields
 
 | Field | Type | Default | Description |
 |-------|------|---------|-------------|
-| `cooldown` | [Integer](/docs/datapack/data-types/integer) OR [Expression](/docs/datapack/data-types/expression) | | The number of ticks the cooldown needs to recharge from `0` back to `cooldown`. Becomes the resource's `max`. |
-| `hud_render` | [Hud Render](/docs/datapack/data-types/hud-render) | _hidden_ | Determines how the cooldown is visualized on the HUD. |
-| `persistent` | [Boolean](/docs/datapack/data-types/boolean) | `true` | When `true`, the cooldown's remaining ticks survive server restart (so a player who used their ult and logged off doesn't get to reuse it on login). When `false`, the cooldown resets to ready (value `0`) whenever the entity rejoins the world. |
+| `cooldown` | [Integer](/docs/datapack/data-types/integer) OR [Expression](/docs/datapack/data-types/expression) | _required_ | How many ticks the cooldown lasts once triggered. |
+| `hud_render` | [Hud Render](/docs/datapack/data-types/hud-render) | _hidden_ | How the cooldown is shown on the HUD. The bar fills as the cooldown recovers and disappears when it is ready. |
+| `persistent` | [Boolean](/docs/datapack/data-types/boolean) | `true` | When `true`, a running cooldown carries on across logging out and server restarts. When `false`, the cooldown resets to `start_value` whenever the holder loads into the world. |
+| `start_value` | Integer OR Expression | `0` | Ticks left when the power is first granted. `0` starts it ready; `cooldown` starts it just used. |
+| `min_action` | [Entity Action Type](/docs/datapack/entity-actions) | _optional_ | Runs when the cooldown reaches `0` — the moment it becomes ready. |
+| `max_action` | Entity Action Type | _optional_ | Runs when the cooldown is set to its full length — the moment it is triggered. |
+| `on_change` | Array of [On Change](/docs/datapack/powers/resource#reacting-to-changes) entries | _none_ | Runs an action when the value reaches one you name — for a cooldown, every value it counts down through. |
 
 ## Behaviour
 
-- On power add, value starts at `0` — the cooldown is "ready". The value represents **remaining ticks until ready** (matches the semantics of Apace's `CooldownPower.getRemainingTicks`).
-- [apoli:trigger_cooldown](/docs/datapack/entity-actions/trigger_cooldown) sets the value to `cooldown` (just triggered, max remaining).
-- Each tick the value decrements by `1` until it reaches `0` (re-ready).
-- The Resource (Entity Condition Type) can check `value == 0` (ready) or `value > 0` (cooling).
-- [apoli:modify_resource](/docs/datapack/entity-actions/modify_resource) with `add 1` increases the remaining time by 1 tick — matches Apace's legacy behaviour exactly, so packs that ran `change_resource: { change: 1 }` on a cooldown still behave the same.
+- The value is the number of **ticks left until ready**. [apoli:trigger_cooldown](/docs/datapack/entity-actions/trigger_cooldown) sets it to `cooldown`.
+- The cooldown counts down on the world clock. It keeps counting while the power's own `condition` fails, while the holder is offline and while its chunk is unloaded, so a cooldown that ran out in the meantime is ready the moment the holder is back.
+- [apoli:modify_resource](/docs/datapack/entity-actions/modify_resource) with `add 20` adds a second to the time left; `set_base 0` makes it ready at once. Writes are clamped to `0` … `cooldown`.
+- The [Resource](/docs/datapack/entity-conditions/resource) condition can check `== 0` (ready) or `> 0` (cooling).
+- `min_action` fires once, when the time left reaches `0`. Setting the value to `0` yourself fires it too, but writing `0` to a cooldown that is already ready does not.
 
 ## Examples
 
-A simple 10-second cooldown displayed on the HUD:
+A 10-second cooldown shown on the HUD:
 
 ```json
 {
-    "type": "apoli:cooldown",
-    "cooldown": 200,
-    "hud_render": { "should_render": true, "bar_index": 3 }
+  "type": "apoli:cooldown",
+  "cooldown": 200,
+  "hud_render": {
+    "should_render": true,
+    "bar_index": 3
+  }
 }
 ```
 
-A cooldown whose duration depends on the player's XP level (longer for higher-XP players):
+A cooldown whose length depends on the player's XP level:
 
 ```json
 {
-    "type": "apoli:cooldown",
-    "cooldown": "100 + 10 * xp_level"
+  "type": "apoli:cooldown",
+  "cooldown": "100 + 10 * xp_level"
+}
+```
+
+A loop: every three seconds the holder is healed, and the cooldown restarts itself. `start_value` starts it running; `min_action` heals and triggers it again:
+
+```json
+{
+  "type": "apoli:cooldown",
+  "cooldown": 60,
+  "start_value": 60,
+  "hud_render": {
+    "should_render": true,
+    "bar_index": 6
+  },
+  "min_action": {
+    "type": "apoli:and",
+    "actions": [
+      {
+        "type": "apoli:heal",
+        "amount": 2
+      },
+      {
+        "type": "apoli:trigger_cooldown",
+        "power": "*:*"
+      }
+    ]
+  }
+}
+```
+
+A warning one second before a cooldown is ready again:
+
+```json
+{
+  "type": "apoli:cooldown",
+  "cooldown": 400,
+  "on_change": [
+    {
+      "value": 20,
+      "entity_action": {
+        "type": "apoli:play_sound",
+        "sound": "minecraft:block.note_block.chime"
+      }
+    }
+  ]
 }
 ```
