@@ -115,6 +115,8 @@ This grows the head by 50% on every axis and locks the right arm to a fixed rais
 
 This hides the left leg.
 
+> `visible` and `hidden` only change the parts they name, and only while the model is being drawn. Every other part keeps the visibility Minecraft or another mod gave it for that frame — skin-layer toggles, a spectator's floating head, or the arms-only body that Better Combat and Iron's Spells & Spellbooks draw in first person during their animations.
+
 ### An eased pose
 
 Give any transformation a `duration` and it blends in over that many ticks instead of snapping, then blends back out when the power stops applying. Nothing else about the entry changes.

@@ -21,6 +21,8 @@ Field  | Type | Default | Description
 
 The actor must be a living entity. Players punch through the same path as a normal left-click, which means the attack-strength cooldown applies and is reset: a punch landed straight after another one hits for less, exactly as it would in the player's hands. Other living entities have no attack cooldown, so both cooldown fields only matter when the actor is a player.
 
+An actor with no attack damage attribute at all — a ghast, a pig, an armor stand — punches for that attribute's default of `2`, plus the attack damage modifiers and enchantments of the item it is punching with. It always takes the direct route described under `damage_type`: no knockback, sweep or on-hit enchantment effects.
+
 > Both cooldown fields exist for area-of-effect punches. Running `apoli:punch` over several targets in one tick charges the cooldown on the first hit, so every target after it takes minimum damage. `"ignore_cooldown": true` gives each target the full hit; add `"reset_cooldown": false` when the burst should not eat the player's own next swing either.
 
 ## Examples

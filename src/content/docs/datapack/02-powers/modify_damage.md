@@ -19,6 +19,8 @@ Field | Type | Default | Description
 `damage_condition` | [Damage Condition](/docs/datapack/damage-conditions) | _optional_ | Only apply to damage matching this.
 `bientity_condition` | [Bi-Entity Condition](/docs/datapack/bientity-conditions) | _optional_ | Only apply for this attacker/target pairing.
 
+> To see what these powers do to each hit, turn on [dev mode](/docs/datapack/commands/dev-mode): every hit they change is reported with its damage before and after.
+
 ## Examples
 
 Hit 50% harder:

@@ -98,6 +98,17 @@ swimming, gliding — and the rotations, pivots and scales that
 [`apoli:modify_model_parts`](/docs/datapack/powers/modify_model_parts) applies on top of them. Raise
 an arm with a `modify_model_parts` power and a particle anchored to `right_hand` rises with it.
 
+Each player's game places the particles on the part where it draws that part for them, at the moment
+they arrive, so the anchor follows a `modify_model_parts` keyframe animation frame by frame instead of
+lagging behind or jumping ahead of it. Poses other mods put on the player model — a Better Combat
+swing, an Iron's Spells casting pose, anything built on playerAnimator — are followed too while the
+particles keep coming; the first burst for an entity sits where Minecraft and Apoli alone pose the
+part.
+
+With `visible_in_first_person`, the holder in first person sees particles anchored to an arm or
+hand at the hand on their own screen: the bare hand, or where the held item is gripped. Everyone
+else sees them on the body.
+
 ```json
 {
   "type": "apoli:particle",

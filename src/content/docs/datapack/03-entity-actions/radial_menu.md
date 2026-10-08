@@ -37,6 +37,12 @@ Field | Type | Default | Description
 `offset_y` | [Integer](/docs/datapack/data-types/integer) | `0` | Pixels to shift the slice **down**. Negative moves it up. This is the one that lets a menu be something other than a flat circle.
 `angle` | [Float](/docs/datapack/data-types/float) | evenly spaced | The slice's own angle around the centre, in degrees, `0` pointing right and increasing clockwise. Set it on every entry to build an arc, a column or a cross instead of a full ring.
 
+## Closing the menu
+
+Picking a slice closes the menu, and so do Esc and the inventory key. When the menu was opened by a key press, such as an [`apoli:action_on_key_press`](/docs/datapack/powers/action_on_key_press), pressing that key again closes it too, the way the inventory key opens and closes the inventory. A menu opened by picking a slice of another menu closes on the same key as the first one.
+
+The key has to be let go before it can close the menu, so the press that opened it never closes it straight away, even when it is held down.
+
 ## Example
 
 One keybind, three elemental choices:

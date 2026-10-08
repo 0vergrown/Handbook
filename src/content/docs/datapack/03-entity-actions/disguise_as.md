@@ -9,7 +9,7 @@ Makes the entity appear as another entity — a mob type, or a player. Ported fr
 
 Type ID: `apoli:disguise_as`
 
-> **Alias:** `apoli:disguise_as_player` is the same action (use whichever reads better). Provide `entity_type` for a mob disguise, or `player_name`/`player_uuid` for a player disguise. A player disguise shows the target's skin when that player is **online**; an offline target falls back to the default skin for their UUID.
+> **Alias:** `apoli:disguise_as_player` is the same action (use whichever reads better). Provide `entity_type` for a mob disguise, or `player_name`/`player_uuid` for a player disguise. A player disguise shows the target's skin and arm model when that player is **online**. An offline target can't be looked up by the client: a disguised mob falls back to the default skin for the target's UUID, and a disguised player keeps their own skin.
 
 ## Fields
 
@@ -70,11 +70,11 @@ or wide arm model. The mob's own held item and armour are mirrored onto the copy
 sword still carries it while disguised.
 
 A **player disguised as another player** is the one case that does not use a copy: the real player is still
-drawn and only the skin texture is swapped, which keeps first-person hands, capes and every other
-player-render power working. The trade-off is that the arm model stays the disguised player's own rather than
-the target's.
+drawn, wearing the target's skin and the target's slim or wide arm model — in third person, in first person and
+in the inventory preview — so first-person hands and every other player-render power keep working. The cape
+and elytra keep the player's own cape texture.
 
 > An action that damages without a swing (a bare [apoli:damage](/docs/datapack/bientity-actions/damage), say)
 > produces no attack animation, because nothing tells the client an attack happened.
 
-> Since 2026-07-10 a disguise also changes the holder's name in **chat** and the **multiplayer tab list** (not just the nameplate), unless `change_name` is `false`. An active [apoli:modify_label_render](/docs/datapack/powers/modify_label_render) takes priority over the disguise's name.
+> A disguise also changes the holder's name in **chat** and the **multiplayer tab list** (not just the nameplate), unless `change_name` is `false`. An active [apoli:modify_label_render](/docs/datapack/powers/modify_label_render) takes priority over the disguise's name.

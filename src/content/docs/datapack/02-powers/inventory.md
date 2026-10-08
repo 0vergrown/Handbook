@@ -19,6 +19,12 @@ Field  | Type | Default | Description
 `recoverable` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Determines if the content of the inventory should be dropped upon losing the power.
 `key` | [Key](/docs/datapack/data-types/key) | `{"key": "key.apoli.primary_active"}` | Which active key this power should respond to.
 
+## Closing the inventory
+
+Pressing the power's `key` again closes the inventory, as do Esc and the inventory key. The key has to be let go first, so holding it down after opening does not close it.
+
+When `key` is also one of Minecraft's slot keys (a hotbar number, swap offhand, drop or pick block), pressing it with the cursor over a slot does the slot action, as usual, and pressing it anywhere else closes the inventory.
+
 ## Examples
 
 ```json

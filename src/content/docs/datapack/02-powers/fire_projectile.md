@@ -217,8 +217,10 @@ instead of the flat texture:
 
 The model is read from `assets/example/geo/shuriken.geo.json` and the animation from `assets/example/animations/shuriken.animation.json`.
 
-The model faces the projectile's direction of travel, and its animations play from the moment it is
-granted, so a spin or a flame flicker runs for the projectile's whole flight.
+The model faces the projectile's direction of travel, pitch included: the side Blockbench labels **north**
+(−Z) leads — the same side a player model's face is on — so build the projectile pointing north. Its
+animations play from the moment it is granted, so a spin or a flame flicker runs for the projectile's whole
+flight.
 
 Every geometry power the projectile holds when it is fired is resolved then and carried in its own
 entity data, so it arrives with the spawn and every viewer sees the model on the very first frame. A

@@ -14,7 +14,7 @@ Type ID: `apoli:shader`
 
 Field  | Type | Default | Description
 -------|------|---------|-------------
-`shader` | Identifier | | Specifies the location of the shader resource file to use.
+`shader` | Identifier | | The post chain file to load, written as its full path: `minecraft:shaders/post/creeper.json` loads `assets/minecraft/shaders/post/creeper.json`.
 `toggleable` | Boolean | `true` | Determines if the applied shader can be toggled.
 `priority` | Integer | `0` | Which shader wins when the entity holds more than one Shader power at once. Highest priority is applied; ties are broken arbitrarily.
 
@@ -26,9 +26,17 @@ The choice is made **on the server** and sent to the client, so any [entity cond
 
 If the entity is spectating something else, the shader comes from whatever it is spectating, not from the spectator.
 
-A shader file that fails to load (missing file, malformed JSON) is reported once and then ignored, so a typo does not spam the log every frame. Fix the file and reload resources (F3+T) to retry it.
+A shader file that fails to load (missing file, malformed JSON) is reported once, naming the file it looked for, and then ignored, so a typo does not spam the log every frame. Fix the file and reload resources (F3+T) to retry it.
 
 > Both sides need Apoli: the server decides which shader applies and the client binds it. A client that is never told about the shader simply does not show it — nothing crashes, the effect just never appears.
+
+## Built-in shaders
+
+Any post-processing shader a resource pack provides can be used, and these come with the game and Apoli, under `minecraft:shaders/post/<name>.json`:
+
+`antialias`, `art`, `bits`, `blobs`, `blobs2`, `blur`, `bumpy`, `color_convolve`, `creeper`, `deconverge`, `desaturate`, `entity_outline`, `flip`, `fxaa`, `green`, `invert`, `notch`, `ntsc`, `outline`, `pencil`, `phosphor`, `scan_pincushion`, `sobel`, `spider`, `transparency`, `wobble`
+
+Minecraft 1.21.1 itself only ships `blur`, `creeper`, `entity_outline`, `invert`, `spider` and `transparency`; Apoli provides the other twenty, so the same shader path works on 1.20.1 and 1.21.1.
 
 ## Examples
 

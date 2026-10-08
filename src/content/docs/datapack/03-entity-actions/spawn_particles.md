@@ -93,6 +93,16 @@ swimming, gliding — and the rotations, pivots and scales that
 this action from an [`apoli:action_on_key_press`](/docs/datapack/powers/action_on_key_press) that
 also raises the arm, and the burst leaves the raised hand.
 
+Each player's game places the particles on the part where it draws that part for them, at the moment
+they arrive, so the anchor follows a `modify_model_parts` keyframe animation frame by frame instead of
+lagging behind or jumping ahead of it. Poses other mods put on the player model — a Better Combat
+swing, an Iron's Spells casting pose, anything built on playerAnimator — are followed too while the
+particles keep coming; the first burst for an entity sits where Minecraft and Apoli alone pose the
+part.
+
+In first person, the holder sees particles anchored to an arm or hand at the hand on their own
+screen: the bare hand, or where the held item is gripped. Everyone else sees them on the body.
+
 ```json
 "entity_action": {
   "type": "apoli:spawn_particles",
