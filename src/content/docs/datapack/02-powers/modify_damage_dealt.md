@@ -21,7 +21,7 @@ Type ID: `apoli:modify_damage_dealt`
 | `target_condition`   | Entity Condition Type                    | _optional_ | If specified, the specified actions/modifiers will only be executed/applied if this condition is fulfilled by the '**target**' entity.                                  |
 | `damage_condition`   | Damage Condition Type                    | _optional_ | If specified, the specified actions/modifiers will only be executed/applied if this condition is fulfilled by the damage dealt by the '**actor**' entity.               |
 | `modifier`           | [Attribute Modifier](/docs/datapack/data-types/attribute-modifier)           | _optional_ | If specified, this modifier will be applied to the damage dealt by the '**actor**' entity.                                                                              |
-| `modifiers`          | [Array](/docs/datapack/data-types/array) of Attribute Modifiers | _optional_ | If specified, these modifiers will be applied t othe damage dealt by the '**actor**' entity.                                                                            |
+| `modifiers`          | [Array](/docs/datapack/data-types/array) of Attribute Modifiers | _optional_ | If specified, these modifiers will be applied to the damage dealt by the '**actor**' entity.                                                                           |
 
 ## Examples
 

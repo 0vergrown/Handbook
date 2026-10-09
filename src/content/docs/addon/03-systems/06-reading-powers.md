@@ -146,7 +146,7 @@ Apoli itself registers two providers — one for [`apoli:multiple`](/docs/datapa
 
 ### Registering your own provider
 
-If your mod grants powers from something of its own — a class system, an artefact, a prestige tier — teach Apoli about it and every source-aware feature learns it at once: `/apoli:power sources`, `grant_all`, the ledger, and any other addon's reverse lookups.
+If your mod grants powers from something of its own — a class system, an artefact, a prestige tier — teach Apoli about it and every source-aware feature learns it at once: `/apoli:power has` (which lists each power with its sources), `grant_all`, the ledger, and any other addon's reverse lookups.
 
 ```java
 PowerSources.register(new PowerSources.Provider() {

@@ -29,11 +29,7 @@ Field  | Type | Default | Description
     "entity_action": {
         "type": "apoli:damage",
         "amount": 2.0,
-        "source": {
-            "name": "onFire",
-            "bypasses_armor": true,
-            "fire": true
-        }
+        "damage_type": "minecraft:on_fire"
     },
     "block_action": {
         "type": "apoli:set_block",
@@ -47,4 +43,4 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will deal 1 heart of `onFire` damage to the player, and place a Lava fluid at where the Magma Block previously was if the player were to mine a Magma Block.
+This example will deal 1 heart of `minecraft:on_fire` damage to the player, and place a Lava fluid at where the Magma Block previously was if the player were to mine a Magma Block.

@@ -19,19 +19,26 @@ Field | Type | Default | Description
 
 ## Example
 
-A cursed sword that only bites for people who are not sneaking:
+A cursed sword that only bites for people who are not sneaking: any sword gets three extra levels of Sharpness through [apoli:modify_enchantment_level](/docs/datapack/powers/modify_enchantment_level), but only while its holder stands up straight:
 
 ```json
 {
-  "type": "apoli:modify_damage_dealt",
+  "type": "apoli:modify_enchantment_level",
+  "enchantment": "minecraft:sharpness",
   "item_condition": {
-    "type": "apoli:holder_condition",
-    "entity_condition": {
-      "type": "apoli:sneaking",
-      "inverted": true
-    }
+    "type": "apoli:all_of",
+    "conditions": [
+      { "type": "apoli:ingredient", "ingredient": { "tag": "minecraft:swords" } },
+      {
+        "type": "apoli:holder_condition",
+        "entity_condition": {
+          "type": "apoli:sneaking",
+          "inverted": true
+        }
+      }
+    ]
   },
-  "modifier": { "operation": "multiply_base_multiplicative", "value": 0.5 }
+  "modifier": { "operation": "add_base_early", "value": 3 }
 }
 ```
 

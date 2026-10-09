@@ -120,7 +120,7 @@ import dev.overgrown.apoli.power.PowerSources;
 Set<ResourceLocation> powers = PowerSources.powersOf(sourceId);  // null when unknown
 ```
 
-Teach it about your own system once, and every source-aware feature — `/apoli:power sources`, `grant_all`, the ledger, other addons — learns it:
+Teach it about your own system once, and every source-aware feature — `/apoli:power has` (which lists each power with its sources), `grant_all`, the ledger, other addons — learns it:
 
 ```java
 PowerSources.register(new PowerSources.Provider() {

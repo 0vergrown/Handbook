@@ -17,7 +17,7 @@ Type ID: `apoli:source`
 
 ## What counts as a source
 
-Every power a holder has is filed under the source that granted it, which is what `/apoli:power sources` prints and what the [apoli:power](/docs/datapack/entity-conditions/power) entity condition's own `source` field matches. Origins files its powers under `<namespace>:layer/<layer>`, so `"source": "origins:layer/origin"` means "anything the player's origin gave them".
+Every power a holder has is filed under the source that granted it, which is what [`/apoli:power has <targets>`](/docs/datapack/commands/power) prints next to each power and what the [apoli:power](/docs/datapack/entity-conditions/power) entity condition's own `source` field matches. Origins files its powers under `<namespace>:layer/<layer>`, so `"source": "origins:layer/origin"` means "anything the player's origin gave them".
 
 Attribution follows the power through delayed and nested actions, so a hit from an [apoli:delay](/docs/datapack/meta-actions/delay) chain or a projectile's `bientity_action_on_hit` still names the power that started it.
 

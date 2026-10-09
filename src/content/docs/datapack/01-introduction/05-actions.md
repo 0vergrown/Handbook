@@ -70,11 +70,8 @@ Most actions reach the game through an *action power*. For example, `apoli:actio
   "type":"apoli:action_on_hit",
   "bientity_action":{
     "type":"apoli:add_velocity",
-    "velocity":{
-      "x":0,
-      "y":0.6,
-      "z":0
-    }
+    "space":"world",
+    "y":0.6
   }
 }
 ```

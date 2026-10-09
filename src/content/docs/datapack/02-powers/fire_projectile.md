@@ -67,8 +67,11 @@ Once `max_bounces` is used up the next block hit ends the shot normally. Give a 
   },
   "max_distance": 64,
   "bientity_action_on_bounce": {
-    "type": "apoli:play_sound",
-    "sound": "minecraft:entity.slime.squish"
+    "type": "apoli:target_action",
+    "action": {
+      "type": "apoli:play_sound",
+      "sound": "minecraft:entity.slime.squish"
+    }
   }
 }
 ```

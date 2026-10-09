@@ -119,9 +119,7 @@ Or scale the damage by how far the shot travelled:
     "bientity_action": {
         "type": "apoli:damage",
         "amount": 4,
-        "source": {
-            "name": "magic"
-        }
+        "damage_type": "minecraft:magic"
     },
     "hit_action": {
         "type": "apoli:play_sound",
@@ -188,9 +186,7 @@ Fires a piercing ray that pushes back all entities within 8 blocks, traces parti
    "bientity_action":{
       "type":"apoli:damage",
       "amount":3,
-      "source":{
-         "name":"magic"
-      }
+      "damage_type":"minecraft:magic"
    },
    "chain":{
       "type":"apoli:raycast",
@@ -202,9 +198,7 @@ Fires a piercing ray that pushes back all entities within 8 blocks, traces parti
       "bientity_action":{
          "type":"apoli:damage",
          "amount":3,
-         "source":{
-            "name":"magic"
-         }
+         "damage_type":"minecraft:magic"
       }
    }
 }

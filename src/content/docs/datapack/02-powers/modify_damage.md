@@ -17,7 +17,16 @@ Field | Type | Default | Description
 `modifiers` | array of [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) | _optional_ | Several modifiers, applied in operation order.
 `target_used` | [Boolean](/docs/datapack/data-types/boolean) | `false` | `false` modifies damage the holder **deals**; `true` modifies damage the holder **takes**. Filled in for you by the two aliases.
 `damage_condition` | [Damage Condition](/docs/datapack/damage-conditions) | _optional_ | Only apply to damage matching this.
-`bientity_condition` | [Bi-Entity Condition](/docs/datapack/bientity-conditions) | _optional_ | Only apply for this attacker/target pairing.
+`bientity_condition` | [Bi-Entity Condition](/docs/datapack/bientity-conditions) | _optional_ | Only apply for this attacker/target pairing: the attacker is the actor, the entity taking the damage is the target. Fails when there is no attacker (falling, fire, `/kill`).
+`target_condition` | [Entity Condition](/docs/datapack/entity-conditions) | _optional_ | Only apply when the entity taking the damage passes this: the one being hit when dealing, the holder itself when taking.
+`bientity_action` | [Bi-Entity Action](/docs/datapack/bientity-actions) | _optional_ | Runs on the attacker (actor) and the entity taking the damage (target) every time the power applies. Skipped when there is no attacker.
+`self_action` | [Entity Action](/docs/datapack/entity-actions) | _optional_ | Runs on the holder every time the power applies.
+`target_action` | [Entity Action](/docs/datapack/entity-actions) | _optional_ | Damage **dealt** only (`target_used: false`): runs on the entity being hit.
+`attacker_action` | [Entity Action](/docs/datapack/entity-actions) | _optional_ | Damage **taken** only (`target_used: true`): runs on the attacker, when there is one.
+`apply_armor_condition` | [Entity Condition](/docs/datapack/entity-conditions) | _optional_ | Damage **taken** only: armor reduces the hit only while the holder passes this. When it fails, the hit ignores armor.
+`damage_armor_condition` | [Entity Condition](/docs/datapack/entity-conditions) | _optional_ | Damage **taken** only: worn armor loses durability from the hit only while the holder passes this.
+
+The actions run once per hit, after the damage has been modified, for every one of these powers that applied to it.
 
 > To see what these powers do to each hit, turn on [dev mode](/docs/datapack/commands/dev-mode): every hit they change is reported with its damage before and after.
 

@@ -63,7 +63,7 @@ One keybind, three elemental choices:
       {
         "item": { "id": "minecraft:snowball" },
         "tooltip": { "translate": "mypack.menu.frost" },
-        "entity_action": { "type": "apoli:freeze", "amount": 140 }
+        "entity_action": { "type": "apoli:freeze", "duration": 140 }
       },
       {
         "item": { "id": "minecraft:feather" },
@@ -91,7 +91,7 @@ A three-slice arc across the top of the screen, each one a little higher than th
     { "angle": 225, "distance": 60, "offset_y": -10, "item": {"id": "minecraft:blaze_powder"},
       "entity_action": {"type": "apoli:set_on_fire", "duration": 4} },
     { "angle": 270, "distance": 60, "offset_y": -24, "item": {"id": "minecraft:snowball"},
-      "entity_action": {"type": "apoli:freeze", "amount": 140} },
+      "entity_action": {"type": "apoli:freeze", "duration": 140} },
     { "angle": 315, "distance": 60, "offset_y": -10, "item": {"id": "minecraft:feather"},
       "entity_action": {"type": "apoli:add_velocity", "y": 1.2, "space": "local"} }
   ]

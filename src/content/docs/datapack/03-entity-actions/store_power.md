@@ -34,14 +34,17 @@ Learn a spell:
 }
 ```
 
-Forget everything on death:
+Forget everything on death (in [apoli:action_on_death](/docs/datapack/powers/action_on_death) the entity that died is the target):
 
 ```json
 {
   "type": "apoli:action_on_death",
-  "entity_action": {
-    "type": "apoli:store_power",
-    "operation": "clear"
+  "bientity_action": {
+    "type": "apoli:target_action",
+    "action": {
+      "type": "apoli:store_power",
+      "operation": "clear"
+    }
   }
 }
 ```

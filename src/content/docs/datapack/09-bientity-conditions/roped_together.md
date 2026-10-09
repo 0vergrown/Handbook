@@ -38,7 +38,7 @@ Do not damage the person on the other end of your rope:
 }
 ```
 
-Pull them along when you use an ability:
+Pull them toward you when you use an ability (the bi-entity [apoli:add_velocity](/docs/datapack/bientity-actions/add_velocity) with a negative `z` pulls the target to the actor):
 
 ```json
 {
@@ -46,8 +46,8 @@ Pull them along when you use an ability:
   "radius": 32,
   "bientity_condition": { "type": "apoli:roped_together" },
   "bientity_action": {
-    "type": "apoli:rope_pull",
-    "speed": 0.4
+    "type": "apoli:add_velocity",
+    "z": -0.4
   }
 }
 ```

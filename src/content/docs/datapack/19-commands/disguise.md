@@ -28,7 +28,7 @@ disguise @s notch
 disguise @e[type=zombie] minecraft:villager {Profession:"minecraft:librarian"}
 ```
 
-`<disguise>` is tried as an entity type first (an unqualified id means `minecraft:`), then as a player name. Player names are matched without regard to case, so `notch` finds `Notch` — spell it any way you like, but a name that is not lowercase has to go through `disguise player` if you want tab-completion to offer it.
+`<disguise>` is tried as an entity type first (an unqualified id means `minecraft:`), then as a player name. Player names are matched without regard to case, so `notch` finds `Notch`. `<disguise>` is read as an id, and an id can't hold capital letters, so here a name has to be typed in lowercase, which is also how tab-completion offers it. `disguise player` takes the name exactly as written.
 
 ## entity
 

@@ -31,10 +31,10 @@ This example will check if the entity is currently in a Plains biome.
 "condition": {
     "type": "apoli:biome",
     "condition": {
-        "type": "apoli:category",
-        "category": "forest"
+        "type": "apoli:in_tag",
+        "tag": "minecraft:is_forest"
     }
 }
 ```
 
-This example will check if the entity is currently in a Forest-like biome.
+This example will check if the entity is currently in a Forest-like biome (any biome in the `minecraft:is_forest` biome tag, through the [apoli:in_tag](/docs/datapack/biome-conditions/in_tag) biome condition).

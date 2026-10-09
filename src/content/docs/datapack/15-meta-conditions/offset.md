@@ -19,13 +19,13 @@ Field | Type | Default | Description
 
 ## Examples
 
-Is the block above this one air? This is the usual "is there room to grow" check:
+Is the block above this one air? This is the usual "is there room to grow" check (the `minecraft:air` block tag covers cave air and void air too):
 
 ```json
 {
   "type": "apoli:offset",
   "y": 1,
-  "condition": { "type": "apoli:air" }
+  "condition": { "type": "apoli:in_tag", "tag": "minecraft:air" }
 }
 ```
 
@@ -39,7 +39,7 @@ Standing on grass with air above, combined:
     {
       "type": "apoli:offset",
       "y": 1,
-      "condition": { "type": "apoli:air" }
+      "condition": { "type": "apoli:in_tag", "tag": "minecraft:air" }
     }
   ]
 }
