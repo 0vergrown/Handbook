@@ -70,4 +70,14 @@ Keep the hitbox alone and only change what people see:
 }
 ```
 
+Make the inventory preview bigger. The preview ignores every other scale type, so on its own this leaves the entity's real size alone:
+
+```json
+{
+    "type": "apoli:scale",
+    "scale_types": "apoli:doll",
+    "scale": 2
+}
+```
+
 > A scale that affects the hitbox moves the entity's bounding box. Shrinking is safe; growing inside a tight space pushes the entity the way vanilla does when it stands up from a crawl.

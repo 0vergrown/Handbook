@@ -14,8 +14,9 @@ By default the edit snaps on and off with the power. Add `duration` to make it e
 | -------------------- | --------------------------------------------------------------------------------------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `model_part`         | [Body Part](/docs/datapack/data-types/body-part)                                               | —         | The part to edit: a limb such as `head` or `right_arm`, a layer such as `jacket`, or a group — `arms`, `legs`, `upper`, `lower` or `whole` — which moves as one piece (see [Moving a group](#moving-a-group)). Matching ignores case and separators (`right_arm` = `rightArm` = `rightarm`). On players the matching skin-overlay layer is edited together with the base part. |
 | `pivot`              | [Vector](/docs/datapack/data-types/vector)                                                     | _the group's own pivot_ | Groups only: the point the group rotates and scales around, in model units — `[0, 0, 0]` is the neck, `y` grows downwards and the feet are at `[0, 24, 0]`. Ignored for a single part. |
+| `target`             | [Vector](/docs/datapack/data-types/vector)                                                     | —         | Required by `reach`, ignored by every other type: the point the limb reaches for, in the same model units as `pivot`. `-z` is in front of the body. See [Reaching for a point](#reaching-for-a-point). |
 | `type`               | [String](/docs/datapack/data-types/string)                                                     | —         | Which property to change. See the table below.                                                                                                                                                                                                                  |
-| `value`              | [Float](/docs/datapack/data-types/float) OR [Expression](/docs/datapack/data-types/expression)  | —         | The amount. Its meaning depends on `type` (see below). Required unless `keyframes` is set, in which case it is ignored. As an Expression it is re-evaluated as the model renders — see [Driving a part from a value](#driving-a-part-from-a-value).                |
+| `value`              | [Float](/docs/datapack/data-types/float) OR [Expression](/docs/datapack/data-types/expression)  | —         | The amount. Its meaning depends on `type` (see below). Required unless `keyframes` is set, in which case it is ignored, or `type` is `reach`, where it defaults to `1`. As an Expression it is re-evaluated as the model renders — see [Driving a part from a value](#driving-a-part-from-a-value).                |
 | `override_animation` | [Boolean](/docs/datapack/data-types/boolean)                                                   | `false`   | For `pitch`/`yaw`/`roll` only: if `true`, the value becomes the absolute rotation and the vanilla animation for that axis is ignored ("locked"). If `false`, it is added on top of the animation.                                                                 |
 | `keyframes`          | [Array](/docs/datapack/data-types/array) of [Model Part Keyframe](/docs/datapack/data-types/model-part-keyframe) | `[]`      | A timeline of values. When set, this replaces `value` and the part animates instead of holding still. The clock starts at 0 the moment the power becomes active.                                                                                                 |
 | `loop`               | [Boolean](/docs/datapack/data-types/boolean)                                                   | `false`   | If `true`, the keyframe timeline repeats forever. If `false`, it plays once and holds the last keyframe's value.                                                                                                                                                 |
@@ -39,6 +40,7 @@ By default the edit snaps on and off with the power. Add `duration` to make it e
 `pivot_z` | Added to the part's Z pivot offset.
 `visible` | Sets visibility: `0` hides the part (and its children), any other value shows it. `override_animation` is ignored.
 `hidden` | Sets the "skip draw" flag: non-`0` skips drawing this part's own cubes while still drawing its children. `override_animation` is ignored.
+`reach` | Points the limb at `target` and stretches or shortens it so its end lands exactly there. The value blends the reach in, from `0` (untouched) to `1` (all the way, the default). See [Reaching for a point](#reaching-for-a-point).
 
 ## Moving a group
 
@@ -80,6 +82,59 @@ Transformations run in list order, so a group edit moves the parts wherever earl
 The whole model tips over backwards around its middle, easing into place over half a second. Without `pivot` it would fall around its feet like a plank.
 
 Group transformations apply wherever the model does — held items, armour and anything else drawn on a limb follow along — and the server sees the same pose, so particles anchored to a part and [body part hits](/docs/datapack/damage-conditions/body_part) land where the part has moved to.
+
+## Reaching for a point
+
+`reach` turns a limb so it points at `target`, then stretches or shortens it so its end — the hand of an arm, the foot of a leg — lands exactly on the point, however far away it is. On the `arms` and `legs` groups each limb reaches on its own, which is how two hands meet:
+
+```json
+{
+  "type": "apoli:modify_model_parts",
+  "transformations": [
+    {
+      "model_part": "arms",
+      "type": "reach",
+      "target": [0, 8, -8],
+      "duration": 6,
+      "easing": "ease_out_cubic"
+    }
+  ]
+}
+```
+
+Both hands come together in front of the stomach, easing in over six ticks. Move `target` further out — `[0, 4, -30]` — and the arms stretch to meet there.
+
+- The limb's pitch and yaw are replaced, its roll is cleared, and its `y_scale` becomes whatever puts its end on the point. `override_animation` and `pivot` do nothing for `reach`.
+- The value blends from the limb's current pose (`0`) to the full reach (`1`), on top of the `duration` fade, so `keyframes` on the value can push a reach out and pull it back.
+- `target` sits in the model's own frame, which turns with the entity but not with a bent torso. To carry the reaching arms along with a bend, put the group rotation — on `upper`, say — after the `reach` in `transformations`.
+- The server works out the same pose, so particles on a hand and [body part](/docs/datapack/damage-conditions/body_part) hits follow the reaching limb.
+
+## Held items
+
+The items in an entity's hands are reached with `right_item`, `left_item`, `main_hand_item`, `off_hand_item` and `items` (see [Body Part](/docs/datapack/data-types/body-part#held-items)). An edit turns the item around the grip, in the item's own frame:
+
+- `pitch`, `yaw` and `roll` rotate the item. For a sword held in third person, `pitch` tips the blade towards the ground, `roll` lays it across the body and `yaw` spins it around its own length.
+- `x_scale`, `y_scale` and `z_scale` grow or shrink it from the grip, on top of any [held item scale](/docs/datapack/data-types/scale-type).
+- `pivot_x`, `pivot_y` and `pivot_z` move it, in pixels.
+- `visible` at `0`, or `hidden` at anything else, stops it being drawn.
+
+Held items follow `perspectives` like everything else, so list `first_person` to turn the item in the holder's own view as well.
+
+```json
+{
+  "type": "apoli:modify_model_parts",
+  "perspectives": ["first_person", "third_person"],
+  "transformations": [
+    {
+      "model_part": "main_hand_item",
+      "type": "pitch",
+      "value": 1.5708
+    }
+  ]
+}
+```
+
+The main-hand item is turned a quarter circle around the grip in both views — a sword points at the ground.
 
 ## Animating a part
 

@@ -90,6 +90,16 @@ Sides are always the player's own: `right_wing` is the wing on the player's righ
 
 None of these are part of a group — `whole` and `upper` leave wings and Ears features alone. They have no hitbox, so the [apoli:body_part](/docs/datapack/damage-conditions/body_part) condition refuses them, and particles and `body_parts` have nothing to attach to.
 
+## Held items
+
+| Name | Also accepts | Covers |
+| --- | --- | --- |
+| `right_item` / `left_item` | `item_right`, `right_hand_item`, `right_held_item` / `item_left`, `left_hand_item`, `left_held_item` | The item held in that hand. |
+| `main_hand_item` / `off_hand_item` | `main_item`, `item_main`, `mainhand_item` / `off_item`, `item_off`, `offhand_item` | The item in the entity's main or off hand — `right_item` for a right-handed entity, `left_item` for a left-handed one. |
+| `items` | `held_items`, `held_item` | Both held items. |
+
+They work in `model_part` of [apoli:modify_model_parts](/docs/datapack/powers/modify_model_parts), where they turn, grow, move or hide the item — see [Held items](/docs/datapack/data-types/model-part-transformation#held-items). They are not model parts, so `whole` and the other groups leave them alone (an item still follows the arm holding it), [apoli:model_color](/docs/datapack/powers/model_color) does not tint them, and the [apoli:body_part](/docs/datapack/damage-conditions/body_part) condition refuses them.
+
 ## Other names
 
 A name that is not in the lists above is passed through unchanged, and so are the wing and Ears names — `tail` reaches `apoli:centaur`'s horse tail as well as an Ears tail. That is how the extra limbs of the built-in models are reached — `right_second_arm` on `apoli:four_arms`, `right_second_leg` on `apoli:stinkfly`, `horse_body` on `apoli:centaur` — and how a minion's `main`, `flat2` and `flat3` parts are named in `body_parts`. On those models the groups pick up the extra limbs too: `arms` covers all four arms of `apoli:four_arms`, and `legs` covers all four legs of `apoli:stinkfly`.

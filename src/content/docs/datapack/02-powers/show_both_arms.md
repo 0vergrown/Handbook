@@ -19,6 +19,7 @@ Field  | Type | Default | Description
 `ghost_arms` | [Integer](/docs/datapack/data-types/integer) | `0` | How many extra "ghost" copies of each drawn arm to trail behind the live one while it swings. `0` disables the effect; the maximum is `16`.
 `ghost_spacing` | [Float](/docs/datapack/data-types/float) | `0.12` | How far back each ghost sits, as a fraction of one swing. The *n*th ghost is drawn at the pose the arm held `n × ghost_spacing` of a swing ago, wrapping into the previous swing. Keep `ghost_arms × ghost_spacing` at or below `1.0`; copies further back than a whole swing are skipped.
 `ghost_alpha` | [Float](/docs/datapack/data-types/float) | `0.35` | Opacity of the ghosts (0.0 – 1.0). They are drawn translucent so the live arm reads clearly through them.
+`ghost_perspectives` | [String](/docs/datapack/data-types/string) OR [Array](/docs/datapack/data-types/array) of String | `["first_person", "third_person"]` | Which views the ghosts are drawn in: `first_person` (the holder's own held-item view) and `third_person` (the body as everyone sees it). See [Ghosts in third person](#ghosts-in-third-person).
 
 ## Ghost arms
 
@@ -26,7 +27,13 @@ Ghosts are copies of the same arm frozen at earlier points of the swing, so a si
 
 If several `show_both_arms` powers are active, the arms are the union of all of them and the ghost settings come from whichever power asks for the most ghosts.
 
-> This is a client-side rendering power and only affects the holder's own view. It draws the *player's real arm*, not a copy: everything that changes how your arms look elsewhere applies here too — [apoli:custom_model_render](/docs/datapack/powers/custom_model_render) skins and texture overlays (per-layer `show_first_person`), [apoli:model_color](/docs/datapack/powers/model_color), [apoli:modify_player_model](/docs/datapack/powers/modify_player_model), [apoli:modify_model_parts](/docs/datapack/powers/modify_model_parts) transformations and keyframes, [apoli:disguise](/docs/datapack/bientity-actions/disguise) / [apoli:disguise_as](/docs/datapack/entity-actions/disguise_as) player skins, and swings from [apoli:swing_hand](/docs/datapack/entity-actions/swing_hand). Hiding an arm with `modify_model_parts` hides it in first person too.
+### Ghosts in third person
+
+With `third_person` in `ghost_perspectives`, the ghosts also trail the swinging arms on the body itself, sleeves included. Everyone sees them: other players, the holder in third person or in an inventory preview, and any camera power that shows the holder's body. In this view every arm that swings gets a trail, so when [apoli:swing_hand](/docs/datapack/entity-actions/swing_hand) swings both hands together, both arms leave ghosts. `main_hand` and `off_hand` do not matter here — in third person both arms are always drawn.
+
+The ghosts use the holder's skin and take [apoli:model_color](/docs/datapack/powers/model_color) tints. An arm hidden with [apoli:modify_model_parts](/docs/datapack/powers/modify_model_parts) leaves no ghost, and neither does an invisible holder.
+
+> The extra arms are only drawn in the holder's own first-person view; ghost arms are also drawn in third person, as described above. The first-person arm is the *player's real arm*, not a copy: everything that changes how your arms look elsewhere applies here too — [apoli:custom_model_render](/docs/datapack/powers/custom_model_render) skins and texture overlays (per-layer `show_first_person`), [apoli:model_color](/docs/datapack/powers/model_color), [apoli:modify_player_model](/docs/datapack/powers/modify_player_model), [apoli:modify_model_parts](/docs/datapack/powers/modify_model_parts) transformations and keyframes, [apoli:disguise](/docs/datapack/bientity-actions/disguise) / [apoli:disguise_as](/docs/datapack/entity-actions/disguise_as) player skins, and swings from [apoli:swing_hand](/docs/datapack/entity-actions/swing_hand). Hiding an arm with `modify_model_parts` hides it in first person too.
 
 ## Examples
 
@@ -67,5 +74,17 @@ Both arms stay visible while `example:combat_stance` is active, including the ma
 ```
 
 A punch barrage: while `example:rush_attack` is on, both fists are visible and each swing drags six translucent copies of itself behind it. Pair it with a power that swings the hands several times a second.
+
+```json
+{
+    "type": "apoli:show_both_arms",
+    "off_hand": false,
+    "ghost_arms": 8,
+    "ghost_spacing": 0.1,
+    "ghost_perspectives": "third_person"
+}
+```
+
+A trail only other people see: every swing leaves eight ghosts on the body, while the holder's own first-person view stays clean.
 
 > To make both arms swing at once, run [apoli:swing_hand](/docs/datapack/entity-actions/swing_hand) twice in the same tick, once for each hand. This power only decides which arms are *drawn* in first person — the swing itself comes from the action.
