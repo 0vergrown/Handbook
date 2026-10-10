@@ -17,7 +17,7 @@ By default the edit snaps on and off with the power. Add `duration` to make it e
 | `target`             | [Vector](/docs/datapack/data-types/vector)                                                     | —         | Required by `reach`, ignored by every other type: the point the limb reaches for, in the same model units as `pivot`. `-z` is in front of the body. See [Reaching for a point](#reaching-for-a-point). |
 | `type`               | [String](/docs/datapack/data-types/string)                                                     | —         | Which property to change. See the table below.                                                                                                                                                                                                                  |
 | `value`              | [Float](/docs/datapack/data-types/float) OR [Expression](/docs/datapack/data-types/expression)  | —         | The amount. Its meaning depends on `type` (see below). Required unless `keyframes` is set, in which case it is ignored, or `type` is `reach`, where it defaults to `1`. As an Expression it is re-evaluated as the model renders — see [Driving a part from a value](#driving-a-part-from-a-value).                |
-| `override_animation` | [Boolean](/docs/datapack/data-types/boolean)                                                   | `false`   | For `pitch`/`yaw`/`roll` only: if `true`, the value becomes the absolute rotation and the vanilla animation for that axis is ignored ("locked"). If `false`, it is added on top of the animation.                                                                 |
+| `override_animation` | [Boolean](/docs/datapack/data-types/boolean)                                                   | `false`   | For `pitch`/`yaw`/`roll`: if `true`, the value becomes the absolute rotation and the vanilla animation for that axis is ignored ("locked"). If `false`, it is added on top of the animation. For `reach`: if `true`, the arm holds the reach instead of swinging — see [Reaching for a point](#reaching-for-a-point). |
 | `keyframes`          | [Array](/docs/datapack/data-types/array) of [Model Part Keyframe](/docs/datapack/data-types/model-part-keyframe) | `[]`      | A timeline of values. When set, this replaces `value` and the part animates instead of holding still. The clock starts at 0 the moment the power becomes active.                                                                                                 |
 | `loop`               | [Boolean](/docs/datapack/data-types/boolean)                                                   | `false`   | If `true`, the keyframe timeline repeats forever. If `false`, it plays once and holds the last keyframe's value.                                                                                                                                                 |
 | `duration`           | [Float](/docs/datapack/data-types/float)                                                       | `0`       | Ticks to fade the whole transformation in when the power becomes active. `0` applies it instantly, which is the original behaviour.                                                                                                                              |
@@ -95,6 +95,7 @@ Group transformations apply wherever the model does — held items, armour and a
       "model_part": "arms",
       "type": "reach",
       "target": [0, 8, -8],
+      "override_animation": true,
       "duration": 6,
       "easing": "ease_out_cubic"
     }
@@ -102,9 +103,10 @@ Group transformations apply wherever the model does — held items, armour and a
 }
 ```
 
-Both hands come together in front of the stomach, easing in over six ticks. Move `target` further out — `[0, 4, -30]` — and the arms stretch to meet there.
+Both hands come together in front of the stomach, easing in over six ticks, and stay there when the holder punches. Move `target` further out — `[0, 4, -30]` — and the arms stretch to meet there.
 
-- The limb's pitch and yaw are replaced, its roll is cleared, and its `y_scale` becomes whatever puts its end on the point. `override_animation` and `pivot` do nothing for `reach`.
+- The limb's pitch and yaw are replaced, its roll is cleared, and its `y_scale` becomes whatever puts its end on the point. `pivot` does nothing for `reach`.
+- `override_animation` set to `true` holds a reaching arm still: it doesn't swing when the holder attacks or uses an item, in first person either (the item in that hand stops swinging with it), and [ghost arms](/docs/datapack/powers/show_both_arms) leave it alone. Without it, the first-person arm swings from its reach pose. In third person a fully reaching arm holds still either way.
 - The value blends from the limb's current pose (`0`) to the full reach (`1`), on top of the `duration` fade, so `keyframes` on the value can push a reach out and pull it back.
 - `target` sits in the model's own frame, which turns with the entity but not with a bent torso. To carry the reaching arms along with a bend, put the group rotation — on `upper`, say — after the `reach` in `transformations`.
 - The server works out the same pose, so particles on a hand and [body part](/docs/datapack/damage-conditions/body_part) hits follow the reaching limb.

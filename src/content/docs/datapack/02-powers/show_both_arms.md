@@ -8,7 +8,7 @@ Draws the arm that first person normally leaves out, so the holder can see both 
 
 Type ID: `apoli:show_both_arms`
 
-Vanilla only ever draws one bare arm in first person: the main hand's, and only while the main hand is empty. The off hand's arm is never drawn, and neither arm is drawn while you are holding something. This power fills those gaps.
+Vanilla only ever draws one bare arm in first person: the main hand's, and only while the main hand is empty. The off hand's arm is never drawn, and neither arm is drawn while you are holding something. This power fills those gaps. An arm that [apoli:modify_model_parts](/docs/datapack/powers/modify_model_parts) edits in the first-person view is drawn anyway, with or without this power.
 
 ## Fields
 
