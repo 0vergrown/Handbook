@@ -14,11 +14,11 @@ By default the edit snaps on and off with the power. Add `duration` to make it e
 | -------------------- | --------------------------------------------------------------------------------------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `model_part`         | [Body Part](/docs/datapack/data-types/body-part)                                               | —         | The part to edit: a limb such as `head` or `right_arm`, a layer such as `jacket`, or a group — `arms`, `legs`, `upper`, `lower` or `whole` — which moves as one piece (see [Moving a group](#moving-a-group)). Matching ignores case and separators (`right_arm` = `rightArm` = `rightarm`). On players the matching skin-overlay layer is edited together with the base part. |
 | `pivot`              | [Vector](/docs/datapack/data-types/vector)                                                     | _the group's own pivot_ | Groups only: the point the group rotates and scales around, in model units — `[0, 0, 0]` is the neck, `y` grows downwards and the feet are at `[0, 24, 0]`. Ignored for a single part. |
-| `target`             | [Vector](/docs/datapack/data-types/vector)                                                     | —         | Required by `reach`, ignored by every other type: the point the limb reaches for, in the same model units as `pivot`. `-z` is in front of the body. See [Reaching for a point](#reaching-for-a-point). |
+| `target`             | [Vector](/docs/datapack/data-types/vector)                                                     | —         | Required by `reach` unless its keyframes give points, ignored by every other type: the point the limb reaches for, in the same model units as `pivot`. `-z` is in front of the body. See [Reaching for a point](#reaching-for-a-point). |
 | `type`               | [String](/docs/datapack/data-types/string)                                                     | —         | Which property to change. See the table below.                                                                                                                                                                                                                  |
-| `value`              | [Float](/docs/datapack/data-types/float) OR [Expression](/docs/datapack/data-types/expression)  | —         | The amount. Its meaning depends on `type` (see below). Required unless `keyframes` is set, in which case it is ignored, or `type` is `reach`, where it defaults to `1`. As an Expression it is re-evaluated as the model renders — see [Driving a part from a value](#driving-a-part-from-a-value).                |
+| `value`              | [Float](/docs/datapack/data-types/float) OR [Expression](/docs/datapack/data-types/expression)  | —         | The amount. Its meaning depends on `type` (see below). Required unless `keyframes` give values, in which case it is ignored, or `type` is `reach`, where it defaults to `1`. As an Expression it is re-evaluated as the model renders — see [Driving a part from a value](#driving-a-part-from-a-value).                |
 | `override_animation` | [Boolean](/docs/datapack/data-types/boolean)                                                   | `false`   | For `pitch`/`yaw`/`roll`: if `true`, the value becomes the absolute rotation and the vanilla animation for that axis is ignored ("locked"). If `false`, it is added on top of the animation. For `reach`: if `true`, the arm holds the reach instead of swinging — see [Reaching for a point](#reaching-for-a-point). |
-| `keyframes`          | [Array](/docs/datapack/data-types/array) of [Model Part Keyframe](/docs/datapack/data-types/model-part-keyframe) | `[]`      | A timeline of values. When set, this replaces `value` and the part animates instead of holding still. The clock starts at 0 the moment the power becomes active.                                                                                                 |
+| `keyframes`          | [Array](/docs/datapack/data-types/array) of [Model Part Keyframe](/docs/datapack/data-types/model-part-keyframe) | `[]`      | A timeline of values, and for `reach` of points. When set, this replaces `value` (and `target`) and the part animates instead of holding still. The clock starts at 0 the moment the power becomes active.                                                                                                 |
 | `loop`               | [Boolean](/docs/datapack/data-types/boolean)                                                   | `false`   | If `true`, the keyframe timeline repeats forever. If `false`, it plays once and holds the last keyframe's value.                                                                                                                                                 |
 | `duration`           | [Float](/docs/datapack/data-types/float)                                                       | `0`       | Ticks to fade the whole transformation in when the power becomes active. `0` applies it instantly, which is the original behaviour.                                                                                                                              |
 | `fade_out_duration`  | [Float](/docs/datapack/data-types/float)                                                       | `duration` | Ticks to fade the transformation back out when the power stops applying. Set it separately for an asymmetric fade (snap in, ease out).                                                                                                                           |
@@ -106,16 +106,89 @@ Group transformations apply wherever the model does — held items, armour and a
 Both hands come together in front of the stomach, easing in over six ticks, and stay there when the holder punches. Move `target` further out — `[0, 4, -30]` — and the arms stretch to meet there.
 
 - The limb's pitch and yaw are replaced, its roll is cleared, and its `y_scale` becomes whatever puts its end on the point. `pivot` does nothing for `reach`.
-- `override_animation` set to `true` holds a reaching arm still: it doesn't swing when the holder attacks or uses an item, in first person either (the item in that hand stops swinging with it), and [ghost arms](/docs/datapack/powers/show_both_arms) leave it alone. Without it, the first-person arm swings from its reach pose. In third person a fully reaching arm holds still either way.
+- `override_animation` set to `true` holds a reaching arm still. It doesn't swing when the holder attacks, mines or places a block, and in first person it also skips the dip after an attack and the drop when switching items, so the item in that hand stays put with it. Animations that belong to using an item, such as eating or drawing a bow, still play. [Ghost arms](/docs/datapack/powers/show_both_arms) leave a held arm alone. Without `override_animation`, the first-person arm swings from its reach pose. In third person a fully reaching arm holds still either way.
 - The value blends from the limb's current pose (`0`) to the full reach (`1`), on top of the `duration` fade, so `keyframes` on the value can push a reach out and pull it back.
 - `target` sits in the model's own frame, which turns with the entity but not with a bent torso. To carry the reaching arms along with a bend, put the group rotation — on `upper`, say — after the `reach` in `transformations`.
 - The server works out the same pose, so particles on a hand and [body part](/docs/datapack/damage-conditions/body_part) hits follow the reaching limb.
+
+Keyframes on the value move a reach in and out over time. This one reaches out over 8 ticks, holds for a second, pulls back and rests, on a three-second loop:
+
+```json
+{
+  "type": "apoli:modify_model_parts",
+  "perspectives": ["first_person", "third_person"],
+  "transformations": [
+    {
+      "model_part": "arms",
+      "type": "reach",
+      "target": [0, -4, -8],
+      "override_animation": true,
+      "loop": true,
+      "easing": "ease_in_out_sine",
+      "keyframes": [
+        { "time": 0, "value": 0 },
+        { "time": 8, "value": 1 },
+        { "time": 28, "value": 1 },
+        { "time": 36, "value": 0 },
+        { "time": 60, "value": 0 }
+      ]
+    }
+  ]
+}
+```
+
+Drop `loop` and it plays once each time the power turns on, ending with the arms back at rest. The hands meet in front of the face, which in first person is about a quarter of the way up the screen.
+
+### Reaching in first person
+
+Minecraft draws the first-person arms from shoulders that sit low in the bottom corners of the screen, a little in front of the camera. A reach in the `first_person` view measures `target` from those shoulders, in the frame of the third-person body, so a pose looks the way it does in third person seen from just behind the shoulders: both hands land on the same point, each arm keeps about its third-person length, and the hand turns the same way.
+
+- A target at shoulder height (`y` = `2`) sits at the bottom edge of the screen, and the stomach — `[0, 8, -8]` above — is below it. Raise the target (a smaller `y`) to bring the hands up: face height (`y` = `-4`) is about a quarter of the way up, and the middle of the screen is level with a point just above the head (`y` = `-11`).
+- A reaching arm holds its item in its hand, gripped the way it is in third person, so a sword follows the reach. While that hand is using its item — eating, drawing a bow, blocking — the item goes back to where Minecraft normally draws it. Arms edited only by `pitch`, `yaw`, `roll` and the other types keep Minecraft's first-person frame and are drawn beside the item.
+
+### Drawing a path
+
+A keyframe can carry a `target` as well as a `value`. The points become a path for the end of the limb to follow: between two keyframes the point travels from one to the next along that keyframe's `easing`, and `catmullrom` bends the path into a smooth curve through the points instead of straight lines between them. Values and points are separate tracks, so a keyframe can set either or both, and the transformation's own `target` is only used when no keyframe sets one.
+
+```json
+{
+  "type": "apoli:modify_model_parts",
+  "perspectives": ["first_person", "third_person"],
+  "transformations": [
+    {
+      "model_part": "right_arm",
+      "type": "reach",
+      "override_animation": true,
+      "loop": true,
+      "easing": "catmullrom",
+      "keyframes": [
+        { "time": 0, "target": [-12, -1, -6] },
+        { "time": 4, "target": [-12, -1, -6], "easing": "linear" },
+        { "time": 7, "target": [-3, -1, -10] },
+        { "time": 10, "target": [5, 0, -7] },
+        { "time": 14, "target": [5, 0, -7], "easing": "linear" },
+        { "time": 20, "target": [-12, -1, -6], "easing": "ease_in_out_sine" }
+      ]
+    },
+    {
+      "model_part": "right_item",
+      "type": "pitch",
+      "value": -1.2
+    }
+  ]
+}
+```
+
+A horizontal slash with the right hand: it waits out to the side, sweeps across in front of the body in six ticks, holds, and swings back, on a one-second loop. The `linear` keyframes hold the hand still between moves, and `ease_in_out_sine` eases the return. The `right_item` edit lays the blade of whatever the right hand holds out along the arm, so a sword sweeps flat across the view in first person and across the body in third.
+
+- Keep the points about ten pixels from the shoulder — `[-5, 2, 0]` for the right arm, `[5, 2, 0]` for the left — and the arm keeps its length. A point further away stretches the arm, and the item in its hand with it.
+- Drop `loop` and the slash plays once each time the power turns on.
 
 ## Held items
 
 The items in an entity's hands are reached with `right_item`, `left_item`, `main_hand_item`, `off_hand_item` and `items` (see [Body Part](/docs/datapack/data-types/body-part#held-items)). An edit turns the item around the grip, in the item's own frame:
 
-- `pitch`, `yaw` and `roll` rotate the item. For a sword held in third person, `pitch` tips the blade towards the ground, `roll` lays it across the body and `yaw` spins it around its own length.
+- `pitch`, `yaw` and `roll` rotate the item. For a sword held in third person, a positive `pitch` tips the blade up and a negative one down towards the ground, `roll` lays it across the body and `yaw` spins it around its own length.
 - `x_scale`, `y_scale` and `z_scale` grow or shrink it from the grip, on top of any [held item scale](/docs/datapack/data-types/scale-type).
 - `pivot_x`, `pivot_y` and `pivot_z` move it, in pixels.
 - `visible` at `0`, or `hidden` at anything else, stops it being drawn.
@@ -136,7 +209,7 @@ Held items follow `perspectives` like everything else, so list `first_person` to
 }
 ```
 
-The main-hand item is turned a quarter circle around the grip in both views — a sword points at the ground.
+The main-hand item is turned a quarter circle around the grip in both views — in third person a sword points straight up.
 
 ## Animating a part
 

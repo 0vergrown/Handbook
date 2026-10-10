@@ -25,7 +25,7 @@ The held-item view draws the player's arm through the same model this power edit
 - `third_person` (the default) — the world view: your own body in third person or in an inventory preview, and every other player or humanoid mob.
 - `first_person` — only the arm drawn by the held-item view.
 
-An arm with an edit in the `first_person` view is always drawn there, so the pose can be seen: beside whatever its hand is holding, and the off arm as well as the main one. Edits that only change visibility, and edits to [held items](/docs/datapack/data-types/model-part-transformation#held-items), don't count.
+An arm with an edit in the `first_person` view is always drawn there, so the pose can be seen — the off arm as well as the main one. An arm that [reaches](/docs/datapack/data-types/model-part-transformation#reaching-in-first-person) holds its item in its hand, as it does in third person; any other edited arm is drawn beside the item, which stays where Minecraft normally draws it. Edits that only change visibility, and edits to [held items](/docs/datapack/data-types/model-part-transformation#held-items), don't count.
 
 Listing both draws the edit everywhere — write `"perspectives": ["first_person", "third_person"]` out in full if that is what you want.
 
