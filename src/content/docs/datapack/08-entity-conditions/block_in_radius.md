@@ -13,8 +13,9 @@ Type ID: `apoli:block_in_radius`
 Field  | Type | Default | Description
 -------|------|---------|-------------
 `block_condition` | Block Condition Type | |  The block condition type to check for.
-`radius` | Integer | | The radius of the area to check how many blocks fulfill the `block_condition`.
-`shape` | String | `"cube"` | Determines the shape of the radius. Accepts `"cube"`, `"star"` or `"sphere"`.
+`radius` | [Vector](/docs/datapack/data-types/vector) | | The size of the area to check — a single number for all axes, or `{"x":.., "y":.., "z":..}` per axis.
+`shape` | [Shape](/docs/datapack/data-types/shape) | `"cube"` | Determines the shape of the area: `cube`, `sphere`, `star`, `cone`, or a hollow one (`cube_hollow`, `sphere_hollow`, `star_hollow`, `cone_hollow`).
+`hollow_thickness` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | `1` | How thick a hollow `shape` is, in blocks. Ignored by the solid shapes.
 `comparison` | Comparison | `">="` | Determines how the amount of blocks which fulfill `block_condition` block condition should be compared to the specified value.
 `compare_to` | [Integer](/docs/datapack/data-types/integer) OR [Expression](/docs/datapack/data-types/expression) | `1` | The value at which the amount of blocks which fulfill `block_condition` will be compared to.
 

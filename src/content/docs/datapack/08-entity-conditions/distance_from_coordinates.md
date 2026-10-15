@@ -17,7 +17,7 @@ Field | Type | Default | Description
 `ignore_x` | Boolean | `false` | Determines whether to consider the X axis to be 0.
 `ignore_y` | Boolean | `false` | Determines whether to consider the Y axis to be 0.
 `ignore_z` | Boolean | `false` | Determines whether to consider the Z axis to be 0.
-`shape` | String | `"cube"` | Determines the shape of the check. Accepts `"cube"`, `"star"` or `"sphere"`.
+`shape` | [Shape](/docs/datapack/data-types/shape) | `"cube"` | How the distance is measured: `"cube"` takes the largest axis, `"star"` adds the axes up, and `"sphere"` is the straight-line distance. `"cone"` measures like `"sphere"`, and a hollow shape measures like its solid form.
 `scale_reference_to_dimension` | Boolean | `true` | Determines whether to check for the reference point whilst considering the coordinate scale of the dimension.
 `result_on_the_wrong_dimension` | Boolean | _optional_ | If specified, this value will override the result of the comparison if the entity being tested is not in the reference's dimension.
 `round_to_digit` | Integer | _optional_ | If specified, rounds the result to the closest number with the specified amount of digits after the comma. Negative numbers also work (e.g: `-2` rounds to multiples of 100).

@@ -39,7 +39,7 @@ By default the edit snaps on and off with the power. Add `duration` to make it e
 `pivot_y` | Added to the part's Y pivot offset.
 `pivot_z` | Added to the part's Z pivot offset.
 `visible` | Sets visibility: `0` hides the part (and its children), any other value shows it. `override_animation` is ignored.
-`hidden` | Sets the "skip draw" flag: non-`0` skips drawing this part's own cubes while still drawing its children. `override_animation` is ignored.
+`hidden` | Sets the "skip draw" flag: non-`0` skips drawing this part's own cubes while still drawing its children. With a CEM pack, the boxes the pack gives the part count as its own cubes. `override_animation` is ignored.
 `reach` | Points the limb at `target` and stretches or shortens it so its end lands exactly there. The value blends the reach in, from `0` (untouched) to `1` (all the way, the default). See [Reaching for a point](#reaching-for-a-point).
 
 ## Moving a group

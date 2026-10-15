@@ -46,6 +46,8 @@ More than one swappable layer may target the same layer; their pools are merged.
 
 The pool is the swappable layer's **available** origins — the ones whose [conditioned origin](/docs/datapack/origins/layers) groups currently pass — minus whatever the player already has as their main origin.
 
+The server works the conditions out and sends the result to the player, so a group's condition can test anything the server knows — command tags, scoreboards, advancements, resources. The swap screen and the swap key follow it within half a second.
+
 This means you do not need a separate "granting" system. Gate each origin on a condition the pack controls, and the pool fills and empties by itself:
 
 ```json
@@ -67,7 +69,7 @@ This means you do not need a separate "granting" system. Gate each origin on a c
 }
 ```
 
-Set `example:stolen/acid` to 1 and Acid appears in the pool; set it back to 0 and it disappears — and if the player was wearing it, they are returned to their main origin automatically. The same happens if the whole swappable layer closes: once no swappable layer aimed at the target offers the player anything, and they have nothing in their granted list for it either, they go back to their main origin.
+Set `example:stolen/acid` to 1 and Acid appears in the pool; set it back to 0 and it disappears — and if the player was wearing it, they are returned to their main origin automatically, within half a second. The same happens if the whole swappable layer closes: once no swappable layer aimed at the target offers the player anything, and they have nothing in their granted list for it either, they go back to their main origin.
 
 Changing the main origin also ends the swap. Choosing, being auto-chosen, having a derived layer re-derive, losing the origin, and using an Orb of Origin all return the player to their (new) main origin first, so they can never be left wearing a pool origin on top of one.
 
@@ -95,7 +97,7 @@ The pool is the granted list plus the condition-driven origins, listed in alphab
 
 Three ways in:
 
-- The **swap key** (default `V`, rebindable in Controls). Each press moves to the next option: `Main → first → … → last → Main`. Shift-press returns to the main origin from anywhere.
+- The **swap key** (default `V`, rebindable in Controls). Each press moves to the next option: `Main → first → … → last → Main`, or `… → last → first` with `wrap_to_main: false`. Shift-press returns to the main origin from anywhere; with `shift_returns_to_main: false` it cycles like a plain press. The key still works when another mod uses the same key.
 - The **S button** on the view-origin screen, which opens a grid of the pool's icons. It only appears when the pool is non-empty.
 - The [`origins:force_swap`](/docs/datapack/origins/force_swap) entity action, for packs that want to drive it from a power.
 

@@ -14,7 +14,7 @@ Type ID: `origins:force_swap` — an [entity action](/docs/datapack/entity-actio
 
 | Field | Type | Default | Purpose |
 | --- | --- | --- | --- |
-| `mode` | String — `linear`, `random` or `main` | `linear` | `linear` advances to the next option in order; `random` picks a different one at random; `main` returns to the main origin. |
+| `mode` | String — `linear`, `random` or `main` | `linear` | `linear` advances to the next option in order, wrapping the way the layer's `wrap_to_main` says; `random` picks a different one at random; `main` returns to the main origin. |
 | `layer` | [Identifier](/docs/datapack/data-types/identifier) | _optional_ | Which layer to swap on. Accepts either the target layer or the swappable layer itself. Defaults to the first layer that has a swappable pool. |
 | `origin` | [Identifier](/docs/datapack/data-types/identifier) | _optional_ | Swap directly to this origin, ignoring `mode`. Does nothing if it is not in the player's pool. |
 | `include_main` | [Boolean](/docs/datapack/data-types/boolean) | `true` | In `random` mode, whether the main origin is one of the possible results. |

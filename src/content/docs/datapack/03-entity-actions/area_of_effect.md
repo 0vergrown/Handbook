@@ -15,7 +15,8 @@ Type ID: `apoli:area_of_effect`
 Field | Type | Default | Description
 ------|------|---------|------------
 `radius` | [Vector](/docs/datapack/data-types/vector) | `16.0` | The size of the area — a single number (uniform on all axes) or `{"x":.., "y":.., "z":..}` for independent per-axis extents.
-`shape` | [Shape](/docs/datapack/data-types/shape) | `"cube"` | The outline of the area: `cube`, `sphere`, `star`, or `cone`.
+`shape` | [Shape](/docs/datapack/data-types/shape) | `"cube"` | The outline of the area: `cube`, `sphere`, `star`, `cone`, or a hollow one (`cube_hollow`, `sphere_hollow`, `star_hollow`, `cone_hollow`).
+`hollow_thickness` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | `1` | How thick a hollow `shape` is, in blocks, read from the '**actor**' each time the action runs. Ignored by the solid shapes.
 `bientity_action` | Bi-entity Action Type | *optional* | The bi-entity action to execute on either or both the '**actor**' or the '**target(s)**'. Leave it out to count matches without doing anything to them.
 `bientity_condition` | Bi-entity Condition Type | *optional* | If specified, the specified bi-entity action will only be executed on either or both the '**actor**' or '**target(s)**' that fulfill this bi-entity condition.
 `include_actor` | Boolean | `false` | Determines whether the '**actor**' should be included as a target.

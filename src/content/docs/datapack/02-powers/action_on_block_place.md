@@ -21,8 +21,8 @@ Field | Type | Default | Description
 `place_on_condition` | Block Condition Type | *optional* | If specified, the specified actions will only be executed if the block the player is about to place a block on fulfills this block condition.
 `directions` | [Array](/docs/datapack/data-types/array) of [String](/docs/datapack/data-types/string) | `["up", "down", "north", "south", "east", "west"]` | Determines whether the specified actions should be executed if the player is about to place a block at the specified side(s) of a block.
 `hands` | [Array](/docs/datapack/data-types/array) of [Hand](/docs/datapack/data-types/hand) | `["main_hand", "off_hand"]` | Determines whether the specified actions should be executed if the player used the specified hand(s) when trying to place a block.
-`result_stack` | [Item Stack](/docs/datapack/data-types/item-stack) | *optional* | If specified, this item stack will be given to the player upon placing a block.
-`result_item_action` | Item Action Type | *optional* | If specified, this item action will be executed on the item that will be given to the player upon placing a block.
+`result_stack` | [Item Stack](/docs/datapack/data-types/item-stack) | *optional* | If specified, this item stack will be given to the player upon placing a block: into the hand that was used if that hand is now empty, otherwise into the inventory (dropped at their feet if it is full).
+`result_item_action` | Item Action Type | *optional* | If specified, this item action will be executed on `result_stack` before it is given to the player. Does nothing without `result_stack`.
 
 > This fires **after** the block goes down, so `place_to_condition` matches the block that was just placed. Use [apoli:prevent_block_place](/docs/datapack/powers/prevent_block_place) if you need to inspect the space *before* it is filled.
 

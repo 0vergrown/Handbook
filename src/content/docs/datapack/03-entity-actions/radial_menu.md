@@ -41,7 +41,7 @@ Field | Type | Default | Description
 
 Picking a slice closes the menu, and so do Esc and the inventory key. When the menu was opened by a key press, such as an [`apoli:action_on_key_press`](/docs/datapack/powers/action_on_key_press), pressing that key again closes it too, the way the inventory key opens and closes the inventory. A menu opened by picking a slice of another menu closes on the same key as the first one.
 
-The key has to be let go before it can close the menu, so the press that opened it never closes it straight away, even when it is held down.
+The key has to be let go before it can close the menu, so the press that opened it never closes it straight away, even when it is held down. Likewise, the press that closes the menu does not open it again.
 
 ## Example
 

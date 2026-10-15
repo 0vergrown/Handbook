@@ -19,7 +19,7 @@ Field | Type | Default | Description
 
 Field | Type | Default | Description
 ------|------|---------|-------------
-`slot` | [String](/docs/datapack/data-types/string) | **required** | The slot to change, as `group/slot` — for example `hand/ring`.
+`slot` | [String](/docs/datapack/data-types/string) | **required** | The slot to change, named the way your accessory mod names it: Trinkets uses `group/slot` (`hand/ring`), Accessories and Curios use the slot name alone (`ring`).
 `id` | [Identifier](/docs/datapack/data-types/identifier) | **required** | A unique id for this modifier, so it can be applied and removed cleanly.
 `amount` | [Float](/docs/datapack/data-types/float) | `0.0` | How much to change the count by.
 `operation` | [Attribute Modifier Operation](/docs/datapack/data-types/attribute-modifier-operation) | `add_base_early` | How `amount` is applied.
@@ -52,6 +52,23 @@ Take a slot away as a drawback, and add another elsewhere as the compensation:
   ]
 }
 ```
+
+> The power's `condition` is checked every tick. The slots are added while it passes and taken away again while it fails, so a slot can follow a resource, a toggle or anything else the condition reads:
+>
+> ```json
+> {
+>   "type": "apoli:modify_accessory_slots",
+>   "condition": {
+>     "type": "apoli:resource",
+>     "resource": "mypack:ring_charge",
+>     "comparison": ">",
+>     "compare_to": 0
+>   },
+>   "modifiers": [
+>     { "slot": "hand/ring", "id": "mypack:charged_ring", "amount": 1 }
+>   ]
+> }
+> ```
 
 > Give each modifier a distinct `id`. Two modifiers sharing one id on the same slot will overwrite each other.
 

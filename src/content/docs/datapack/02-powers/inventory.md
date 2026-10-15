@@ -21,7 +21,7 @@ Field  | Type | Default | Description
 
 ## Closing the inventory
 
-Pressing the power's `key` again closes the inventory, as do Esc and the inventory key. The key has to be let go first, so holding it down after opening does not close it.
+Pressing the power's `key` again closes the inventory, as do Esc and the inventory key. The key has to be let go first, so holding it down after opening does not close it. The press that closes the inventory does not open it again, even while the key is still held.
 
 When `key` is also one of Minecraft's slot keys (a hotbar number, swap offhand, drop or pick block), pressing it with the cursor over a slot does the slot action, as usual, and pressing it anywhere else closes the inventory.
 

@@ -4,7 +4,7 @@ description: "Swaps out the sounds the entity that has the power makes."
 navigation_title: "Replace Sound Emission"
 ---
 
-Swaps out the sounds the entity that has the power **makes** — its hurt and death sounds, footsteps, eating, equipping, attack swings, level-up chime and so on. Everyone who can hear the entity hears the replacement.
+Swaps out the sounds the entity that has the power **makes** — its hurt and death sounds, footsteps, eating, equipping, attack swings, level-up chime and so on. Everyone who can hear the entity hears the replacement, the holder included.
 
 **Type ID:** `apoli:replace_sound_emission`
 
@@ -16,7 +16,7 @@ For the other direction — changing what the holder *hears* — use [`apoli:rep
 | --- | --- | --- | --- |
 | `sounds` | Object | **required** | Map of sound to replace → what to replace it with. See below. |
 | `replace` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Whether a match stops the original sound (and every lower-priority power). `false` plays the replacement *on top of* the original. |
-| `entity_action` | [Entity Action Type](/docs/datapack/entity-actions) | _optional_ | Action run on the holder whenever one of its rules matches. |
+| `entity_action` | [Entity Action Type](/docs/datapack/entity-actions) | _optional_ | Action run on the holder whenever one of its rules matches. It runs once, on the server, however many players hear the sound. |
 | `priority` | [Integer](/docs/datapack/data-types/integer) | `0` | Ordering when the holder has several replace-sound powers. Higher runs first. |
 
 ## The `sounds` map

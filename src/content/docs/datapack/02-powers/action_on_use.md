@@ -19,7 +19,7 @@ Field | Type | Default | Description
 ------|------|---------|-------------
 `bientity_action` | Bi-entity Action Type | _optional_ | If specified, run on the actor/target pair.
 `held_item_action`| Item Action Type | _optional_ | If specified, run on the actor's held stack in the hand that triggered the use.
-`result_item_action` | Item Action Type | _optional_ | If specified, run on whatever stack ends up in the actor's hand AFTER `held_item_action` and `result_stack` have applied. Skipped if the stack ends up empty.
+`result_item_action` | Item Action Type | _optional_ | If specified, run on `result_stack` before it is given to the actor. Does nothing without `result_stack` — to change the item in hand, use `held_item_action`.
 `bientity_condition` | Bi-entity Condition Type | _optional_ | Gate: only run if this passes for the actor/target pair.
 `item_condition` | Item Condition Type | _optional_ | Gate: only run if this passes for the actor's held stack.
 `hands`| [Array](/docs/datapack/data-types/array) of [Hand](/docs/datapack/data-types/hand) | `["off_hand", "main_hand"]` | Which hand(s) of the actor are allowed to trigger this power.

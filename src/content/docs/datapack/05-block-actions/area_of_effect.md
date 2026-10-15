@@ -13,7 +13,8 @@ Type ID: `apoli:area_of_effect`
 Field | Type | Default | Description
 ------|------|---------|------------
 `radius` | [Vector](/docs/datapack/data-types/vector) | `16` | The size of the area — a single number (uniform on all axes) or `{"x":.., "y":.., "z":..}` for independent per-axis extents (e.g. a flat layer).
-`shape` | [Shape](/docs/datapack/data-types/shape) | `"cube"` | The outline of the area: `cube`, `sphere`, `star`, or `cone`.
+`shape` | [Shape](/docs/datapack/data-types/shape) | `"cube"` | The outline of the area: `cube`, `sphere`, `star`, `cone`, or a hollow one (`cube_hollow`, `sphere_hollow`, `star_hollow`, `cone_hollow`).
+`hollow_thickness` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | `1` | How thick a hollow `shape` is, in blocks. Only world-level expression variables are available here. Ignored by the solid shapes.
 `block_action` | Block Action Type | | The block action to execute on the blocks within the specified radius.
 `block_condition` | Block Condition Type | *optional* | If specified, the specified block action will only be executed on blocks that fulfill this block condition.
 

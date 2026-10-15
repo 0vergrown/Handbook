@@ -14,7 +14,7 @@ Apoli's render powers work on top of that. This integration is **behaviour-gated
 | [`apoli:custom_model_render`](/docs/datapack/powers/custom_model_render) `texture` mode | drawn over the pack's model, in the pose the pack animated it into |
 | `apoli:custom_model_render` `geometry` mode | bones bound to a body part follow the pack's animated part, not the vanilla one |
 | [`apoli:model_color`](/docs/datapack/powers/model_color) | tints the pack's model |
-| [`apoli:modify_model_parts`](/docs/datapack/powers/modify_model_parts) | applied to the vanilla pose before the pack animates from it |
+| [`apoli:modify_model_parts`](/docs/datapack/powers/modify_model_parts) | applied to the vanilla pose before the pack animates from it; `visible` and `hidden` also hide the boxes the pack gives that part |
 | [`apoli:prevent_feature_render`](/docs/datapack/powers/prevent_feature_render) | unchanged; it hides feature layers, not the model |
 
 A CEM pack is free to put a part anywhere it likes. `apoli:custom_model_render` in `geometry` mode measures each body part against the **vanilla rest pose** and applies the difference to the bone bound to it, so a bone named `head` lands on the pack's head wherever the pack has moved it — including poses like Fresh Animations' crouch, which sits lower and leans less than vanilla's.
@@ -24,6 +24,12 @@ A CEM pack is free to put a part anywhere it likes. `apoli:custom_model_render` 
 The [pivot rule](/docs/datapack/powers/custom_model_render) does not change: give every bone that names a body part the vanilla pivot for that part — `head`, `hat` and `body` at `[0, 24, 0]`, arms at `[±5, 22, 0]`, legs at `[±1.9, 12, 0]`. A bone pivoted somewhere else sweeps an arc the limb never takes, and a CEM pack's larger range of motion makes that more obvious, not less.
 
 Bones that do **not** name a body part ride their parent, so a rig that hangs everything off one `head` bone follows the head as a unit and needs no other binding.
+
+## Mods that pose the player through EMF
+
+The [EMF Compat](https://modrinth.com/mod/emf-compat-core) addons — for Better Combat, Iron's Spells 'n Spellbooks, Immersive Melodies and others — put another mod's pose, such as a sword swing, a cast or an instrument, back onto the pack's model after the pack has animated it. Apoli draws its overlays and geometry from that finished pose. While it draws them, it holds the pack's animation for that entity with EMF's per-entity pause, which the addons leave alone, so a custom skin stays on the arm during the pose and after it, in first person as well as third.
+
+While an addon holds a pose it also copies each limb's visibility onto the skin layer on top of it: `head` onto `hat`, the arms onto the sleeves, the legs onto the trousers and `body` onto `jacket`. A `visible` or `hidden` edit on one of those layers still hides it, because Apoli also hides the boxes the CEM pack gives the layer. A layer the pack leaves as plain vanilla geometry has no boxes of its own, so it shows again for the length of the pose.
 
 ## Things worth knowing
 

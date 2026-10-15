@@ -13,6 +13,8 @@ _None._
 
 > The power's `condition` gates the flight: while it fails, flight is taken away and the holder drops out of the air, and it comes back the moment the condition passes again. Suppressing the power ([apoli:suppress_power](/docs/datapack/entity-actions/suppress_power)) does the same. Creative and spectator mode are never touched — a creative player keeps flying regardless.
 
+> Flight from this power does not protect from fall damage. A holder who stops flying in mid-air, or walks off a ledge, takes fall damage like anyone else. If the power should also make its holder immune to falls, pair it with [apoli:invulnerability](/docs/datapack/powers/invulnerability) and a [apoli:from_falling](/docs/datapack/damage-conditions/from_falling) damage condition.
+
 > Flight from this power does not feed sprinting. Vanilla lets anyone who *may* fly sprint on an empty stomach; that shortcut is kept for actual creative and spectator mode only, so a survival holder of this power still needs more than 6 food points — 3 shanks — to start or hold a sprint, like anyone else.
 
 ## Examples
@@ -35,3 +37,20 @@ _None._
 ```
 
 Flight only while there is mana left. Drain the resource over time and the holder falls when it runs out.
+
+```json
+{
+    "type": "apoli:multiple",
+    "flight": {
+        "type": "apoli:creative_flight"
+    },
+    "no_fall_damage": {
+        "type": "apoli:invulnerability",
+        "damage_condition": {
+            "type": "apoli:from_falling"
+        }
+    }
+}
+```
+
+Flight with the fall immunity a creative player has.

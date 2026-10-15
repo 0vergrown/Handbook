@@ -156,6 +156,11 @@ Three actions take a `tags` list and act on every power the entity holds that ca
 - [apoli:suppress_power](/docs/datapack/entity-actions/suppress_power) — switch them off.
 - [apoli:unsuppress_power](/docs/datapack/entity-actions/unsuppress_power) — switch them back on.
 
+Two conditions accept `tags` as well, and pass when the entity holds (or has active) any power with one of them:
+
+- [apoli:power](/docs/datapack/entity-conditions/power) — the entity holds a tagged power.
+- [apoli:power_active](/docs/datapack/entity-conditions/power_active) — a tagged power is active.
+
 That is what makes "copy one move from whatever origin you touched" a single action rather than a
 list that has to be updated whenever a pack adds a power: tag the moves once, and the action finds
 them.

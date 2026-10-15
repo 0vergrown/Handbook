@@ -18,9 +18,9 @@ Field | Type | Default | Description
 `item_condition` | Item Condition Type | _optional_ | If specified, only execute the specified actions if this condition is fulfilled by the item in the 'actor' (the player that has the power) entity's specified hand(s) determined by the `hands` string field.
 `directions` | [Array](/docs/datapack/data-types/array) of [String](/docs/datapack/data-types/string) | `["north", "east", "south", "west", "up", "down"]` | If specified, only execute the specified actions if you used the specified face of the block.
 `hands` | [Array](/docs/datapack/data-types/array) of [Hand](/docs/datapack/data-types/hand) | `["off_hand", "main_hand"]` | Determines if the power should be activated if the player used the specified hand(s). Accepts `"off_hand"`, `"main_hand"` or both.
-`result_stack` | [Item Stack](/docs/datapack/data-types/item-stack) | _optional_ | If specified, gives the item to the 'actor' (the player that has the power) entity.
+`result_stack` | [Item Stack](/docs/datapack/data-types/item-stack) | _optional_ | If specified, gives the item to the 'actor' (the player that has the power): into the hand that was used if that hand is now empty, otherwise into the inventory (dropped at their feet if it is full).
 `held_item_action` | Item Action Type | _optional_ | If specified, this action will be executed on the item used for right-clicking the 'target' entity in the specified hand(s) determined by the `hands` string field.
-`result_item_action` | Item Action Type | _optional_ | If specified, this action will be executed on the item that is given to the 'actor' (the player that has the power) entity.
+`result_item_action` | Item Action Type | _optional_ | If specified, this action will be executed on `result_stack` before it is given to the 'actor' (the player that has the power). Does nothing without `result_stack`.
 `action_result` | [Action Result](/docs/datapack/data-types/action-result) | `"success"` | Determines the result of the 'use' action.
 
 > `entity_action`, `block_action` and the item actions run on the server only; `action_result` is returned on both sides so the client's prediction matches. `hands` and `directions` are checked before the conditions, so restricting them is the cheap way to narrow a power down.

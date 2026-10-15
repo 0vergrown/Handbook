@@ -28,6 +28,11 @@ A **Key** tells an [active power](/docs/datapack/powers/action_on_key_press) whi
 > including when a `cooldown` expires while the key is still down. To fire again, release the key
 > and press it again.
 
+> A key pressed while a screen is open — a chest, the chat, a [radial menu](/docs/datapack/entity-actions/radial_menu) —
+> does not activate a power, and neither does the press that closes the screen: a key still held
+> when the screen closes counts once it is released and pressed again. A `continuous: true` power
+> picks up as soon as the screen closes if its key is held.
+
 ## Built-in keys
 
 You can point at any keybinding the game knows about:

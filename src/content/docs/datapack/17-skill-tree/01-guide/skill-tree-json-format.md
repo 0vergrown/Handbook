@@ -69,7 +69,7 @@ Both end up in the same tree and behave identically. Power-data skills win if bo
 | `description` | [Text Component](/docs/datapack/data-types/text-component) | `skill.<ns>.<path>.description` | Display description. |
 | `icon` | [Icon](/docs/datapack/data-types/icon) | `{"item": "minecraft:grass_block"}` | Node icon — an item id, an item stack, or a `texture`. |
 | `frame` | `task` \| `goal` \| `challenge` | `task` | Border drawn around the node, matching the advancement frames. |
-| `cost` | [Integer](/docs/datapack/data-types/integer) | `0` | Points needed to buy it. |
+| `cost` | [Integer](/docs/datapack/data-types/integer) or [Object](/docs/datapack/data-types/object) | `0` | What buying it costs — points, or points and items, as described in [Paying with items](/docs/datapack/skill-tree/skill-tree-power-data#paying-with-items). |
 | `excludes` | [Array](/docs/datapack/data-types/array) of [Identifier](/docs/datapack/data-types/identifier) | `[]` | Skills that become unbuyable once this one is bought, and vice versa. |
 | `condition` | [Entity Condition](/docs/datapack/introduction/conditions) | _optional_ | Must pass before the skill can be bought. |
 | `visibility_condition` | [Entity Condition](/docs/datapack/introduction/conditions) | _optional_ | Must pass for the node to appear at all. |

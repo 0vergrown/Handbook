@@ -42,4 +42,4 @@ Passes while anyone has the entity in their `example:party` set.
 
 Passes when the entity is in three or more sets at once, of any kind.
 
-> Set membership lives on the server, so this condition is always false when the client evaluates it. It can't drive the `condition` of a purely visual power such as [apoli:model_color](/docs/datapack/powers/model_color) or [apoli:entity_glow](/docs/datapack/powers/entity_glow) — have the set's `action_on_add` grant members a marker power and test that instead.
+> The number of sets an entity is in is only known to the server, so this condition is always false when the client evaluates it. To drive a visual power such as [apoli:model_color](/docs/datapack/powers/model_color) or [apoli:entity_glow](/docs/datapack/powers/entity_glow), ask from the owner's side with the [bi-entity condition of the same name](/docs/datapack/bientity-conditions/in_entity_set), which works on the client.

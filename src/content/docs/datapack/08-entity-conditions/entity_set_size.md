@@ -9,6 +9,10 @@ Compares the amount of entities stored in a power that uses the [apoli:entity_se
 
 Type ID: `apoli:entity_set_size` (but can use it's old `set_size` type id as an alias)
 
+> This condition also works where the client evaluates conditions, such as the `condition` of a render power. A set is sent to its owner and to every player who can see the owner, so a client knows the size of its own sets and of the sets of any entity in view.
+
+> The size counts every member, including offline players and, for a [persistent](/docs/datapack/powers/entity_set#persistent-sets) set, members that no longer exist.
+
 ##	Fields
 
 Field | Type | Default | Description
