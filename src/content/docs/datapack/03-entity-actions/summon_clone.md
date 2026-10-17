@@ -23,7 +23,7 @@ Type ID: `apoli:summon_clone`
 | `max_life_ticks`       | [Integer](/docs/datapack/data-types/integer)              | `1200`     | Ticks before the clone dies of its own accord. `0` or less = permanent until killed.                                      |
 | `summon_id`            | [Identifier](/docs/datapack/data-types/identifier)           | _optional_ | A tag used by [apoli:set_summon_max_life](/docs/datapack/entity-actions/set_summon_max_life) to target this clone.                                |
 | `powers`               | [Array](/docs/datapack/data-types/array) of Identifiers | _optional_ | Powers to grant the clone on spawn.                                                                         |
-| `bientity_action`      | Bi-entity Action Type            | _optional_ | Runs once after the clone spawns, with the owner as actor and the clone as target.                          |
+| `bientity_action`      | Bi-entity Action Type            | _optional_ | Runs once after the clone spawns, with the owner as actor and the clone as target. If it moves the clone, every player watching sees it appear at its new spot, not at yours. |
 
 ## Examples
 

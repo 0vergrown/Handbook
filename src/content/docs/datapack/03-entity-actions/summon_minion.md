@@ -20,7 +20,7 @@ Type ID: `apoli:summon_minion`
 | `max_life_ticks`  | [Integer](/docs/datapack/data-types/integer)              | `1200`                                      | Ticks before the minion dies of its own accord. `0` or less = permanent until killed.              |
 | `summon_id`       | [Identifier](/docs/datapack/data-types/identifier)           | _optional_                                  | A tag used by [apoli:set_summon_max_life](/docs/datapack/entity-actions/set_summon_max_life) to target this minion.        |
 | `powers`          | [Array](/docs/datapack/data-types/array) of Identifiers | _optional_                                  | Powers to grant the minion on spawn. Granting it a geometry-mode [apoli:custom_model_render](/docs/datapack/powers/custom_model_render) replaces the minion's model with a Blockbench one. |
-| `bientity_action` | Bi-entity Action Type            | _optional_                                  | Runs once after the minion spawns, with the owner as actor and the minion as target. |
+| `bientity_action` | Bi-entity Action Type            | _optional_                                  | Runs once after the minion spawns, with the owner as actor and the minion as target. If it moves the minion — an [`apoli:teleport_to`](/docs/datapack/bientity-actions/teleport_to) that puts it in front of you, say — every player watching sees it appear at its new spot, not at yours. |
 
 ## Examples
 
