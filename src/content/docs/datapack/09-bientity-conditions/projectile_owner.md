@@ -4,15 +4,15 @@ description: "Checks whether the target is a projectile the actor owns."
 navigation_title: "Projectile Owner"
 ---
 
-Checks whether the target is a projectile — an arrow, trident, snowball, fireball, potion or any other projectile — and the actor is the entity that owns it, usually whoever shot or threw it.
+Checks whether the target is a projectile (an arrow, trident, snowball, fireball, potion or any other projectile) and the actor is the entity that owns it, usually whoever shot or threw it.
 
 Type ID: `apoli:projectile_owner`
 
-Anything that is not a projectile fails, even when the actor owns it: a tamed wolf does not pass, and neither does an arrow someone else fired. [`apoli:owner`](/docs/datapack/bientity-conditions/owner) is the wider check that also covers tamed animals.
+Anything that isn't a projectile fails, even when the actor owns it, so a tamed wolf doesn't pass, and neither does an arrow someone else fired. [`apoli:owner`](/docs/datapack/bientity-conditions/owner) is the wider check that also covers tamed animals.
 
 ## Fields
 
-_None._
+This condition has no fields.
 
 ## Examples
 

@@ -4,19 +4,19 @@ description: Does nothing. Useful as an explicit no-op branch.
 navigation_title: "Nothing"
 ---
 
-Does nothing at all. It exists so you can write "and in this case, nothing happens" explicitly, where leaving a field out would be ambiguous or invalid.
+Does nothing at all. It lets you write that nothing happens in a case on purpose, where leaving a field out would be unclear or invalid.
 
 Type ID: `apoli:nothing`
 
-It is a meta type, so it is available wherever an action is: entity, bi-entity, block and item actions all accept it. The matching [`apoli:nothing`](/docs/datapack/meta-conditions/nothing) condition and the [`apoli:simple`](/docs/datapack/powers/simple) power (which also answers to `apoli:nothing`) do the same for condition and power fields.
+It is a meta type, so it works wherever an action does: entity, bi-entity, block and item actions all accept it. The matching [`apoli:nothing`](/docs/datapack/meta-conditions/nothing) condition and the [`apoli:simple`](/docs/datapack/powers/simple) power (which also answers to `apoli:nothing`) do the same for condition and power fields.
 
 ## Fields
 
-_None._
+This action has no fields.
 
 ## Examples
 
-As the `else_action` of a branch, to make it obvious the other case was considered rather than forgotten:
+As the `else_action` of a branch, to show the other case was considered and not forgotten:
 
 ```json
 {
@@ -52,4 +52,4 @@ The same type in a bi-entity field:
 }
 ```
 
-It is also the simplest placeholder while you build a power up — a required action field has to be *something*.
+It is also the simplest placeholder while you build a power, since a required action field needs something in it.

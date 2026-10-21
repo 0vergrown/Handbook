@@ -10,9 +10,9 @@ Type ID: `apoli:difficulty`
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|-------------
-`difficulty` | [String](/docs/datapack/data-types/string) or array | **required** | One of `peaceful`, `easy`, `normal`, `hard`, or an array of them. An array passes if the current difficulty is any one of them.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `difficulty` | [String](/docs/datapack/data-types/string) or array | _required_ | One of `peaceful`, `easy`, `normal` or `hard`, or an array of them. An array passes if the current difficulty is any one of them. |
 
 ## Examples
 
@@ -25,7 +25,7 @@ A single difficulty:
 }
 ```
 
-Several at once — here, a curse that only bites above Easy:
+Several at once, here a curse that only bites above Easy:
 
 ```json
 {
@@ -43,7 +43,7 @@ Several at once — here, a curse that only bites above Easy:
 }
 ```
 
-Pair it with [`apoli:if_else`](/docs/datapack/meta-actions/if_else) to scale a value rather than switch it on and off:
+Pair it with [`apoli:if_else`](/docs/datapack/meta-actions/if_else) to scale a value instead of switching it on and off:
 
 ```json
 {
@@ -54,4 +54,5 @@ Pair it with [`apoli:if_else`](/docs/datapack/meta-actions/if_else) to scale a v
 }
 ```
 
-> There is also a `difficulty` variable in [expressions](/docs/datapack/data-types/expression), reading `0` for peaceful through `3` for hard — so `"amount": "1 + difficulty"` scales without a branch at all.
+> [!TIP]
+> [Expressions](/docs/datapack/data-types/expression) also have a `difficulty` variable, which reads `0` for peaceful up to `3` for hard, so `"amount": "1 + difficulty"` scales without a branch at all.

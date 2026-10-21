@@ -1,18 +1,18 @@
 ---
 title: "Modify (Item Action Type)"
-description: "Applies an Item Modifier to the item stack."
+description: "Applies an item modifier to the item stack."
 navigation_title: "Modify"
 ---
 
-Applies an Item Modifier to the item stack.
+Applies an item modifier to the item stack.
 
 Type ID: `apoli:modify`
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|-------------
-`modifier` | Identifier | | The ID of an item modifier.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | [Identifier](/docs/datapack/data-types/identifier) | _required_ | The ID of an item modifier. |
 
 ## Examples
 
@@ -23,7 +23,7 @@ Field | Type | Default | Description
 }
 ```
 
-This example will apply the `example:stuff` item modifier to the item stack.
+This applies the `example:stuff` item modifier to the stack. The item modifier itself looks like this:
 
 ```json
 {
@@ -38,8 +38,8 @@ This example will apply the `example:stuff` item modifier to the item stack.
     ]
 }
 ```
-This being the contents of the `example:stuff` item modifier.
 
-The loot context the modifier runs in supplies `origin` (the holder's position), `tool` (the stack being modified) and `this_entity` (the holder) — every other loot parameter is absent, so a function that reads one (`minecraft:copy_state`, anything needing `block_entity`) will fail. Functions that swap the item outright, like `minecraft:furnace_smelt`, only work where Apoli can replace the whole stack: inside [`apoli:item_on_item`](/docs/datapack/powers/item_on_item). Everywhere else the new item's components and count are copied onto the existing stack, so the item itself stays as it was.
+The loot context the modifier runs in supplies `origin` (the holder's position), `tool` (the stack being modified) and `this_entity` (the holder). Every other loot parameter is missing, so a function that reads one (`minecraft:copy_state`, or anything that needs `block_entity`) fails. Functions that swap the item outright, like `minecraft:furnace_smelt`, only work where Apoli can replace the whole stack, which is inside [`apoli:item_on_item`](/docs/datapack/powers/item_on_item). Everywhere else, the new item's components and count are copied onto the existing stack, so the item itself stays the same.
 
-> Nothing happens, silently, if `modifier` names an item modifier that does not exist — and the folder was **renamed in 1.21**. It is `data/<namespace>/item_modifier/<name>.json` (singular) on 1.21.1 and `data/<namespace>/item_modifiers/<name>.json` (plural) on 1.20.1. A pack that keeps the 1.20 spelling on 1.21.1 loads with no error and every `apoli:modify` quietly does nothing.
+> [!WARNING]
+> Nothing happens, and nothing is logged, if `modifier` names an item modifier that doesn't exist. The folder name differs between versions: it is `data/<namespace>/item_modifier/<name>.json` (singular) on 1.21.1 and `data/<namespace>/item_modifiers/<name>.json` (plural) on 1.20.1. A pack that keeps the 1.20 spelling on 1.21.1 loads with no error, and every `apoli:modify` does nothing.

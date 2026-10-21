@@ -1,22 +1,22 @@
 ---
 title: "Area Of Effect (Block Action Type)"
-description: "Executes the provided Block Action Type on all blocks within the specified radius and shape."
+description: "Runs a block action on every block in an area of a given size and shape."
 navigation_title: "Area Of Effect"
 ---
 
-Executes the provided Block Action Type on all blocks within the specified radius and shape.
+Runs a block action on every block in an area of a given size and shape.
 
 Type ID: `apoli:area_of_effect`
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|------------
-`radius` | [Vector](/docs/datapack/data-types/vector) | `16` | The size of the area — a single number (uniform on all axes) or `{"x":.., "y":.., "z":..}` for independent per-axis extents (e.g. a flat layer).
-`shape` | [Shape](/docs/datapack/data-types/shape) | `"cube"` | The outline of the area: `cube`, `sphere`, `star`, `cone`, or a hollow one (`cube_hollow`, `sphere_hollow`, `star_hollow`, `cone_hollow`).
-`hollow_thickness` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | `1` | How thick a hollow `shape` is, in blocks. Only world-level expression variables are available here. Ignored by the solid shapes.
-`block_action` | Block Action Type | | The block action to execute on the blocks within the specified radius.
-`block_condition` | Block Condition Type | *optional* | If specified, the specified block action will only be executed on blocks that fulfill this block condition.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `radius` | [Vector](/docs/datapack/data-types/vector) | `16` | The size of the area: a single number for the same size on every axis, or `{"x":.., "y":.., "z":..}` for a separate size on each axis, such as a flat layer. |
+| `shape` | [Shape](/docs/datapack/data-types/shape) | `"cube"` | The outline of the area: `cube`, `sphere`, `star`, `cone`, or a hollow one (`cube_hollow`, `sphere_hollow`, `star_hollow`, `cone_hollow`). |
+| `hollow_thickness` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | `1` | How thick a hollow `shape` is, in blocks. Only world-level expression variables are available here. Ignored by the solid shapes. |
+| `block_action` | [Block Action Type](/docs/datapack/block-actions) | _required_ | The block action to run on each block in the area. |
+| `block_condition` | [Block Condition Type](/docs/datapack/block-conditions) | _optional_ | The action only runs on blocks that pass this condition. |
 
 ## Examples
 
@@ -33,7 +33,7 @@ Field | Type | Default | Description
 }
 ```
 
-This example will make all waterloggable blocks not waterlogged within 16 blocks radius with a shape of a cube.
+This un-waterlogs every waterloggable block in a cube with a radius of 16 blocks.
 
 ```json
 "block_action": {
@@ -52,4 +52,4 @@ This example will make all waterloggable blocks not waterlogged within 16 blocks
 }
 ```
 
-This example will replace all blocks that aren't included in the `#minecraft:dragon_immune` block tag with air within a 4 blocks radius with a shape of a diamond.
+This replaces every block that isn't in the `#minecraft:dragon_immune` block tag with air, within 4 blocks, in the `star` shape, which is a diamond.

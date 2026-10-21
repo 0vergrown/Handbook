@@ -1,28 +1,28 @@
 ---
 title: "Emissive (Power Type)"
-description: "Makes the holder glow — rendered at full brightness, and lighting up the world when LambDynamicLights is installed."
+description: "Makes the entity glow at full brightness, and light up the world when LambDynamicLights is installed."
 navigation_title: "Emissive"
 ---
 
-Makes the holder glow: its model is rendered at full brightness, and with [LambDynamicLights](https://modrinth.com/mod/lambdynamiclights) installed it also casts real light on the blocks around it.
+Makes the entity with the power glow. Its model renders at full brightness, and with [LambDynamicLights](https://modrinth.com/mod/lambdynamiclights) installed it also casts real light on the blocks around it.
 
 Type ID: `apoli:emissive`
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|------------
-`luminance` | [Integer](/docs/datapack/data-types/integer) | `15` | Light level from `0` to `15`, on the same scale as block light — `15` is a torch and then some, `7` is roughly a redstone torch.
-`self_lit` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Whether the holder's own model renders at that brightness. Set it `false` for a holder that lights the room without looking lit itself.
-`water_sensitive` | [Boolean](/docs/datapack/data-types/boolean) | `false` | Passed to LambDynamicLights: when `true` the emitted light is suppressed underwater, the way a torch would be.
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `luminance` | [Integer](/docs/datapack/data-types/integer) | `15` | The light level, from `0` to `15`, on the same scale as block light. `15` is one level brighter than a torch, and `7` matches a redstone torch. |
+| `self_lit` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Whether the entity's own model renders at that brightness. Set it to `false` for an entity that lights the room without looking lit itself. |
+| `water_sensitive` | [Boolean](/docs/datapack/data-types/boolean) | `false` | Passed to LambDynamicLights. When `true`, the light goes out underwater, the way a torch's would. |
 
-Several active `apoli:emissive` powers do not stack — the highest `luminance` wins.
+Several active `apoli:emissive` powers don't stack. The highest `luminance` wins.
 
 ## LambDynamicLights
 
-The world-lighting half is optional. Without LambDynamicLights the power still renders the holder at full brightness; blocks nearby simply stay unlit. Apoli detects the mod at runtime, so no data-pack change is needed either way — and unlike the types under [Compat](/docs/compat/introduction/overview), `apoli:emissive` always loads.
+Lighting the world is optional. Without LambDynamicLights the power still renders the entity at full brightness, and nearby blocks stay unlit. Apoli detects the mod at runtime, so the data pack doesn't change either way. Unlike the types under [Compatibility](/docs/compat/introduction/overview), `apoli:emissive` always loads.
 
-Because dynamic lighting is drawn by the client, the effect is visible to everyone who has LambDynamicLights, and invisible to everyone who does not, on the same server.
+Dynamic lighting is drawn by each client, so on the same server, players with LambDynamicLights see the light and players without it don't.
 
 ## Examples
 
@@ -32,7 +32,7 @@ Because dynamic lighting is drawn by the client, the effect is visible to everyo
 }
 ```
 
-The holder glows and lights its surroundings at full strength.
+The entity glows and lights its surroundings at full strength.
 
 ```json
 {
@@ -46,6 +46,7 @@ The holder glows and lights its surroundings at full strength.
 }
 ```
 
-A torch-like glow that only burns while `example:flame_mode` is on, and goes out underwater.
+A torch-like glow that only shows while `example:flame_mode` is on, and goes out underwater.
 
-> This works on any entity that can hold powers, not just players.
+> [!NOTE]
+> The power works on any entity that can hold powers, mobs included.

@@ -1,18 +1,18 @@
 ---
 title: "Fluid (Block Condition Type)"
-description: "Checks the fluid state of the current position with a Fluid Condition Type."
+description: "Checks the fluid at the block's position with a fluid condition."
 navigation_title: "Fluid"
 ---
 
-Checks the fluid state of the current position with a Fluid Condition Type.
+Checks the fluid at the block's position with a fluid condition.
 
 Type ID: `apoli:fluid`
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`fluid_condition` | Fluid Condition Type | | The fluid condition type to check the fluid state at the position.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `fluid_condition` | [Fluid Condition Type](/docs/datapack/fluid-conditions) | _required_ | The fluid condition to check at the position. |
 
 ## Examples
 
@@ -25,4 +25,4 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will check if the block is a source fluid.
+This checks whether the block is a fluid source.

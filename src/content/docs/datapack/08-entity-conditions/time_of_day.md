@@ -1,19 +1,19 @@
 ---
 title: "Time Of Day (Entity Condition Type)"
-description: "Checks the current day time ticks of the world."
+description: "Compares the world's time of day, in ticks, with a number."
 navigation_title: "Time Of Day"
 ---
 
-Checks the current day time ticks of the world.
+Compares the world's current time of day, in ticks, with a number.
 
 Type ID: `apoli:time_of_day`
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|------------
-`comparison` | Comparison | | Determines how the current day time ticks of the world should be compared to the specified value.
-`compare_to` | Integer | | The value at which the current day time ticks of the world will be compared to.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `comparison` | [Comparison](/docs/datapack/data-types/comparison) | _required_ | How the time of day is compared with `compare_to`. |
+| `compare_to` | [Integer](/docs/datapack/data-types/integer) | _required_ | The number the time of day is compared with. |
 
 ## Examples
 
@@ -35,4 +35,4 @@ Field | Type | Default | Description
 }
 ```
 
-This example will check if it's the sun is currently setting.
+This checks whether the sun is setting.

@@ -1,9 +1,9 @@
 ---
 title: Aliasing legacy JSON
-description: Accept old type ids, renamed fields, and injected defaults without touching your codec.
+description: "Accepting old type IDs, renamed fields and injected defaults without touching your codec."
 ---
 
-When you port powers from another mod — or rename something — old data packs shouldn't break. Apoli's **aliasing** lets one registered type answer to several ids, accept old field names, and inject defaults, all *before* your codec ever runs. Your codec stays clean; the compatibility lives in the registration.
+When you port powers from another mod, or rename something, old data packs shouldn't break. Apoli's aliasing lets one registered type answer to several IDs, accept old field names and add defaults, all before your codec runs. Your codec stays clean, and the compatibility lives in the registration.
 
 ## AliasingOptions
 
@@ -21,14 +21,14 @@ PowerTypeRegistry.register(
 
 Now both `mymod:attribute` and `mymod:conditioned_attribute` load through `AttributePower`.
 
-The builder:
+The builder has these methods:
 
 | Method | Effect |
 | --- | --- |
-| `addTypeAlias(id)` | The type also answers to this old id. |
-| `addTypeAlias(id, defaults)` | As above, and inject these field defaults for that alias only. |
-| `renameField(old, new)` | Rewrite an old field name to its canonical name pre-parse. |
-| `build()` | Produce the options. |
+| `addTypeAlias(id)` | The type also answers to this old ID. |
+| `addTypeAlias(id, defaults)` | The same, and adds these field defaults for that alias only. |
+| `renameField(old, new)` | Rewrites an old field name to its current name before parsing. |
+| `build()` | Produces the options. |
 
 The same builder works for actions and conditions:
 
@@ -42,7 +42,7 @@ ActionTypes.ENTITY.register(
 
 ## Field renames
 
-If a field was called `entity_action` but you've split it into `self_action`, rename per alias so the old JSON still parses:
+If a field was called `entity_action` and is now `self_action`, rename it for the alias so the old JSON still parses. `registerAliasFieldRenames` maps the legacy field name for that one alias:
 
 ```java
 PowerTypeRegistry.register(
@@ -52,14 +52,13 @@ PowerTypeRegistry.register(
         .addTypeAlias(MyMod.id("self_action_on_hit"))
         .build()
 );
-// map the legacy field name for that alias
 PowerTypeRegistry.registerAliasFieldRenames(
     MyMod.id("self_action_on_hit"), Map.of("entity_action", "self_action"));
 ```
 
 ## Injected defaults
 
-`registerAliasDefaults` (and the two-arg `addTypeAlias`) fill in fields that the alias should imply. This is how `apoli:modify_damage_dealt` and `apoli:modify_damage_taken` are the *same* type with a different default for which side is affected:
+`registerAliasDefaults`, and the two-argument `addTypeAlias`, fill in fields that the alias should imply. That is how `apoli:modify_damage_dealt` and `apoli:modify_damage_taken` are the same type with a different default for which side is affected:
 
 ```java
 PowerTypeRegistry.registerAliasDefaults(MyMod.id("modify_damage_taken"), Map.of("target_used", "true"));
@@ -67,8 +66,8 @@ PowerTypeRegistry.registerAliasDefaults(MyMod.id("modify_damage_taken"), Map.of(
 
 ## Why do it this way
 
-- Your `configCodec()` only ever sees canonical ids and field names — no legacy branches.
+- Your `configCodec()` only ever sees current IDs and field names, with no legacy branches.
 - All the compatibility is declared in one place, next to the registration.
 - Removing an alias later is a one-line change.
 
-This is the pattern behind the many aliases you see across the [data-pack docs](/docs/datapack/introduction/powers) (`change_resource`, `set_size`, `disguise_as_player`, …).
+This is the pattern behind the many aliases across the [data pack docs](/docs/datapack/introduction/powers), such as `change_resource`, `set_size` and `disguise_as_player`.

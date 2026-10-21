@@ -1,22 +1,22 @@
 ---
 title: "Add To Entity Set (Bi-Entity Action Type)"
-description: "Add the target entity to the power that uses the Entity Set of the actor entity."
+description: "Adds the target to one of the actor's entity set powers, for good or for a while."
 navigation_title: "Add To Entity Set"
 aliases: ["add_to_set"]
 ---
 
-Add the target entity to the power that uses the [apoli:entity_set](/docs/datapack/powers/entity_set) of the actor entity.
+Adds the target entity to one of the actor's [apoli:entity_set](/docs/datapack/powers/entity_set) powers.
 
-Type ID: `apoli:add_to_entity_set` (but can use it's old `add_to_set` type id as an alias)
+Type ID: `apoli:add_to_entity_set` (the older `apoli:add_to_set` ID is accepted as an alias)
 
-##	Fields
+## Fields
 
-Field | Type | Default | Description
-------|------|---------|------------
-`set` | [Identifier](/docs/datapack/data-types/identifier) | | The ID of the power to add the target entity into.
-`time_limit` | [Integer](/docs/datapack/data-types/integer) | *optional* | If specified, this will determine how long the target entity will be stored in the specified power in ticks.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `set` | [Identifier](/docs/datapack/data-types/identifier) | _required_ | The ID of the entity set power to add the target to. |
+| `time_limit` | [Integer](/docs/datapack/data-types/integer) | _optional_ | How many ticks the target stays in the set. Without it, the target stays until it is removed. |
 
-##	Examples
+## Examples
 
 ```json
 "bientity_action": {
@@ -25,7 +25,7 @@ Field | Type | Default | Description
 }
 ```
 
-This example will add the target entity to the `example:entities_to_exclude` (`data/example/powers/entities_to_exclude.json`) power permanently.
+This adds the target to the `example:entities_to_exclude` power (`data/example/powers/entities_to_exclude.json`) for good.
 
 ```json
 "bientity_action": {
@@ -35,4 +35,4 @@ This example will add the target entity to the `example:entities_to_exclude` (`d
 }
 ```
 
-This example will add the target entity to the `example:make_em_glow` (`data/example/powers/make_em_glow.json`) power temporarily for 10 seconds, after which the target entity will be removed.
+This adds the target to the `example:make_em_glow` power (`data/example/powers/make_em_glow.json`) for 10 seconds, after which it is removed again.

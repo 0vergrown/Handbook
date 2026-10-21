@@ -4,7 +4,7 @@ description: "Grants an Apoli power while a Pufferfish's Skills skill is unlocke
 navigation_title: "Power"
 ---
 
-Grants an Apoli power to the player while the skill holding this reward is unlocked, and takes it back when the skill is locked or refunded. Registered only when [Pufferfish's Skills](/docs/compat/pufferfishs-skills/overview) is installed.
+Grants an Apoli power to the player while the skill holding this reward is unlocked, and takes it back when the skill is locked or refunded. It is only registered when [Pufferfish's Skills](/docs/compat/pufferfishs-skills/overview) is installed.
 
 Type ID: `apoli:power`
 
@@ -12,8 +12,8 @@ Type ID: `apoli:power`
 
 | Field | Type | Default | Description |
 | --- | --- | --- | --- |
-| `power` | [Identifier](/docs/datapack/data-types/identifier) | **required** | The power to grant. |
-| `operation` | String | `add` | `add` grants the power while unlocked; `remove` inverts it — the power is held while the skill is **locked** and dropped once it is unlocked. |
+| `power` | [Identifier](/docs/datapack/data-types/identifier) | _required_ | The power to grant. |
+| `operation` | [String](/docs/datapack/data-types/string) | `add` | `add` grants the power while the skill is unlocked. `remove` turns that around: the power is held while the skill is locked and dropped once it is unlocked. |
 
 ## Examples
 
@@ -26,7 +26,7 @@ Type ID: `apoli:power`
 }
 ```
 
-Unlocking the skill grants `example:double_jump`; refunding it takes the power away again.
+Unlocking the skill grants `example:double_jump`, and refunding it takes the power away again.
 
 ```json
 {
@@ -38,6 +38,7 @@ Unlocking the skill grants `example:double_jump`; refunding it takes the power a
 }
 ```
 
-The player carries `example:slow_falling_penalty` until this skill is unlocked, at which point the reward stops granting it.
+The player carries `example:slow_falling_penalty` until this skill is unlocked, and then the reward stops granting it.
 
-> `operation: remove` cannot strip a power the player got from somewhere else — Apoli powers are held per source, and a reward only ever controls its own. It works by granting the power while locked, so use it for drawbacks the skill tree itself introduced.
+> [!NOTE]
+> `operation: remove` can't take away a power the player got from somewhere else, because Apoli powers are held per source and a reward only ever controls its own. It works by granting the power while the skill is locked, so use it for drawbacks the skill tree itself introduces.

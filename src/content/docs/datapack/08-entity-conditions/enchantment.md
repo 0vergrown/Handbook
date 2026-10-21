@@ -1,22 +1,22 @@
 ---
 title: "Enchantment (Entity Condition Type)"
-description: "Checks the level of an enchantment on the entity's equipment."
+description: "Compares the level of an enchantment on the entity's equipment with a number."
 navigation_title: "Enchantment"
 ---
 
-Checks the level of an enchantment on the entity's equipment.
+Compares the level of an enchantment on the entity's equipment with a number.
 
 Type ID: `apoli:enchantment`
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`enchantment` | [Identifier](/docs/datapack/data-types/identifier) | | The namespace and ID of the enchantment of interest.
-`use_modifications` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Whether to count levels changed by [`apoli:modify_enchantment_level`](/docs/datapack/powers/modify_enchantment_level). With `true`, an empty slot the enchantment applies to (e.g. an empty main hand for Sharpness) can also count. With `false`, only the levels stored on the items are read.
-`calculation` | [String](/docs/datapack/data-types/string) | `"sum"` | Which number to compare - either the `sum` of levels of this enchantment on all of the entity's equipment, or the `max` level of this enchantment on any of the entity's equipment.
-`comparison` | [Comparison](/docs/datapack/data-types/comparison) | | Determines how the level of the specified enchantment should be compared to the specified value.
-`compare_to` | [Integer](/docs/datapack/data-types/integer) | | The value at which the level of the specified enchantment will be compared to.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `enchantment` | [Identifier](/docs/datapack/data-types/identifier) | _required_ | The ID of the enchantment. |
+| `use_modifications` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Whether to count levels changed by [`apoli:modify_enchantment_level`](/docs/datapack/powers/modify_enchantment_level). With `true`, an empty slot the enchantment applies to, such as an empty main hand for Sharpness, can count too. With `false`, only the levels stored on the items are read. |
+| `calculation` | [String](/docs/datapack/data-types/string) | `"sum"` | Which number to compare: the `sum` of this enchantment's levels across all of the entity's equipment, or the `max` level on any single piece. |
+| `comparison` | [Comparison](/docs/datapack/data-types/comparison) | _required_ | How the enchantment level is compared with `compare_to`. |
+| `compare_to` | [Integer](/docs/datapack/data-types/integer) | _required_ | The number the level is compared with. |
 
 ## Examples
 
@@ -30,7 +30,7 @@ Field  | Type | Default | Description
 }
 ```
 
-This condition will check whether the entity is wearing a full set of Protection IV armor (or better, which might be possible with mods).
+This checks whether the entity is wearing a full set of Protection IV armor, or better where mods allow it.
 
 ```json
 "condition": {
@@ -43,4 +43,4 @@ This condition will check whether the entity is wearing a full set of Protection
 }
 ```
 
-This condition checks for real Fortune on the entity's equipment, ignoring any levels granted by powers.
+This checks for real Fortune on the entity's equipment, ignoring any levels that powers grant.

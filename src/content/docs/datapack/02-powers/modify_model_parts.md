@@ -1,35 +1,36 @@
 ---
 title: "Modify Model Parts (Power Type)"
-description: "Transforms parts of the holder's biped model — rotation, scale, pivot offset and visibility — every frame."
+description: "Changes the rotation, scale, pivot offset and visibility of parts of the holder's biped model every frame."
 navigation_title: "Modify Model Parts"
 ---
 
-Transforms parts of the holder's biped model — rotation, scale, pivot offset and visibility — every frame. Each edit can hold a fixed pose, ease in and out, or run a looping keyframe animation.
+Changes the rotation, scale, pivot offset and visibility of parts of the holder's biped model, every frame. Each edit can hold a fixed pose, ease in and out, or run a looping keyframe animation.
 
 Type ID: `apoli:modify_model_parts`
 
-> This is a client-side rendering power and only affects biped models (players and humanoid mobs). On players, an edit to a base part (e.g. `body`) is also applied to its skin-overlay layer (e.g. the jacket).
+> [!NOTE]
+> This is a client-side rendering power and only affects biped models (players and humanoid mobs). On players, an edit to a base part such as `body` also applies to its skin overlay layer, here the jacket.
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`transformations` | [Array](/docs/datapack/data-types/array) of [Model Part Transformation](/docs/datapack/data-types/model-part-transformation) | — | The list of edits to apply. Each entry targets one [body part](/docs/datapack/data-types/body-part) and one property — a single limb, a group such as `arms`, `upper` or `whole` that moves as one piece, a [held item](/docs/datapack/data-types/model-part-transformation#held-items), or an Icarus wing or Ears feature by one of the [wing and Ears names](/docs/datapack/data-types/body-part#wings-and-ears-features). A [`reach`](/docs/datapack/data-types/model-part-transformation#reaching-for-a-point) entry points limbs at a spot, so two hands can meet.
-`override_pose` | Array of String | `[]` | Poses whose vanilla animation is thrown away before `transformations` run, so the edits start from the standing pose. Takes the same vanilla `Pose` names as [`apoli:pose`](/docs/datapack/powers/pose)'s `entity_pose`.
-`perspectives` | String OR Array of String | `["third_person"]` | Which views the transformations are drawn in: `first_person`, `third_person`, or both. See [First person and third person](#first-person-and-third-person).
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `transformations` | [Array](/docs/datapack/data-types/array) of [Model Part Transformation](/docs/datapack/data-types/model-part-transformation) | _required_ | The edits to apply. Each entry targets one [body part](/docs/datapack/data-types/body-part) and one property. The part can be a single limb, a group such as `arms`, `upper` or `whole` that moves as one piece, a [held item](/docs/datapack/data-types/model-part-transformation#held-items), or an Icarus wing or Ears feature by one of the [wing and Ears names](/docs/datapack/data-types/body-part#wings-and-ears-features). A [`reach`](/docs/datapack/data-types/model-part-transformation#reaching-for-a-point) entry points limbs at a spot, so two hands can meet. |
+| `override_pose` | [Array](/docs/datapack/data-types/array) of [String](/docs/datapack/data-types/string) | `[]` | Poses whose vanilla animation is thrown away before `transformations` run, so the edits start from the standing pose. Takes the same vanilla `Pose` names as the `entity_pose` of [`apoli:pose`](/docs/datapack/powers/pose). |
+| `perspectives` | [String](/docs/datapack/data-types/string) or [Array](/docs/datapack/data-types/array) of [String](/docs/datapack/data-types/string) | `["third_person"]` | Which views the transformations are drawn in: `first_person`, `third_person`, or both. See [First person and third person](#first-person-and-third-person). |
 
 ## First person and third person
 
-The held-item view draws the player's arm through the same model this power edits, so a body animation authored for the third-person view lands on the first-person hand too — where a scaled or rotated arm reads as broken rather than animated. `perspectives` decides which views an edit is drawn in:
+The held item view draws the player's arm through the same model this power edits, so a body animation written for the third person view lands on the first person hand too, where a scaled or rotated arm looks broken. `perspectives` decides which views an edit is drawn in:
 
-- `third_person` (the default) — the world view: your own body in third person or in an inventory preview, and every other player or humanoid mob.
-- `first_person` — only the arm drawn by the held-item view.
+- `third_person` (the default) is the world view: your own body in third person or in an inventory preview, and every other player or humanoid mob.
+- `first_person` is only the arm drawn by the held item view.
 
-An arm with an edit in the `first_person` view is always drawn there, so the pose can be seen — the off arm as well as the main one. An arm that [reaches](/docs/datapack/data-types/model-part-transformation#reaching-in-first-person) holds its item in its hand, as it does in third person; any other edited arm is drawn beside the item, which stays where Minecraft normally draws it. Edits that only change visibility, and edits to [held items](/docs/datapack/data-types/model-part-transformation#held-items), don't count.
+An arm with an edit in the `first_person` view is always drawn there so the pose can be seen, the off arm as well as the main one. An arm that [reaches](/docs/datapack/data-types/model-part-transformation#reaching-in-first-person) holds its item in its hand, as it does in third person. Any other edited arm is drawn beside the item, which stays where Minecraft normally draws it. Edits that only change visibility, and edits to [held items](/docs/datapack/data-types/model-part-transformation#held-items), don't count.
 
-Listing both draws the edit everywhere — write `"perspectives": ["first_person", "third_person"]` out in full if that is what you want.
+To draw an edit everywhere, list both views in full: `"perspectives": ["first_person", "third_person"]`.
 
-Each entry in `transformations` may carry its own `perspectives`, which overrides the power-level value for that entry. That is how one power drives two different animations:
+Each entry in `transformations` can carry its own `perspectives`, which overrides the power's value for that entry. That way one power drives two different animations:
 
 ```json
 {
@@ -56,11 +57,12 @@ Each entry in `transformations` may carry its own `perspectives`, which override
 
 The arm is raised sharply on the visible body and only nudged in the holder's own view.
 
-> The check is the render pass, not the camera setting. An inventory or GUI preview of the player is a third-person pass even while the camera is in first person, so previews keep showing the third-person animation.
+> [!NOTE]
+> The check uses the render pass, not the camera setting. An inventory or GUI preview of the player is a third person pass even while the camera is in first person, so previews keep showing the third person animation.
 
 ## Overriding a pose
 
-A transformation is normally layered on top of whatever vanilla is already doing, which makes animating one *specific* pose awkward: to write your own swimming animation you first have to cancel out vanilla's swim stroke. Listing a pose in `override_pose` resets it to standing first, so your edits are authored against a neutral base.
+A transformation is normally layered on top of whatever vanilla is already doing, which makes animating one specific pose awkward. To write your own swimming animation, you would first have to cancel out vanilla's swim stroke. Listing a pose in `override_pose` resets it to standing first, so your edits start from a neutral base.
 
 While the holder is in a listed pose:
 
@@ -100,7 +102,7 @@ Poses you don't list are untouched, so a power can take over swimming and leave 
 }
 ```
 
-This grows the head by 50% on every axis and locks the right arm to a fixed raised pitch, ignoring the walking/idle animation.
+This makes the head 50% bigger on every axis and locks the right arm at a fixed raised pitch, ignoring the walking and idle animation.
 
 ```json
 {
@@ -117,7 +119,8 @@ This grows the head by 50% on every axis and locks the right arm to a fixed rais
 
 This hides the left leg.
 
-> `visible` and `hidden` only change the parts they name, and only while the model is being drawn. Every other part keeps the visibility Minecraft or another mod gave it for that frame — skin-layer toggles, a spectator's floating head, or the arms-only body that Better Combat and Iron's Spells & Spellbooks draw in first person during their animations. With a CEM pack running through [Entity Model Features](/docs/compat/custom-entity-models), both also hide the boxes the pack gives the part.
+> [!NOTE]
+> `visible` and `hidden` only change the parts they name, and only while the model is being drawn. Every other part keeps the visibility Minecraft or another mod gave it for that frame, such as skin layer toggles, a spectator's floating head, or the arms-only body that Better Combat and Iron's Spells & Spellbooks draw in first person during their animations. With a CEM pack running through [Entity Model Features](/docs/compat/custom-entity-models), both also hide the boxes the pack gives the part.
 
 ### An eased pose
 
@@ -146,7 +149,7 @@ The body leans forward over 6 ticks when the holder starts sneaking and unwinds 
 
 ### A looping animation
 
-`keyframes` replaces `value` with a timeline in ticks. The clock starts when the power becomes active, and `loop` makes it repeat. One power, one entry — no resource, no condition chain, no second power.
+`keyframes` replaces `value` with a timeline in ticks. The clock starts when the power becomes active, and `loop` makes it repeat. It takes one power with one entry per part, with no resource, condition chain or second power.
 
 ```json
 {
@@ -202,7 +205,7 @@ Both arms windmill on a one-second cycle, half a cycle out of phase.
 
 ### A one-shot animation
 
-Leave `loop` at `false` and the timeline plays once, then holds the last keyframe. Combined with a condition, this gives you a triggered animation that settles into a pose.
+Leave `loop` at `false` and the timeline plays once, then holds the last keyframe. With a condition, that gives a triggered animation that settles into a pose.
 
 ```json
 {
@@ -238,7 +241,9 @@ Leave `loop` at `false` and the timeline plays once, then holds the last keyfram
 }
 ```
 
-The arm winds back, then throws forward past its target and settles — and when the condition stops holding, it releases back to the vanilla animation over 5 ticks.
+The arm winds back, then throws forward past its target and settles. When the condition stops holding, it goes back to the vanilla animation over 5 ticks.
+
+### A custom swimming animation
 
 ```json
 {
@@ -279,4 +284,4 @@ The arm winds back, then throws forward past its target and settles — and when
 }
 ```
 
-A hand-written swimming animation. Because `swimming` is listed in `override_pose`, vanilla's swim stroke and horizontal body flip are gone, so the body pitch is authored from scratch instead of fighting the stroke that would otherwise still be running underneath.
+Because `swimming` is listed in `override_pose`, vanilla's swim stroke and horizontal body flip are gone, so the body pitch starts from scratch and doesn't fight a stroke still running underneath.

@@ -1,19 +1,19 @@
 ---
 title: "NBT (Item Condition Type)"
-description: "Checks the item's NBT."
+description: "Checks whether the item's NBT contains the given data."
 navigation_title: "NBT"
 aliases: ["custom_data"]
 ---
 
-Checks the item's NBT.
+Checks whether the item's NBT contains the given data.
 
 Type ID: `apoli:nbt`
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|-------------
-`nbt` | NBT | | The NBT data to check for.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `nbt` | [NBT](/docs/datapack/data-types/nbt) | _required_ | The NBT data to look for. |
 
 ## Examples
 
@@ -24,6 +24,7 @@ Field | Type | Default | Description
 }
 ```
 
-This example will check if the item stack has the `exampleCustomTag: 1b` NBT.
+This checks whether the item stack has the `exampleCustomTag: 1b` NBT.
 
-> **`apoli:custom_data` is this condition.** The original Apoli called it that because it reads the item's `minecraft:custom_data` component; both ids do the same thing here.
+> [!NOTE]
+> `apoli:custom_data` is the same condition. The original Apoli uses that name because it reads the item's `minecraft:custom_data` component, and both IDs do the same thing here.

@@ -1,20 +1,21 @@
 ---
 title: "Knocked Out (Entity Condition Type)"
-description: Passes while the entity is knocked out.
+description: "Checks whether the entity is knocked out."
 navigation_title: "Knocked Out"
 ---
 
-Passes while the entity is in the knocked-out state.
+Checks whether the entity is in the knocked-out state.
 
 Type ID: `apoli:knocked_out`
 
+> [!NOTE]
+> This type needs [Hardcore Revival](https://modrinth.com/mod/hardcore-revival) and doesn't exist without it, so a pack that uses it must depend on the mod.
+
 ## Fields
 
-_None._
+This condition has no fields.
 
 ## Examples
-
-Glow while you are down, so allies can see you:
 
 ```json
 {
@@ -23,7 +24,7 @@ Glow while you are down, so allies can see you:
 }
 ```
 
-Find the downed players around you, which is how a revive ability picks its targets:
+The holder glows while they are down, so allies can see them.
 
 ```json
 {
@@ -32,7 +33,7 @@ Find the downed players around you, which is how a revive ability picks its targ
 }
 ```
 
-Suppress your abilities while you are down:
+This bi-entity condition finds downed players around you, which is how a revive ability picks its targets.
 
 ```json
 {
@@ -42,4 +43,4 @@ Suppress your abilities while you are down:
 }
 ```
 
-> Needs [Hardcore Revival](https://modrinth.com/mod/hardcore-revival). These types do not exist without it, so a pack using them must depend on the mod.
+This switches off two of the holder's abilities while they are down.

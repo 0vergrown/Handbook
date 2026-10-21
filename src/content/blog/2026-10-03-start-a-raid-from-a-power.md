@@ -5,15 +5,15 @@ date: 2026-10-03
 author: Overgrown
 ---
 
-Apoli **1.108.0** and Origins **1.46.14**. Origins has no changes of its own this time; it is built against the new Apoli.
+This is Apoli 1.108.0 and Origins 1.46.14. Origins has no changes of its own this time, and is built against the new Apoli.
 
 ## apoli:start_raid
 
-[`apoli:start_raid`](/docs/datapack/entity-actions/start_raid) starts a raid on the village the entity is standing in, as if it had walked in carrying an omen. `omen_level` sets how strong the raid is, from `1` to `5`, and takes an expression, so the level can come from a resource. If a raid is already running there, it absorbs the omen and grows instead, the same way a second omen would.
+[`apoli:start_raid`](/docs/datapack/entity-actions/start_raid) starts a raid on the village the entity is standing in, as if it had walked in carrying an omen. `omen_level` sets how strong the raid is, from `1` to `5`, and takes an expression, so the level can come from a resource. If a raid is already running there, it takes in the omen and grows instead, the same way a second omen would.
 
-The raid is credited to whoever started it. A player gets the *Raids Triggered* statistic and fires the `minecraft:voluntary_exile` advancement trigger, exactly as if their own omen had started it. Mobs, armor stands and markers can run it too, so a data pack can start a raid from any spot in a village.
+The raid is credited to whoever started it. A player gets the Raids Triggered statistic and fires the `minecraft:voluntary_exile` advancement trigger, exactly as if their own omen had started it. Mobs, armor stands and markers can run it too, so a data pack can start a raid from any spot in a village.
 
-Raids still need a village. Outside one, or on Peaceful, with `disableRaids` on, or in a dimension without raids, nothing happens and the new `fail_action` runs instead, so a power can tell the player why. `success_action` runs when a raid starts or grows.
+Raids still need a village. Outside one, on Peaceful, with `disableRaids` on, or in a dimension without raids, nothing happens and the new `fail_action` runs instead, so a power can tell the player why. `success_action` runs when a raid starts or grows.
 
 ```json
 {

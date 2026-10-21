@@ -1,11 +1,3 @@
-# Build the Handbook and deploy it to GitHub Pages.
-#
-# This produces a fully static site (SvelteKit adapter-static) — there is no
-# server running at request time, which is exactly what GitHub Pages needs.
-#
-# The base path is derived automatically from the repository name so the site
-# works when served from https://<user>.github.io/<repo>/. If you move to a
-# custom domain served at the root, set BASE_PATH to an empty string below.
 name: Deploy Handbook to Pages
 
 on:
@@ -18,7 +10,6 @@ permissions:
   pages: write
   id-token: write
 
-# Allow one concurrent deployment, cancelling in-progress runs.
 concurrency:
   group: pages
   cancel-in-progress: true
@@ -40,8 +31,6 @@ jobs:
 
       - name: Build
         env:
-          # For a project page (user.github.io/<repo>) the site lives under /<repo>.
-          # Change this to "" if you deploy to a custom domain or a user/org root site.
           BASE_PATH: /${{ github.event.repository.name }}
         run: npm run build
 

@@ -1,19 +1,3 @@
-// Alias extractor for Apoli — a docs maintenance aid.
-//
-// Walks the mod's registration classes and records, for every registered type,
-// the legacy ids it also answers to (`AliasingOptions.addTypeAlias`). These are
-// the ids people actually type in old data packs — `active_self` for
-// `action_on_key_press`, `trinket` for `accessory` — so every type page lists
-// them in its `aliases:` frontmatter and the search modal matches on them.
-//
-//   node scripts/extract-aliases.mjs  ->  scripts/aliases.json
-//
-// Keyed "<category>/<id>", because a short id is NOT unique across categories
-// (apoli:explode is an entity, bi-entity and block action).
-//
-// This exists separately from extract-schema.mjs because that script's
-// single-line regex silently truncates multi-line builder chains — the very
-// registrations that have the most aliases.
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -36,9 +20,6 @@ const FILES = {
 	'fluid conditions': 'condition/builtin/fluid/FluidConditions.java'
 };
 
-// The meta registries register the same ids once per flavour through helper
-// methods, so the sequential scanner below can't attribute them. They are few
-// and stable; the docs collapse every flavour into one section anyway.
 const META = {
 	'meta actions/random_chance': ['chance'],
 	'meta conditions/all_of': ['and'],
@@ -50,7 +31,6 @@ const META = {
 
 const ID_ARG = /(?:Apoli\.id\(\s*"([^"]+)"\s*\)|"([a-z0-9_]+:[a-z0-9_/.]+)")/;
 
-/** `private static final ResourceLocation FOO = Apoli.id("foo");` -> FOO: foo */
 function constantIds(src) {
 	const map = new Map();
 	const re = /static final ResourceLocation\s+([A-Z0-9_]+)\s*=\s*Apoli\.id\(\s*"([^"]+)"\s*\)/g;
@@ -83,12 +63,10 @@ function scan(src, category, out) {
 			if (direct && direct.index === 0) current = direct[1] || direct[2];
 			else if (constant && constants.has(constant[1])) current = constants.get(constant[1]);
 			else if (direct) current = direct[1] || direct[2];
-			else current = null; // id is on the next line
-			// a one-line registration carries its whole builder chain here
+			else current = null;
 			collectAliases(line, category, current, out);
 			continue;
 		}
-		// a bare `Apoli.id("x"),` line directly after a wrapped register(
 		if (current === null) {
 			const bare = /^\s*(?:Apoli\.id\(\s*"([^"]+)"\s*\)|"([a-z0-9_]+:[a-z0-9_/.]+)")\s*,/.exec(line);
 			if (bare) {

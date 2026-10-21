@@ -11,11 +11,13 @@ Type ID: `apoli:send_action` (also `shappoli:send_action`)
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|-------------
-`receiver` | [Identifier](/docs/datapack/data-types/identifier) | **required** | The id of a power on the same entity. Nothing happens if the entity does not have it, if it is suppressed, if its own `condition` fails, or if it is not the right receiving type.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `receiver` | [Identifier](/docs/datapack/data-types/identifier) | _required_ | The ID of a power on the holder. Nothing happens if the holder doesn't have it, if it is suppressed, if its own `condition` fails, or if it isn't the right receiving type. |
 
 ## Example
+
+The receiver wears down a tool by one point of durability:
 
 ```json
 {
@@ -24,6 +26,8 @@ Field | Type | Default | Description
   "item_action": { "type": "apoli:damage", "amount": 1 }
 }
 ```
+
+Any power that uses an item can send to it:
 
 ```json
 {

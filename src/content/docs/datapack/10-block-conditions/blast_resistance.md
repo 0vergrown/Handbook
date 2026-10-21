@@ -1,19 +1,19 @@
 ---
 title: "Blast Resistance (Block Condition Type)"
-description: "Checks the blast resistance value of the block."
+description: "Compares the block's blast resistance with a number."
 navigation_title: "Blast Resistance"
 ---
 
-Checks the blast resistance value of the block.
+Compares the block's blast resistance with a number.
 
 Type ID: `apoli:blast_resistance`
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|------------
-`comparison` | [Comparison](/docs/datapack/data-types/comparison) | | Determines how the blast resistance of the block should be compared to the specified value.
-`compare_to` | [Float](/docs/datapack/data-types/float) | | The value at which the blast resistance value of the block will be compared to.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `comparison` | [Comparison](/docs/datapack/data-types/comparison) | _required_ | How the blast resistance is compared with `compare_to`. |
+| `compare_to` | [Float](/docs/datapack/data-types/float) | _required_ | The number the blast resistance is compared with. |
 
 ## Examples
 
@@ -24,4 +24,5 @@ Field | Type | Default | Description
     "compare_to": 1200
 }
 ```
-This example will check if the blast resistance value of the block is that of an Obsidian block or greater.
+
+This checks whether the block's blast resistance is at least that of obsidian.

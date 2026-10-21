@@ -1,22 +1,22 @@
 ---
 title: "Spawn Effect Cloud (Entity Action Type)"
-description: "Spawns an area effect cloud (as from a lingering potion) at the position of the entity."
+description: "Spawns an area effect cloud, like the one from a lingering potion, at the entity's position."
 navigation_title: "Spawn Effect Cloud"
 ---
 
-Spawns an area effect cloud (as from a lingering potion) at the position of the entity.
+Spawns an area effect cloud, like the one a lingering potion leaves, at the entity's position.
 
 Type ID: `apoli:spawn_effect_cloud`
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`radius` | Float | `3.0` | The radius of the cloud.
-`radius_on_use` | Float | `-0.5` | How much the radius should change when an effect is applied.
-`wait_time` | Integer | `10` | How many ticks to wait until the cloud takes effect.
-`effect` | Status Effect Instance | _optional_ | If specified, this status effect will be applied by the cloud to entities inside of it.
-`effects` | Array of Status Effect Instances | _optional_ | If specified, these status effects will be applied by the cloud to entities inside of it.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `radius` | [Float](/docs/datapack/data-types/float) | `3.0` | The radius of the cloud. |
+| `radius_on_use` | [Float](/docs/datapack/data-types/float) | `-0.5` | How much the radius changes each time the cloud applies an effect. |
+| `wait_time` | [Integer](/docs/datapack/data-types/integer) | `10` | Ticks before the cloud starts working. |
+| `effect` | [Status Effect Instance](/docs/datapack/data-types/status-effect-instance) | _optional_ | A status effect the cloud applies to entities inside it. |
+| `effects` | [Array](/docs/datapack/data-types/array) of [Status Effect Instance](/docs/datapack/data-types/status-effect-instance) | _optional_ | Several status effects the cloud applies to entities inside it. |
 
 ## Examples
 
@@ -33,4 +33,4 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will spawn a large Area Effect Cloud, which provides the Resistance IV status effect that will last for 5 seconds at the entity's position.
+This spawns a cloud with a radius of 10 blocks at the entity's position. Two seconds after it appears, it starts giving Resistance IV for 5 seconds to anything inside.

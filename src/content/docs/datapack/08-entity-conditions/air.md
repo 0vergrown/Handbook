@@ -1,23 +1,22 @@
 ---
 title: "Air (Entity Condition Type)"
-description: "Checks how much breath / air / bubble the entity has at the moment."
+description: "Compares how much air the entity has left with a number."
 navigation_title: "Air"
 ---
 
-Checks how much breath / air / bubble the entity has at the moment.
+Compares how much air (breath) the entity has left, in ticks, with a number.
 
 Type ID: `apoli:air`
 
-> Players (and most mobs) have a max value of 300 ticks, whilst dolphins have a max value of 4800 ticks. Axolotls, on the other hand, have a max value of 6000 ticks.
->
-> In order to get the value of a single bubble, you can divide the max value by 10. (`max / 10 = value`)
+> [!NOTE]
+> Players and most mobs have a maximum of 300 ticks of air, dolphins have 4800 and axolotls have 6000. One bubble is the maximum divided by 10 (`max / 10 = value`).
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`comparison` | Comparison | |  Determines how the breath / air / bubble (in ticks) the entity has should be compared to the specified value.
-`compare_to` | Integer | | The value at which the breath / air / bubble (in ticks) the entity has will be compared to.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `comparison` | [Comparison](/docs/datapack/data-types/comparison) | _required_ | How the entity's air, in ticks, is compared with `compare_to`. |
+| `compare_to` | [Integer](/docs/datapack/data-types/integer) | _required_ | The number the air is compared with. |
 
 ## Examples
 
@@ -29,4 +28,4 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will check if the player has no breath / air / bubbles left.
+This checks whether the entity has no air left.

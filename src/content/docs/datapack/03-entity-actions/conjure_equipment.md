@@ -1,27 +1,28 @@
 ---
 title: "Conjure Equipment (Entity Action Type)"
-description: "Conjures an item directly into an equipment or accessory slot of the entity."
+description: "Puts a temporary item straight into an equipment or accessory slot of the entity."
 navigation_title: "Conjure Equipment"
 ---
 
-Conjures an item directly into an equipment or accessory slot of the entity. Conjured items are ephemeral: they cannot be placed into a chest, an ender chest, a crafting grid, an [apoli:inventory](/docs/datapack/powers/inventory) power or any other container, and the moment one reaches the ground — dropped, or dropped on death — it is deleted instantly. With `lock` enabled it cannot even be picked out of its slot in the inventory screen.
+Conjures an item straight into an equipment or accessory slot of the entity. Conjured items are temporary. They can't be put in a chest, an ender chest, a crafting grid, an [apoli:inventory](/docs/datapack/powers/inventory) power or any other container, and the moment one reaches the ground (dropped, or dropped on death) it is deleted. With `lock` on, it can't even be taken out of its slot in the inventory screen.
 
 Type ID: `apoli:conjure_equipment`
 
-> The action replaces whatever was in the slot (the previous item is overwritten, not dropped) — pair it with [equipped-item conditions](/docs/datapack/entity-conditions/equipped_item) if you need to guard against that. Works on any living entity, not just players.
+> [!WARNING]
+> The action replaces whatever was in the slot, and the previous item is deleted instead of dropped. Pair it with [equipped item conditions](/docs/datapack/entity-conditions/equipped_item) if you need to guard against that. It works on any living entity, not only players.
 
 ## Fields
 
-| Field  | Type                                    | Default      | Description                                                                                                          |
-| ------ | --------------------------------------- | ------------ | -------------------------------------------------------------------------------------------------------------------- |
-| `slot` | String  | *optional* | The vanilla equipment slot: `mainhand`, `offhand`, `head`, `chest`, `legs` or `feet` (the command-style `slot.` prefix is also accepted, e.g. `slot.mainhand`). |
-| `accessory_slot` | [Accessory slot](/docs/compat/accessories/overview#slots), or an array of them | *optional* | An accessory slot to conjure into. Requires Trinkets, Accessories or Curios; without one of those installed this does nothing. |
-| `item` | Item Stack | **required** | The item to conjure — item id, amount and components/NBT.                                                       |
-| `lock` | Boolean | `false`     | While `true`, the item cannot be moved out of its slot via inventory clicking (shift-click included), cannot be dropped with the drop key, and cannot be unequipped from an accessory slot.                |
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `slot` | [String](/docs/datapack/data-types/string) | _optional_ | The vanilla equipment slot: `mainhand`, `offhand`, `head`, `chest`, `legs` or `feet`. The command-style `slot.` prefix is accepted too, as in `slot.mainhand`. |
+| `accessory_slot` | [Accessory slot](/docs/compat/accessories/overview#slots), or an array of them | _optional_ | An accessory slot to conjure into. Needs Trinkets, Accessories or Curios, and does nothing without one of them. |
+| `item` | [Item Stack](/docs/datapack/data-types/item-stack) | _required_ | The item to conjure: item ID, amount and components or NBT. |
+| `lock` | [Boolean](/docs/datapack/data-types/boolean) | `false` | While `true`, the item can't be moved out of its slot by clicking in the inventory (shift-click included), can't be dropped with the drop key, and can't be unequipped from an accessory slot. |
 
-At least one of `slot` and `accessory_slot` must be present; the power fails to load otherwise. Giving both conjures the item into both.
+At least one of `slot` and `accessory_slot` must be present, or the power fails to load. With both, the item is conjured into both.
 
-When `accessory_slot` matches more than one slot, the item goes into the first **empty** match, and into the first match overall if none are empty — so a filter like `"ring"` behaves like equipping rather than overwriting.
+When `accessory_slot` matches more than one slot, the item goes into the first empty match, or into the first match overall if none are empty, so a filter like `"ring"` behaves like equipping instead of overwriting.
 
 ## Examples
 
@@ -36,7 +37,7 @@ When `accessory_slot` matches more than one slot, the item goes into the first *
 }
 ```
 
-Conjures an iron sword into the main hand that cannot be unequipped; if it somehow leaves the inventory it deletes itself.
+This conjures an iron sword into the main hand that can't be unequipped. If it somehow leaves the inventory, it deletes itself.
 
 ```json
 {
@@ -49,7 +50,7 @@ Conjures an iron sword into the main hand that cannot be unequipped; if it someh
 }
 ```
 
-Conjures a locked nether star into the first free `charm` accessory slot.
+This conjures a locked nether star into the first free `charm` accessory slot.
 
 ```json
 {
@@ -64,4 +65,4 @@ Conjures a locked nether star into the first free `charm` accessory slot.
 }
 ```
 
-Conjures a Sharpness V diamond sword into the offhand. It can be moved around the owner's inventory freely, but is refused by every other container and deletes itself the moment it is dropped.
+This conjures a Sharpness V diamond sword into the offhand. It can be moved around the owner's inventory freely, but every other container refuses it and it deletes itself the moment it is dropped.

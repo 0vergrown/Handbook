@@ -1,21 +1,22 @@
 ---
 title: "Modify XP Gain (Power Type)"
-description: "Modifies how much XP the player gains when they pick up an experience orb."
+description: "Changes how much XP the player gains from experience orbs."
 navigation_title: "Modify XP Gain"
 ---
 
-Modifies how much XP the player gains when they pick up an experience orb.
+Changes how much XP the player gains when they pick up an experience orb.
 
 Type ID: `apoli:modify_xp_gain`
 
-> Be careful not to make this go too high, as then the player would be able to gain more experience from dying.
+> [!WARNING]
+> Keep the multiplier modest. If it is too high, a player can gain more experience than they lose by dying.
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`modifier` | Attribute Modifier | _optional_ | If specified, this modifier will apply to the experience gained.
-`modifiers` | Array of Attribute Modifiers | _optional_ | If specified, these modifiers will apply to the experience gained.
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `modifier` | [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) | _optional_ | If set, this modifier is applied to the experience gained. |
+| `modifiers` | [Array](/docs/datapack/data-types/array) of [Attribute Modifiers](/docs/datapack/data-types/attribute-modifier) | _optional_ | If set, these modifiers are applied to the experience gained. |
 
 ## Examples
 
@@ -29,4 +30,4 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will triple the gained experience from experience orbs.
+This triples the experience gained from experience orbs.

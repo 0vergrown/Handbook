@@ -1,10 +1,11 @@
 ---
 title: "Object (Data Type)"
-description: "A complex piece of data consisting of more fields."
+description: "A piece of data made of several named fields, in curly braces."
 navigation_title: "Object"
 ---
 
-A complex piece of data consisting of more fields. Objects are enclosed in curly braces and contain multiple `"key": value` entries separated by commas.
+A piece of data made of several fields. Objects are enclosed in curly braces and contain `"key": value` entries separated by commas.
+
 ## Examples
 
 ```json
@@ -19,7 +20,8 @@ A complex piece of data consisting of more fields. Objects are enclosed in curly
 	}
 }
 ```
-An object containing a [String](/docs/datapack/data-types/string) field, an [Integer](/docs/datapack/data-types/integer) field, and an [Array](/docs/datapack/data-types/array) of Strings.
+
+An object with a [String](/docs/datapack/data-types/string) field, an [Integer](/docs/datapack/data-types/integer) field and an [Array](/docs/datapack/data-types/array) of strings.
 
 ```json
 "effect": {
@@ -29,4 +31,4 @@ An object containing a [String](/docs/datapack/data-types/string) field, an [Int
 }
 ```
 
-An object in the format of a [Status Effect Instance](/docs/datapack/data-types/status-effect-instance), specifying a Slowness II status which lasts for 4 seconds.
+An object in the format of a [Status Effect Instance](/docs/datapack/data-types/status-effect-instance), for Slowness II lasting 4 seconds.

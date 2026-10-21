@@ -1,22 +1,23 @@
 ---
 title: "Passenger Recursive (Entity Condition Type)"
-description: "Checks how many passengers (including the passengers' passengers) are currently riding the entity."
+description: "Compares how many passengers ride the entity, counting passengers of passengers, with a number."
 navigation_title: "Passenger Recursive"
 ---
 
-Checks how many passengers (including the passengers' passengers) are currently riding the entity.
+Compares how many passengers are riding the entity, counting the passengers' passengers too, with a number.
 
 Type ID: `apoli:passenger_recursive`
 
-> In the context of this entity condition type, the '**actor**' entity/entities is/are the passenger(s) (and its passengers' passengers) and the '**target**' is the entity that invoked the condition.
+> [!NOTE]
+> For `bientity_condition`, each passenger (and each of its passengers) is the actor, and the entity the condition is checked on is the target.
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|-------------
-`bientity_condition` | Bi-entity Condition Type | _optional_ | If specified, only increase the amount of passengers if either or both the '**actor**' entity/entities and the '**target**' entity fulfills this bi-entity condition.
-`comparison` | Comparison | `">="` | Determines how the amount of passengers (including the passengers' passengers) of the entity should be compared to the specified value.
-`compare_to` | Integer | `1` | The value at which the amount of passengers (including the passengers' passengers) of the entity will be compared to.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `bientity_condition` | [Bi-entity Condition Type](/docs/datapack/bientity-conditions) | _optional_ | Only passengers that pass this condition are counted. |
+| `comparison` | [Comparison](/docs/datapack/data-types/comparison) | `">="` | How the passenger count is compared with `compare_to`. |
+| `compare_to` | [Integer](/docs/datapack/data-types/integer) | `1` | The number the passenger count is compared with. |
 
 ## Examples
 
@@ -35,4 +36,4 @@ Field | Type | Default | Description
 }
 ```
 
-This example will check if the target entity is being ridden by an armor stand that is also being ridden by an armor stand (and so on).
+This checks whether the entity is ridden by at least two armor stands, such as one armor stand riding another.

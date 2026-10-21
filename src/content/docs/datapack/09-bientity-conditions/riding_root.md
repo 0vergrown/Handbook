@@ -1,16 +1,16 @@
 ---
 title: "Riding Root (Bi-Entity Condition Type)"
-description: "Checks if the actor entity is riding the target entity from the very end of the riding chain."
+description: "Checks whether the target is the entity at the bottom of the actor's riding stack."
 navigation_title: "Riding Root"
 ---
 
-Checks if the actor entity is riding the target entity from the very end of the riding chain.
+Checks whether the target is the entity at the bottom of the actor's riding stack, the last vehicle in the chain the actor is riding.
 
 Type ID: `apoli:riding_root`
 
 ## Fields
 
-_None._
+This condition has no fields.
 
 ## Examples
 

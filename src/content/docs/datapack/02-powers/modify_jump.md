@@ -1,20 +1,20 @@
 ---
 title: "Modify Jump (Power Type)"
-description: "Modifies how high the entity that has the power can jump."
+description: "Changes how high the entity that has the power can jump."
 navigation_title: "Modify Jump"
 ---
 
-Modifies how high the entity that has the power can jump.
+Changes how high the entity that has the power can jump.
 
 Type ID: `apoli:modify_jump`
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`modifier` | Attribute Modifier | _optional_ | If specified, this modifier will be applied to the upwards velocity.
-`modifiers` | Array of Attribute Modifiers | _optional_ | If specified, these modifiers will be applied to the upwards velocity.
-`entity_action` | Entity Action Type | _optional_ | If specified, this action will be executed on the entity that has the power whenever the entity jumps.
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `modifier` | [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) | _optional_ | If set, this modifier is applied to the upward velocity of the jump. |
+| `modifiers` | [Array](/docs/datapack/data-types/array) of [Attribute Modifiers](/docs/datapack/data-types/attribute-modifier) | _optional_ | If set, these modifiers are applied to the upward velocity of the jump. |
+| `entity_action` | [Entity Action Type](/docs/datapack/entity-actions) | _optional_ | If set, this action runs on the entity with the power every time it jumps. |
 
 ## Examples
 
@@ -32,4 +32,4 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will increase the entity that has the power's jump height to 4 blocks and display a cloud particle at the entity's feet upon jumping.
+This raises the entity's jump height to about 4 blocks and shows cloud particles at its feet when it jumps.

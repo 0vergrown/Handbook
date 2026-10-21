@@ -1,21 +1,22 @@
 ---
 title: "XP Points (Entity Condition Type)"
-description: "Checks the experience points of the entity."
+description: "Compares the player's experience points with a number."
 navigation_title: "XP Points"
 ---
 
-Checks the experience points of the entity.
+Compares the entity's experience points with a number.
 
 Type ID: `apoli:xp_points`
 
-> **This entity condition type will only work on players.**
+> [!NOTE]
+> This condition only works on players.
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`comparison` | Comparison | | Determines how the experience points of the player should be compared to the specified value.
-`compare_to` | Integer | | The value at which the experience points of the player will be compared to.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `comparison` | [Comparison](/docs/datapack/data-types/comparison) | _required_ | How the player's experience points are compared with `compare_to`. |
+| `compare_to` | [Integer](/docs/datapack/data-types/integer) | _required_ | The number the experience points are compared with. |
 
 ## Examples
 
@@ -27,4 +28,4 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will check if the player has 90 or more experience points, which is only achieveable if the player have at least 7 levels.
+This checks whether the player has 90 or more experience points, which takes at least 7 levels.

@@ -4,9 +4,9 @@ description: "Reads and changes the scales stored on entities."
 navigation_title: "Scale"
 ---
 
-Reads and changes the scales stored on entities. A value set here persists on the entity, survives relogs and dimension changes, and multiplies with any [apoli:scale](/docs/datapack/powers/scale) power the entity holds.
+Reads and changes the scales stored on entities. A value set here stays on the entity, survives relogs and dimension changes, and multiplies with any [apoli:scale](/docs/datapack/powers/scale) power the entity holds.
 
-Requires permission level 2 (`apoli.command.scale`).
+It needs permission level 2, or the `apoli.command.scale` node, and has no short alias.
 
 ```mcfunction
 apoli:scale get <targets> [<scale_type>]
@@ -21,14 +21,14 @@ apoli:scale list
 ```
 
 | Argument | Meaning |
-|----------|---------|
-| `<targets>` | Any entity selector. Scales work on every entity, not just players. |
+| --- | --- |
+| `<targets>` | Any entity selector. Scales work on every entity, mobs included. |
 | `<scale_type>` | A [Scale Type](/docs/datapack/data-types/scale-type). `get` defaults to `apoli:base`. |
-| `<value>` | The right-hand side of the operation, between `0.0001` and `10000`. |
-| `<ticks>` | How long the change takes. Omitted or `0` snaps immediately. |
-| `<easing>` | How the change is spread over `<ticks>`; defaults to `linear`. |
+| `<value>` | The right-hand side of the operation, from `0.0001` to `10000`. |
+| `<ticks>` | How long the change takes. Leaving it out, or `0`, applies it straight away. |
+| `<easing>` | How the change is spread over `<ticks>`. It defaults to `linear`. |
 
-`get` prints the **final** value — stored value, powers and parent scales folded together — which is what the game actually uses. `reset` clears every stored scale on the target; it does not touch scales that come from a power.
+`get` prints the final value, with the stored value, powers and parent scales combined, which is what the game uses. `reset` clears every stored scale on the target and doesn't touch scales that come from a power.
 
 ```mcfunction
 apoli:scale set @s apoli:base 2

@@ -1,35 +1,20 @@
-<!--
-  TEMPLATE: the overview / intro page of a section.
-  Copy to src/content/docs/<topic>/<NN-section>/01-overview.md
-  This is the first page in a section — set it, and it becomes the landing page.
--->
 ---
-title: SECTION_NAME
-description: ONE LINE INTRODUCING THIS WHOLE SECTION.
+title: "SECTION_NAME"
+description: "ONE_SENTENCE_SUMMARY_OF_THE_SECTION"
 ---
 
-<!-- One or two sentences framing the section. What is this family of things? -->
-ONE OR TWO SENTENCES.
+ONE_OR_TWO_SENTENCES_ON_WHAT_THE_SECTION_COVERS
 
-## WHAT_THEY_ARE
-
-<!-- The core idea, with a small example of the shared shape. -->
+## SHARED_SHAPE
 
 ```json
 { "type": "apoli:EXAMPLE" }
 ```
 
-## KINDS / CATEGORIES
+WHAT_EVERY_MEMBER_OF_THE_SECTION_HAS_IN_COMMON
 
-<!-- A table grouping the members of this section, linking the important ones. -->
+## KINDS
 
-| Kind       | What it is  | Example           |
-|------------|-------------|-------------------|
-| CATEGORY_A | DESCRIPTION | `apoli:EXAMPLE_A` |
-| CATEGORY_B | DESCRIPTION | `apoli:EXAMPLE_B` |
-
-## Next
-
-<!-- Point at the most useful pages in this section. -->
-
-- [PAGE_TITLE](/docs/TOPIC/SECTION/PAGE)
+| Kind | What it is | Example |
+| --- | --- | --- |
+| KIND | DESCRIPTION | [`apoli:EXAMPLE`](/docs/TOPIC/SECTION/PAGE) |

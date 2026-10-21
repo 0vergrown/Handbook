@@ -5,7 +5,7 @@ date: 2026-10-03
 author: Overgrown
 ---
 
-Apoli **1.109.0** and Origins **1.47.0**.
+This is Apoli 1.109.0 and Origins 1.47.0.
 
 ## apoli:tooltip works
 
@@ -34,15 +34,15 @@ The tooltip is built on the player's own client, so its conditions should be thi
 
 ## Inedible
 
-Origins with a restricted diet now say so. Hover over a food your origin can't eat and a gray **Inedible** sits right under its name:
+Origins with a restricted diet now say so. Hover over a food your origin can't eat and a grey "Inedible" sits right under its name:
 
-- **Arachnid** (Carnivore): anything that isn't meat.
-- **Avian** (Vegetarian): meat.
-- **Buzzborne** (Nectarivore): everything except honey bottles and honeycomb.
-- **Enderian**: pumpkin pie.
+- The Arachnid (Carnivore) can't eat anything that isn't meat.
+- The Avian (Vegetarian) can't eat meat.
+- The Buzzborne (Nectarivore) can't eat anything except honey bottles and honeycomb.
+- The Enderian can't eat pumpkin pie.
 
-Each label uses the same item condition as the restriction it describes, so the two can't disagree. For the three diets that includes the `origins:ignore_diet` tag: an item added to it loses its label along with its restriction.
+Each label uses the same item condition as the restriction it describes, so the two can't disagree. For the three diets, that includes the `origins:ignore_diet` tag: an item added to it loses its label along with its restriction.
 
-The text comes from the `origins.tooltip.inedible` translation key, so translators can cover it, and your own powers can reuse it. Pair a [`apoli:prevent_item_use`](/docs/datapack/powers/prevent_item_use) with an `apoli:tooltip` that has the same `item_condition` inside one [`apoli:multiple`](/docs/datapack/powers/multiple) and your origin's diet gets the same label. The [tooltip page](/docs/datapack/powers/tooltip) has the full example.
+The text comes from the `origins.tooltip.inedible` translation key, so translators can cover it, and your own powers can reuse it. Pair an [`apoli:prevent_item_use`](/docs/datapack/powers/prevent_item_use) with an `apoli:tooltip` that has the same `item_condition` inside one [`apoli:multiple`](/docs/datapack/powers/multiple), and your origin's diet gets the same label. The [tooltip page](/docs/datapack/powers/tooltip) has the full example.
 
-Power ids haven't changed, so data packs that refer to `origins:arachnid/carnivore` or `origins:avian/vegetarian` keep working, and players who already have these origins get the label on their own the next time they join.
+Power IDs haven't changed, so data packs that refer to `origins:arachnid/carnivore` or `origins:avian/vegetarian` keep working, and players who already have these origins get the label by themselves the next time they join.

@@ -1,7 +1,3 @@
-// Generate per-type pages for types that exist in the Apoli source but were not
-// in the ported Node docs (newer additions + canonical ids that only had an
-// alias page). Field tables come straight from scripts/schema.json; the one-line
-// descriptions are curated below. Run scripts/extract-schema.mjs first.
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -11,8 +7,6 @@ const schema = JSON.parse(fs.readFileSync(path.join(ROOT, 'scripts/schema.json')
 const OUT = path.join(ROOT, 'src/content/docs/datapack');
 const DOCS = path.join(ROOT, 'src/content/docs');
 
-// Types that only exist when another mod is installed live in the Compatibility
-// topic, one folder per mod — not in the datapack reference. Keyed by type id.
 const COMPAT = {
 	action_on_speak: 'compat/02-simple-voice-chat',
 	action_on_reply: 'compat/02-simple-voice-chat',
@@ -50,8 +44,6 @@ const COMPAT = {
 	prevent_shape_ability_use: 'compat/13-woodwalkers'
 };
 
-// Types that are documented outside their flavour's reference section because
-// they belong to a feature that has its own section. Same idea as COMPAT.
 const RELOCATED = {
 	add_skill_points: 'datapack/17-skill-tree/02-entity-actions',
 	grant_skill_tree: 'datapack/17-skill-tree/02-entity-actions',
@@ -74,7 +66,6 @@ const SECTION = {
 	'meta conditions': '15-meta-conditions'
 };
 
-// one-line, accurate descriptions for each missing type
 const D = {
 	action_on_key_sequence: 'Runs an action when a sequence of keys is entered, like a combo.',
 	action_on_scroll_wheel: 'Runs an action when the holder scrolls the mouse wheel.',
@@ -91,7 +82,6 @@ const D = {
 	modify_accessory_slots: 'Adds or removes accessory slots for the entity.',
 	action_on_knockout: 'Runs an action when the entity is knocked out (needs a downed-state mod).',
 	action_on_revive: 'Runs an action when a knocked-out entity is revived.',
-	// entity actions
 	nothing: 'Does nothing. Useful as an explicit no-op branch.',
 	grant_all_powers: 'Grants every loaded power to the entity.',
 	suppress_power: 'Temporarily disables a power without removing it.',
@@ -108,7 +98,6 @@ const D = {
 	revive: 'Revives a knocked-out entity.',
 	attach_rope: 'Attaches a rope between the actor and the target.',
 	random_chance: 'Runs an action (or checks a condition) with a given probability (alias `chance`).',
-	// entity conditions
 	key_pressed: 'Passes while a keybinding is held.',
 	voice_speaking: 'Passes while the entity is talking in voice chat (needs Simple Voice Chat).',
 	voice_disabled: 'Passes when the entity has voice chat disabled (alias `voice_muted`).',
@@ -119,14 +108,11 @@ const D = {
 	accessory_equipped_count: 'Counts the entity\'s equipped accessories (alias `equipped_trinket_count`).',
 	accessory_slot_count: 'Counts the entity\'s accessory slots (alias `trinket_slot_count`).',
 	knocked_out: 'Passes while the entity is knocked out.',
-	// item conditions
 	is_equippable: 'Passes when the item can be equipped (alias `equippable`).',
 	accessory: 'Passes when the item is an accessory (alias `trinket`).',
-	// meta conditions
 	all_of: 'Passes when every listed condition passes (alias `and`).',
 	any_of: 'Passes when any listed condition passes (alias `or`).',
 	offset: 'Tests a block condition at an offset from this position (block conditions only).',
-	// backwards compatibility with the original Apoli
 	damage_over_time: 'Damages the entity on an interval while its condition holds.',
 	burn: 'Sets the entity on fire on an interval while its condition holds.',
 	modify_air_speed: 'Modifies how fast the entity moves through the air.',
@@ -147,7 +133,6 @@ const D = {
 	explosive: 'Passes when the damage came from an explosion.',
 	fire: 'Passes when the damage is fire damage.',
 	from_falling: 'Passes when the damage came from a fall.',
-	// scripting
 	difficulty: 'Passes when the world difficulty is one of the listed values.',
 	script: 'Runs a script registered from KubeJS or shipped as a data pack `.js` file.',
 	receive_action: 'Receives actions sent by `apoli:send_action` from another power.',
@@ -155,7 +140,6 @@ const D = {
 	send_action: 'Sends this action to a `apoli:receive_action` power on the same entity.',
 	send_condition: 'Asks a `apoli:receive_condition` power on the same entity.',
 	self_bientity_action: 'Runs a bi-entity action with the entity as both actor and target.',
-	// WoodWalkers
 	can_use_shape_ability: 'Passes when the player can use their shape ability right now (needs WoodWalkers).',
 	has_shape_ability: 'Passes when the current shape has an ability (needs WoodWalkers).',
 	shape_ability_cooldown: 'Compares the shape ability cooldown in ticks (needs WoodWalkers).',
@@ -187,16 +171,11 @@ function cleanType(t, cat) {
 		.replace(/\bNbt\b/g, 'nbt');
 }
 
-// Recursive: a section may nest one folder to group its pages in the sidebar
-// (compat/06-hardcore-revival/03-entity-actions/revive.md), and a page that
-// already exists inside a group must not be regenerated at the section root.
 function listPages(dir) {
 	const out = new Set();
 	const walk = (d) => {
 		for (const e of fs.readdirSync(d, { withFileTypes: true })) {
 			if (e.isDirectory()) walk(path.join(d, e.name));
-			// hyphen/underscore-insensitive: a ported page named is-equippable.md
-			// documents the same type as a generated is_equippable.md would
 			else if (e.name.endsWith('.md'))
 				out.add(e.name.replace(/\.md$/, '').replace(/^\d+-/, '').replace(/-/g, '_'));
 		}
@@ -242,7 +221,7 @@ function build(cat, folder) {
 		const relocated = COMPAT[t.id] ?? RELOCATED[t.id];
 		const dir = relocated ? path.join(DOCS, relocated) : path.join(OUT, folder);
 		if (pagesIn(dir).has(t.id.replace(/-/g, '_'))) continue;
-		if (!D[t.id]) continue; // only generate ones we have a description for
+		if (!D[t.id]) continue;
 		const rows = t.fields
 			.map((f) => `| \`${f.name}\` | ${cleanType(f.type, cat)} | ${fmtDefault(f)} |`)
 			.join('\n');

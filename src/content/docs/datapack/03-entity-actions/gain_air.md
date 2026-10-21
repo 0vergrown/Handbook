@@ -1,18 +1,18 @@
 ---
 title: "Gain Air (Entity Action Type)"
-description: "Restores breath (bubbles!) to a living entity."
+description: "Gives a living entity back some of its breath."
 navigation_title: "Gain Air"
 ---
 
-Restores breath (bubbles!) to a living entity.
+Gives a living entity back some of its breath, the air shown as bubbles above the hunger bar.
 
 Type ID: `apoli:gain_air`
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`value` | Integer or [Expression](/docs/datapack/data-types/expression) |  | The amount of breath to restore.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | _required_ | How much breath to restore. |
 
 ## Examples
 
@@ -23,4 +23,4 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will restore about 1 second of breath to the entity.
+This restores about 1 second of breath.

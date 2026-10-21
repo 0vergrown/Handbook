@@ -1,19 +1,19 @@
 ---
 title: "Moving (Entity Condition Type)"
-description: "Checks whether the entity is currently moving."
+description: "Checks whether the entity is moving, horizontally, vertically or both."
 navigation_title: "Moving"
 ---
 
-Checks whether the entity is currently moving.
+Checks whether the entity is moving.
 
 Type ID: `apoli:moving`
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|------------
-`horizontally` | Boolean | `true` | Determines whether to check if the entity is moving horizontally.
-`vertically` | Boolean | `true` | Determines whether to check if the entity is moving vertically.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `horizontally` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Whether horizontal movement counts. |
+| `vertically` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Whether vertical movement counts. |
 
 ## Examples
 
@@ -23,7 +23,7 @@ Field | Type | Default | Description
 }
 ```
 
-This example will check if the entity is moving either horizontally or vertically.
+This checks whether the entity is moving either horizontally or vertically.
 
 ```json
 "condition": {
@@ -32,7 +32,7 @@ This example will check if the entity is moving either horizontally or verticall
 }
 ```
 
-This example will check if the entity is moving vertically, whatever it is doing horizontally.
+This checks whether the entity is moving vertically, whatever it is doing horizontally.
 
 ```json
 "condition": {
@@ -41,10 +41,11 @@ This example will check if the entity is moving vertically, whatever it is doing
 }
 ```
 
-This example will check if the entity is moving horizontally — the check to use for a walk animation.
+This checks whether the entity is moving horizontally, which is the check to use for a walk animation.
 
 ## How movement is measured
 
-On the server, and on a client for the entity that client moves itself — your own player, a boat or horse you are steering — the condition reads the entity's velocity. Everything else a client only watches, such as other players and mobs, is measured by how far it moved since the previous tick, so a render condition like a walk cycle on [apoli:custom_model_render](/docs/datapack/powers/custom_model_render) plays for other players' models too.
+On the server, and on a client for an entity that client moves itself (your own player, or a boat or horse you are steering), the condition reads the entity's velocity. Everything else a client only watches, such as other players and mobs, is measured by how far it moved since the previous tick, so a render condition like a walk cycle on [apoli:custom_model_render](/docs/datapack/powers/custom_model_render) plays for other players' models too.
 
+> [!TIP]
 > An entity standing on the ground can still carry a small downward velocity from gravity, which counts as moving vertically. To tell walking from standing still, set `vertically` to `false`.

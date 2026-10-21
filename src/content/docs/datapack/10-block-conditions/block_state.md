@@ -1,24 +1,25 @@
 ---
 title: "Block State (Block Condition Type)"
-description: "Checks a block state property of the block."
+description: "Checks a block state property of the block, such as facing or age."
 navigation_title: "Block State"
 ---
 
-Checks a block state property of the block.
+Checks a block state property of the block, such as `facing` or `age`.
 
 Type ID: `apoli:block_state`
 
-> If none of the expected fields are specified, this condition will just check if the block has the specified property.
+> [!NOTE]
+> If none of the value fields are set, the condition only checks that the block has the property.
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`property` | [String](/docs/datapack/data-types/string) | | The name of the property that will be checked. Examples are `facing` or `age`.
-`comparison` | [Comparison](/docs/datapack/data-types/comparison) | _optional_ | If specified and if the property uses an integer, determines how the integer value of the specified property should be compared to the specified value. **Only used if the specified property has an integer value.**
-`compare_to` | [Integer](/docs/datapack/data-types/integer) | _optional_ | If specified, the integer at which the integer value of the specified property will be compared to. **Only used if the specified property has an integer value.**
-`value` | [Boolean](/docs/datapack/data-types/boolean) | _optional_ | If specified, the boolean to compare to the boolean value of the specified property. **Only used if the specified property has a boolean value.**
-`enum` | [String](/docs/datapack/data-types/string) | _optional_ | If specified, the string at which the string value of the specified property will be compared to. **Only used if the specified property has a string value.**
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `property` | [String](/docs/datapack/data-types/string) | _required_ | The name of the property to check, such as `facing` or `age`. |
+| `comparison` | [Comparison](/docs/datapack/data-types/comparison) | _optional_ | For an integer property, how its value is compared with `compare_to`. Only used when the property is an integer. |
+| `compare_to` | [Integer](/docs/datapack/data-types/integer) | _optional_ | For an integer property, the number its value is compared with. Only used when the property is an integer. |
+| `value` | [Boolean](/docs/datapack/data-types/boolean) | _optional_ | For a boolean property, the value it must have. Only used when the property is a boolean. |
+| `enum` | [String](/docs/datapack/data-types/string) | _optional_ | For an enum property, the value it must have. Only used when the property is an enum. |
 
 ## Examples
 
@@ -39,7 +40,7 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will check if a Chest block is facing north.
+This checks whether a chest is facing north.
 
 ```json
 "block_condition": {
@@ -48,4 +49,4 @@ This example will check if a Chest block is facing north.
 }
 ```
 
-This example will check if the specified block has the `age` Block State property.
+This checks whether the block has the `age` property.

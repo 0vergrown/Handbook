@@ -1,52 +1,53 @@
 ---
 title: Conditions
-description: Yes/no tests that gate powers and actions.
+description: Yes or no tests that powers and actions check.
 ---
 
-A **condition** is a test that answers *true* or *false*. Conditions are how Apoli asks questions about the world: are you sneaking? is it raining? is your health below half? They gate powers, branch [meta-actions](/docs/datapack/meta-actions), and filter targets.
+A condition is a test that answers true or false. Apoli uses conditions to ask about the world, for example whether the entity is sneaking, whether it is raining or whether its health is below half. Powers use them to switch on and off, meta-actions branch on them, and actions use them to filter targets.
 
 ## The shape of a condition
 
-The familiar typed object:
+A condition is a typed object like everything else:
 
 ```json
 { "type": "apoli:sneaking" }
 ```
 
-Conditions never *do* anything — they only report. Something else decides what to do with the answer.
+A condition only reports a result. Whatever checks it decides what to do with the answer.
 
 ## Where conditions are used
 
-- **On a power** — the shared `condition` field makes a power active only while the test passes.
-- **In a meta-action** — `apoli:if_else` and friends branch on a condition.
-- **In an action power** — many, like `apoli:action_on_hit`, take a `condition` that must hold for the action to fire.
-- **Inside other conditions** — meta-conditions combine several tests.
+- A power's shared `condition` field makes the power active only while the test passes.
+- `apoli:if_else` and the other branching [meta-actions](/docs/datapack/meta-actions) pick an action based on a condition.
+- Many action powers, like `apoli:action_on_hit`, take a `condition` that must hold before the action fires.
+- Meta-conditions combine several conditions into one.
 
-## Flavours
+## Kinds of condition
 
-Like actions, conditions come typed by what they examine:
+Like actions, conditions have kinds based on what they test:
 
-| Flavour | Tests | Examples |
+| Kind | Tests | Examples |
 | --- | --- | --- |
 | [Entity](/docs/datapack/entity-conditions) | one entity | `apoli:sneaking`, `apoli:health` |
-| [Bi-entity](/docs/datapack/bientity-conditions) | a pair | `apoli:attacker`, `apoli:undirected` |
+| [Bi-entity](/docs/datapack/bientity-conditions) | a pair of entities | `apoli:attacker`, `apoli:undirected` |
 | [Block](/docs/datapack/block-conditions) | a block | `apoli:block_state`, `apoli:in_tag` |
 | [Item](/docs/datapack/item-conditions) | an item stack | `apoli:enchantment`, `apoli:food` |
 | [Damage](/docs/datapack/damage-conditions) | a damage source | `apoli:type`, `apoli:amount` |
-| [Biome / Fluid](/docs/datapack/biome-conditions) | surroundings | `apoli:temperature`, `apoli:fluid` |
-| [Meta](/docs/datapack/meta-conditions) | *other conditions* | `apoli:all_of`, `apoli:any_of` |
+| [Biome](/docs/datapack/biome-conditions) | a biome | `apoli:temperature`, `apoli:precipitation` |
+| [Fluid](/docs/datapack/fluid-conditions) | a fluid state | `apoli:still`, `apoli:empty` |
+| [Meta](/docs/datapack/meta-conditions) | other conditions | `apoli:all_of`, `apoli:any_of` |
 
 ## Inverting
 
-Add `"inverted": true` to flip any condition. There is no `not_sneaking` — you invert `sneaking`:
+Add `"inverted": true` to flip any condition. There is no `not_sneaking` condition, so you invert `sneaking`:
 
 ```json
 { "type": "apoli:sneaking", "inverted": true }
 ```
 
-## Combining — the meta-conditions
+## Combining conditions
 
-To test several things at once, wrap them:
+To test several things at once, wrap them in a meta-condition:
 
 ```json
 {
@@ -58,15 +59,15 @@ To test several things at once, wrap them:
 }
 ```
 
-| Meta-condition | Passes when… |
+| Meta-condition | Passes when |
 | --- | --- |
-| `apoli:and` / `apoli:all_of` | **every** listed condition passes |
-| `apoli:or` / `apoli:any_of` | **any** listed condition passes |
-| `apoli:constant` | always the value you give it (`true`/`false`) |
+| `apoli:and` or `apoli:all_of` | every listed condition passes |
+| `apoli:or` or `apoli:any_of` | any listed condition passes |
+| `apoli:constant` | always returns the value you give it (`true` or `false`) |
 
-Nest these freely — an `apoli:or` of two `apoli:and`s is fine.
+Meta-conditions nest, so an `apoli:or` of two `apoli:and` conditions works.
 
 ## Next
 
-- [Entity conditions](/docs/datapack/entity-conditions) — the common tests.
-- [Meta-actions](/docs/datapack/meta-actions) — where conditions do their branching.
+- [Entity conditions](/docs/datapack/entity-conditions) has the most common tests.
+- [Meta-actions](/docs/datapack/meta-actions) branch on conditions.

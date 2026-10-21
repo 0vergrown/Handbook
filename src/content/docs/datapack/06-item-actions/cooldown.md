@@ -4,15 +4,15 @@ description: "Puts the item on cooldown for the player holding it, like an ender
 navigation_title: "Cooldown"
 ---
 
-Puts the item on cooldown for the player holding it, with the same grey sweep an ender pearl shows after a throw. While it lasts, the player cannot use that item.
+Puts the item on cooldown for the player holding it, with the same grey sweep an ender pearl shows after a throw. While it lasts, the player can't use that item.
 
 Type ID: `apoli:cooldown`
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|-------------
-`ticks` | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | _required_ | How long the cooldown lasts, in ticks (20 ticks is one second). An Expression is evaluated once each time the action runs, against the player holding the item. `0` or less does nothing.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `ticks` | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | _required_ | How long the cooldown lasts, in ticks (20 ticks is one second). An expression is evaluated once each time the action runs, against the player holding the item. `0` or less does nothing. |
 
 ## Examples
 
@@ -31,7 +31,7 @@ Field | Type | Default | Description
 }
 ```
 
-This example puts whatever the player is holding on a 5-second cooldown when they press their primary ability key.
+This puts whatever the player is holding on a 5-second cooldown when they press their primary ability key.
 
 ```json
 "item_action": {
@@ -40,10 +40,13 @@ This example puts whatever the player is holding on a 5-second cooldown when the
 }
 ```
 
-This example uses an [Expression](/docs/datapack/data-types/expression) for a 3-second cooldown.
+This uses an [expression](/docs/datapack/data-types/expression) for a 3-second cooldown.
 
-> The cooldown applies to the **item type**, not to one stack. Putting one ender pearl on cooldown puts every ender pearl in that player's inventory on cooldown, just like vanilla does.
+> [!NOTE]
+> The cooldown applies to the item type, not to one stack. Putting one ender pearl on cooldown puts every ender pearl in that player's inventory on cooldown, just like vanilla does.
 
-> A new cooldown **replaces** the one the item already has. It does not add to it. If vanilla also sets a cooldown on the same use (an ender pearl's 1-second throw cooldown), whichever runs last wins.
+> [!NOTE]
+> A new cooldown replaces the one the item already has instead of adding to it. If vanilla also sets a cooldown on the same use, such as an ender pearl's 1-second throw cooldown, whichever runs last wins.
 
-> Only players have item cooldowns. If the item is held by a mob, is in no one's hands, or the slot is empty, the action does nothing.
+> [!NOTE]
+> Only players have item cooldowns. If the item is held by a mob, isn't in anyone's hands, or the slot is empty, the action does nothing.

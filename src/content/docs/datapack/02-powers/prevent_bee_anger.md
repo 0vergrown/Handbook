@@ -10,11 +10,11 @@ Type ID: `apoli:prevent_bee_anger`
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`block_condition` | Block Condition Type | _optional_ | If specified, only hives that fulfill this condition are affected — everything else angers its bees as usual.
-`bientity_condition` | Bi-entity Condition Type | _optional_ | If specified, the bees are only calmed when this condition holds. The **actor** is the entity that has the power and the **target** is the bee that would have been angered, so it is tested once per bee.
-`bientity_action` | Bi-entity Action Type | _optional_ | Executed for each bee that was stopped from getting angry, with the same actor and target. Only runs when the hive is harvested, not when it is disturbed.
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `block_condition` | [Block Condition Type](/docs/datapack/block-conditions) | _optional_ | If set, only hives that pass this condition are affected. Other hives anger their bees as usual. |
+| `bientity_condition` | [Bi-entity Condition Type](/docs/datapack/bientity-conditions) | _optional_ | If set, bees are only calmed while this condition holds. The actor is the entity with the power and the target is the bee that would have been angered, so the condition is tested once per bee. |
+| `bientity_action` | [Bi-entity Action Type](/docs/datapack/bientity-actions) | _optional_ | Runs for each bee that was kept calm, with the same actor and target. It only runs when the hive is harvested, not when it is disturbed. |
 
 ## Examples
 
@@ -47,6 +47,7 @@ Bees never turn on this entity, whatever it does to their hive.
 }
 ```
 
-Bees four or more blocks away stay calm when this entity takes honey, and each of them is given Regeneration for five seconds. Bees closer than that still swarm.
+Bees four or more blocks away stay calm when this entity takes honey, and each of them gets Regeneration for five seconds. Bees closer than that still swarm.
 
-> Only the bees that vanilla would have angered are considered — bees that were already hostile for another reason keep their target.
+> [!NOTE]
+> Only the bees that vanilla would have angered are considered. Bees that were already hostile for another reason keep their target.

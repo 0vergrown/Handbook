@@ -1,20 +1,21 @@
 ---
 title: "Walk On Fluid (Power Type)"
-description: "Allows the entity that has the power to walk on fluid."
+description: "Lets the entity that has the power walk on a fluid."
 navigation_title: "Walk On Fluid"
 ---
 
-Allows the entity that has the power to walk on fluid.
+Lets the entity that has the power walk on a fluid.
 
 Type ID: `apoli:walk_on_fluid`
 
-> It is suggested to use the [Fluid Height (Entity Condition Type)](/docs/datapack/entity-conditions/fluid_height) entity condition type to check if the height of the fluid the player is currently on/in is less or equal to 0.4, otherwise, the entity that has the power may have problems getting out of the fluid once they are submerged.
+> [!TIP]
+> Add a [Fluid Height](/docs/datapack/entity-conditions/fluid_height) condition that checks the fluid is 0.4 blocks deep or less where the entity stands. Without it, an entity that ends up submerged can struggle to get out of the fluid.
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`fluid` | Identifier | | The namespace and ID of the fluid tag on which the player should be able to walk onto. Most important examples: `minecraft:water` and `minecraft:lava`. The leading `#` is optional.
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `fluid` | [Identifier](/docs/datapack/data-types/identifier) | | The fluid tag the entity can walk on, such as `minecraft:water` or `minecraft:lava`. The leading `#` is optional. |
 
 ## Examples
 
@@ -31,4 +32,4 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will allow the entity that has the power to walk on lava similar to Striders. The suggested condition was added to allow the entity to swim in lava once they sink, which may happens when they walk into a Lava-fall.
+This lets the entity walk on lava like a strider. The `fluid_height` condition lets it swim in lava once it sinks, which can happen when it walks into a lavafall.

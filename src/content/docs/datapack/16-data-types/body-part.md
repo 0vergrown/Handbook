@@ -1,21 +1,21 @@
 ---
 title: "Body Part (Data Type)"
-description: "A named part of a humanoid body — a limb, a skin layer, a region such as a hand or the chest, or a group such as both arms."
+description: "A named part of a humanoid body: a limb, a skin layer, a region such as a hand or the chest, or a group such as both arms."
 navigation_title: "Body Part"
 ---
 
-A named part of a humanoid body — a limb, a skin layer, a region such as a hand or the chest, or a group such as both arms. Every field that names a body part reads the same list:
+A named part of a humanoid body: a limb, a skin layer, a region such as a hand or the chest, or a group such as both arms. Every field that names a body part reads the same list:
 
 - `model_part` in a [Model Part Transformation](/docs/datapack/data-types/model-part-transformation), [apoli:particle](/docs/datapack/powers/particle) and [apoli:spawn_particles](/docs/datapack/entity-actions/spawn_particles)
 - `part` in [apoli:model_color](/docs/datapack/powers/model_color)
 - `body_parts` in [apoli:custom_model_render](/docs/datapack/powers/custom_model_render)
 - `body_part` in the [apoli:body_part](/docs/datapack/damage-conditions/body_part) damage condition
 
-Given as a String. Matching ignores case, spaces, `_` and `-`, so `right_arm`, `RightArm` and `right-arm` are the same part.
+It is given as a string. Matching ignores case, spaces, `_` and `-`, so `right_arm`, `RightArm` and `right-arm` are the same part.
 
 ## Limbs and skin layers
 
-These map onto the parts of the vanilla biped model. On a player, a limb also covers its skin-overlay layer; the layer names on their own target only the layer.
+These map onto the parts of the vanilla biped model. On a player, a limb also covers its skin overlay layer, and the layer names on their own only target the layer.
 
 | Name | Also accepts | Covers |
 | --- | --- | --- |
@@ -30,12 +30,12 @@ These map onto the parts of the vanilla biped model. On a player, a limb also co
 
 ## Regions
 
-A region is a piece of a limb rather than a whole model part. Regions are what a particle anchors to and what a hit can land on; they are not separate pieces of the model, so they do nothing in `apoli:model_color`, `apoli:modify_model_parts` or `body_parts`.
+A region is a piece of a limb, not a whole model part. Regions are what a particle anchors to and what a hit can land on. They aren't separate pieces of the model, so they do nothing in `apoli:model_color`, `apoli:modify_model_parts` or `body_parts`.
 
 | Name | Also accepts | Where |
 | --- | --- | --- |
 | `right_hand` / `left_hand` | `hand_right`, `right_fist` / `hand_left`, `left_fist` | The last quarter of that arm, where a held item sits. |
-| `main_hand` / `off_hand` | `hand_main` / `hand_off` | The hand on the entity's main or off side — `right_hand` for a right-handed entity, `left_hand` for a left-handed one. |
+| `main_hand` / `off_hand` | `hand_main` / `hand_off` | The hand on the entity's main or off side: `right_hand` for a right-handed entity and `left_hand` for a left-handed one. |
 | `hands` | | Either hand. |
 | `right_foot` / `left_foot` | `foot_right` / `foot_left` | The last quarter of that leg. |
 | `feet` | | Either foot. |
@@ -45,17 +45,17 @@ A region is a piece of a limb rather than a whole model part. Regions are what a
 
 ## Groups
 
-A group names several limbs at once. In [apoli:modify_model_parts](/docs/datapack/powers/modify_model_parts) a group moves **as one piece** — a `pitch` on `upper` bends the whole upper body forward at the waist instead of tipping the head, arms and torso over each on its own pivot. Everywhere else a group simply means all of its parts.
+A group names several limbs at once. In [apoli:modify_model_parts](/docs/datapack/powers/modify_model_parts) a group moves as one piece, so a `pitch` on `upper` bends the whole upper body forward at the waist instead of tipping the head, arms and torso over, each on its own pivot. Everywhere else, a group means all of its parts.
 
 | Name | Also accepts | Covers | Pivot |
 | --- | --- | --- | --- |
 | `arms` | | Both arms and their sleeves. | Halfway between the shoulders. |
 | `legs` | | Both legs and their trouser layers. | Halfway between the hips. |
-| `upper` | `upper_body` | Head, torso and both arms, with their layers. | The waist — the bottom of the torso, following it when it leans. |
-| `lower` | `lower_body` | Torso and both legs, with their layers. | The neck — the top of the torso. |
+| `upper` | `upper_body` | The head, torso and both arms, with their layers. | The waist, at the bottom of the torso, following it when it leans. |
+| `lower` | `lower_body` | The torso and both legs, with their layers. | The neck, at the top of the torso. |
 | `whole` | `any`, `all` | Every part of the model, including any extra limbs. | The feet, at ground level. |
 
-Each pivot is the joint that holds the group to the rest of the body, so a rotated group stays attached: `upper` swings around the waist the legs hang from, and `lower` around the neck the head sits on. `whole` turns around the feet, which keeps the model standing on the ground when it is scaled. A transformation can move the pivot with its `pivot` field — see [Moving a group](/docs/datapack/data-types/model-part-transformation#moving-a-group).
+Each pivot is the joint that holds the group to the rest of the body, so a rotated group stays attached: `upper` swings around the waist the legs hang from, and `lower` around the neck the head sits on. `whole` turns around the feet, which keeps the model standing on the ground when it is scaled. A transformation can move the pivot with its `pivot` field (see [Moving a group](/docs/datapack/data-types/model-part-transformation#moving-a-group)).
 
 ## Wings and Ears features
 
@@ -81,30 +81,30 @@ These name the extra geometry that [Icarus](/docs/compat/icarus/overview) and [E
 
 They work in `model_part` of [apoli:modify_model_parts](/docs/datapack/powers/modify_model_parts) and `part` of [apoli:model_color](/docs/datapack/powers/model_color):
 
-- **Icarus wings** are real model parts, so every transformation type applies — `pitch`, `yaw` and `roll` swing the wing about its root on the back, the scales grow it from there, and `visible` / `hidden` take it away. This covers wings from an equipped item and from [apoli:wings](/docs/compat/icarus/wings) alike.
-- **Ears features** are drawn by Ears itself, not as model parts, so they answer to `visible` and `hidden` and to colour, but not to rotation, scale or pivot. They already follow the part they hang from: bend `head` and the ears and horns go with it.
+- Icarus wings are real model parts, so every transformation type applies. `pitch`, `yaw` and `roll` swing the wing about its root on the back, the scales grow it from there, and `visible` and `hidden` take it away. This covers wings from an equipped item and from [apoli:wings](/docs/compat/icarus/wings) alike.
+- Ears features are drawn by Ears itself, not as model parts, so they respond to `visible`, `hidden` and colour, but not to rotation, scale or pivot. They already follow the part they hang from, so bend `head` and the ears and horns go with it.
 
-Ears draws both ears as one shape in its `above`, `cross`, `tall` and `tall_cross` ear modes. `right_ear` and `left_ear` cannot reach that shape on their own; `ears` does, and so does hiding both `right_ear` and `left_ear` at once. Wings work the same way: a single or flat Ears wing answers to `wings`, or to hiding both `right_wing` and `left_wing`.
+Ears draws both ears as one shape in its `above`, `cross`, `tall` and `tall_cross` ear modes. `right_ear` and `left_ear` can't reach that shape on their own, but `ears` can, and so does hiding both `right_ear` and `left_ear` at once. Wings work the same way: a single or flat Ears wing responds to `wings`, or to hiding both `right_wing` and `left_wing`.
 
-Sides are always the player's own: `right_wing` is the wing on the player's right, including in an asymmetric Ears wing pair whose skin layout names that wing the left one.
+Sides are always the player's own, so `right_wing` is the wing on the player's right, even in an asymmetric Ears wing pair whose skin layout calls that wing the left one.
 
-None of these are part of a group — `whole` and `upper` leave wings and Ears features alone. They have no hitbox, so the [apoli:body_part](/docs/datapack/damage-conditions/body_part) condition refuses them, and particles and `body_parts` have nothing to attach to.
+None of these belong to a group, so `whole` and `upper` leave wings and Ears features alone. They have no hitbox, so the [apoli:body_part](/docs/datapack/damage-conditions/body_part) condition refuses them, and particles and `body_parts` have nothing to attach to.
 
 ## Held items
 
 | Name | Also accepts | Covers |
 | --- | --- | --- |
 | `right_item` / `left_item` | `item_right`, `right_hand_item`, `right_held_item` / `item_left`, `left_hand_item`, `left_held_item` | The item held in that hand. |
-| `main_hand_item` / `off_hand_item` | `main_item`, `item_main`, `mainhand_item` / `off_item`, `item_off`, `offhand_item` | The item in the entity's main or off hand — `right_item` for a right-handed entity, `left_item` for a left-handed one. |
+| `main_hand_item` / `off_hand_item` | `main_item`, `item_main`, `mainhand_item` / `off_item`, `item_off`, `offhand_item` | The item in the entity's main or off hand: `right_item` for a right-handed entity and `left_item` for a left-handed one. |
 | `items` | `held_items`, `held_item` | Both held items. |
 
-They work in `model_part` of [apoli:modify_model_parts](/docs/datapack/powers/modify_model_parts), where they turn, grow, move or hide the item — see [Held items](/docs/datapack/data-types/model-part-transformation#held-items). They are not model parts, so `whole` and the other groups leave them alone (an item still follows the arm holding it), [apoli:model_color](/docs/datapack/powers/model_color) does not tint them, and the [apoli:body_part](/docs/datapack/damage-conditions/body_part) condition refuses them.
+They work in `model_part` of [apoli:modify_model_parts](/docs/datapack/powers/modify_model_parts), where they turn, grow, move or hide the item (see [Held items](/docs/datapack/data-types/model-part-transformation#held-items)). They aren't model parts, so `whole` and the other groups leave them alone (an item still follows the arm holding it), [apoli:model_color](/docs/datapack/powers/model_color) doesn't tint them, and the [apoli:body_part](/docs/datapack/damage-conditions/body_part) condition refuses them.
 
 ## Other names
 
-A name that is not in the lists above is passed through unchanged, and so are the wing and Ears names — `tail` reaches `apoli:centaur`'s horse tail as well as an Ears tail. That is how the extra limbs of the built-in models are reached — `right_second_arm` on `apoli:four_arms`, `right_second_leg` on `apoli:stinkfly`, `horse_body` on `apoli:centaur` — and how a minion's `main`, `flat2` and `flat3` parts are named in `body_parts`. On those models the groups pick up the extra limbs too: `arms` covers all four arms of `apoli:four_arms`, and `legs` covers all four legs of `apoli:stinkfly`.
+A name that isn't in the lists above is passed through unchanged, and so are the wing and Ears names, so `tail` reaches the horse tail of `apoli:centaur` as well as an Ears tail. That is how the extra limbs of the built-in models are reached, such as `right_second_arm` on `apoli:four_arms`, `right_second_leg` on `apoli:stinkfly` and `horse_body` on `apoli:centaur`, and how a minion's `main`, `flat2` and `flat3` parts are named in `body_parts`. On those models the groups pick up the extra limbs too: `arms` covers all four arms of `apoli:four_arms`, and `legs` covers all four legs of `apoli:stinkfly`.
 
-The [apoli:body_part](/docs/datapack/damage-conditions/body_part) condition only accepts the limbs, layers, regions and groups on this page, and fails to load with an unknown name or a wing or Ears name, because it can only ever narrow down which hits it matches.
+The [apoli:body_part](/docs/datapack/damage-conditions/body_part) condition only accepts the limbs, layers, regions and groups on this page. It fails to load with an unknown name or a wing or Ears name, because it can only ever narrow down which hits it matches.
 
 ## Example
 

@@ -1,23 +1,23 @@
 ---
 title: "Modify Air Speed (Power Type)"
-description: Modifies how fast the entity moves while off the ground.
+description: "Changes how fast the entity moves while it is off the ground."
 navigation_title: "Modify Air Speed"
 ---
 
-Modifies the speed the entity moves at while it is not standing on anything — falling, jumping, or flying in creative. It does not touch walking speed.
+Changes the speed the entity moves at while it isn't standing on anything: falling, jumping or flying in Creative mode. Walking speed is not affected. To make walking speed bonuses count in the air too, use [Attribute Modify Transfer](/docs/datapack/powers/attribute_modify_transfer).
 
 Type ID: `apoli:modify_air_speed`
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|-------------
-`modifier` | [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) | _optional_ | A single modifier applied to the air speed.
-`modifiers` | array of [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) | _optional_ | Several modifiers, applied in operation order.
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `modifier` | [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) | _optional_ | A single modifier applied to the air speed. |
+| `modifiers` | [Array](/docs/datapack/data-types/array) of [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) | _optional_ | Several modifiers, applied in operation order. |
 
 ## Examples
 
-Much finer control in mid-air, for an origin that is meant to feel agile:
+An agile origin with 50% more control in mid-air:
 
 ```json
 {
@@ -29,7 +29,7 @@ Much finer control in mid-air, for an origin that is meant to feel agile:
 }
 ```
 
-The opposite — a heavy origin that cannot steer once it leaves the ground:
+A heavy origin that steers poorly once it leaves the ground, except while gliding:
 
 ```json
 {

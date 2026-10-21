@@ -1,23 +1,24 @@
 ---
 title: "Shape Ability Cooldown (Entity Condition Type)"
-description: Compares the shape ability cooldown, in ticks.
+description: "Compares the shape ability cooldown, in ticks."
 navigation_title: "Shape Ability Cooldown"
 ---
 
-Compares how many ticks are left on the shape ability's cooldown. `0` means ready.
+Compares how many ticks are left on the shape ability's cooldown, where `0` means ready.
 
 Type ID: `apoli:shape_ability_cooldown`
 
+> [!NOTE]
+> This type needs [WoodWalkers](/docs/compat/woodwalkers/overview) and doesn't exist without it, so a pack that uses it must depend on the mod.
+
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|-------------
-`comparison` | [Comparison](/docs/datapack/data-types/comparison) | **required** | `<`, `<=`, `>`, `>=`, `==`, `!=`.
-`compare_to` | [Integer](/docs/datapack/data-types/integer) | **required** | Ticks to compare against — 20 ticks is a second.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `comparison` | [Comparison](/docs/datapack/data-types/comparison) | _required_ | How the cooldown is compared: `<`, `<=`, `>`, `>=`, `==` or `!=`. |
+| `compare_to` | [Integer](/docs/datapack/data-types/integer) | _required_ | The ticks to compare against, where 20 ticks is a second. |
 
 ## Example
-
-Slow the player down for the three seconds after they use their ability:
 
 ```json
 {
@@ -37,4 +38,4 @@ Slow the player down for the three seconds after they use their ability:
 }
 ```
 
-> Needs [WoodWalkers](/docs/compat/woodwalkers). This type does not exist without it, so a pack using it must depend on the mod.
+This slows the player down while more than three seconds are left on the cooldown, which covers the time just after they use the ability.

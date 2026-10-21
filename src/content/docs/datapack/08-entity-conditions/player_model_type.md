@@ -1,18 +1,18 @@
 ---
 title: "Player Model Type (Entity Condition Type)"
-description: "Checks which skin model the player is using — the wide (Steve) arms or the slim (Alex) arms."
+description: "Checks which skin model the player uses: the wide (Steve) arms or the slim (Alex) arms."
 navigation_title: "Player Model Type"
 ---
 
-Checks which skin model the player is using — the wide (Steve) arms or the slim (Alex) arms.
+Checks which skin model the player uses: the wide (Steve) arms or the slim (Alex) arms.
 
 Type ID: `apoli:player_model_type`
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|------------
-`model_type` | [Player Model Type](/docs/datapack/data-types/player-model-type) | **required** | `wide` or `slim`.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `model_type` | [Player Model Type](/docs/datapack/data-types/player-model-type) | _required_ | `wide` or `slim`. |
 
 ## Examples
 
@@ -23,14 +23,15 @@ Field | Type | Default | Description
 }
 ```
 
-Passes for players whose skin uses the three-pixel (Alex) arms.
+This passes for players whose skin uses the three-pixel (Alex) arms.
 
-The model is resolved from the first of these that is available:
+The model comes from the first of these that is available:
 
-1. **What the client reports.** Sent on join and whenever it changes — the only source that sees client-side skin-replacement mods.
-2. **The player's signed profile**, read server-side. Works for players on a vanilla client, or one without Apoli.
-3. **Vanilla's default-skin rule for the player's UUID**, matching the skin the game itself would draw.
+1. What the client reports. It is sent on join and whenever it changes, and it is the only source that sees skin replacement mods on the client.
+2. The player's signed profile, read on the server. This works for players on a vanilla client, or one without Apoli.
+3. Vanilla's default skin rule for the player's UUID, which matches the skin the game itself would draw.
 
-Non-players always fail this condition.
+Entities that aren't players always fail this condition.
 
-> Pairing a `wide` power with a `slim` power is the usual way to use this, and it relies on the two being mutually exclusive — they are, for every player, on every path above.
+> [!NOTE]
+> The usual way to use this is to pair a `wide` power with a `slim` power, which relies on the two never both passing. They never do, for any player, on any of the paths above.

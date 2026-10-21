@@ -4,13 +4,13 @@ description: "Clears the entity's freeze counter."
 navigation_title: "Unfreeze"
 ---
 
-Sets the entity's freeze counter straight back to `0`, clearing the frost vignette, the blue tint and any freeze damage that was about to land.
+Sets the entity's freeze counter straight back to `0`, which clears the frost vignette, the blue tint and any freeze damage that was about to land.
 
 Type ID: `apoli:unfreeze`
 
 ## Fields
 
-_None._
+This action has no fields.
 
 ## Examples
 
@@ -20,7 +20,7 @@ _None._
 }
 ```
 
-Thaw out whenever the holder is warm enough:
+Thaw out whenever the holder is on fire:
 
 ```json
 {
@@ -35,4 +35,5 @@ Thaw out whenever the holder is warm enough:
 }
 ```
 
-> An entity standing **in** powder snow starts freezing again on the next tick — vanilla refills the counter every tick it is in the block. Clearing the counter is not immunity; for that, put the entity's type in `#minecraft:freeze_immune_entity_types` or keep running this action.
+> [!NOTE]
+> An entity standing in powder snow starts freezing again on the next tick, because vanilla refills the counter every tick it is in the block. Clearing the counter doesn't make the entity immune. For that, put the entity's type in `#minecraft:freeze_immune_entity_types` or keep running this action.

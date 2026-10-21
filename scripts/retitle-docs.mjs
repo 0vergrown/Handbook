@@ -1,19 +1,3 @@
-// Rewrites the frontmatter of every type-reference page to the house format:
-//
-//   title:            Custom Model Render (Power Type)   <- h1 + search + browser tab
-//   navigation_title: Custom Model Render                <- sidebar label
-//   aliases:          ["active_self"]                    <- legacy ids, searchable
-//
-// Idempotent: re-run it after adding pages and it will only touch what changed.
-// Run scripts/extract-aliases.mjs first so aliases.json is current.
-//
-//   node scripts/retitle-docs.mjs --dry     print the plan, write nothing
-//   node scripts/retitle-docs.mjs           apply
-//
-// The parenthetical comes from the SECTION the page lives in, never from the
-// type id — a short id is not unique (apoli:explode is an entity, bi-entity AND
-// block action; apoli:nbt is an entity, block and item condition). Disambiguating
-// those is the whole point of the suffix.
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -23,7 +7,6 @@ const DOCS = path.join(ROOT, 'src/content/docs');
 const aliasMap = JSON.parse(fs.readFileSync(path.join(ROOT, 'scripts/aliases.json'), 'utf8'));
 const DRY = process.argv.includes('--dry');
 
-// section folder -> [parenthetical, alias-lookup category]
 const SECTION_KIND = {
 	'datapack/02-powers': ['Power Type', 'powers'],
 	'datapack/03-entity-actions': ['Entity Action Type', 'entity actions'],
@@ -44,8 +27,6 @@ const SECTION_KIND = {
 	'datapack/20-advancement-triggers': ['Advancement Trigger', null]
 };
 
-// Sections that mix concept pages with several type flavours, so the kind has to
-// be stated per page. Keyed by file basename within the section.
 const PAGE_KIND = {
 	'datapack/17-skill-tree': {
 		add_skill_points: ['Entity Action Type', 'entity actions'],
@@ -114,8 +95,6 @@ const PAGE_KIND = {
 	}
 };
 
-// Index / overview pages that live inside a reference section but describe the
-// whole section rather than one type.
 const SKIP = new Set([
 	'datapack/04-bientity-actions/bi-entity-action-types',
 	'datapack/09-bientity-conditions/bi-entity-condition-types',
@@ -136,7 +115,6 @@ const ACRONYMS = new Map([
 	['fov', 'FOV']
 ]);
 
-/** `custom_model_render` -> `Custom Model Render`. Every word capitalised. */
 function prettyName(id) {
 	return id
 		.split(/[_\-\s]+/)
@@ -145,7 +123,6 @@ function prettyName(id) {
 		.join(' ');
 }
 
-/** Existing human titles that predate the acronym map. */
 const TITLE_FIXES = new Map([
 	['Hud Render', 'HUD Render'],
 	['Nbt', 'NBT']
@@ -166,7 +143,6 @@ function readField(block, key) {
 	return m[1].trim().replace(/^["']|["']$/g, '');
 }
 
-/** The canonical id the page documents, from its `Type ID: \`ns:id\`` line. */
 function bodyTypeId(body) {
 	const m = /^Type ID:\s*`([^`]+)`/m.exec(body);
 	return m ? m[1] : null;
@@ -197,7 +173,6 @@ for (const file of files) {
 	const base = parts[parts.length - 1];
 	const id = stripPrefix(base);
 
-	// numeric-prefixed pages are ordered concept pages, never a single type
 	if (/^\d+-/.test(base)) continue;
 	if (SKIP.has(`${sectionKey}/${id}`)) continue;
 
@@ -218,8 +193,6 @@ for (const file of files) {
 	const oldTitle = readField(fm.block, 'title') ?? '';
 	const description = readField(fm.block, 'description') ?? '';
 
-	// The id in the body wins over the filename: it is what disambiguated pages
-	// like store_origin_bientity.md and badge_sprite.md actually document.
 	const typeId = bodyTypeId(fm.body);
 	const shortId = typeId ? typeId.split(':').pop() : id;
 
@@ -241,7 +214,6 @@ for (const file of files) {
 	block = block.replace(/^navigation_title:\s*.*$\n?/m, '');
 	block = block.replace(/^aliases:\s*.*$\n?/m, '');
 	block = block.replace(/^title:\s*.*$/m, `title: ${quote(title)}`);
-	// keep the pair right under title/description, wherever description sits
 	if (/^description:\s*.*$/m.test(block)) {
 		block = block.replace(/^description:\s*.*$/m, (line) => [line, ...extra].join('\n'));
 	} else {

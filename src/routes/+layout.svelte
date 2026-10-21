@@ -1,55 +1,33 @@
 <script>
 	import '$lib/styles/index.css';
-	// Self-hosted fonts (no external requests — works offline / on GitHub Pages)
-	import '@fontsource/fira-sans/400.css';
-	import '@fontsource/fira-sans/500.css';
-	import '@fontsource/dm-serif-display/400.css';
-	import '@fontsource/fira-mono/400.css';
-	import '@fontsource/fira-mono/500.css';
-
-	import Nav from '$lib/components/Nav.svelte';
+	import Navbar from '$lib/components/Navbar.svelte';
+	import Footer from '$lib/components/Footer.svelte';
 	import SearchModal from '$lib/components/SearchModal.svelte';
-	import OfficeAssistant from '$lib/components/OfficeAssistant.svelte';
 
-	let { children, data } = $props();
+	let { children } = $props();
+
+	function onclick(event) {
+		const button = event.target instanceof Element ? event.target.closest('.copy-button') : null;
+		if (!button) return;
+		const code = button.closest('.code-block')?.querySelector('pre code');
+		if (!code || !navigator.clipboard) return;
+		navigator.clipboard.writeText(code.textContent ?? '').then(() => {
+			button.classList.add('copy-button--copied');
+			button.setAttribute('aria-label', 'Copied');
+			setTimeout(() => {
+				button.classList.remove('copy-button--copied');
+				button.setAttribute('aria-label', 'Copy code to clipboard');
+			}, 1000);
+		});
+	}
 </script>
 
-<a href="#main" class="skip-link">Skip to content</a>
+<svelte:document {onclick} />
 
-<Nav
-	datapackHome={data.datapackHome}
-	addonHome={data.addonHome}
-	compatHome={data.compatHome}
-/>
-
-<main id="main">
+<a class="skip-to-content" href="#main">Skip to main content</a>
+<Navbar />
+<div class="main-wrapper">
 	{@render children()}
-</main>
-
+</div>
+<Footer />
 <SearchModal />
-
-<OfficeAssistant />
-
-<style>
-	main {
-		position: relative;
-		padding-top: var(--sk-nav-height);
-		min-height: 100vh;
-	}
-
-	.skip-link {
-		position: fixed;
-		top: -100px;
-		left: 1rem;
-		z-index: 300;
-		padding: 0.8rem 1.6rem;
-		background: var(--sk-bg-1);
-		border: 1px solid var(--sk-fg-accent);
-		border-radius: var(--sk-border-radius);
-		color: var(--sk-fg-1);
-		transition: top 0.15s;
-	}
-	.skip-link:focus {
-		top: 1rem;
-	}
-</style>

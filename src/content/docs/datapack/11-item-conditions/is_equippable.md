@@ -1,19 +1,19 @@
 ---
 title: "Is Equippable (Item Condition Type)"
-description: "Checks if the item is equippable."
+description: "Checks whether the item can be equipped, optionally in a given slot."
 navigation_title: "Is Equippable"
 aliases: ["equippable"]
 ---
 
-Checks if the item is equippable.
+Checks whether the item can be equipped, optionally in a given slot.
 
 Type ID: `apoli:is_equippable`
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|------------
-equipment_slot | Equipment Slot (Data Type) | *optional* | If specified, checks if the item is equippable in the specified equipment slot. Accepts `"head"`, `"chest"`, `"legs"`, `"feet"`, or `"offhand"`.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `equipment_slot` | Equipment Slot | _optional_ | Checks whether the item can be equipped in this slot: `"head"`, `"chest"`, `"legs"`, `"feet"` or `"offhand"`. |
 
 ## Examples
 
@@ -23,7 +23,7 @@ equipment_slot | Equipment Slot (Data Type) | *optional* | If specified, checks 
 }
 ```
 
-This example will check if the item is generally equippable.
+This checks whether the item can be equipped at all.
 
 ```json
 "item_condition": {
@@ -32,4 +32,4 @@ This example will check if the item is generally equippable.
 }
 ```
 
-This example will check if the item can be equipped in the chest equipment slot.
+This checks whether the item can be equipped in the chest slot.

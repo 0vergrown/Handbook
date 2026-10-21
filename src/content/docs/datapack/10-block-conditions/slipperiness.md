@@ -1,20 +1,20 @@
 ---
 title: "Slipperiness (Block Condition Type)"
-description: "Checks the slipperiness value of the block."
+description: "Compares the block's slipperiness with a number."
 navigation_title: "Slipperiness"
 aliases: ["slipperness"]
 ---
 
-Checks the slipperiness value of the block.
+Compares the block's slipperiness with a number.
 
 Type ID: `apoli:slipperiness`
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|------------
-`comparison` | Comparison | | Determines how the slipperiness value of the block should be compared to the specified value.
-`compare_to` | Float | | The value at which the slipperiness value of the block will be compared to.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `comparison` | [Comparison](/docs/datapack/data-types/comparison) | _required_ | How the slipperiness is compared with `compare_to`. |
+| `compare_to` | [Float](/docs/datapack/data-types/float) | _required_ | The number the slipperiness is compared with. |
 
 ## Examples
 
@@ -26,4 +26,4 @@ Field | Type | Default | Description
 }
 ```
 
-This example will check if the block has the same slipperiness of an Ice (or Packed Ice) block.
+This checks whether the block is as slippery as ice or packed ice.

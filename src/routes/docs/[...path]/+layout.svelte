@@ -1,62 +1,21 @@
 <script>
-	import DocsSidebar from '$lib/components/DocsSidebar.svelte';
+	import { page } from '$app/state';
+	import nav from 'virtual:handbook/nav';
+	import DocSidebar from '$lib/components/DocSidebar.svelte';
+	import BackToTop from '$lib/components/BackToTop.svelte';
 
-	let { data, children } = $props();
+	let { children } = $props();
+
+	const topic = $derived(page.params.path?.split('/')[0] ?? '');
+	const sections = $derived(nav.topics[topic] ?? []);
 </script>
 
-<div class="docs-shell">
-	<aside class="sidebar">
-		<DocsSidebar nav={data.nav} topicTitle={data.topicTitle} />
-	</aside>
-
-	<div class="page-wrap">
-		{@render children()}
-	</div>
+<div class="docs-wrapper">
+	<BackToTop />
+	<DocSidebar {sections} />
+	<main id="main" class="doc-main-container">
+		<div class="container">
+			{@render children()}
+		</div>
+	</main>
 </div>
-
-<style>
-	.docs-shell {
-		--sidebar-width: 27rem;
-		--toc-width: 24rem;
-		/* Past this width the whole sidebar+content+ToC cluster centres, instead
-		   of the content drifting rightwards into the fixed ToC on ultrawide. */
-		--docs-max: 132rem;
-		--gutter: max(0px, calc((100vw - var(--docs-max)) / 2));
-		position: relative;
-	}
-
-	.sidebar {
-		border-bottom: 1px solid var(--sk-border);
-		background: var(--sk-bg-2);
-	}
-	:root.dark .sidebar {
-		background: var(--sk-bg-0);
-	}
-
-	.page-wrap {
-		min-width: 0;
-	}
-
-	@media (min-width: 832px) {
-		.sidebar {
-			position: fixed;
-			top: var(--sk-nav-height);
-			left: var(--gutter);
-			width: var(--sidebar-width);
-			height: calc(100vh - var(--sk-nav-height));
-			overflow-y: auto;
-			border-bottom: none;
-			border-right: 1px solid var(--sk-border);
-			z-index: 10;
-		}
-		.page-wrap {
-			padding-left: calc(var(--gutter) + var(--sidebar-width));
-		}
-	}
-
-	@media (min-width: 1200px) {
-		.page-wrap {
-			padding-right: calc(var(--gutter) + var(--toc-width));
-		}
-	}
-</style>

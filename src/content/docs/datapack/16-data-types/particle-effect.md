@@ -1,6 +1,6 @@
 ---
 title: "Particle Effect (Data Type)"
-description: "A String naming a particle type, or an Object naming it together with that type's own parameters."
+description: "A string naming a particle type, or an object naming it together with that type's own parameters."
 navigation_title: "Particle Effect"
 ---
 
@@ -18,10 +18,10 @@ Any particle that takes no parameters can be written as a bare identifier:
 
 The object form is the particle's own JSON: a `type` field plus whatever fields that particle type declares. The field names are the vanilla ones, the same as in `/particle`.
 
-Field | Type | Default | Description
-------|------|---------|------------
-`type` | [Identifier](/docs/datapack/data-types/identifier) | — | The particle type to spawn.
-… | | | Every other field belongs to the named particle type.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `type` | [Identifier](/docs/datapack/data-types/identifier) | _required_ | The particle type to spawn. |
+| other fields | | | Every other field belongs to the named particle type. |
 
 ```json
 "particle": {
@@ -42,15 +42,17 @@ A red dust particle at double size.
 }
 ```
 
-A block particle that uses the Ice texture.
+A block particle with the ice texture.
 
-> A `params` string (`{"type": "minecraft:dust", "params": "0.92 0.31 0.31 2"}`) is parsed as a `/particle` command argument, and the argument syntax is **not the same on both versions**. On 1.20.1 it is the space-separated form shown here; on 1.21.1 the game reads it as SNBT using the same field names as the object form, so a space-separated string cannot be read there and no particle is spawned. Write the fields out instead — the object form above is read identically on every version.
+> [!WARNING]
+> A `params` string (`{"type": "minecraft:dust", "params": "0.92 0.31 0.31 2"}`) is parsed as a `/particle` command argument, and that syntax differs between versions. On 1.20.1 it is the space-separated form shown here. On 1.21.1 the game reads it as SNBT with the same field names as the object form, so a space-separated string can't be read there and no particle spawns. Write the fields out instead, since the object form above is read the same way on every version.
 
-> A particle Apoli cannot build is named in the log the first time it is used, and nothing is spawned where it is used. If a power that should emit particles is silent, that line is the first place to look.
+> [!TIP]
+> A particle Apoli can't build is named in the log the first time it is used, and nothing spawns where it is used. If a power that should give off particles is silent, look for that line first.
 
 ## Apoli's own particle
 
-`apoli:custom` is a particle type Apoli registers, built from a texture you ship in a resource pack — colour, size, lifetime, gravity, rotation and frame animation all come from the JSON. It is written like any other object-form particle:
+`apoli:custom` is a particle type Apoli registers, built from a texture you ship in a resource pack. Its colour, size, lifetime, gravity, rotation and frame animation all come from the JSON. It is written like any other particle in object form:
 
 ```json
 "particle": {

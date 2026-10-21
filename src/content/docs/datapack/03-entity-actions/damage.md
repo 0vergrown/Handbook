@@ -1,25 +1,27 @@
 ---
 title: "Damage (Entity Action Type)"
-description: "Applies damage to an entity."
+description: "Deals damage of a given damage type to the entity."
 navigation_title: "Damage"
 ---
 
-Applies damage to an entity.
+Deals damage of a given damage type to the entity.
 
 Type ID: `apoli:damage`
 
-> **`amount` is optional, and omitting it deals damage equal to the entity's max health.** That is intended — it is how the second example below works, supplying only `modifier`/`modifiers` to damage a fraction of max health. But it also means a **misspelled or unknown field name silently becomes a one-shot**, because unknown keys are ignored. If a power always deals exactly the entity's max health, check the spelling of `amount` first.
+> [!WARNING]
+> `amount` is optional, and leaving it out deals damage equal to the entity's max health. That is deliberate: an action can leave `amount` out and set the damage entirely with `modifier` or `modifiers`, as the second example below does. It also means a misspelled or unknown field name silently becomes a one-shot, because unknown keys are ignored. If a power always deals exactly the entity's max health, check the spelling of `amount` first.
 
-> See [Minecraft Wiki: Damage type](https://minecraft.wiki/w/Damage_type) and [Minecraft Wiki: Damage type tag (Java Edition)](https://minecraft.wiki/w/Damage_type_tag_(Java_Edition)) for more information about vanilla damage types and damage type tags.
+> [!TIP]
+> [Minecraft Wiki: Damage type](https://minecraft.wiki/w/Damage_type) and [Minecraft Wiki: Damage type tag (Java Edition)](https://minecraft.wiki/w/Damage_type_tag_(Java_Edition)) explain the vanilla damage types and damage type tags.
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`amount` | Float or [Expression](/docs/datapack/data-types/expression) | _optional_ | The amount of damage to deal. Also accepted under the legacy name `damage`. If omitted, the entity's max health is used as the base value for the modifier(s).
-`damage_type` | Identifier | | Defines the properties of the damage source that will be dealt, such as part of its death message, and whether it can bypass armor, shield, etc. (via damage type tags.)
-`modifier` | Attribute Modifier | _optional_ | If specified, this modifier will be applied to the damage taken by the entity.
-`modifiers` | Array of Attribute Modifiers | _optional_ | If specified, these modifiers will be applied to the damage taken by the entity.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `amount` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | _optional_ | How much damage to deal. `damage` is accepted as a legacy name. Left out, the entity's max health is the base value for the modifiers. |
+| `damage_type` | [Identifier](/docs/datapack/data-types/identifier) | _required_ | The damage type, which decides part of the death message and, through damage type tags, whether the damage bypasses armor, shields and so on. |
+| `modifier` | [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) | _optional_ | A modifier applied to the damage. |
+| `modifiers` | [Array](/docs/datapack/data-types/array) of [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) | _optional_ | Several modifiers applied to the damage. |
 
 ## Examples
 
@@ -31,7 +33,7 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will deal 2 hearts of `on_fire` damage, which by its tags in vanilla is considered fire damage and bypasses armor.
+This deals 2 hearts of `on_fire` damage, which vanilla tags as fire damage that bypasses armor.
 
 ```json
 "entity_action": {
@@ -51,8 +53,8 @@ This example will deal 2 hearts of `on_fire` damage, which by its tags in vanill
 }
 ```
 
-This example will deal `2 * (1 + example:damage_multiplier)` amount of `out_of_world` damage to the entity, with `2` used for overriding the base value for the modifiers, and the value of the `example:damage_multiplier` (`data/example/powers/damage_multipler.json`) power as the "multiplier". If the value of the said power is `3`, the amount of damage that will be dealt will be `8` (`2 * (1 + 3) = 8`.)
+This deals `2 * (1 + example:damage_multiplier)` `out_of_world` damage. `set_base` replaces the base value with `2`, and the value of the `example:damage_multiplier` power (`data/example/powers/damage_multiplier.json`) is the multiplier. If that power's value is `3`, the damage is `8` (`2 * (1 + 3) = 8`).
 
-## Which entity the Expression reads
+## Which entity the expression reads
 
-`amount` is an [Expression](/docs/datapack/data-types/expression) evaluated against the entity being damaged, which in this entity action is also the entity in scope. The `target_` and `actor_` prefixes both resolve to that same entity here; they only differ in a bi-entity context — see [apoli:damage (Bi-Entity Action Type)](/docs/datapack/bientity-actions/damage).
+`amount` is an [expression](/docs/datapack/data-types/expression) evaluated against the entity being damaged, which in this entity action is also the entity in scope. The `target_` and `actor_` prefixes both resolve to that same entity here. They only differ in a bi-entity context (see [apoli:damage (Bi-entity Action Type)](/docs/datapack/bientity-actions/damage)).

@@ -1,16 +1,16 @@
 ---
 title: "Block Entity (Block Condition Type)"
-description: "Checks if the block has a block entity."
+description: "Checks whether the block has a block entity."
 navigation_title: "Block Entity"
 ---
 
-Checks if the block has a block entity.
+Checks whether the block has a block entity, as chests, furnaces and signs do.
 
 Type ID: `apoli:block_entity`
 
 ## Fields
 
-_None._
+This condition has no fields.
 
 ## Examples
 

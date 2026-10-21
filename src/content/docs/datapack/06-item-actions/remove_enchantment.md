@@ -1,21 +1,21 @@
 ---
 title: "Remove Enchantment (Item Action Type)"
-description: "Removes certain enchantments from the item."
+description: "Removes some or all of the item's enchantments."
 navigation_title: "Remove Enchantment"
 ---
 
-Removes certain enchantments from the item.
+Removes some or all of the item's enchantments.
 
 Type ID: `apoli:remove_enchantment`
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|------------
-`enchantment` | Identifier | _optional_ | If specified, this enchantment will be removed from the item.
-`enchantments` | Array of Identifiers | _optional_ | If specified, these enchantments will be removed from the item.
-`levels` | Integer | _optional_ | If specified, only the enchantments that has the specified level will be removed from the item.
-`reset_repair_cost` | Boolean | `false` | Determines whether the 'repair cost' of the item should be reset.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `enchantment` | [Identifier](/docs/datapack/data-types/identifier) | _optional_ | An enchantment to remove from the item. |
+| `enchantments` | [Array](/docs/datapack/data-types/array) of Identifiers | _optional_ | Several enchantments to remove from the item. |
+| `levels` | [Integer](/docs/datapack/data-types/integer) | _optional_ | Only removes enchantments at this level. |
+| `reset_repair_cost` | [Boolean](/docs/datapack/data-types/boolean) | `false` | Whether the item's repair cost is reset. |
 
 ## Examples
 
@@ -27,4 +27,4 @@ Field | Type | Default | Description
 }
 ```
 
-This example will remove the Mending enchantment from the item whilst resetting its 'repair cost'.
+This removes Mending from the item and resets its repair cost.

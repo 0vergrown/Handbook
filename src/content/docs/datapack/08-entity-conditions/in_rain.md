@@ -1,16 +1,16 @@
 ---
 title: "In Rain (Entity Condition Type)"
-description: "Checks if it's raining at the entity's position."
+description: "Checks whether it is raining at the entity's position."
 navigation_title: "In Rain"
 ---
 
-Checks if it's raining at the entity's position.
+Checks whether it is raining at the entity's position.
 
 Type ID: `apoli:in_rain`
 
 ## Fields
 
-_None._
+This condition has no fields.
 
 ## Examples
 

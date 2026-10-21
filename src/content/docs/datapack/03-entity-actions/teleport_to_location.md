@@ -10,13 +10,13 @@ Type ID: `apoli:teleport_to_location`
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`id` | [String](/docs/datapack/data-types/string) | **required** | The name the position was saved under.
-`keep_rotation` | [Boolean](/docs/datapack/data-types/boolean) | `false` | Whether the entity keeps the way it is currently facing instead of the rotation it saved.
-`clear` | [Boolean](/docs/datapack/data-types/boolean) | `false` | Whether the saved position is forgotten once it has been used, making it a one-shot recall.
-`success_action` | Entity Action Type | _optional_ | Runs on the entity once it has arrived.
-`fail_action` | Entity Action Type | _optional_ | Runs on the entity when nothing is saved under that name, when the saved dimension no longer exists, or when [apoli:prevent_teleport](/docs/datapack/powers/prevent_teleport) refuses the move.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `id` | [String](/docs/datapack/data-types/string) | _required_ | The name the position was saved under. |
+| `keep_rotation` | [Boolean](/docs/datapack/data-types/boolean) | `false` | Whether the entity keeps facing the way it is now instead of using the saved rotation. |
+| `clear` | [Boolean](/docs/datapack/data-types/boolean) | `false` | Whether the saved position is forgotten once it has been used, for a recall that only works once. |
+| `success_action` | [Entity Action Type](/docs/datapack/entity-actions) | _optional_ | Runs on the entity once it has arrived. |
+| `fail_action` | [Entity Action Type](/docs/datapack/entity-actions) | _optional_ | Runs on the entity when nothing is saved under that name, when the saved dimension no longer exists, or when [apoli:prevent_teleport](/docs/datapack/powers/prevent_teleport) refuses the move. |
 
 ## Examples
 
@@ -40,6 +40,7 @@ Field  | Type | Default | Description
 }
 ```
 
-A ten-second-cooldown recall to a saved anchor, with a message when there isn't one.
+A recall to a saved anchor on a 30-second cooldown, with a message when there is nothing saved.
 
-> Pair with [apoli:has_location](/docs/datapack/entity-conditions/has_location) when the answer should be known *before* the key is pressed — to grey out a HUD icon, or to make the power's own `condition` false while nothing is saved.
+> [!TIP]
+> Pair it with [apoli:has_location](/docs/datapack/entity-conditions/has_location) when you need to know before the key is pressed, for example to grey out a HUD icon or to make the power's own `condition` false while nothing is saved.

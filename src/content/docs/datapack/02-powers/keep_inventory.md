@@ -1,21 +1,21 @@
 ---
 title: "Keep Inventory (Power Type)"
-description: "Makes certain items persist in the entity's inventory."
+description: "Keeps chosen items in the entity's inventory when it dies."
 navigation_title: "Keep Inventory"
 ---
 
-Makes certain items persist in the entity's inventory.
+Keeps chosen items in the entity's inventory when it dies.
 
 Type ID: `apoli:keep_inventory`
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|------------
-`item_condition` | Item Condition Type | _optional_ | If specified, only make the items that fulfill the specified item condition type persist in the entity's inventory.
-`slots` | Array of Integers | _optional_ | If specified, only make the items that are in the listed inventory slots persist in the entity's inventory. Unset means the hotbar and main inventory (`0`-`35`) plus the four armor slots (`100`-`103`).
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `item_condition` | [Item Condition Type](/docs/datapack/item-conditions) | _optional_ | If set, only items that pass this condition are kept. |
+| `slots` | [Array](/docs/datapack/data-types/array) of [Integers](/docs/datapack/data-types/integer) | _optional_ | If set, only items in these inventory slots are kept. Without it, the hotbar and main inventory (`0` to `35`) and the four armor slots (`100` to `103`) are kept. |
 
-Slot numbers are the vanilla ones the `/item replace entity` command uses: `0`-`8` is the hotbar, `9`-`35` the rest of the inventory, `98` the offhand, `99` the main hand, `100`-`103` boots/leggings/chestplate/helmet, and `200`+ the ender chest. The offhand is **not** kept unless you list `98`.
+Slot numbers are the vanilla ones the `/item replace entity` command uses: `0` to `8` is the hotbar, `9` to `35` is the rest of the inventory, `98` is the off hand, `99` is the main hand, `100` to `103` are the boots, leggings, chestplate and helmet, and `200` and up are the ender chest. The off hand is not kept unless you list `98`.
 
 ## Examples
 
@@ -36,7 +36,7 @@ Slot numbers are the vanilla ones the `/item replace entity` command uses: `0`-`
 }
 ```
 
-This example will make items in the hotbar slots persist.
+This keeps the items in the hotbar.
 
 ```json
 {
@@ -50,8 +50,9 @@ This example will make items in the hotbar slots persist.
 }
 ```
 
-This example keeps every sword wherever it sits in the inventory, and drops everything else.
+This keeps every sword wherever it sits in the inventory, and drops everything else.
 
-> The kept stacks are pulled out of the inventory just before the rest of it drops and put straight back afterwards, so they survive the death and are already in place on the respawned player. Curse of Vanishing still destroys an item first, and the `keepInventory` gamerule already keeps everything, which makes this power inert.
+The kept stacks are taken out of the inventory just before the rest of it drops and put straight back afterwards, so they survive the death and are already in place on the respawned player. Curse of Vanishing still destroys an item first. The `keepInventory` gamerule already keeps everything, so with it on this power does nothing.
 
-> Grave mods respect it too: kept items stay with the player instead of going into the grave with [You're in Grave Danger](/docs/compat/youre-in-grave-danger/overview), [Gravestones](/docs/compat/gravestones/overview) and the [GraveStone Mod](/docs/compat/gravestone-mod/overview).
+> [!NOTE]
+> Grave mods respect the power too. Kept items stay with the player instead of going into the grave with [You're in Grave Danger](/docs/compat/youre-in-grave-danger/overview), [Gravestones](/docs/compat/gravestones/overview) and the [GraveStone Mod](/docs/compat/gravestone-mod/overview).

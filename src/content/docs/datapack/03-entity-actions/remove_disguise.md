@@ -1,16 +1,16 @@
 ---
 title: "Remove Disguise (Entity Action Type)"
-description: "Removes the entity's current disguise, if any."
+description: "Removes the entity's current disguise, if it has one."
 navigation_title: "Remove Disguise"
 ---
 
-Removes the entity's current disguise, if any. Ported from the Sync mod.
+Removes the entity's current disguise, if it has one. This action was ported from the Sync mod.
 
 Type ID: `apoli:remove_disguise`
 
 ## Fields
 
-This action type has no fields.
+This action has no fields.
 
 ## Examples
 

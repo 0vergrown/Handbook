@@ -1,15 +1,15 @@
 ---
 title: "Destruction Type (Data Type)"
-description: "A String used to determine the effect of an explosion to the terrain."
+description: "A string that decides what an explosion does to the terrain."
 navigation_title: "Destruction Type"
 ---
 
-A [String](/docs/datapack/data-types/string) used to determine the effect of an explosion to the terrain.
+A [String](/docs/datapack/data-types/string) that decides what an explosion does to the terrain.
 
-##	Values
+## Values
 
-  Value      |  Description                                                     
--------------|------------------------------------------------------------------
-  `break`    |  The explosion will destroy blocks and drop the loot of said blocks.  
-  `none`     |  The explosion will **not** destroy blocks nor drop the loot of said blocks.  
-  `destroy`  |  The explosion will destroy blocks and drop the loot of *some* of the said blocks. It has lower chance with higher explosion power; it also checks the `minecraft:survives_explosion` loot condition in loot tables.
+| Value | Description |
+| --- | --- |
+| `break` | The explosion destroys blocks and drops their loot. |
+| `none` | The explosion doesn't destroy blocks or drop their loot. |
+| `destroy` | The explosion destroys blocks and drops the loot of only some of them. The chance gets lower as the explosion's power goes up, and the `minecraft:survives_explosion` loot condition in loot tables is checked too. |

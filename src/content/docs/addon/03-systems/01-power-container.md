@@ -1,67 +1,72 @@
 ---
 title: The power container
-description: Where an entity's powers live, and the full API for reading and mutating them.
+description: "Where an entity's powers live, and the full API for reading and changing them."
 ---
 
-Every entity that can have powers owns a **power container**. It is the runtime home of that entity's powers: what it has, who granted each one, what is currently suppressed, and any per-power scratch data. Your power type's hooks receive it as `holder`.
+Every entity that can have powers owns a power container. It is the runtime home of that entity's powers: what it has, who granted each one, what is suppressed, and any scratch data for each power. Your power type's hooks receive it as `holder`.
 
 ## Getting one
 
 ```java
-PowerContainer container = PowerContainer.of(entity);   // null when the entity has none
+PowerContainer container = PowerContainer.of(entity);
 if (container == null || container.isEmpty()) return;
 ```
 
-`PowerContainer.of` takes a plain `Entity`, not a `LivingEntity` — powers work on projectiles, item entities and armour stands as well as mobs. It returns **null** for an entity that has never been given a container, so null-check it before anything else. `isEmpty()` is the cheap second gate and is the first line of almost every built-in handler.
+`PowerContainer.of` takes a plain `Entity`, not a `LivingEntity`, because powers work on projectiles, item entities and armour stands as well as mobs. It returns null for an entity that has never been given a container, so null-check it before anything else. `isEmpty()` is the cheap second check and the first line of almost every built-in handler.
 
 Going the other way:
 
 ```java
-LivingEntity owner = container.owner();    // null if the owner is not living
-Entity raw = container.rawOwner();         // always the real entity
+LivingEntity owner = container.owner();
+Entity raw = container.rawOwner();
 ```
+
+`owner()` is null when the owner isn't living, and `rawOwner()` is always the real entity.
 
 ## Reading
 
 ```java
-boolean has = container.hasPower(powerId);            // is this exact power on the entity?
-Set<ResourceLocation> all = container.allPowers();    // every power id
-Set<ResourceLocation> srcs = container.allSources();  // every source id
-Set<ResourceLocation> from = container.sourcesOf(powerId);  // who granted this one
-List<ResourceLocation> ids = container.powersOfType(ApoliIds.ELYTRA_FLIGHT);  // by type
+boolean has = container.hasPower(powerId);
+Set<ResourceLocation> all = container.allPowers();
+Set<ResourceLocation> srcs = container.allSources();
+Set<ResourceLocation> from = container.sourcesOf(powerId);
+List<ResourceLocation> ids = container.powersOfType(ApoliIds.ELYTRA_FLIGHT);
 ```
 
-`powersOfType` takes the **canonical** type id, not an alias. `ApoliIds` holds interned constants for the built-in types — use those rather than building a `ResourceLocation` at the call site. For your own, keep a `private static final ResourceLocation` next to the code that needs it.
+`hasPower` checks whether this exact power is on the entity, `allPowers` and `allSources` list every power ID and every source ID, `sourcesOf` says who granted one power, and `powersOfType` finds the powers of one type.
 
-> `hasPower` answers "is this power attached", which is not the same as "is it doing anything". A power can be attached and suppressed, or attached with a `condition` that is currently false. For the question you usually mean, see [reading powers](/docs/addon/systems/reading-powers).
+`powersOfType` takes the canonical type ID, not an alias. `ApoliIds` holds interned constants for the built-in types, so use those instead of building a `ResourceLocation` at the call site. For your own types, keep a `private static final ResourceLocation` next to the code that needs it.
 
-## Mutating
+> [!NOTE]
+> `hasPower` answers whether the power is attached, which isn't the same as whether it is doing anything. A power can be attached and suppressed, or attached with a `condition` that is currently false. For the question you usually mean, see [reading powers](/docs/addon/systems/reading-powers).
+
+## Changing what it holds
 
 ```java
-container.addPower(powerId, sourceId);            // grant, from a source
-container.removePower(powerId, sourceId);         // release one source's claim
-container.removeAllFromSource(sourceId);          // drop everything that source granted
-container.removePowerCompletely(powerId);         // force-remove, every source
-container.clear();                                // everything
+container.addPower(powerId, sourceId);
+container.removePower(powerId, sourceId);
+container.removeAllFromSource(sourceId);
+container.removePowerCompletely(powerId);
+container.clear();
 ```
 
-Each returns `true` when it actually changed something.
+In order, these grant a power from a source, release one source's claim on it, drop everything a source granted, remove a power for every source at once, and remove everything. The first four return `true` when they changed something.
 
-Because a power can be granted by several sources at once, the container **reference-counts** them: `removePower` only detaches when the *last* source lets go. That is why `onRemoved` must not assume it is the final removal — check `holder.hasPower(powerId)` first, exactly as the built-ins do:
+Because a power can be granted by several sources at once, the container counts them, and `removePower` only detaches the power when the last source lets go. That is why `onRemoved` must not assume it is the final removal. Check `holder.hasPower(powerId)` first, as the built-in types do, and only undo the effect once it is false:
 
 ```java
 @Override
 public void onRemoved(ResourceLocation powerId, Cfg cfg, PowerContainer holder, ResourceLocation source) {
-    if (holder.hasPower(powerId)) return;   // another source still holds it
-    // now it is really gone — undo the effect
+    if (holder.hasPower(powerId)) return;
+    undo(holder);
 }
 ```
 
-`addPower`/`removePower` are the same calls [`apoli:multiple`](/docs/datapack/powers/multiple) uses to attach its sub-powers, with the parent power as the *source*. Anything can be a source id — an origin, a skill tree, a command, another power.
+`addPower` and `removePower` are the same calls [`apoli:multiple`](/docs/datapack/powers/multiple) uses to attach its sub-powers, with the parent power as the source. Anything can be a source ID: an origin, a skill tree, a command or another power.
 
 ## Suppression
 
-Suppressing a power leaves it attached but inert. It is reference-counted per source in the same way:
+Suppressing a power leaves it attached but inert, and it is counted per source in the same way:
 
 ```java
 container.suppressPower(powerId, sourceId);
@@ -74,61 +79,61 @@ Set<ResourceLocation> suppressed = container.suppressedPowers();
 Set<ResourceLocation> by = container.suppressionSourcesOf(powerId);
 ```
 
-Your power type is told about it through two hooks, so a power that applied an attribute modifier or started a render effect can stand down and back up:
+Your power type hears about it through two hooks, so a power that applied an attribute modifier or started a render effect can take it down and put it back:
 
 ```java
 @Override public void onSuppressed(ResourceLocation id, Cfg cfg, PowerContainer holder) { }
 @Override public void onUnsuppressed(ResourceLocation id, Cfg cfg, PowerContainer holder) { }
 ```
 
-A suppressed power still ticks *nothing* and should be treated as absent by every read. Every helper on `PowerLookup` already skips suppressed powers; if you walk `allPowers()` yourself, you have to check `isSuppressed` yourself too.
+A suppressed power doesn't tick and should be treated as absent by every read. Every helper on `PowerLookup` already skips suppressed powers, and if you walk `allPowers()` yourself, you have to check `isSuppressed` too.
 
 ## Auxiliary data
 
-A `PowerType` is a **singleton**: one instance serves every entity in the world, so it must be stateless. Per-holder state goes in the container's aux storage, keyed by power id:
+A `PowerType` is a singleton: one instance serves every entity in the world, so it must be stateless. State for each holder goes in the container's aux storage, keyed by power ID:
 
 ```java
 int ticks = holder.getAuxIntOr(powerId, 0);
 
 if (holder instanceof PowerContainerImpl impl) {
     impl.setAuxInt(powerId, ticks + 1);
-    int[] slots = impl.getAuxInts(powerId);          // multi-value resources
+    int[] slots = impl.getAuxInts(powerId);
     impl.setAuxInts(powerId, new int[] { 1, 2, 3 });
-    CompoundTag nbt = impl.getAuxNbt(powerId);       // anything that is not an int
+    CompoundTag nbt = impl.getAuxNbt(powerId);
     impl.setAuxNbt(powerId, tag);
-    int[] scratch = impl.scratchInts(powerId, 4);    // in-memory only, never saved
+    int[] scratch = impl.scratchInts(powerId, 4);
 }
 ```
 
-The read side (`getAuxInt`, `getAuxIntOr`, `getAuxInts`) is on the `PowerContainer` interface. The write side lives on `PowerContainerImpl` — instance-check for it, as the built-ins do.
+`getAuxInts` and `setAuxInts` hold several values, as table resources do, and `getAuxNbt` and `setAuxNbt` hold anything that isn't an int. The read side (`getAuxInt`, `getAuxIntOr`, `getAuxInts`) is on the `PowerContainer` interface, and the write side lives on `PowerContainerImpl`, so check for it with `instanceof`, as the built-in types do.
 
-`scratchInts` is the odd one out: it hands back a mutable array that lives only in memory and is never written to disk or sent to the client. Use it for schedules and interpolation state that would be wrong to persist.
+`scratchInts` is the odd one out: it returns a mutable array that only lives in memory and is never written to disk or sent to the client. Use it for schedules and interpolation state that would be wrong to save.
 
-> Storing per-entity state in a field on your `PowerType` is the classic addon bug: every entity in the world would share it. Always key state by the holder.
+> [!WARNING]
+> Storing per-entity state in a field on your `PowerType` is the classic addon bug, because every entity in the world would share it. Always key state by the holder.
 
-## Persistence & syncing
+## Persistence and syncing
 
-`markDirty()` tells the container its saved form and its synced form are both stale:
+`markDirty()` tells the container that its saved form and its synced form are both out of date:
 
 ```java
 impl.setAuxInt(powerId, value);
 holder.markDirty();
 ```
 
-Every mutation path you add needs a `markDirty()`. A stale cache that never persists is a **data-loss bug**, which is worse than a slow one — the aux setters themselves do not guess when you are finished.
+`setAuxInt` and `setAuxInts` call it themselves when the value changes. `setAuxNbt` clears the cached save tag and sends the tag to the owning player, but doesn't mark the container dirty, so call `markDirty()` after it when other clients need the change, and after any other change to saved state. A stale cache that never saves is a data loss bug, which is worse than a slow one.
 
-Serialization is a hot path in its own right: an entity's NBT is written for every chunk save and for every `nbt=` selector candidate, so the container serves a cached save tag rather than re-encoding. That cache is what `markDirty()` invalidates.
+Saving is a hot path in its own right. An entity's NBT is written for every chunk save and for every `nbt=` selector candidate, so the container serves a cached save tag instead of encoding again. That cache is what `markDirty()` clears.
 
 ## Performance shape
 
-Lookups you do per tick, per hit or per entity in a selector must be O(1) against the container's own indexes — `powersOfType` reads a type index, not a scan. Never walk `allPowers()` on a hot path. The early-out ladder every built-in uses is:
+Lookups you do every tick, on every hit or for every entity in a selector must be O(1) against the container's own indexes. `powersOfType` reads a type index instead of scanning. Never walk `allPowers()` on a hot path. Every built-in type checks things in this order, and only does the expensive part after the last check:
 
 ```java
 PowerContainer container = PowerContainer.of(entity);
 if (container == null || container.isEmpty()) return;
 List<ResourceLocation> powers = container.powersOfType(TYPE_ID);
 if (powers.isEmpty()) return;
-// only now do the expensive part
 ```
 
 See [performance](/docs/addon/systems/performance) for the rest of the rules.

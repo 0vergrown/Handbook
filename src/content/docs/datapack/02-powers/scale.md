@@ -1,10 +1,10 @@
 ---
 title: "Scale (Power Type)"
-description: "Resizes the entity — hitbox, model, eye height and the physics that follow from size — for as long as the power is held."
+description: "Resizes the entity's hitbox, model, eye height and size-based physics while the power is held."
 navigation_title: "Scale"
 ---
 
-Resizes the entity for as long as the power is held. One power can drive several scale types at once, and the value can be an [Expression](/docs/datapack/data-types/expression), so size can follow health, a resource, or anything else you can compute.
+Resizes the entity for as long as it has the power. One power can drive several scale types at once, and the value can be an [Expression](/docs/datapack/data-types/expression), so size can follow health, a resource or anything else you can compute.
 
 Type ID: `apoli:scale`
 
@@ -12,14 +12,14 @@ Type ID: `apoli:scale`
 
 | Field | Type | Default | Description |
 |-------|------|---------|-------------|
-| `scale_types` | [Scale Type](/docs/datapack/data-types/scale-type) or [Array](/docs/datapack/data-types/array) of them | `apoli:base` | Which scale types this power multiplies. |
-| `scale` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | _optional_ | A straight multiplier. `2` is twice the size, `0.5` is half. |
-| `modifier` | [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) | _optional_ | A modifier applied to `scale` (or to `1.0` when `scale` is absent). |
+| `scale_types` | [Scale Type](/docs/datapack/data-types/scale-type) or [Array](/docs/datapack/data-types/array) of them | `apoli:base` | The scale types this power multiplies. |
+| `scale` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | _optional_ | A plain multiplier. `2` is twice the size and `0.5` is half. |
+| `modifier` | [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) | _optional_ | A modifier applied to `scale`, or to `1.0` when there is no `scale`. |
 | `modifiers` | [Array](/docs/datapack/data-types/array) of [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) | _optional_ | Several modifiers, applied in operation order. |
 
-`scale_type` is accepted as a spelling of `scale_types`, and a `pehkui:` namespace resolves to the matching Apoli scale type, so a Pehkui-flavoured id like `pehkui:height` works.
+`scale_type` is accepted as another spelling of `scale_types`, and the `pehkui:` namespace resolves to the matching Apoli scale type, so a Pehkui ID like `pehkui:height` works.
 
-The power **multiplies**; it never replaces. Two `apoli:scale` powers on the same entity both apply, and a `/apoli:scale` value set by a command multiplies on top of them.
+The power multiplies the size instead of replacing it. Two `apoli:scale` powers on the same entity both apply, and a value set with the `/apoli:scale` command multiplies on top of them.
 
 ## Examples
 
@@ -33,8 +33,7 @@ Twice as big while the power is held:
 }
 ```
 
-Several scales at once — every type in the list gets the same factor, measured against its own current
-value, so this makes the model five times bigger in every direction and leaves the hitbox alone:
+Several scale types get the same factor, each measured against its own current value. This makes the model five times bigger in every direction and leaves the hitbox alone:
 
 ```json
 {
@@ -60,7 +59,7 @@ Shrink as you lose health, using an expression:
 }
 ```
 
-Keep the hitbox alone and only change what people see:
+Leave the hitbox alone and only change what people see:
 
 ```json
 {
@@ -80,4 +79,5 @@ Make the inventory preview bigger. The preview ignores every other scale type, s
 }
 ```
 
-> A scale that affects the hitbox moves the entity's bounding box. Shrinking is safe; growing inside a tight space pushes the entity the way vanilla does when it stands up from a crawl.
+> [!NOTE]
+> A scale that affects the hitbox moves the entity's bounding box. Shrinking is safe, and growing in a tight space pushes the entity out the way vanilla does when it stands up from crawling.

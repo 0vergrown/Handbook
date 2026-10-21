@@ -1,24 +1,27 @@
 ---
 title: "Status Effect Instance (Data Type)"
-description: "An Object used to define a status effect with duration, amplifier, etc."
+description: "An object that describes a status effect with its duration, amplifier and display settings."
 navigation_title: "Status Effect Instance"
 ---
 
-An [Object](/docs/datapack/data-types/object) used to define a status effect with duration, amplifier, etc.
+An [Object](/docs/datapack/data-types/object) that describes a status effect with its duration, amplifier and display settings.
 
-> **NOTE**: To make the Status Effect Instance infinite, you can set the value of `duration` to `-1`.
+> [!TIP]
+> To make the effect last forever, set `duration` to `-1`.
 
-> **ALIASES (1.21.1):** Apace renamed `effect` → `id` and `is_ambient` → `ambient` to match vanilla. Both spellings are accepted, so data packs from either era load unchanged.
+> [!NOTE]
+> On 1.21.1, `id` and `ambient`, the names Apace and vanilla use, are accepted as aliases of `effect` and `is_ambient`, so data packs written for either load unchanged.
 
 ## Fields
-Field  | Type | Default | Description
--------|-----|---------------|-------------
-`effect` | [Identifier](/docs/datapack/data-types/identifier) | | The identifier of the status effect. [Custom status effects](/docs/datapack/introduction/custom-status-effects) from a data pack work here too. _Alias: `id`._
-`duration` | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | `100` | Determines the duration of the status effect (in ticks). An Expression is evaluated against the entity the effect is applied to, at application time.
-`amplifier` | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | `0` | Determines the strength of the status effect (0 being level 1). Accepts an Expression like `duration`.
-`is_ambient` | [Boolean](/docs/datapack/data-types/boolean) | `false` | Determines whether the particle effects of the status effect is less noticeable. _Alias: `ambient`._
-`show_particles` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Determines whether the status effect should display particle effects on the entity.
-`show_icon` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Determines whether the status effect would display an icon on the HUD.
+
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `effect` | [Identifier](/docs/datapack/data-types/identifier) | _required_ | The ID of the status effect. [Custom status effects](/docs/datapack/introduction/custom-status-effects) from a data pack work here too. `id` is accepted as an alias. |
+| `duration` | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | `100` | How long the effect lasts, in ticks. An expression is evaluated against the entity the effect is applied to, when it is applied. |
+| `amplifier` | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | `0` | The strength of the effect, where 0 is level I. It accepts an expression like `duration`. |
+| `is_ambient` | [Boolean](/docs/datapack/data-types/boolean) | `false` | Whether the effect's particles are less noticeable. `ambient` is accepted as an alias. |
+| `show_particles` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Whether the effect shows particles on the entity. |
+| `show_icon` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Whether the effect shows an icon on the HUD. |
 
 ## Examples
 
@@ -29,7 +32,8 @@ Field  | Type | Default | Description
     "duration": -1
 }
 ```
-A Slowness II status with an infinite duration.
+
+Slowness II that lasts forever.
 
 ```json
 "effect": {
@@ -40,7 +44,8 @@ A Slowness II status with an infinite duration.
     "show_icon": false
 }
 ```
-An ambient and mostly hidden status effect of Levitation I which lasts for 10 seconds.
+
+Levitation I for 10 seconds, ambient and mostly hidden.
 
 ```json
 "effects": [
@@ -60,7 +65,8 @@ An ambient and mostly hidden status effect of Levitation I which lasts for 10 se
     }
 ]
 ```
-An [Array](/docs/datapack/data-types/array) of status effect instances with the Slowness I and Slow Falling I status effects that lasts for 20 seconds.
+
+An [Array](/docs/datapack/data-types/array) of effects, giving Slow Falling I and Slowness I for 20 seconds.
 
 ```json
 "effect": {
@@ -69,4 +75,5 @@ An [Array](/docs/datapack/data-types/array) of status effect instances with the 
     "amplifier": "clamp(my_pack:mana / 10, 0, 3)"
 }
 ```
-Speed whose duration scales with the target's current health and whose level is driven by a [apoli:resource](/docs/datapack/powers/resource) value, capped at Speed IV.
+
+Speed whose duration grows with the target's current health and whose level comes from an [apoli:resource](/docs/datapack/powers/resource) value, capped at Speed IV.

@@ -1,20 +1,21 @@
 ---
 title: "Entity Group (Entity Condition Type)"
-description: "Checks whether the entity is of a specific entity group."
+description: "Checks whether the entity belongs to an entity group, such as undead or arthropod."
 navigation_title: "Entity Group"
 ---
 
-Checks whether the entity is of a specific entity group.
+Checks whether the entity belongs to an entity group, such as undead or arthropod.
 
 Type ID: `apoli:entity_group`
 
-> See [Minecraft Wiki: Mob (Classification)](https://minecraft.wiki/w/Mob#Classification) for more information about entity groups.
+> [!TIP]
+> [Minecraft Wiki: Mob (Classification)](https://minecraft.wiki/w/Mob#Classification) explains the entity groups.
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`group` | String | |  Entity group required for the entity to pass the check. One of `default`, `undead`, `arthropod`, `illager` and `aquatic`.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `group` | [String](/docs/datapack/data-types/string) | _required_ | The group the entity must be in: `default`, `undead`, `arthropod`, `illager` or `aquatic`. |
 
 ## Examples
 
@@ -25,4 +26,4 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will check if the entity is included in the `undead` entity group.
+This checks whether the entity is in the `undead` group.

@@ -1,24 +1,23 @@
 ---
 title: "Selector Action (Entity Action Type)"
-description: "Executes an action on entities selected by a target selector."
+description: "Runs a bi-entity action on the entities a target selector finds."
 navigation_title: "Selector Action"
 ---
 
-Executes an action on entities selected by a target selector.
+Runs a bi-entity action on the entities a target selector finds. The actor is the entity that ran the action, and each selected entity is a target.
 
 Type ID: `apoli:selector_action`
 
-> See [Minecraft Wiki: Target selectors](https://minecraft.wiki/w/Target_selectors) for more information about target selectors.
-
-> This entity action type has a bi-entity action context, where the '**actor**' entity is the entity that invoked the entity action while the '**target**' entities are the entities that were selected by the specified `selector`.
+> [!TIP]
+> [Minecraft Wiki: Target selectors](https://minecraft.wiki/w/Target_selectors) explains how target selectors work.
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|-------------
-`selector` | String | | The selector to use for selecting entities. It can be the username of a player, the UUID of the entity or a target selector.
-`bientity_action` | Bi-entity Action Type | _optional_ | If specified, this action will be executed on either or both the '**actor**' and '**target**' entities.
-`bientity_condition` | Bi-entity Condition Type | _optional_ | If specified, the specified action will only be executed if this condition is fulfilled by either or both the '**actor**' and '**target**' entities.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `selector` | [String](/docs/datapack/data-types/string) | _required_ | Which entities to select: a player's username, an entity's UUID or a target selector. |
+| `bientity_action` | [Bi-entity Action Type](/docs/datapack/bientity-actions) | _optional_ | Runs for each selected entity, with the entity that ran the action as the actor and the selected entity as the target. |
+| `bientity_condition` | [Bi-entity Condition Type](/docs/datapack/bientity-conditions) | _optional_ | The action only runs for selected entities that pass this, with the same actor and target. |
 
 ## Examples
 
@@ -34,7 +33,7 @@ Field | Type | Default | Description
 }
 ```
 
-This example will deal 2 and a half hearts of damage to the player named Steve.
+This deals 2.5 hearts of damage to the player named Steve.
 
 ```json
 "entity_action": {
@@ -50,4 +49,4 @@ This example will deal 2 and a half hearts of damage to the player named Steve.
 }
 ```
 
-This example will kill armor stands that have the `some_tag` tag *(added via the `/tag` command)*
+This kills the armor stands that have the `some_tag` tag (added with the `/tag` command).

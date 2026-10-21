@@ -1,19 +1,19 @@
 ---
 title: "Has Power (Item Condition Type)"
-description: "Checks if the item has a power embedded to it."
+description: "Checks whether the item has a given power embedded in it."
 navigation_title: "Has Power"
 ---
 
-Checks if the item has a power embedded to it.
+Checks whether the item has a given power embedded in it.
 
 Type ID: `apoli:has_power`
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|------------
-`power` | Identifier | | The ID of the power to check for.
-`slot` | Equipment Slot (Data Type) | _optional_ | If specified, this will check if the power embedded to the item is assigned to this equipment slot. Accepts one of `"head"`, `"chest"`, `"legs"`, `"feet"`, `"mainhand"` or `"offhand"`.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `power` | [Identifier](/docs/datapack/data-types/identifier) | _required_ | The ID of the power to look for. |
+| `slot` | Equipment Slot | _optional_ | Only counts the power when it is assigned to this equipment slot: `"head"`, `"chest"`, `"legs"`, `"feet"`, `"mainhand"` or `"offhand"`. |
 
 ## Examples
 
@@ -24,7 +24,7 @@ Field | Type | Default | Description
 }
 ```
 
-This example will check if the item has Merling's Gills *(`origins:water_breathing`)* power embedded to it.
+This checks whether the item has the Merling's Gills power (`origins:water_breathing`) embedded in it.
 
 ```json
 "item_condition": {
@@ -34,4 +34,4 @@ This example will check if the item has Merling's Gills *(`origins:water_breathi
 }
 ```
 
-This example will check if the item has Elytrian's Winged *(`origins:elytra`)* power embedded to it.
+This checks whether the item has the Elytrian's Winged power (`origins:elytra`) embedded in it for the chest slot.

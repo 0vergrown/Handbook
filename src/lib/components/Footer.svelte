@@ -1,151 +1,66 @@
 <script>
 	import { base } from '$app/paths';
+	import nav from 'virtual:handbook/nav';
 	import { SITE } from '$lib/config.js';
-	import { LICENSE } from '$lib/license.js';
-	import Icon from './Icon.svelte';
+	import ExternalIcon from './ExternalIcon.svelte';
 
 	const year = new Date().getFullYear();
+
+	const columns = [
+		{
+			title: 'Docs',
+			links: [
+				{ label: 'Data Pack', href: `/docs/${nav.first.datapack}/` },
+				{ label: 'Addon', href: `/docs/${nav.first.addon}/` },
+				{ label: 'Compatibility', href: `/docs/${nav.first.compat}/` }
+			]
+		},
+		{
+			title: 'Community',
+			links: [
+				{ label: 'Discord', href: SITE.discord, external: true },
+				{ label: 'X', href: SITE.x, external: true }
+			]
+		},
+		{
+			title: 'More',
+			links: [
+				{ label: 'Blog', href: '/blog/' },
+				{ label: 'Download', href: '/download/' },
+				{ label: 'License', href: '/license/' },
+				{ label: 'GitHub', href: SITE.github, external: true }
+			]
+		}
+	];
 </script>
 
-<footer>
-	<div class="inner">
-		<div class="brand">
-			<span class="logo"><Icon name="book" size={20} /></span>
-			<div>
-				<strong>{SITE.name}</strong>
-				<p>Docs for the Apoli power engine &amp; the Origins addon.</p>
-			</div>
+<footer class="footer">
+	<div class="container">
+		<div class="row footer__links">
+			{#each columns as column (column.title)}
+				<div class="col footer__col">
+					<div class="footer__title">{column.title}</div>
+					<ul class="footer__items clean-list">
+						{#each column.links as link (link.label)}
+							<li class="footer__item">
+								{#if link.external}
+									<a class="footer__link-item" href={link.href} target="_blank" rel="noopener noreferrer">
+										{link.label}<ExternalIcon />
+									</a>
+								{:else}
+									<a class="footer__link-item" href="{base}{link.href}">{link.label}</a>
+								{/if}
+							</li>
+						{/each}
+					</ul>
+				</div>
+			{/each}
 		</div>
-
-		<nav class="columns" aria-label="Footer">
-			<div>
-				<h4>Docs</h4>
-				<a href="{base}/docs/datapack">Data Pack</a>
-				<a href="{base}/docs/addon">Addon</a>
+		<div class="text--center">
+			<div class="footer__copyright">
+				Copyright © {year} {SITE.author}. Apoli, Origins and this website are covered by
+				<a href="{base}/license/">the A/O License</a>.
 			</div>
-			<div>
-				<h4>Project</h4>
-				<a href="{base}/download">Downloads</a>
-				<a href="{base}/blog">Blog</a>
-				<a href="{base}/license">License</a>
-			</div>
-			<div>
-				<h4>Community</h4>
-				<a href={SITE.github} target="_blank" rel="noreferrer">GitHub</a>
-				<a href={SITE.x} target="_blank" rel="noreferrer">X / Twitter</a>
-				<a href={SITE.discord} target="_blank" rel="noreferrer">Discord</a>
-			</div>
-		</nav>
-	</div>
-
-	<div class="baseline">
-		<span>
-			© {year} Overgrown. Apoli, Origins and this website are licensed under
-			<a href="{base}/license">{LICENSE.name}</a>.
-		</span>
-		<div class="socials">
-			<a href={SITE.github} target="_blank" rel="noreferrer" aria-label="GitHub"
-				><Icon name="github" size={18} /></a
-			>
-			<a href={SITE.x} target="_blank" rel="noreferrer" aria-label="X (Twitter)"
-				><Icon name="x" size={16} /></a
-			>
-			<a href={SITE.discord} target="_blank" rel="noreferrer" aria-label="Discord"
-				><Icon name="discord" size={18} /></a
-			>
 		</div>
 	</div>
 </footer>
-
-<style>
-	footer {
-		border-top: 1px solid var(--sk-border);
-		background: var(--sk-bg-2);
-		padding: 4rem var(--sk-page-padding-side) 2rem;
-		font-family: var(--sk-font-family-ui);
-	}
-	.inner {
-		max-width: 120rem;
-		margin: 0 auto;
-		display: flex;
-		flex-wrap: wrap;
-		gap: 3rem 4rem;
-		justify-content: space-between;
-	}
-	.brand {
-		display: flex;
-		gap: 1rem;
-		max-width: 32rem;
-	}
-	.brand .logo {
-		display: grid;
-		place-content: center;
-		width: 3.2rem;
-		height: 3.2rem;
-		border-radius: var(--sk-border-radius);
-		background: var(--sk-fg-accent);
-		color: white;
-		flex-shrink: 0;
-	}
-	.brand strong {
-		font-family: var(--sk-font-family-heading);
-		font-weight: 500;
-		font-size: 1.8rem;
-		color: var(--sk-fg-1);
-	}
-	.brand p {
-		font: var(--sk-font-ui-small);
-		color: var(--sk-fg-4);
-		margin-top: 0.3rem;
-	}
-	.columns {
-		display: flex;
-		gap: 4rem;
-		flex-wrap: wrap;
-	}
-	.columns h4 {
-		font: var(--sk-font-ui-small);
-		text-transform: uppercase;
-		letter-spacing: 0.06em;
-		color: var(--sk-fg-4);
-		margin-bottom: 1rem;
-		font-family: var(--sk-font-family-ui);
-	}
-	.columns a {
-		display: block;
-		color: var(--sk-fg-2);
-		font: var(--sk-font-ui-medium);
-		padding: 0.3rem 0;
-		text-decoration: none;
-	}
-	.columns a:hover {
-		color: var(--sk-fg-accent);
-	}
-	.baseline {
-		max-width: 120rem;
-		margin: 3rem auto 0;
-		padding-top: 2rem;
-		border-top: 1px solid var(--sk-border);
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		gap: 1rem;
-		flex-wrap: wrap;
-		color: var(--sk-fg-4);
-		font: var(--sk-font-ui-small);
-	}
-	.baseline a {
-		color: var(--sk-fg-3);
-	}
-	.baseline a:hover {
-		color: var(--sk-fg-accent);
-	}
-	.socials {
-		display: flex;
-		gap: 1rem;
-		color: var(--sk-fg-3);
-	}
-	.socials a:hover {
-		color: var(--sk-fg-1);
-	}
-</style>

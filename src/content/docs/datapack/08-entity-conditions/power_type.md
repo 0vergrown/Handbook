@@ -1,18 +1,18 @@
 ---
 title: "Power Type (Entity Condition Type)"
-description: "Checks if the entity has a power that uses the specified Power Type."
+description: "Checks whether the entity has a power of a given power type."
 navigation_title: "Power Type"
 ---
 
-Checks if the entity has a power that uses the specified Power Type.
+Checks whether the entity has a power that uses a given power type.
 
 Type ID: `apoli:power_type`
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|------------
-`power_type` | Identifier | | The namespace and ID of the Power Type of a power the entity has.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `power_type` | [Identifier](/docs/datapack/data-types/identifier) | _required_ | The ID of the power type to look for among the entity's powers. |
 
 ## Examples
 
@@ -23,4 +23,4 @@ Field | Type | Default | Description
 }
 ```
 
-This example will check if the entity has a power that uses the Active Self (Power Type).
+This checks whether the entity has a power that uses the Active Self power type.

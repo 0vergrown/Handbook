@@ -1,42 +1,44 @@
 ---
 title: "Replace Loot Table (Power Type)"
-description: "Replaces a loot table with another loot table."
+description: "Replaces a loot table with another one."
 navigation_title: "Replace Loot Table"
 ---
 
-Replaces a loot table with another loot table.
+Replaces a loot table with another one.
 
 Type ID: `apoli:replace_loot_table`
 
-> The keys in the `replace` object field are formatted as a regular expression, where matching loot table namespace, path and IDs will be replaced with the specified value. The expression has to match the whole loot table ID (`minecraft:entities/pig`, not just `pig`). See [Wikipedia: Regular expression](https://en.wikipedia.org/wiki/Regular_expression) for more information about regular expressions and [RegExr](https://regexr.com/) to test regular expressions online.
+Each key in the `replace` object is a regular expression. Loot tables whose ID it matches are replaced with the value. The expression has to match the whole loot table ID (`minecraft:entities/pig`, not just `pig`). [Wikipedia's regular expression page](https://en.wikipedia.org/wiki/Regular_expression) explains the syntax, and [RegExr](https://regexr.com/) can test an expression online.
 
-> In the context of this power type, the '**actor**' entity is the entity whose powers are used, and the '**target**' entity depends on the kind of loot being rolled:
->
-> Loot Type  | Actor Entity | Target Entity
-> -----------|--------------|--------------
-> Barter     | The nearest player the Piglin can see (the Piglin itself if there is none). | The Piglin that was bartered with.
-> Block      | The entity that broke the block. | The '**actor**' entity.
-> Chest      | The entity that opened the Chest. | The '**actor**' entity.
-> Entity     | The entity that killed it (the entity that died, if nothing killed it). | The entity that died.
-> Fishing    | The owner of the fishing bobber. | The fishing bobber.
->
-> Loot rolled without an entity, such as a loot chest emptied by a hopper, is never replaced.
+## Actors and targets
 
-> Loot tables used from inside other loot tables are matched too. A white sheep drops from `minecraft:entities/sheep/white` (its wool), which uses `minecraft:entities/sheep` (its mutton), so replacing `minecraft:entities/sheep` swaps the mutton and keeps the wool.
+The actor is the entity whose powers are used, and the target depends on the kind of loot being rolled:
+
+| Loot type | Actor | Target |
+|-----------|-------|--------|
+| Barter | The nearest player the piglin can see, or the piglin itself if there is none. | The piglin that was bartered with. |
+| Block | The entity that broke the block. | The actor. |
+| Chest | The entity that opened the chest. | The actor. |
+| Entity | The entity that killed it, or the entity that died if nothing killed it. | The entity that died. |
+| Fishing | The owner of the fishing bobber. | The fishing bobber. |
+
+Loot rolled without an entity, such as a loot chest emptied by a hopper, is never replaced.
+
+Loot tables used from inside other loot tables are matched too. A white sheep drops from `minecraft:entities/sheep/white` (its wool), which uses `minecraft:entities/sheep` (its mutton), so replacing `minecraft:entities/sheep` swaps the mutton and keeps the wool.
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|------------
-`replace` | Object | | An object with `"key": "value"` pairs that determine which loot table (`"key"`) will be replaced with a new loot table (`"value"`). The first key that matches is used. A key that isn't a valid regular expression stops the power from loading, with an error naming it, and a `"value"` that names a missing loot table is skipped with a warning in the log.
-`bientity_condition` | Bi-entity Condition Type | _optional_ | If specified, the loot tables will only be replaced if this condition is fulfilled by either or both '**actor**' and '**target**' entities.
-`block_condition` | Block Condition Type | _optional_ | If specified, the loot tables will only be replaced if the block at the position of the loot fulfills this condition: the broken block, the opened Chest, or where the entity died or the bobber landed. Bartering has no position, so a power with a `block_condition` never replaces bartering loot.
-`item_condition` | Item Condition Type | _optional_ | If specified, the loot tables will only be replaced if the item used for the loot fulfills this condition: the tool that broke the block, or the fishing rod. Loot without such an item, like entity drops and chests, tests an empty item; to check what the actor is holding there, use the power's `condition` with an [apoli:equipped_item](/docs/datapack/entity-conditions/equipped_item) condition, as in the second example.
-`priority` | Integer | `0` | Determines the application priority of the power. When several of the actor's powers replace the same loot table, the one with the highest priority rolls the loot, and the `apoli:replaced_loot_table` inside it stands for the next one down; inside the lowest one, it stands for the original loot table.
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `replace` | [Object](/docs/datapack/data-types/object) | | `"key": "value"` pairs that decide which loot table (`"key"`) is replaced with which new loot table (`"value"`). The first key that matches is used. A key that isn't a valid regular expression stops the power from loading, with an error naming it, and a `"value"` that names a missing loot table is skipped with a warning in the log. |
+| `bientity_condition` | [Bi-entity Condition Type](/docs/datapack/bientity-conditions) | _optional_ | If set, loot tables are only replaced when the actor and target pass this condition. |
+| `block_condition` | [Block Condition Type](/docs/datapack/block-conditions) | _optional_ | If set, loot tables are only replaced when the block at the loot's position passes this condition: the broken block, the opened chest, or where the entity died or the bobber landed. Bartering has no position, so a power with a `block_condition` never replaces bartering loot. |
+| `item_condition` | [Item Condition Type](/docs/datapack/item-conditions) | _optional_ | If set, loot tables are only replaced when the item used for the loot passes this condition: the tool that broke the block, or the fishing rod. Loot without such an item, like entity drops and chests, tests an empty item. To check what the actor is holding in those cases, use the power's `condition` with an [apoli:equipped_item](/docs/datapack/entity-conditions/equipped_item) condition, as in the second example. |
+| `priority` | [Integer](/docs/datapack/data-types/integer) | `0` | When several of the actor's powers replace the same loot table, the one with the highest priority rolls the loot, and the `apoli:replaced_loot_table` inside it stands for the next one down. Inside the lowest one, it stands for the original loot table. |
 
 ## Examples
 
-`data/example/loot_table/double_drops.json` (1.21.1; `loot_tables/` on 1.20.1)
+`data/example/loot_table/double_drops.json` (`loot_tables/` on 1.20.1):
 
 ```json
 {
@@ -55,7 +57,7 @@ Field | Type | Default | Description
 }
 ```
 
-`data/example/powers/double_ores_except_diamond_ore.json`
+`data/example/powers/double_ores_except_diamond_ore.json`:
 
 ```json
 {
@@ -66,9 +68,9 @@ Field | Type | Default | Description
 }
 ```
 
-This example will essentially double the drops of Ore blocks except for Diamond Ore block, as indicated in the specified regular expression. The `apoli:replaced_loot_table` loot table contains the contents of the replaced loot table, which is in this case would be the loot tables for Ore blocks except for the Diamond Ore block. On 1.20.1, the `minecraft:loot_table` entry names its loot table with `name` instead of `value`.
+This doubles the drops of every ore block except diamond ore, as the regular expression says. `apoli:replaced_loot_table` holds the contents of the loot table being replaced, which here is the loot table of whichever ore was broken. On 1.20.1, the `minecraft:loot_table` entry names its loot table with `name` instead of `value`.
 
-`data/example/loot_table/entities/custom_creeper_loot.json` (1.21.1; `loot_tables/` on 1.20.1)
+`data/example/loot_table/entities/custom_creeper_loot.json` (`loot_tables/` on 1.20.1):
 
 ```json
 {
@@ -88,7 +90,7 @@ This example will essentially double the drops of Ore blocks except for Diamond 
 }
 ```
 
-`data/example/powers/modify_creeper_loot.json`
+`data/example/powers/modify_creeper_loot.json`:
 
 ```json
 {
@@ -109,4 +111,4 @@ This example will essentially double the drops of Ore blocks except for Diamond 
 }
 ```
 
-This example will replace the loot table for Creepers with the `example:entities/custom_creeper_loot` loot table if the actor entity is holding a Wooden Sword, which will make the Creeper drop one of the Music Disc items from the `#minecraft:creeper_drop_music_discs` item tag in a random fashion if killed.
+When the actor holds a wooden sword, this replaces the creeper's loot table with `example:entities/custom_creeper_loot`, so a creeper killed that way drops a random music disc from the `#minecraft:creeper_drop_music_discs` item tag.

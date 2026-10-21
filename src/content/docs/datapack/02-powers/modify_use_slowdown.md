@@ -4,19 +4,19 @@ description: "Changes how much using an item, like raising a shield or drawing a
 navigation_title: "Modify Use Slowdown"
 ---
 
-Changes how much using an item slows the player down. Raising a shield, drawing a bow, eating and anything else with a use action multiply the player's movement input by `0.2`; this power modifies that number.
+Changes how much using an item slows the player down. Raising a shield, drawing a bow, eating and anything else with a use action multiply the player's movement input by `0.2`, and this power changes that number.
 
 Type ID: `apoli:modify_use_slowdown`
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`modifier` | [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) | _optional_ | A modifier applied to the slowdown factor.
-`modifiers` | [Array](/docs/datapack/data-types/array) of [Attribute Modifiers](/docs/datapack/data-types/attribute-modifier) | _optional_ | Several modifiers applied to the slowdown factor.
-`item_condition` | Item Condition Type | _optional_ | If specified, the power only applies while the item being used passes this condition. Without it, every use action is affected.
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `modifier` | [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) | _optional_ | A modifier applied to the slowdown factor. |
+| `modifiers` | [Array](/docs/datapack/data-types/array) of [Attribute Modifiers](/docs/datapack/data-types/attribute-modifier) | _optional_ | Several modifiers applied to the slowdown factor. |
+| `item_condition` | [Item Condition Type](/docs/datapack/item-conditions) | _optional_ | If set, the power only applies while the item being used passes this condition. Without it, every use action is affected. |
 
-The factor starts at vanilla's `0.2` and the result is clamped between `0` and `1`: `1.0` means no slowdown at all, `0.0` means the player cannot move while using anything. When several of these powers apply, each one's modifiers are applied to the same value in turn.
+The factor starts at vanilla's `0.2` and the result is clamped between `0` and `1`: `1.0` means no slowdown at all, and `0.0` means the player can't move while using anything. When several of these powers apply, each one's modifiers are applied to the same value in turn.
 
 ## Examples
 
@@ -50,6 +50,7 @@ The player walks at full speed with a shield raised.
 }
 ```
 
-Drawing a bow costs far less speed: the factor goes from `0.2` to `0.6`.
+Drawing a bow costs far less speed, because the factor goes from `0.2` to `0.6`.
 
-> Vanilla slows the movement *input* rather than the movement speed attribute, so an [apoli:attribute](/docs/datapack/powers/attribute) power on `minecraft:generic.movement_speed` cannot cancel this slowdown cleanly. The slowdown is worked out on the player's own client, so the power's `condition` and `item_condition` must be things the client can check — powers, resources, equipment and item conditions all work. The power only affects players.
+> [!NOTE]
+> Vanilla slows the movement input, not the movement speed attribute, so an [apoli:attribute](/docs/datapack/powers/attribute) power on `minecraft:generic.movement_speed` can't cancel this slowdown cleanly. The slowdown is worked out on the player's own client, so the power's `condition` and `item_condition` must be things the client can check. Powers, resources, equipment and item conditions all work. The power only affects players.

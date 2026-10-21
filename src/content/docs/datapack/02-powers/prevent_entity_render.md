@@ -1,23 +1,25 @@
 ---
 title: "Prevent Entity Render (Power Type)"
-description: "Prevents an entity from being rendered to the entity that has the power, including their armor, shadow, and hitboxes."
+description: "Hides entities from the player that has the power, including their armor, shadow and hitbox."
 navigation_title: "Prevent Entity Render"
 ---
 
-Prevents an entity from being rendered to the entity that has the power, including their armor, shadow, and hitboxes.
+Hides entities from the player that has the power, including their armor, shadow and hitbox.
 
 Type ID: `apoli:prevent_entity_render`
 
-> The conditions specified in the `entity_condition` and `bientity_condition` fields are only evaluated on the **client-side**, therefore, using any condition types that only work on the server-side will not work.
+> [!WARNING]
+> `entity_condition` and `bientity_condition` are only evaluated on the client, so condition types that only work on the server won't work here.
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`entity_condition` | Entity Condition Type | _optional_ | If specified, only entities which fulfills this condition will be affected.
-`bientity_condition` | Bi-entity Condition Type | _optional_ | If specified, the power will only be active if this condition is fulfilled by either or both the 'actor' (the player that has the power) and 'target' (the entity that will not render) entities.
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `entity_condition` | [Entity Condition Type](/docs/datapack/entity-conditions) | _optional_ | If set, only entities that pass this condition are hidden. |
+| `bientity_condition` | [Bi-entity Condition Type](/docs/datapack/bientity-conditions) | _optional_ | If set, an entity is only hidden when this condition passes. The actor is the player with the power, and the target is the entity being hidden. |
 
-> The holder is not exempt: if the conditions match the holder, they disappear from their own third-person view too. Scope with a `bientity_condition` such as `apoli:target_condition` if you only mean other entities.
+> [!NOTE]
+> The player with the power is not exempt. If the conditions match the player themselves, they disappear from their own third-person view too. Use a `bientity_condition` such as `apoli:target_condition` if you only mean other entities.
 
 ## Examples
 
@@ -34,7 +36,7 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will make creepers invisible for the player that has the power during the day.
+This makes creepers invisible to the player during the day.
 
 ```json
 {
@@ -63,4 +65,4 @@ This example will make creepers invisible for the player that has the power duri
 }
 ```
 
-This example will prevent mobs that are from the 'aquatic' entity group from rendering for the entity that has the power only if the entity that has the power is submerged in water and those mobs are 9 or more blocks away.
+While the player is underwater, this hides mobs in the aquatic entity group that are more than 8 blocks away.

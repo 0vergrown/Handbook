@@ -1,10 +1,11 @@
 ---
 title: "String (Data Type)"
-description: "A piece of text."
+description: "A piece of text in quotation marks."
 navigation_title: "String"
 ---
 
-A piece of text. Has to be enclosed by quotation marks. Please note that if there are supposed to be quotation marks within the text itself, they need to be escaped with a backslash. (`\`)
+A piece of text. It has to be enclosed in quotation marks, and quotation marks inside the text itself must be escaped with a backslash (`\`).
+
 ## Examples
 
 ```json
@@ -12,7 +13,8 @@ A piece of text. Has to be enclosed by quotation marks. Please note that if ther
 	"field_name": "You should not sleep here!"
 }
 ```
-A simple text.
+
+A plain piece of text.
 
 ```json
 {
@@ -20,4 +22,5 @@ A simple text.
 	"command": "give @s minecraft:iron_axe{display:{Name:'{\"text\":\"Brutal Axe\", \"italic\": false}'}}"
 }
 ```
-A string to specify a command, which includes escaped quotation marks.
+
+A string holding a command, with escaped quotation marks inside it.

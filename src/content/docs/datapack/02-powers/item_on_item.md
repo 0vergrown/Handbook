@@ -1,30 +1,30 @@
 ---
 title: "Item On Item (Power Type)"
-description: "Executes an Entity Action Type or Item Action Types when the player uses an item on an item, similar to how you would put items in a bundle."
+description: "Runs actions when the player uses one item on another in an inventory, the way you put items into a bundle."
 navigation_title: "Item On Item"
 ---
 
-Executes an Entity Action Type or Item Action Types when the player uses an item on an item, similar to how you would put items in a bundle.
+Runs an entity action and item actions when the player uses one item on another in an inventory, the way you put items into a bundle.
 
 Type ID: `apoli:item_on_item`
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|-------------
-`using_item_condition` | Item Condition Type | _optional_ | If specified, the specified actions will only execute if this condition is fulfilled by the item that is used to right-click an item.
-`on_item_condition` | Item Condition Type | _optional_ | If specified, the specified actions will only execute if this condition is fulfilled by the item that has been right-clicked.
-`result` | Item Stack | _optional_ | If specified, this item will be given to the player.
-`result_from_on_stack` | Integer | `0` | Determines how many items based on the `on_item` stack will be given as a result for using an item on an item. Mostly to be used in conjunction with `result_item_action`.
-`using_item_action` | Item Action Type | _optional_ | If specified, this action will be executed on the item that is used to right-click an item.
-`on_item_action` | Item Action Type | _optional_ | If specified, this action will be executed on the item that has been right-clicked.
-`result_item_action` | Item Action Type | _optional_ | If specified, this action will be executed on the item that is given to the player.
-`entity_action` | Entity Action Type | _optional_ | If specified, this action will be executed on the player after they used an item on an item.
-`click_type` | String or Integer | `"secondary"` | Which click runs the actions: `"primary"` (or `0`) is a left-click, `"secondary"` (or `1`) is a right-click.
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `using_item_condition` | [Item Condition Type](/docs/datapack/item-conditions) | _optional_ | If set, the actions only run when the item doing the clicking passes this condition. |
+| `on_item_condition` | [Item Condition Type](/docs/datapack/item-conditions) | _optional_ | If set, the actions only run when the item being clicked passes this condition. |
+| `result` | [Item Stack](/docs/datapack/data-types/item-stack) | _optional_ | If set, this item is given to the player. |
+| `result_from_on_stack` | [Integer](/docs/datapack/data-types/integer) | `0` | How many items from the clicked stack are given as the result. It is mostly used together with `result_item_action`. |
+| `using_item_action` | [Item Action Type](/docs/datapack/item-actions) | _optional_ | If set, this action runs on the item doing the clicking. |
+| `on_item_action` | [Item Action Type](/docs/datapack/item-actions) | _optional_ | If set, this action runs on the item being clicked. |
+| `result_item_action` | [Item Action Type](/docs/datapack/item-actions) | _optional_ | If set, this action runs on the item given to the player. |
+| `entity_action` | [Entity Action Type](/docs/datapack/entity-actions) | _optional_ | If set, this action runs on the player after they use one item on another. |
+| `click_type` | [String](/docs/datapack/data-types/string) or [Integer](/docs/datapack/data-types/integer) | `"secondary"` | Which click runs the actions: `"primary"` (or `0`) is a left-click, and `"secondary"` (or `1`) is a right-click. |
 
-The "using" item is the stack on your cursor; the "on" item is the stack in the slot you click. A matching power replaces the normal pick-up/swap for that click — but items with their own stack-click behaviour still go first, so a Bundle on the cursor wins over the power.
+The using item is the stack on your cursor, and the on item is the stack in the slot you click. A matching power replaces the normal pick up or swap for that click, but items with their own click behaviour still go first, so a bundle on the cursor wins over the power.
 
-`result` and `result_item_action` deliver the result stack into the clicked slot if `on_item_action` (or `result_from_on_stack`) emptied it; otherwise it goes into the player's inventory, and drops at their feet if there is no room.
+`result` and `result_item_action` put the result stack into the clicked slot if `on_item_action` (or `result_from_on_stack`) emptied it. Otherwise it goes into the player's inventory, and it drops at their feet if there is no room.
 
 ## Examples
 
@@ -52,15 +52,15 @@ The "using" item is the stack on your cursor; the "on" item is the stack in the 
 }
 ```
 
-This example will smelt smeltable items by using a Coal item on it.
+This smelts a smeltable item when the player uses coal on it.
+
+The `example:furnace_smelt` item modifier it uses is this file, at `data/example/item_modifier/furnace_smelt.json` on 1.21.1 or `data/example/item_modifiers/furnace_smelt.json` on 1.20.1:
 
 ```json
 {
     "function": "minecraft:furnace_smelt"
 }
 ```
-
-This example being the contents of the `example:furnace_smelt` item modifier — `data/example/item_modifier/furnace_smelt.json` on 1.21.1, `data/example/item_modifiers/…` (plural) on 1.20.1.
 
 ```json
 {
@@ -99,4 +99,4 @@ This example being the contents of the `example:furnace_smelt` item modifier —
 }
 ```
 
-This example will give the player 8 Oak Planks if the player were to use any Axe tool item on an Oak Log item (have the Axe tool item in the cursor, and right-click on an Oak Log item).
+This gives the player 8 oak planks when they use any axe on an oak log, by holding the axe on the cursor and right-clicking the log.

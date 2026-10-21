@@ -1,9 +1,9 @@
 ---
 title: Expressions
-description: The compiled math engine behind number fields that read the world.
+description: "The compiled math engine behind number fields that read the world."
 ---
 
-Many numeric fields — `amount`, `chance`, velocity components, `duration` — accept not just a constant but an **expression**: a bit of math that can reference the entity's state. `"amount": "health * 0.5"` heals for half the entity's current health. This page is for addon authors who want their own fields to accept expressions.
+Many number fields, such as `amount`, `chance`, velocity components and `duration`, accept an expression as well as a constant: a bit of math that can read the entity's state. `"amount": "health * 0.5"` heals for half the entity's current health. This page is for addon authors who want their own fields to accept expressions.
 
 ## Accepting an expression
 
@@ -15,7 +15,7 @@ public record Cfg(Expression amount) {}
 Expression.FLOAT_OR_EXPR.fieldOf("amount").forGetter(Cfg::amount)
 ```
 
-A data pack can now write either form:
+`INT_OR_EXPR` and `DOUBLE_OR_EXPR` do the same for whole numbers and doubles. A data pack can then write either form:
 
 ```json
 { "amount": 4 }
@@ -24,20 +24,25 @@ A data pack can now write either form:
 
 ## Evaluating it
 
-Expressions are **compiled once** at load, then evaluated cheaply per use. Evaluate against the entity, its container, and the level:
+Expressions are compiled once, when the pack loads, and are cheap to evaluate after that:
 
 ```java
-float value = cfg.amount().eval(entity, container, level, /* fallback */ 0f);
+double amount = cfg.amount().eval(entity);
+double withValue = cfg.amount().eval(entity, current);
+double withHolder = cfg.amount().evalWith(entity, container, current);
+int rounded = cfg.amount().evalInt(entity);
 ```
 
-The engine resolves variables (like `health`, `armor`, resource values) from that entity without allocating maps. Keep a compiled `Expression`; never re-parse a string at runtime.
+`eval(entity)` finds the entity's power container by itself. The second argument, when there is one, is what the expression reads as `value`. `evalWith` takes a container you already have, which saves the lookup, and the `evalInt` forms round to the nearest whole number. `eval(level)` evaluates with no entity at all, for fields that only read the world. When the expression is a plain number, `constantValue()` returns it, and every `eval` returns it straight away.
+
+The engine resolves variables (like `health`, `armor` and resource values) from that entity without allocating maps. Keep the compiled `Expression`, and never parse a string again at runtime.
 
 ## Contextual variables
 
-Some triggers expose extra variables. In a damage context, `damage` is bound to the incoming amount, so a modifier can be `"damage * 0.5"`. These are set on a thread-local before evaluation and cleared after — read them, don't hold them.
+Some triggers expose extra variables. In a damage context, `damage` is bound to the incoming amount, so a modifier can be `"damage * 0.5"`. These are set on a thread-local before evaluation and cleared afterwards, so read them and don't hold on to them.
 
 ## Performance
 
-- **Compile once, eval many.** Parsing is done at load; `eval` is the hot path and must stay allocation-free.
-- The built-in engine is the fast path; a general parser exists only as a fallback for expressions it can't compile. Prefer syntax the fast engine understands.
-- Don't call `eval` more often than you need — cache the result within a tick if it's reused.
+- Compile once and evaluate many times. Parsing happens at load, and `eval` is the hot path, which must stay free of allocations.
+- A string that doesn't parse is rejected by the codec when the pack loads, so syntax mistakes never reach the hot path.
+- Don't call `eval` more often than you need, and cache the result within a tick if it is used again.

@@ -1,48 +1,46 @@
 ---
 title: "Action On Entity Set (Entity Action Type)"
-description: "Executes an action on entities stored within the power that uses the Entity Set."
+description: "Runs a bi-entity action on the entities stored in an entity set power."
 navigation_title: "Action On Entity Set"
 aliases: ["action_on_set"]
 ---
 
-Executes an action on entities stored within the power that uses the [apoli:entity_set](/docs/datapack/powers/entity_set).
+Runs a bi-entity action on the entities stored in an [apoli:entity_set](/docs/datapack/powers/entity_set) power. The actor is the entity that ran the action and each stored entity is a target, whatever dimension it is in.
 
-Type ID: `apoli:action_on_entity_set` (but can use it's old `action_on_set` type id as an alias)
+Type ID: `apoli:action_on_entity_set` (the older `apoli:action_on_set` ID is accepted as an alias)
 
-> In the context of this entity action type, the actor will be the entity that invoked the entity action while the target will be the entities within the power. The action will be executed on the entities stored within the power regardless of their dimension.
+## Fields
 
-##	Fields
-
-Field | Type | Default | Description
-------|------|---------|------------
-`set` | [Identifier](/docs/datapack/data-types/identifier) | | The ID of the power.
-`bientity_action` | Bi-entity Action Type | | The bi-entity action to execute on both or either the actor and target.
-`bientity_condition` | Bi-entity Condition Type | *optional* | If specified, only execute the bi-entity action if this bi-entity condition is fulfilled by both or either the actor and target.
-`limit` | [Integer](/docs/datapack/data-types/integer) | `0` | Determines the max amount of times the entity action type should iterate and execute the bi-entity action on the entities stored within the power. If the value is less than or equal to `0`, then there will be no limit.
-`reverse` | [Boolean](/docs/datapack/data-types/boolean) | `false` | Determines whether to reverse the order of the entities within the power when processing.
-`iterate` | [Set Iteration](/docs/datapack/data-types/set-iteration) | `members` | Which side of the set to walk — `members` for the set *you* own, `owners` for every set that has *you* in it.
-`include_offline` | [Boolean](/docs/datapack/data-types/boolean) | `false` | Also visit players who are offline, as read-only copies of their saved data. See [Reaching players who are offline](#reaching-players-who-are-offline).
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `set` | [Identifier](/docs/datapack/data-types/identifier) | _required_ | The ID of the entity set power. |
+| `bientity_action` | [Bi-entity Action Type](/docs/datapack/bientity-actions) | _required_ | The action to run for each stored entity. |
+| `bientity_condition` | [Bi-entity Condition Type](/docs/datapack/bientity-conditions) | _optional_ | The action only runs for stored entities that pass this condition. |
+| `limit` | [Integer](/docs/datapack/data-types/integer) | `0` | The most entities to run the action on. `0` or less means no limit. |
+| `reverse` | [Boolean](/docs/datapack/data-types/boolean) | `false` | Whether to go through the stored entities in reverse order. |
+| `iterate` | [Set Iteration](/docs/datapack/data-types/set-iteration) | `members` | Which side of the set to walk: `members` for the set you own, or `owners` for every set that has you in it. |
+| `include_offline` | [Boolean](/docs/datapack/data-types/boolean) | `false` | Also visits players who are offline, as read-only copies of their saved data. See [Reaching players who are offline](#reaching-players-who-are-offline). |
 
 ### Walking the owners instead of the members
 
-By default the entity running this action must hold the [apoli:entity_set](/docs/datapack/powers/entity_set) power itself; if it doesn't, nothing happens. That makes the common "get me out of the set that captured me" case impossible to write, because the set lives on the entity that *added* you, not on you.
+By default the entity running this action must hold the [apoli:entity_set](/docs/datapack/powers/entity_set) power itself, and nothing happens if it doesn't. That makes the common case of leaving a set that captured you impossible to write, because the set lives on the entity that added you.
 
-`"iterate": "owners"` flips the walk: it finds every entity whose `set` power currently contains you, and runs the bi-entity action once per such entity with **the set's owner as the actor and you as the target**. Those are exactly the roles [apoli:remove_from_entity_set](/docs/datapack/bientity-actions/remove_from_entity_set) expects, so leaving a set someone else put you in is a one-liner.
+`"iterate": "owners"` reverses the walk. It finds every entity whose `set` power contains you and runs the bi-entity action once per entity, with the set's owner as the actor and you as the target. Those are exactly the roles [apoli:remove_from_entity_set](/docs/datapack/bientity-actions/remove_from_entity_set) expects, so leaving a set someone else put you in takes one action.
 
-`limit` and `reverse` apply to the owner list in this mode. `bientity_condition` is tested with the same actor/target pair that the action would receive.
+`limit` and `reverse` apply to the list of owners in this mode. `bientity_condition` is tested with the same actor and target the action would get.
 
 ### Reaching players who are offline
 
-By default this action only visits entities that are in the world: a member or owner who is offline, or a mob in an unloaded chunk, is skipped.
+By default this action only visits entities that are in the world, and a member or owner who is offline, or a mob in an unloaded chunk, is skipped.
 
-With `"include_offline": true`, a player who is offline is visited too, as an **offline copy**: a stand-in loaded from the player's saved data, with their powers, resources, origin, inventory and position. Conditions can read it, and [apoli:exists](/docs/datapack/entity-conditions/exists) (also written `apoli:online`) is `false` for it, so you can tell the two apart. Set actions work on it: an offline owner can be the actor of [apoli:remove_from_entity_set](/docs/datapack/bientity-actions/remove_from_entity_set), so a member can leave a [persistent](/docs/datapack/powers/entity_set#persistent-sets) set while its owner is away.
+With `"include_offline": true`, a player who is offline is visited too, as an offline copy: a stand-in loaded from the player's saved data, with their powers, resources, origin, inventory and position. Conditions can read it, and [apoli:exists](/docs/datapack/entity-conditions/exists) (also written `apoli:online`) is `false` for it, so you can tell the two apart. Set actions work on it. An offline owner can be the actor of [apoli:remove_from_entity_set](/docs/datapack/bientity-actions/remove_from_entity_set), so a member can leave a [persistent](/docs/datapack/powers/entity_set#persistent-sets) set while its owner is away.
 
-- Anything else an action changes on the offline copy is thrown away; the player's real data only changes when they play. Use offline copies for questions and set membership, not for damage, items or resources.
-- Conditions about the world around the copy (blocks, biome, light) read their last position, which may have to load that chunk.
-- Mobs are never copied: an unloaded or dead mob is still skipped.
-- The copy is loaded from disk the first time it is needed and kept, for up to 32 offline players at a time, until the player logs in again. Repeated visits cost a map lookup.
+- Anything else an action changes on the offline copy is thrown away, and the player's real data only changes when they play. Use offline copies for questions and set membership, and keep damage, items and resources for players who are online.
+- Conditions about the world around the copy (blocks, biome, light) read the player's last position, which may have to load that chunk.
+- Mobs are never copied, so an unloaded or dead mob is still skipped.
+- The copy is loaded from disk the first time it is needed and kept until the player logs in again, for up to 32 offline players at a time. Repeated visits cost a map lookup.
 
-##	Examples
+## Examples
 
 ```json
 "entity_action": {
@@ -58,7 +56,7 @@ With `"include_offline": true`, a player who is offline is visited too, as an **
 }
 ```
 
-This example will restore 2 hearts to entities that were added to the `example:special_pets` (`data/example/powers/special_pets.json`) power using the [apoli:add_to_entity_set](/docs/datapack/bientity-actions/add_to_entity_set).
+This restores 2 hearts to the entities that were added to the `example:special_pets` power (`data/example/powers/special_pets.json`) with [apoli:add_to_entity_set](/docs/datapack/bientity-actions/add_to_entity_set).
 
 ```json
 {
@@ -75,7 +73,7 @@ This example will restore 2 hearts to entities that were added to the `example:s
 }
 ```
 
-Put this on the *victim*: taking any damage removes them from every `example:mind_controlled` set they are in, firing that set's `action_on_remove` on the way out. Without `"iterate": "owners"` this does nothing, because the victim never holds the set power.
+Put this on the victim. Taking any damage removes them from every `example:mind_controlled` set they are in, and fires that set's `action_on_remove` on the way out. Without `"iterate": "owners"` it does nothing, because the victim never holds the set power.
 
 ```json
 "entity_action": {

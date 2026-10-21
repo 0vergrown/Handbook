@@ -1,31 +1,31 @@
 ---
 title: "Projectile Return (Data Type)"
-description: "An Object that makes a projectile from apoli:fire_projectile fly back to whoever fired it, like a trident with Loyalty."
+description: "An object that makes a projectile from apoli:fire_projectile fly back to whoever fired it, like a trident with Loyalty."
 navigation_title: "Projectile Return"
 ---
 
 An [Object](/docs/datapack/data-types/object) that makes a projectile turn around and fly back to whoever fired it, the way a trident with Loyalty does. It goes in the `return` field of [apoli:fire_projectile](/docs/datapack/powers/fire_projectile), as a power or as an [entity action](/docs/datapack/entity-actions/fire_projectile).
 
-Only the projectile drawn from `texture_location` comes back. A vanilla projectile fired with `entity_type` keeps its own behaviour and ignores `return`.
+Only a projectile drawn from `texture_location` comes back. A vanilla projectile fired with `entity_type` keeps its own behaviour and ignores `return`.
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|------------
-`on_hit_entity` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Come back after hitting an entity. When `false`, an entity hit ends the shot as usual.
-`on_hit_block` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Come back after hitting a block. The projectile stops at the surface and starts back from there.
-`after` | [Integer](/docs/datapack/data-types/integer) | `0` | Come back on its own after this many ticks in the air, hit or not. `0` never does.
-`speed` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | `2` | How strongly it is pulled back, on the same scale as Loyalty levels: `1` returns like Loyalty I, `3` like Loyalty III. Worked out when it turns around, with the owner as the entity. `0` or less means it does not come back this time.
-`hit_while_returning` | [Boolean](/docs/datapack/data-types/boolean) | `false` | Whether it can hit entities on the way back. Each hit runs the shot's usual hit actions. It never hits its owner, or the entity whose hit turned it around.
-`bientity_action_on_return` | Bi-entity Action | _optional_ | Runs when it turns around, with the owner as the actor and the projectile as the target.
-`bientity_action_on_catch` | Bi-entity Action | _optional_ | Runs when it reaches the owner, just before it disappears. Same actor and target.
-`condition` | Bi-entity Condition | _optional_ | Holds back the turn that `after` and `max_distance` call for until it passes, with the owner as the actor and the projectile as the target. Until then the projectile flies on. A hit that turns it around is not held back.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `on_hit_entity` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Comes back after hitting an entity. With `false`, hitting an entity ends the shot as usual. |
+| `on_hit_block` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Comes back after hitting a block. The projectile stops at the surface and starts back from there. |
+| `after` | [Integer](/docs/datapack/data-types/integer) | `0` | Comes back by itself after this many ticks in the air, whether it hit anything or not. `0` never does. |
+| `speed` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | `2` | How strongly it is pulled back, on the same scale as Loyalty levels: `1` returns like Loyalty I, and `3` like Loyalty III. It is worked out when the projectile turns around, with the owner as the entity. `0` or less means it doesn't come back this time. |
+| `hit_while_returning` | [Boolean](/docs/datapack/data-types/boolean) | `false` | Whether it can hit entities on the way back. Each hit runs the shot's usual hit actions. It never hits its owner, or the entity whose hit turned it around. |
+| `bientity_action_on_return` | [Bi-entity Action Type](/docs/datapack/bientity-actions) | _optional_ | Runs when it turns around, with the owner as the actor and the projectile as the target. |
+| `bientity_action_on_catch` | [Bi-entity Action Type](/docs/datapack/bientity-actions) | _optional_ | Runs when it reaches the owner, just before it disappears, with the same actor and target. |
+| `condition` | [Bi-entity Condition Type](/docs/datapack/bientity-conditions) | _optional_ | Holds back the turn that `after` and `max_distance` call for until it passes, with the owner as the actor and the projectile as the target. Until then the projectile flies on. A hit that turns it around isn't held back. |
 
 ## How it comes back
 
 - Reaching `max_distance` turns the projectile around instead of removing it, so `max_distance` is also how far a boomerang flies before it swings back.
-- With a `condition`, a turn that `after` or `max_distance` has called for waits, tick by tick, until the condition passes. The shot's `lifetime` still ends a projectile that is held out too long.
-- On the way back it flies through blocks, ignores gravity and is pulled toward the owner's eyes every tick, curving round rather than snapping back. It disappears once it reaches them.
+- With a `condition`, a turn that `after` or `max_distance` calls for waits, tick by tick, until the condition passes. The shot's `lifetime` still ends a projectile that is held out too long.
+- On the way back it flies through blocks, ignores gravity and is pulled toward the owner's eyes every tick, curving round instead of snapping back. It disappears once it reaches them.
 - A [reflective](/docs/datapack/powers/fire_projectile#bouncing-off-walls) projectile uses up its bounces first. The block hit after its last bounce turns it around, as long as `on_hit_block` is `true`.
 - It is removed without being caught if the owner dies, leaves, changes dimension or switches to spectator, or when the shot's `lifetime` runs out.
 - The pull is worked out on the server and on every client watching, so it looks smooth without extra network traffic.
@@ -64,7 +64,7 @@ A boomerang that flies 12 blocks, comes back whether or not it hits anything, an
 }
 ```
 
-The long `cooldown` stops a second throw while the first is still out; catching it sets the power's remaining cooldown back to `0`. `*:*` is this power's own id — see [Identifier](/docs/datapack/data-types/identifier).
+The long `cooldown` stops a second throw while the first is still out, and catching it sets the power's remaining cooldown back to `0`. `*:*` is this power's own ID (see [Identifier](/docs/datapack/data-types/identifier)).
 
 A chakram that turns back the moment it hits something, or after a second in the air if it hits nothing, and can strike again on the way home:
 
@@ -112,4 +112,4 @@ A boomerang that stays out while its owner holds the attack key, wherever they s
 }
 ```
 
-Set `on_hit_entity` to `false` for a shot that only comes back when it misses: an entity hit then ends it where it lands, and `after` or `max_distance` bring back the throws that found nothing.
+Set `on_hit_entity` to `false` for a shot that only comes back when it misses. Hitting an entity then ends it where it lands, and `after` or `max_distance` bring back the throws that found nothing.

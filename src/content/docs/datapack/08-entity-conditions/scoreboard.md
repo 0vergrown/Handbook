@@ -1,25 +1,27 @@
 ---
 title: "Scoreboard (Entity Condition Type)"
-description: "Compares the score of the entity from a specified scoreboard objective to a specified value."
+description: "Compares the entity's score in a scoreboard objective with a number."
 navigation_title: "Scoreboard"
 ---
 
-Compares the score of the entity from a specified scoreboard objective to a specified value.
+Compares the entity's score in a scoreboard objective with a number.
 
 Type ID: `apoli:scoreboard`
 
-> If the player does not have the scoreboard objective, this condition would always return false (even if `"!="` is used). You can then use the `"!="` comparison in combination with the `"=="` comparison to test if the player does not have this objective set (for example, if a player has newly joined a world or had their objectives reset).
+> [!NOTE]
+> If the player has no score in the objective, this condition is always false, even with `"!="`. Combine a `"!="` check with a `"=="` check to test whether the player has no score set, for example after joining a world for the first time or having their scores reset.
 
-> This entity condition type only operates on the **server-side**, meaning that it cannot be used in fields that are evaluated on the client-side.
+> [!WARNING]
+> This condition only works on the server, so it can't be used in fields that are evaluated on the client.
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`name` | String | _optional_ | If specified, the condition will check for the score of this score holder.
-`objective` | String | | The name of the scoreboard objective to retrieve the value from and compare.
-`comparison` | Comparison | | Determines how the score of the specified score holder should be compared to the specified value.
-`compare_to` | Integer | | The value at which the score of the specified score holder will be compared to.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `name` | [String](/docs/datapack/data-types/string) | _optional_ | A score holder to read the score of, instead of the entity. |
+| `objective` | [String](/docs/datapack/data-types/string) | _required_ | The name of the scoreboard objective to read. |
+| `comparison` | [Comparison](/docs/datapack/data-types/comparison) | _required_ | How the score is compared with `compare_to`. |
+| `compare_to` | [Integer](/docs/datapack/data-types/integer) | _required_ | The number the score is compared with. |
 
 ## Examples
 
@@ -32,4 +34,4 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will check if the score of the player in the `obj` scoreboard objective is greater than 3.
+This checks whether the player's score in the `obj` objective is greater than 3.

@@ -1,18 +1,18 @@
 ---
 title: "And (Meta Condition Type)"
-description: "Checks whether all of the provided conditions are fulfilled."
+description: "Checks whether every condition in a list passes."
 navigation_title: "And"
 ---
 
-Checks whether all of the provided conditions are fulfilled.
+Checks whether every condition in a list passes.
 
 Type ID: `apoli:and`
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`conditions` | [Array](/docs/datapack/data-types/array) of Condition Types | | All of these condition types have to be fulfilled in order for this condition to be fulfilled.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `conditions` | [Array](/docs/datapack/data-types/array) of condition types | _required_ | All of these conditions must pass for this one to pass. |
 
 ## Examples
 
@@ -30,4 +30,4 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will check if it is both daytime, and the entity is invisible.
+This checks whether the entity is both sneaking and invisible.

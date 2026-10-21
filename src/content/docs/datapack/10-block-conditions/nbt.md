@@ -1,18 +1,18 @@
 ---
 title: "NBT (Block Condition Type)"
-description: "Checks the NBT of the block entity."
+description: "Checks whether the block entity's NBT contains the given data."
 navigation_title: "NBT"
 ---
 
-Checks the NBT of the block entity.
+Checks whether the NBT of the block's block entity contains the given data.
 
 Type ID: `apoli:nbt`
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|-------------
-`nbt` | NBT | | The NBT data to check for.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `nbt` | [NBT](/docs/datapack/data-types/nbt) | _required_ | The NBT data to look for. |
 
 ## Examples
 
@@ -32,4 +32,4 @@ Field | Type | Default | Description
 }
 ```
 
-This example will check if Beacon block has a `Level` value of 1.
+This checks whether a beacon has a `Levels` value of 1.

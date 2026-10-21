@@ -10,11 +10,11 @@ Type ID: `apoli:from_falling`
 
 ## Fields
 
-This type has no fields. Like every condition, it accepts `inverted` to flip the result.
+This condition has no fields. Like every condition, it accepts `inverted` to flip the result.
 
 ## How it works
 
-It is shorthand for [`apoli:in_tag`](/docs/datapack/damage-conditions/in_tag) against the `minecraft:is_fall` damage type tag, so a data pack that adds its own damage type to that tag is matched too.
+It is shorthand for [`apoli:in_tag`](/docs/datapack/damage-conditions/in_tag) with the `minecraft:is_fall` damage type tag, so a data pack that adds its own damage type to that tag is matched too.
 
 ## Example
 
@@ -28,7 +28,7 @@ A light origin that takes less from a drop:
 }
 ```
 
-Or use it to trigger something rather than to reduce damage:
+Or use it to trigger something instead of reducing damage:
 
 ```json
 {

@@ -1,18 +1,18 @@
 ---
 title: "On Block (Entity Condition Type)"
-description: "Checks if a block underneath the entity's feet fulfills the specified Block Condition Type."
+description: "Checks whether the entity is standing on the ground, optionally on a block that passes a condition."
 navigation_title: "On Block"
 ---
 
-Checks if a block underneath the entity's feet fulfills the specified Block Condition Type.
+Checks whether the entity is standing on the ground, optionally on a block that passes a block condition.
 
 Type ID: `apoli:on_block`
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`block_condition` | Block Condition Type | _optional_ | If specified, the condition will evaluate to true if the block underneath the entity's feet fulfills the specified block condition type. Otherwise, only check if the entity is on the ground. 
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `block_condition` | [Block Condition Type](/docs/datapack/block-conditions) | _optional_ | The block under the entity's feet must pass this condition. Without it, the condition only checks that the entity is on the ground. |
 
 ## Examples
 
@@ -22,7 +22,7 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will check if the entity is currently on the ground.
+This checks whether the entity is on the ground.
 
 ```json
 "condition": {
@@ -34,4 +34,4 @@ This example will check if the entity is currently on the ground.
 }
 ```
 
-This example will check if the entity is currently on a Grass Block.
+This checks whether the entity is standing on a grass block.

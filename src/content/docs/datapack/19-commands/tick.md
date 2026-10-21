@@ -1,12 +1,12 @@
 ---
 title: "Tick (Command)"
-description: "Minecraft's own /tick command, extended with per-entity and per-chunk targets."
+description: "Minecraft's own /tick command, extended with targets for single entities and chunks."
 navigation_title: "Tick"
 ---
 
-Minecraft's `/tick` command controls how fast the world runs. Apoli adds two branches to it — `entity` and `chunk` — so the same six operations can be pointed at a handful of mobs or a patch of ground instead of the whole server.
+Minecraft's `/tick` command controls how fast the world runs. Apoli adds two branches to it, `entity` and `chunk`, so the same six operations can be aimed at a handful of mobs or a patch of ground instead of the whole server.
 
-The vanilla branches are untouched: `/tick query`, `/tick rate`, `/tick freeze`, `/tick unfreeze`, `/tick step` and `/tick sprint` still mean the whole server.
+The vanilla branches are unchanged: `/tick query`, `/tick rate`, `/tick freeze`, `/tick unfreeze`, `/tick step` and `/tick sprint` still apply to the whole server.
 
 ## Targets
 
@@ -17,16 +17,16 @@ tick chunk <from> <to> <operation>
 tick chunk <from> radius <blocks> <operation>
 ```
 
-`<targets>` is any entity selector. `<from>` and `<to>` are block **columns** (`x z`, so `~ ~` is where you are standing) — the chunks containing them are used, and `from`/`to` covers the whole rectangle between the two. `radius` covers every chunk within that many blocks of `<from>`.
+`<targets>` is any entity selector. `<from>` and `<to>` are block columns (`x z`, so `~ ~` is where you are standing). The chunks containing them are used, and `<from> <to>` covers the whole rectangle between the two. `radius` covers every chunk within that many blocks of `<from>`.
 
-An area larger than 4096 chunks is refused; narrow it down.
+An area larger than 4096 chunks is refused, so narrow it down.
 
 ## Operations
 
 | Operation | What it does |
-|-----------|--------------|
+| --- | --- |
 | `query` | Prints the tick rate each target is actually running at. |
-| `rate <1–10000>` | Ticks the target that many times per second. |
+| `rate <rate>` | Ticks the target that many times per second, from 1 to 10000. |
 | `rate reset` | Clears everything Apoli set on the target. |
 | `freeze` | Stops the target ticking. |
 | `unfreeze` | Starts it again. |
@@ -43,34 +43,33 @@ tick chunk 0 0 512 512 query
 
 ## What a rate does
 
-A rate below the server's own means the target is skipped on some server ticks, spread as evenly as possible. At `rate 5` an entity gets one tick in four: it falls, walks, burns, attacks and ages at a quarter speed, and its status effects and cooldowns count down four times slower. On a chunk the same gate covers block entities, scheduled block and fluid ticks, and random ticks.
+A rate below the server's own means the target is skipped on some server ticks, spread as evenly as possible. At `rate 5` an entity gets one tick in four: it falls, walks, burns, attacks and ages at a quarter of the speed, and its status effects and cooldowns count down four times slower. On a chunk, the same gate covers block entities, scheduled block and fluid ticks, and random ticks.
 
-A rate **above** the server's own does nothing on its own — the server cannot tick a single entity more often than it ticks at all. To run something faster, raise the whole server with `/tick rate 40` and hold everything else down, either with `tick chunk`/`tick entity` or with [apoli:modify_tick_rate](/docs/datapack/powers/modify_tick_rate) on a `dimension` target.
+A rate above the server's own does nothing by itself, because the server can't tick a single entity more often than it ticks at all. To run something faster, raise the whole server with `/tick rate 40` and hold everything else down, either with `tick chunk` and `tick entity` or with [apoli:modify_tick_rate](/docs/datapack/powers/modify_tick_rate) on a `dimension` target.
 
-Every entity running slower than the server is told so, and its client slows it the same way, so the two never disagree about where it is. Mobs are driven by the server's position updates and the client stretches that interpolation. Projectiles, items and other non-living entities would normally run their own physics on the client, so while they are slowed the client stops simulating them and glides them toward each position the server sends instead. Either way the entity glides at its new speed instead of running ahead and getting snapped back.
+Every entity running slower than the server is told so, and its client slows it the same way, so the two never disagree about where it is. Mobs are driven by the server's position updates, and the client stretches that interpolation. Projectiles, items and other non-living entities would normally run their own physics on the client, so while they are slowed, the client stops simulating them and glides them toward each position the server sends instead. Either way the entity moves at its new speed instead of running ahead and getting snapped back.
 
-Scopes fall back to each other: an entity with no rate of its own uses its chunk's, and a chunk with no rate of its own uses its dimension's — which only [apoli:tick_rate](/docs/datapack/entity-actions/tick_rate) and [apoli:modify_tick_rate](/docs/datapack/powers/modify_tick_rate) can set.
+Scopes fall back to each other: an entity with no rate of its own uses its chunk's, and a chunk with no rate of its own uses its dimension's, which only [apoli:tick_rate](/docs/datapack/entity-actions/tick_rate) and [apoli:modify_tick_rate](/docs/datapack/powers/modify_tick_rate) can set.
 
-> Freezing a **player** stops them on both sides: their server-side tick — hunger, regeneration, status effects, item cooldowns, block breaking — and their own client's tick, so they cannot walk either. Looking around and clicking are not part of the tick, so a frozen player can still look about and use or attack what is in reach.
+> [!NOTE]
+> Freezing a player stops them on both sides: their tick on the server (hunger, regeneration, status effects, item cooldowns, block breaking) and their own client's tick, so they can't walk either. Looking around and clicking aren't part of the tick, so a frozen player can still look about and use or attack what is in reach.
 
-> **Damage on a frozen entity.** A frozen entity's half-second immunity after a hit never counts
-> down, so while it stays frozen any later hit no stronger than the last one does nothing. Damage that
-> must land on something frozen — a power that holds enemies in place and then hurts them — needs a
-> damage type in `#minecraft:bypasses_cooldown`. The red hurt flash still fades on screen as usual.
+> [!WARNING]
+> A frozen entity's half-second immunity after a hit never counts down, so while it stays frozen, any later hit no stronger than the last one does nothing. Damage that must land on something frozen, such as a power that holds enemies in place and then hurts them, needs a damage type in `#minecraft:bypasses_cooldown`. The red hurt flash still fades on screen as usual.
 
 ## Riding
 
-- An entity's own rate or freeze always applies to it, whatever it is riding. A frozen passenger stays frozen in a moving boat — it is carried along, but it does not tick, so it cannot steer or climb out.
+- An entity's own rate or freeze always applies to it, whatever it is riding. A frozen passenger stays frozen in a moving boat. It is carried along, but it doesn't tick, so it can't steer or climb out.
 - A passenger with no rate of its own takes its vehicle's.
-- A vehicle never runs faster than whoever is steering it — the player in a boat's front seat, on a saddled horse, on a pig with a carrot on a stick. A frozen rider freezes the boat or mount under them, and the vehicle goes back to its own rate the moment they are off it.
-- Anything the local player is riding keeps ticking normally on their own client while it is only slowed, because skipping ticks would stutter their camera; the server's small corrections are the lesser evil. A frozen vehicle stops for its rider too.
+- A vehicle never runs faster than whoever is steering it: the player in a boat's front seat, on a saddled horse, or on a pig with a carrot on a stick. A frozen rider freezes the boat or mount under them, and the vehicle goes back to its own rate as soon as they get off.
+- Anything the local player is riding keeps ticking normally on their own client while it is only slowed, because skipping ticks would make their camera stutter, and the server's small corrections are the lesser problem. A frozen vehicle stops for its rider too.
 
 ## Lifetime
 
-What this command sets is held in memory for as long as the server runs. It survives `/reload`, is not written to the world save, and is dropped when the server stops or the entity leaves the dimension. Anything that has to survive a restart belongs in a power: [apoli:modify_tick_rate](/docs/datapack/powers/modify_tick_rate) re-applies itself every tick and lapses on its own when the power goes away.
+What this command sets is held in memory for as long as the server runs. It survives `/reload`, isn't written to the world save, and is dropped when the server stops or the entity leaves the dimension. Anything that has to survive a restart belongs in a power: [apoli:modify_tick_rate](/docs/datapack/powers/modify_tick_rate) applies itself again every tick and lapses on its own when the power goes away.
 
 ## Permissions
 
-On Minecraft 1.21 and later these branches live under vanilla's `/tick`, so they need the same permission level it does — level 3, not the level 2 the rest of Apoli's commands use.
+On Minecraft 1.21 and later, these branches live under vanilla's `/tick`, so they need the same permission level it does: level 3, one above the level 2 the rest of Apoli's commands use. The same branches are also registered as `/apoli:tick entity` and `/apoli:tick chunk` at level 2 (or the `apoli.command.tick` node), which is the form to use in `.mcfunction` files, since functions run at level 2.
 
-Minecraft 1.20.1 has no `/tick` command. There, Apoli registers `/tick` itself with only the `entity` and `chunk` branches, at permission level 2 (or the `apoli.command.tick` node), and the server-wide operations are unavailable — use `apoli:tick_rate` with `scope: dimension` instead.
+Minecraft 1.20.1 has no `/tick` command. There, Apoli registers `/tick` itself with only the `entity` and `chunk` branches, at permission level 2 (or the `apoli.command.tick` node), and the operations for the whole server aren't available, so use `apoli:tick_rate` with `scope: dimension` instead.

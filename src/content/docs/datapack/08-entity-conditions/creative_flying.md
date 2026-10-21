@@ -1,18 +1,19 @@
 ---
 title: "Creative Flying (Entity Condition Type)"
-description: "Checks if the player is Creative Mode flying."
+description: "Checks whether the player is flying the way Creative mode flight works."
 navigation_title: "Creative Flying"
 ---
 
-Checks if the player is Creative Mode flying.
+Checks whether the player is flying the way Creative mode flight works.
 
 Type ID: `apoli:creative_flying`
 
 ## Fields
 
-_None._
+This condition has no fields.
 
 ## Examples
+
 ```json
 "condition": {
     "type": "apoli:creative_flying"

@@ -1,29 +1,27 @@
 ---
 title: "Modify Damage Taken (Power Type)"
-description: "Modifies how much damage the entity that has the power takes."
+description: "Changes how much damage the entity that has the power takes."
 navigation_title: "Modify Damage Taken"
 ---
 
-Modifies how much damage the entity that has the power takes.
+Changes how much damage the entity that has the power takes. The actor is the attacker, and the target is the entity with the power.
 
 Type ID: `apoli:modify_damage_taken`
 
-> In the context of this power type, the '**actor**' entity is the entity that did the attacking whilst the '**target**' entity is the entity that has the power.
-
 ## Fields
 
-| Field                    | Type                                     | Default    | Description                                                                                                                                                             |
-|--------------------------|------------------------------------------|------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `bientity_action`        | Bi-entity Action Type                    | _optional_ | If specified, this action will be executed on either or both the '**actor**' and '**target**' entities whenever the modifier(s) is/are applied.                         |
-| `self_action`            | Entity Action Type                       | _optional_ | If specified, this action will be executed on the '**target**' entity whenever the modifier(s) is/are applied.                                                          |
-| `attacker_action`        | Entity Action Type                       | _optional_ | If specified, this action will be executed on the '**actor**' entity whenever the modifier(s) is/are applied.                                                           |
-| `bientity_condition`     | Bi-entity Condition Type                 | _optional_ | If specified, the specified action(s)/modifier(s) will only be executed/applied if this condition is fulfilled by either or both '**actor**' and '**target**' entities. |
-| `target_condition`       | Entity Condition Type                    | _optional_ | If specified, the specified action(s)/modifier(s) will only be executed/applied if this condition is fulfilled by the '**target**' entity (the one that has the power).  |
-| `apply_armor_condition`  | Entity Condition Type                    | _optional_ | If specified, armor will only be applied to the damage taken if this condition is fulfilled by the '**target**' entity.                                                 |
-| `damage_armor_condition` | Entity Condition Type                    | _optional_ | If specified, worn armor will only be damaged if this condition is fulfilled by the '**target**' entity.                                                                |
-| `damage_condition`       | Damage Condition Type                    | _optional_ | If specified, the specified modifiers(s) and/or action(s) will only apply if the taken damage fulfills this condition.                                                  |
-| `modifier`               | [Attribute Modifier](/docs/datapack/data-types/attribute-modifier)           | _optional_ | If specified, this modifier will be applied to the damage taken by the '**target**' entity.                                                                             |
-| `modifiers`              | [Array](/docs/datapack/data-types/array) of Attribute Modifiers | _optional_ | If specified, these modifiers will be applied to the damage taken by the '**target**' entity.                                                                           |
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `bientity_action` | [Bi-entity Action Type](/docs/datapack/bientity-actions) | _optional_ | If set, this action runs on the actor, the target or both whenever the modifiers are applied. |
+| `self_action` | [Entity Action Type](/docs/datapack/entity-actions) | _optional_ | If set, this action runs on the target whenever the modifiers are applied. |
+| `attacker_action` | [Entity Action Type](/docs/datapack/entity-actions) | _optional_ | If set, this action runs on the actor whenever the modifiers are applied. |
+| `bientity_condition` | [Bi-entity Condition Type](/docs/datapack/bientity-conditions) | _optional_ | If set, the actions and modifiers only apply when the actor and target pass this condition. |
+| `target_condition` | [Entity Condition Type](/docs/datapack/entity-conditions) | _optional_ | If set, the actions and modifiers only apply when the target, the entity with the power, passes this condition. |
+| `apply_armor_condition` | [Entity Condition Type](/docs/datapack/entity-conditions) | _optional_ | If set, armor only reduces the damage while the target passes this condition. |
+| `damage_armor_condition` | [Entity Condition Type](/docs/datapack/entity-conditions) | _optional_ | If set, worn armor only takes damage while the target passes this condition. |
+| `damage_condition` | [Damage Condition Type](/docs/datapack/damage-conditions) | _optional_ | If set, the modifiers and actions only apply when the damage taken passes this condition. |
+| `modifier` | [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) | _optional_ | If set, this modifier is applied to the damage the target takes. |
+| `modifiers` | [Array](/docs/datapack/data-types/array) of [Attribute Modifiers](/docs/datapack/data-types/attribute-modifier) | _optional_ | If set, these modifiers are applied to the damage the target takes. |
 
 ## Examples
 
@@ -60,7 +58,8 @@ Type ID: `apoli:modify_damage_taken`
     }
 }
 ```
-This example will make the entity that has the power take 2 and a half additional hearts of damage if the attacker is holding an item with either the Curse of Binding, or Curse of Vanishing enchantments.
+
+The entity with the power takes 5.5 extra damage (almost 3 hearts) when the attacker holds an item with Curse of Binding or Curse of Vanishing.
 
 ```json
 {
@@ -95,4 +94,5 @@ This example will make the entity that has the power take 2 and a half additiona
     }
 }
 ```
-This example is an updated version of the first example.
+
+This does the same, but checks the attacker with a bi-entity condition instead of a damage condition.

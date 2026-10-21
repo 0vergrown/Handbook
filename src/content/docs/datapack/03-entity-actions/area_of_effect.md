@@ -1,35 +1,33 @@
 ---
 title: "Area Of Effect (Entity Action Type)"
-description: "Executes a Bi-Entity Action within a specified radius."
+description: "Runs a bi-entity action on every entity in an area around the entity."
 navigation_title: "Area Of Effect"
 ---
 
-Executes a Bi-Entity Action within a specified radius.
+Runs a bi-entity action on every entity in an area around the entity. The actor is the entity that ran the action, and each entity in the area is a target.
 
 Type ID: `apoli:area_of_effect`
 
-> In the context of this entity action type, the '**actor**' is the entity that invoked the action and the '**target(s)**' is/are the entity/entities within the specified radius.
-
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|------------
-`radius` | [Vector](/docs/datapack/data-types/vector) | `16.0` | The size of the area — a single number (uniform on all axes) or `{"x":.., "y":.., "z":..}` for independent per-axis extents.
-`shape` | [Shape](/docs/datapack/data-types/shape) | `"cube"` | The outline of the area: `cube`, `sphere`, `star`, `cone`, or a hollow one (`cube_hollow`, `sphere_hollow`, `star_hollow`, `cone_hollow`).
-`hollow_thickness` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | `1` | How thick a hollow `shape` is, in blocks, read from the '**actor**' each time the action runs. Ignored by the solid shapes.
-`bientity_action` | Bi-entity Action Type | *optional* | The bi-entity action to execute on either or both the '**actor**' or the '**target(s)**'. Leave it out to count matches without doing anything to them.
-`bientity_condition` | Bi-entity Condition Type | *optional* | If specified, the specified bi-entity action will only be executed on either or both the '**actor**' or '**target(s)**' that fulfill this bi-entity condition.
-`include_actor` | Boolean | `false` | Determines whether the '**actor**' should be included as a target.
-`after_action` | Entity Action Type | *optional* | Run once on the '**actor**' after the sweep, with `count` bound to how many entities matched.
-`offset` | [Vector](/docs/datapack/data-types/vector) | `0.0` | Moves the centre of the area away from the '**actor**' by this much before the sweep runs.
-`space` | [Space](/docs/datapack/data-types/space) | `"world"` | The frame `offset` is read in. `"local"` follows the actor's full look direction; `"local_horizontal_normalized"` follows only their yaw, keeping `y` as world-up.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `radius` | [Vector](/docs/datapack/data-types/vector) | `16.0` | The size of the area: a single number for the same size on every axis, or `{"x":.., "y":.., "z":..}` for a separate size on each axis. |
+| `shape` | [Shape](/docs/datapack/data-types/shape) | `"cube"` | The outline of the area: `cube`, `sphere`, `star`, `cone`, or a hollow one (`cube_hollow`, `sphere_hollow`, `star_hollow`, `cone_hollow`). |
+| `hollow_thickness` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | `1` | How thick a hollow `shape` is, in blocks, read from the actor each time the action runs. Ignored by the solid shapes. |
+| `bientity_action` | [Bi-entity Action Type](/docs/datapack/bientity-actions) | _optional_ | Runs for each target. Leave it out to count matches without doing anything to them. |
+| `bientity_condition` | [Bi-entity Condition Type](/docs/datapack/bientity-conditions) | _optional_ | The action only runs on targets that pass this condition. |
+| `include_actor` | [Boolean](/docs/datapack/data-types/boolean) | `false` | Whether the actor counts as a target too. |
+| `after_action` | [Entity Action Type](/docs/datapack/entity-actions) | _optional_ | Runs once on the actor after the sweep, with `count` bound to how many entities matched. |
+| `offset` | [Vector](/docs/datapack/data-types/vector) | `0.0` | Moves the centre of the area away from the actor by this much before the sweep runs. |
+| `space` | [Space](/docs/datapack/data-types/space) | `"world"` | The frame `offset` is read in. `"local"` follows the actor's full look direction, and `"local_horizontal_normalized"` follows only its yaw, keeping `y` as world up. |
 
 ## Counting what it found
 
-Two [Expression](/docs/datapack/data-types/expression) variables are bound while this action runs:
+Two [expression](/docs/datapack/data-types/expression) variables are bound while this action runs:
 
-- `count` — how many entities matched. Available in `bientity_action` and in `after_action`.
-- `index` — the zero-based iteration number, in `bientity_action` only.
+- `count` is how many entities matched. It is available in `bientity_action` and in `after_action`.
+- `index` is the zero-based iteration number, in `bientity_action` only.
 
 That turns "how many mobs are near me?" into a number you can store, instead of an `if_else_list` of hard-coded bands:
 
@@ -55,11 +53,11 @@ That turns "how many mobs are near me?" into a number you can store, instead of 
 }
 ```
 
-With `bientity_action` omitted, nothing happens to the entities themselves — the sweep is only there to produce `count`.
+With `bientity_action` left out, nothing happens to the entities themselves, and the sweep only produces `count`.
 
 ## Putting the area somewhere else
 
-By default the sweep is centred on the actor. `offset` moves that centre, and `space` says which way the offset points — so a small sphere placed a few blocks along the player's look is a "grab what is in front of my face" check, without the single-ray limits of [apoli:raycast](/docs/datapack/entity-actions/raycast):
+By default the sweep is centred on the actor. `offset` moves that centre and `space` says which way the offset points, so a small sphere placed a few blocks along the player's look works as a check for what is in front of their face, without the limits of a single ray from [apoli:raycast](/docs/datapack/entity-actions/raycast):
 
 ```json
 "entity_action": {
@@ -78,7 +76,7 @@ By default the sweep is centred on the actor. `offset` moves that centre, and `s
 }
 ```
 
-`local_horizontal_normalized` rotates the offset by the actor's yaw only, so `z` is "forward" and `y` stays world-up — the sphere sits in front of the player's head and does not dive into the floor when they look down. Use `"local"` instead when the area should follow pitch as well.
+`local_horizontal_normalized` rotates the offset by the actor's yaw only, so `z` is forward and `y` stays world up. The sphere sits in front of the player's head and doesn't dive into the floor when they look down. Use `"local"` instead when the area should follow pitch as well.
 
 ## Examples
 
@@ -97,7 +95,7 @@ By default the sweep is centred on the actor. `offset` moves that centre, and `s
 }
 ```
 
-This example will summon a lightning bolt on entities within a 10 block spherical radius.
+This summons a lightning bolt on every entity within a 10-block sphere.
 
 ```json
 "entity_action": {
@@ -116,7 +114,7 @@ This example will summon a lightning bolt on entities within a 10 block spherica
 }
 ```
 
-This example will set entities within a 32 block radius on fire for 5 seconds if the entities that are within the radius can be "seen" by the entity that invoked the action.
+This sets entities within 32 blocks on fire for 5 seconds, as long as the entity that ran the action can see them.
 
 ```json
 "entity_action": {
@@ -137,4 +135,4 @@ This example will set entities within a 32 block radius on fire for 5 seconds if
 }
 ```
 
-This example gives `radius` a per-axis vector to make a wide, flat 25×7×25 slab (12 out on each horizontal axis, only 3 up/down) — a ground-hugging area effect instead of a full cube.
+This gives `radius` a vector, one size per axis, to make a wide, flat 25×7×25 slab (12 out on each horizontal axis and only 3 up and down). The result hugs the ground instead of filling a full cube.

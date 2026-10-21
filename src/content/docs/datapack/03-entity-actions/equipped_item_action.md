@@ -1,19 +1,19 @@
 ---
 title: "Equipped Item Action (Entity Action Type)"
-description: "Executes an Item Action Type on an item stack in a specified equipment slot."
+description: "Runs an item action on the item in one of the entity's equipment slots."
 navigation_title: "Equipped Item Action"
 ---
 
-Executes an Item Action Type on an item stack in a specified equipment slot.
+Runs an item action on the item stack in one of the entity's equipment slots.
 
 Type ID: `apoli:equipped_item_action`
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`equipment_slot` | String | |  Which equipped item to execute the action on. One of: `"mainhand"`, `"offhand"`, `"head"`, `"chest"`, `"legs"`, `"feet"`.
-`action` | Item Action Type | | The item action type to execute on the item stack in the specified equipment slot.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `equipment_slot` | [String](/docs/datapack/data-types/string) | _required_ | The equipment slot to use: `"mainhand"`, `"offhand"`, `"head"`, `"chest"`, `"legs"` or `"feet"`. |
+| `action` | [Item Action Type](/docs/datapack/item-actions) | _required_ | The item action to run on the stack in that slot. |
 
 ## Examples
 
@@ -28,4 +28,4 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will "consume" (remove) 1 item from the item stack in the mainhand equipment slot.
+This consumes (removes) 1 item from the stack in the main hand.

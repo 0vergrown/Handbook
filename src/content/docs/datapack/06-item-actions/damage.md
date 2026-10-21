@@ -1,19 +1,19 @@
 ---
 title: "Damage (Item Action Type)"
-description: "Damages the item stack with a specified amount."
+description: "Uses up some of the item stack's durability."
 navigation_title: "Damage"
 ---
 
-Damages the item stack with a specified amount.
+Uses up some of the item stack's durability.
 
 Type ID: `apoli:damage`
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|-------------
-`amount` | Integer | `1` | The amount of damage it should do to the item stack.
-`ignore_unbreaking` | Boolean | `false` | Determines if this action should ignore the Unbreaking enchantment.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `amount` | [Integer](/docs/datapack/data-types/integer) | `1` | How much damage to do to the item stack. |
+| `ignore_unbreaking` | [Boolean](/docs/datapack/data-types/boolean) | `false` | Whether the action ignores the Unbreaking enchantment. |
 
 ## Examples
 
@@ -25,4 +25,4 @@ Field | Type | Default | Description
 }
 ```
 
-This example will damage the item stack by 10, ignoring the Unbreaking enchantment.
+This damages the item stack by 10, ignoring Unbreaking.

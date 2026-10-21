@@ -1,23 +1,24 @@
 ---
 title: "Prevent Shape Ability Use (Power Type)"
-description: Stops the player from using their shape ability.
+description: "Stops the player from using their shape ability."
 navigation_title: "Prevent Shape Ability Use"
 aliases: ["shappoli:prevent_shape_ability_use"]
 ---
 
-Blocks the shape ability from being used. The cooldown is untouched, so the player simply gets nothing when they press the key.
+Blocks the shape ability from being used. The cooldown is left alone, so the player gets nothing when they press the key.
 
 Type ID: `apoli:prevent_shape_ability_use` (alias `shappoli:prevent_shape_ability_use`)
 
+> [!NOTE]
+> This type needs [WoodWalkers](/docs/compat/woodwalkers/overview) and doesn't exist without it, so a pack that uses it must depend on the mod.
+
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|-------------
-`bientity_condition` | [Bi-Entity Condition](/docs/datapack/bientity-conditions) | _optional_ | Only block when this passes. Actor is the player, target is their current shape.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `bientity_condition` | [Bi-entity Condition Type](/docs/datapack/bientity-conditions) | _optional_ | Only blocks when this passes, with the player as the actor and their current shape as the target. |
 
 ## Example
-
-No abilities while you are starving:
 
 ```json
 {
@@ -30,4 +31,4 @@ No abilities while you are starving:
 }
 ```
 
-> Needs [WoodWalkers](/docs/compat/woodwalkers). This type does not exist without it, so a pack using it must depend on the mod.
+This blocks the ability while the player's food level is 6 or lower.

@@ -12,15 +12,15 @@ Type ID: `apoli:tick_rate`
 
 | Field | Type | Default | Description |
 | --- | --- | --- | --- |
-| `scope` | `chunk`, `dimension` or `server` | `chunk` | Whether the change covers the block's chunk, the whole dimension, or the server. `server` drives Minecraft's own tick rate, exactly as `/tick` does — see [the entity action](/docs/datapack/entity-actions/tick_rate#server-scope-is-vanillas-tick). |
-| `rate` | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | _unchanged_ | Logical ticks per second. `20` is normal speed, `0` stops everything. |
-| `frozen` | [Boolean](/docs/datapack/data-types/boolean) | _unchanged_ | Stops ticking entirely, regardless of `rate`. |
+| `scope` | [String](/docs/datapack/data-types/string) (`chunk`, `dimension` or `server`) | `chunk` | Whether the change covers the block's chunk, the whole dimension or the server. `server` drives Minecraft's own tick rate, exactly as `/tick` does (see [the entity action](/docs/datapack/entity-actions/tick_rate#server-scope-is-vanillas-tick)). |
+| `rate` | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | _unchanged_ | Logical ticks per second. `20` is normal speed, and `0` stops everything. |
+| `frozen` | [Boolean](/docs/datapack/data-types/boolean) | _unchanged_ | Stops ticking entirely, whatever the `rate`. |
 | `step` | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | _unchanged_ | Lets a frozen scope run this many ticks and then freeze again. |
 | `sprint` | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | _unchanged_ | Runs the scope at full speed for this many ticks, ignoring its rate. |
 | `reset` | [Boolean](/docs/datapack/data-types/boolean) | `false` | Clears every override on that scope. Every other field is ignored. |
 | `duration` | [Integer](/docs/datapack/data-types/integer) | `0` | How long the override lasts, in ticks. `0` means until something clears it. |
 
-An entity standing in a slowed chunk inherits that rate unless it has one of its own, so freezing a chunk freezes what is standing in it too.
+An entity standing in a slowed chunk takes on that rate unless it has one of its own, so freezing a chunk freezes what is standing in it too.
 
 ## Example
 
@@ -32,4 +32,4 @@ An entity standing in a slowed chunk inherits that rate unless it has one of its
 }
 ```
 
-Crawls the chunk to a tenth speed for ten seconds.
+This slows the chunk to a tenth of normal speed for ten seconds.

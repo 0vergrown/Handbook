@@ -4,21 +4,21 @@ description: Passes when the damage is fire damage.
 navigation_title: "Fire"
 ---
 
-Passes when the damage is fire damage — burning, lava, fire blocks, magma blocks, blaze fireballs.
+Passes when the damage is fire damage, such as burning, lava, fire blocks, magma blocks and blaze fireballs.
 
 Type ID: `apoli:fire`
 
 ## Fields
 
-This type has no fields. Like every condition, it accepts `inverted` to flip the result.
+This condition has no fields. Like every condition, it accepts `inverted` to flip the result.
 
 ## How it works
 
-It is shorthand for [`apoli:in_tag`](/docs/datapack/damage-conditions/in_tag) against the `minecraft:is_fire` damage type tag, so a data pack that adds its own damage type to that tag is matched too.
+It is shorthand for [`apoli:in_tag`](/docs/datapack/damage-conditions/in_tag) with the `minecraft:is_fire` damage type tag, so a data pack that adds its own damage type to that tag is matched too.
 
 ## Example
 
-This is exactly what [`apoli:fire_immunity`](/docs/datapack/powers/invulnerability) is built from, and writing it out yourself is how you get a partial version instead of an absolute one:
+[`apoli:fire_immunity`](/docs/datapack/powers/invulnerability) is built from exactly this, and writing it out yourself is how you get partial protection instead of full immunity:
 
 ```json
 {
@@ -28,7 +28,7 @@ This is exactly what [`apoli:fire_immunity`](/docs/datapack/powers/invulnerabili
 }
 ```
 
-Full immunity, written the long way — identical to using the `apoli:fire_immunity` alias:
+Full immunity written the long way, which is the same as using the `apoli:fire_immunity` alias:
 
 ```json
 {

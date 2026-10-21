@@ -1,22 +1,20 @@
 ---
 title: "Prevent Block Use (Power Type)"
-description: "Prevents the usage of blocks for the player that has the power."
+description: "Stops the player from using blocks with a right-click."
 navigation_title: "Prevent Block Use"
 ---
 
-Prevents the usage of blocks for the player that has the power.
+Stops the player who has the power from using blocks, meaning they can't interact with a block by right-clicking it.
 
 Type ID: `apoli:prevent_block_use`
 
-> Preventing the "usage" of a block means that the player won't be able to interact (right-click) with the said block.
-
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`block_condition` | Block Condition Type | | If specified, only blocks that fulfill this condition are affected.
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `block_condition` | [Block Condition Type](/docs/datapack/block-conditions) | | If set, only blocks that pass this condition are affected. |
 
-> Covers both halves of a right-click: using the block itself (opening a chest) and using an item on it (bonemealing a crop). It applies on the client too, so the interaction is never even predicted — nothing flickers.
+The power covers both halves of a right-click: using the block itself, like opening a chest, and using an item on it, like bonemealing a crop. It also applies on the client, so the game never predicts the interaction and nothing flickers.
 
 ## Examples
 
@@ -30,4 +28,4 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will prevent the player from using Crafting Tables.
+This stops the player from using crafting tables.

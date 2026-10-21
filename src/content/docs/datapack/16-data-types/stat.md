@@ -1,17 +1,17 @@
 ---
 title: "Stat (Data Type)"
-description: "An Object specifying a statistic via a statistic type and an Identifier."
+description: "An object that names a statistic by its type and ID."
 navigation_title: "Stat"
 ---
 
-An [Object](/docs/datapack/data-types/object) specifying a statistic via a statistic type and an [Identifier](/docs/datapack/data-types/identifier).
+An [Object](/docs/datapack/data-types/object) that names a statistic by its statistic type and an [Identifier](/docs/datapack/data-types/identifier).
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|------------
-`type` | [Identifier](/docs/datapack/data-types/identifier) | | The type of the statistic.
-`id` | [Identifier](/docs/datapack/data-types/identifier) | | The name of the statistic; may depend on the specified type of the statistic.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `type` | [Identifier](/docs/datapack/data-types/identifier) | _required_ | The type of the statistic. |
+| `id` | [Identifier](/docs/datapack/data-types/identifier) | _required_ | The name of the statistic, which depends on its type. |
 
 ## Examples
 
@@ -22,7 +22,7 @@ Field | Type | Default | Description
 }
 ```
 
-This example specifies the statistic for tracking the time since the last time a player has rested.
+This names the statistic that tracks the time since a player last rested.
 
 ```json
 "stat": {
@@ -31,4 +31,4 @@ This example specifies the statistic for tracking the time since the last time a
 }
 ```
 
-This example specifies the statistic for tracking how much Dirt blocks a player has mined.
+This names the statistic that tracks how many dirt blocks a player has mined.

@@ -1,40 +1,40 @@
 ---
 title: "Recipe (Power Type)"
-description: "Allows a player with this power to craft the defined crafting recipe."
+description: "Lets a player with this power craft the recipe it defines."
 navigation_title: "Recipe"
 ---
 
-Allows a player with this power to craft the defined crafting recipe. The recipe is injected server-side and only players holding the power can use it. When several recipes fit the same grid, each player gets one they are allowed to craft, so a power recipe they lack never blocks one they can make.
+Lets a player with this power craft the recipe it defines. The recipe is added on the server, and only players with the power can use it. When several recipes fit the same grid, each player gets one they are allowed to craft, so a power recipe they don't have never blocks one they can make.
 
 Type ID: `apoli:recipe` (alias: `origins:recipe`)
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`recipe` | [Crafting Recipe](/docs/datapack/data-types/crafting-recipe) | | The recipe to craft. Any vanilla crafting recipe type works (`minecraft:crafting_shaped`, `minecraft:crafting_shapeless`, ...). Its `id` names the recipe; without one, the power's own id is used.
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `recipe` | [Crafting Recipe](/docs/datapack/data-types/crafting-recipe) | | The recipe to craft. Any vanilla crafting recipe type works, such as `minecraft:crafting_shaped` and `minecraft:crafting_shapeless`. Its `id` names the recipe, and without one the power's own ID is used. |
 
-## Sharing an `id`
+## Sharing an ID
 
-Several powers can write the same recipe `id`:
+Several powers can use the same recipe `id`:
 
-- **Identical recipes** (the whole `recipe` object matches) are registered once, and holding any one of those powers unlocks it.
-- **Different recipes** all still work, each for the holders of its own power. The first power by id (namespace, then path) keeps the `id`; every other one is registered under its own power id, and Apoli logs a warning naming it. [`apoli:modify_crafting`](/docs/datapack/powers/modify_crafting) matches all of them by the `id` you wrote.
+- Identical recipes, where the whole `recipe` object matches, are registered once, and having any one of those powers unlocks it.
+- Different recipes all still work, each for the players who have its own power. The first power by ID (namespace, then path) keeps the `id`, and every other one is registered under its own power ID, with a warning in the log naming it. [`apoli:modify_crafting`](/docs/datapack/powers/modify_crafting) matches all of them by the `id` you wrote.
 
-Give different recipes different ids anyway: vanilla features that name a recipe, such as `/recipe` and the `recipe_unlocked` advancement trigger, only know the registered id.
+Give different recipes different IDs anyway, because vanilla features that name a recipe, such as `/recipe` and the `recipe_unlocked` advancement trigger, only know the registered ID.
 
 ## Granting powers with the crafted item
 
-The recipe's `result` can additionally carry a `power` field (one entry) and/or a `powers` field (an array of entries). The crafted item then grants those powers through the item-powers system — the same data written by the "Add Power (Item Modifier)" while the item sits in a matching equipment slot. On 1.21.1 the entries are embedded into the result's `minecraft:custom_data` component; on 1.20.1 they land in the item's NBT `tag`, the JSON you write is identical either way.
+The recipe's `result` can also carry a `power` field with one entry, a `powers` field with an array of entries, or both. The crafted item then grants those powers through the item powers system while it sits in a matching equipment slot, using the same data the "Add Power" item modifier writes. On 1.21.1 the entries go into the result's `minecraft:custom_data` component, and on 1.20.1 into the item's NBT `tag`. The JSON you write is the same either way.
 
-Each entry is either a plain power id **string** (granted in **every** equipment slot) or an **object**:
+Each entry is either a plain power ID string, which grants the power in every equipment slot, or an object:
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`power` | Identifier | **required** | The id of the power to grant.
-`slot` | String or Array of Strings | all slots | Equipment slot(s) the item must be in for the power to apply: `mainhand`, `offhand`, `head`, `chest`, `legs`, `feet`.
-`hidden` | Boolean | `false` | Stored with the entry (original-Apoli item-power format compatibility). Currently has no effect in this re-implementation.
-`negative` | Boolean | `false` | Stored with the entry (original-Apoli item-power format compatibility). Currently has no effect in this re-implementation.
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `power` | [Identifier](/docs/datapack/data-types/identifier) | _required_ | The ID of the power to grant. |
+| `slot` | [String](/docs/datapack/data-types/string) or [Array](/docs/datapack/data-types/array) of Strings | all slots | The equipment slots the item has to be in for the power to apply: `mainhand`, `offhand`, `head`, `chest`, `legs` or `feet`. |
+| `hidden` | [Boolean](/docs/datapack/data-types/boolean) | `false` | Kept for compatibility with the original Apoli item power format. It has no effect. |
+| `negative` | [Boolean](/docs/datapack/data-types/boolean) | `false` | Kept for compatibility with the original Apoli item power format. It has no effect. |
 
 ## Examples
 
@@ -59,7 +59,7 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will allow the player that has the power to craft Cobwebs by combining two strings in a crafting grid with no specific order.
+This lets the player craft a cobweb from two pieces of string in any order.
 
 ```json
 {
@@ -89,4 +89,4 @@ This example will allow the player that has the power to craft Cobwebs by combin
 }
 ```
 
-This example crafts an iron sword that grants `example:fire_touch` while held in the main hand, and `example:warm_glow` in any equipment slot.
+This crafts an iron sword that grants `example:fire_touch` while held in the main hand, and `example:warm_glow` in any equipment slot.

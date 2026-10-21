@@ -1,18 +1,18 @@
 ---
 title: "Invert (Bi-Entity Condition Type)"
-description: "Swaps the context of the target entity and the actor entity."
+description: "Checks a bi-entity condition with the actor and target swapped."
 navigation_title: "Invert"
 ---
 
-Swaps the context of the target entity and the actor entity.
+Checks a bi-entity condition with the actor and the target swapped.
 
 Type ID: `apoli:invert`
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`condition` | Bi-entity Condition Type | | The bi-entity condition type to check which will have its 'target' and 'actor' contexts swapped.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `condition` | [Bi-entity Condition Type](/docs/datapack/bientity-conditions) | _required_ | The bi-entity condition to check with the actor and target swapped. |
 
 ## Examples
 
@@ -24,4 +24,5 @@ Field  | Type | Default | Description
     }
 }
 ```
-This example will check if the target entity can see the actor entity, as the roles are now swapped.
+
+This checks whether the target can see the actor, since the roles are swapped.

@@ -1,20 +1,20 @@
 ---
 title: "In Block Anywhere (Entity Condition Type)"
-description: "Checks how many blocks are overlapping with the entity's eyes or feet."
+description: "Counts the blocks overlapping the entity's eyes or feet that pass a condition, and compares the count."
 navigation_title: "In Block Anywhere"
 ---
 
-Checks how many blocks are overlapping with the entity's eyes or feet.
+Counts how many blocks that pass a block condition overlap the entity's eyes or feet, and compares the count with a number.
 
 Type ID: `apoli:in_block_anywhere`
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`block_condition` | Block Condition Type | |  The block condition type which blocks need to fulfill in order to count for this condition.
-`comparison` | Comparison | `">="` |  Determines how the amount of blocks which overlap and fulfill `block_condition` should be compared to the specified value.
-`compare_to` | Integer | `1` |  The value at which the amount of blocks which overlap and fulfill `block_condition` will be compared to.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `block_condition` | [Block Condition Type](/docs/datapack/block-conditions) | _required_ | The condition a block must pass to be counted. |
+| `comparison` | [Comparison](/docs/datapack/data-types/comparison) | `">="` | How the count is compared with `compare_to`. |
+| `compare_to` | [Integer](/docs/datapack/data-types/integer) | `1` | The number the count is compared with. |
 
 ## Examples
 
@@ -30,4 +30,4 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will check if the entity is currently inside a two-block tall foliage block that belongs in the `#minecraft:flowers` (`data\minecraft\tags\blocks\flowers.json`) block tag. An example is the rose bush block.
+This checks whether the entity is inside a two-block tall plant from the `#minecraft:flowers` block tag (`data/minecraft/tags/blocks/flowers.json`), such as a rose bush.

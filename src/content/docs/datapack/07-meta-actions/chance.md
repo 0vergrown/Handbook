@@ -1,24 +1,25 @@
 ---
 title: "Chance (Meta Action Type)"
-description: "Executes the provided action only with a specific chance."
+description: "Runs an action only some of the time, with a given chance."
 navigation_title: "Chance"
 ---
 
-Executes the provided action only with a specific chance.
+Runs an action only some of the time, with a given chance.
 
 Type ID: `apoli:chance`
 
 ## Fields
 
-> **ALIAS:** `success_action` is accepted as an alias for `action` (the name some Apace data uses for the success branch).
+> [!NOTE]
+> `success_action` is accepted as an alias for `action`, which is the name some Apace data uses for the success branch.
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`action` | Action Type | | The action which might be executed. _Alias: `success_action`._
-`chance` | Float or [Expression](/docs/datapack/data-types/expression) | | The chance that the action will execute, from 0 to 1. (E.g. 0.1 means 10% chance, 0.95 means 95% chance). An Expression is evaluated each attempt against the context entity.
-`fail_action` | Action Type | _optional_ | The action to execute if the specified action in the `action` field is not executed.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `action` | Action type | _required_ | The action that might run. `success_action` is accepted as an alias. |
+| `chance` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | _required_ | The chance that the action runs, from 0 to 1, so 0.1 is a 10% chance and 0.95 is a 95% chance. An expression is evaluated on each attempt against the context entity. |
+| `fail_action` | Action type | _optional_ | The action to run when `action` doesn't. |
 
-**Expression context:** entity actions use the acting entity; bi-entity actions use the **actor**; item actions use the holder; block actions have no entity (entity variables read `0`, world-time variables still work).
+The expression context depends on the kind of action: entity actions use the acting entity, bi-entity actions use the actor, and item actions use the holder. Block actions have no entity, so entity variables read `0`, while world time variables still work.
 
 ## Examples
 
@@ -33,7 +34,7 @@ Field  | Type | Default | Description
 }
 ```
 
-This example has a 40% chance to set the entity on fire for 5 seconds.
+This has a 40% chance to set the entity on fire for 5 seconds.
 
 ```json
 "entity_action": {
@@ -46,4 +47,4 @@ This example has a 40% chance to set the entity on fire for 5 seconds.
 }
 ```
 
-This example's chance scales with the entity's XP level: 10% at level 0, 40% at level 30.
+The chance here grows with the entity's XP level, from 10% at level 0 to 40% at level 30.

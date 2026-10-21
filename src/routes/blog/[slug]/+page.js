@@ -1,12 +1,6 @@
-import { error } from '@sveltejs/kit';
-import { getPost, allBlogSlugs } from '$lib/content/blog.js';
+const POSTS = import.meta.glob('/src/content/blog/*.md');
 
-export async function load({ params }) {
-	const post = await getPost(params.slug);
-	if (!post) error(404, 'Post not found');
-	return { post };
-}
-
-export function entries() {
-	return allBlogSlugs().map((slug) => ({ slug }));
+export async function load({ data }) {
+	const module = await POSTS[data.post.file]();
+	return { ...data, component: module.default };
 }

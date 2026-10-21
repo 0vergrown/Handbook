@@ -5,21 +5,21 @@ navigation_title: "Send Action"
 aliases: ["shappoli:send_action"]
 ---
 
-Hands off to an [`apoli:receive_action`](/docs/datapack/powers/receive_action) power on the same entity, which decides what actually happens.
+Hands off to an [`apoli:receive_action`](/docs/datapack/powers/receive_action) power on the same entity, which decides what happens.
 
-This is how you write shared behaviour once. Instead of copying the same block of actions into six powers, put it in one receiver and have the six send to it — and because the receiver is a normal power, it can be granted, revoked, suppressed and conditioned like any other, so the same trigger can do different things depending on which receiver the entity currently holds.
+Use it to write shared behaviour once. Instead of copying the same block of actions into six powers, put it in one receiver and have the six send to it. The receiver is a normal power, so it can be granted, revoked, suppressed and conditioned like any other, and the same trigger can do different things depending on which receiver the entity holds at the time.
 
 Type ID: `apoli:send_action` (also `shappoli:send_action`)
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|-------------
-`receiver` | [Identifier](/docs/datapack/data-types/identifier) | **required** | The id of a power on the same entity. Nothing happens if the entity does not have it, if it is suppressed, if its own `condition` fails, or if it is not the right receiving type.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `receiver` | [Identifier](/docs/datapack/data-types/identifier) | _required_ | The ID of a power on the same entity. Nothing happens if the entity doesn't have it, if it is suppressed, if its own `condition` fails, or if it isn't the right receiving type. |
 
 ## Example
 
-One receiver holds the "you spent blood" behaviour:
+One receiver holds what happens when the player spends blood:
 
 ```json
 {
@@ -34,7 +34,7 @@ One receiver holds the "you spent blood" behaviour:
 }
 ```
 
-Every power that costs blood just sends to it, and none of them needs to know how blood works:
+Every power that costs blood sends to it, and none of them needs to know how blood works:
 
 ```json
 {

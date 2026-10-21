@@ -1,16 +1,16 @@
 ---
 title: "On Fire (Entity Condition Type)"
-description: "Checks if the entity is currently burning."
+description: "Checks whether the entity is burning."
 navigation_title: "On Fire"
 ---
 
-Checks if the entity is currently burning.
+Checks whether the entity is burning.
 
 Type ID: `apoli:on_fire`
 
 ## Fields
 
-_None._
+This condition has no fields.
 
 ## Examples
 

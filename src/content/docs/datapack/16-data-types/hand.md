@@ -1,19 +1,19 @@
 ---
 title: "Hand (Data Type)"
-description: "A String used to indicate one of the hands of an entity."
+description: "A string naming one of an entity's hands."
 navigation_title: "Hand"
 ---
 
-A [String](/docs/datapack/data-types/string) used to indicate one of the hands of an entity.
+A [String](/docs/datapack/data-types/string) naming one of an entity's hands.
 
 ## Values
 
-  Value         |  Description
-----------------|--------------
-  `main_hand`   |  The entity's main hand. By default this is the right hand, mirrored to the left hand for players who set "Main Hand" to "Left" in their controls.
-  `off_hand`    |  The entity's off-hand (the other hand).
+| Value | Description |
+| --- | --- |
+| `main_hand` | The entity's main hand. That is the right hand by default, and the left hand for players who set Main Hand to Left in their controls. |
+| `off_hand` | The entity's off hand, the other one. |
 
-Each value is also accepted without the underscore (`mainhand`, `offhand`) and in its exact upper-case form (`MAIN_HAND`, `MAINHAND`, `OFF_HAND`, `OFFHAND`) for compatibility with packs written against upstream's enum-style spelling. Mixed case (e.g. `Main_Hand`) is **not** accepted.
+Each value is also accepted without the underscore (`mainhand`, `offhand`) and in its exact upper-case form (`MAIN_HAND`, `MAINHAND`, `OFF_HAND`, `OFFHAND`), so packs written for upstream's enum-style spelling work. Mixed case such as `Main_Hand` isn't accepted.
 
 ## Examples
 
@@ -23,7 +23,7 @@ Each value is also accepted without the underscore (`mainhand`, `offhand`) and i
 ]
 ```
 
-Only consider the main hand.
+Only the main hand counts.
 
 ```json
 "hands": [
@@ -32,4 +32,4 @@ Only consider the main hand.
 ]
 ```
 
-Consider both hands. Equivalent to omitting the field on power types that default to both.
+Both hands count. That is the same as leaving the field out on power types that default to both.

@@ -1,18 +1,19 @@
 ---
 title: "Swimming (Entity Condition Type)"
-description: "Checks whether the entity is currently swimming (in the swimming pose)."
+description: "Checks whether the player is swimming, in the swimming pose."
 navigation_title: "Swimming"
 ---
 
-Checks whether the entity is currently swimming (in the swimming pose).
+Checks whether the entity is swimming, meaning it is in the swimming pose.
 
 Type ID: `apoli:swimming`
 
-> **This entity condition type will only work on players.**
+> [!NOTE]
+> This condition only works on players.
 
 ## Fields
 
-_None._
+This condition has no fields.
 
 ## Examples
 

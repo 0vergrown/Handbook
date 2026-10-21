@@ -1,23 +1,24 @@
 ---
 title: "Comparison (Data Type)"
-description: "A String which specifies how two numbers should be compared."
+description: "A string that says how two numbers are compared, such as < or >=."
 navigation_title: "Comparison"
 ---
 
-A [String](/docs/datapack/data-types/string) which specifies how two numbers should be compared. Usually the first number is provided by whatever condition you are in, and the second is specified in an accompanying `compare_to` field.
+A [String](/docs/datapack/data-types/string) that says how two numbers are compared. The first number usually comes from the condition it is in, and the second is given in a `compare_to` field next to it.
 
-> On [apoli:resource](/docs/datapack/entity-conditions/resource), `compare_to` is not limited to a literal number — it accepts a full [Expression](/docs/datapack/data-types/expression), so you can compare a resource against another resource or against an entity stat. Every other `compare_to` field takes a plain number.
+> [!NOTE]
+> On [apoli:resource](/docs/datapack/entity-conditions/resource), `compare_to` isn't limited to a plain number. It accepts a full [Expression](/docs/datapack/data-types/expression), so you can compare a resource against another resource or against an entity stat. Every other `compare_to` field takes a plain number.
 
 ## Values
 
-Value  | Description
--------|------
-`<` | Checks if the first number is **less than** the second number.
-`<=` | Checks if the first number is **less than or equal to** the second number.
-`>` | Checks if the first number is **greater than** the second number.
-`>=` | Checks if the first number is **greater than or equal to** the second number.
-`==` | Checks if the first number is **equal to** the second number.
-`!=` | Checks if the first number is **not equal to** the second number.
+| Value | Description |
+| --- | --- |
+| `<` | Checks whether the first number is less than the second. |
+| `<=` | Checks whether the first number is less than or equal to the second. |
+| `>` | Checks whether the first number is greater than the second. |
+| `>=` | Checks whether the first number is greater than or equal to the second. |
+| `==` | Checks whether the first number is equal to the second. |
+| `!=` | Checks whether the first number isn't equal to the second. |
 
 ## Examples
 
@@ -27,7 +28,7 @@ Value  | Description
 }
 ```
 
-Equal to. There's not much to say about this.
+This compares for equality.
 
 ```json
 "condition": {
@@ -37,4 +38,4 @@ Equal to. There's not much to say about this.
 }
 ```
 
-A comparison used inside XP Levels (Entity Condition Type), which checks that the player is level 3 or higher.
+A comparison inside an XP Levels entity condition, which checks that the player is level 3 or higher.

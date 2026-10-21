@@ -1,21 +1,22 @@
 ---
 title: "Temperature (Biome Condition Type)"
-description: "Checks for the temperature of the biome the entity is currently in."
+description: "Compares the biome's temperature with a number."
 navigation_title: "Temperature"
 ---
 
-Checks for the temperature of the biome the entity is currently in.
+Compares the biome's temperature with a number.
 
 Type ID: `apoli:temperature`
 
-> You can visit [Minecraft Wiki: Biome (List of Overworld climates)](https://minecraft.wiki/w/Biome#List_of_Overworld_climates) for a list of temperature values for the vanilla biomes.
+> [!TIP]
+> [Minecraft Wiki: Biome (List of Overworld climates)](https://minecraft.wiki/w/Biome#List_of_Overworld_climates) lists the temperature of each vanilla biome.
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`comparison` | Comparison | | Determines how the temperature value of the biome should be compared to the specified value.
-`compare_to` | Float | | The value at which the temperature value of the biome will be compared to.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `comparison` | [Comparison](/docs/datapack/data-types/comparison) | _required_ | How the temperature is compared with `compare_to`. |
+| `compare_to` | [Float](/docs/datapack/data-types/float) | _required_ | The number the temperature is compared with. |
 
 ## Examples
 
@@ -30,4 +31,4 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will check if the biome the entity is currently in has a temperature of 2 or more. (e.g: `minecraft:badlands`, `minecraft:desert`, etc.)
+This checks whether the biome the entity is in has a temperature of 2 or more, as `minecraft:badlands` and `minecraft:desert` do.

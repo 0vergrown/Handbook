@@ -1,21 +1,21 @@
 ---
 title: "Remove From Entity Set (Bi-Entity Action Type)"
-description: "Removes the target entity from the power that uses the Entity Set of the actor entity."
+description: "Removes the target from one of the actor's entity set powers."
 navigation_title: "Remove From Entity Set"
 aliases: ["remove_from_set"]
 ---
 
-Removes the target entity from the power that uses the [apoli:entity_set](/docs/datapack/powers/entity_set) of the actor entity.
+Removes the target entity from one of the actor's [apoli:entity_set](/docs/datapack/powers/entity_set) powers.
 
-Type ID: `apoli:remove_from_entity_set` (but can use it's old `remove_from_set` type id as an alias)
+Type ID: `apoli:remove_from_entity_set` (the older `apoli:remove_from_set` ID is accepted as an alias)
 
-##	Fields
+## Fields
 
-Field | Type | Default | Description
-------|------|---------|------------
-`set` | [Identifier](/docs/datapack/data-types/identifier) | | The ID of the power to remove the target entity from.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `set` | [Identifier](/docs/datapack/data-types/identifier) | _required_ | The ID of the entity set power to remove the target from. |
 
-##	Examples
+## Examples
 
 ```json
 "bientity_action": {
@@ -24,4 +24,4 @@ Field | Type | Default | Description
 }
 ```
 
-This example will remove the target entity from the `example:entities_to_exclude` (`data/example/powers/entities_to_exclude.json`) power.
+This removes the target from the `example:entities_to_exclude` power (`data/example/powers/entities_to_exclude.json`).

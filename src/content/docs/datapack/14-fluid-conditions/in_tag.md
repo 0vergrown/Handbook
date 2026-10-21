@@ -1,18 +1,18 @@
 ---
 title: "In Tag (Fluid Condition Type)"
-description: "Checks whether the fluid is in a specified tag."
+description: "Checks whether the fluid is in a fluid tag."
 navigation_title: "In Tag"
 ---
 
-Checks whether the fluid is in a specified tag.
+Checks whether the fluid is in a fluid tag.
 
 Type ID: `apoli:in_tag`
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`tag` | [Identifier](/docs/datapack/data-types/identifier) | |  ID of the tag which the fluid should be in to pass the check. The leading `#` is optional.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `tag` | [Identifier](/docs/datapack/data-types/identifier) | _required_ | The ID of the fluid tag. The leading `#` is optional. |
 
 ## Examples
 
@@ -23,4 +23,4 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will check if the fluid is included in the `#minecraft:water` (`data\minecraft\tags\fluids`) block tag.
+This checks whether the fluid is in the `#minecraft:water` fluid tag (`data/minecraft/tags/fluids/water.json`).

@@ -1,16 +1,16 @@
 ---
 title: "Invisible (Entity Condition Type)"
-description: "Checks whether the entity is currently invisible."
+description: "Checks whether the entity is invisible."
 navigation_title: "Invisible"
 ---
 
-Checks whether the entity is currently invisible.
+Checks whether the entity is invisible.
 
 Type ID: `apoli:invisible`
 
 ## Fields
 
-_None._
+This condition has no fields.
 
 ## Examples
 

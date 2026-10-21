@@ -1,20 +1,20 @@
 ---
 title: "Type (Damage Condition Type)"
-description: "Checks whether the damage source is of a certain damage type."
+description: "Checks whether the damage is of a given damage type, or in a damage type tag."
 navigation_title: "Type"
 ---
 
-Checks whether the damage source is of a certain damage type.
+Checks whether the damage is of a given damage type.
 
 Type ID: `apoli:type`
 
-##	Fields
+## Fields
 
-| Field         | Type                   | Default | Description                                                |
-|---------------|------------------------|---------|------------------------------------------------------------|
-| `damage_type` | [Identifier](/docs/datapack/data-types/identifier) |         | The damage type to compare the damage source to. Prefix with `#` to match a damage type tag instead — `"#minecraft:is_fire"`. |
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `damage_type` | [Identifier](/docs/datapack/data-types/identifier) | _required_ | The damage type to match. Start it with `#` to match a damage type tag instead, as in `"#minecraft:is_fire"`. |
 
-##	Examples
+## Examples
 
 ```json
 "damage_condition": {
@@ -23,7 +23,7 @@ Type ID: `apoli:type`
 }
 ```
 
-This example will check if the damage source is of the `minecraft:magic` damage type.
+This checks whether the damage is of the `minecraft:magic` damage type.
 
 ```json
 "damage_condition": {
@@ -32,4 +32,4 @@ This example will check if the damage source is of the `minecraft:magic` damage 
 }
 ```
 
-This example will check if the damage source is in the `minecraft:is_fire` tag.
+This checks whether the damage type is in the `minecraft:is_fire` tag.

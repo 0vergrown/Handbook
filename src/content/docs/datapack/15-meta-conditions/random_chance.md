@@ -5,15 +5,15 @@ navigation_title: "Random Chance"
 aliases: ["chance"]
 ---
 
-Passes with the given probability. Available in every condition flavour.
+Passes with the given probability. It works in every kind of condition.
 
 Type ID: `apoli:random_chance` (alias `apoli:chance`)
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|-------------
-`chance` | [Float](/docs/datapack/data-types/float) | **required** | Probability of passing, `0.0` to `1.0`.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `chance` | [Float](/docs/datapack/data-types/float) | _required_ | The probability of passing, from `0.0` to `1.0`. |
 
 ## Examples
 
@@ -26,7 +26,7 @@ A one-in-five chance:
 }
 ```
 
-Used as a power's condition, this re-rolls **every time the condition is checked** — which for a ticking power is many times a second, and almost never what you want:
+Used as a power's condition, it rolls again every time the condition is checked, which for a power that ticks is many times a second and almost never what you want:
 
 ```json
 {
@@ -37,6 +37,7 @@ Used as a power's condition, this re-rolls **every time the condition is checked
 }
 ```
 
-Here the long `interval` is what makes it sane: the condition is only consulted every five seconds, so it is a one-in-four chance every five seconds rather than a coin flip per tick.
+Here the long `interval` is what makes it work: the condition is only checked every five seconds, so it is a one-in-four chance every five seconds and not a coin flip every tick.
 
-> If you want to roll once and *act*, use the [meta action](/docs/datapack/meta-actions/random_chance) instead — it is almost always the right one. Reach for the condition only when the thing being gated is itself evaluated on a slow, deliberate schedule.
+> [!TIP]
+> To roll once and then act, use the [meta action](/docs/datapack/meta-actions/random_chance) instead, which is almost always the right choice. Use the condition only when the thing it gates is itself checked on a slow, deliberate schedule.

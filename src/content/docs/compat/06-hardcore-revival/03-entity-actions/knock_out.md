@@ -1,20 +1,21 @@
 ---
 title: "Knock Out (Entity Action Type)"
-description: Knocks the entity out.
+description: "Knocks the entity out."
 navigation_title: "Knock Out"
 ---
 
-Puts the entity into the knocked-out state directly, as if they had run out of health.
+Puts the entity straight into the knocked-out state, as if they had run out of health.
 
 Type ID: `apoli:knock_out`
 
+> [!NOTE]
+> This type needs [Hardcore Revival](https://modrinth.com/mod/hardcore-revival) and doesn't exist without it, so a pack that uses it must depend on the mod.
+
 ## Fields
 
-_None._
+This action has no fields.
 
 ## Example
-
-An ability that downs whoever you hit instead of killing them:
 
 ```json
 {
@@ -32,4 +33,4 @@ An ability that downs whoever you hit instead of killing them:
 }
 ```
 
-> Needs [Hardcore Revival](https://modrinth.com/mod/hardcore-revival). These types do not exist without it, so a pack using them must depend on the mod.
+This ability knocks out whoever the holder hits instead of killing them, while the `mypack:subdue` resource is above 0.

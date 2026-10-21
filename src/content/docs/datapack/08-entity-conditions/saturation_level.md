@@ -1,21 +1,22 @@
 ---
 title: "Saturation Level (Entity Condition Type)"
-description: "Checks the entity's saturation level, which is the invisible value that determines how 'full' the entity is, which then determines how long it takes before the hunger level of the entity will go down."
+description: "Compares the player's hidden saturation level with a number."
 navigation_title: "Saturation Level"
 ---
 
-Checks the entity's saturation level, which is the invisible value that determines how "full" the entity is, which then determines how long it takes before the hunger level of the entity will go down.
+Compares the entity's saturation level with a number. Saturation is the hidden value that decides how full the entity is, and so how long it takes before its food level starts going down.
 
 Type ID: `apoli:saturation_level`
 
-> **This entity condition type will only work on players.**
+> [!NOTE]
+> This condition only works on players.
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`comparison` | Comparison | | Determines how the saturation level of the player should be compared to the specified value.
-`compare_to` | Float | | The value at which the saturation level of the player will be compared to.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `comparison` | [Comparison](/docs/datapack/data-types/comparison) | _required_ | How the player's saturation level is compared with `compare_to`. |
+| `compare_to` | [Float](/docs/datapack/data-types/float) | _required_ | The number the saturation level is compared with. |
 
 ## Examples
 
@@ -27,4 +28,4 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will check if the player's saturation level reaches 0.
+This checks whether the player's saturation has run out.

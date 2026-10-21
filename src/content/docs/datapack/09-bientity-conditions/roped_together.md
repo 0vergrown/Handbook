@@ -4,13 +4,13 @@ description: Passes when the two entities are connected by an Apoli rope.
 navigation_title: "Roped Together"
 ---
 
-Passes when the actor and the target are joined by a rope created with [`apoli:attach_rope`](/docs/datapack/entity-actions/attach_rope). Direction does not matter — it is true from either end.
+Passes when the actor and the target are joined by a rope made with [`apoli:attach_rope`](/docs/datapack/entity-actions/attach_rope). The direction doesn't matter, so it is true from either end.
 
 Type ID: `apoli:roped_together`
 
 ## Fields
 
-_None._
+This condition has no fields.
 
 ## Examples
 
@@ -25,7 +25,7 @@ Glow for whoever you are tied to:
 }
 ```
 
-Do not damage the person on the other end of your rope:
+Don't damage the person on the other end of your rope:
 
 ```json
 {
@@ -38,7 +38,7 @@ Do not damage the person on the other end of your rope:
 }
 ```
 
-Pull them toward you when you use an ability (the bi-entity [apoli:add_velocity](/docs/datapack/bientity-actions/add_velocity) with a negative `z` pulls the target to the actor):
+Pull them toward you when you use an ability. The bi-entity [apoli:add_velocity](/docs/datapack/bientity-actions/add_velocity) with a negative `z` pulls the target to the actor:
 
 ```json
 {

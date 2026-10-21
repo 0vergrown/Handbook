@@ -1,16 +1,16 @@
 ---
 title: "Water Loggable (Block Condition Type)"
-description: "Checks whether the block is waterloggable, meaning fluid can occupy the same block space (stairs, for example)."
+description: "Checks whether the block can be waterlogged, so a fluid can share its space, as with stairs."
 navigation_title: "Water Loggable"
 ---
 
-Checks whether the block is waterloggable, meaning that there can be fluid in the same block space (e.g. stairs).
+Checks whether the block can be waterlogged, meaning a fluid can share its space, as it can with stairs.
 
 Type ID: `apoli:water_loggable`
 
 ## Fields
 
-_None._
+This condition has no fields.
 
 ## Examples
 

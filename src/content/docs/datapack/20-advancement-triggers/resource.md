@@ -4,19 +4,19 @@ description: "Fires when a resource or cooldown the player holds changes value."
 navigation_title: "Resource"
 ---
 
-Fires every time a [resource](/docs/datapack/powers/resource) or [cooldown](/docs/datapack/powers/cooldown) the player holds is written to, carrying the value it landed on.
+Fires every time a [resource](/docs/datapack/powers/resource) or [cooldown](/docs/datapack/powers/cooldown) the player holds is written to, with the value it ended up at.
 
 Trigger ID: `apoli:resource`
 
 ## Fields
 
-| Field | Type | Default | Purpose |
+| Field | Type | Default | Description |
 | --- | --- | --- | --- |
 | `player` | Entity predicate | _optional_ | The usual vanilla player predicate. |
-| `resource` | [Identifier](/docs/datapack/data-types/identifier) | _optional_ | The resource power that changed. Omit it to match any of them. |
-| `value` | Int range | any | Bounds the value must land inside, as vanilla's `{"min": x, "max": y}` — a bare number means exactly that value. |
+| `resource` | [Identifier](/docs/datapack/data-types/identifier) | _optional_ | The resource power that changed. Leave it out to match any of them. |
+| `value` | Int range | _any_ | Bounds the value must land inside, written like vanilla's `{"min": x, "max": y}`. A plain number means exactly that value. |
 
-## Example
+## Examples
 
 ```json
 {
@@ -33,7 +33,7 @@ Trigger ID: `apoli:resource`
 }
 ```
 
-An advancement for spending everything you had:
+This advancement is granted when `example:mana` reaches 100 or more.
 
 ```json
 {
@@ -50,7 +50,9 @@ An advancement for spending everything you had:
 }
 ```
 
+This one is granted for spending everything, when `example:mana` lands on 0.
+
 ## Notes
 
-- It fires on a **write**, which is what [apoli:modify_resource](/docs/datapack/entity-actions/modify_resource), `/apoli:resource set` and a resource power's own recharge all do. A cooldown counting itself down tick by tick is not a write and does not fire.
-- The value reported is the one actually stored, after the resource's `min`/`max` clamp and after any [apoli:modify_resource_change](/docs/datapack/powers/modify_resource_change).
+- It fires on a write, which is what [apoli:modify_resource](/docs/datapack/entity-actions/modify_resource), `/apoli:resource set` and a resource power's own recharge all do. A cooldown counting itself down tick by tick isn't a write and doesn't fire it.
+- The value reported is the one actually stored, after the resource's `min` and `max` clamp and after any [apoli:modify_resource_change](/docs/datapack/powers/modify_resource_change).

@@ -1,27 +1,27 @@
 ---
 title: "Modify Bounciness (Power Type)"
-description: "Makes the entity bounce off blocks it lands on, and decides whether that landing still hurts."
+description: "Makes the entity bounce off blocks it lands on, and decides whether the landing still hurts."
 navigation_title: "Modify Bounciness"
 aliases: ["modify_block_bounciness"]
 ---
 
-Makes the entity bounce off blocks it lands on. The speed it hits the ground with is run through the [attribute modifiers](/docs/datapack/data-types/attribute-modifier) and becomes upward speed; a result of `0.125` or less is too small to bounce and is ignored.
+Makes the entity bounce off blocks it lands on. The speed it hits the ground with goes through the [attribute modifiers](/docs/datapack/data-types/attribute-modifier) and becomes upward speed. A result of `0.125` or less is too small to bounce and is ignored.
 
 Type ID: `apoli:modify_bounciness`
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|-------------
-`block_condition` | Block Condition Type | *optional* | Only bounce off blocks matching this. Omit and every block bounces.
-`modifier` | [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) | *optional* | Applied to the landing speed to get the bounce height.
-`modifiers` | list of [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) | *optional* | Several of the above.
-`block_action` | Block Action Type | *optional* | Runs on the landed-on block each time a bounce happens.
-`entity_action` | Entity Action Type | *optional* | Runs on the bouncing entity each time a bounce happens.
-`damage` | [Boolean](/docs/datapack/data-types/boolean) | `false` | Whether the entity still takes fall damage on a matching block. Left `false`, a matching landing hurts nothing — the slime-block behaviour.
-`preventable` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Whether sneaking cancels the bounce, the way it cancels a slime block's. Set `false` and the entity bounces even while sneaking.
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `block_condition` | [Block Condition Type](/docs/datapack/block-conditions) | _optional_ | Only bounce off blocks that pass this condition. Without it, every block bounces. |
+| `modifier` | [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) | _optional_ | Applied to the landing speed to get the bounce height. |
+| `modifiers` | [Array](/docs/datapack/data-types/array) of [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) | _optional_ | Several modifiers. |
+| `block_action` | [Block Action Type](/docs/datapack/block-actions) | _optional_ | Runs on the block landed on each time the entity bounces. |
+| `entity_action` | [Entity Action Type](/docs/datapack/entity-actions) | _optional_ | Runs on the bouncing entity each time it bounces. |
+| `damage` | [Boolean](/docs/datapack/data-types/boolean) | `false` | Whether the entity still takes fall damage on a matching block. With `false`, a matching landing doesn't hurt, as on a slime block. |
+| `preventable` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Whether sneaking cancels the bounce, as it does on a slime block. Set it to `false` and the entity bounces even while sneaking. |
 
-`damage` and `preventable` are read from **every** matching power: if any of them sets `damage: true` the landing hurts, and if any sets `preventable: true` sneaking cancels the bounce. Neither field does anything unless a power actually matches the block being landed on, so an entity with no `apoli:modify_bounciness` takes fall damage exactly as vanilla does.
+`damage` and `preventable` are read from every matching power. If any of them sets `damage: true` the landing hurts, and if any sets `preventable: true` sneaking cancels the bounce. Neither field does anything unless a power matches the block being landed on, so an entity without `apoli:modify_bounciness` takes fall damage as it does in vanilla.
 
 ## Examples
 
@@ -55,7 +55,7 @@ Bounce only off wool, keep taking fall damage, and ignore sneaking:
 }
 ```
 
-Bounce and make a noise about it:
+Bounce and play a sound each time:
 
 ```json
 {

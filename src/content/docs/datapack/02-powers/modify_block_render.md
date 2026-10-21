@@ -1,23 +1,24 @@
 ---
 title: "Modify Block Render (Power Type)"
-description: "Modifies how a block would look like to the entity that has the power."
+description: "Changes how blocks look to the entity that has the power."
 navigation_title: "Modify Block Render"
 ---
 
-Modifies how a block would look like to the entity that has the power.
+Changes how blocks look to the entity that has the power.
 
 Type ID: `apoli:modify_block_render`
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|-------------
-`block_condition` | Block Condition Type | _optional_ | If specified, only modify how the blocks that fulfill this condition would look like.
-`block` | Identifier | | The namespace and ID of the replacement block.
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `block_condition` | [Block Condition Type](/docs/datapack/block-conditions) | _optional_ | If set, only blocks that pass this condition change their look. |
+| `block` | [Identifier](/docs/datapack/data-types/identifier) | | The ID of the block they look like instead. |
 
-> This is **render only**. The block is still the real one for collision, breaking, redstone and everything else — only the mesh the chunk builder produces for that player changes.
+> [!NOTE]
+> This only changes rendering. The block is still the real one for collision, breaking, redstone and everything else. Only the mesh the chunk builder makes for that player changes.
 >
-> Chunk meshes are rebuilt on block updates, so a block already on screen when the power is granted keeps its old look until something in that chunk section changes. Re-log or place a block nearby to force the rebuild.
+> Chunk meshes are rebuilt on block updates, so a block that is already on screen when the power is granted keeps its old look until something in that chunk section changes. Relog, or place a block nearby, to force the rebuild.
 
 ## Examples
 
@@ -32,4 +33,4 @@ Field | Type | Default | Description
 }
 ```
 
-This example will make Diamond Ore blocks look like Diamond Blocks.
+This makes diamond ore look like diamond blocks.

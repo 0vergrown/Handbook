@@ -1,18 +1,19 @@
 ---
 title: "Sprinting (Entity Condition Type)"
-description: "Checks whether the entity is currently sprinting."
+description: "Checks whether the player is sprinting."
 navigation_title: "Sprinting"
 ---
 
-Checks whether the entity is currently sprinting.
+Checks whether the entity is sprinting.
 
 Type ID: `apoli:sprinting`
 
-> **This entity condition type will only work on players.**
+> [!NOTE]
+> This condition only works on players.
 
 ## Fields
 
-_None._
+This condition has no fields.
 
 ## Examples
 

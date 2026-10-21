@@ -1,34 +1,26 @@
-<!--
-  TEMPLATE: an action page (or one action within a flavour's page).
-  Copy to src/content/docs/datapack/03-actions/NN-NAME.md
-  Source of truth: action/builtin/FLAVOUR/*Actions.java (registration) and each action's codec().
-  FLAVOUR is one of: entity, bientity, block, item, meta.
--->
 ---
-title: apoli:ACTION_ID
-description: ONE LINE SAYING WHAT HAPPENS WHEN THIS ACTION RUNS.
+title: "NAME (KIND Action Type)"
+description: "ONE_SENTENCE_SUMMARY"
+navigation_title: "NAME"
 ---
 
-<!-- One or two sentences. What does this action DO, and what does it act on? -->
-ONE OR TWO SENTENCES. This is a **FLAVOUR action** — it goes in a `FLAVOUR_action` field.
+ONE_OR_TWO_SENTENCES_ON_WHAT_HAPPENS_WHEN_THE_ACTION_RUNS
+
+Type ID: `apoli:TYPE_ID`
 
 ## Fields
 
-| Field     | Type | Default | Purpose       |
-|-----------|------|---------|---------------|
-| `FIELD_A` | TYPE | DEFAULT | WHAT IT DOES. |
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `FIELD` | [DATA_TYPE](/docs/datapack/data-types/DATA_TYPE) | DEFAULT | WHAT_THE_FIELD_DOES |
 
-<!-- If the action takes no config, say so: "This action has no fields." -->
-
-## Example
+## Examples
 
 ```json
-{
-  "type": "apoli:ACTION_ID",
-  "FIELD_A": EXAMPLE_VALUE
+"entity_action": {
+    "type": "apoli:TYPE_ID",
+    "FIELD": VALUE
 }
 ```
 
-EXPLAIN THE EXAMPLE IN ONE LINE.
-
-<!-- Optional: show it fired from a power, e.g. inside an action_on_hit's bientity_action. -->
+WHAT_THE_EXAMPLE_DOES

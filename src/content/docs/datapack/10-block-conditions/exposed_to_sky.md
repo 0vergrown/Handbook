@@ -1,16 +1,16 @@
 ---
 title: "Exposed To Sky (Block Condition Type)"
-description: "Checks whether the block is exposed to the sky."
+description: "Checks whether the sky is visible from the block's position."
 navigation_title: "Exposed To Sky"
 ---
 
-Checks whether the block is exposed to the sky.
+Checks whether the block is exposed to the sky, with nothing above it blocking the view up.
 
 Type ID: `apoli:exposed_to_sky`
 
 ## Fields
 
-_None._
+This condition has no fields.
 
 ## Examples
 

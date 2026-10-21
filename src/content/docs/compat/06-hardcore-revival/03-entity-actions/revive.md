@@ -1,22 +1,23 @@
 ---
 title: "Revive (Entity Action Type)"
-description: Revives a knocked-out entity.
+description: "Revives a knocked-out entity."
 navigation_title: "Revive"
 ---
 
-Brings a knocked-out entity back up. Does nothing if they are not down.
+Brings a knocked-out entity back up. It does nothing if they aren't down.
 
 Type ID: `apoli:revive`
 
+> [!NOTE]
+> This type needs [Hardcore Revival](https://modrinth.com/mod/hardcore-revival) and doesn't exist without it, so a pack that uses it must depend on the mod.
+
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|-------------
-`apply_effects` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Apply Hardcore Revival's usual post-revive effects. Set to `false` for a clean revive with no penalty.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `apply_effects` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Whether Hardcore Revival's usual effects after a revive are applied. Set it to `false` for a clean revive with no penalty. |
 
 ## Examples
-
-Revive everyone nearby who is down — a medic's ability:
 
 ```json
 {
@@ -33,7 +34,7 @@ Revive everyone nearby who is down — a medic's ability:
 }
 ```
 
-A full-strength revive that skips the usual after-effects, as the payoff for an expensive cost:
+This medic's ability revives everyone within 8 blocks who is down.
 
 ```json
 {
@@ -42,4 +43,4 @@ A full-strength revive that skips the usual after-effects, as the payoff for an 
 }
 ```
 
-> Needs [Hardcore Revival](https://modrinth.com/mod/hardcore-revival). These types do not exist without it, so a pack using them must depend on the mod.
+This revive skips the usual after-effects, as the reward for an expensive cost.

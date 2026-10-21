@@ -1,33 +1,31 @@
 ---
 title: "Stat (Entity Condition Type)"
-description: "Compares one of the player's in-game statistics (the values on the Statistics screen) against a number."
+description: "Compares one of the player's statistics, the values on the Statistics screen, with a number."
 navigation_title: "Stat"
 aliases: ["stats", "status", "statistic"]
 ---
 
-Compares one of the player's in-game statistics (the values on the Statistics screen) against a number.
+Compares one of the player's statistics, the values on the Statistics screen, with a number.
 
-Type ID: `apoli:stat`
-
-Aliases: `apoli:stats`, `apoli:status`, `apoli:statistic` (the legacy `status` field name is also accepted for `stat`)
+Type ID: `apoli:stat` (aliases `apoli:stats`, `apoli:status` and `apoli:statistic`, and the legacy field name `status` is accepted for `stat`)
 
 ## Fields
 
-| Field        | Type                | Default | Description                                                                              |
-| ------------ | ------------------- | ------- | ---------------------------------------------------------------------------------------- |
-| `stat`       | [Stat](/docs/datapack/data-types/stat)    | *required* | Which statistic to read (see below).                                                  |
-| `comparison` | Comparison          | `>=`    | How to compare the stat value.                                                            |
-| `compare_to` | [Integer](/docs/datapack/data-types/integer) | *required* | The number to compare against.                                                        |
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `stat` | [Stat](/docs/datapack/data-types/stat) | _required_ | Which statistic to read (see below). |
+| `comparison` | [Comparison](/docs/datapack/data-types/comparison) | `>=` | How the statistic is compared with `compare_to`. |
+| `compare_to` | [Integer](/docs/datapack/data-types/integer) | _required_ | The number to compare against. |
 
-### [Stat](/docs/datapack/data-types/stat)
+### Stat
 
-Either a plain id string, shorthand for the `minecraft:custom` stat type:
+A [Stat](/docs/datapack/data-types/stat) is either a plain ID string, which is short for the `minecraft:custom` stat type:
 
 ```json
 "stat": "minecraft:jump"
 ```
 
-or an object choosing a typed statistic, where `type` is a stat type (`minecraft:custom`, `minecraft:mined`, `minecraft:crafted`, `minecraft:used`, `minecraft:broken`, `minecraft:picked_up`, `minecraft:dropped`, `minecraft:killed`, `minecraft:killed_by`) and `id` is the entry in that type's registry:
+Or an object that picks a typed statistic, where `type` is a stat type (`minecraft:custom`, `minecraft:mined`, `minecraft:crafted`, `minecraft:used`, `minecraft:broken`, `minecraft:picked_up`, `minecraft:dropped`, `minecraft:killed` or `minecraft:killed_by`) and `id` is the entry in that type's registry:
 
 ```json
 "stat":{
@@ -36,17 +34,17 @@ or an object choosing a typed statistic, where `type` is a stat type (`minecraft
 }
 ```
 
-Custom stat ids include e.g. `minecraft:jump`, `minecraft:deaths`, `minecraft:mob_kills`, `minecraft:play_time`, `minecraft:walk_one_cm`, `minecraft:sprint_one_cm`, `minecraft:damage_dealt`, `minecraft:damage_taken` all distance stats are in centimetres, all time stats in ticks.
+Custom stat IDs include `minecraft:jump`, `minecraft:deaths`, `minecraft:mob_kills`, `minecraft:play_time`, `minecraft:walk_one_cm`, `minecraft:sprint_one_cm`, `minecraft:damage_dealt` and `minecraft:damage_taken`. Every distance stat is in centimetres and every time stat is in ticks.
 
 ## Notes
 
-- **Server side only.** Statistics live on the server (clients only receive them when the stats screen is opened), so this condition always fails when evaluated client-side (don't use it for HUD `hud_render` conditions or other client-evaluated spots).
-- Stats never go below 0. `minecraft:custom` covers all the "action counter" stats; the typed forms count per block/item/entity.
-- Pair with the [apoli:modify_stat](/docs/datapack/entity-actions/modify_stat) to build custom counters that show up on the vanilla Statistics screen.
+- It only works on the server. Statistics live on the server, and clients only receive them when the Statistics screen is opened, so this condition always fails when the client evaluates it. Don't use it in `hud_render` conditions or anywhere else the client evaluates.
+- Stats never go below 0. `minecraft:custom` covers all the stats that count actions, and the typed forms count per block, item or entity.
+- Pair it with [apoli:modify_stat](/docs/datapack/entity-actions/modify_stat) to build custom counters that show up on the vanilla Statistics screen.
 
 ## Example
 
-Run an action once the player has travelled 2 km on foot:
+Let the player use an ability on the attack key once they have walked 2 km:
 
 ```json
 {

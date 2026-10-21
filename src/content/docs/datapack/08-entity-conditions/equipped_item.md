@@ -1,19 +1,19 @@
 ---
 title: "Equipped Item (Entity Condition Type)"
-description: "Checks whether the entity has an item equipped in the specified equipment slot that fulfills the specified Item Condition Type."
+description: "Checks whether the item in one of the entity's equipment slots passes an item condition."
 navigation_title: "Equipped Item"
 ---
 
-Checks whether the entity has an item equipped in the specified equipment slot that fulfills the specified Item Condition Type.
+Checks whether the item in one of the entity's equipment slots passes an item condition.
 
 Type ID: `apoli:equipped_item`
 
 ## Fields
 
-| Field            | Type                | Default | Description                                                                                                                        |
-|------------------|---------------------|---------|------------------------------------------------------------------------------------------------------------------------------------|
-| `equipment_slot` | [String](/docs/datapack/data-types/string)  |         | Determines which equipment slot to check for the item. Accepts `"mainhand"`, `"offhand"`, `"head"`, `"chest"`, `"legs"`, `"feet"`. |
-| `item_condition` | Item Condition Type |         | The item condition type to check for on the item in the specified equipment slot.                                                  |
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `equipment_slot` | [String](/docs/datapack/data-types/string) | _required_ | Which equipment slot to check: `"mainhand"`, `"offhand"`, `"head"`, `"chest"`, `"legs"` or `"feet"`. |
+| `item_condition` | [Item Condition Type](/docs/datapack/item-conditions) | _required_ | The condition the item in that slot must pass. |
 
 ## Examples
 
@@ -29,4 +29,4 @@ Type ID: `apoli:equipped_item`
 }
 ```
 
-This example will check if the item in the entity's mainhand has a harvest level of 2 or more.
+This checks whether the item in the entity's main hand has a harvest level of 2 or more.

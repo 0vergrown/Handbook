@@ -1,18 +1,18 @@
 ---
 title: "Target Action (Bi-Entity Action Type)"
-description: "Executes an Entity Action Type on the target entity."
+description: "Runs an entity action on the target."
 navigation_title: "Target Action"
 ---
 
-Executes an Entity Action Type on the target entity.
+Runs an entity action on the target.
 
 Type ID: `apoli:target_action`
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`action` | Entity Action Type | | The entity action type to execute on the target entity.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `action` | [Entity Action Type](/docs/datapack/entity-actions) | _required_ | The entity action to run on the target. |
 
 ## Examples
 
@@ -26,4 +26,4 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will set the target entity on fire for 5 seconds.
+This sets the target on fire for 5 seconds.

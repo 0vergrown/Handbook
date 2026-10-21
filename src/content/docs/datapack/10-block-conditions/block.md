@@ -1,18 +1,18 @@
 ---
 title: "Block (Block Condition Type)"
-description: "Checks whether the block is a certain block (by ID)."
+description: "Checks whether the block is a given block, or in a block tag."
 navigation_title: "Block"
 ---
 
-Checks whether the block is a certain block (by ID).
+Checks whether the block is a given block, by ID.
 
 Type ID: `apoli:block`
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`block` | [Identifier](/docs/datapack/data-types/identifier) | | The block this block needs to be. Prefix with `#` to match a block tag instead — `"#minecraft:logs"`.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `block` | [Identifier](/docs/datapack/data-types/identifier) | _required_ | The block this block must be. Start it with `#` to match a block tag instead, as in `"#minecraft:logs"`. |
 
 ## Examples
 
@@ -23,7 +23,7 @@ Field  | Type | Default | Description
 }
 ```
 
-This example checks if the block is a Diamond Block.
+This checks whether the block is a diamond block.
 
 ```json
 "block_condition": {
@@ -41,7 +41,7 @@ This example checks if the block is a Diamond Block.
 }
 ```
 
-This example will check if the block is either a Diamond Block or an Emerald Block.
+This checks whether the block is a diamond block or an emerald block.
 
 ```json
 "block_condition": {
@@ -50,6 +50,4 @@ This example will check if the block is either a Diamond Block or an Emerald Blo
 }
 ```
 
-This example passes for any block in the `minecraft:logs` tag. It is the same check as
-[`apoli:in_tag`](/docs/datapack/block-conditions/in_tag) with that tag — use whichever reads
-better where you are.
+This passes for any block in the `minecraft:logs` tag. It is the same check as [`apoli:in_tag`](/docs/datapack/block-conditions/in_tag) with that tag, so use whichever reads better where you are.

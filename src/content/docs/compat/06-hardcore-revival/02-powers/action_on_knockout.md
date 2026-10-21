@@ -1,22 +1,23 @@
 ---
 title: "Action On Knockout (Power Type)"
-description: Runs an action when the entity is knocked out.
+description: "Runs an action when the entity is knocked out."
 navigation_title: "Action On Knockout"
 ---
 
-Fires when the holder is knocked out — the downed state Hardcore Revival uses instead of death.
+Fires when the holder is knocked out, the downed state Hardcore Revival uses instead of death.
 
 Type ID: `apoli:action_on_knockout`
 
+> [!NOTE]
+> This type needs [Hardcore Revival](https://modrinth.com/mod/hardcore-revival) and doesn't exist without it, so a pack that uses it must depend on the mod.
+
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|-------------
-`entity_action` | [Entity Action](/docs/datapack/entity-actions) | _optional_ | Runs on the holder as they go down.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `entity_action` | [Entity Action Type](/docs/datapack/entity-actions) | _optional_ | Runs on the holder as they go down. |
 
 ## Examples
-
-Drop a marker so allies can find you:
 
 ```json
 {
@@ -31,7 +32,7 @@ Drop a marker so allies can find you:
 }
 ```
 
-Spend a charge to soften the blow, so an origin gets one free knockout:
+This leaves a burst of soul particles and a loud sound, so allies can find the holder.
 
 ```json
 {
@@ -44,4 +45,4 @@ Spend a charge to soften the blow, so an origin gets one free knockout:
 }
 ```
 
-> Needs [Hardcore Revival](https://modrinth.com/mod/hardcore-revival). These types do not exist without it, so a pack using them must depend on the mod.
+This spends a charge of the `mypack:second_wind` resource on each knockout, so an origin can, for example, count its free knockouts.

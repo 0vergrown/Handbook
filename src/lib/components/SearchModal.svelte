@@ -1,342 +1,490 @@
 <script>
-	import { onMount, tick } from 'svelte';
+	import { tick } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { base } from '$app/paths';
-	import { searchBlocks } from '$lib/content/index.js';
-	import { searchState } from '$lib/search.svelte.js';
-	import Icon from './Icon.svelte';
+	import { search } from '$lib/search.svelte.js';
 
 	let query = $state('');
 	let selected = $state(0);
-	let input = $state(null);
-	let listEl = $state(null);
+	let input = $state();
+	let list = $state();
 
-	// Pre-lowercase everything once, so each keystroke is a cheap scan.
-	const HAYSTACK = searchBlocks.map((b) => ({
-		block: b,
-		title: b.title.toLowerCase(),
-		crumb: (b.breadcrumb || '').toLowerCase(),
-		content: (b.content || '').toLowerCase(),
-		// type id + legacy aliases; page titles are human, so ids live only here
-		keywords: (b.keywords || []).map((k) => k.toLowerCase()),
-		// heading blocks (deep-links) rank a touch below full pages
-		isSection: b.href.includes('#')
-	}));
+	const results = $derived(search.query(query));
 
-	/**
-	 * Deterministic ranked search. Every query term must match somewhere;
-	 * an exact type id or alias ranks with an exact title, then title matches,
-	 * then breadcrumb, then body text.
-	 */
-	function score(entry, terms) {
-		let total = entry.isSection ? -3 : 0;
-		for (const t of terms) {
-			let best = 0;
-			if (entry.title === t) best = 120;
-			else if (entry.keywords.includes(t)) best = 110;
-			else if (entry.title.startsWith(t)) best = 60;
-			else if (entry.keywords.some((k) => k.startsWith(t))) best = 50;
-			else if (wordStart(entry.title, t)) best = 45;
-			else if (entry.title.includes(t)) best = 30;
-			else if (entry.keywords.some((k) => k.includes(t))) best = 20;
-			else if (entry.crumb.includes(t)) best = 10;
-			else if (entry.content.includes(t)) best = 6;
-			else return -1; // a term matched nothing → drop this result
-			total += best;
-		}
-		return total;
-	}
+	const groups = $derived.by(() => {
+		const out = [];
+		results.forEach((hit, position) => {
+			let group = out.find((candidate) => candidate.section === hit.section);
+			if (!group) {
+				group = { section: hit.section, hits: [] };
+				out.push(group);
+			}
+			group.hits.push({ hit, position });
+		});
+		return out;
+	});
 
-	function wordStart(haystack, term) {
-		let i = haystack.indexOf(term);
-		while (i > 0) {
-			if (!/[a-z0-9]/.test(haystack[i - 1])) return true;
-			i = haystack.indexOf(term, i + 1);
-		}
-		return i === 0;
-	}
+	const order = $derived(groups.flatMap((group) => group.hits.map((entry) => entry.hit)));
 
-	const results = $derived.by(() => {
+	function highlight(text) {
 		const terms = query.toLowerCase().trim().split(/\s+/).filter(Boolean);
-		if (terms.length === 0) return [];
-		const scored = [];
-		for (const entry of HAYSTACK) {
-			const s = score(entry, terms);
-			if (s > 0) scored.push({ block: entry.block, s });
+		if (!terms.length) return [{ text, match: false }];
+		const lower = text.toLowerCase();
+		const marks = new Array(text.length).fill(false);
+		for (const term of terms) {
+			let at = lower.indexOf(term);
+			while (at !== -1) {
+				if (at === 0 || !/[a-z0-9]/.test(lower[at - 1])) marks.fill(true, at, at + term.length);
+				at = lower.indexOf(term, at + 1);
+			}
 		}
-		scored.sort((a, b) => b.s - a.s);
-		return scored.slice(0, 12).map((x) => x.block);
-	});
-
-	// keep the highlighted row valid + in view
-	$effect(() => {
-		results;
-		selected = 0;
-	});
-	$effect(() => {
-		if (listEl) {
-			const el = listEl.querySelector(`[data-i="${selected}"]`);
-			el?.scrollIntoView({ block: 'nearest' });
+		const parts = [];
+		for (let i = 0; i < text.length; i++) {
+			const last = parts[parts.length - 1];
+			if (last && last.match === marks[i]) last.text += text[i];
+			else parts.push({ text: text[i], match: marks[i] });
 		}
-	});
-
-	function open() {
-		searchState.open = true;
-		tick().then(() => input?.focus());
+		return parts;
 	}
+
+	async function show() {
+		search.open = true;
+		search.load();
+		await tick();
+		input?.focus();
+	}
+
 	function close() {
-		searchState.open = false;
+		search.open = false;
 		query = '';
+		selected = 0;
+		document.body.style.overflow = '';
 	}
-	function choose(block) {
-		if (!block) return;
+
+	function choose(hit) {
+		if (!hit) return;
 		close();
-		goto(base + block.href);
+		goto(`${base}${hit.href}`);
 	}
 
-	function onKeydown(e) {
-		if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
-			e.preventDefault();
-			searchState.open ? close() : open();
+	async function move(step) {
+		if (!order.length) return;
+		selected = (selected + step + order.length) % order.length;
+		await tick();
+		list?.querySelector('[aria-selected="true"]')?.scrollIntoView({ block: 'nearest' });
+	}
+
+	function onkeydown(event) {
+		const typing = /^(input|textarea|select)$/i.test(event.target?.tagName ?? '') || event.target?.isContentEditable;
+		if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
+			event.preventDefault();
+			if (search.open) close();
+			else show();
 			return;
 		}
-		if (
-			e.key === '/' &&
-			!searchState.open &&
-			!/input|textarea|select/i.test(e.target?.tagName || '')
-		) {
-			e.preventDefault();
-			open();
+		if (!search.open) {
+			if (event.key === '/' && !typing) {
+				event.preventDefault();
+				show();
+			}
 			return;
 		}
-		if (!searchState.open) return;
-		if (e.key === 'Escape') {
-			e.preventDefault();
+		if (event.key === 'Escape') {
+			event.preventDefault();
 			close();
-		} else if (e.key === 'ArrowDown') {
-			e.preventDefault();
-			selected = Math.min(selected + 1, results.length - 1);
-		} else if (e.key === 'ArrowUp') {
-			e.preventDefault();
-			selected = Math.max(selected - 1, 0);
-		} else if (e.key === 'Enter') {
-			e.preventDefault();
-			choose(results[selected]);
+		} else if (event.key === 'ArrowDown') {
+			event.preventDefault();
+			move(1);
+		} else if (event.key === 'ArrowUp') {
+			event.preventDefault();
+			move(-1);
+		} else if (event.key === 'Enter') {
+			event.preventDefault();
+			choose(order[selected]);
 		}
 	}
 
-	$effect(() => {
-		if (searchState.open) tick().then(() => input?.focus());
-	});
-	$effect(() => {
-		if (typeof document !== 'undefined') {
-			document.body.style.overflow = searchState.open ? 'hidden' : '';
-		}
-	});
-	onMount(() => () => (document.body.style.overflow = ''));
+	function oninput() {
+		selected = 0;
+	}
 
-	const topicLabel = (t) => (t === 'datapack' ? 'Data Pack' : t === 'addon' ? 'Addon' : t);
+	$effect(() => {
+		if (!search.open) return;
+		search.load();
+		document.body.style.overflow = 'hidden';
+		tick().then(() => input?.focus());
+	});
 </script>
 
-<svelte:window onkeydown={onKeydown} />
+<svelte:window {onkeydown} />
 
-{#if searchState.open}
-	<div class="overlay" role="presentation" onclick={close}>
+{#if search.open}
+	<div class="search-container" role="presentation" onclick={close}>
 		<div
-			class="modal"
+			class="search-modal"
 			role="dialog"
 			aria-modal="true"
-			aria-label="Search documentation"
-			onclick={(e) => e.stopPropagation()}
+			aria-label="Search the docs"
+			tabindex="-1"
+			onclick={(event) => event.stopPropagation()}
+			onkeydown={() => {}}
 		>
-			<div class="search-field">
-				<Icon name="search" size={20} />
-				<input
-					bind:this={input}
-					bind:value={query}
-					type="text"
-					placeholder="Search the docs…"
-					spellcheck="false"
-					autocomplete="off"
-				/>
-				<button class="raised close" onclick={close} aria-label="Close search">
-					<Icon name="close" size={16} />
-				</button>
-			</div>
+			<header class="search-modal__header">
+				<form class="search-form" role="search" onsubmit={(event) => event.preventDefault()}>
+					<label class="search-form__label" for="search-input">
+						<svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
+							<path
+								d="M14.386 14.386l4.0877 4.0877-4.0877-4.0877c-2.9418 2.9419-7.7115 2.9419-10.6533 0-2.9419-2.9418-2.9419-7.7115 0-10.6533 2.9418-2.9419 7.7115-2.9419 10.6533 0 2.9419 2.9418 2.9419 7.7115 0 10.6533z"
+								stroke="currentColor"
+								fill="none"
+								fill-rule="evenodd"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+							/>
+						</svg>
+						<span class="visually-hidden">Search</span>
+					</label>
+					<input
+						id="search-input"
+						class="search-form__input"
+						type="search"
+						placeholder="Search docs"
+						autocomplete="off"
+						autocapitalize="off"
+						spellcheck="false"
+						enterkeyhint="go"
+						aria-controls="search-results"
+						bind:value={query}
+						bind:this={input}
+						{oninput}
+					/>
+				</form>
+				<button type="button" class="clean-btn search-modal__cancel" onclick={close}>Cancel</button>
+			</header>
 
-			<div class="results" bind:this={listEl}>
-				{#if query.trim() === ''}
-					<p class="hint">Search powers, actions, conditions, data types and the API.</p>
-				{:else if results.length === 0}
-					<p class="hint">No results for “{query}”.</p>
+			<div class="search-modal__dropdown" id="search-results" bind:this={list}>
+				{#if search.failed}
+					<p class="search-modal__note">The search index did not load. Check your connection and try again.</p>
+				{:else if !query.trim()}
+					<p class="search-modal__note">
+						Search powers, actions, conditions, data types, the Java API and the blog. Type IDs and
+						their old aliases work too.
+					</p>
+				{:else if !search.index}
+					<p class="search-modal__note">Loading the search index…</p>
+				{:else if !results.length}
+					<p class="search-modal__note">No results for "<strong>{query}</strong>".</p>
 				{:else}
-					<ul>
-						{#each results as block, i (block.id)}
-							<li>
-								<a
-									href={base + block.href}
-									data-i={i}
-									class:selected={i === selected}
-									onmouseenter={() => (selected = i)}
-									onclick={() => close()}
-								>
-									<span class="topic-badge" data-topic={block.topic}>{topicLabel(block.topic)}</span>
-									<span class="result-text">
-										<span class="result-title">{block.title}</span>
-										<span class="result-crumb">{block.breadcrumb}</span>
-									</span>
-									<Icon name="arrow-right" size={16} />
-								</a>
-							</li>
-						{/each}
-					</ul>
+					{#each groups as group (group.section)}
+						<section class="search-hits">
+							<div class="search-hits__source">{group.section}</div>
+							<ul role="listbox">
+								{#each group.hits as { hit } (hit.href)}
+									{@const index = order.indexOf(hit)}
+									<li class="search-hit" role="option" aria-selected={index === selected}>
+										<a
+											href="{base}{hit.href}"
+											onclick={close}
+											onmouseenter={() => (selected = index)}
+										>
+											<span class="search-hit__title">
+												{#each highlight(hit.title) as part, partIndex (partIndex)}
+													{#if part.match}<mark>{part.text}</mark>{:else}{part.text}{/if}
+												{/each}
+											</span>
+											<span class="search-hit__path">{hit.crumb}</span>
+										</a>
+									</li>
+								{/each}
+							</ul>
+						</section>
+					{/each}
 				{/if}
 			</div>
 
-			<div class="footer">
-				<span><kbd>↑</kbd><kbd>↓</kbd> to navigate</span>
-				<span><kbd>↵</kbd> to select</span>
-				<span><kbd>esc</kbd> to close</span>
-			</div>
+			<footer class="search-modal__footer">
+				<ul class="search-commands">
+					<li><kbd class="search-key">↵</kbd><span>to select</span></li>
+					<li><kbd class="search-key">↓</kbd><kbd class="search-key">↑</kbd><span>to navigate</span></li>
+					<li><kbd class="search-key">esc</kbd><span>to close</span></li>
+				</ul>
+			</footer>
 		</div>
 	</div>
 {/if}
 
 <style>
-	.overlay {
+	.search-container {
+		background-color: rgba(101, 108, 133, 0.8);
+		height: 100vh;
+		left: 0;
 		position: fixed;
-		inset: 0;
-		z-index: 200;
-		background: rgba(0, 0, 0, 0.4);
-		backdrop-filter: blur(2px);
-		display: flex;
-		justify-content: center;
-		align-items: flex-start;
-		padding: 10vh 1.6rem 1.6rem;
+		top: 0;
+		width: 100vw;
+		z-index: 300;
 	}
 
-	.modal {
-		width: min(64rem, 100%);
-		max-height: 70vh;
+	:global([data-theme='dark']) .search-container {
+		background-color: rgba(9, 10, 17, 0.8);
+	}
+
+	.search-modal {
+		background: var(--hb-search-modal-background);
+		border-radius: 6px;
+		box-shadow:
+			inset 1px 1px 0 0 hsla(0, 0%, 100%, 0.5),
+			0 3px 8px 0 #555a64;
 		display: flex;
 		flex-direction: column;
-		background: var(--sk-bg-1);
-		border: 1px solid var(--sk-border);
-		border-radius: var(--sk-border-radius);
-		box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
-		overflow: hidden;
+		margin: 60px auto auto;
+		max-width: 560px;
+		position: relative;
 	}
 
-	.search-field {
-		display: flex;
+	:global([data-theme='dark']) .search-modal {
+		box-shadow:
+			inset 1px 1px 0 0 #2c2e40,
+			0 3px 8px 0 #000309;
+	}
+
+	.search-modal__header {
 		align-items: center;
-		gap: 1rem;
-		padding: 1.4rem 1.4rem;
-		border-bottom: 1px solid var(--sk-border);
-		color: var(--sk-fg-3);
-	}
-	.search-field input {
-		flex: 1;
-		border: none;
-		background: none;
-		outline: none;
-		font: var(--sk-font-ui-large);
-		font-size: 2rem;
-		color: var(--sk-fg-1);
-	}
-	.close {
-		width: 2.8rem;
-		height: 2.8rem;
+		display: flex;
+		padding: 12px 12px 0;
 	}
 
-	.results {
-		overflow-y: auto;
-		padding: 0.6rem;
+	.search-form {
+		align-items: center;
+		background: var(--ifm-background-surface-color);
+		border-radius: 4px;
+		box-shadow: inset 0 0 0 2px var(--ifm-color-primary);
+		display: flex;
+		flex: 1;
+		height: 56px;
+		padding: 0 12px;
+		position: relative;
 	}
-	.hint {
-		color: var(--sk-fg-4);
-		font: var(--sk-font-ui-medium);
-		padding: 2rem 1.4rem;
+
+	:global([data-theme='dark']) .search-form {
+		background: var(--ifm-background-color);
+	}
+
+	.search-form__label {
+		color: var(--ifm-color-primary-text);
+		display: flex;
+		margin: 0;
+		padding: 0;
+	}
+
+	.search-form__input {
+		appearance: none;
+		background: transparent;
+		border: 0;
+		color: var(--ifm-color-content);
+		flex: 1;
+		font-size: 1.2em;
+		height: 100%;
+		outline: none;
+		padding: 0 0 0 8px;
+		width: 80%;
+	}
+
+	.search-form__input::placeholder {
+		color: var(--ifm-color-emphasis-600);
+		opacity: 1;
+	}
+
+	.search-form__input::-webkit-search-cancel-button {
+		display: none;
+	}
+
+	.search-modal__cancel {
+		color: var(--ifm-color-primary-text);
+		display: none;
+		flex: none;
+		font-size: 1em;
+		font-weight: 500;
+		margin-left: 12px;
+		white-space: nowrap;
+	}
+
+	.search-modal__dropdown {
+		max-height: calc(100vh - 56px - 12px - 44px - 60px - 60px);
+		min-height: 12px;
+		overflow-y: auto;
+		padding: 0 12px;
+		scrollbar-width: thin;
+	}
+
+	.search-modal__note {
+		color: var(--ifm-color-emphasis-700);
+		font-size: 0.9em;
+		margin: 0;
+		padding: 36px 0;
 		text-align: center;
 	}
-	ul {
-		list-style: none;
-	}
-	.results a {
-		display: flex;
-		align-items: center;
-		gap: 1.2rem;
-		padding: 1rem 1.2rem;
-		border-radius: var(--sk-border-radius);
-		color: var(--sk-fg-2);
-		text-decoration: none;
-	}
-	.results a.selected {
-		background: var(--sk-bg-4);
-		color: var(--sk-fg-1);
-	}
-	.results a .result-text {
-		display: flex;
-		flex-direction: column;
-		gap: 0.2rem;
-		flex: 1;
-		min-width: 0;
-	}
-	.result-title {
-		font: var(--sk-font-ui-medium);
-		color: inherit;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-	}
-	.result-crumb {
-		font: var(--sk-font-ui-small);
-		color: var(--sk-fg-4);
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-	}
-	.topic-badge {
-		font: var(--sk-font-ui-small);
-		padding: 0.2rem 0.6rem;
-		border-radius: 100px;
-		background: var(--sk-bg-4);
-		color: var(--sk-fg-3);
-		white-space: nowrap;
-	}
-	.topic-badge[data-topic='datapack'] {
-		background: color-mix(in srgb, hsl(140, 60%, 45%) 20%, var(--sk-bg-4));
-		color: hsl(140, 60%, 32%);
-	}
-	.topic-badge[data-topic='addon'] {
-		background: color-mix(in srgb, hsl(204, 90%, 50%) 20%, var(--sk-bg-4));
-		color: hsl(204, 80%, 42%);
-	}
-	:root.dark .topic-badge[data-topic='datapack'] {
-		color: hsl(140, 55%, 62%);
-	}
-	:root.dark .topic-badge[data-topic='addon'] {
-		color: hsl(204, 80%, 66%);
+
+	.search-hits {
+		margin-bottom: 12px;
 	}
 
-	.footer {
+	.search-hits ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	.search-hits__source {
+		background: var(--hb-search-modal-background);
+		color: var(--ifm-color-primary-text);
+		font-size: 0.85em;
+		font-weight: 600;
+		line-height: 32px;
+		margin: 0 -4px;
+		padding: 8px 4px 0;
+		position: sticky;
+		top: 0;
+		z-index: 10;
+	}
+
+	.search-hit {
+		border-radius: 4px;
 		display: flex;
-		gap: 1.6rem;
-		padding: 1rem 1.4rem;
-		border-top: 1px solid var(--sk-border);
-		color: var(--sk-fg-4);
-		font: var(--sk-font-ui-small);
+		padding-bottom: 4px;
+		position: relative;
 	}
-	.footer kbd {
-		font-size: 1.1rem;
-		padding: 0.1rem 0.4rem;
-		background: var(--sk-bg-3);
-		border: 1px solid var(--sk-border);
-		border-bottom-width: 2px;
-		margin-right: 0.2rem;
+
+	.search-hit a {
+		background: var(--hb-search-hit-background);
+		border-radius: 4px;
+		box-shadow: var(--hb-search-hit-shadow);
+		color: var(--ifm-color-emphasis-800);
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		min-height: 56px;
+		padding: 6px 12px;
+		width: 100%;
 	}
-	@media (max-width: 520px) {
-		.footer {
+
+	.search-hit a:hover {
+		text-decoration: none;
+	}
+
+	.search-hit[aria-selected='true'] a {
+		background-color: var(--ifm-color-primary-text);
+		color: var(--ifm-color-emphasis-0);
+	}
+
+	.search-hit__title {
+		font-size: 0.9em;
+		font-weight: 500;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.search-hit__title mark {
+		background: none;
+		color: var(--ifm-color-primary-text);
+		text-decoration: underline;
+		text-underline-offset: 0.15em;
+	}
+
+	.search-hit[aria-selected='true'] .search-hit__title mark {
+		color: inherit;
+	}
+
+	.search-hit__path {
+		font-size: 0.75em;
+		opacity: 0.8;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.search-modal__footer {
+		align-items: center;
+		background: var(--ifm-background-surface-color);
+		border-radius: 0 0 8px 8px;
+		box-shadow:
+			0 -1px 0 0 var(--ifm-color-emphasis-200),
+			0 -3px 6px 0 rgba(69, 98, 155, 0.12);
+		display: flex;
+		flex-direction: row-reverse;
+		flex-shrink: 0;
+		height: 44px;
+		justify-content: space-between;
+		padding: 0 12px;
+		position: relative;
+		user-select: none;
+		width: 100%;
+		z-index: 300;
+	}
+
+	.search-commands {
+		color: var(--ifm-color-emphasis-600);
+		display: flex;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	.search-commands li {
+		align-items: center;
+		display: flex;
+	}
+
+	.search-commands li:not(:last-of-type) {
+		margin-right: 0.8em;
+	}
+
+	.search-commands span {
+		font-size: 0.75em;
+		margin-left: 0.4em;
+	}
+
+	.search-key {
+		align-items: center;
+		background: var(--hb-search-key-background);
+		border: 0;
+		border-radius: 2px;
+		box-shadow: var(--hb-search-key-shadow);
+		color: var(--ifm-color-emphasis-600);
+		display: flex;
+		font-family: var(--ifm-font-family-base);
+		font-size: 0.75em;
+		height: 18px;
+		justify-content: center;
+		margin-right: 0.4em;
+		padding: 0 0 1px;
+		width: 20px;
+	}
+
+	.search-key:last-of-type {
+		margin-right: 0;
+	}
+
+	@media (max-width: 768px) {
+		.search-modal {
+			border-radius: 0;
+			box-shadow: none;
+			height: 100vh;
+			margin: 0;
+			max-width: 100%;
+			width: 100%;
+		}
+
+		.search-modal__dropdown {
+			flex: 1;
+			max-height: none;
+		}
+
+		.search-modal__cancel {
+			display: inline-block;
+		}
+
+		.search-modal__footer {
 			display: none;
 		}
 	}

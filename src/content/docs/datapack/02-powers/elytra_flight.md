@@ -1,19 +1,19 @@
 ---
 title: "Elytra Flight (Power Type)"
-description: "Allows the player to fly as if they had an Elytra equipped."
+description: "Lets the player fly as if they had an Elytra equipped."
 navigation_title: "Elytra Flight"
 ---
 
-Allows the player to fly as if they had an Elytra equipped.
+Lets the player fly as if they had an Elytra equipped.
 
 Type ID: `apoli:elytra_flight`
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`render_elytra` | Boolean |  | Determines whether an Elytra should render on the player's back while this power is active. A rendered Elytra hides the player's cape, the same way a worn one does.
-`texture_location` | Identifier | _optional_ | If specified, this will be the texture used by the Elytra granted by this power.
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `render_elytra` | [Boolean](/docs/datapack/data-types/boolean) | | Whether an Elytra renders on the player's back while the power is active. A rendered Elytra hides the player's cape, as a worn one does. |
+| `texture_location` | [Identifier](/docs/datapack/data-types/identifier) | _optional_ | If set, the texture used for the Elytra this power renders. |
 
 ## Examples
 
@@ -24,7 +24,7 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will grant the player the ability to fall-fly, with the Elytra not being rendered.
+This lets the player glide without rendering an Elytra.
 
 ```json
 {
@@ -34,4 +34,4 @@ This example will grant the player the ability to fall-fly, with the Elytra not 
 }
 ```
 
-This example will grant the player the ability to fall-fly, with the Elytra being rendered as the default texture.
+This lets the player glide and renders an Elytra with the default texture.

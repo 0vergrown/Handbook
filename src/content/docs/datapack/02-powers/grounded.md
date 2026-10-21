@@ -1,10 +1,10 @@
 ---
 title: "Grounded (Power Type)"
-description: "An entity with this power counts as being 'on ground', meaning regular walking mechanics can occur even if the entity isn't physically on a block."
+description: "The entity counts as standing on the ground, even when it isn't on a block."
 navigation_title: "Grounded"
 ---
 
-An entity with this power counts as being "on ground", meaning regular walking mechanics can occur even if the entity isn't physically on a block.
+An entity with this power counts as standing on the ground, so normal walking works even when it isn't on a block.
 
 Type ID: `apoli:grounded`
 
@@ -20,7 +20,7 @@ _None._
 }
 ```
 
-The most basic example - always counts the player as being on the ground, allowing them to jump even while in the air.
+This always counts the player as on the ground, so they can jump in mid-air.
 
 ```json
 {
@@ -69,4 +69,4 @@ The most basic example - always counts the player as being on the ground, allowi
 }
 ```
 
-A combination of powers which allows the player to walk on air (neither jump nor fall) for a short duration when they use their primary ability key.
+These powers let the player walk on air, neither jumping nor falling, for a short time after they press their primary ability key.

@@ -1,23 +1,23 @@
 ---
 title: "Explode (Block Action Type)"
-description: "Summons an explosion with a specific explosion power."
+description: "Creates an explosion of a given power at the block's position."
 navigation_title: "Explode"
 ---
 
-Summons an explosion with a specific explosion power.
+Creates an explosion of a given power at the block's position.
 
 Type ID: `apoli:explode`
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|-------------
-`power` | Float | | Determines the power of the explosion.
-`destruction_type` | Destruction Type | `"break"` | Determines the effect of the explosion to the terrain.
-`damage_targets` | Boolean | `true` | Determines if entities caught in the blast take damage. `false` still breaks blocks and applies knockback.
-`indestructible` | Block Condition Type | _optional_ | If specified, the blocks that fulfill this condition will not be destroyed by the summoned explosion.
-`destructible` | Block Condition Type | _optional_ | If specified, only the blocks that fulfill this condition will be destroyed by the summoned explosion.
-`create_fire` | Boolean | `false` | Determines if the summoned explosion should create fire.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `power` | [Float](/docs/datapack/data-types/float) | _required_ | The power of the explosion. |
+| `destruction_type` | [Destruction Type](/docs/datapack/data-types/destruction-type) | `"break"` | What the explosion does to the terrain. |
+| `damage_targets` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Whether entities caught in the blast take damage. `false` still breaks blocks and applies knockback. |
+| `indestructible` | [Block Condition Type](/docs/datapack/block-conditions) | _optional_ | Blocks that pass this condition aren't destroyed by the explosion. |
+| `destructible` | [Block Condition Type](/docs/datapack/block-conditions) | _optional_ | Only blocks that pass this condition are destroyed by the explosion. |
+| `create_fire` | [Boolean](/docs/datapack/data-types/boolean) | `false` | Whether the explosion starts fires. |
 
 ## Examples
 
@@ -30,7 +30,7 @@ Field | Type | Default | Description
 }
 ```
 
-This example will summon an explosion at the position of where the block action was invoked that would not destroy the terrain nor spread fire.
+This creates an explosion at the block's position that neither damages the terrain nor starts fires.
 
 ```json
 "block_action": {
@@ -45,4 +45,4 @@ This example will summon an explosion at the position of where the block action 
 }
 ```
 
-This example will summon an explosion at the position of where the block action was invoked that would only destroy blocks that are in the `#minecraft:impermeable` (`data/minecraft/tags/blocks/impermeable.json`) block tag.
+This creates an explosion at the block's position that only destroys blocks in the `#minecraft:impermeable` block tag (`data/minecraft/tags/blocks/impermeable.json`).

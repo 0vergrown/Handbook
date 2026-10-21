@@ -1,16 +1,16 @@
 ---
 title: "Extinguish (Entity Action Type)"
-description: "Extinguishes the fire from the entity, removing the burning effect."
+description: "Puts out the fire on the entity."
 navigation_title: "Extinguish"
 ---
 
-Extinguishes the fire from the entity, removing the burning effect.
+Puts out the fire on the entity, so it stops burning.
 
 Type ID: `apoli:extinguish`
 
 ## Fields
 
-_None._
+This action has no fields.
 
 ## Examples
 

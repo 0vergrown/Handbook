@@ -1,23 +1,22 @@
 ---
 title: "Feed (Entity Action Type)"
-description: "Feeds the entity, filling up their hunger bar as if they had eaten a food item with the provided values."
+description: "Fills a player's hunger bar as if they had eaten a food item with the given values."
 navigation_title: "Feed"
 ---
 
-Feeds the entity, filling up their hunger bar as if they had eaten a food item with the provided values.
+Feeds the player, filling their hunger bar as if they had eaten a food item with the given values.
 
 Type ID: `apoli:feed`
 
-> The actual food saturation level is determined by the `food * saturation * 2` formula.
-
-> **This entity action type will only work on players.**
+> [!NOTE]
+> This action only works on players. The saturation the player gets is worked out as `food * saturation * 2`.
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`food` | Integer or [Expression](/docs/datapack/data-types/expression) |  | The amount of food points to restore.
-`saturation` | Float or [Expression](/docs/datapack/data-types/expression) |  | The amount of saturation points to restore.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `food` | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | _required_ | How many food points to restore. |
+| `saturation` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | _required_ | The saturation value of the food, used in the formula above. |
 
 ## Examples
 
@@ -29,4 +28,4 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will *feed* the player 2 hunger shanks (4 hunger points), and 16 saturation points.
+This restores 2 hunger shanks (4 food points) and 16 saturation points.

@@ -1,22 +1,23 @@
 ---
 title: "Command (Entity Condition Type)"
-description: "Compares the result of the specified command to the specified value."
+description: "Runs a command and compares its result with a number."
 navigation_title: "Command"
 ---
 
-Compares the result of the specified command to the specified value.
+Runs a command and compares its result with a number.
 
 Type ID: `apoli:command`
 
-> This entity condition type only operates on the **server-side**, meaning that it cannot be used in fields that are evaluated on the client-side.
+> [!WARNING]
+> This condition only works on the server, so it can't be used in fields that are evaluated on the client.
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`command` | String | |  The command to execute.
-`comparison` | Comparison | | Determines how the result value (an integer) of the executed command should be compared to the specified value.
-`compare_to` | Integer | | The value at which the result value (an integer) of the executed command will be compared to.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `command` | [String](/docs/datapack/data-types/string) | _required_ | The command to run. |
+| `comparison` | [Comparison](/docs/datapack/data-types/comparison) | _required_ | How the command's result, an integer, is compared with `compare_to`. |
+| `compare_to` | [Integer](/docs/datapack/data-types/integer) | _required_ | The number the result is compared with. |
 
 ## Examples
 
@@ -28,7 +29,8 @@ Field  | Type | Default | Description
     "compare_to": 1
 }
 ```
-This example will check if the entity has the same score in the `objective1` and `objective2` scoreboard objectives.
+
+This checks whether the entity has the same score in the `objective1` and `objective2` scoreboard objectives.
 
 ```json
 "condition": {
@@ -39,4 +41,4 @@ This example will check if the entity has the same score in the `objective1` and
 }
 ```
 
-This example will check if there are 4 or more entities that are included in the `#minecraft:skeletons` (`data/minecraft/tags/entity_types/skeletons.json`) entity type tag within a 64 blocks spherical radius relative to the entity.
+This checks whether there are 4 or more entities from the `#minecraft:skeletons` entity type tag (`data/minecraft/tags/entity_types/skeletons.json`) within 64 blocks of the entity.

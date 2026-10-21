@@ -1,32 +1,30 @@
 ---
 title: "Game Event Listener (Power Type)"
-description: "Executes an action upon listening to a game event or vibration."
+description: "Runs an action when the entity hears a game event or vibration."
 navigation_title: "Game Event Listener"
 ---
 
-Executes an action upon listening to a game event or vibration.
+Runs an action when the entity that has the power hears a game event or vibration. The actor is the entity that emitted the game event, and the target is the entity with the power.
 
 Type ID: `apoli:game_event_listener`
 
-> In the context of this power type, the '**actor**' entity is the entity that emmited the game event or vibration while the '**target**' entity is the entity that has the power.
-
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|-------------
-`trigger_order` | String | `"unspecified"` | Determines whether the power type should prioritize game events by distance (`"by_distance"`) or arbitrarily (`"unspecified"`).
-`entity` | Boolean | `true` | Determines whether the power type should listen to game events emitted by entities.
-`block` | Boolean | `true` | Determines whether the power type should listen to game events emitted by blocks.
-`bientity_action` | Bi-entity Action Type | _optional_ | If specified, this action will be executed on either or both the '**actor**' and '**target**' entities.
-`bientity_condition` | Bi-entity Condition Type | _optional_ | If specified, the specified actions will only be executed if this condition is fulfilled by either or both '**actor**' and '**target**' entities.
-`block_action` | Block Action Type | _optional_ | If specified, this block action type will be executed at the position where the game event or vibration was emitted.
-`block_condition` | Block Condition Type | _optional_ | If specified, only executes the actions if the game event or vibration is emitted by a block that fulfills the block condition.
-`cooldown` | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | `1` | Interval of ticks this power needs to recharge before being able to listen to game events or vibrations again.
-`hud_render` | Hud Render | `{"should_render": false}` | Determines how the cooldown of this power is visualized on the HUD.
-`event` | Identifier | _optional_ | If specified, will make the power only listen for the game events with this namespace and IDs.
-`events` | Array of Identifiers | _optional_ | If specified, will make the power only listen for the game events with these namespace and IDs.
-`event_tag` | Identifier | _optional_ | If specified, will make the power only listen for the game events inside game event tag. The leading `#` is optional.
-`show_particle` | Boolean | `true` | Determines whether the vibration should emit a particle effect.
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `trigger_order` | [String](/docs/datapack/data-types/string) | `"unspecified"` | Whether game events are handled nearest first (`"by_distance"`) or in any order (`"unspecified"`). |
+| `entity` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Whether the power listens to game events emitted by entities. |
+| `block` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Whether the power listens to game events emitted by blocks. |
+| `bientity_action` | [Bi-entity Action Type](/docs/datapack/bientity-actions) | _optional_ | If set, this action runs on the actor, the target or both. |
+| `bientity_condition` | [Bi-entity Condition Type](/docs/datapack/bientity-conditions) | _optional_ | If set, the actions only run when the actor and target pass this condition. |
+| `block_action` | [Block Action Type](/docs/datapack/block-actions) | _optional_ | If set, this action runs at the position where the game event was emitted. |
+| `block_condition` | [Block Condition Type](/docs/datapack/block-conditions) | _optional_ | If set, the actions only run when the game event comes from a block that passes this condition. |
+| `cooldown` | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | `1` | Ticks the power needs to recharge before it can hear game events again. |
+| `hud_render` | [HUD Render](/docs/datapack/data-types/hud-render) | `{"should_render": false}` | How the cooldown is shown on the HUD. |
+| `event` | [Identifier](/docs/datapack/data-types/identifier) | _optional_ | If set, the power only listens for this game event. |
+| `events` | [Array](/docs/datapack/data-types/array) of [Identifiers](/docs/datapack/data-types/identifier) | _optional_ | If set, the power only listens for these game events. |
+| `event_tag` | [Identifier](/docs/datapack/data-types/identifier) | _optional_ | If set, the power only listens for game events in this tag. The leading `#` is optional. |
+| `show_particle` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Whether the vibration shows a particle. |
 
 ## Examples
 
@@ -44,6 +42,10 @@ Field | Type | Default | Description
 }
 ```
 
-This example will set the entity with the power on fire every time the `hit_ground` game event is emmited.
+This sets the entity with the power on fire every time it hears the `hit_ground` game event.
 
-> `minecraft:hit_ground` is emitted by vanilla on **any** landing with a fall distance above 0, even a one-block hop, so filter with a bi-entity or block condition if you only want damaging falls. When you are testing on a dedicated server with no players online, entity ticking pauses after 15 seconds — mobs freeze and no events fire.
+> [!NOTE]
+> Vanilla emits `minecraft:hit_ground` on any landing with a fall distance above 0, even a one-block hop, so filter with a bi-entity or block condition if you only want damaging falls.
+
+> [!TIP]
+> When you test on a dedicated server with no players online, entity ticking pauses after 15 seconds. Mobs freeze and no events fire.

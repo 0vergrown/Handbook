@@ -1,21 +1,21 @@
 ---
 title: "Enchantment (Item Condition Type)"
-description: "Checks the level of a certain enchantment, or the amount of individual enchantments on the item."
+description: "Compares the level of an enchantment on the item, or the number of enchantments it has, with a number."
 navigation_title: "Enchantment"
 ---
 
-Checks the level of a certain enchantment, or the amount of individual enchantments on the item.
+Compares the level of an enchantment on the item, or the number of enchantments it has, with a number.
 
 Type ID: `apoli:enchantment`
 
 ## Fields
 
-| Field               | Type                   | Default    | Description                                                                                                                                                                        |
-|---------------------|------------------------|------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `enchantment`       | [Identifier](/docs/datapack/data-types/identifier) | _optional_ | If specified, the level of the enchantment that corresponds to this identifier will be compared. Otherwise, the amount of enchantments in the item stack will be compared instead. |
-| `use_modifications` | [Boolean](/docs/datapack/data-types/boolean)    | `true`     | Whether to count levels changed by [`apoli:modify_enchantment_level`](/docs/datapack/powers/modify_enchantment_level). They apply when the item is worn or held by an entity with that power, or when the check runs for an entity with that power (e.g. inside [`apoli:equipped_item`](/docs/datapack/entity-conditions/equipped_item) or [`apoli:inventory`](/docs/datapack/entity-conditions/inventory)). With `false`, only the enchantments stored on the item are read. |
-| `comparison`        | [Comparison](/docs/datapack/data-types/comparison) | `">"`      | Determines how the level of the specified enchantment, or the amount of enchantments in the item stack, should be compared to the specified value.                                 |
-| `compare_to`        | [Integer](/docs/datapack/data-types/integer)    | `0`        | The value at which the level of the specified enchantment, or the amount of the enchantments in the item stack, will be compared to.                                               |
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `enchantment` | [Identifier](/docs/datapack/data-types/identifier) | _optional_ | The enchantment whose level is compared. Without it, the number of enchantments on the stack is compared instead. |
+| `use_modifications` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Whether to count levels changed by [`apoli:modify_enchantment_level`](/docs/datapack/powers/modify_enchantment_level). They apply when the item is worn or held by an entity with that power, or when the check runs for an entity with that power, for example inside [`apoli:equipped_item`](/docs/datapack/entity-conditions/equipped_item) or [`apoli:inventory`](/docs/datapack/entity-conditions/inventory). With `false`, only the enchantments stored on the item are read. |
+| `comparison` | [Comparison](/docs/datapack/data-types/comparison) | `">"` | How the level, or the number of enchantments, is compared with `compare_to`. |
+| `compare_to` | [Integer](/docs/datapack/data-types/integer) | `0` | The number it is compared with. |
 
 ## Examples
 
@@ -27,7 +27,8 @@ Type ID: `apoli:enchantment`
     "compare_to": 3
 }
 ```
-This example will check if the item has the Fortune III enchantment.
+
+This checks whether the item has Fortune III.
 
 ```json
 "item_condition": {
@@ -36,11 +37,13 @@ This example will check if the item has the Fortune III enchantment.
     "compare_to": 3
 }
 ```
-This example will check if the item has 3 or more enchantments.
+
+This checks whether the item has 3 or more enchantments.
 
 ```json
 "item_condition": {
     "type": "apoli:enchantment"
 }
 ```
-This example will check if the item has any enchantment at all.
+
+This checks whether the item has any enchantment at all.

@@ -1,13 +1,13 @@
 ---
 title: Auxiliary state & persistence
-description: Store per-power data that saves with the entity and survives relog.
+description: "Storing data for each power that saves with the entity and survives relogs."
 ---
 
-A [`PowerType`](/docs/addon/api/registering-power-types) is a **singleton** — one instance serves every entity — so it must be stateless. Anything a power needs to remember between ticks (a counter, a timer, an accumulated value) lives in the [power container](/docs/addon/systems/power-container)'s **auxiliary data**, keyed by power id.
+A [`PowerType`](/docs/addon/api/registering-power-types) is a singleton, with one instance serving every entity, so it must be stateless. Anything a power needs to remember between ticks, such as a counter, a timer or an accumulated value, lives in the [power container](/docs/addon/systems/power-container)'s auxiliary data, keyed by power ID.
 
-## Reading & writing aux data
+## Reading and writing aux data
 
-Aux accessors live on `PowerContainerImpl`:
+The aux setters live on `PowerContainerImpl`:
 
 ```java
 if (holder instanceof PowerContainerImpl impl) {
@@ -16,28 +16,28 @@ if (holder instanceof PowerContainerImpl impl) {
 }
 ```
 
-There are typed accessors for the common cases (`getAuxInt`/`setAuxInt`, and a general NBT tag via `getAuxNbt`/`setAuxNbt`). Store what you need under the power's own id so it never collides with another power.
+There are typed accessors for the common cases (`getAuxInt` and `setAuxInt`), and a general NBT tag through `getAuxNbt` and `setAuxNbt`. Store what you need under the power's own ID so it never collides with another power.
 
 ## Clean up on removal
 
-Aux data outlives nothing it shouldn't — remove it when the power is truly gone:
+Remove aux data when the power is really gone. Here `removeAux` clears it once the last source has let go:
 
 ```java
 @Override public void onRemoved(ResourceLocation id, Cfg cfg, PowerContainer holder, ResourceLocation source) {
     if (!holder.hasPower(id) && holder instanceof PowerContainerImpl impl) {
-        impl.removeAux(id); // last source let go
+        impl.removeAux(id);
     }
 }
 ```
 
-Because a power can be granted by several sources, only clear state once `hasPower` reports the power is finally absent.
+Because a power can be granted by several sources, only clear state once `hasPower` says the power is finally absent.
 
-## Persistence is opt-in per value
+## Keep state in the container
 
-Aux data is serialised with the entity and restored on load, so a resource keeps its value across relog. If you keep state *outside* the container — say a `Map<UUID, ...>` — it will **not** persist and will leak. Two rules:
+Aux data is saved with the entity and restored on load, so a resource keeps its value across relogs. State you keep outside the container, such as a `Map<UUID, ...>`, isn't saved and leaks. Two rules follow:
 
 1. Prefer aux data over external maps.
-2. If you must use an external map (e.g. for transient client state), clear the entry when the entity is removed.
+2. If you must use an external map, for example for temporary client state, clear the entry when the entity is removed.
 
 ```java
 public static void onEntityGone(UUID entityId) {
@@ -47,4 +47,4 @@ public static void onEntityGone(UUID entityId) {
 
 ## Mark dirty when you mutate
 
-Cached serialisation and client sync only update when the container is told the data changed. After mutating stored state, mark it dirty (`markDirty` / `setAuxNbt` do this for you). A stale cache that never re-saves is a **data-loss bug** — worse than a slow one.
+Cached saving and client sync only update when the container is told the data changed. `setAuxInt` and `setAuxInts` mark the container dirty themselves when the value changes. After any other change to stored state, including `setAuxNbt`, call `markDirty()`. A stale cache that never saves again is a data loss bug, which is worse than a slow one.

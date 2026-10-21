@@ -5,21 +5,21 @@ navigation_title: "Holder Condition"
 aliases: ["holder", "shappoli:holder_condition", "shappoli:holder"]
 ---
 
-Tests an [entity condition](/docs/datapack/entity-conditions) against whoever is holding the stack. Fails when nothing is holding it — an item on the ground or in a chest has no holder.
+Tests an [entity condition](/docs/datapack/entity-conditions) against whoever is holding the stack. It fails when nothing is holding it, since an item on the ground or in a chest has no holder.
 
-This is the bridge from an item context back to an entity one, which is what lets an item condition depend on the person rather than the item.
+It connects an item context back to an entity, which lets an item condition depend on the person instead of the item.
 
-Type ID: `apoli:holder_condition` (aliases `apoli:holder`, `shappoli:holder_condition`)
+Type ID: `apoli:holder_condition` (aliases `apoli:holder` and `shappoli:holder_condition`)
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|-------------
-`entity_condition` | [Entity Condition](/docs/datapack/entity-conditions) | **required** | The condition to test against the holder. `condition` is accepted as a legacy spelling.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `entity_condition` | [Entity Condition Type](/docs/datapack/entity-conditions) | _required_ | The condition to test against the holder. `condition` is accepted as a legacy spelling. |
 
 ## Example
 
-A cursed sword that only bites for people who are not sneaking: any sword gets three extra levels of Sharpness through [apoli:modify_enchantment_level](/docs/datapack/powers/modify_enchantment_level), but only while its holder stands up straight:
+A cursed sword that only bites for people who aren't sneaking. Any sword gets three extra levels of Sharpness through [apoli:modify_enchantment_level](/docs/datapack/powers/modify_enchantment_level), but only while its holder stands up straight:
 
 ```json
 {
@@ -42,7 +42,7 @@ A cursed sword that only bites for people who are not sneaking: any sword gets t
 }
 ```
 
-Or gate an item's use on the holder's resource:
+Or make an item's use depend on the holder's resource:
 
 ```json
 {

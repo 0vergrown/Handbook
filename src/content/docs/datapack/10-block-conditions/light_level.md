@@ -1,22 +1,23 @@
 ---
 title: "Light Level (Block Condition Type)"
-description: "Allows checking the light level at the block's position."
+description: "Compares the light level at the block's position with a number."
 navigation_title: "Light Level"
 ---
 
-Allows checking the light level at the block's position.
+Compares the light level at the block's position with a number.
 
 Type ID: `apoli:light_level`
 
-> If no light type is specified in the `light_type` field, the highest light level between the block light level and **internal** sky light level will be used as the "resulting" light level of the position of the block.
+> [!NOTE]
+> Without a `light_type`, the light level used is the higher of the block light level and the internal sky light level at the position.
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`light_type` | String | _optional_ | If specified, determines the type of light level to compare. Accepts `"sky"` or `"block"`.
-`comparison` | Comparison | | Determines how the light level should be compared to the specified value.
-`compare_to` | Integer | | The value at which the light level will be compared to.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `light_type` | [String](/docs/datapack/data-types/string) | _optional_ | Which kind of light to compare: `"sky"` or `"block"`. |
+| `comparison` | [Comparison](/docs/datapack/data-types/comparison) | _required_ | How the light level is compared with `compare_to`. |
+| `compare_to` | [Integer](/docs/datapack/data-types/integer) | _required_ | The number the light level is compared with. |
 
 ## Examples
 
@@ -29,4 +30,4 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will check if the light level at the specified position is more than 10, and is emitted by a block.
+This checks whether the block light at the position, the light given off by blocks, is above 10.

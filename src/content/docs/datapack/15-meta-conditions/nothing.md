@@ -4,15 +4,15 @@ description: Tests nothing, and always passes.
 navigation_title: "Nothing"
 ---
 
-Tests nothing, and therefore always passes. It is the condition half of [`apoli:nothing`](/docs/datapack/meta-actions/nothing) — a way to write "no condition here" in a field that requires one.
+Tests nothing, so it always passes. It is the condition half of [`apoli:nothing`](/docs/datapack/meta-actions/nothing), a way to write "no condition here" in a field that requires one.
 
 Type ID: `apoli:nothing`
 
-It is a meta type, so it is available wherever a condition is: entity, bi-entity, block, item, damage, fluid and biome conditions all accept it. Use [`apoli:constant`](/docs/datapack/meta-conditions/constant) instead when you want to pick the answer, since `apoli:nothing` is always `true`.
+It is a meta type, so it works wherever a condition does: entity, bi-entity, block, item, damage, fluid and biome conditions all accept it. Use [`apoli:constant`](/docs/datapack/meta-conditions/constant) instead when you want to pick the answer, since `apoli:nothing` is always `true`.
 
 ## Fields
 
-_None._
+This condition has no fields.
 
 ## Examples
 
@@ -22,7 +22,7 @@ _None._
 }
 ```
 
-As the placeholder branch of an [`apoli:if_case`](/docs/datapack/meta-actions/if_case) chain, where the last case should always be reached:
+As the last branch of an [`apoli:if_case`](/docs/datapack/meta-actions/if_case) chain, which should always be reached:
 
 ```json
 {
@@ -40,4 +40,5 @@ As the placeholder branch of an [`apoli:if_case`](/docs/datapack/meta-actions/if
 }
 ```
 
-> `inverted: true` works here like it does on any condition, so `{"type": "apoli:nothing", "inverted": true}` never passes.
+> [!NOTE]
+> `inverted: true` works here as it does on any condition, so `{"type": "apoli:nothing", "inverted": true}` never passes.

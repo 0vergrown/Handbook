@@ -1,16 +1,16 @@
 ---
 title: "Ender Chest (Entity Action Type)"
-description: "Brings up the Ender Chest GUI as if the player has interacted with one."
+description: "Opens the player's Ender Chest screen, as if they had used an Ender Chest."
 navigation_title: "Ender Chest"
 ---
 
-Brings up the Ender Chest GUI as if the player has interacted with one.
+Opens the player's Ender Chest screen, as if they had used an Ender Chest.
 
 Type ID: `apoli:ender_chest`
 
 ## Fields
 
-_None._
+This action has no fields.
 
 ## Examples
 

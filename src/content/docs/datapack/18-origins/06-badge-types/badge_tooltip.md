@@ -1,27 +1,26 @@
 ---
 title: "Tooltip (Badge Type)"
-description: "Badge — an icon with hover text in the origin screen."
+description: "An icon with hover text in the origin screen."
 navigation_title: "Tooltip"
 ---
 
-An icon in the origin-selection screen that shows a line of text when hovered. The everyday [badge](/docs/datapack/origins/badges) type for explaining a power.
+An icon in the origin selection screen that shows a line of text when hovered. It is the everyday [badge](/docs/datapack/origins/badges) type for explaining a power.
 
-Type ID: `origins:tooltip` — a badge type.
+Type ID: `origins:tooltip`
 
-> **Needs the Origins mod.** Badges are an Origins concept; core Apoli has no equivalent. Not to be confused with the [`apoli:tooltip`](/docs/datapack/powers/tooltip) *power*, which adds a line to an item's tooltip in-world.
+> [!NOTE]
+> Badges come from the Origins mod, and core Apoli has nothing like them. Don't confuse this with the [`apoli:tooltip`](/docs/datapack/powers/tooltip) power, which adds a line to an item's tooltip in the world.
 
 ## Fields
 
-| Field | Type | Default | Purpose |
+| Field | Type | Default | Description |
 | --- | --- | --- | --- |
-| `sprite` | [Identifier](/docs/datapack/data-types/identifier) | _required_ | Full path to the texture to draw, e.g. `origins:textures/gui/badge/isaacfanta/active.png`. |
-| `text` | [Text Component](/docs/datapack/data-types/text-component) | _required_ | The hover text. A bare string is a literal; use an object for a translation key or styling. |
+| `sprite` | [Identifier](/docs/datapack/data-types/identifier) | _required_ | The full path of the texture to draw, such as `origins:textures/gui/badge/isaacfanta/active.png`. |
+| `text` | [Text Component](/docs/datapack/data-types/text-component) | _required_ | The hover text. A plain string is literal text, and an object can use a translation key or styling. |
 
-The text wraps to the width of the origin panel, so a couple of sentences is fine.
+The text wraps to the width of the origin panel, so a couple of sentences fit.
 
 ## Examples
-
-A plain literal:
 
 ```json
 {
@@ -31,7 +30,7 @@ A plain literal:
 }
 ```
 
-A translated one, so the badge follows the player's language:
+This badge shows literal text.
 
 ```json
 {
@@ -40,3 +39,5 @@ A translated one, so the badge follows the player's language:
   "text": { "translate": "badge.my_pack.aquatic" }
 }
 ```
+
+This one uses a translation key, so the badge follows the player's language.

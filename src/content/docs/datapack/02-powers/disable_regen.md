@@ -1,16 +1,16 @@
 ---
 title: "Disable Regen (Power Type)"
-description: Stops the entity healing from the passive hunger-driven regeneration.
+description: "Stops the natural regeneration that comes from a full hunger bar."
 navigation_title: "Disable Regen"
 ---
 
-Stops the natural regeneration that vanilla gives a player whose hunger is high enough. Every other source of healing still works — potions, golden apples, [`apoli:heal`](/docs/datapack/entity-actions/heal), a beacon — so this makes an origin depend on those rather than on waiting.
+Stops the natural regeneration that vanilla gives a player whose hunger is high enough. Every other source of healing still works, such as potions, golden apples, [`apoli:heal`](/docs/datapack/entity-actions/heal) and beacons, so an origin with this power has to heal through those instead of waiting.
 
 Type ID: `apoli:disable_regen`
 
 ## Fields
 
-_None._ It takes the fields every power takes, and `condition` is the useful one.
+_None._ The power takes the fields every power takes, and `condition` is the useful one here.
 
 ## Examples
 
@@ -22,7 +22,7 @@ Never regenerate naturally:
 }
 ```
 
-Only while you are starved of something else — here a vampire heals normally with blood, and not at all without:
+Here a vampire regenerates normally while it has blood, and not at all without it:
 
 ```json
 {
@@ -36,7 +36,7 @@ Only while you are starved of something else — here a vampire heals normally w
 }
 ```
 
-Pair it with a healing route of your own so the origin still has one:
+Give the origin another way to heal, such as healing over time while it has blood:
 
 ```json
 {

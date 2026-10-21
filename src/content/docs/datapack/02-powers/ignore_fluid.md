@@ -1,28 +1,28 @@
 ---
 title: "Ignore Fluid (Power Type)"
-description: "Stops the entity being affected by the matching fluid — water by default, but the fluid_condition accepts any."
+description: "The entity moves through a fluid as if it were air. Water by default, and fluid_condition picks any other fluid."
 navigation_title: "Ignore Fluid"
 aliases: ["ignore_water"]
 ---
 
-Makes the holder move through a fluid as if it were air: no pushing, no floating, no swimming and no fluid physics. Water by default, but the `fluid_condition` accepts any fluid — lava included.
+Makes the entity move through a fluid as if it were air, with no pushing, floating, swimming or fluid physics. The fluid is water by default, and `fluid_condition` can pick any other fluid, lava included.
 
 Type ID: `apoli:ignore_fluid` (aliased from `apoli:ignore_water`)
 
-> The legacy `apoli:ignore_water` id from Apace's Apoli still works — it resolves to `apoli:ignore_fluid` at load time, and with no `fluid_condition` it ignores water exactly as it used to.
+The legacy `apoli:ignore_water` ID from Apace's Apoli resolves to `apoli:ignore_fluid` at load time, and with no `fluid_condition` it ignores water.
 
 ## Fields
 
 | Field | Type | Default | Description |
 |-------|------|---------|-------------|
-| `fluid_condition` | [Fluid Condition Type](/docs/datapack/fluid-conditions) | _water_ | Which fluid to ignore. Tested against every fluid block the holder touches. Left out, the power ignores water. |
+| `fluid_condition` | [Fluid Condition Type](/docs/datapack/fluid-conditions) | _water_ | Which fluid to ignore, tested against every fluid block the entity touches. Without it, the power ignores water. |
 
 ## Behaviour
 
-- Every fluid block the holder's body touches is tested on its own, so brushing the edge of a lake or the side of a lava pool is ignored as well as being in the middle of it. Fluid blocks that fail the condition still act normally, so ignoring `apoli:still` water lets currents carry you.
-- In an ignored fluid the holder walks along the bottom and falls under normal gravity. It does not swim, even while sprinting, and cannot start swimming there.
-- Ignoring **lava** means lava cannot hurt the holder or set it on fire. Fire from anything else still burns.
-- Only movement and contact are ignored. With its head under an ignored fluid the holder still runs out of air and still sees the fluid's fog — pair the power with [apoli:fluid_vision](/docs/datapack/powers/fluid_vision) or water breathing for a full "lives in water" effect.
+- Every fluid block the entity's body touches is tested on its own, so brushing the edge of a lake or the side of a lava pool is ignored as well as being in the middle of one. Fluid blocks that fail the condition still act normally, so ignoring `apoli:still` water lets currents carry you.
+- In an ignored fluid the entity walks along the bottom and falls under normal gravity. It doesn't swim, even while sprinting, and can't start swimming there.
+- Ignoring lava means lava can't hurt the entity or set it on fire. Fire from anything else still burns.
+- Only movement and contact are ignored. With its head in an ignored fluid the entity still runs out of air and still sees the fluid's fog. Add [apoli:fluid_vision](/docs/datapack/powers/fluid_vision) or water breathing for an origin that lives in water.
 
 ## Examples
 

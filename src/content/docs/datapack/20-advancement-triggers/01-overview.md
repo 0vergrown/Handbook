@@ -1,10 +1,10 @@
 ---
 title: "Advancement Triggers"
-description: "The advancement criteria Apoli adds, for advancements that react to powers and resources."
+description: "The advancement triggers Apoli adds, for advancements that react to powers and resources."
 navigation_title: "Overview"
 ---
 
-Apoli registers vanilla **advancement triggers**, so an advancement can fire on something a power did. They go in the `criteria` block of an advancement JSON like any vanilla trigger, and they take the usual optional `player` entity predicate on top of their own fields.
+Apoli registers vanilla advancement triggers, so an advancement can fire on something a power did. They go in the `criteria` block of an advancement JSON like any vanilla trigger, and they take the usual optional `player` entity predicate on top of their own fields.
 
 | Trigger | Fires when |
 | --- | --- |
@@ -13,7 +13,7 @@ Apoli registers vanilla **advancement triggers**, so an advancement can fire on 
 
 Origins adds one of its own: [origins:chose_origin](/docs/datapack/origins/chose_origin).
 
-## Shape
+## Example
 
 ```json
 {
@@ -32,4 +32,5 @@ Origins adds one of its own: [origins:chose_origin](/docs/datapack/origins/chose
 
 Everything in `conditions` is optional. A trigger with an empty `conditions` block fires on any occurrence of its event.
 
-> Advancement triggers are server-side and per player. They never fire for mobs or other entities, even ones that hold the power.
+> [!NOTE]
+> Advancement triggers run on the server, for each player. They never fire for mobs or other entities, even ones that hold the power.

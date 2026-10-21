@@ -7,15 +7,13 @@ aliases: ["allied"]
 
 Checks whether the actor and the target are on the same scoreboard team.
 
-Type ID: `apoli:same_team`
-
-Type aliases: `apoli:allied`
+Type ID: `apoli:same_team` (alias `apoli:allied`)
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|-------------
-`allow_teamless` | Boolean | `false` | If `true`, two entities that are both on **no** team count as allied.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `allow_teamless` | [Boolean](/docs/datapack/data-types/boolean) | `false` | With `true`, two entities that are both on no team count as allied. |
 
 ## Example
 

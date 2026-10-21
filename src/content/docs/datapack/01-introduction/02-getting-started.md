@@ -3,7 +3,7 @@ title: Getting started
 description: Set up a data pack and write your first Apoli power.
 ---
 
-This page gets a single, working power into your game. You'll need a world with **Apoli** installed (Origins optional).
+This page takes one working power from an empty folder into your game. You need a world with Apoli installed. Origins is optional.
 
 ## Create the data pack
 
@@ -19,7 +19,7 @@ datapacks/
                 └── swim.json
 ```
 
-`pack.mcmeta` tells Minecraft it's a data pack:
+`pack.mcmeta` tells Minecraft that the folder is a data pack:
 
 ```json
 {
@@ -30,11 +30,12 @@ datapacks/
 }
 ```
 
-> `pack_format` depends on your Minecraft version. `48` is for 1.21.1; use the value that matches your game.
+> [!NOTE]
+> `pack_format` depends on your Minecraft version. `48` is the value for 1.21.1 and `15` is the value for 1.20.1.
 
 ## Write the power
 
-Powers live in `data/<namespace>/powers/`. The file name is the power's id — this one is `my_pack:swim`. Put this in `swim.json`:
+Powers go in `data/<namespace>/powers/`, and the file's path gives the power its ID, so this one is `my_pack:swim`. Put this in `swim.json`:
 
 ```json
 {
@@ -48,25 +49,26 @@ Powers live in `data/<namespace>/powers/`. The file name is the power's id — t
 }
 ```
 
-Every power has a [`type`](/docs/datapack/introduction/powers). Here it's `apoli:swim_speed`, which speeds up swimming. `name` and `description` are shown in-game; the rest of the fields configure the type.
+Every power has a [`type`](/docs/datapack/introduction/powers). This one is `apoli:swim_speed`, which makes swimming faster. `name` and `description` are shown in game, and the other fields configure the type.
 
 ## Grant it to yourself
 
-Powers do nothing until an entity *has* one. Reload and grant it with a command:
+A power does nothing until an entity has it. Reload the pack and grant the power with a command:
 
 ```mcfunction
 /reload
 /power grant @s my_pack:swim
 ```
 
-Jump in water — you're faster. Take it away again with `/power revoke @s my_pack:swim`.
+Jump into water and you swim faster. `/power revoke @s my_pack:swim` takes the power away again.
 
-> With **Origins** installed you'd normally attach powers to an origin instead of granting them by command. See [Origins » Layers](/docs/datapack/origins/layers) for that flow.
+> [!NOTE]
+> With Origins installed, you usually attach powers to an origin instead of granting them by command. [Layers](/docs/datapack/origins/layers) explains how that works.
 
-## What just happened
+## What happened
 
-- A **data pack** is just a folder of JSON that Minecraft loads.
+- A data pack is a folder of JSON files that Minecraft loads.
 - Apoli reads every file under `powers/` and registers it as a power.
-- `/power grant` attaches the power to an entity; Apoli applies its effect.
+- `/power grant` attaches the power to an entity, and Apoli applies its effect.
 
-From here, the interesting part is the [`type`](/docs/datapack/introduction/powers) — there are over a hundred of them.
+Most of what a power does comes from its [`type`](/docs/datapack/introduction/powers), and Apoli has over a hundred of them.

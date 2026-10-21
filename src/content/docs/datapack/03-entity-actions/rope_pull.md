@@ -1,28 +1,32 @@
 ---
 title: "Rope Pull (Entity Action Type)"
-description: "Shoves an end of the acting entity's ropes toward the other end — the 'launch', 'grab' and 'reel' verb."
+description: "Pushes one end of the entity's ropes toward the other end, to launch along a rope, grab with it or reel in."
 navigation_title: "Rope Pull"
 ---
 
-Shoves an end of the acting entity's ropes toward the other end — the "launch", "grab" and "reel" verb. Pushing the entity's own end at it launches you along the rope (fire a whip at a wall, then yank yourself to it); pushing the far end drags that entity in (grab an enemy). Player velocity is applied in a way that actually reaches the client.
+Pushes one end of the acting entity's ropes toward the other end. Pushing the entity's own end launches it along the rope, so you can fire a whip at a wall and then yank yourself to it. Pushing the far end drags that entity in, which grabs an enemy. Player velocity is applied in a way that reaches the client.
 
 Type ID: `apoli:rope_pull`
 
-> **This is a one-shot impulse, not a held pull.** It applies velocity once each time the action *runs*. Inside an `apoli:action_on_key_press` power it fires only on the press of *that power's* key — a `key_pressed` condition on another key does not re-trigger it. For "hold a key to be pulled in", either rely on the rope's built-in controls (`controllable: true` + `reel_step` on [Attach Rope](/docs/datapack/entity-actions/attach_rope); jump reels in), or drive this action every tick from an `apoli:action_over_time` power gated on `apoli:attached_to_rope` + `apoli:key_pressed`. Also mind that in an `if_else_list`, only the **first** matching branch runs — a plain "attached → detach" branch above a pull branch makes the pull unreachable.
+> [!IMPORTANT]
+> This is a single push each time the action runs, and it doesn't keep pulling. Inside an `apoli:action_on_key_press` power it only fires on the press of that power's own key, and a `key_pressed` condition on another key doesn't trigger it again. To be pulled in while holding a key, either use the rope's built-in controls (`controllable: true` with `reel_step` on [Attach Rope](/docs/datapack/entity-actions/attach_rope), where jump reels in), or run this action every tick from an `apoli:action_over_time` power gated on `apoli:attached_to_rope` and `apoli:key_pressed`. In an `if_else_list`, only the first matching branch runs, so a plain "attached, then detach" branch above a pull branch makes the pull unreachable.
 
-> `speed` is in **blocks per tick** (1.0 ≈ 20 m/s). With `set: true`, values like `20` are extreme.
+> [!NOTE]
+> `speed` is in blocks per tick, where 1.0 is about 20 m/s. With `set: true`, values like `20` are extreme.
+
 ## Fields
 
-| Field   | Type                                                         | Default    | Description                                                                                                                 |
-| ------- | ------------------------------------------------------------ | ---------- | --------------------------------------------------------------------------------------------------------------------------- |
-| `slot`  | String                                                       | _optional_ | Only act on the rope in this slot. If omitted, every rope the entity owns is affected.                                      |
-| `which` | String                                                       | `"self"`   | Which end to push: `self` (launch the actor toward the far end), `other` (drag the far entity toward the actor), or `both`. |
-| `speed` | [Float](/docs/datapack/data-types/float)     | `1.0`      | Magnitude of the velocity applied along the rope. This is your "launch speed".                                              |
-| `set`   | [Boolean](/docs/datapack/data-types/boolean) | `false`    | If `true`, replaces the pushed entity's velocity instead of adding to it.                                                   |
-| `reel`  | [Float](/docs/datapack/data-types/float)     | `0.0`      | Also shorten the rope by this amount each time the action runs (a scripted reel-in).                                        |
-| `sublevel_force` | [Float](/docs/datapack/data-types/float) | `1.0` | Multiplier on the impulse used when the far end is anchored to a [Sable](/docs/compat/sable) sub-level. `speed` is scaled by the structure's own mass first, so `speed` reads as a change in the structure's velocity and this is the knob for making it heavier or lighter to drag. Ignored without Sable. |
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `slot` | [String](/docs/datapack/data-types/string) | _optional_ | Only acts on the rope in this slot. Leave it out to affect every rope the entity owns. |
+| `which` | [String](/docs/datapack/data-types/string) | `"self"` | Which end to push: `self` launches the actor toward the far end, `other` drags the far entity toward the actor, and `both` does both. |
+| `speed` | [Float](/docs/datapack/data-types/float) | `1.0` | The size of the velocity applied along the rope, which is the launch speed. |
+| `set` | [Boolean](/docs/datapack/data-types/boolean) | `false` | With `true`, replaces the pushed entity's velocity instead of adding to it. |
+| `reel` | [Float](/docs/datapack/data-types/float) | `0.0` | Also shortens the rope by this much each time the action runs, for a scripted reel-in. |
+| `sublevel_force` | [Float](/docs/datapack/data-types/float) | `1.0` | A multiplier on the push used when the far end is anchored to a [Sable](/docs/compat/sable) sub-level. `speed` is scaled by the structure's own mass first, so `speed` reads as a change in the structure's velocity and this field makes it heavier or lighter to drag. Ignored without Sable. |
 
 ## Examples
+
 ```json
 {
     "type": "apoli:rope_pull",
@@ -30,7 +34,8 @@ Type ID: `apoli:rope_pull`
     "speed": 2.5
 }
 ```
-Launches the actor toward the far end of every rope they own — the pull half of a grapple.
+
+This launches the actor toward the far end of every rope it owns, the pull half of a grapple.
 
 ```json
 {
@@ -40,7 +45,8 @@ Launches the actor toward the far end of every rope they own — the pull half o
     "speed": 1.5
 }
 ```
-Drags whatever is tied to the actor's `grab` rope toward them. If that end is a [Sable](/docs/compat/sable) sub-level rather than an entity, the impulse goes into the structure's rigid body instead, at the exact block the rope is tied to — so a rope on the edge of a ship swings it as well as pulling it.
+
+This drags whatever is tied to the actor's `grab` rope toward it. If that end is a [Sable](/docs/compat/sable) sub-level instead of an entity, the push goes into the structure's rigid body at the exact block the rope is tied to, so a rope on the edge of a ship swings it as well as pulling it.
 
 ```json
 {
@@ -56,4 +62,5 @@ Drags whatever is tied to the actor's `grab` rope toward them. If that end is a 
     }
 }
 ```
-The canonical "held pull" recipe, as a separate power entry (not the one that attaches the rope): a small additive kick every tick plus a continuous `reel`. The kick alone would ramp forever with nothing to stop it once the actor reaches the anchor — the `reel` is what makes it self-limiting, since it shortens the rope down to `min_length` and the already-tuned leash spring (`stiffness`/`radial_damping`/`swing_boost` on [Attach Rope](/docs/datapack/entity-actions/attach_rope)) simply stops correcting once the actor is that close. No extra key or distance check needed — `attached_to_rope` turns itself off when the rope detaches. A single large one-shot `speed` (e.g. 8+) instead of this pattern is what makes a grapple feel like a teleport.
+
+This is the usual recipe for a held pull, as a separate power from the one that attaches the rope: a small push added every tick plus a steady `reel`. The push alone would keep building with nothing to stop it once the actor reaches the anchor. The `reel` makes it stop by itself, because it shortens the rope down to `min_length`, and the leash spring (`stiffness`, `radial_damping` and `swing_boost` on [Attach Rope](/docs/datapack/entity-actions/attach_rope)) stops correcting once the actor is that close. No extra key or distance check is needed, because `attached_to_rope` turns false when the rope detaches. A single large `speed` (8 or more) instead of this pattern is what makes a grapple feel like a teleport.

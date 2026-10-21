@@ -1,18 +1,18 @@
 ---
 title: "Heightmap Type (Data Type)"
-description: "A String used for various game calculations to determine the highest Y level of a coordinate in a world."
+description: "A string that picks which kind of highest block the game looks for at a position."
 navigation_title: "Heightmap Type"
 ---
 
-A [String](/docs/datapack/data-types/string) used for various game calculations to determine the highest Y level of a coordinate in a world.
+A [String](/docs/datapack/data-types/string) that picks a heightmap, which the game uses to find the highest Y level at a position in a world.
 
-##	Values
+## Values
 
-Value | Description
-------|------------
-`world_surface` 			|	Queries the Y level of the highest non-air block.
-`world_surface_wg`			|	Queries the Y level of the highest non-air block (**only used on world generation**.)
-`ocean_floor`				|	Queries the Y level of the highest block that has collision, except carpets.
-`ocean_floor_wg`			|	Queries the Y level of the highest block that has collision, except carpets (**only used on world generation**.)
-`motion_blocking`			|	Queries the Y level of the highest block that has collision or contains a fluid (e.g: water, lava, or fluidlogged blocks.)
-`motion_blocking_no_leaves`	|	Queries the Y level of the highest block that has collision or contains a fluid, except leaves (e.g: water, lava, or fluidlogged blocks.)
+| Value | Description |
+| --- | --- |
+| `world_surface` | The Y level of the highest block that isn't air. |
+| `world_surface_wg` | The Y level of the highest block that isn't air, only used during world generation. |
+| `ocean_floor` | The Y level of the highest block with collision, except carpets. |
+| `ocean_floor_wg` | The Y level of the highest block with collision, except carpets, only used during world generation. |
+| `motion_blocking` | The Y level of the highest block that has collision or contains a fluid, such as water, lava or a waterlogged block. |
+| `motion_blocking_no_leaves` | The Y level of the highest block that has collision or contains a fluid, except leaves. |

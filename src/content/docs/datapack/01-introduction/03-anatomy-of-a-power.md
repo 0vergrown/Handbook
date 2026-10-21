@@ -1,13 +1,13 @@
 ---
 title: Anatomy of a power
-description: Every power, action, condition and data type shares one shape. Learn it once.
+description: Powers, actions, conditions and data types all share one JSON shape.
 ---
 
-Apoli looks big — hundreds of types — but it's built from one repeating shape. Once you can read that shape, every page in these docs reads the same way.
+Apoli has hundreds of types, but they all use one shape. Once you can read it, every page in this reference follows the same pattern.
 
 ## Everything is a typed object
 
-A **power**, an **action**, and a **condition** are all JSON objects with a `type`:
+A power, an action and a condition are all JSON objects with a `type`:
 
 ```json
 {
@@ -16,11 +16,11 @@ A **power**, an **action**, and a **condition** are all JSON objects with a `typ
 }
 ```
 
-The `type` is an [identifier](/docs/datapack/introduction/data-types) (`namespace:path`). It selects *which* thing this is; the remaining fields configure it. Apoli looks the type up, and if it doesn't recognise it, the power fails to load with an error in the log.
+The `type` is an [identifier](/docs/datapack/introduction/data-types) (`namespace:path`). It says which thing the object is, and the other fields configure it. Apoli looks the type up, and if it doesn't recognise it, the power fails to load with an error in the log.
 
 ## Fields are typed too
 
-Each field expects a particular kind of value. Some are primitives (a number, a string, a boolean). Many are **nested typed objects**, an action field wants an action, a condition field wants a condition:
+Each field expects a particular kind of value. Some take a number, a string or a boolean. Many take another typed object: an action field takes an action, and a condition field takes a condition.
 
 ```json
 {
@@ -36,11 +36,11 @@ Each field expects a particular kind of value. Some are primitives (a number, a 
 }
 ```
 
-Here `cooldown` is a number, `bientity_action` is an [action](/docs/datapack/introduction/actions), and `condition` is a [condition](/docs/datapack/introduction/conditions). This nesting is the whole trick, you compose behaviour by putting typed objects inside typed objects.
+Here `cooldown` is a number, `bientity_action` is an [action](/docs/datapack/introduction/actions) and `condition` is a [condition](/docs/datapack/introduction/conditions). You build behaviour by putting typed objects inside other typed objects.
 
-## Lists where it makes sense
+## Lists
 
-Wherever one value is allowed, a **list** of them usually is too. Apoli's `apoli:and` runs a list of actions; `apoli:multiple` bundles a list of powers.
+Where a field takes one value, it usually takes a list too. Some types exist to group others: `apoli:and` runs a list of actions, and `apoli:multiple` bundles a list of powers.
 
 ```json
 {
@@ -59,11 +59,11 @@ Wherever one value is allowed, a **list** of them usually is too. Apoli's `apoli
 
 ## Optional fields have defaults
 
-Most fields are optional and fall back to a default. In the `action_on_hit` example, `cooldown` defaults to `1` and `condition` defaults to "always". Only write the fields you actually want to change - the docs list every field, its type, and its default.
+Most fields are optional and fall back to a default. In the `action_on_hit` example, `cooldown` defaults to `1`, and without a `condition` the power is always active. Write only the fields you want to change. Each type page lists every field with its type and default.
 
 ## Inverting a condition
 
-Any condition can be flipped by adding `"inverted": true`. There's no separate "not sneaking" condition - you invert `apoli:sneaking`:
+Add `"inverted": true` to any condition to flip its result. There is no separate "not sneaking" condition, so you invert `apoli:sneaking`:
 
 ```json
 {
@@ -74,15 +74,13 @@ Any condition can be flipped by adding `"inverted": true`. There's no separate "
 
 ## When an optional field is wrong
 
-A **missing** optional field falls back to its default. A field that is *present but malformed* — a typo in a nested field name, broken SNBT escaping — is **dropped**, and the rest of the definition loads without it. The power still works; it just quietly stops doing the part you got wrong.
+A missing optional field falls back to its default. A field that is present but malformed, such as a typo in a nested field name or broken SNBT escaping, is dropped, and the rest of the definition loads without it. The power still works, minus the part you got wrong. This is the most common reason a power seems to ignore part of its JSON.
 
-That is the single most common way a power "ignores" something.
+Condition fields are the exception. Dropping a condition would leave a power always active, or leave a glow, an area of effect or a teleport unfiltered, which is the dangerous way to fail. So a condition that is present but can't be parsed fails the whole power instead. That applies to the power's own `condition` and to every nested `entity_condition`, `bientity_condition`, `block_condition`, `item_condition`, `damage_condition`, `biome_condition` and `fluid_condition` on any power, action or condition. The power doesn't load, and the log says why.
 
-**Every condition field is the exception.** Dropping a gate would leave the power *always active* — or a glow, an area-of-effect or a teleport unfiltered — which is the dangerous direction to fail in. So a condition that is present but unparseable **fails the whole power** instead — the power's own top-level `condition`, and every nested `entity_condition`, `bientity_condition`, `block_condition`, `item_condition`, `damage_condition`, `biome_condition` and `fluid_condition` on any power, action or condition. The power does not load at all, and the log says why:
+In this example `condtions` is a typo for `conditions`, so `apoli:all_of` is missing its required field, the condition can't be parsed and the power is rejected:
 
 ```json
-// "condtions" is a typo for "conditions", so apoli:all_of is missing its
-// required field and the condition cannot be parsed — this power is rejected.
 "condition":{
    "type":"apoli:all_of",
    "condtions":[
@@ -93,7 +91,7 @@ That is the single most common way a power "ignores" something.
 }
 ```
 
-Check the server log first — it names the field and the power either way:
+Check the server log first. It names the field and the power in both cases:
 
 ```txt
 [Apoli] Failed to parse power my_pack:example: The 'condition' field of
@@ -101,7 +99,7 @@ my_pack:example is present but failed to parse:
 No key conditions in MapLike[{"type":"apoli:all_of","condtions":[...]}]
 ```
 
-Every *other* optional field — including nested **action** fields such as a resource's `min_action` and `max_action` — is dropped rather than fatal, because losing one makes a power do *less*, which is visible rather than dangerous. Every one of those drops is logged with a warning naming the field and the power:
+Every other optional field, including nested action fields such as a resource's `min_action` and `max_action`, is dropped instead of failing the power. Losing one of those makes the power do less, which is easy to notice and not dangerous. Each drop is logged as a warning that names the field and the power:
 
 ```txt
 [Apoli] Ignoring the 'max_action' field of my_pack:example — it is present but
@@ -109,14 +107,15 @@ failed to parse, so it was dropped and everything else loaded.
 Missing damage_type in MapLike[{"type":"apoli:damage","amount":4,"source":{...}}]
 ```
 
-> Malformed SNBT in a `tag`/`nbt` string is the other frequent one — the warning gives you the exact character offset (`Invalid SNBT: Expected '}' at position 81`). Remember the string is inside JSON, so every quote the SNBT needs has to be escaped: `"tag": "{display:{Name:'[{\"text\":\"Hi\"}]'}}"`.
+> [!TIP]
+> Malformed SNBT in a `tag` or `nbt` string is the other common case. The warning gives the exact character offset (`Invalid SNBT: Expected '}' at position 81`). The SNBT string sits inside JSON, so every quote it needs has to be escaped: `"tag": "{display:{Name:'[{\"text\":\"Hi\"}]'}}"`.
 
-## How to read the rest of these docs
+## Reading a type page
 
-Every type page follows the same template:
+Every type page has the same parts:
 
-1. a one-line summary of what it does,
-2. a **fields** table (name · type · default · purpose),
-3. a working example you can paste into a data pack.
+1. a short summary of what the type does,
+2. a fields table with each field's name, type, default and description,
+3. working examples you can paste into a data pack.
 
-That's it. [Powers](/docs/datapack/introduction/powers), [actions](/docs/datapack/introduction/actions) and [conditions](/docs/datapack/introduction/conditions) are all just this shape, repeated.
+The [Powers](/docs/datapack/introduction/powers), [Actions](/docs/datapack/introduction/actions) and [Conditions](/docs/datapack/introduction/conditions) pages cover what each kind has in common.

@@ -1,25 +1,25 @@
 ---
 title: "Modify Status Effect Amplifier (Power Type)"
-description: Modifies how strong status effects are when they are applied.
+description: "Changes how strong status effects are when they are applied."
 navigation_title: "Modify Status Effect Amplifier"
 ---
 
-Modifies the amplifier of status effects as they are applied to the holder. Amplifier `0` is level I, `1` is level II, and so on, so setting it to `0` means "always level I".
+Changes the amplifier of status effects as they are applied to the entity with the power. Amplifier `0` is level I and `1` is level II, so setting it to `0` means "always level I".
 
 Type ID: `apoli:modify_status_effect_amplifier`
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|-------------
-`modifier` | [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) | _optional_ | A single modifier applied to the amplifier.
-`modifiers` | array of [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) | _optional_ | Several modifiers.
-`status_effect` | [Identifier](/docs/datapack/data-types/identifier) | _optional_ | Restrict to one effect.
-`status_effects` | array of [Identifier](/docs/datapack/data-types/identifier) | `[]` | Restrict to several. Empty means every effect.
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `modifier` | [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) | _optional_ | A single modifier applied to the amplifier. |
+| `modifiers` | [Array](/docs/datapack/data-types/array) of [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) | _optional_ | Several modifiers. |
+| `status_effect` | [Identifier](/docs/datapack/data-types/identifier) | _optional_ | Limits the power to one effect. |
+| `status_effects` | [Array](/docs/datapack/data-types/array) of [Identifier](/docs/datapack/data-types/identifier) | `[]` | Limits the power to several effects. An empty list means every effect. |
 
 ## Examples
 
-Every harmful effect is knocked down to its weakest level:
+Poison, Weakness and Mining Fatigue always land at level I:
 
 ```json
 {
@@ -33,7 +33,7 @@ Every harmful effect is knocked down to its weakest level:
 }
 ```
 
-A brewer whose own potions land one level higher:
+Strength, Speed and Regeneration land one level higher:
 
 ```json
 {

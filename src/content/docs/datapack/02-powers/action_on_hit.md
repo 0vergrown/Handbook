@@ -1,54 +1,52 @@
 ---
 title: "Action On Hit (Power Type)"
-description: "Executes an action when the entity that has the power has hit another entity, after the hit's damage actually lands."
+description: "Runs an action when the entity that has the power hits another entity, after the hit's damage lands."
 navigation_title: "Action On Hit"
 aliases: ["self_action_on_hit", "target_action_on_hit"]
 ---
 
-Executes an action when the entity that has the power has hit another entity, after the hit's damage actually lands.
+Runs an action when the entity that has the power hits another entity, after the hit's damage lands. The actor is the entity with the power, and the target is the entity that was hit.
 
-**Type ID:** `apoli:action_on_hit`
-
-> In the context of this power type, the **actor** is the entity that has the power and the **target** is the entity that was hit.
+Type ID: `apoli:action_on_hit`
 
 ## Fields
 
-Every field below works under **every** ID this power type answers to. The legacy ID you write only decides where a legacy `entity_action` lands — it never turns other fields off.
+Every field below works under every ID this power type answers to. The legacy ID you write only decides where a legacy `entity_action` runs. It never turns other fields off.
 
-| Field                 | Type                     | Default                    | Description                                                                       |
-| --------------------- | ------------------------ | -------------------------- | --------------------------------------------------------------------------------- |
-| `bientity_action`     | Bi-entity Action Type    | _optional_                 | Action run with the actor/target pair when the hit lands.                          |
-| `self_action`         | Entity Action Type       | _optional_                 | Action run on the actor (the entity that has the power).                           |
-| `attacker_action`     | Entity Action Type       | _optional_                 | Action run on the attacker. Here the attacker **is** the holder, so this is a synonym for `self_action`. |
-| `target_action`       | Entity Action Type       | _optional_                 | Action run on the target (the entity that was hit).                                |
-| `entity_action`       | Entity Action Type       | _optional_                 | Legacy field. Runs on whichever side `entity_action_target` names.                 |
-| `entity_action_target`| `"self"` / `"attacker"` / `"target"` | `"self"`       | Which entity `entity_action` runs on. Set automatically by the legacy IDs below.   |
-| `bientity_condition`  | Bi-entity Condition Type | _optional_                 | Gates firing on the (actor, target) pair.                                          |
-| `target_condition`    | Entity Condition Type    | _optional_                 | Gates firing on the target.                                                        |
-| `attacker_condition`  | Entity Condition Type    | _optional_                 | Gates firing on the attacker (the holder).                                         |
-| `damage_condition`    | Damage Condition Type    | _optional_                 | Gates firing on the damage that was dealt.                                         |
-| `cooldown`            | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | `1`                        | Ticks the power needs to recharge between fires.                                   |
-| `hud_render`          | Hud Render               | `{"should_render": false}` | How the cooldown is shown on the HUD.                                              |
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `bientity_action` | [Bi-entity Action Type](/docs/datapack/bientity-actions) | _optional_ | Runs on the actor and target pair when the hit lands. |
+| `self_action` | [Entity Action Type](/docs/datapack/entity-actions) | _optional_ | Runs on the actor, the entity that has the power. |
+| `attacker_action` | [Entity Action Type](/docs/datapack/entity-actions) | _optional_ | Runs on the attacker. Here the attacker is the entity with the power, so this does the same as `self_action`. |
+| `target_action` | [Entity Action Type](/docs/datapack/entity-actions) | _optional_ | Runs on the target, the entity that was hit. |
+| `entity_action` | [Entity Action Type](/docs/datapack/entity-actions) | _optional_ | Legacy field. Runs on whichever side `entity_action_target` names. |
+| `entity_action_target` | `"self"`, `"attacker"` or `"target"` | `"self"` | Which entity `entity_action` runs on. The legacy IDs below set it for you. |
+| `bientity_condition` | [Bi-entity Condition Type](/docs/datapack/bientity-conditions) | _optional_ | Must pass for the actor and target pair before the power fires. |
+| `target_condition` | [Entity Condition Type](/docs/datapack/entity-conditions) | _optional_ | Must pass for the target. |
+| `attacker_condition` | [Entity Condition Type](/docs/datapack/entity-conditions) | _optional_ | Must pass for the attacker, the entity with the power. |
+| `damage_condition` | [Damage Condition Type](/docs/datapack/damage-conditions) | _optional_ | Must pass for the damage that was dealt. |
+| `cooldown` | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | `1` | Ticks the power needs to recharge between fires. |
+| `hud_render` | [HUD Render](/docs/datapack/data-types/hud-render) | `{"should_render": false}` | How the cooldown is shown on the HUD. |
 
-All action and condition fields are optional. Specifying several actions runs all of them, in the order listed above.
+All action and condition fields are optional. Setting several actions runs all of them, in the order listed above.
 
-Inside any of these actions the `damage` [Expression](/docs/datapack/data-types/expression) variable holds the damage amount of the hit.
+Inside any of these actions, the `damage` [expression](/docs/datapack/data-types/expression) variable holds the damage amount of the hit.
 
 ## Apace compatibility
 
-This power type absorbs three legacy Apace types into one schema, and JSON authored under the old IDs still loads unchanged.
+This power type takes in three legacy Apace types, and JSON written for the old IDs loads unchanged.
 
 | Legacy ID | `entity_action` runs on | Notes |
 |---|---|---|
-| `apoli:action_on_hit` | the actor (holder) | Apace's canonical type used `bientity_action`; `entity_action` is an Apoli extension here. |
-| `apoli:self_action_on_hit` | the actor (holder) | Apace's variant that ran the action on the actor. |
+| `apoli:action_on_hit` | the actor | Apace's main type used `bientity_action`. Here `entity_action` is an Apoli extension. |
+| `apoli:self_action_on_hit` | the actor | Apace's variant that ran the action on the actor. |
 | `apoli:target_action_on_hit` | the target | Apace's variant that ran the action on the target. |
 
-The legacy IDs are **aliases only**. They do not rename or consume fields, so a power written as `apoli:target_action_on_hit` can still use `bientity_action`, `self_action` and `target_action` alongside its `entity_action`, and the canonical `apoli:action_on_hit` accepts `entity_action` too. If you want `entity_action` on a side the alias does not imply, set `entity_action_target` explicitly.
+The legacy IDs are only aliases. They don't rename or consume fields, so a power written as `apoli:target_action_on_hit` can still use `bientity_action`, `self_action` and `target_action` alongside its `entity_action`, and `apoli:action_on_hit` accepts `entity_action` too. To run `entity_action` on a side the alias doesn't imply, set `entity_action_target`.
 
 ## Examples
 
-## Canonical form — knockback on hit
+### Knockback on hit
 
 ```json
 {
@@ -60,7 +58,7 @@ The legacy IDs are **aliases only**. They do not rename or consume fields, so a 
 }
 ```
 
-## Legacy `self_action_on_hit` — heal the attacker
+### Heal the attacker with self_action_on_hit
 
 ```json
 {
@@ -72,9 +70,9 @@ The legacy IDs are **aliases only**. They do not rename or consume fields, so a 
 }
 ```
 
-Loads as `apoli:action_on_hit` with `entity_action` bound to the actor.
+This loads as `apoli:action_on_hit`, with `entity_action` running on the actor.
 
-## Legacy `target_action_on_hit` — set the target on fire
+### Set the target on fire with target_action_on_hit
 
 ```json
 {
@@ -89,4 +87,4 @@ Loads as `apoli:action_on_hit` with `entity_action` bound to the actor.
 }
 ```
 
-Loads as `apoli:action_on_hit` with `entity_action` bound to the target, and `target_condition` carried through unchanged.
+This loads as `apoli:action_on_hit`, with `entity_action` running on the target and `target_condition` kept as written.

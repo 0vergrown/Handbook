@@ -1,19 +1,21 @@
 ---
 title: "Detach Rope (Entity Action Type)"
-description: "Cuts ropes the acting entity owns."
+description: "Cuts ropes the entity owns, either one labelled rope or all of them."
 navigation_title: "Detach Rope"
 ---
 
-Cuts ropes the acting entity owns. With a `slot` it releases only that labelled rope (e.g. one of two whips); without one it releases every rope the entity owns.
+Cuts ropes the acting entity owns. With a `slot` it releases only that labelled rope, such as one of two whips. Without one, it releases every rope the entity owns.
 
 Type ID: `apoli:detach_rope`
+
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`slot` | String | _optional_ | The labelled rope to cut. If omitted, all ropes owned by the entity are cut.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `slot` | [String](/docs/datapack/data-types/string) | _optional_ | The labelled rope to cut. Leave it out to cut every rope the entity owns. |
 
 ## Example
+
 ```json
 {
     "entity_action": {
@@ -23,4 +25,4 @@ Field  | Type | Default | Description
 }
 ```
 
-This releases the entity's `left_whip` rope, leaving any others in place.
+This releases the entity's `left_whip` rope and leaves any others in place.

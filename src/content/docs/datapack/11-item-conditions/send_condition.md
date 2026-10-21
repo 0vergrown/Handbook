@@ -11,11 +11,13 @@ Type ID: `apoli:send_condition` (also `shappoli:send_condition`)
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|-------------
-`receiver` | [Identifier](/docs/datapack/data-types/identifier) | **required** | The id of a power on the same entity. Nothing happens if the entity does not have it, if it is suppressed, if its own `condition` fails, or if it is not the right receiving type.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `receiver` | [Identifier](/docs/datapack/data-types/identifier) | _required_ | The ID of a power on the holder. The condition is false if the holder doesn't have it, if it is suppressed, if its own `condition` fails, or if it isn't the right receiving type. |
 
 ## Example
+
+The receiver defines which materials are forbidden:
 
 ```json
 {
@@ -26,6 +28,8 @@ Field | Type | Default | Description
   }
 }
 ```
+
+A power that blocks using them asks it:
 
 ```json
 {

@@ -5,19 +5,19 @@ navigation_title: "Send Action"
 aliases: ["shappoli:send_action"]
 ---
 
-Hands off to an [`apoli:receive_action`](/docs/datapack/powers/receive_action) power on the **actor**, passing both entities through. The receiver reads them with its `bientity_action` and `bientity_condition` fields.
+Hands off to an [`apoli:receive_action`](/docs/datapack/powers/receive_action) power on the actor and passes both entities through. The receiver reads them with its `bientity_action` and `bientity_condition` fields.
 
 Type ID: `apoli:send_action` (also `shappoli:send_action`)
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|-------------
-`receiver` | [Identifier](/docs/datapack/data-types/identifier) | **required** | The id of a power on the same entity. Nothing happens if the entity does not have it, if it is suppressed, if its own `condition` fails, or if it is not the right receiving type.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `receiver` | [Identifier](/docs/datapack/data-types/identifier) | _required_ | The ID of a power on the actor. Nothing happens if the actor doesn't have it, if it is suppressed, if its own `condition` fails, or if it isn't the right receiving type. |
 
 ## Example
 
-The receiver decides what "punish the attacker" means for this origin:
+The receiver decides what punishing the attacker means for this origin:
 
 ```json
 {

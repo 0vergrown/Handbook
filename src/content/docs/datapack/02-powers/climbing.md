@@ -1,21 +1,22 @@
 ---
 title: "Climbing (Power Type)"
-description: "Allows the entity that has the power to climb."
+description: "Lets the entity that has the power climb."
 navigation_title: "Climbing"
 ---
 
-Allows the entity that has the power to climb.
+Lets the entity that has the power climb.
 
 Type ID: `apoli:climbing`
 
-> To have the usual climbing effect, it is recommended to check for the Collided Horizontally (Entity Condition Type) inside the `condition` object of the power.
+> [!TIP]
+> To climb walls the usual way, put an [`apoli:collided_horizontally`](/docs/datapack/entity-conditions/collided_horizontally) check in the power's `condition`.
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`allow_holding` | [Boolean](/docs/datapack/data-types/boolean) | `true` | If `true`, the entity that has the power is able to hold onto blocks.
-`hold_condition` | Entity Condition Type | _optional_ | If specified and `allow_holding` is `true`, the entity that has the power will be able to 'hold onto the block' (not affected by gravity) if this condition is fulfilled, otherwise, defaults to if the entity is sneaking.
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `allow_holding` | [Boolean](/docs/datapack/data-types/boolean) | `true` | If `true`, the entity can hold onto the block it is climbing. |
+| `hold_condition` | [Entity Condition Type](/docs/datapack/entity-conditions) | _optional_ | If set and `allow_holding` is `true`, the entity holds onto the block (gravity stops pulling it down) while this condition passes. Without it, the entity holds on while sneaking. |
 
 ## Examples
 
@@ -39,4 +40,4 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will allow the entity to climb in cobwebs and hold onto them by sneaking.
+This lets the entity climb inside cobwebs. The `hold_condition` is the same cobweb check, so the entity holds its position whenever it is in a cobweb.

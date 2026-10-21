@@ -4,16 +4,16 @@ description: "Stops the entity from being teleported by anything."
 navigation_title: "Prevent Teleport"
 ---
 
-Stops the entity from being teleported. It catches every route: `/teleport`, the spectator menu, ender pearls and chorus fruit, enderman escapes, portals and end gateways, and every Apoli action that moves an entity — [apoli:teleport](/docs/datapack/entity-actions/teleport), [apoli:random_teleport](/docs/datapack/entity-actions/random_teleport), [apoli:teleport_to](/docs/datapack/bientity-actions/teleport_to) and the rest.
+Stops the entity from being teleported. It catches every route: `/teleport`, the spectator menu, ender pearls and chorus fruit, endermen escaping, portals and end gateways, and every Apoli action that moves an entity, such as [apoli:teleport](/docs/datapack/entity-actions/teleport), [apoli:random_teleport](/docs/datapack/entity-actions/random_teleport) and [apoli:teleport_to](/docs/datapack/bientity-actions/teleport_to).
 
 Type ID: `apoli:prevent_teleport`
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`entity_action` | Entity Action Type | _optional_ | Runs on the entity each time a teleport is blocked. Good for a sound or a message; it fires once per blocked attempt, not once per tick.
-`prevent_dimension_change` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Whether portals and end gateways are blocked too. Set it to `false` to leave normal travel alone and only stop teleports within a dimension.
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `entity_action` | [Entity Action Type](/docs/datapack/entity-actions) | _optional_ | Runs on the entity each time a teleport is blocked, once per blocked attempt. Useful for a sound or a message. |
+| `prevent_dimension_change` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Whether portals and end gateways are blocked too. Set it to `false` to leave normal travel alone and only stop teleports within a dimension. |
 
 ## Examples
 
@@ -23,7 +23,7 @@ Field  | Type | Default | Description
 }
 ```
 
-Nothing moves this entity but its own legs.
+Nothing moves this entity except its own legs.
 
 ```json
 {
@@ -41,8 +41,10 @@ Nothing moves this entity but its own legs.
 }
 ```
 
-While slowed, the entity cannot blink or be pulled anywhere — but portals still work, and each blocked attempt thuds.
+While the entity has Slowness, nothing can teleport or pull it, but portals still work, and each blocked attempt plays a low bass note.
 
-> An action that would have teleported still reports failure, so `fail_action` on [apoli:teleport](/docs/datapack/entity-actions/teleport), [apoli:random_teleport](/docs/datapack/entity-actions/random_teleport) and [apoli:teleport_to_location](/docs/datapack/entity-actions/teleport_to_location) runs — that is the hook for telling the player why nothing happened.
->
-> With `prevent_dimension_change` left on, a player in the Nether or the End cannot walk back out. Give them a way home, or gate the power on a `condition` they can clear.
+> [!NOTE]
+> An action that would have teleported the entity still reports failure, so the `fail_action` of [apoli:teleport](/docs/datapack/entity-actions/teleport), [apoli:random_teleport](/docs/datapack/entity-actions/random_teleport) and [apoli:teleport_to_location](/docs/datapack/entity-actions/teleport_to_location) runs. Use it to tell the player why nothing happened.
+
+> [!WARNING]
+> With `prevent_dimension_change` left on, a player in the Nether or the End can't walk back out through a portal. Give them a way home, or put the power behind a `condition` they can clear.

@@ -1,54 +1,43 @@
 <script>
 	import { page } from '$app/state';
 	import { base } from '$app/paths';
-	import Icon from '$lib/components/Icon.svelte';
+	import nav from 'virtual:handbook/nav';
+	import { SITE } from '$lib/config.js';
+	import { search } from '$lib/search.svelte.js';
+
+	const missing = $derived(page.status === 404);
 </script>
 
 <svelte:head>
-	<title>{page.status} • Handbook</title>
+	<title>{missing ? 'Page not found' : 'Something went wrong'} | {SITE.name}</title>
 </svelte:head>
 
-<div class="error">
-	<span class="code">{page.status}</span>
-	<h1>{page.error?.message ?? 'Something went wrong'}</h1>
-	<p>The page you're looking for isn't here. It may have moved, or never existed.</p>
-	<a class="btn" href="{base}/"><Icon name="arrow-left" size={16} /> Back to home</a>
-</div>
+<main id="main" class="container not-found">
+	<div class="row">
+		<div class="col col--6 col--offset-3 markdown">
+			{#if missing}
+				<h1>Page not found</h1>
+				<p>Nothing is published at this address. The page may have moved, or the link may have a typo in it.</p>
+				<p>
+					Try <button type="button" class="clean-btn inline-link" onclick={() => (search.open = true)}>searching the docs</button>
+					or start from the <a href="{base}/docs/{nav.first.datapack}/">Data Pack overview</a>.
+				</p>
+			{:else}
+				<h1>Something went wrong</h1>
+				<p>{page.error?.message ?? 'The page failed to load.'}</p>
+				<p><a href="{base}/docs/{nav.first.datapack}/">Back to the docs</a></p>
+			{/if}
+		</div>
+	</div>
+</main>
 
 <style>
-	.error {
-		max-width: 60rem;
-		margin: 0 auto;
-		padding: 12rem var(--sk-page-padding-side);
-		text-align: center;
+	.inline-link {
+		color: var(--ifm-link-color);
+		font: inherit;
 	}
-	.code {
-		font-family: var(--sk-font-family-heading);
-		font-size: 8rem;
-		color: var(--sk-fg-accent);
-		line-height: 1;
-	}
-	h1 {
-		font: var(--sk-font-h2);
-		margin: 1rem 0;
-	}
-	p {
-		color: var(--sk-fg-3);
-		font-size: 1.8rem;
-		margin-bottom: 2.5rem;
-	}
-	.btn {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.5rem;
-		padding: 1rem 1.8rem;
-		border: 1px solid var(--sk-border);
-		border-radius: var(--sk-border-radius);
-		color: var(--sk-fg-1);
-		text-decoration: none;
-	}
-	.btn:hover {
-		border-color: var(--sk-fg-accent);
-		text-decoration: none;
+
+	.inline-link:hover {
+		text-decoration: underline;
 	}
 </style>

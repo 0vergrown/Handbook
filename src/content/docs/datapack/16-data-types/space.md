@@ -1,20 +1,20 @@
 ---
 title: "Space (Data Type)"
-description: "A String that defines which coordinate system is used for directions."
+description: "A string that picks the coordinate system directions are read in."
 navigation_title: "Space"
 ---
 
-A  [String](/docs/datapack/data-types/string) that defines which coordinate system is used for directions.
+A [String](/docs/datapack/data-types/string) that picks the coordinate system directions are read in.
 
-##	Values
+## Values
 
-  Value                             |  Description                              
-------------------------------------|-------------------------------------------
-  `world`                           |  The axes are global: `x` points to west (negative) or east (positive), `y` points to bottom (negative) or top (positive) and `z` points to north (negative) or south (positive).  
-  `local`                           |  The axes are local to the entity: `x` points to its left side and is always horizontal, `y` points to the top of the entity's head and `z` points to the direction the entity is facing.  
-  `local_horizontal`                |  Same as `local`, except it considers the vertical length of the direction of the entity is facing to be 0, resulting in `z` being projected *(flattened out)* onto the horizontal plane, making it shorter. `x` and `y` also become shorter by the same amount and `y` always points upwards. The axes shrink as the direction the entity is facing diverges from being horizontal. *(e.g: if the entity is looking straight up or straight down, the axes will have a length of 0, akin to forcing `x`, `y` and `z` to be `0`)*  
-  `local_horizontal_normalized`     |  Same as `local_horizontal`, except the axes are normalized — the offset keeps its full length whatever the entity's pitch is. This is a pure rotation around the entity's yaw, so unlike `local_horizontal` it stays well-defined when the entity looks straight up or straight down.  
-  `velocity`                        |  The axes are local to the entity's velocity, similar to `local`. If the velocity is purely vertical, the way the entity is pointing is used to determine the direction of `x` and `y` instead of the velocity. The axes scale based on how fast the entity is moving. *(e.g: if the entity is not moving, the axes will have a length of 0, akin to forcing `x`, `y` and `z` to be `0`)*  
-  `velocity_normalized`             |  Same as `velocity`, except the axes are normalized. *(e.g: the axes' length are brought back to its previous length of 1 if it's of non-zero length, making it **not** depend on the speed of the entity's movement, only as long as the entity is moving)*  
-  `velocity_horizontal`             |  Same as `velocity`, except the vertical velocity is considered to be `0`.  
-  `velocity_horizontal_normalized`  |  Same as `velocity_horizontal`, except the axes are normalized. *(e.g: the axes' length are brought back to its previous length of 1 if it's of non-zero length)*
+| Value | Description |
+| --- | --- |
+| `world` | The axes are global: `x` points west (negative) or east (positive), `y` down (negative) or up (positive), and `z` north (negative) or south (positive). |
+| `local` | The axes follow the entity: `x` points to its left side and is always horizontal, `y` points to the top of its head, and `z` points the way it is facing. |
+| `local_horizontal` | Like `local`, except the vertical part of the entity's facing counts as 0, so `z` is flattened onto the horizontal plane and gets shorter. `x` and `y` shrink by the same amount, and `y` always points up. The axes shrink the further the entity's facing is from horizontal, and if it looks straight up or straight down they have a length of 0, as if `x`, `y` and `z` were all `0`. |
+| `local_horizontal_normalized` | Like `local_horizontal`, except the axes are normalized, so the offset keeps its full length whatever the entity's pitch is. It is a pure rotation around the entity's yaw, so unlike `local_horizontal` it still works when the entity looks straight up or straight down. |
+| `velocity` | The axes follow the entity's velocity, much like `local`. If the velocity is purely vertical, the way the entity faces decides the direction of `x` and `y` instead. The axes scale with how fast the entity is moving, so when it isn't moving they have a length of 0, as if `x`, `y` and `z` were all `0`. |
+| `velocity_normalized` | Like `velocity`, except the axes are normalized back to a length of 1 whenever they aren't zero, so they don't depend on how fast the entity moves, only that it is moving. |
+| `velocity_horizontal` | Like `velocity`, except the vertical velocity counts as `0`. |
+| `velocity_horizontal_normalized` | Like `velocity_horizontal`, except the axes are normalized back to a length of 1 whenever they aren't zero. |

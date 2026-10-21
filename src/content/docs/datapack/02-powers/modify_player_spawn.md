@@ -1,33 +1,34 @@
 ---
 title: "Modify Player Spawn (Power Type)"
-description: "Modifies the location of the player's spawnpoint to the specified dimension, biome and/or structure."
+description: "Moves the player's spawn point to a dimension, biome or structure."
 navigation_title: "Modify Player Spawn"
 ---
 
-Modifies the location of the player's spawnpoint to the specified dimension, biome and/or structure.
+Moves the player's spawn point to the dimension you choose, and optionally to a biome or structure in it.
 
 Type ID: `apoli:modify_player_spawn`
 
-> See [Minecraft Wiki: Generated structures (IDs)](https://minecraft.wiki/w/Generated_structures#ID) and [Minecraft Wiki: Biome (Biome IDs)](https://minecraft.wiki/w/Biome#Biome_IDs) for a list of structure IDs and biome IDs respectively.
+The Minecraft Wiki lists the [structure IDs](https://minecraft.wiki/w/Generated_structures#ID) and the [biome IDs](https://minecraft.wiki/w/Biome#Biome_IDs).
 
-> Keep in mind that structure location is costly and it might take one or two seconds (or longer) before the player gets teleported when choosing the power.
+> [!WARNING]
+> Locating a structure is expensive, so it can take a second or two, or longer, before the player is teleported after choosing the power.
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`dimension` | Identifier | | The namespace and ID of the dimension the player should spawn in.
-`biome` | Identifier | _optional_ | If specified, the player will only spawn in the biome that matches the specified namespace and ID.
-`structure` | Identifier | _optional_ | If specified, the player will only spawn in the specified namespace and ID of the structure. **The structure needs to generate in the specified dimension.**
-`spawn_strategy` | String | `"default"` | Determines whether the player should spawn near the world spawnpoint (0, 0) of the dimension (`"center"`) or near the coordinates of the Overworld spawnpoint (whilst considering the value of the `dimension_distance_multiplier` field) (`"default"`).
-`dimension_distance_multiplier` | Float | _optional_ | Defines the ratio of Overworld blocks to blocks in the specified dimension. e.g: for The Nether dimension, this would be set to `0.125`. **This needs to be set when `spawn_strategy` is set to `"default"`**
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `dimension` | [Identifier](/docs/datapack/data-types/identifier) | | The dimension the player spawns in. |
+| `biome` | [Identifier](/docs/datapack/data-types/identifier) | _optional_ | If set, the player only spawns in this biome. |
+| `structure` | [Identifier](/docs/datapack/data-types/identifier) | _optional_ | If set, the player only spawns in this structure. The structure has to generate in the chosen dimension. |
+| `spawn_strategy` | [String](/docs/datapack/data-types/string) | `"default"` | `"center"` spawns the player near the dimension's center (0, 0). `"default"` spawns them near the Overworld spawn point, scaled by `dimension_distance_multiplier`. |
+| `dimension_distance_multiplier` | [Float](/docs/datapack/data-types/float) | _optional_ | The ratio of Overworld blocks to blocks in the chosen dimension, for example `0.125` for the Nether. Set it whenever `spawn_strategy` is `"default"`. |
 
 ## When it applies
 
-- **On choosing an origin** that grants the power, the player is teleported to the located spawn straight away.
-- **On death**, if the player has no respawn point, or their bed or respawn anchor is gone.
+- When the player chooses an origin that grants the power, they are teleported to the located spawn straight away.
+- When the player dies with no respawn point, or their bed or respawn anchor is gone.
 
-A player who has slept in a bed keeps that bed — the power only fills the gap vanilla would fill with the world spawn. The located spawn is stored as a forced respawn point, so the search runs once rather than on every death, and it is cleared again if the player loses the power.
+A player who has slept in a bed keeps that bed. The power only fills the gap vanilla would fill with the world spawn. The located spawn is stored as a forced respawn point, so the search runs once instead of on every death, and it is cleared if the player loses the power.
 
 ## Examples
 
@@ -40,4 +41,4 @@ A player who has slept in a bed keeps that bed — the power only fills the gap 
 }
 ```
 
-This example will let players spawn at an End City in The End dimension.
+This makes the player spawn at an End City in the End.

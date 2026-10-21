@@ -1,15 +1,3 @@
-// Schema extractor for Apoli / Origins — a docs maintenance aid.
-//
-// Parses the mod source's registration files + config codecs and emits a
-// manifest of every registered power / action / condition and its fields
-// (name, type, default). Use it to check the Handbook's fields tables against
-// the current source, or to find newly-added types that need a page.
-//
-//   node scripts/extract-schema.mjs
-//     -> scripts/schema.json  (structured)
-//     -> scripts/schema.txt   (readable, grouped by category)
-//
-// Adjust ROOTS below if the mod repos move.
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -19,7 +7,6 @@ const ROOTS = {
 	origins: '/home/default/Documents/GitHub/Origins/Origins-Fabric-1.21.1/src/main/java/dev/overgrown/origins'
 };
 
-// index every .java file by class basename
 function indexClasses(root) {
 	const map = new Map();
 	if (!fs.existsSync(root)) return map;
@@ -34,7 +21,6 @@ function indexClasses(root) {
 	return map;
 }
 
-// friendly type names from the codec expression preceding .fieldOf
 const TYPE_MAP = [
 	[/^Codec\.INT|IntProvider|intRange/, 'integer'],
 	[/^Codec\.(DOUBLE|FLOAT)|doubleRange|floatRange/, 'number'],
@@ -76,14 +62,12 @@ function friendlyType(expr) {
 	let base = expr;
 	for (const [re, name] of TYPE_MAP) if (re.test(expr)) { base = name; break; }
 	if (base === expr) {
-		// clean a raw expression to something readable
 		base = expr.replace(/\.CODEC.*$/, '').replace(/^.*\b(\w+)$/, '$1');
 	}
 	if (listMatch) return `list of ${base}`;
 	return base;
 }
 
-// balanced-arg parse of a .fieldOf(...) / .optionalFieldOf(...) call at index i
 function readCall(src, openParen) {
 	let depth = 0, i = openParen, inStr = null, args = [], cur = '';
 	for (; i < src.length; i++) {
@@ -113,8 +97,7 @@ function extractFields(src) {
 		if (!args.length) continue;
 		const nameRaw = args[0];
 		const nm = /^["']([^"']+)["']$/.exec(nameRaw);
-		if (!nm) continue; // dynamic field name, skip
-		// codec expr: look back from m.index to a boundary
+		if (!nm) continue;
 		const before = src.slice(Math.max(0, m.index - 120), m.index);
 		const exprMatch = /([A-Za-z_][\w.]*(?:\([^()]*\))?(?:\.[A-Za-z_]\w*)*)\s*$/.exec(before);
 		const expr = exprMatch ? exprMatch[1] : '';
@@ -127,15 +110,12 @@ function extractFields(src) {
 		});
 		re.lastIndex = end;
 	}
-	// de-dupe by name (codecs sometimes list a field twice via aliases)
 	const seen = new Set();
 	return fields.filter((f) => (seen.has(f.name) ? false : seen.add(f.name)));
 }
 
-// parse a registration file: returns [{id, cls, aliases[]}]
 function parseRegistrations(file, callRe, dedupe = false) {
 	const src = fs.readFileSync(file, 'utf8');
-	// map ResourceLocation constants -> id string
 	const constMap = new Map();
 	for (const cm of src.matchAll(/(?:ResourceLocation|Identifier)\s+([A-Z_][A-Z0-9_]*)\s*=\s*\w+\.id\(\s*["']([^"']+)["']/g)) {
 		constMap.set(cm[1], cm[2]);
@@ -206,7 +186,6 @@ const apoli = build(ROOTS.apoli, {
 const outDir = path.dirname(fileURLToPath(import.meta.url));
 fs.writeFileSync(path.join(outDir, 'schema.json'), JSON.stringify({ apoli }, null, 2));
 
-// readable summary
 let out = '';
 let totals = {};
 for (const [cat, list] of Object.entries(apoli)) {
@@ -218,7 +197,7 @@ for (const [cat, list] of Object.entries(apoli)) {
 		if (!t.fields.length) { out += `    (no fields)\n`; continue; }
 		for (const f of t.fields) {
 			const def = f.required ? 'REQUIRED' : `default ${f.default ?? '?'}`;
-			out += `    · ${f.name} : ${f.type} — ${def}\n`;
+			out += `    · ${f.name} : ${f.type} = ${def}\n`;
 		}
 	}
 }

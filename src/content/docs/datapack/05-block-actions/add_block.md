@@ -1,19 +1,21 @@
 ---
 title: "Add Block (Block Action Type)"
-description: "Adds a block at the specified action position."
+description: "Places a block at the position, but only where the block already there can be replaced."
 navigation_title: "Add Block"
 ---
 
-Adds a block at the specified action position. Adding means setting the block at the position, offset by the direction of the action.
+Places a block at the action's position, but only if the block already there can be replaced, the way air, water or short grass can. [apoli:set_block](/docs/datapack/block-actions/set_block) overwrites whatever is there, while this action leaves solid blocks alone.
 
 Type ID: `apoli:add_block`
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`block` | Identifier | | The namespace and ID of the block to place.
-`nbt` | NBT | *optional* | The NBT data to give the block.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `block` | [Identifier](/docs/datapack/data-types/identifier) | _required_ | The ID of the block to place. It takes a plain block ID, so the block is always placed in its default state. |
+| `nbt` | [NBT](/docs/datapack/data-types/nbt) | _optional_ | Block entity data for the placed block, such as a chest's contents. It only applies to blocks that have a block entity. |
+
+To change a property of the placed block, such as which way it faces, follow this action with [apoli:modify_block_state](/docs/datapack/block-actions/modify_block_state).
 
 ## Examples
 
@@ -24,22 +26,4 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will add a Coal Ore block at the position of the block action type.
-
-```json
-"block_action": {
-    "type": "apoli:add_block",
-    "block": "minecraft:chest[facing=north]"
-}
-```
-
-This example will add a Chest block facing north at the position of the block action type.
-
-```json
-"block_action": {
-    "type": "apoli:add_block",
-    "block": "minecraft:chest",
-    "nbt":"[facing=north]"
-}
-```
-Same as before but with the NBT field
+This places a coal ore block at the position, if the block there can be replaced.

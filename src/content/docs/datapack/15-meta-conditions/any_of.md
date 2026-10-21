@@ -5,19 +5,19 @@ navigation_title: "Any Of"
 aliases: ["or"]
 ---
 
-Passes when at least one condition in the list passes. An empty list fails. Available in every condition flavour.
+Passes when at least one condition in the list passes, and an empty list fails. It works in every kind of condition.
 
 Type ID: `apoli:any_of` (alias `apoli:or`)
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|-------------
-`conditions` | array of conditions | **required** | Any one passing is enough. Same flavour as the containing condition.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `conditions` | array of conditions | _required_ | Any one of them passing is enough. They are the same kind as the containing condition. |
 
 ## Examples
 
-Wet by any means:
+Wet in any way:
 
 ```json
 {
@@ -42,4 +42,5 @@ A list of acceptable dimensions, which is the most common use:
 }
 ```
 
+> [!TIP]
 > Conditions are checked in order and stop at the first success, so put the likeliest first.

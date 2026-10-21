@@ -1,19 +1,19 @@
 ---
 title: "Fuel (Item Condition Type)"
-description: "Checks whether the item is considered as fuel."
+description: "Compares how long the item burns as furnace fuel with a number."
 navigation_title: "Fuel"
 ---
 
-Checks whether the item is considered as fuel.
+Checks whether the item works as fuel, by comparing how many ticks it burns for with a number.
 
 Type ID: `apoli:fuel`
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|-------------
-`comparison` | Comparison | `">"` | Determines how the fuel time value (in ticks) of the item stack should be compared to a specific value.
-`compare_to` | Integer | `0` | The value at which the fuel time value (in ticks) of the item stack will be compared to.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `comparison` | [Comparison](/docs/datapack/data-types/comparison) | `">"` | How the burn time, in ticks, is compared with `compare_to`. |
+| `compare_to` | [Integer](/docs/datapack/data-types/integer) | `0` | The number the burn time is compared with. |
 
 ## Examples
 
@@ -25,4 +25,4 @@ Field | Type | Default | Description
 }
 ```
 
-This example will check if the item fuel time value of 10 or more.
+This checks whether the item burns as fuel for 10 ticks or more.

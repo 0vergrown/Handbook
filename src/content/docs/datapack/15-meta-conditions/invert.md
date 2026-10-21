@@ -4,13 +4,13 @@ description: "There is no meta condition to invert the results of another condit
 navigation_title: "Invert"
 ---
 
-> **There is no meta condition to invert the results of another condition.** However, **every** condition supports the following field, which can be used to achieve the same:
+Apoli has no meta condition that inverts another condition. Every condition supports the `inverted` field instead, which does the same.
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`inverted` | [Boolean](/docs/datapack/data-types/boolean) | `false` | If true, the condition acts inverted.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `inverted` | [Boolean](/docs/datapack/data-types/boolean) | `false` | With `true`, the condition's result is flipped. |
 
 ## Examples
 
@@ -21,4 +21,4 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will check if the player is **not** sneaking.
+This checks whether the player isn't sneaking.

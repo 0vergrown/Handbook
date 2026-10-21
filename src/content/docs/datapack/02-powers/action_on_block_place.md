@@ -1,32 +1,33 @@
 ---
 title: "Action On Block Place (Power Type)"
-description: "Executes an action upon placing a block."
+description: "Runs actions when the player places a block."
 navigation_title: "Action On Block Place"
 ---
 
-Executes an action upon placing a block.
+Runs actions when the player that has the power places a block.
 
 Type ID: `apoli:action_on_block_place`
 
-##	Fields
+## Fields
 
-Field | Type | Default | Description
-------|------|---------|------------
-`entity_action` | Entity Action Type | *optional* | If specified, this entity action will be executed on the player upon placing a block.
-`held_item_action` | Item Action Type | *optional* | If specified, this item action will be executed on the item the player has used to place a block.
-`place_to_action` | Block Action Type | *optional* | If specified, this block action will be executed at the position of the block the player has placed.
-`place_on_action` | Block Action Type | *optional* | If specified, this block action will be executed on the block the player placed a block on.
-`item_condition` | Item Condition Type | *optional* | If specified, the specified actions will only be executed if the item the player has used to place a block fulfills this item condition.
-`place_to_condition` | Block Condition Type | *optional* | If specified, the specified actions will only be executed if the block at the position of the block the player is about to place fulfills this block condition.
-`place_on_condition` | Block Condition Type | *optional* | If specified, the specified actions will only be executed if the block the player is about to place a block on fulfills this block condition.
-`directions` | [Array](/docs/datapack/data-types/array) of [String](/docs/datapack/data-types/string) | `["up", "down", "north", "south", "east", "west"]` | Determines whether the specified actions should be executed if the player is about to place a block at the specified side(s) of a block.
-`hands` | [Array](/docs/datapack/data-types/array) of [Hand](/docs/datapack/data-types/hand) | `["main_hand", "off_hand"]` | Determines whether the specified actions should be executed if the player used the specified hand(s) when trying to place a block.
-`result_stack` | [Item Stack](/docs/datapack/data-types/item-stack) | *optional* | If specified, this item stack will be given to the player upon placing a block: into the hand that was used if that hand is now empty, otherwise into the inventory (dropped at their feet if it is full).
-`result_item_action` | Item Action Type | *optional* | If specified, this item action will be executed on `result_stack` before it is given to the player. Does nothing without `result_stack`.
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `entity_action` | [Entity Action Type](/docs/datapack/entity-actions) | _optional_ | If set, this action runs on the player when they place a block. |
+| `held_item_action` | [Item Action Type](/docs/datapack/item-actions) | _optional_ | If set, this action runs on the item the player placed the block with. |
+| `place_to_action` | [Block Action Type](/docs/datapack/block-actions) | _optional_ | If set, this action runs at the position of the placed block. |
+| `place_on_action` | [Block Action Type](/docs/datapack/block-actions) | _optional_ | If set, this action runs on the block the player placed the block against. |
+| `item_condition` | [Item Condition Type](/docs/datapack/item-conditions) | _optional_ | If set, the actions only run when the item the player placed the block with passes this condition. |
+| `place_to_condition` | [Block Condition Type](/docs/datapack/block-conditions) | _optional_ | If set, the actions only run when the block at the placed position passes this condition. |
+| `place_on_condition` | [Block Condition Type](/docs/datapack/block-conditions) | _optional_ | If set, the actions only run when the block placed against passes this condition. |
+| `directions` | [Array](/docs/datapack/data-types/array) of [String](/docs/datapack/data-types/string) | `["up", "down", "north", "south", "east", "west"]` | The sides of a block the player has to place against for the actions to run. |
+| `hands` | [Array](/docs/datapack/data-types/array) of [Hand](/docs/datapack/data-types/hand) | `["main_hand", "off_hand"]` | The hands the player has to use for the actions to run. |
+| `result_stack` | [Item Stack](/docs/datapack/data-types/item-stack) | _optional_ | If set, this item stack is given to the player when they place a block. It goes into the hand that was used if that hand is now empty, otherwise into the inventory, and it is dropped at their feet if the inventory is full. |
+| `result_item_action` | [Item Action Type](/docs/datapack/item-actions) | _optional_ | If set, this action runs on `result_stack` before the player gets it. Without `result_stack` it does nothing. |
 
-> This fires **after** the block goes down, so `place_to_condition` matches the block that was just placed. Use [apoli:prevent_block_place](/docs/datapack/powers/prevent_block_place) if you need to inspect the space *before* it is filled.
+> [!NOTE]
+> The power fires after the block goes down, so `place_to_condition` matches the block that was just placed. Use [apoli:prevent_block_place](/docs/datapack/powers/prevent_block_place) to inspect the space before it is filled.
 
-##	Examples
+## Examples
 
 ```json
 {
@@ -50,7 +51,8 @@ Field | Type | Default | Description
 	]
 }
 ```
-This example will heal the player upon the player placing Wheat Seeds on top of Farmland blocks.
+
+This heals the player when they plant wheat seeds on top of farmland.
 
 ```json
 {
@@ -88,4 +90,5 @@ This example will heal the player upon the player placing Wheat Seeds on top of 
 	}
 }
 ```
-This example will make Netherrack blocks placed by the player will absorb Lava fluid with a 4 radius star-shaped area, and replace the placed Netherrack with a Magma block.
+
+When the player places netherrack into lava, the lava within a star-shaped area with a radius of 4 is removed, and the placed netherrack becomes a magma block.

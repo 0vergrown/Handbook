@@ -1,18 +1,18 @@
 ---
 title: "Bonemeal (Block Action Type)"
-description: "Applies bone meal to the target block as if a dispenser or a player used a Bone Meal item to it."
+description: "Uses bone meal on the block, as if a dispenser or a player had used Bone Meal on it."
 navigation_title: "Bonemeal"
 ---
 
-Applies bone meal to the target block as if a dispenser or a player used a Bone Meal item to it.
+Uses bone meal on the block, as if a dispenser or a player had used a Bone Meal item on it.
 
 Type ID: `apoli:bonemeal`
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|------------
-`effects` | Boolean | `true` | Determines if the particle and other visual effects of the bonemeal-ing action should appear.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `effects` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Whether the particles and other visual effects of using bone meal appear. |
 
 ## Examples
 
@@ -23,4 +23,4 @@ Field | Type | Default | Description
 }
 ```
 
-This example will apply bonemeal to the target block of the block action without the visual effects.
+This uses bone meal on the block without the visual effects.

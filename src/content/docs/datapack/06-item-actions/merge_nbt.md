@@ -1,18 +1,18 @@
 ---
 title: "Merge NBT (Item Action Type)"
-description: "Merges the specified NBT to the item's NBT."
+description: "Merges NBT into the item's NBT."
 navigation_title: "Merge NBT"
 ---
 
-Merges the specified NBT to the item's NBT.
+Merges NBT into the item's NBT.
 
 Type ID: `apoli:merge_nbt`
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|------------
-`nbt` | NBT | | The NBT to merge to the item's NBT.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `nbt` | [NBT](/docs/datapack/data-types/nbt) | _required_ | The NBT to merge into the item's NBT. |
 
 ## Examples
 
@@ -23,4 +23,4 @@ Field | Type | Default | Description
 }
 ```
 
-This example will merge the `{custom_stuff: 1b}` NBT to the item's NBT.
+This merges `{custom_stuff: 1b}` into the item's NBT.

@@ -1,30 +1,28 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="light" data-theme-choice="system">
 	<head>
 		<meta charset="utf-8" />
-		<link rel="icon" href="%sveltekit.assets%/handbook.svg" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<meta name="theme-color" content="#ff3e00" />
-
-		<!-- Set the theme before first paint to avoid a flash of the wrong colour scheme -->
+		<link rel="icon" type="image/png" sizes="32x32" href="%sveltekit.assets%/assets/brand/favicon-32.png" />
+		<link rel="icon" type="image/png" sizes="192x192" href="%sveltekit.assets%/assets/brand/favicon-192.png" />
+		<link rel="apple-touch-icon" href="%sveltekit.assets%/assets/brand/apple-touch-icon.png" />
 		<script>
-			try {
-				const stored = localStorage.getItem('handbook:theme');
-				const theme =
-					!stored || stored === 'system'
-						? window.matchMedia('(prefers-color-scheme: dark)').matches
-							? 'dark'
-							: 'light'
-						: stored;
-				document.documentElement.classList.add(theme);
-			} catch (e) {
-				// localStorage disabled — fall back to the media query via CSS
-			}
+			(function () {
+				var choice = 'system';
+				try {
+					var stored = localStorage.getItem('handbook:theme');
+					if (stored === 'light' || stored === 'dark') choice = stored;
+				} catch (error) {}
+				var dark =
+					choice === 'dark' ||
+					(choice === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+				document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+				document.documentElement.setAttribute('data-theme-choice', choice);
+			})();
 		</script>
-
 		%sveltekit.head%
 	</head>
 	<body data-sveltekit-preload-data="hover">
-		<div style="display: contents">%sveltekit.body%</div>
+		<div id="handbook">%sveltekit.body%</div>
 	</body>
 </html>

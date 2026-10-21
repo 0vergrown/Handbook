@@ -4,29 +4,27 @@ description: "Sets, changes or animates one of the entity's stored scales."
 navigation_title: "Scale"
 ---
 
-Changes a scale that is **stored on the entity** — it survives relogs, dimension changes and the power being revoked, exactly like a value set with [/apoli:scale](/docs/datapack/commands/scale). Use [apoli:scale](/docs/datapack/powers/scale) instead when the size should only last as long as the power.
+Changes a scale that is stored on the entity. The value survives relogs, dimension changes and the power being revoked, exactly like a value set with [/apoli:scale](/docs/datapack/commands/scale). Use the [apoli:scale](/docs/datapack/powers/scale) power instead when the size should only last as long as the power.
 
 Type ID: `apoli:scale`
 
 ## Fields
 
 | Field | Type | Default | Description |
-|-------|------|---------|-------------|
+| --- | --- | --- | --- |
 | `scale_types` | [Scale Type](/docs/datapack/data-types/scale-type) or [Array](/docs/datapack/data-types/array) of them | `apoli:base` | Which scales to change. |
 | `operation` | [String](/docs/datapack/data-types/string) | `set` | `set`, `add`, `subtract`, `multiply`, `divide` or `power`. |
 | `scale` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | `1` | The right-hand side of the operation. |
-| `ticks` | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | `0` | How long the change takes. `0` snaps immediately. |
+| `ticks` | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | `0` | How long the change takes. `0` applies it immediately. |
 | `easing` | [String](/docs/datapack/data-types/string) | `linear` | How the change is spread over `ticks`. See [Scale Type](/docs/datapack/data-types/scale-type) for the list. |
 
-`scale_type` is accepted as a spelling of `scale_types`.
+`scale_type` is accepted as another spelling of `scale_types`.
 
-Every type in the list gets the **same** operation and the same `scale`, each measured against its own
-current value. They are independent: `apoli:model_width` and `apoli:model_height` at `5` makes a model
-five times bigger in every direction, while `apoli:model_height` alone stretches it upwards only.
+Every type in the list gets the same operation and the same `scale`, each measured against its own current value. The types are independent: `apoli:model_width` and `apoli:model_height` at `5` make a model five times bigger in every direction, while `apoli:model_height` alone only stretches it upwards.
 
 ## Examples
 
-Five times bigger, model only — the hitbox is untouched:
+Five times bigger, model only, with the hitbox untouched:
 
 ```json
 {

@@ -1,20 +1,21 @@
 ---
 title: "Swing Hand (Entity Action Type)"
-description: "Swings the specified hand."
+description: "Plays the swing animation of one of the entity's hands."
 navigation_title: "Swing Hand"
 ---
 
-Swings the specified hand.
+Plays the swing animation of one of the entity's hands.
 
 Type ID: `apoli:swing_hand`
 
-> This action is purely cosmetic, and will not interact with the world in any way. This means you can't use this to break, or place blocks, hit or use entities, or any other action that involves swinging your hand.
+> [!NOTE]
+> The swing is only visual and doesn't interact with the world. It can't break or place blocks, hit or use entities, or do anything else a real swing does.
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`hand` | [Hand](/docs/datapack/data-types/hand) | `"main_hand"` | Which hand is swung: `"main_hand"` or `"off_hand"`. `"mainhand"`/`"offhand"` and the upper-case spellings are also accepted.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `hand` | [Hand](/docs/datapack/data-types/hand) | `"main_hand"` | Which hand swings: `"main_hand"` or `"off_hand"`. `"mainhand"`, `"offhand"` and the upper-case spellings are accepted too. |
 
 ## Examples
 
@@ -25,7 +26,7 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will swing the entity's off hand.
+This swings the entity's off hand.
 
 ## Swinging both hands at once
 
@@ -41,8 +42,9 @@ Run the action twice in the same tick, once per hand, and both arms swing togeth
 }
 ```
 
-Minecraft only tracks one swing per entity, so before this the second call simply replaced the first and you saw a single arm move. Apoli now notices that the second swing arrived while the other arm was already swinging and animates both.
+Minecraft only tracks one swing per entity, so normally the second call replaces the first and only one arm moves. Apoli notices when the second swing arrives while the other arm is already swinging, and animates both.
 
-The two arms share one swing timer, so they move in perfect sync — this is a two-fisted swing, not two independent ones. It works in third person and, with [apoli:show_both_arms](/docs/datapack/powers/show_both_arms), in first person as well; without that power vanilla only draws one first-person arm, so there is only one arm there to animate. With `show_both_arms` ghost arms, both arms leave a trail, in first and third person alike.
+The two arms share one swing timer, so they move in perfect sync as a two-fisted swing. It works in third person, and in first person with [apoli:show_both_arms](/docs/datapack/powers/show_both_arms). Without that power, vanilla only draws one arm in first person, so there is only one arm to animate there. With `show_both_arms` ghost arms, both arms leave a trail in first and third person alike.
 
-> Both calls have to land in the **same tick**. A tick or more apart and Minecraft rejects the second swing outright, exactly as it does without Apoli, and you get one arm.
+> [!WARNING]
+> Both calls have to land in the same tick. A tick or more apart, Minecraft rejects the second swing outright, exactly as it does without Apoli, and only one arm moves.

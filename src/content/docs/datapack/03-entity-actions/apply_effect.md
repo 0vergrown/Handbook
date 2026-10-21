@@ -1,19 +1,19 @@
 ---
 title: "Apply Effect (Entity Action Type)"
-description: "Adds one or more status effects to the living entity."
+description: "Gives a living entity one or more status effects."
 navigation_title: "Apply Effect"
 ---
 
-Adds one or more status effects to the living entity. Does not have an effect on non-living entities.
+Gives a living entity one or more status effects. It does nothing to entities that aren't alive.
 
 Type ID: `apoli:apply_effect`
 
 ## Fields
 
-| Field     | Type                                                    | Default    | Description                                                  |
-| --------- | ------------------------------------------------------- | ---------- | ------------------------------------------------------------ |
-| `effect`  | [Status Effect Instance](/docs/datapack/data-types/status-effect-instance)                      | _optional_ | If set, this status effect will be applied by this action.   |
-| `effects` | [Array](/docs/datapack/data-types/array) of [Status Effect Instance](/docs/datapack/data-types/status-effect-instance) | _optional_ | If set, these status effects will be applied by this action. |
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `effect` | [Status Effect Instance](/docs/datapack/data-types/status-effect-instance) | _optional_ | A status effect to apply. |
+| `effects` | [Array](/docs/datapack/data-types/array) of [Status Effect Instance](/docs/datapack/data-types/status-effect-instance) | _optional_ | Several status effects to apply. |
 
 ## Examples
 
@@ -28,7 +28,7 @@ Type ID: `apoli:apply_effect`
 }
 ```
 
-This example will apply a Speed I status effect to the entity that would last for 20 seconds.
+This gives the entity Speed I for 20 seconds.
 
 ```json
 "entity_action": {
@@ -51,4 +51,5 @@ This example will apply a Speed I status effect to the entity that would last fo
 	]
 }
 ```
-This example will apply both Slowness I and Slow Falling I status effects that lasts for 20 seconds.
+
+This gives the entity Slow Falling I and Slowness I, both for 20 seconds.

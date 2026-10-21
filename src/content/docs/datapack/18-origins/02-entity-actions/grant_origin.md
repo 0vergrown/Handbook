@@ -1,36 +1,35 @@
 ---
 title: "Grant Origin (Entity Action Type)"
-description: "Entity action — gives a player a specific origin, on a normal layer or into a swap pool."
+description: "Gives a player a specific origin, on a normal layer or into a swap pool."
 navigation_title: "Grant Origin"
 ---
 
-Gives a player one named origin. On a normal [layer](/docs/datapack/origins/layers) it becomes their pick; on a [swappable layer](/docs/datapack/origins/swapping) it is added to their swap pool.
+Gives a player one named origin. On a normal [layer](/docs/datapack/origins/layers) it becomes their pick, and on a [swappable layer](/docs/datapack/origins/swapping) it is added to their swap pool.
 
-Type ID: `origins:grant_origin` — an [entity action](/docs/datapack/entity-actions).
+Type ID: `origins:grant_origin`
 
-> **Needs the Origins mod.** Registered by Origins, not core Apoli. It only runs for players.
+> [!NOTE]
+> This action comes from the Origins mod and only runs for players.
 
 ## Fields
 
-| Field | Type | Default | Purpose |
+| Field | Type | Default | Description |
 | --- | --- | --- | --- |
-| `origin` | [Identifier](/docs/datapack/data-types/identifier) | _required_ | The origin to grant. Unknown ids and `origins:empty` do nothing. |
+| `origin` | [Identifier](/docs/datapack/data-types/identifier) | _required_ | The origin to grant. Unknown IDs and `origins:empty` do nothing. |
 | `layer` | [Identifier](/docs/datapack/data-types/identifier) | `origins:origin` | The layer to grant it on. |
-| `to_pool` | [Boolean](/docs/datapack/data-types/boolean) | `false` | On a **normal** layer, put the origin in that layer's swap pool instead of making it the player's pick. Ignored on a swappable layer, where a grant is always a pool grant. _Also accepts the alias `swappable`._ |
+| `to_pool` | [Boolean](/docs/datapack/data-types/boolean) | `false` | On a normal layer, puts the origin in that layer's swap pool instead of making it the player's pick. It is ignored on a swappable layer, where a grant always goes to the pool. `swappable` works as an alias. |
 
-## What "granting" means per layer kind
+## What granting does on each kind of layer
 
 | `layer` is | Result |
 | --- | --- |
-| a normal layer | the origin becomes the player's pick there, exactly as [`/origin set`](/docs/datapack/commands/origin) would |
-| a normal layer, with `to_pool: true` | the origin is added to the swap pool feeding that layer — the player can swap to it, but their own origin is untouched |
-| a [swappable layer](/docs/datapack/origins/swapping) | the origin is added to that pool |
+| A normal layer | The origin becomes the player's pick there, exactly as [`/origin set`](/docs/datapack/commands/origin) would make it. |
+| A normal layer, with `to_pool: true` | The origin is added to the swap pool for that layer. The player can swap to it, and their own origin is untouched. |
+| A [swappable layer](/docs/datapack/origins/swapping) | The origin is added to that pool. |
 
-Pool grants are **per player** and are not checked against the layer's `origins` list, so a swappable layer can ship empty and be filled entirely at run time.
+Pool grants are stored for each player and aren't checked against the layer's `origins` list, so a swappable layer can ship empty and be filled entirely at run time.
 
 ## Examples
-
-Give the player the Phantom origin outright:
 
 ```json
 {
@@ -40,7 +39,7 @@ Give the player the Phantom origin outright:
 }
 ```
 
-Unlock an extra form they can swap into, without disturbing what they are now:
+This gives the player the Phantom origin on the main layer.
 
 ```json
 {
@@ -51,4 +50,6 @@ Unlock an extra form they can swap into, without disturbing what they are now:
 }
 ```
 
-> To take one back, use [`origins:revoke_origin`](/docs/datapack/origins/revoke_origin). To move one between two players, use [`origins:transfer_origin`](/docs/datapack/origins/transfer_origin).
+This unlocks `example:wolf_form` as an extra form the player can swap into, without changing their current origin.
+
+[`origins:revoke_origin`](/docs/datapack/origins/revoke_origin) takes an origin back, and [`origins:transfer_origin`](/docs/datapack/origins/transfer_origin) moves one between two players.

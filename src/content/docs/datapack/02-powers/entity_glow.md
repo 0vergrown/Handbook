@@ -1,35 +1,38 @@
 ---
 title: "Entity Glow (Power Type)"
-description: "Makes other entities glow (as with the glowing status effect), but only for the player that has the power."
+description: "Makes other entities glow, as with the Glowing effect, but only for the player that has the power."
 navigation_title: "Entity Glow"
 aliases: ["self_glow"]
 ---
 
-Makes other entities glow (as with the glowing status effect), but only for the player that has the power.
+Makes other entities glow, as they do with the Glowing effect, but only for the player that has the power.
 
 Type ID: `apoli:entity_glow`
 
-> You can use a color picker website and divide the RGB values by 255 to get the values *(e.g: ranging from 0.0 to 1.0)* to be used for the power type.
+Both the entity with the power and the glowing entity can be any entity, not only living ones. Granting `apoli:self_glow` to a projectile, such as an arrow or a custom projectile, makes the projectile itself glow.
 
-> Both the holder of the power and the glowing entity can be **any entity**, not just living ones — granting `apoli:self_glow` to a projectile (e.g. an arrow or a custom projectile) makes the projectile itself glow.
+In `bientity_condition`, the actor is always the entity that has the power. For `apoli:entity_glow` that is the viewer, and the target is the entity that would glow. For `apoli:self_glow` it is the other way round: the actor is the glowing entity and the target is the viewer who might see it.
 
-> `entity_condition` and `bientity_condition` are evaluated **client-side**, so only conditions the client can answer will work: world and time, entity flags and pose, equipment, `apoli:power_active`, resources and cooldowns, your own [apoli:inventory](/docs/datapack/powers/inventory) power containers, and [entity sets](/docs/datapack/bientity-conditions/in_entity_set) — your own and those of any entity in view. `apoli:command`, `apoli:advancement`, `apoli:scoreboard`, `apoli:stat` and `apoli:predicate` still read as `false` there. Nothing glows in first person either — Minecraft does not render the camera entity, so test `apoli:self_glow` in third person (F5).
+> [!TIP]
+> To get colour values from a colour picker, divide each RGB value by 255 to get a number between 0.0 and 1.0.
 
-> **In `bientity_condition`, `actor` is always the entity that holds the power.** For `apoli:entity_glow` that is the viewer and `target` is the entity that would glow; for `apoli:self_glow` it is the other way round — `actor` is the glowing holder and `target` is the viewer deciding whether they can see it.
+> [!WARNING]
+> `entity_condition` and `bientity_condition` are evaluated on the client, so only conditions the client can answer work: the world and time, entity flags and pose, equipment, `apoli:power_active`, resources and cooldowns, your own [apoli:inventory](/docs/datapack/powers/inventory) containers, and [entity sets](/docs/datapack/bientity-conditions/in_entity_set), both your own and those of any entity in view. `apoli:command`, `apoli:advancement`, `apoli:scoreboard`, `apoli:stat` and `apoli:predicate` read as `false` there. Nothing glows in first person either, because Minecraft doesn't render the camera entity, so test `apoli:self_glow` in third person (F5).
 
-> A `bientity_condition` or `entity_condition` that fails to parse fails the **whole power**, with a log line naming it. Check the log there first — a glow that ignores its condition is usually a condition that never parsed.
+> [!NOTE]
+> A `bientity_condition` or `entity_condition` that fails to parse fails the whole power, with a log line naming it. Check the log first, because a glow that ignores its condition is usually a condition that never parsed.
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`entity_condition` | Entity Condition Type | _optional_ | If specified, only entities which fulfill this condition will glow for the player that has the power.
-`bientity_condition` | Bi-entity Condition Type | _optional_ | If specified, the power will only be active if this condition is fulfilled by either or both the 'actor' (the player that has the power) and 'target' (the entity that would glow) entities.
-`use_teams` | Boolean | `true` | Determines whether glowing entities should use their team's color with their glow. If set to false, the entity will instead use the `red`, `green` and `blue` fields within this power type.
-`red` | Float | `1.0` | Value by which the red component of the glow will be multiplied. Range: 0.0 - 1.0.
-`green` | Float | `1.0` | Value by which the green component of the glow will be multiplied. Range: 0.0 - 1.0.
-`blue` | Float | `1.0` | Value by which the blue component of the glow will be multiplied. Range: 0.0 - 1.0.
-`self_glow_target` | Boolean | `false` | If `true`, the power makes the entity that **has** the power glow for everyone else, instead of making other entities glow for the holder. The `apoli:self_glow` type ID is an alias for this power with `self_glow_target` defaulting to `true` (see [Self Glow](/docs/datapack/powers/self_glow)).
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `entity_condition` | [Entity Condition Type](/docs/datapack/entity-conditions) | _optional_ | If set, only entities that pass this condition glow for the player with the power. |
+| `bientity_condition` | [Bi-entity Condition Type](/docs/datapack/bientity-conditions) | _optional_ | If set, an entity only glows when this condition passes. The actor is the player with the power, and the target is the entity that would glow. |
+| `use_teams` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Whether glowing entities use their team colour. If `false`, the glow uses the `red`, `green` and `blue` fields. |
+| `red` | [Float](/docs/datapack/data-types/float) | `1.0` | Multiplies the red component of the glow, from 0.0 to 1.0. |
+| `green` | [Float](/docs/datapack/data-types/float) | `1.0` | Multiplies the green component of the glow, from 0.0 to 1.0. |
+| `blue` | [Float](/docs/datapack/data-types/float) | `1.0` | Multiplies the blue component of the glow, from 0.0 to 1.0. |
+| `self_glow_target` | [Boolean](/docs/datapack/data-types/boolean) | `false` | If `true`, the entity that has the power glows for everyone else, instead of other entities glowing for it. The `apoli:self_glow` type ID is an alias for this power with `self_glow_target` set to `true` (see [Self Glow](/docs/datapack/powers/self_glow)). |
 
 ## Examples
 
@@ -56,7 +59,7 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will make all entities which are not arthropods glow when they're in cobwebs. The glow is the same color as the entity's team.
+This makes every entity that isn't an arthropod glow while it is in a cobweb. The glow uses the entity's team colour.
 
 ```json
 {
@@ -71,4 +74,4 @@ This example will make all entities which are not arthropods glow when they're i
 }
 ```
 
-This example will make all entities that the player is able to see glow with a green glow.
+This makes every entity the player can see glow green.

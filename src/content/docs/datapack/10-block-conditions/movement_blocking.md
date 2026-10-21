@@ -1,6 +1,6 @@
 ---
 title: "Movement Blocking (Block Condition Type)"
-description: "Checks whether the block is marked in code as blocking movement and doesn't have an empty collision shape."
+description: "Checks whether the block is marked as blocking movement and has a collision shape."
 navigation_title: "Movement Blocking"
 ---
 
@@ -10,7 +10,7 @@ Type ID: `apoli:movement_blocking`
 
 ## Fields
 
-_None._
+This condition has no fields.
 
 ## Examples
 

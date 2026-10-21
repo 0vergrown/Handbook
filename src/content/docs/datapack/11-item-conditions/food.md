@@ -1,16 +1,16 @@
 ---
 title: "Food (Item Condition Type)"
-description: "Checks whether the item is a food component."
+description: "Checks whether the item is food."
 navigation_title: "Food"
 ---
 
-Checks whether the item is a food component.
+Checks whether the item is food, meaning it has a food component.
 
 Type ID: `apoli:food`
 
 ## Fields
 
-_None._
+This condition has no fields.
 
 ## Examples
 
@@ -20,4 +20,4 @@ _None._
 }
 ```
 
-This example will check if the item is considered a food item.
+This checks whether the item counts as food.

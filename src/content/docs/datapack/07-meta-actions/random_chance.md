@@ -5,17 +5,17 @@ navigation_title: "Random Chance"
 aliases: ["chance"]
 ---
 
-Rolls once and runs `action` if it succeeds, or `fail_action` if it does not. Available in every action flavour — entity, bi-entity, block and item — and the fields are the same in all of them.
+Rolls once and runs `action` if the roll succeeds, or `fail_action` if it fails. It works in every kind of action (entity, bi-entity, block and item), with the same fields in all of them.
 
 Type ID: `apoli:random_chance` (alias `apoli:chance`)
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|-------------
-`chance` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | **required** | Probability of success, `0.0` to `1.0`. `0.25` is a one-in-four chance.
-`action` | action | **required** | Runs when the roll succeeds. Same flavour as the containing action.
-`fail_action` | action | _optional_ | Runs when the roll fails.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `chance` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | _required_ | The probability of success, from `0.0` to `1.0`. `0.25` is a one-in-four chance. |
+| `action` | Action type | _required_ | Runs when the roll succeeds. It is the same kind of action as the one containing it. |
+| `fail_action` | Action type | _optional_ | Runs when the roll fails. |
 
 ## Examples
 
@@ -35,7 +35,7 @@ A one-in-ten chance to drop something extra when you break a block:
 }
 ```
 
-Both outcomes spelled out, which reads better than leaving the failure implicit:
+Both outcomes written out, which reads better than leaving the failure implicit:
 
 ```json
 {
@@ -46,7 +46,7 @@ Both outcomes spelled out, which reads better than leaving the failure implicit:
 }
 ```
 
-Because `chance` takes an [expression](/docs/datapack/data-types/expression), the odds can depend on state — here, likelier the more of a resource you have:
+Because `chance` takes an [expression](/docs/datapack/data-types/expression), the odds can depend on state. Here they are likelier the more of a resource you have:
 
 ```json
 {
@@ -56,4 +56,5 @@ Because `chance` takes an [expression](/docs/datapack/data-types/expression), th
 }
 ```
 
-> The roll happens once per invocation. To roll separately for several things, use several `apoli:random_chance` blocks rather than one wrapping an [`apoli:and`](/docs/datapack/meta-actions/and).
+> [!NOTE]
+> The roll happens once each time the action runs. To roll separately for several things, use several `apoli:random_chance` blocks instead of one wrapping an [`apoli:and`](/docs/datapack/meta-actions/and).

@@ -1,15 +1,15 @@
 ---
 title: "Shape Type (Data Type)"
-description: "A String used to determine how raycasts will handle blocks."
+description: "A string that decides which block shape a raycast collides with."
 navigation_title: "Shape Type"
 ---
 
-A [String](/docs/datapack/data-types/string) used to determine how raycasts will handle blocks.
+A [String](/docs/datapack/data-types/string) that decides which shape of a block a raycast collides with.
 
-##	Values
+## Values
 
-| Value      | Description                                                                                                   |
-| ---------- | ------------------------------------------------------------------------------------------------------------- |
-| `collider` | The ray will only stop at blocks with collision. *(e.g: blocks that cannot be walked through)*                |
-| `outline`  | The ray will take the shape of the block into account, only stopping if the ray has hit a face of a block.    |
-| `visual`   | The ray will only stop at blocks that are not considered transparent. *(e.g: blocks that aren't see-through)* |
+| Value | Description |
+| --- | --- |
+| `collider` | The ray only stops at blocks with collision, meaning blocks you can't walk through. |
+| `outline` | The ray follows the shape of the block and only stops where it hits one of the block's faces. |
+| `visual` | The ray only stops at blocks that aren't transparent, meaning blocks you can't see through. |

@@ -1,21 +1,21 @@
 ---
 title: "Text Component (Data Type)"
-description: "A String, Array, or Object used for displaying text with formatting, translations, keybinds, and the other Minecraft JSON-text features."
+description: "A string, array or object for text with formatting, translations, keybinds and the other features of Minecraft's JSON text."
 navigation_title: "Text Component"
 ---
 
-A [String](/docs/datapack/data-types/string), [Array](/docs/datapack/data-types/array), or [Object](/docs/datapack/data-types/object) used for displaying text with formatting, translations, keybinds, and the other Minecraft JSON-text features. Accepts everything vanilla's text component format accepts.
+A [String](/docs/datapack/data-types/string), [Array](/docs/datapack/data-types/array) or [Object](/docs/datapack/data-types/object) for showing text with formatting, translations, keybinds and the other features of Minecraft's JSON text. It accepts everything vanilla's text component format accepts.
 
-## Auto-fallback translation keys
+## Automatic translation keys
 
-If a power omits the `name` or `description` field, Apoli falls back to the auto-generated translation key:
+If a power leaves out its `name` or `description` field, Apoli falls back to a generated translation key:
 
-  Field         |  Auto key
-----------------|--------------
-  `name`        |  `power.<namespace>.<path>.name`
-  `description` |  `power.<namespace>.<path>.description`
+| Field | Generated key |
+| --- | --- |
+| `name` | `power.<namespace>.<path>.name` |
+| `description` | `power.<namespace>.<path>.description` |
 
-For example, a power at `data/mymod/powers/fly.json` with no `name` field is displayed as `power.mymod.fly.name`. Add this key to a language file in a resource pack to translate it.
+For example, a power at `data/mymod/powers/fly.json` with no `name` field is shown as `power.mymod.fly.name`. Add that key to a language file in a resource pack to translate it.
 
 ## Examples
 
@@ -42,7 +42,7 @@ A coloured component.
 ]
 ```
 
-A composite component built from a list — formatting on the first element inherits to the rest.
+A component built from a list, where formatting on the first element carries over to the rest.
 
 ```json
 "name": {
@@ -50,4 +50,4 @@ A composite component built from a list — formatting on the first element inhe
 }
 ```
 
-An explicit translation key. Equivalent to omitting the field entirely (when the auto-key matches the power's id).
+An explicit translation key. When the generated key matches the power's ID, this is the same as leaving the field out.

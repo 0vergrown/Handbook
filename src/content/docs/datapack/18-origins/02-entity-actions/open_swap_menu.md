@@ -1,24 +1,23 @@
 ---
 title: "Open Swap Menu (Entity Action Type)"
-description: "Entity action — opens the swap picker screen for the player."
+description: "Opens the swap picker screen for the player."
 navigation_title: "Open Swap Menu"
 ---
 
-Opens the swap picker — the Origins window showing a grid of the player's [swappable pool](/docs/datapack/origins/swapping), with their main origin in the first slot.
+Opens the swap picker, the Origins window with a grid of the player's [swappable pool](/docs/datapack/origins/swapping) and their main origin in the first slot.
 
-Type ID: `origins:open_swap_menu` — an [entity action](/docs/datapack/entity-actions).
+Type ID: `origins:open_swap_menu`
 
-> **Needs the Origins mod.** Registered by Origins, not core Apoli. It only works on players, and only on the server.
+> [!NOTE]
+> This action comes from the Origins mod. It only works on players, and only on the server.
 
 ## Fields
 
-| Field | Type | Default | Purpose |
+| Field | Type | Default | Description |
 | --- | --- | --- | --- |
-| `layer` | [Identifier](/docs/datapack/data-types/identifier) | _optional_ | Which layer to show the pool for. Accepts either the target layer or the swappable layer itself. Defaults to the first layer that has a swappable pool. |
+| `layer` | [Identifier](/docs/datapack/data-types/identifier) | _optional_ | The layer to show the pool for, either the target layer or the swappable layer itself. Defaults to the first layer that has a swappable pool. |
 
-## Examples
-
-Bind the picker to a key instead of cycling with it:
+## Example
 
 ```json
 {
@@ -31,3 +30,5 @@ Bind the picker to a key instead of cycling with it:
   }
 }
 ```
+
+This power opens the picker on a key press, instead of cycling through the pool with the swap key.

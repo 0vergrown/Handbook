@@ -1,38 +1,38 @@
 ---
 title: "Loop (Meta Action Type)"
-description: "Executes an action a set number of times, spaced evenly over time."
+description: "Runs an action a number of times, spaced evenly over time."
 navigation_title: "Loop"
 ---
 
-Executes an action a set number of times, spaced evenly over time.
+Runs an action a number of times, spaced evenly over time.
 
 Type ID: `apoli:loop`
 
 ## Fields
 
-| Field           | Type                                         | Default    | Description                                                                                                                                                       |
-|-----------------|----------------------------------------------|------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `value`         | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | `1`        | Number of times `action` is executed. At `0` or less the whole action is skipped — not even `before_action` and `after_action` fire.                              |
-| `ticks`         | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | `1`        | Tick interval between iterations. At `0` or less every iteration runs in the firing tick instead (see [Running it all in one tick](#running-it-all-in-one-tick)). |
-| `before_action` | Entity Action                                | *optional* | Fired once, immediately, before the first iteration.                                                                                                              |
-| `action`        | Entity Action                                | *optional* | Fired once per iteration.                                                                                                                                         |
-| `after_action`  | Entity Action                                | *optional* | Fired once, in the same tick as the final iteration, right after it.                                                                                              |
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | `1` | How many times `action` runs. At `0` or less the whole action is skipped, and `before_action` and `after_action` don't fire either. |
+| `ticks` | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | `1` | Ticks between iterations. At `0` or less every iteration runs in the tick the loop fires (see [Running it all in one tick](#running-it-all-in-one-tick)). |
+| `before_action` | [Entity Action Type](/docs/datapack/entity-actions) | _optional_ | Runs once, straight away, before the first iteration. |
+| `action` | [Entity Action Type](/docs/datapack/entity-actions) | _optional_ | Runs once per iteration. |
+| `after_action` | [Entity Action Type](/docs/datapack/entity-actions) | _optional_ | Runs once, in the same tick as the final iteration, right after it. |
 
 ## Behavior
 
 With `ticks` at `1` or more, timing is measured in ticks from the moment the loop fires:
 
 - `before_action` runs at tick `0`, just before the first iteration.
-- `action` runs `value` times with iteration *k* at tick `(k − 1) × ticks`. The **first iteration is immediate** (tick `0`), so the default `value` of `1` runs entirely in the firing tick with no scheduling at all.
-- `after_action` runs in the same tick as the final iteration, immediately after it.
+- `action` runs `value` times, with iteration *k* at tick `(k − 1) × ticks`. The first iteration happens straight away at tick `0`, so the default `value` of `1` runs entirely in the tick the loop fires, with nothing scheduled.
+- `after_action` runs in the same tick as the final iteration, right after it.
 
-A `value: 3`, `ticks: 20` loop therefore runs `action` at ticks `0`, `20`, and `40`, spanning `(value − 1) × ticks` ticks total. If `action` is omitted there is nothing to iterate, so `before_action` and `after_action` (when present) both fire immediately.
+A loop with `value: 3` and `ticks: 20` runs `action` at ticks `0`, `20` and `40`, spanning `(value − 1) × ticks` ticks in total. If `action` is left out there is nothing to repeat, so `before_action` and `after_action` (when present) both fire straight away.
 
-`value` and `ticks` can be [Expressions](/docs/datapack/data-types/expression). Both are worked out once, when the loop fires, and their variables read the entity the action runs on — the actor, in a bi-entity action. So `"value": "2 + 2 * example:charges"` repeats more the more charges the entity has when the loop starts, and spending charges mid-loop does not cut it short.
+`value` and `ticks` can be [expressions](/docs/datapack/data-types/expression). Both are worked out once, when the loop fires, and their variables read the entity the action runs on, which is the actor in a bi-entity action. `"value": "2 + 2 * example:charges"` repeats more the more charges the entity has when the loop starts, and spending charges during the loop doesn't cut it short.
 
 ## Running it all in one tick
 
-Set `ticks` to `0` (or any negative number) and the loop stops scheduling entirely: all `value` iterations run back-to-back inside the firing tick, then `after_action` fires. Nothing is deferred, so the whole loop is finished by the time the action that triggered it returns.
+Set `ticks` to `0` (or any negative number) and the loop schedules nothing: all `value` iterations run back to back inside the tick it fires, then `after_action` fires. Nothing is put off, so the whole loop has finished by the time the action that triggered it returns.
 
 ```json
 {
@@ -49,15 +49,16 @@ Set `ticks` to `0` (or any negative number) and the loop stops scheduling entire
 }
 ```
 
-Can be used as a repeat-N-times helper for building a burst of particles, rolling several chances at once, applying an effect in a batch rather than as a timer.
+Use it to repeat something a set number of times, for example to build a burst of particles, roll several chances at once or apply an effect in a batch instead of on a timer.
 
-> Synchronous iterations are capped at **4096**. A `ticks: 0` loop asking for more silently stops there. This is a safety limit, not a target: every iteration lands on the server thread in the same tick, so a heavy `action` repeated a few thousand times is a lag spike. Give `ticks` a real interval when the count is large.
+> [!WARNING]
+> Iterations in a single tick are capped at 4096, and a `ticks: 0` loop asking for more stops there without a warning. The cap is a safety limit and shouldn't be treated as a target. Every iteration runs on the server thread in the same tick, so a heavy `action` repeated a few thousand times causes a lag spike. Give `ticks` a real interval when the count is large.
 
 ## Performance
 
-A scheduled loop (`ticks` of `1` or more) only ever keeps **one** entry in the deferred-action queue: each iteration schedules just the next one, so a long loop (e.g. `value: 1000`) costs the server a constant amount per tick instead of scaling with `value`. It runs only when triggered, so it is free while idle unlike a per-tick power such as [`Action Over Time (Power Type)`](/docs/datapack/powers/action_over_time).
+A scheduled loop (`ticks` of `1` or more) only ever keeps one entry in the queue of delayed actions, because each iteration schedules only the next one. A long loop, such as `value: 1000`, costs the server the same small amount per tick whatever `value` is. It only runs when triggered, so it costs nothing while idle, unlike a power that runs every tick such as [apoli:action_over_time](/docs/datapack/powers/action_over_time).
 
-A `ticks: 0` loop never touches the queue at all, but it pays the entire cost up front in one tick. Prefer it for small counts and cheap actions.
+A `ticks: 0` loop never touches the queue, but it pays the entire cost up front in one tick. Prefer it for small counts and cheap actions.
 
 ## Examples
 
@@ -75,7 +76,8 @@ A `ticks: 0` loop never touches the queue at all, but it pays the entire cost up
   }
 }
 ```
-Spawns flame particles five times, once every 10 ticks (0.5 seconds).
+
+This spawns flame particles five times, once every 10 ticks (0.5 seconds).
 
 ```json
 {
@@ -97,4 +99,5 @@ Spawns flame particles five times, once every 10 ticks (0.5 seconds).
   }
 }
 ```
-Plays a pling, deals 2 fire damage three times at 1-second intervals, then plays an explosion sound.
+
+This plays a pling, deals 2 fire damage three times at 1-second intervals, and then plays an explosion sound.

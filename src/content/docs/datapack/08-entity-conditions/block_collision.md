@@ -1,21 +1,21 @@
 ---
 title: "Block Collision (Entity Condition Type)"
-description: "Checks whether the bounding box of the entity collides with a block."
+description: "Checks whether the entity's bounding box, optionally moved, collides with a block."
 navigation_title: "Block Collision"
 ---
 
-Checks whether the bounding box of the entity collides with a block.
+Checks whether the entity's bounding box collides with a block, optionally after moving the box by a fraction of its own size.
 
 Type ID: `apoli:block_collision`
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`block_condition` | Block Condition Type | _optional_ | If specified, the condition type will only evaluate to true if the bounding box of the entity is colliding with a block that fulfills this condition.
-`offset_x` | Float | `0` |  By how much of the bounding box size should the box be offset in the X direction (e.g.: 0 = no offset, 1 = offset of exact width, 2 = offset of twice the width of the bounding box)
-`offset_y` | Float | `0` |  By how much of the bounding box size should the box be offset in the Y direction (e.g.: 0 = no offset, 1 = offset of exact height, 2 = offset of twice the height of the bounding box)
-`offset_z` | Float | `0` | By how much of the bounding box size should the box be offset in the Z direction (e.g.: 0 = no offset, 1 = offset of exact depth, 2 = offset of twice the depth of the bounding box)
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `block_condition` | [Block Condition Type](/docs/datapack/block-conditions) | _optional_ | The block the box collides with must pass this condition. |
+| `offset_x` | [Float](/docs/datapack/data-types/float) | `0` | How far to move the box on the X axis, as a multiple of its width: 0 is no offset, 1 is one full width and 2 is twice the width. |
+| `offset_y` | [Float](/docs/datapack/data-types/float) | `0` | How far to move the box on the Y axis, as a multiple of its height. |
+| `offset_z` | [Float](/docs/datapack/data-types/float) | `0` | How far to move the box on the Z axis, as a multiple of its depth. |
 
 ## Examples
 
@@ -28,7 +28,7 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will check if the entity is colliding with the positive X or Z faces of a block.
+This checks whether the entity is touching a block on its positive X or Z side.
 
 ```json
 "condition": {
@@ -56,4 +56,4 @@ This example will check if the entity is colliding with the positive X or Z face
 }
 ```
 
-This example will check if the entity is colliding with the X and Z faces of a Slime block.
+This checks whether the entity is touching a slime block on any of its X or Z sides.

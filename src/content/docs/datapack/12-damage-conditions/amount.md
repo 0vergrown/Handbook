@@ -1,19 +1,19 @@
 ---
 title: "Amount (Damage Condition Type)"
-description: "Checks whether the damage is of a specified amount."
+description: "Compares the amount of damage with a number."
 navigation_title: "Amount"
 ---
 
-Checks whether the damage is of a specified amount.
+Compares the amount of damage with a number.
 
 Type ID: `apoli:amount`
 
 ## Fields
 
-| Field        | Type                  | Default | Description                                                                    |
-|--------------|-----------------------|---------|--------------------------------------------------------------------------------|
-| `comparison` | Comparison (Data Type |         | Determines how the amount of damage should be compared to the specified value. |
-| `compare_to` | [Float](/docs/datapack/data-types/float)     |         | The value at which the amount of damage will be compared to.                   |
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `comparison` | [Comparison](/docs/datapack/data-types/comparison) | _required_ | How the damage is compared with `compare_to`. |
+| `compare_to` | [Float](/docs/datapack/data-types/float) | _required_ | The number the damage is compared with. |
 
 ## Examples
 
@@ -24,4 +24,5 @@ Type ID: `apoli:amount`
     "compare_to": 4
 }
 ```
-This example will check if the damage dealt/taken is equal to 2 hearts.
+
+This checks whether the damage dealt or taken is exactly 2 hearts.

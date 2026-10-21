@@ -1,30 +1,29 @@
 ---
 title: "Apply Stored Origin (Entity Action Type)"
-description: "Entity action — sets the entity's origin from a previously stored key."
+description: "Sets the player's origin from an entry saved earlier under a key."
 navigation_title: "Apply Stored Origin"
 ---
 
 Sets the entity's origin from an entry saved earlier by [`origins:store_origin`](/docs/datapack/origins/store_origin).
 
-Type ID: `origins:apply_stored_origin` — an [entity action](/docs/datapack/entity-actions).
+Type ID: `origins:apply_stored_origin`
 
-> **Needs the Origins mod.** Registered by Origins, not core Apoli. It only works on players, and only on the server. See [Origin storage](/docs/datapack/origins/storage) for the system as a whole.
+> [!NOTE]
+> This action comes from the Origins mod. It only works on players, and only on the server. See [Origin storage](/docs/datapack/origins/storage) for the whole system.
 
 ## Fields
 
-| Field | Type | Default | Purpose |
+| Field | Type | Default | Description |
 | --- | --- | --- | --- |
-| `key` | [String](/docs/datapack/data-types/string) | _required_ | Which stored entry to apply. |
-| `layer` | [Identifier](/docs/datapack/data-types/identifier) | _optional_ | Apply to this layer instead of the one recorded with the entry. |
-| `clear` | [Boolean](/docs/datapack/data-types/boolean) | `false` | Remove the entry once it has been applied. |
+| `key` | [String](/docs/datapack/data-types/string) | _required_ | The stored entry to apply. |
+| `layer` | [Identifier](/docs/datapack/data-types/identifier) | _optional_ | Applies the origin to this layer instead of the one recorded with the entry. |
+| `clear` | [Boolean](/docs/datapack/data-types/boolean) | `false` | Removes the entry once it has been applied. |
 
-Nothing happens if the key holds no origin, or if the layer or origin no longer exists — a data pack that removed an origin can't strand a player on it.
+Nothing happens if the key holds no origin, or if the layer or origin no longer exists, so a data pack that removes an origin can't leave a player stuck on it.
 
-The change goes through the normal origin-change path: powers are diffed rather than removed and re-added, so resources and [`apoli:inventory`](/docs/datapack/powers/inventory) contents that both origins share are left alone. Gated layers are revalidated and every client is re-synced afterwards.
+The change goes through the normal origin change path. Powers are compared instead of being removed and added again, so resources and [`apoli:inventory`](/docs/datapack/powers/inventory) contents that both origins share are left alone. Gated layers are revalidated and every client is synced again afterwards.
 
 ## Examples
-
-Give the player back what they were:
 
 ```json
 {
@@ -34,7 +33,7 @@ Give the player back what they were:
 }
 ```
 
-Apply a stored origin onto a different layer than it came from:
+This gives the player back the origin stored under `before_curse` and removes the entry.
 
 ```json
 {
@@ -43,3 +42,5 @@ Apply a stored origin onto a different layer than it came from:
   "layer": "origins:copy"
 }
 ```
+
+This applies the origin stored under `stolen` to the `origins:copy` layer, whatever layer it came from.

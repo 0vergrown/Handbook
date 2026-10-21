@@ -1,21 +1,15 @@
 ---
 title: "Keys, colours, and a rope to a ship"
-description: "Apoli 1.54.0 puts alpha where you expect it in a hex colour, aims particles and anchors them to body parts, places and sizes overlays, puts Bedrock models on fired projectiles, gives radial-menu slices a vertical offset, lets a rope drag a Sable structure, and adds apoli:prevent_key_press."
+description: "Apoli 1.54.0 puts alpha where you expect it in a hex colour, aims particles and anchors them to body parts, places and sizes overlays, puts Bedrock models on fired projectiles, gives radial menu slices offsets, lets a rope drag a Sable structure, and adds apoli:prevent_key_press."
 date: 2026-08-30
 author: Overgrown
 ---
 
-A batch of five small things, one of which changes what a value you may already have written means.
-That one is first.
+This is a batch of small things, and one of them changes what a value you may already have written means. That one goes first.
 
-## `#RRGGBBAA` — alpha moved to the end
+## `#RRGGBBAA`: alpha moves to the end
 
-`apoli:custom` takes a colour as a hex string, and an eight-digit one used to be read as
-`#AARRGGBB`: alpha in the **first** pair, the way Java writes a packed ARGB int. That is not how
-anybody writes a colour by hand. Every colour picker, every CSS file, every image editor puts alpha
-last, so `"#FFFFFF00"` looks like transparent white and Apoli was reading it as a slightly-off
-opaque cyan. The two digits people reach for to fade a particle out did nothing to its transparency
-and quietly changed its blue channel instead.
+`apoli:custom` takes a colour as a hex string, and an eight digit one used to be read as `#AARRGGBB`, with alpha in the first pair, the way Java writes a packed ARGB int. Nobody writes a colour like that by hand. Every colour picker, CSS file and image editor puts alpha last, so `"#FFFFFF00"` looks like transparent white, and Apoli was reading it as a slightly-off opaque cyan. The two digits people reach for to fade a particle out did nothing to its transparency and quietly changed its blue channel instead.
 
 So the `#` spelling now means what it looks like:
 
@@ -24,26 +18,21 @@ So the `#` spelling now means what it looks like:
 "end_color": "#FF3B1E00"
 ```
 
-Six digits is still `#RRGGBB`, fully opaque. Eight digits is `#RRGGBBAA`.
+Six digits are still `#RRGGBB`, fully opaque, and eight digits are `#RRGGBBAA`.
 
-The old order is still reachable, spelled the way Java spells it — a `0x` prefix keeps meaning
-`0xAARRGGBB`, as does a bare packed integer:
+The old order is still there, spelled the way Java spells it. A `0x` prefix keeps meaning `0xAARRGGBB`, and so does a bare packed integer:
 
 ```json
 "color": "0x80FFFFFF"
 ```
 
-If you wrote an eight-digit `#` colour before this, swap the first pair to the end. A six-digit
-colour, a float list and a packed integer are all unchanged.
+If you wrote an eight digit `#` colour before this, move the first pair to the end. A six digit colour, a float list and a packed integer are all unchanged.
 
-One thing worth knowing while you are in there: the vanilla particle shader throws away any pixel
-under about 10% alpha, so a particle fading to `0` alpha vanishes slightly before the fade finishes.
-Fading `end_size` to `0.0` at the same time covers it.
+While you're in there: the vanilla particle shader throws away any pixel under about 10% alpha, so a particle fading to `0` alpha vanishes slightly before the fade finishes. Fading `end_size` to `0.0` at the same time covers it.
 
 ## Particles that aren't all the same colour
 
-`lifetime_variation` and `size_variation` already existed to stop a burst looking like a stamp.
-Colour now has the same treatment, in two flavours:
+`lifetime_variation` and `size_variation` already existed to stop a burst looking like a stamp. Colour now gets the same treatment, in two flavours:
 
 ```json
 {
@@ -56,16 +45,11 @@ Colour now has the same treatment, in two flavours:
 }
 ```
 
-`color_variation` jitters each of red, green and blue by ±*n*; `hue_variation` rotates the whole
-colour by ±*n* degrees. Both are rolled once per particle at spawn and applied to `color` and
-`end_color` identically, so every particle still runs the same fade — just from its own shade. Small
-values read as shimmer; `hue_variation: 180` scatters a burst across the whole wheel.
+`color_variation` shifts each of red, green and blue by up to ±*n*, and `hue_variation` rotates the whole colour by up to ±*n* degrees. Both are rolled once per particle when it spawns and applied to `color` and `end_color` alike, so every particle still runs the same fade, just from its own shade. Small values read as shimmer, and `hue_variation: 180` scatters a burst across the whole wheel.
 
 ## Radial menus that aren't circles
 
-A radial menu slice could move away from the centre and that was it, so every menu was a ring. Slices
-now take `offset_x` and `offset_y` in screen pixels, and an `angle` that overrides the evenly-spaced
-one:
+A radial menu slice could move away from the centre and that was it, so every menu was a ring. Slices now take `offset_x` and `offset_y` in screen pixels, and an `angle` that overrides the even spacing:
 
 ```json
 {
@@ -81,16 +65,11 @@ one:
 }
 ```
 
-That is an arc across the top of the screen. `angle` decides which spoke a slice sits on, `distance`
-how far out along it, and the offsets move it anywhere afterwards — arcs, columns, crosses, a row
-along the hotbar. The offsets ride the same bloom animation as `distance`, so a displaced slice still
-flies out from the middle instead of snapping into place.
+That's an arc across the top of the screen. `angle` decides which spoke a slice sits on, `distance` how far out along it, and the offsets move it anywhere afterwards, so you can make arcs, columns, crosses or a row along the hotbar. The offsets ride the same bloom animation as `distance`, so a moved slice still flies out from the middle instead of snapping into place.
 
 ## `apoli:prevent_key_press`
 
-A new power type that stops the holder's keys reaching the game. With no `keys` list that is
-everything — no movement, no attacking, no items, no inventory, no ability keys — which is the stun
-or paralysis effect people keep rebuilding out of a pile of attribute modifiers:
+This new power type stops the holder's keys from reaching the game. With no `keys` list, that's everything: no movement, attacking, items, inventory or ability keys. It's the stun or paralysis effect people keep rebuilding out of a pile of attribute modifiers:
 
 ```json
 {
@@ -113,23 +92,13 @@ With a list, only those keys go dead:
 }
 ```
 
-The block sits on the keybind itself, so it covers vanilla controls, data-driven keybinds from
-`data/<namespace>/keybinds/`, every key-driven power type, and
-[`apoli:key_pressed`](/docs/datapack/entity-conditions/key_pressed) — which reads a blocked key as
-not held rather than sticking. The server refuses a blocked key too, so it is not a client-side
-honour system.
+The block sits on the keybind itself, so it covers vanilla controls, data-driven keybinds from `data/<namespace>/keybinds/`, every power type driven by keys, and [`apoli:key_pressed`](/docs/datapack/entity-conditions/key_pressed), which reads a blocked key as not held instead of getting stuck. The server refuses a blocked key too, so a modified client can't get around it.
 
-Keys held by [`apoli:force_key_pressed`](/docs/datapack/entity-actions/force_key_pressed) are
-deliberately **not** blocked by default: a paralysed player can still be puppeted, which is usually
-the interesting version. Set `affect_forced: true` if you want prevention to win over forcing.
-Escape is never blocked, so nobody gets trapped out of the pause menu.
+Keys held by [`apoli:force_key_pressed`](/docs/datapack/entity-actions/force_key_pressed) aren't blocked by default, on purpose: a paralysed player can still be puppeted, which is usually the interesting version. Set `affect_forced: true` if you want prevention to win over forcing. Escape is never blocked, so nobody gets locked out of the pause menu.
 
 ## Ropes and Sable structures
 
-[`apoli:rope_pull`](/docs/datapack/entity-actions/rope_pull) only knew how to shove entities, so a
-rope tied to an assembled Sable structure had nothing to pull at the far end. Now `which: "other"`
-puts an impulse into that structure's rigid body, at the block the rope is tied to — so a rope on
-the bow swings a ship as well as dragging it.
+[`apoli:rope_pull`](/docs/datapack/entity-actions/rope_pull) only knew how to shove entities, so a rope tied to an assembled Sable structure had nothing to pull at the far end. Now `which: "other"` puts an impulse into that structure's rigid body at the block the rope is tied to, so a rope on the bow swings a ship as well as dragging it.
 
 ```json
 {
@@ -140,20 +109,13 @@ the bow swings a ship as well as dragging it.
 }
 ```
 
-`speed` is scaled by the structure's mass first, so it reads the same way it does on an entity:
-roughly the velocity change you are asking for. A hundred-block ship needs a much bigger shove than a
-pig, which is the point. `sublevel_force` multiplies that if a particular rope should be stronger.
+`speed` is scaled by the structure's mass first, so it reads the same way it does on an entity, roughly as the change in velocity you're asking for. A ship of a hundred blocks needs a much bigger shove than a pig, which is the point. `sublevel_force` multiplies that if a particular rope should be stronger.
 
-Rope endpoints have anchored to sub-levels for a while; alongside this a hit that resolves further
-away than the raycast's own `distance` is now discarded rather than anchored, so a structure that
-answers a ray in a way Apoli cannot map back to the world gives you no rope rather than one stretched
-across the map.
+Rope endpoints have anchored to sub-levels for a while. Along with this change, a hit that resolves further away than the raycast's own `distance` is now thrown out instead of anchored, so a structure that answers a ray in a way Apoli can't map back to the world gives you no rope, instead of one stretched across the map.
 
 ## Overlays you can place and size
 
-`apoli:overlay` could only ever stretch a texture across the whole screen. It now takes `x`, `y`,
-`width` and `height`, an `anchor` to measure them from, and `u`/`v` to pull one sprite out of a
-sheet — so it is an HUD element as much as a tint:
+`apoli:overlay` could only ever stretch a texture across the whole screen. It now takes `x`, `y`, `width` and `height`, an `anchor` to measure them from, and `u` and `v` to pull one sprite out of a sheet, so it works as a HUD element as much as a tint:
 
 ```json
 {
@@ -170,11 +132,9 @@ sheet — so it is an HUD element as much as a tint:
 }
 ```
 
-All six of those are [Expressions](/docs/datapack/data-types/expression), which is what makes a
-counter one power instead of ten.
+All six of those are [Expressions](/docs/datapack/data-types/expression), which is what makes a counter one power instead of ten.
 
-A single power can also carry a list of overlays under `overlays`, each with its own `condition`, and
-every one whose condition passes is drawn. That is the shape you want for status indicators:
+A single power can also carry a list of overlays under `overlays`, each with its own `condition`, and every one whose condition passes is drawn. That's the shape you want for status indicators:
 
 ```json
 {
@@ -187,13 +147,11 @@ every one whose condition passes is drawn. That is the shape you want for status
 }
 ```
 
-The flat single-overlay spelling still works exactly as it did.
+The flat spelling for a single overlay still works exactly as it did.
 
 ## Bedrock models on fired projectiles
 
-A projectile fired with `texture_location` is Apoli's own entity, so it can wear an
-[`apoli:custom_model_render`](/docs/datapack/powers/custom_model_render) model the same way a minion
-or a clone does — grant the power to the projectile from `projectile_action`:
+A projectile fired with `texture_location` is Apoli's own entity, so it can wear an [`apoli:custom_model_render`](/docs/datapack/powers/custom_model_render) model the same way a minion or a clone does. Grant the power to the projectile from `projectile_action`:
 
 ```json
 {
@@ -207,14 +165,11 @@ or a clone does — grant the power to the projectile from `projectile_action`:
 }
 ```
 
-The model faces the direction of travel and its animations run for the projectile's whole flight.
+The model faces the direction of travel, and its animations run for the projectile's whole flight.
 
 ## Particles that go where you point them
 
-`apoli:particle` and `apoli:spawn_particles` spawned along the world axes, so `offset_z: 2` put the
-particles two blocks due south instead of two blocks in front of the player, and there was no way to
-give them a direction at all. Both now take a `space`, explicit `velocity_x`/`velocity_y`/`velocity_z`,
-and a `speed` that accepts a vector as well as a number:
+`apoli:particle` and `apoli:spawn_particles` spawned along the world axes, so `offset_z: 2` put the particles two blocks due south instead of two blocks in front of the player, and there was no way to give them a direction at all. Both now take a `space`, explicit `velocity_x`, `velocity_y` and `velocity_z`, and a `speed` that accepts a vector as well as a number:
 
 ```json
 {
@@ -228,20 +183,13 @@ and a `speed` that accepts a vector as well as a number:
 }
 ```
 
-`space: "local"` turns both the offset and the velocity with the entity, so that is a cone of sparks
-in front of the eyes, travelling the way they are looking.
+`space: "local"` turns both the offset and the velocity with the entity, so that's a cone of sparks in front of the eyes, travelling the way they're looking.
 
-They also take a `model_part`, using the same names
-[`apoli:model_color`](/docs/datapack/powers/model_color) and
-[`apoli:modify_model_parts`](/docs/datapack/powers/modify_model_parts) use — `head`, `body`,
-`right_arm`, `left_arm`, `right_leg`, `left_leg` — so particles can come off a hand rather than out
-of the ground at your feet. The anchor follows body rotation, entity size and the crouching pose; it
-does not follow swing animations.
+They also take a `model_part`, using the same names as [`apoli:model_color`](/docs/datapack/powers/model_color) and [`apoli:modify_model_parts`](/docs/datapack/powers/modify_model_parts) (`head`, `body`, `right_arm`, `left_arm`, `right_leg` and `left_leg`), so particles can come off a hand instead of out of the ground at your feet. The anchor follows body rotation, entity size and the crouching pose, but not swing animations.
 
 ## Cannons need a muzzle
 
-`apoli:fire_projectile` now takes `offset_x` / `offset_y` / `offset_z` and a `space` for where the
-projectile appears, which matters a lot more now that it can wear a model:
+`apoli:fire_projectile` now takes `offset_x`, `offset_y` and `offset_z` and a `space` for where the projectile appears, which matters a lot more now that it can wear a model:
 
 ```json
 {
@@ -257,18 +205,10 @@ projectile appears, which matters a lot more now that it can wear a model:
 
 ## A fix worth knowing about
 
-`apoli:stacking_status_effect` treated `min_stacks` as a floor the stack count could never fall
-below, in **both** directions. A power with `min_stacks: 2` therefore never dropped to zero when its
-condition stopped holding, and re-applied its effects forever. `min_stacks` is now what it reads
-like: the count the power jumps to while it is active. Inactive, stacks decay to zero and the effects
-stop.
+`apoli:stacking_status_effect` treated `min_stacks` as a floor the stack count could never fall below, in both directions. A power with `min_stacks: 2` therefore never dropped to zero when its condition stopped holding, and applied its effects again forever. `min_stacks` is now what it reads like: the count the power jumps to while it's active. When it's inactive, the stacks decay to zero and the effects stop.
 
-## Origins: the Controls list finally reads in order
+## Origins: the Controls list reads in order at last
 
-Origins registers ten active-power keys, all named "Active Power (Primary)", "Active Power
-(Secondary)" and so on. The Controls screen sorts a category alphabetically by the displayed name, so
-what players actually saw was Denary, Nonary, Octonary, Primary, Quaternary, Quinary, Secondary,
-Senary, Septenary, Ternary — the full list in an order nobody could use.
+Origins registers ten active power keys, named "Active Power (Primary)", "Active Power (Secondary)" and so on. The Controls screen sorts a category alphabetically by the displayed name, so what players actually saw was Denary, Nonary, Octonary, Primary, Quaternary, Quinary, Secondary, Senary, Septenary and Ternary, the full list in an order nobody could use.
 
-They are now called "1st Active Power (Primary)" through "10th Active Power (Denary)", which sorts
-into the order they are meant to be read in.
+They're now called "1st Active Power (Primary)" through "10th Active Power (Denary)", which sorts into the order they're meant to be read in.

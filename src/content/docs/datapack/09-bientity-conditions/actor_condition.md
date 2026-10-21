@@ -1,18 +1,18 @@
 ---
 title: "Actor Condition (Bi-Entity Condition Type)"
-description: "Checks for an Entity Condition Type on the actor entity."
+description: "Checks an entity condition on the actor."
 navigation_title: "Actor Condition"
 ---
 
-Checks for an Entity Condition Type on the actor entity.
+Checks an entity condition on the actor.
 
 Type ID: `apoli:actor_condition`
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`condition` | Entity Condition Type | | The entity condition type to check for on the acting entity.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `condition` | [Entity Condition Type](/docs/datapack/entity-conditions) | _required_ | The entity condition to check on the actor. |
 
 ## Examples
 
@@ -25,4 +25,4 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will check if the actor entity is a tamable and tamed mob.
+This checks whether the actor is a tameable mob that has been tamed.

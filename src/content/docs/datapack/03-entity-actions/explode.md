@@ -1,24 +1,25 @@
 ---
 title: "Explode (Entity Action Type)"
-description: "Summons an explosion with a specific explosion power."
+description: "Creates an explosion of a given power at the entity."
 navigation_title: "Explode"
 ---
 
-Summons an explosion with a specific explosion power.
+Creates an explosion of a given power at the entity's position.
 
 Type ID: `apoli:explode`
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|-------------
-`power` | Float | | Determines the power of the explosion.
-`destruction_type` | Destruction Type | `"break"` | Determines the effect of the explosion to the terrain.
-`damage_self` | Boolean | `true` | Determines if the entity that invoked the action should take damage from the summoned explosion.
-`damage_targets` | Boolean | `true` | Determines if everything *other* than the entity that invoked the action should take damage. Set to `false` for a blast that still breaks blocks and knocks entities back without hurting them.
-`indestructible` | Block Condition Type | _optional_ | If specified, the blocks that fulfill this condition will not be destroyed by the summoned explosion.
-`destructible` | Block Condition Type | _optional_ | If specified, only the blocks that fulfill this condition will be destroyed by the summoned explosion.
-`create_fire` | Boolean | `false` | Determines if the summoned explosion should create fire.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `power` | [Float](/docs/datapack/data-types/float) | _required_ | The power of the explosion. |
+| `destruction_type` | [Destruction Type](/docs/datapack/data-types/destruction-type) | `"break"` | What the explosion does to the terrain. |
+| `damage_self` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Whether the entity that ran the action takes damage from the explosion. |
+| `damage_targets` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Whether everything other than the entity that ran the action takes damage. Set it to `false` for a blast that still breaks blocks and knocks entities back without hurting them. |
+| `bientity_condition` | [Bi-entity Condition Type](/docs/datapack/bientity-conditions) | _optional_ | Only entities that pass this take damage, with the entity that ran the action as the actor and the entity in the blast as the target. |
+| `indestructible` | [Block Condition Type](/docs/datapack/block-conditions) | _optional_ | Blocks that pass this condition aren't destroyed by the explosion. |
+| `destructible` | [Block Condition Type](/docs/datapack/block-conditions) | _optional_ | Only blocks that pass this condition are destroyed by the explosion. |
+| `create_fire` | [Boolean](/docs/datapack/data-types/boolean) | `false` | Whether the explosion starts fires. |
 
 ## Examples
 
@@ -32,7 +33,7 @@ Field | Type | Default | Description
 }
 ```
 
-This example will summon an explosion that will **not** damage the entity that invoked the action, the terrain, or create fire.
+This explosion doesn't hurt the entity that ran the action, doesn't damage the terrain and doesn't start fires.
 
 ```json
 "entity_action": {
@@ -44,5 +45,4 @@ This example will summon an explosion that will **not** damage the entity that i
 }
 ```
 
-This one levels the terrain and shoves every nearby entity away without dealing a point of damage to anyone. Knockback
-is applied independently of damage, so it survives `damage_targets: false`.
+This one levels the terrain and shoves every nearby entity away without dealing any damage. Knockback is applied separately from damage, so it still happens with `damage_targets: false`.

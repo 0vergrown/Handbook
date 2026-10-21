@@ -1,46 +1,47 @@
 ---
 title: "Inventory Action (Entity Action Type)"
-description: "Walks the entity's inventory or a power inventory and performs one operation per matching slot — the operation field replaces the separate modify_inventory, replace_inventory and drop_inventory actions."
+description: "Goes through the entity's inventory or a power inventory and does one operation on each matching slot: modify, replace or drop."
 navigation_title: "Inventory Action"
 aliases: ["modify_inventory", "replace_inventory", "drop_inventory"]
 ---
 
-Walks the items of either the entity's inventory or an [apoli:inventory](/docs/datapack/powers/inventory), and performs one operation per matching slot. This single action replaces Apace's `modify_inventory`, `replace_inventory`, and `drop_inventory` — the `operation` field picks which behaviour you get.
+Goes through the items in the entity's inventory or in an [apoli:inventory](/docs/datapack/powers/inventory) power, and does one operation on each matching slot. This one action covers Apace's `modify_inventory`, `replace_inventory` and `drop_inventory`, and the `operation` field picks which behaviour you get.
 
 Type ID: `apoli:inventory_action`
 
-> **ALIASES:** the three legacy ids still work and select the matching operation automatically:
-> `apoli:modify_inventory` → `operation: modify`, `apoli:replace_inventory` → `operation: replace`, `apoli:drop_inventory` → `operation: drop`. (Both the `apoli:` and `origins:` namespaces resolve.) Data packs written for either era load unchanged.
+> [!NOTE]
+> The three legacy IDs still work and select the matching operation: `apoli:modify_inventory` is `operation: modify`, `apoli:replace_inventory` is `operation: replace` and `apoli:drop_inventory` is `operation: drop`. Both the `apoli:` and `origins:` namespaces resolve, so data packs written for either load unchanged.
 
 ## Operations
 
-| `operation`         | Per-slot behaviour                                                                                 | Empty slots |
-| ------------------- | -------------------------------------------------------------------------------------------------- | ----------- |
-| `modify` *(default)* | Runs `item_action` on the stack.                                                                  | skipped |
-| `replace`           | Swaps the stack for `stack`, then runs `item_action` (if any) on the replacement.                  | **included** |
-| `drop`              | Drops the stack into the world, then runs `item_action` (if any) on the dropped stack first.       | skipped |
+| `operation` | What happens to each slot | Empty slots |
+| --- | --- | --- |
+| `modify` (default) | Runs `item_action` on the stack. | skipped |
+| `replace` | Swaps the stack for `stack`, then runs `item_action` (if any) on the replacement. | included |
+| `drop` | Runs `item_action` (if any) on the stack, then drops it into the world. | skipped |
 
-> `replace` deliberately visits **empty** slots, so it can put an item *into* an empty slot — that is how you keep an item pinned in the offhand. It also means a `replace` with no `slot`/`slots` and no `item_condition` fills the entity's whole inventory with `stack`. Always scope it.
+> [!WARNING]
+> `replace` visits empty slots on purpose, so it can put an item into an empty slot. That is how you keep an item pinned in the offhand. It also means a `replace` with no `slot` or `slots` and no `item_condition` fills the entity's whole inventory with `stack`, so always narrow it down.
 
 ## Fields
 
-| Field              | Type                                                                        | Default       | Description                                                                                                      |
-| ------------------ | --------------------------------------------------------------------------- | ------------- | ---------------------------------------------------------------------------------------------------------------- |
-| `operation`        | String                                           | `"modify"`    | One of `modify`, `replace`, `drop` — see the table above.                                                        |
-| `inventory_type`   | Inventory Type                           | `"inventory"` | Whether to walk the entity's own inventory or a power's inventory.                                               |
-| `entity_action`    | Entity Action Type                             | _optional_    | Executed on the entity **once, before** the slots are walked.                                                    |
-| `item_condition`   | Item Condition Type                           | _optional_    | If specified, only items fulfilling this condition are affected.                                                 |
-| `slot`             | Item Slot                                     | _optional_    | Restrict to a single slot.                                                                                       |
-| `slots`            | Array of Item Slots | _optional_    | Restrict to these slots. For a `power` inventory, use the `container.N` form (raw slot index).                   |
-| `power`            | Identifier                                   | _optional_    | The [apoli:inventory](/docs/datapack/powers/inventory) to walk, when `inventory_type` is `"power"`.           |
-| `process_mode`     | Process Mode                               | `"stacks"`    | How stacks are counted toward `limit`. Honoured by `modify`; `replace`/`drop` always act once per stack.         |
-| `limit`            | Integer                                         | `0`           | Max number of stacks (or items, in `items` mode) to affect. `<= 0` means no limit.                               |
-| `item_action`      | Item Action Type                                 | _optional_    | **Required-in-spirit for `modify`** (without it `modify` is a no-op); optional post-step for `replace`/`drop`.   |
-| `stack`            | Item Stack                                   | _optional_    | **`replace` only** — the replacement item.                                                                       |
-| `merge_nbt`        | Boolean                                         | `false`       | **`replace` only** — merge the old item's data onto the replacement. (1.20.1: NBT tag; 1.21.1: data components.) |
-| `throw_randomly`   | Boolean                                         | `false`       | **`drop` only** — scatter items in random directions (death-drop style).                                         |
-| `retain_ownership` | Boolean                                         | `true`        | **`drop` only** — keep the dropping entity as the item's thrower.                                                |
-| `amount`           | Integer                                         | _optional_    | **`drop` only** — split this many off each matching stack instead of dropping the whole stack.                   |
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `operation` | [String](/docs/datapack/data-types/string) | `"modify"` | One of `modify`, `replace` or `drop`, as in the table above. |
+| `inventory_type` | [Inventory Type](/docs/datapack/data-types/inventory-type) | `"inventory"` | Whether to go through the entity's own inventory or a power's inventory. |
+| `entity_action` | [Entity Action Type](/docs/datapack/entity-actions) | _optional_ | Runs on the entity once, before any slots are visited. |
+| `item_condition` | [Item Condition Type](/docs/datapack/item-conditions) | _optional_ | Only items that pass this condition are affected. |
+| `slot` | [Item Slot](/docs/datapack/data-types/item-slot) | _optional_ | Limits the action to one slot. |
+| `slots` | [Array](/docs/datapack/data-types/array) of [Item Slot](/docs/datapack/data-types/item-slot) | _optional_ | Limits the action to these slots. For a `power` inventory, use the `container.N` form (the raw slot index). |
+| `power` | [Identifier](/docs/datapack/data-types/identifier) | _optional_ | The [apoli:inventory](/docs/datapack/powers/inventory) power to go through when `inventory_type` is `"power"`. |
+| `process_mode` | [Process Mode](/docs/datapack/data-types/process-mode) | `"stacks"` | How stacks count toward `limit`. Used by `modify`, while `replace` and `drop` always act once per stack. |
+| `limit` | [Integer](/docs/datapack/data-types/integer) | `0` | The most stacks (or items, in `items` mode) to affect. `0` or less means no limit. |
+| `item_action` | [Item Action Type](/docs/datapack/item-actions) | _optional_ | What `modify` does, so without it `modify` does nothing. For `replace` and `drop` it is an optional extra step. |
+| `stack` | [Item Stack](/docs/datapack/data-types/item-stack) | _optional_ | For `replace` only: the replacement item. |
+| `merge_nbt` | [Boolean](/docs/datapack/data-types/boolean) | `false` | For `replace` only: merges the old item's data onto the replacement (the NBT tag on 1.20.1, data components on 1.21.1). |
+| `throw_randomly` | [Boolean](/docs/datapack/data-types/boolean) | `false` | For `drop` only: scatters items in random directions, the way a death drop does. |
+| `retain_ownership` | [Boolean](/docs/datapack/data-types/boolean) | `true` | For `drop` only: keeps the dropping entity as the item's thrower. |
+| `amount` | [Integer](/docs/datapack/data-types/integer) | _optional_ | For `drop` only: splits this many off each matching stack instead of dropping the whole stack. |
 
 ## Examples
 
@@ -61,7 +62,7 @@ Type ID: `apoli:inventory_action`
 }
 ```
 
-Slightly damages every armour-valued item in the entity's inventory.
+This slightly damages every item in the entity's inventory that has an armour value.
 
 ```json
 "entity_action": {
@@ -72,7 +73,7 @@ Slightly damages every armour-valued item in the entity's inventory.
 }
 ```
 
-Replaces the entity's offhand item with a Barrier — including when the offhand is empty. *(Equivalent to the legacy `apoli:replace_inventory`.)*
+This replaces the entity's offhand item with a barrier, even when the offhand is empty. It is the same as the legacy `apoli:replace_inventory`.
 
 ```json
 "entity_action": {
@@ -81,7 +82,7 @@ Replaces the entity's offhand item with a Barrier — including when the offhand
 }
 ```
 
-A legacy-id example: drops the first three hotbar slots. Resolves to `operation: drop`.
+An example with a legacy ID, which drops the first three hotbar slots. It resolves to `operation: drop`.
 
 ```json
 "entity_action": {
@@ -93,4 +94,4 @@ A legacy-id example: drops the first three hotbar slots. Resolves to `operation:
 }
 ```
 
-Walks the `example:extra_inventory` [Inventory power](/docs/datapack/entity-conditions/inventory)'s stored container and consumes one of each item. Power-inventory slots are addressed with `container.N` (e.g. `"slots": ["container.0", "container.1"]`); this runs server-side only.
+This goes through the stored container of the `example:extra_inventory` [inventory power](/docs/datapack/powers/inventory) and consumes one of each item. Power inventory slots are addressed as `container.N`, such as `"slots": ["container.0", "container.1"]`, and this only runs on the server.

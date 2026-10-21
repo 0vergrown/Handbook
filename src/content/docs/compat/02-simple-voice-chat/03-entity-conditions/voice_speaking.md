@@ -1,20 +1,18 @@
 ---
 title: "Voice Speaking (Entity Condition Type)"
-description: "Passes while the entity is talking into voice chat."
+description: "Checks whether the entity is talking into voice chat."
 navigation_title: "Voice Speaking"
 ---
 
-Passes while the entity is currently talking into voice chat.
+Checks whether the entity is currently talking into voice chat.
 
 Type ID: `apoli:voice_speaking`
 
 ## Fields
 
-This type has no fields.
+This condition has no fields.
 
 ## Example
-
-Glow while you're on the mic:
 
 ```json
 {
@@ -22,3 +20,5 @@ Glow while you're on the mic:
   "condition": { "type": "apoli:voice_speaking" }
 }
 ```
+
+This power makes the holder glow while they are talking.

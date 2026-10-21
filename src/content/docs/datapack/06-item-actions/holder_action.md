@@ -1,24 +1,22 @@
 ---
 title: "Holder Action (Item Action Type)"
-description: "Executes an entity action on the holder of the item stack."
+description: "Runs an entity action on whoever is holding the item stack."
 navigation_title: "Holder Action"
 aliases: ["holder"]
 ---
 
-Executes an entity action on the holder of the item stack.
+Runs an entity action on whoever is holding the item stack.
 
-Type ID: `apoli:holder_action`
+Type ID: `apoli:holder_action` (alias `apoli:holder`)
 
-Aliases: `apoli:holder`
+## Fields
 
-##	Fields
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `action` | [Entity Action Type](/docs/datapack/entity-actions) | _optional_ | The entity action to run on the holder. |
+| `entity_action` | [Entity Action Type](/docs/datapack/entity-actions) | _optional_ | The same as `action`, under another name. |
 
-Field | Type | Default | Description
-------|------|---------|------------
-`action` | Entity Action Type | *optional* | The entity action to execute on the holder of the item stack.
-`entity_action` | Entity Action Type | *optional* | The same as the `action` field, but with a different name.
-
-##	Examples
+## Examples
 
 ```json
 "item_action": {
@@ -30,4 +28,4 @@ Field | Type | Default | Description
 }
 ```
 
-This example will recover 2 hearts (4 health points) of the holder of the item stack.
+This heals the holder by 2 hearts (4 health points).

@@ -4,13 +4,13 @@ description: "Opens a 3×3 crafting grid for the player, with no crafting table 
 navigation_title: "Crafting Table"
 ---
 
-Opens the Crafting Table screen for the player, as if they had right-clicked one. Nothing has to exist in the world — this is a portable 3×3 grid.
+Opens the Crafting Table screen for the player, as if they had right-clicked one. Nothing has to exist in the world, so this works as a portable 3×3 grid.
 
 Type ID: `apoli:crafting_table`
 
 ## Fields
 
-_None._
+This action has no fields.
 
 ## Examples
 
@@ -20,7 +20,7 @@ _None._
 }
 ```
 
-Bound to a key, as a "carry a workbench" power:
+Bound to a key, as a power that lets the player carry a workbench:
 
 ```json
 {
@@ -32,7 +32,7 @@ Bound to a key, as a "carry a workbench" power:
 
 ## Notes
 
-- Server-side only; it does nothing when the target is not a player.
-- The screen stays open until the player closes it. Walking away does not shut it, the way a real crafting table does once you leave its range.
-- Items left in the grid come back to the player's inventory on close, and drop at their feet if it is full — the same as a real table.
+- It runs on the server only, and does nothing when the target isn't a player.
+- The screen stays open until the player closes it. Walking away doesn't close it, unlike a real crafting table once you leave its range.
+- Items left in the grid go back to the player's inventory when the screen closes, and drop at their feet if it is full, the same as with a real table.
 - [`apoli:modify_crafting`](/docs/datapack/powers/modify_crafting) applies here too. Its `block_action` runs at the block the player was standing on when the screen opened.

@@ -1,23 +1,24 @@
 ---
 title: "Prevent Shape Change (Power Type)"
-description: Stops the player from changing shape.
+description: "Stops the player from changing shape."
 navigation_title: "Prevent Shape Change"
 aliases: ["prevent_morph", "shappoli:prevent_shape_change", "shappoli:prevent_morph"]
 ---
 
-Blocks shape changes. With no condition it blocks every change, including clearing the shape — so gate it unless you really mean "you are stuck like this".
+Blocks shape changes. With no condition it blocks every change, including clearing the shape, so add a condition unless you really mean that the player is stuck as they are.
 
 Type ID: `apoli:prevent_shape_change` (aliases `apoli:prevent_morph`, `shappoli:prevent_shape_change`)
 
+> [!NOTE]
+> This type needs [WoodWalkers](/docs/compat/woodwalkers/overview) and doesn't exist without it, so a pack that uses it must depend on the mod.
+
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|-------------
-`bientity_condition` | [Bi-Entity Condition](/docs/datapack/bientity-conditions) | _optional_ | Only block when this passes. Actor is the player, target is the shape they are trying to become. Absent means block everything.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `bientity_condition` | [Bi-entity Condition Type](/docs/datapack/bientity-conditions) | _optional_ | Only blocks when this passes, with the player as the actor and the shape they are trying to become as the target. Without it, every change is blocked. |
 
 ## Examples
-
-You cannot become anything undead:
 
 ```json
 {
@@ -29,7 +30,7 @@ You cannot become anything undead:
 }
 ```
 
-Locked into your current shape while a resource is spent:
+The player can't become anything undead.
 
 ```json
 {
@@ -43,4 +44,4 @@ Locked into your current shape while a resource is spent:
 }
 ```
 
-> Needs [WoodWalkers](/docs/compat/woodwalkers). This type does not exist without it, so a pack using it must depend on the mod.
+The player is locked into their current shape while the `mypack:stamina` resource is used up.

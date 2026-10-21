@@ -1,21 +1,22 @@
 ---
 title: "XP Levels (Entity Condition Type)"
-description: "Checks the current experience level of the entity."
+description: "Compares the player's experience level with a number."
 navigation_title: "XP Levels"
 ---
 
-Checks the current experience level of the entity.
+Compares the entity's current experience level with a number.
 
 Type ID: `apoli:xp_levels`
 
-> **This entity condition type will only work on players.**
+> [!NOTE]
+> This condition only works on players.
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`comparison` | Comparison | | Determines how the experience level of the player should be compared to the specified value.
-`compare_to` | Integer | | The value at which the experience level of the player will be compared to.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `comparison` | [Comparison](/docs/datapack/data-types/comparison) | _required_ | How the player's experience level is compared with `compare_to`. |
+| `compare_to` | [Integer](/docs/datapack/data-types/integer) | _required_ | The number the experience level is compared with. |
 
 ## Examples
 
@@ -27,4 +28,4 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will check if the player has 5 levels or less.
+This checks whether the player has 5 levels or fewer.

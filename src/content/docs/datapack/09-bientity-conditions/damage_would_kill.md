@@ -4,24 +4,24 @@ description: "Checks whether the actor dealing a given amount of a given damage 
 navigation_title: "Damage Would Kill"
 ---
 
-Simulates the **actor** hitting the **target** and checks whether the target would die. The damage source carries the actor, so attacker-side [apoli:modify_damage](/docs/datapack/powers/modify_damage) powers, shield facing and armour-piercing damage types all count. The simulation runs the same reductions the real hit would — invulnerability, shield blocking, the damage cooldown, armour, Resistance, Protection and absorption — and returns `false` if an [apoli:prevent_death](/docs/datapack/powers/prevent_death) power would catch the target.
+Simulates the actor hitting the target and checks whether the target would die. The damage source carries the actor, so attacker-side [apoli:modify_damage](/docs/datapack/powers/modify_damage) powers, which way a shield faces and damage types that pierce armour all count. The simulation applies the same reductions the real hit would (invulnerability, shield blocking, the damage cooldown, armour, Resistance, Protection and absorption), and returns `false` if an [apoli:prevent_death](/docs/datapack/powers/prevent_death) power would save the target.
 
 Type ID: `apoli:damage_would_kill`
 
 ## Fields
 
 | Field | Type | Default | Description |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `amount` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | _required_ | The raw damage to simulate, before any reduction. Expressions are evaluated on the actor. |
-| `damage_type` | [Identifier](/docs/datapack/data-types/identifier) | _required_ | The damage type to simulate, e.g. `minecraft:player_attack`. |
+| `damage_type` | [Identifier](/docs/datapack/data-types/identifier) | _required_ | The damage type to simulate, such as `minecraft:player_attack`. |
 | `modifier` | [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) | _none_ | Applied to `amount` before the simulation. |
-| `modifiers` | Array of [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) | _none_ | Same, for several modifiers. |
+| `modifiers` | Array of [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) | _none_ | The same, for several modifiers. |
 
-The condition is `false` when the target is not a living entity, and `false` when the target is already dead.
+The condition is `false` when the target isn't a living entity, and when the target is already dead.
 
 ## Examples
 
-An execute — the finishing blow is free, but only when it really is the finishing blow:
+An execute that only triggers on the finishing blow:
 
 ```json
 {
@@ -54,8 +54,10 @@ Mark a target your next swing would kill:
 }
 ```
 
-> A render power such as `apoli:entity_glow` evaluates its conditions on the **client**, where enchantment protection and server-only conditions read as absent — the prediction there is close but not exact. Anything evaluated server-side (damage, actions, `modify_damage`) gets the full picture.
+> [!NOTE]
+> A render power such as `apoli:entity_glow` evaluates its conditions on the client, where enchantment protection and conditions that only the server knows read as absent, so the prediction there is close but not exact. Anything evaluated on the server (damage, actions, `modify_damage`) gets the full picture.
 
-> The simulation reads the world and never changes it — no armour is damaged and no action fires. Damage handled by other mods' own pipelines is invisible to it.
+> [!NOTE]
+> The simulation reads the world and never changes it, so no armour is damaged and no action fires. Damage handled by other mods' own pipelines is invisible to it.
 
-The [entity version](/docs/datapack/entity-conditions/damage_would_kill) is the same check with no attacker, for "would this incoming damage kill me".
+The [entity version](/docs/datapack/entity-conditions/damage_would_kill) is the same check without an attacker, for asking whether incoming damage would kill you.

@@ -1,31 +1,34 @@
 ---
 title: "Replace Sound Reception (Power Type)"
-description: "Swaps out the sounds the entity that has the power hears."
+description: "Replaces the sounds the player that has the power hears."
 navigation_title: "Replace Sound Reception"
 ---
 
-Swaps out the sounds the player that has the power **hears** — every sound, from any source, before it reaches their speakers. Nobody else is affected.
+Replaces the sounds the player that has the power hears: every sound, from any source, before it reaches their speakers. Nobody else is affected.
 
-**Type ID:** `apoli:replace_sound_reception`
+Type ID: `apoli:replace_sound_reception`
 
-This is the mirror of [`apoli:replace_sound_emission`](/docs/datapack/powers/replace_sound_emission) and takes exactly the same fields; only the side that gets rewritten differs.
+It is the mirror of [`apoli:replace_sound_emission`](/docs/datapack/powers/replace_sound_emission) and takes the same fields. Only the side that gets rewritten differs.
 
 ## Fields
 
 | Field | Type | Default | Description |
 | --- | --- | --- | --- |
-| `sounds` | Object | **required** | Map of sound to replace → what to replace it with. Same format as [`apoli:replace_sound_emission`](/docs/datapack/powers/replace_sound_emission#the-sounds-map). |
-| `replace` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Whether a match stops the original sound (and every lower-priority power). `false` plays the replacement *on top of* the original. |
-| `entity_action` | [Entity Action Type](/docs/datapack/entity-actions) | _optional_ | Action run on the holder whenever one of its rules matches. |
-| `priority` | [Integer](/docs/datapack/data-types/integer) | `0` | Ordering when the holder has several replace-sound powers. Higher runs first. |
+| `sounds` | [Object](/docs/datapack/data-types/object) | _required_ | Maps each sound to replace to what replaces it, in the same format as [`apoli:replace_sound_emission`](/docs/datapack/powers/replace_sound_emission#the-sounds-map). |
+| `replace` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Whether a match stops the original sound and every power with a lower priority. `false` plays the replacement on top of the original. |
+| `entity_action` | [Entity Action Type](/docs/datapack/entity-actions) | _optional_ | Runs on the player whenever one of the power's rules matches. |
+| `priority` | [Integer](/docs/datapack/data-types/integer) | `0` | The order when the player has several sound replacement powers. Higher runs first. |
 
-> This power only does anything on a **player**, and only for that player's own client. Granting it to a mob does nothing.
+> [!NOTE]
+> This power only does anything on a player, and only for that player's own client. Granting it to a mob does nothing.
 
-> `entity_action` runs on the client, so it is only useful for client-visible effects. Use [`apoli:replace_sound_emission`](/docs/datapack/powers/replace_sound_emission) if you need an action the server acts on.
+With `"replace": false`, the original keeps playing as it would have, looping included, and each layered sound plays once. Layering a chime over a minecart's rolling sound gives one chime, not a chime that loops with the cart.
+
+`entity_action` runs on the client, so it only helps with effects the client can show. Use [`apoli:replace_sound_emission`](/docs/datapack/powers/replace_sound_emission) for an action the server should act on.
 
 ## Examples
 
-Deafness — mute everything except your own voice and the UI:
+Deafness, muting block, entity, ambient and music sounds while leaving item and interface sounds:
 
 ```json
 {
@@ -36,7 +39,7 @@ Deafness — mute everything except your own voice and the UI:
 }
 ```
 
-Hear zombies as pigs, and randomise stone footsteps:
+Hear zombies as pigs, and replace stone footsteps with a random mix:
 
 ```json
 {
@@ -58,7 +61,7 @@ Hear zombies as pigs, and randomise stone footsteps:
 }
 ```
 
-Muffled hearing while underwater, keeping the real sound underneath:
+Muffled hearing while underwater, with the real sounds still playing underneath:
 
 ```json
 {

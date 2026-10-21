@@ -1,25 +1,20 @@
 ---
 title: "Action On Land (Power Type)"
-description: "Executes an Entity Action Type when the player lands on the ground after being airborne."
+description: "Runs an entity action when the entity lands after falling."
 navigation_title: "Action On Land"
 ---
 
-Executes an Entity Action Type when the player lands on the ground after being airborne.
+Runs an entity action when the entity lands on the ground after being in the air.
 
 Type ID: `apoli:action_on_land`
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`entity_action` | Entity Action Type | | The action to execute on the player.
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `entity_action` | [Entity Action Type](/docs/datapack/entity-actions) | | The action to run on the entity. |
 
-The action runs on the tick the entity touches the ground after an actual fall, just before any fall
-damage is dealt. Anything that only cancels the *damage* — `take_fall_damage: false` on
-[apoli:modify_falling](/docs/datapack/powers/modify_falling), a Slow Falling effect, feather falling —
-leaves the landing intact, so this still fires. Something that resets the fall distance mid-air
-(entering water, a [apoli:set_fall_distance](/docs/datapack/entity-actions/set_fall_distance) of `0`,
-climbing a ladder) means there was no fall left to land from, and it does not.
+The action runs on the tick the entity touches the ground after an actual fall, just before any fall damage is dealt. Anything that only cancels the damage still lets the action run, such as `take_fall_damage: false` on [apoli:modify_falling](/docs/datapack/powers/modify_falling), Slow Falling or Feather Falling. Anything that resets the fall distance in mid-air means there is no fall left to land from, so the action doesn't run. That includes entering water, an [apoli:set_fall_distance](/docs/datapack/entity-actions/set_fall_distance) of `0` and climbing a ladder.
 
 ## Examples
 
@@ -38,4 +33,4 @@ climbing a ladder) means there was no fall left to land from, and it does not.
 }
 ```
 
-This example will execute an [apoli:execute_command](/docs/datapack/entity-actions/execute_command) that will then execute a `/fill` command that will replace a 3x3 area of Grass Blocks with Air underneath the entity's feet if the entity in question has been falling for 4 or more blocks.
+When the entity lands after falling more than 4 blocks, this uses [apoli:execute_command](/docs/datapack/entity-actions/execute_command) to run a `/fill` that replaces the grass blocks in a 3 by 3 area under its feet with air.

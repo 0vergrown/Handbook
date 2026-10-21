@@ -1,18 +1,18 @@
 ---
 title: "Entity Type (Entity Condition Type)"
-description: "Checks whether the entity is of a specific entity type."
+description: "Checks whether the entity is of a given entity type, or in an entity type tag."
 navigation_title: "Entity Type"
 ---
 
-Checks whether the entity is of a specific entity type.
+Checks whether the entity is of a given entity type.
 
 Type ID: `apoli:entity_type`
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`entity_type` | [Identifier](/docs/datapack/data-types/identifier) | | The entity type the entity needs to have. Prefix with `#` to match an entity type tag instead — `"#minecraft:skeletons"`.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `entity_type` | [Identifier](/docs/datapack/data-types/identifier) | _required_ | The entity type the entity must have. Start it with `#` to match an entity type tag instead, as in `"#minecraft:skeletons"`. |
 
 ## Examples
 
@@ -23,7 +23,7 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will check if the entity is a Creeper.
+This checks whether the entity is a creeper.
 
 ```json
 "condition": {
@@ -32,4 +32,4 @@ This example will check if the entity is a Creeper.
 }
 ```
 
-This example passes for any entity in the `minecraft:skeletons` tag.
+This passes for any entity in the `minecraft:skeletons` tag.

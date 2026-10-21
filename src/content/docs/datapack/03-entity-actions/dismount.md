@@ -1,16 +1,16 @@
 ---
 title: "Dismount (Entity Action Type)"
-description: "Dismounts the entity from their vehicle."
+description: "Makes the entity get off whatever it is riding."
 navigation_title: "Dismount"
 ---
 
-Dismounts the entity from their vehicle.
+Makes the entity get off the vehicle it is riding.
 
 Type ID: `apoli:dismount`
 
 ## Fields
 
-_None._
+This action has no fields.
 
 ## Examples
 

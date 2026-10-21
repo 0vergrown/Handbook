@@ -5,23 +5,24 @@ navigation_title: "Minecraft Version"
 aliases: ["game_version", "mc_version"]
 ---
 
-Checks the Minecraft version the game is running. It ignores its context entirely, so the same type is available wherever a condition is — entity, bi-entity, item, block, damage, fluid and biome — and in a power's [`load_condition`](/docs/datapack/introduction/powers#gating-a-power-at-load-time), which is where it earns its keep: a data pack that ships one set of files for several game versions can drop the branch that this version could not parse.
+Checks the Minecraft version the game is running. It ignores its context entirely, so the same type works wherever a condition does (entity, bi-entity, item, block, damage, fluid and biome) and in a power's [`load_condition`](/docs/datapack/introduction/powers#skipping-a-power-at-load-time). That is where it is most useful: a data pack that ships one set of files for several game versions can drop the branch that this version couldn't parse.
 
 Type ID: `apoli:minecraft_version`
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`version` | [String](/docs/datapack/data-types/string) | optional | A version name such as `1.21` or `1.20.1`, compared with `comparison`.
-`data_version` | [Integer](/docs/datapack/data-types/integer) | optional | The world data version (`3465` on 1.20.1, `3955` on 1.21.1), compared with `comparison`.
-`comparison` | [Comparison](/docs/datapack/data-types/comparison) | `>=` | How the running version is compared to `version` / `data_version`.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `version` | [String](/docs/datapack/data-types/string) | _optional_ | A version name such as `1.21` or `1.20.1`, compared with `comparison`. |
+| `data_version` | [Integer](/docs/datapack/data-types/integer) | _optional_ | The world data version (`3465` on 1.20.1, `3955` on 1.21.1), compared with `comparison`. |
+| `comparison` | [Comparison](/docs/datapack/data-types/comparison) | `>=` | How the running version is compared with `version` or `data_version`. |
 
-At least one of `version` / `data_version` must be given; with neither, the condition is never fulfilled. Give both and both have to match.
+At least one of `version` and `data_version` must be given, and with neither the condition never passes. Give both and both have to match.
 
-`version` is compared number-group by number-group, so `1.9` is older than `1.10` and `1.21` is older than `1.21.1`. Snapshot names (`24w03a`) do not order against release names at all — use `data_version` when you need to catch one.
+`version` is compared one group of numbers at a time, so `1.9` is older than `1.10` and `1.21` is older than `1.21.1`. Snapshot names such as `24w03a` don't order against release names at all, so use `data_version` when you need to catch one.
 
-> The game version never changes while the game runs, so this is resolved **once**, when the JSON is read. Testing it per tick costs nothing.
+> [!NOTE]
+> The game version never changes while the game runs, so this is worked out once, when the JSON is read. Testing it every tick costs nothing.
 
 ## Examples
 
@@ -32,7 +33,7 @@ At least one of `version` / `data_version` must be given; with neither, the cond
 }
 ```
 
-Fulfilled on 1.21 and newer. Add `"inverted": true` for the other half of the split.
+This passes on 1.21 and newer. Add `"inverted": true` for the other half of the split.
 
 ```json
 {
@@ -60,4 +61,4 @@ One coloured dust particle, written in both spellings. Exactly one sub-power sur
 }
 ```
 
-Keyed off the data version instead, which orders snapshots correctly.
+This uses the data version instead, which orders snapshots correctly.

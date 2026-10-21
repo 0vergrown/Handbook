@@ -1,18 +1,18 @@
 ---
 title: "Undirected (Bi-Entity Condition Type)"
-description: "Checks if the specified bi-entity condition is true before or after swapping the actor and target context."
+description: "Checks a bi-entity condition both ways round, passing if either direction holds."
 navigation_title: "Undirected"
 ---
 
-Checks if the specified bi-entity condition is true before or after swapping the actor and target context.
+Checks a bi-entity condition both ways round, and passes if it holds with the actor and target as they are or with the two swapped.
 
 Type ID: `apoli:undirected`
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|-------------
-`condition` | Bi-entity Condition Type | | The bi-entity condition type to check for.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `condition` | [Bi-entity Condition Type](/docs/datapack/bientity-conditions) | _required_ | The bi-entity condition to check. |
 
 ## Examples
 
@@ -25,4 +25,4 @@ Field | Type | Default | Description
 }
 ```
 
-This example will check if the actor entity is the owner of the target entity, or if the target entity is the owner of the actor entity.
+This checks whether the actor owns the target, or the target owns the actor.

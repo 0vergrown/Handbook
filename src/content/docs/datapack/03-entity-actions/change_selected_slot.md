@@ -11,12 +11,12 @@ Type ID: `apoli:change_selected_slot`
 
 ## Fields
 
-| Field | Type | Default | Purpose |
+| Field | Type | Default | Description |
 | --- | --- | --- | --- |
-| `slot` | Integer | **required** | The hotbar slot to select — `0` is the far left, `8` the far right. Out-of-range values are clamped. With `relative: true` this is an offset instead. |
-| `relative` | Boolean | `false` | Add `slot` to the current selection and wrap around, so `1` cycles right and `-1` cycles left. |
+| `slot` | [Integer](/docs/datapack/data-types/integer) | _required_ | The hotbar slot to select, from `0` on the far left to `8` on the far right. Values outside that range are clamped. With `relative: true` this is an offset instead. |
+| `relative` | [Boolean](/docs/datapack/data-types/boolean) | `false` | Adds `slot` to the current selection and wraps around, so `1` cycles right and `-1` cycles left. |
 
-Does nothing for entities that are not players. The new selection is pushed to the client immediately, so the hotbar highlight and held-item model update on the same tick.
+It does nothing for entities that aren't players. The new selection is sent to the client straight away, so the hotbar highlight and the held item model update on the same tick.
 
 ## Examples
 
@@ -27,7 +27,7 @@ Does nothing for entities that are not players. The new selection is pushed to t
 }
 ```
 
-Forces the player back to the first hotbar slot.
+This puts the player back on the first hotbar slot.
 
 ```json
 {
@@ -37,4 +37,4 @@ Forces the player back to the first hotbar slot.
 }
 ```
 
-Cycles one slot to the right, wrapping from slot 8 back to slot 0.
+This cycles one slot to the right, wrapping from slot 8 back to slot 0.

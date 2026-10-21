@@ -1,21 +1,22 @@
 ---
 title: "Food Level (Entity Condition Type)"
-description: "Checks the entity's food level (chicken legs / hunger meter / whatever you wanna call it). The food level is in the range of 0 to 20."
+description: "Compares the player's food level, from 0 to 20, with a number."
 navigation_title: "Food Level"
 ---
 
-Checks the entity's food level (chicken legs / hunger meter / whatever you wanna call it). The food level is in the range of 0 to 20.
+Compares the entity's food level with a number. The food level is what the hunger bar shows, from 0 to 20.
 
 Type ID: `apoli:food_level`
 
-> **This entity condition type will only work on players.**
+> [!NOTE]
+> This condition only works on players.
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`comparison` | Comparison | | Determines how the food level of the player should be compared to the specified value.
-`compare_to` | Float | | The value at which the food level of the player will be compared to.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `comparison` | [Comparison](/docs/datapack/data-types/comparison) | _required_ | How the player's food level is compared with `compare_to`. |
+| `compare_to` | [Float](/docs/datapack/data-types/float) | _required_ | The number the food level is compared with. |
 
 ## Examples
 
@@ -27,4 +28,4 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will check if the player have 0 hunger shanks (or 0 food points).
+This checks whether the player has no hunger shanks left (0 food points).

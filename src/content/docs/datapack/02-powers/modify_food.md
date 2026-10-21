@@ -1,47 +1,49 @@
 ---
 title: "Modify Food (Power Type)"
-description: "Modifies the food values of items the holder eats."
+description: "Changes the food values of items the entity eats."
 navigation_title: "Modify Food"
 ---
 
-Modifies the food the holder eats, without replacing it. Where [apoli:edible_item](/docs/datapack/powers/edible_item) hands one specific item a whole new food component, this scales the values an item already has — so a single power can double the nutrition of every item in a tag, halve everyone's eating time, or strip the effects off raw meat.
+Changes the food the entity with the power eats, without replacing it. [apoli:edible_item](/docs/datapack/powers/edible_item) gives one item a whole new food component, while this power scales the values an item already has. One power can double the nutrition of every item in a tag, halve the eating time of everything, or strip the effects off raw meat.
 
 Type ID: `apoli:modify_food`
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|-------------
-`item_condition` | Item Condition Type | _optional_ | If specified, the power only applies to items fulfilling this condition. **Omit it and the power applies to everything the holder eats.**
-`food_modifier` | [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) | _optional_ | Applied to the item's nutrition (hunger shanks).
-`food_modifiers` | [Array](/docs/datapack/data-types/array) of Attribute Modifier | _optional_ | Several modifiers applied to the item's nutrition.
-`saturation_modifier` | [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) | _optional_ | Applied to the item's saturation modifier.
-`saturation_modifiers` | [Array](/docs/datapack/data-types/array) of Attribute Modifier | _optional_ | Several modifiers applied to the item's saturation modifier.
-`eat_ticks_modifier` | [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) | _optional_ | Applied to how long the item takes to eat, in ticks.
-`eat_ticks_modifiers` | [Array](/docs/datapack/data-types/array) of Attribute Modifier | _optional_ | Several modifiers applied to the eating time.
-`always_edible` | Boolean | `false` | If `true`, the matching items can be eaten on a full hunger bar. Also accepted as `can_always_eat`.
-`prevent_effects` | Boolean | `false` | If `true`, the status effects the food would apply are dropped.
-`replace_stack` | [Item Stack](/docs/datapack/data-types/item-stack) | _optional_ | If specified, the holder is left with this stack after eating instead of whatever the food would normally leave (bowls, bottles, nothing).
-`entity_action` | Entity Action Type | _optional_ | Executed on the holder after eating a matching item.
-`item_action` | Item Action Type | _optional_ | Executed on the stack that was eaten.
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `item_condition` | [Item Condition Type](/docs/datapack/item-conditions) | _optional_ | If set, the power only applies to items that pass this condition. Without it, the power applies to everything the entity eats. |
+| `food_modifier` | [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) | _optional_ | Applied to the item's nutrition (hunger points). |
+| `food_modifiers` | [Array](/docs/datapack/data-types/array) of [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) | _optional_ | Several modifiers applied to the item's nutrition. |
+| `saturation_modifier` | [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) | _optional_ | Applied to the item's saturation modifier. |
+| `saturation_modifiers` | [Array](/docs/datapack/data-types/array) of [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) | _optional_ | Several modifiers applied to the item's saturation modifier. |
+| `eat_ticks_modifier` | [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) | _optional_ | Applied to how long the item takes to eat, in ticks. |
+| `eat_ticks_modifiers` | [Array](/docs/datapack/data-types/array) of [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) | _optional_ | Several modifiers applied to the eating time. |
+| `always_edible` | [Boolean](/docs/datapack/data-types/boolean) | `false` | If `true`, matching items can be eaten on a full hunger bar. `can_always_eat` is accepted too. |
+| `prevent_effects` | [Boolean](/docs/datapack/data-types/boolean) | `false` | If `true`, the status effects the food would apply are dropped. |
+| `replace_stack` | [Item Stack](/docs/datapack/data-types/item-stack) | _optional_ | If set, the entity is left with this stack after eating instead of whatever the food would normally leave, such as a bowl, a bottle or nothing. |
+| `entity_action` | [Entity Action Type](/docs/datapack/entity-actions) | _optional_ | Runs on the entity after it eats a matching item. |
+| `item_action` | [Item Action Type](/docs/datapack/item-actions) | _optional_ | Runs on the stack that was eaten. |
 
-> The singular and plural spellings are the same field — `food_modifier` is read as a one-entry `food_modifiers`. Write whichever reads better; do not write both.
+> [!NOTE]
+> The singular and plural spellings are the same field: `food_modifier` is read as a `food_modifiers` with one entry. Write whichever reads better, but not both.
 
 ## How it behaves
 
-The power hooks eating itself, so it applies to **vanilla food, modded food and [apoli:edible_item](/docs/datapack/powers/edible_item) food alike**. Every matching power on the holder is applied in turn, so two powers that each double nutrition quadruple it.
+The power hooks into eating itself, so it applies to vanilla food, modded food and food from [apoli:edible_item](/docs/datapack/powers/edible_item) alike. Every matching power on the entity applies in turn, so two powers that each double nutrition quadruple it.
 
-Order of operations when the holder finishes eating something:
+When the entity finishes eating something:
 
-1. Every `apoli:modify_food` on the holder whose `condition` and `item_condition` pass is collected.
+1. Every `apoli:modify_food` on the entity whose `condition` and `item_condition` pass is collected.
 2. `food_modifiers` and `saturation_modifiers` are applied to the item's own values.
-3. `prevent_effects` drops the effect list; `replace_stack` overrides what the item converts into.
-4. Hunger and saturation are restored, then the surviving effects roll.
-5. `item_action` runs on the eaten stack, then `entity_action` on the eater.
+3. `prevent_effects` drops the effect list, and `replace_stack` overrides what the item turns into.
+4. Hunger and saturation are restored, then the remaining effects roll.
+5. `item_action` runs on the eaten stack, then `entity_action` runs on the eater.
 
-`eat_ticks_modifiers` are applied earlier — when the eating animation starts — because that is when the game asks how long the item takes.
+`eat_ticks_modifiers` apply earlier, when the eating animation starts, because that is when the game asks how long the item takes.
 
-> `replace_stack` uses vanilla's "using converts to" slot, which only players get. A non-player holder eats the item normally and receives nothing back.
+> [!NOTE]
+> `replace_stack` uses vanilla's "using converts to" slot, which only players have. Other entities eat the item normally and get nothing back.
 
 ## Examples
 
@@ -69,7 +71,7 @@ Order of operations when the holder finishes eating something:
 }
 ```
 
-Doubles both the hunger and the saturation of every item in the `minecraft:fishes` tag.
+This doubles both the hunger and the saturation of every item in the `minecraft:fishes` tag.
 
 ```json
 {
@@ -85,7 +87,7 @@ Doubles both the hunger and the saturation of every item in the `minecraft:fishe
 }
 ```
 
-Halves the eating time of anything edible, and lets the holder eat on a full hunger bar.
+This halves the eating time of anything edible and lets the entity eat on a full hunger bar.
 
 ```json
 {
@@ -113,4 +115,4 @@ Halves the eating time of anything edible, and lets the holder eat on a full hun
 }
 ```
 
-Meat is half as filling, its own effects never apply, and eating it makes the holder nauseous.
+Meat is half as filling, its own effects never apply, and eating it makes the entity nauseous.

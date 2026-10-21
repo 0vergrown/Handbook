@@ -1,17 +1,17 @@
 ---
 title: "Is Damageable (Item Condition Type)"
-description: "Checks if the item is damageable."
+description: "Checks whether the item has durability that can be used up."
 navigation_title: "Is Damageable"
 aliases: ["damageable"]
 ---
 
-Checks if the item is damageable.
+Checks whether the item has durability that can be used up.
 
 Type ID: `apoli:is_damageable`
 
 ## Fields
 
-_None._
+This condition has no fields.
 
 ## Examples
 
@@ -21,4 +21,5 @@ _None._
 }
 ```
 
-> **`apoli:damageable` is this condition,** kept as an alias for packs ported from the original Apoli.
+> [!NOTE]
+> `apoli:damageable` is the same condition, kept as an alias for packs ported from the original Apoli.

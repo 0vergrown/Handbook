@@ -1,18 +1,18 @@
 ---
 title: "Using Item (Entity Condition Type)"
-description: "Checks whether the entity is currently using an item (eating a food item, using a shield, drawing a bow, etc.) that fulfills the specified Item Condition Type."
+description: "Checks whether the entity is using an item, such as eating, blocking with a shield or drawing a bow."
 navigation_title: "Using Item"
 ---
 
-Checks whether the entity is currently using an item (eating a food item, using a shield, drawing a bow, etc.) that fulfills the specified Item Condition Type.
+Checks whether the entity is using an item, such as eating food, blocking with a shield or drawing a bow, optionally one that passes an item condition.
 
 Type ID: `apoli:using_item`
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`item_condition` | Item Condition Type | _optional_ | If specified, the condition will only evaluate to true if the item that is being used fulfills the specified item condition type.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `item_condition` | [Item Condition Type](/docs/datapack/item-conditions) | _optional_ | The item being used must pass this condition. |
 
 ## Examples
 
@@ -25,4 +25,4 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will check if the entity is currently eating a food item.
+This checks whether the entity is eating.

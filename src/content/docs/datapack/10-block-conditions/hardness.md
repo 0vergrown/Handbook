@@ -1,21 +1,19 @@
 ---
 title: "Hardness (Block Condition Type)"
-description: "Checks the hardness value of the block."
+description: "Compares the block's hardness, which decides how long it takes to break, with a number."
 navigation_title: "Hardness"
 ---
 
-Checks the hardness value of the block.
+Compares the block's hardness with a number. Hardness decides how long the block takes to break.
 
 Type ID: `apoli:hardness`
 
-> A block's hardness value is used for determining how long it takes to break the block.
-
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|------------
-`comparison` | Comparison | | Determines how the hardness value of the block should compared to the specified value.
-`compare_to` | Float | | The value at which the hardness value of the block will be compared to.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `comparison` | [Comparison](/docs/datapack/data-types/comparison) | _required_ | How the hardness is compared with `compare_to`. |
+| `compare_to` | [Float](/docs/datapack/data-types/float) | _required_ | The number the hardness is compared with. |
 
 ## Examples
 
@@ -27,4 +25,4 @@ Field | Type | Default | Description
 }
 ```
 
-This example will check if the block is as hard as Stone.
+This checks whether the block is exactly as hard as stone.

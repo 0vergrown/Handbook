@@ -1,54 +1,54 @@
 ---
 title: "Attribute Modifier (Data Type)"
-description: "An Object describing how a single numerical value should be modified."
+description: "An object that describes how one number is changed, used by attributes and resources alike."
 navigation_title: "Attribute Modifier"
 ---
 
-An [Object](/docs/datapack/data-types/object) describing how a single numerical value should be modified. Used by both vanilla-attribute powers (apoli:attribute) and by resource operations (apoli:modify_resource, apoli:change_resource alias). One data type, both call sites.
+An [Object](/docs/datapack/data-types/object) that describes how one number is changed. Attribute powers (apoli:attribute) and resource operations (apoli:modify_resource and its apoli:change_resource alias) both use it, as one data type for both.
 
-## Why one type and not two
+## One type for attributes and resources
 
-Apace's Apoli had `AttributeModifier` for the `apoli:attribute` power and a separate `Modifier` for `apoli:modify_resource`, which differed only in whether the `attribute` field was required. In this rewrite they're one type with all-optional fields — the consuming power/action enforces which fields are required for its own purposes.
+Apace's Apoli has `AttributeModifier` for the `apoli:attribute` power and a separate `Modifier` for `apoli:modify_resource`, which differ only in whether the `attribute` field is required. Here they are one type with every field optional, and each power or action enforces the fields it needs.
 
 ## Fields
 
-| Field       | Type                                        | Default               | Description                                                                                                                                                          |
-| ----------- | ------------------------------------------- | --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `operation` | [Attribute Modifier Operation](/docs/datapack/data-types/attribute-modifier-operation)    |                       | The operation performed by this modifier.                                                                                                                            |
-| `value`     | [Float](/docs/datapack/data-types/float) OR [Expression](/docs/datapack/data-types/expression) | `0`                   | The modifier value. _Also accepts the alias `amount`._ When an Expression, evaluated each time the modifier is applied.                                                                                 |
-| `attribute` | [Identifier](/docs/datapack/data-types/identifier)                      | _optional_            | The vanilla attribute id this modifier targets. **Required** by apoli:attribute; ignored by apoli:modify_resource (since that targets a resource, not an attribute). |
-| `name`      | [String](/docs/datapack/data-types/string)                          | derived from power id | The vanilla AttributeModifier name (used for the modifier's UUID seed).                                                                                              |
-| `resource`  | [Identifier](/docs/datapack/data-types/identifier)                      | _optional_            | If set, use the value of this Resource (or Cooldown) power as the modifier value instead of `value`/`value`-as-Expression.                                           |
-| `position`  | [Integer](/docs/datapack/data-types/integer) OR [Expression](/docs/datapack/data-types/expression) | _optional_ | Which slot of `resource` to read, when it names a table [apoli:resource](/docs/datapack/powers/resource). Ignored without `resource`. _Also accepts the aliases `index` and `slot`._ |
-| `modifier`  | [Attribute Modifier](/docs/datapack/data-types/attribute-modifier)              | _optional_            | A nested modifier applied to **the value of this modifier** before it acts. Lets you scale a resource-driven value, etc.                                             |
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `operation` | [Attribute Modifier Operation](/docs/datapack/data-types/attribute-modifier-operation) | _required_ | The operation this modifier performs. |
+| `value` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | `0` | The modifier value. `amount` is accepted as an alias. An expression is evaluated each time the modifier is applied. |
+| `attribute` | [Identifier](/docs/datapack/data-types/identifier) | _optional_ | The vanilla attribute ID this modifier targets. apoli:attribute requires it, and apoli:modify_resource ignores it, since that targets a resource and not an attribute. |
+| `name` | [String](/docs/datapack/data-types/string) | derived from the power ID | The vanilla AttributeModifier name, used to seed the modifier's UUID. |
+| `resource` | [Identifier](/docs/datapack/data-types/identifier) | _optional_ | When set, the value of this resource (or cooldown) power is used as the modifier value instead of `value`. |
+| `position` | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | _optional_ | Which slot of `resource` to read, when it names a table [apoli:resource](/docs/datapack/powers/resource). Ignored without `resource`. `index` and `slot` are accepted as aliases. |
+| `modifier` | [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) | _optional_ | A nested modifier applied to this modifier's own value before it acts, for example to scale a value that comes from a resource. |
 
-## Order of precedence for the input value
+## Where the input value comes from
 
-When the modifier is applied to a current base/total, the "modifier value" fed into the operation is computed as:
+When the modifier is applied to a current base or total, the value fed into the operation is worked out like this:
 
-1. If `resource` is set, start with that resource's current value — the value in slot `position` when one is given.
-2. Otherwise, evaluate `value` (Float or Expression).
-3. If `modifier` (nested) is set, run that modifier against the value from step 1 or 2 and use the result.
+1. If `resource` is set, it starts from that resource's current value, or the value in slot `position` when one is given.
+2. Otherwise, it evaluates `value` (a number or an expression).
+3. If a nested `modifier` is set, it runs that modifier on the value from step 1 or 2 and uses the result.
 
-That single rule subsumes Apace's separate "resource-as-value" and "modifier-of-modifier" forms.
+This one rule covers both of Apace's separate forms, a resource as the value and a modifier of a modifier.
 
-**Expression context:** inside a `value` Expression, the `value` variable is bound to the **unmodified input** the modifier chain is being applied to — the current resource value in `apoli:modify_resource`, the attribute's base value in `apoli:attribute`, or the incoming amount in `modify_*` powers. So `"value": "value * 0.5"` with `"operation": "set_total"` halves whatever comes in. All other [Expression](/docs/datapack/data-types/expression) variables (`health`, `xp_level`, resource ids, …) are available too.
+Inside a `value` expression, the `value` variable is the unmodified input the modifier chain is applied to: the current resource value in `apoli:modify_resource`, the attribute's base value in `apoli:attribute`, or the incoming amount in `modify_*` powers. So `"value": "value * 0.5"` with `"operation": "set_total"` halves whatever comes in. Every other [expression](/docs/datapack/data-types/expression) variable (`health`, `xp_level`, resource IDs and so on) is available too.
 
 ## Examples
 
-Add 9 to a base value (used inside `apoli:modify_resource`):
+Add 9 to a base value, inside `apoli:modify_resource`:
 
 ```json
 "modifier": { "operation": "add_base_early", "value": 9 }
 ```
 
-Multiply current value by 2 additive (Apace-style):
+Multiply the current value by 2 additively, in the Apace style:
 
 ```json
 "modifier": { "operation": "multiply_base_additive", "value": 2 }
 ```
 
-Use another resource's value as the modifier value (the input is the value of `example:resource`):
+Use another resource's value as the modifier value, so the input is the value of `example:resource`:
 
 ```json
 "modifier": {
@@ -57,7 +57,7 @@ Use another resource's value as the modifier value (the input is the value of `e
 }
 ```
 
-Resource value, scaled down 0.001× via nested modifier (Apace-style nested modifier example):
+A resource's value, scaled down to 0.001× with a nested modifier, in the style of Apace's nested modifier example:
 
 ```json
 "modifier": {
@@ -67,7 +67,7 @@ Resource value, scaled down 0.001× via nested modifier (Apace-style nested modi
 }
 ```
 
-Vanilla attribute apply (used inside `apoli:attribute`):
+A vanilla attribute modifier, inside `apoli:attribute`:
 
 ```json
 "modifier": {
@@ -77,7 +77,7 @@ Vanilla attribute apply (used inside `apoli:attribute`):
 }
 ```
 
-Expression value (a max-health bonus that scales with the player's current XP level):
+An expression value, for a max health bonus that grows with the player's current XP level:
 
 ```json
 "modifier": {

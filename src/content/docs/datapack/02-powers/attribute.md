@@ -1,31 +1,31 @@
 ---
 title: "Attribute (Power Type)"
-description: "Modifies one or more attributes on the entity for as long as the power is held."
+description: "Changes one or more attributes on the entity for as long as it has the power."
 navigation_title: "Attribute"
 aliases: ["conditioned_attribute", "modify_attribute"]
 ---
 
-Modifies one or more attributes on the entity for as long as the power is held.
+Changes one or more attributes on the entity for as long as it has the power.
 
-Type ID: `apoli:attribute` (type-alias: `apoli:conditioned_attribute` for back-compat with Apace's packs)
+Type ID: `apoli:attribute` (type alias: `apoli:conditioned_attribute`, for packs written for Apace's Apoli)
 
-> In Apace's Apoli, `apoli:attribute` did not accept a `condition` field; he later added `apoli:conditioned_attribute` as a parallel type that did. In this rewrite, `condition` is a property of every power (see [Power JSON Format](/docs/datapack/introduction/powers)), so the same single type accepts conditions and the `conditioned_attribute` id is just an alias.
+`apoli:conditioned_attribute` resolves to this type. In Apace's Apoli, `apoli:attribute` takes no `condition`, and `apoli:conditioned_attribute` is the separate type that does. Here every power accepts `condition` (see [Powers](/docs/datapack/introduction/powers)), so one type covers both.
 
 ## Fields
 
 | Field | Type | Default | Description |
 |-------|------|---------|-------------|
-| `modifier` | [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) | _optional_ | A single modifier applied to its `attribute`. |
-| `modifiers` | [Array](/docs/datapack/data-types/array) of [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) | _optional_ | Multiple modifiers applied to their respective `attribute` fields. |
-| `update_health` | [Boolean](/docs/datapack/data-types/boolean) | `true` | When the modifier touches `minecraft:generic.max_health`, scale the player's current health so their fill ratio is preserved. |
+| `modifier` | [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) | _optional_ | A single modifier, applied to its `attribute`. |
+| `modifiers` | [Array](/docs/datapack/data-types/array) of [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) | _optional_ | Several modifiers, each applied to its own `attribute`. |
+| `update_health` | [Boolean](/docs/datapack/data-types/boolean) | `true` | When a modifier changes `minecraft:generic.max_health`, scales the player's current health so the bar stays as full as it was. |
 
-At least one of `modifier` or `modifiers` must be present; the `attribute` field inside each modifier is required when the modifier is used by this power (otherwise the codec rejects it with a clear error).
+At least one of `modifier` or `modifiers` must be present. The `attribute` field inside each modifier is required for this power, and the codec rejects a modifier without one with a clear error.
 
 ## Reach on 1.20.1
 
-`minecraft:player.block_interaction_range` and `minecraft:player.entity_interaction_range` are the attributes that control how far a player can reach. They were added to the game in 1.20.5, so on **1.20.1** vanilla does not have them.
+`minecraft:player.block_interaction_range` and `minecraft:player.entity_interaction_range` are the attributes that control how far a player can reach. Vanilla added them in 1.20.5, so 1.20.1 doesn't have them.
 
-The 1.20.1 build **registers both of them itself** (as `apoli:player.block_interaction_range` and `apoli:player.entity_interaction_range`, with vanilla's `4.5` and `3.0` defaults) and answers to the `minecraft:` names as aliases, so the same power JSON works unchanged on 1.20.1, 1.21.1 and NeoForge:
+The 1.20.1 build registers both itself, as `apoli:player.block_interaction_range` and `apoli:player.entity_interaction_range` with vanilla's defaults of `4.5` and `3.0`, and answers to the `minecraft:` names as aliases. The same power JSON works on 1.20.1, 1.21.1 and NeoForge:
 
 ```json
 {
@@ -47,13 +47,14 @@ The 1.20.1 build **registers both of them itself** (as `apoli:player.block_inter
 }
 ```
 
-> The backport drives the same four places vanilla 1.21 does: the client's block raycast, the client's entity pick range, and the server's block-use, block-break and entity-interaction distance checks. Server checks keep vanilla's leniency (block reach + 1.5, entity reach + 3.0), so with no modifier applied the limits are byte-for-byte vanilla's `36.0`.
+> [!NOTE]
+> On 1.20.1 these attributes control the same four checks vanilla 1.21 uses them for: the client's block raycast, the client's entity pick range, and the server's distance checks for using and breaking blocks and for interacting with entities. The server checks keep vanilla's leniency (block reach plus 1.5, entity reach plus 3.0), so with no modifier applied the limits match vanilla's `36.0` exactly.
 >
-> One 1.20.1-only limit: the client finds candidate entities inside the block raycast, so entity reach is effectively capped by block reach. Raise both together — as the example does — and it behaves as expected.
+> One limit is specific to 1.20.1: the client looks for entities inside the block raycast, so entity reach can't go past block reach. Raise both together, as the example does, and reach works as expected.
 
 ## Examples
 
-Single modifier:
+A single modifier:
 
 ```json
 {
@@ -67,7 +68,7 @@ Single modifier:
 }
 ```
 
-Multiple modifiers with a condition:
+Several modifiers with a condition:
 
 ```json
 {
@@ -91,7 +92,7 @@ Multiple modifiers with a condition:
 }
 ```
 
-Modifier driven by a resource value (links a vanilla attribute to a [apoli:resource](/docs/datapack/powers/resource)):
+A modifier driven by an [apoli:resource](/docs/datapack/powers/resource) value, which links a vanilla attribute to the resource:
 
 ```json
 {
@@ -104,6 +105,7 @@ Modifier driven by a resource value (links a vanilla attribute to a [apoli:resou
 }
 ```
 
-> **`apoli:modify_attribute` is this power** with the attribute hoisted out of the modifiers and written once at the top level. It is an alias kept for packs ported from the original Apoli — see [its page](/docs/datapack/powers/modify_attribute) for the shape it takes. Prefer `apoli:attribute` in new packs, because each modifier naming its own attribute means one power can touch several at once.
+> [!NOTE]
+> `apoli:modify_attribute` is this power, with the attribute moved out of the modifiers and written once at the top level. It is an alias kept for packs ported from the original Apoli, and [its page](/docs/datapack/powers/modify_attribute) shows the shape it takes. Prefer `apoli:attribute` in new packs, because when each modifier names its own attribute, one power can change several at once.
 >
-> `apoli:conditioned_attribute` is the same type as well; the `condition` field it implies is available on every power.
+> `apoli:conditioned_attribute` is the same type as well, and the `condition` field it implies is available on every power.

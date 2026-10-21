@@ -1,152 +1,176 @@
-/* Base reset + element defaults. Adapted from svelte.dev's site-kit base.css. */
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
 
 html {
-	font-size: 62.5%; /* 1rem = 10px */
+	background-color: var(--ifm-background-color);
+	color: var(--ifm-color-content);
+	font: 100% / var(--ifm-line-height-base) var(--ifm-font-family-base);
+	-webkit-font-smoothing: antialiased;
+	-webkit-tap-highlight-color: transparent;
+	text-rendering: optimizeLegibility;
+	text-size-adjust: 100%;
 	-webkit-text-size-adjust: 100%;
-	box-sizing: border-box;
+	scroll-padding-top: calc(var(--ifm-navbar-height) + 0.5rem);
 }
 
 html,
 body {
 	height: 100%;
-	width: 100%;
 }
 
 body {
-	font-family: var(--sk-font-family-body);
-	line-height: 1.5;
-	color: var(--sk-fg-2);
-	background-color: var(--sk-bg-1);
-	width: 100%;
-	tab-size: 2;
-	-moz-tab-size: 2;
-	/* NB: no `overflow-x: hidden` here — it silently breaks `position: sticky`
-	   for the docs sidebars. Wide children scroll inside their own containers. */
-}
-
-* {
-	box-sizing: inherit;
 	margin: 0;
-	padding: 0;
-	scrollbar-width: thin;
-	scrollbar-color: var(--sk-scrollbar) transparent;
+	overflow-wrap: break-word;
 }
 
-*:focus-visible {
-	outline: 2px solid var(--sk-fg-accent);
-	outline-offset: 1px;
-	border-radius: var(--sk-border-radius);
-}
-
-p,
-ul,
-ol {
-	font: var(--sk-font-body);
-	margin: 0.5lh 0;
-	text-wrap: pretty;
-}
-p:first-child,
-ul:first-child,
-ol:first-child {
-	margin-top: 0;
-}
-p:last-child,
-ul:last-child,
-ol:last-child {
-	margin-bottom: 0;
+#handbook {
+	display: flex;
+	flex-direction: column;
+	min-height: 100%;
 }
 
 a {
-	position: relative;
+	color: var(--ifm-link-color);
 	text-decoration: none;
-	cursor: pointer;
-	color: var(--sk-fg-accent);
+	transition: color var(--ifm-transition-fast) cubic-bezier(0.08, 0.52, 0.52, 1);
 }
+
 a:hover {
 	text-decoration: underline;
 }
 
-h1 {
-	font: var(--sk-font-h1);
+a:not([href]) {
+	text-decoration: none;
 }
-h2 {
-	font: var(--sk-font-h2);
-}
-h3 {
-	font: var(--sk-font-h3);
-}
-h1,
-h2,
-h3,
-h4 {
-	position: relative;
-	text-wrap: balance;
-	color: var(--sk-fg-1);
-	font-family: var(--sk-font-family-heading);
-	font-weight: 500;
+
+p {
+	margin: 0 0 var(--ifm-leading);
 }
 
 strong,
 b {
-	font-weight: 600;
+	font-weight: var(--ifm-font-weight-bold);
 }
 
-code,
-kbd {
-	position: relative;
-	border-radius: var(--sk-border-radius);
-	background: var(--sk-bg-4);
-	line-height: 1.7;
-	font-size: 0.85em;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	color: inherit;
+	font-family: var(--ifm-font-family-base);
+	font-weight: var(--ifm-font-weight-bold);
+	line-height: var(--ifm-heading-line-height);
+	margin: 0 0 var(--ifm-spacing-vertical);
+}
+
+h1 {
+	font-size: var(--ifm-h1-font-size);
+}
+
+h2 {
+	font-size: var(--ifm-h2-font-size);
+}
+
+h3 {
+	font-size: var(--ifm-h3-font-size);
+}
+
+h4 {
+	font-size: var(--ifm-h4-font-size);
+}
+
+h5 {
+	font-size: var(--ifm-h5-font-size);
+}
+
+h6 {
+	font-size: var(--ifm-h6-font-size);
+}
+
+ul,
+ol {
+	margin: 0 0 1rem;
+	padding-left: 2rem;
+}
+
+ul ul,
+ul ol,
+ol ol,
+ol ul {
+	margin: 0;
+}
+
+ol ol,
+ul ol {
+	list-style-type: lower-roman;
 }
 
 code {
-	font-family: var(--sk-font-family-mono);
-	margin: 0 0.2rem;
-	padding: 0.2rem 0.4rem;
-	white-space: nowrap;
+	background-color: var(--ifm-code-background);
+	border: 0.1rem solid var(--ifm-code-border);
+	border-radius: var(--ifm-global-radius);
+	font-family: var(--ifm-font-family-monospace);
+	font-size: var(--ifm-code-font-size);
+	padding: 0.1rem;
+	vertical-align: middle;
 }
 
-kbd {
-	font-family: var(--sk-font-family-ui);
-	padding: 0.2rem 0.6rem;
-	border-bottom: 2px solid var(--sk-border);
-}
-
-pre {
-	overflow-x: auto;
-}
-pre code {
-	top: 0;
-	white-space: inherit;
-	background-color: transparent;
-	padding: 0;
-	margin: 0;
-	font-size: var(--sk-font-size-mono);
-}
-
-::selection {
-	background: var(--sk-bg-selection);
-}
-
-input,
-button,
-select,
-textarea {
-	font-family: var(--sk-font-family-ui);
-	font-size: inherit;
+a code {
 	color: inherit;
 }
 
-button {
+pre {
+	border-radius: var(--ifm-global-radius);
+	font: var(--ifm-code-font-size) / 1.45 var(--ifm-font-family-monospace);
+	margin: 0 0 var(--ifm-spacing-vertical);
+	overflow: auto;
+	padding: 1rem;
+}
+
+pre code {
 	background-color: transparent;
 	border: none;
-	color: currentColor;
-	cursor: pointer;
+	font-size: 100%;
+	line-height: inherit;
+	padding: 0;
+	vertical-align: baseline;
 }
-button[disabled] {
-	color: var(--sk-fg-4);
-	cursor: default;
+
+kbd {
+	background-color: var(--ifm-color-emphasis-0);
+	border: 1px solid var(--ifm-color-emphasis-400);
+	border-radius: 0.2rem;
+	box-shadow: inset 0 -1px 0 var(--ifm-color-emphasis-400);
+	color: var(--ifm-color-emphasis-800);
+	font: 80% var(--ifm-font-family-monospace);
+	padding: 0.15rem 0.3rem;
+}
+
+blockquote {
+	border-left: 2px solid var(--ifm-blockquote-border-color);
+	color: var(--ifm-blockquote-color);
+	margin: 0 0 var(--ifm-spacing-vertical);
+	padding: 0 var(--ifm-spacing-horizontal);
+}
+
+blockquote > :first-child {
+	margin-top: 0;
+}
+
+blockquote > :last-child {
+	margin-bottom: 0;
+}
+
+hr {
+	background-color: var(--ifm-color-emphasis-500);
+	border: 0;
+	height: 1px;
+	margin: 1.5rem 0;
 }
 
 img {
@@ -154,30 +178,293 @@ img {
 	height: auto;
 }
 
-/* small "raised" square buttons used in the nav (theme toggle, mobile menu, ...) */
-.raised {
-	display: grid;
-	place-content: center;
-	width: 3.2rem;
-	height: 3.2rem;
-	border-radius: var(--sk-border-radius);
-	border: 1px solid var(--sk-raised-color);
-	color: var(--sk-fg-2);
-	transition: border-color 0.15s;
+table {
+	border-collapse: collapse;
+	display: block;
+	margin-bottom: var(--ifm-spacing-vertical);
+	max-width: 100%;
+	overflow: auto;
 }
-.raised:hover {
-	border-color: var(--sk-raised-hover-color);
-	text-decoration: none;
+
+table thead tr {
+	border-bottom: 2px solid var(--ifm-table-border-color);
+}
+
+table thead {
+	background-color: var(--ifm-table-stripe-background);
+}
+
+table tr {
+	border-top: 1px solid var(--ifm-table-border-color);
+}
+
+table tr:nth-child(2n) {
+	background-color: var(--ifm-table-stripe-background);
+}
+
+table th,
+table td {
+	border: 1px solid var(--ifm-table-border-color);
+	padding: 0.75rem;
+}
+
+table th {
+	font-weight: var(--ifm-font-weight-bold);
+	text-align: left;
+}
+
+table td:not(:first-child) code {
+	overflow-wrap: anywhere;
+}
+
+button,
+input,
+select,
+textarea {
+	font: inherit;
+	color: inherit;
+}
+
+:focus-visible {
+	outline: 2px solid var(--ifm-color-primary);
+	outline-offset: 2px;
+}
+
+::selection {
+	background: color-mix(in srgb, var(--ifm-color-primary) 28%, transparent);
+}
+
+.clean-btn {
+	background: none;
+	border: none;
+	color: inherit;
+	cursor: pointer;
+	font-family: inherit;
+	padding: 0;
+}
+
+.clean-list {
+	list-style: none;
+	padding-left: 0;
+}
+
+.text--center {
+	text-align: center;
+}
+
+.text--right {
+	text-align: right;
+}
+
+.text--truncate {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 .visually-hidden {
 	border: 0;
 	clip: rect(0 0 0 0);
-	height: auto;
-	margin: 0;
+	height: 1px;
+	margin: -1px;
 	overflow: hidden;
 	padding: 0;
 	position: absolute;
-	width: 1px;
 	white-space: nowrap;
+	width: 1px;
+}
+
+.thin-scrollbar {
+	scrollbar-color: var(--ifm-scrollbar-thumb) transparent;
+}
+
+@media (pointer: fine) {
+	.thin-scrollbar {
+		scrollbar-width: thin;
+	}
+
+	.thin-scrollbar::-webkit-scrollbar {
+		height: 7px;
+		width: 7px;
+	}
+
+	.thin-scrollbar::-webkit-scrollbar-track {
+		background: var(--ifm-scrollbar-track);
+		border-radius: 10px;
+	}
+
+	.thin-scrollbar::-webkit-scrollbar-thumb {
+		background: var(--ifm-scrollbar-thumb);
+		border-radius: 10px;
+	}
+
+	.thin-scrollbar::-webkit-scrollbar-thumb:hover {
+		background: var(--ifm-scrollbar-thumb-hover);
+	}
+}
+
+.container {
+	margin: 0 auto;
+	max-width: var(--ifm-container-width);
+	padding: 0 var(--ifm-spacing-horizontal);
+	width: 100%;
+}
+
+@media (min-width: 1440px) {
+	.container {
+		max-width: var(--ifm-container-width-xl);
+	}
+}
+
+.row {
+	display: flex;
+	flex-wrap: wrap;
+	margin: 0 calc(var(--ifm-spacing-horizontal) * -1);
+}
+
+.col {
+	--ifm-col-width: 100%;
+	flex: 1 0;
+	margin-left: 0;
+	max-width: var(--ifm-col-width);
+	min-width: 0;
+	padding: 0 var(--ifm-spacing-horizontal);
+	width: 100%;
+}
+
+.col[class*='col--'] {
+	flex: 0 0 var(--ifm-col-width);
+}
+
+.col--2 {
+	--ifm-col-width: calc(2 / 12 * 100%);
+}
+
+.col--3 {
+	--ifm-col-width: calc(3 / 12 * 100%);
+}
+
+.col--6 {
+	--ifm-col-width: 50%;
+}
+
+.col--7 {
+	--ifm-col-width: calc(7 / 12 * 100%);
+}
+
+.col--8 {
+	--ifm-col-width: calc(8 / 12 * 100%);
+}
+
+.col--9 {
+	--ifm-col-width: 75%;
+}
+
+.col--offset-1 {
+	margin-left: calc(1 / 12 * 100%);
+}
+
+.col--offset-2 {
+	margin-left: calc(2 / 12 * 100%);
+}
+
+.col--offset-3 {
+	margin-left: 25%;
+}
+
+@media (max-width: 996px) {
+	.col {
+		--ifm-col-width: 100%;
+		flex-basis: var(--ifm-col-width);
+		margin-left: 0;
+	}
+
+	.col[class*='col--offset'] {
+		margin-left: 0;
+	}
+}
+
+.margin-vert--lg {
+	margin-bottom: 2rem;
+	margin-top: 2rem;
+}
+
+.margin-bottom--lg {
+	margin-bottom: 2rem;
+}
+
+.margin-bottom--xl {
+	margin-bottom: 5rem;
+}
+
+.margin-top--lg {
+	margin-top: 2rem;
+}
+
+.button {
+	--hb-button-background: var(--ifm-color-primary-text);
+	--hb-button-border: var(--ifm-color-primary-text);
+	--hb-button-color: var(--ifm-color-emphasis-0);
+	background-color: var(--hb-button-background);
+	border: 1px solid var(--hb-button-border);
+	border-radius: var(--ifm-global-radius);
+	color: var(--hb-button-color);
+	cursor: pointer;
+	display: inline-block;
+	font-size: 0.875rem;
+	font-weight: var(--ifm-font-weight-bold);
+	line-height: 1.5;
+	padding: 0.375rem 1.5rem;
+	text-align: center;
+	transition:
+		color var(--ifm-transition-fast) cubic-bezier(0.08, 0.52, 0.52, 1),
+		background var(--ifm-transition-fast) cubic-bezier(0.08, 0.52, 0.52, 1),
+		border-color var(--ifm-transition-fast) cubic-bezier(0.08, 0.52, 0.52, 1);
+	user-select: none;
+	vertical-align: middle;
+	white-space: nowrap;
+}
+
+.button:hover {
+	--hb-button-background: var(--hb-button-hover);
+	--hb-button-border: var(--hb-button-hover);
+	color: var(--hb-button-color);
+	text-decoration: none;
+}
+
+.button--secondary {
+	--hb-button-background: var(--ifm-color-gray-200);
+	--hb-button-border: var(--ifm-color-gray-200);
+	--hb-button-color: var(--ifm-color-gray-900);
+}
+
+.button--secondary:hover {
+	--hb-button-background: rgb(212, 213, 216);
+	--hb-button-border: rgb(212, 213, 216);
+}
+
+.button--lg {
+	font-size: 1.18rem;
+	padding: 0.5rem 2rem;
+}
+
+.skip-to-content {
+	background-color: var(--ifm-background-surface-color);
+	color: var(--ifm-color-emphasis-900);
+	left: 100%;
+	padding: 0.5rem 1rem;
+	position: fixed;
+	top: 1rem;
+	z-index: 201;
+}
+
+.skip-to-content:focus {
+	box-shadow: var(--ifm-global-shadow-md);
+	left: 1rem;
+}
+
+.main-wrapper {
+	display: flex;
+	flex: 1 0 auto;
+	flex-direction: column;
 }

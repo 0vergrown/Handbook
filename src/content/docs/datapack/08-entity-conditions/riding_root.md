@@ -1,20 +1,21 @@
 ---
 title: "Riding Root (Entity Condition Type)"
-description: "Checks whether the 'actor' entity is indirectly riding the 'target' entity."
+description: "Checks whether the entity is riding something, looking at the entity at the bottom of the stack."
 navigation_title: "Riding Root"
 ---
 
-Checks whether the '**actor**' entity is indirectly riding the '**target**' entity.
+Checks whether the entity is riding another entity, directly or through other riders, and tests the entity at the bottom of the stack.
 
 Type ID: `apoli:riding_root`
 
-> In the context for this entity condition type, the '**actor**' entity is the passenger and the entity that invoked the condition while the '**target**' is the entity that is being indirectly ridden (at the start of the riding chain).
+> [!NOTE]
+> For `bientity_condition`, the actor is the passenger, which is the entity the condition is checked on, and the target is the entity at the start of the riding chain, which is ridden indirectly.
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|-------------
-`bientity_condition` | Bi-entity Condition Type | _optional_ | If specified, this condition type will only evaluate to true if this condition is fulfilled by either or both the '**actor**' and '**target**' entities.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `bientity_condition` | [Bi-entity Condition Type](/docs/datapack/bientity-conditions) | _optional_ | The condition only passes if the pair of entities also passes this. |
 
 ## Examples
 
@@ -24,7 +25,7 @@ Field | Type | Default | Description
 }
 ```
 
-This example will check if the '**actor**' entity is riding an entity.
+This checks whether the entity is riding anything.
 
 ```json
 "condition": {
@@ -39,4 +40,4 @@ This example will check if the '**actor**' entity is riding an entity.
 }
 ```
 
-This example will check if the '**actor**' entity is riding a pig. This will also check if the '**actor**' entity is riding the passenger(s) of a pig.
+This checks whether the entity is riding a pig, either directly or by riding one of the pig's passengers.

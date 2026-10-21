@@ -5,19 +5,19 @@ navigation_title: "All Of"
 aliases: ["and"]
 ---
 
-Passes when every condition in the list passes. An empty list passes. Available in every condition flavour, and the conditions inside must be the same flavour as the one containing them.
+Passes when every condition in the list passes, and an empty list passes. It works in every kind of condition, and the conditions inside must be the same kind as the one containing them.
 
 Type ID: `apoli:all_of` (alias `apoli:and`)
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|-------------
-`conditions` | array of conditions | **required** | All must pass. Same flavour as the containing condition.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `conditions` | array of conditions | _required_ | All of them must pass. They are the same kind as the containing condition. |
 
 ## Examples
 
-Sneaking *and* in water:
+Sneaking and in water:
 
 ```json
 {
@@ -47,7 +47,7 @@ Nested with [`apoli:any_of`](/docs/datapack/meta-conditions/any_of) to build "A 
 }
 ```
 
-Any condition also takes `inverted`, so "A and not B" needs no extra nesting:
+Every condition also takes `inverted`, so "A and not B" needs no extra nesting:
 
 ```json
 {
@@ -59,4 +59,5 @@ Any condition also takes `inverted`, so "A and not B" needs no extra nesting:
 }
 ```
 
-> Conditions are checked in order and stop at the first failure, so put the cheap ones first — a resource check before a `apoli:command`, for instance.
+> [!TIP]
+> Conditions are checked in order and stop at the first failure, so put the cheap ones first, such as a resource check before an `apoli:command`.

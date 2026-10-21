@@ -1,21 +1,22 @@
 ---
 title: "Fall Distance (Entity Condition Type)"
-description: "Checks how much blocks the entity has been falling."
+description: "Compares how many blocks the entity has fallen with a number."
 navigation_title: "Fall Distance"
 ---
 
-Checks how much blocks the entity has been falling.
+Compares how many blocks the entity has fallen with a number.
 
 Type ID: `apoli:fall_distance`
 
-> This entity condition type will return `0` if the entity has the Slow Falling status effect.
+> [!NOTE]
+> The fall distance reads as `0` while the entity has the Slow Falling status effect.
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`comparison` | Comparison | | Determines how the fall distance of the entity should be compared to the specified value.
-`compare_to` | Float | | The value at which the fall distance of the entity will be compared to.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `comparison` | [Comparison](/docs/datapack/data-types/comparison) | _required_ | How the fall distance is compared with `compare_to`. |
+| `compare_to` | [Float](/docs/datapack/data-types/float) | _required_ | The number the fall distance is compared with. |
 
 ## Examples
 
@@ -27,4 +28,4 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will check if the entity has been falling for 4 or more blocks.
+This checks whether the entity has fallen 4 blocks or more.

@@ -4,20 +4,21 @@ description: "Compares how loudly the entity is currently talking."
 navigation_title: "Voice Loudness"
 ---
 
-Compares the entity's current speaking loudness, on a `0`–`100` scale, against a value.
+Compares the entity's current speaking loudness, on a scale of `0` to `100`, against a value.
 
 Type ID: `apoli:voice_loudness`
 
 ## Fields
 
-| Field | Type | Default | Purpose |
+| Field | Type | Default | Description |
 | --- | --- | --- | --- |
 | `comparison` | [Comparison](/docs/datapack/data-types/comparison) | `>=` | How to compare. |
-| `compare_to` | [Integer](/docs/datapack/data-types/integer) | `1` | The value to compare against, `0`–`100`. |
+| `compare_to` | [Integer](/docs/datapack/data-types/integer) | `1` | The value to compare against, from `0` to `100`. |
 
-The default of `>= 1` is effectively "is making any sound at all".
+The default of `>= 1` checks whether the entity is making any sound at all.
 
-> Loudness is approximated from the size of the encoded voice packet - no audio is decoded. It is cheap but coarse: reliable for "loud vs. quiet", not for precise volume. Pick thresholds by testing rather than by expecting decibels.
+> [!NOTE]
+> Loudness is estimated from the size of the encoded voice packet, and no audio is decoded. It is cheap but coarse: reliable for telling loud from quiet, not for precise volume. Pick thresholds by testing instead of expecting decibels.
 
 ## Example
 
@@ -39,4 +40,5 @@ The default of `>= 1` is effectively "is making any sound at all".
    }
 }
 ```
-Only shout-powered abilities
+
+This shockwave only goes off when the holder shouts at a loudness of 70 or more.

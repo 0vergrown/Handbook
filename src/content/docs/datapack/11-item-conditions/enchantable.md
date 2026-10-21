@@ -1,16 +1,16 @@
 ---
 title: "Enchantable (Item Condition Type)"
-description: "Checks if the item is enchantable."
+description: "Checks whether the item can be enchanted."
 navigation_title: "Enchantable"
 ---
 
-Checks if the item is enchantable.
+Checks whether the item can be enchanted.
 
 Type ID: `apoli:enchantable`
 
 ## Fields
 
-_None._
+This condition has no fields.
 
 ## Examples
 

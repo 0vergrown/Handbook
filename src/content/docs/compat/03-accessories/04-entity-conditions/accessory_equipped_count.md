@@ -1,6 +1,6 @@
 ---
 title: "Accessory Equipped Count (Entity Condition Type)"
-description: Counts how many accessories the entity is wearing.
+description: "Compares how many accessories the entity is wearing."
 navigation_title: "Accessory Equipped Count"
 aliases: ["equipped_trinket_count"]
 ---
@@ -9,18 +9,18 @@ Counts the accessories the entity currently has equipped and compares that numbe
 
 Type ID: `apoli:accessory_equipped_count` (alias `apoli:equipped_trinket_count`)
 
+> [!NOTE]
+> This type only exists when an accessory mod is installed: [Trinkets](https://modrinth.com/mod/trinkets), [Accessories](https://modrinth.com/mod/accessories) or Curios, depending on your loader. A pack that uses it must depend on one.
+
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|-------------
-`comparison` | [Comparison](/docs/datapack/data-types/comparison) | **required** | `<`, `<=`, `>`, `>=`, `==`, `!=`.
-`compare_to` | [Integer](/docs/datapack/data-types/integer) | **required** | The count to compare against.
-`slots` | array of [String](/docs/datapack/data-types/string) or objects | `[]` | Which accessory slots to look at. A string is `slot`, `group/slot`, or `group/slot/index` — for example `"ring"`, `"hand/ring"`, `"hand/ring/0"`. An empty list means every slot.
-`item_condition` | [Item Condition](/docs/datapack/item-conditions) | _optional_ | Only count accessories matching this.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `comparison` | [Comparison](/docs/datapack/data-types/comparison) | _required_ | How the count is compared: `<`, `<=`, `>`, `>=`, `==` or `!=`. |
+| `compare_to` | [Integer](/docs/datapack/data-types/integer) | _required_ | The count to compare against. |
+| `slots` | [Array](/docs/datapack/data-types/array) of [slots](/docs/compat/accessories/overview#slots) | `[]` | The accessory slots to count in. A string is `slot`, `group/slot` or `group/slot/index`, such as `"ring"`, `"hand/ring"` or `"hand/ring/0"`. An empty list means every slot. |
 
 ## Examples
-
-Wearing at least three accessories:
 
 ```json
 {
@@ -30,7 +30,7 @@ Wearing at least three accessories:
 }
 ```
 
-A "minimalist" origin rewarded for wearing nothing at all:
+This checks whether the entity is wearing at least three accessories.
 
 ```json
 {
@@ -50,7 +50,7 @@ A "minimalist" origin rewarded for wearing nothing at all:
 }
 ```
 
-Count only rings:
+This minimalist origin moves faster while it wears nothing at all.
 
 ```json
 {
@@ -61,4 +61,4 @@ Count only rings:
 }
 ```
 
-> Needs an accessory mod — [Trinkets](https://modrinth.com/mod/trinkets), [Accessories](https://modrinth.com/mod/accessories) or Curios, depending on your loader. These types do not exist without one, so a pack using them must depend on it.
+This only counts rings, and passes for two or more.

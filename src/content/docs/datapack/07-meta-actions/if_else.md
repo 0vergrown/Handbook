@@ -1,29 +1,30 @@
 ---
 title: "If Else (Meta Action Type)"
-description: "Executes an action only if a condition holds, and optionally executes another action when it doesn't hold."
+description: "Runs an action when a condition holds, and optionally another action when it doesn't."
 navigation_title: "If Else"
 ---
 
-Executes an action only if a condition holds, and optionally executes another action when it doesn't hold.
+Runs an action when a condition holds, and optionally another action when it doesn't.
 
 Type ID: `apoli:if_else`
 
-> Depending on the condition type, a different action type is expected:
-> 
-> Action Type | Condition Type
-> ------------|----------------
-> Bi-entity Action Type | Bi-entity Condition Type
-> Entity Action Type | Entity Condition Type
-> Block Action Type| Block Condition Type
-> Item Action Type | Item Condition Type
+> [!NOTE]
+> The kind of action depends on the kind of condition:
+>
+> | Action type | Condition type |
+> | --- | --- |
+> | Bi-entity Action Type | Bi-entity Condition Type |
+> | Entity Action Type | Entity Condition Type |
+> | Block Action Type | Block Condition Type |
+> | Item Action Type | Item Condition Type |
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`condition` | Condition Type | | A condition based on the type of action.
-`if_action` | Action Type | | The action which is executed when the condition evaluates to true.
-`else_action` | Action Type | _optional_ | If present, this action will be executed when the condition evaluates to false.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `condition` | Condition type | _required_ | A condition of the kind that matches the action. |
+| `if_action` | Action type | _required_ | The action that runs when the condition is true. |
+| `else_action` | Action type | _optional_ | The action that runs when the condition is false. |
 
 ## Examples
 
@@ -44,4 +45,4 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will set the entity on fire for 5 seconds if they are "sneaking". Otherwise, it will restore 3 hearts of health to the entity instead.
+This sets the entity on fire for 5 seconds if it is sneaking, and otherwise restores 3 hearts of health.

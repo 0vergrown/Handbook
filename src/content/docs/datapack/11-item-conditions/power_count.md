@@ -1,20 +1,20 @@
 ---
 title: "Power Count (Item Condition Type)"
-description: "Checks how many powers are embedded in the item."
+description: "Compares how many powers are embedded in the item with a number."
 navigation_title: "Power Count"
 ---
 
-Checks how many powers are embedded in the item.
+Compares how many powers are embedded in the item with a number.
 
 Type ID: `apoli:power_count`
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|------------
-`slot` | Equipment Slot (Data Type) | _optional_ | If specified, this will check how many powers are assigned to this equipment slot. Accepts one of `"head"`, `"chest"`, `"legs"`, `"feet"`, `"mainhand"` or `"offhand"`.
-`comparison` | Comparison | | Determines how the amount of powers embedded in the item stack should be compared to the specified value.
-`compare_to` | Integer | | The value at which the amount of powers embedded in the item stack will be compared to.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `slot` | Equipment Slot | _optional_ | Only counts the powers assigned to this equipment slot: `"head"`, `"chest"`, `"legs"`, `"feet"`, `"mainhand"` or `"offhand"`. |
+| `comparison` | [Comparison](/docs/datapack/data-types/comparison) | _required_ | How the number of powers is compared with `compare_to`. |
+| `compare_to` | [Integer](/docs/datapack/data-types/integer) | _required_ | The number the count is compared with. |
 
 ## Examples
 
@@ -26,7 +26,7 @@ Field | Type | Default | Description
 }
 ```
 
-This example will check if the item has more than 0 powers embedded in it.
+This checks whether the item has any powers embedded in it.
 
 ```json
 "item_condition": {
@@ -37,4 +37,4 @@ This example will check if the item has more than 0 powers embedded in it.
 }
 ```
 
-This example will check if the item has less than 10 powers embedded in it.
+This checks whether the item has fewer than 10 powers assigned to the main hand.

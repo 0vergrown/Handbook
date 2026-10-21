@@ -1,22 +1,23 @@
 ---
 title: "Riding Recursive (Entity Condition Type)"
-description: "Checks whether the 'actor' entity is directly riding the 'target' entity or the passenger(s) of the 'target' entity."
+description: "Counts the entities below this one in its riding stack and compares the count with a number."
 navigation_title: "Riding Recursive"
 ---
 
-Checks whether the '**actor**' entity is directly riding the '**target**' entity or the passenger(s) of the '**target**' entity.
+Checks whether the entity is riding another entity, and counts every entity below it in the stack: the one it rides directly and anything that one rides in turn.
 
 Type ID: `apoli:riding_recursive`
 
-> In the context of this entity condition type, the '**actor**' entity is the passenger and the entity that invoked the condition whilst the '**target**' entities are the entity that is being directly ridden and the passenger(s) of the said entity.
+> [!NOTE]
+> For `bientity_condition`, the actor is the passenger, which is the entity the condition is checked on, and each entity below it in the stack is a target.
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|-------------
-`bientity_condition` | Bi-entity Condition Type | _optional_ | If specified, this condition type will only evaluate to true if this condition is fulfilled by either or both the '**actor**' and '**target**' entities.
-`comparison` | Comparison | `">="` | Determines how the amount of entities currently being ridden should be compared to the specified value.
-`compare_to` | Integer | `1` | The value at which the amount of entities currently being ridden will be compared to.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `bientity_condition` | [Bi-entity Condition Type](/docs/datapack/bientity-conditions) | _optional_ | Only entities that pass this condition with the passenger are counted. |
+| `comparison` | [Comparison](/docs/datapack/data-types/comparison) | `">="` | How the number of entities being ridden is compared with `compare_to`. |
+| `compare_to` | [Integer](/docs/datapack/data-types/integer) | `1` | The number the count is compared with. |
 
 ## Examples
 
@@ -28,7 +29,7 @@ Field | Type | Default | Description
 }
 ```
 
-This example will check if the '**actor**' entity is currently riding an entity directly or an entity that has one or multiple passengers, regardless of their entity type.
+This checks whether the entity is riding something that is itself riding something, whatever their types.
 
 ```json
 "condition": {
@@ -45,4 +46,4 @@ This example will check if the '**actor**' entity is currently riding an entity 
 }
 ```
 
-This example will check if the '**actor**' entity is currently riding a Strider directly or an entity that has Striders as its passengers.
+This checks whether at least two of the entities below the passenger in its stack are striders.

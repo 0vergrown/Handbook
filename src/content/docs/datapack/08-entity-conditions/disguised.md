@@ -1,16 +1,16 @@
 ---
 title: "Disguised (Entity Condition Type)"
-description: "Checks whether the entity is currently disguised (by Disguise As or the Disguise bi-entity action). Ported from the Sync mod."
+description: "Checks whether the entity is disguised by Disguise As or the Disguise bi-entity action."
 navigation_title: "Disguised"
 ---
 
-Checks whether the entity is currently disguised (by [Disguise As](/docs/datapack/entity-actions/disguise_as) or the [Disguise](/docs/datapack/bientity-actions/disguise) bi-entity action). Ported from the Sync mod.
+Checks whether the entity is disguised, by [Disguise As](/docs/datapack/entity-actions/disguise_as) or by the [Disguise](/docs/datapack/bientity-actions/disguise) bi-entity action. It was ported from the Sync mod.
 
 Type ID: `apoli:disguised`
 
 ## Fields
 
-This condition type has no fields.
+This condition has no fields.
 
 ## Examples
 
@@ -20,4 +20,4 @@ This condition type has no fields.
 }
 ```
 
-True while the entity is disguised as anything.
+This passes while the entity is disguised as anything.

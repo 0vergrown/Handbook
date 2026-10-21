@@ -1,25 +1,25 @@
 ---
 title: "Resource (Entity Condition Type)"
-description: "Checks the value of a power that uses the apoli:resource power type, or a power type that has a built-in cooldown (using remaining ticks as the value)."
+description: "Compares the value of a resource power, or the remaining ticks of a power's built-in cooldown, with a number."
 navigation_title: "Resource"
 ---
 
-Checks the value of a power that uses the [apoli:resource](/docs/datapack/powers/resource) power type, or a power type that has a built-in cooldown (using remaining ticks as the value).
+Compares the value of an [apoli:resource](/docs/datapack/powers/resource) power with a number. It also reads any power type with a built-in cooldown, using the remaining ticks as the value.
 
 Type ID: `apoli:resource`
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`resource` | Identifier | | The namespace and ID of a power that will be evaluated.
-`position` | [Integer](/docs/datapack/data-types/integer) OR [Expression](/docs/datapack/data-types/expression) | _optional_ | Which slot of a table resource to read. Omit it and the condition passes if **any** slot satisfies the comparison. Also aliased as `index` and `slot`.
-`comparison` | [Comparison](/docs/datapack/data-types/comparison) | | Determines how the value of the specified power should be compared to the specified value.
-`compare_to` | [Integer](/docs/datapack/data-types/integer) OR [Expression](/docs/datapack/data-types/expression) | | The value the resource is compared against. Also aliased as `check`. As an Expression it is re-evaluated every time the condition is tested, so you can compare a resource against another resource, an entity stat, or any math over them.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `resource` | [Identifier](/docs/datapack/data-types/identifier) | _required_ | The ID of the power to read. |
+| `position` | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | _optional_ | Which slot of a table resource to read. Leave it out and the condition passes if any slot satisfies the comparison. `index` and `slot` are accepted as aliases. |
+| `comparison` | [Comparison](/docs/datapack/data-types/comparison) | _required_ | How the power's value is compared with `compare_to`. |
+| `compare_to` | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | _required_ | The value the resource is compared against. `check` is accepted as an alias. An expression is evaluated again every time the condition is tested, so you can compare a resource against another resource, an entity stat or any arithmetic on them. |
 
 ## Checking one slot of a table
 
-When `resource` names a [apoli:resource](/docs/datapack/powers/resource) with a `size` above `1`, `position` picks the slot to read:
+When `resource` names an [apoli:resource](/docs/datapack/powers/resource) with a `size` above `1`, `position` picks the slot to read:
 
 ```json
 "condition": {
@@ -33,7 +33,7 @@ When `resource` names a [apoli:resource](/docs/datapack/powers/resource) with a 
 
 That reads the value at position 2 and passes when it is `5`.
 
-Leave `position` out and the condition becomes "is this value anywhere in the table?":
+Leave `position` out and the condition asks whether the value is anywhere in the table:
 
 ```json
 "condition": {
@@ -44,13 +44,14 @@ Leave `position` out and the condition becomes "is this value anywhere in the ta
 }
 ```
 
-`position` is itself an [Expression](/docs/datapack/data-types/expression), so the slot can be computed — `"position": "example:cursor"` reads whichever slot another resource is pointing at.
+`position` is an [expression](/docs/datapack/data-types/expression) too, so the slot can be worked out when the condition runs. `"position": "example:cursor"` reads whichever slot another resource points at.
 
-> On a scalar resource (no `size`, or `size` of `1`) an omitted `position` behaves exactly as it always has: it reads the single value.
+> [!NOTE]
+> On a resource with one value (no `size`, or a `size` of `1`), leaving `position` out reads that single value.
 
 ## Cooldowns as resources
 
-`resource` does not have to name a [apoli:resource](/docs/datapack/powers/resource) or [apoli:cooldown](/docs/datapack/powers/cooldown) power. Every power type with a built-in `cooldown` field exposes that cooldown as a read-only resource whose value is the **remaining ticks** — `0` means the power is ready:
+`resource` doesn't have to name an [apoli:resource](/docs/datapack/powers/resource) or [apoli:cooldown](/docs/datapack/powers/cooldown) power. Every power type with a built-in `cooldown` field exposes that cooldown as a read-only resource whose value is the number of ticks left, where `0` means the power is ready:
 
 - [apoli:action_on_key_press](/docs/datapack/powers/action_on_key_press) (and its `active_self` alias)
 - [apoli:action_on_key_sequence](/docs/datapack/powers/action_on_key_sequence)
@@ -60,7 +61,7 @@ Leave `position` out and the condition becomes "is this value anywhere in the ta
 - [apoli:action_on_collision](/docs/datapack/powers/action_on_collision)
 - [apoli:game_event_listener](/docs/datapack/powers/game_event_listener)
 
-So the idiomatic "is this ability off cooldown?" check is a comparison against `0`:
+So the usual check for whether an ability is off cooldown compares against `0`:
 
 ```json
 "condition": {
@@ -71,15 +72,16 @@ So the idiomatic "is this ability off cooldown?" check is a comparison against `
 }
 ```
 
-> The same ids work in [apoli:modify_resource](/docs/datapack/entity-actions/modify_resource) and `/apoli:resource`, so a data pack can shorten or clear an ability's cooldown. Writing clamps to `0 … cooldown`.
+> [!TIP]
+> The same IDs work in [apoli:modify_resource](/docs/datapack/entity-actions/modify_resource) and `/apoli:resource`, so a data pack can shorten or clear an ability's cooldown. Writes are clamped between `0` and `cooldown`.
 
-## Comparing against an Expression
+## Comparing against an expression
 
-`compare_to` accepts a full [Expression](/docs/datapack/data-types/expression), not just a literal number. On top of the usual Expression variables, the following are bound here:
+`compare_to` accepts a full [expression](/docs/datapack/data-types/expression), as well as a plain number. On top of the usual expression variables, these are bound here:
 
-- `value`: the current value of the resource named in `resource` — the same number on the left-hand side of the comparison.
-- `<namespace>:<path>`: the value of **any other** Resource or Cooldown power the entity has, written as its full power id. This is how you compare one resource against another.
-- Every other Expression variable (`health`, `max_health`, `xp_level`, `world_time`, …) — see the [Expression](/docs/datapack/data-types/expression) page for the full list.
+- `value`: the current value of the resource named in `resource`, the same number as on the left of the comparison.
+- `<namespace>:<path>`: the value of any other resource or cooldown power the entity has, written as its full power ID. This is how you compare one resource against another.
+- Every other expression variable, such as `health`, `max_health`, `xp_level` and `world_time`. See the [Expression](/docs/datapack/data-types/expression) page for the full list.
 
 ## Examples
 
@@ -92,7 +94,7 @@ So the idiomatic "is this ability off cooldown?" check is a comparison against `
 }
 ```
 
-This example will check if the player has a value of 1 in the `example:a_simple_resource` resource power. (`data\example\powers\a_simple_resource.json`)
+This checks whether the player has a value of 1 in the `example:a_simple_resource` resource power (`data/example/powers/a_simple_resource.json`).
 
 ```json
 "condition": {
@@ -103,7 +105,7 @@ This example will check if the player has a value of 1 in the `example:a_simple_
 }
 ```
 
-This example will check if the player has a value of more than 50 in the `with_resource_subpower` sub-power of `example:a_multiple_power` power. (`data\example\powers\a_multiple_power.json`)
+This checks whether the player has a value above 50 in the `with_resource_subpower` sub-power of the `example:a_multiple_power` power (`data/example/powers/a_multiple_power.json`).
 
 ```json
 "condition": {
@@ -114,7 +116,7 @@ This example will check if the player has a value of more than 50 in the `with_r
 }
 ```
 
-Comparing one resource against another: this passes when the entity's `example:mana` resource is at least as large as its `example:spell_cost` resource.
+This compares one resource against another, and passes when the entity's `example:mana` resource is at least as large as its `example:spell_cost` resource.
 
 ```json
 "condition": {
@@ -125,4 +127,4 @@ Comparing one resource against another: this passes when the entity's `example:m
 }
 ```
 
-Expressions can mix resources with entity stats and arithmetic: this passes when the `example:rage` resource exceeds half the entity's maximum health.
+Expressions can mix resources with entity stats and arithmetic. This passes when the `example:rage` resource is more than half the entity's maximum health.

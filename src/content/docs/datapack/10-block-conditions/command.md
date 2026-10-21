@@ -1,20 +1,20 @@
 ---
 title: "Command (Block Condition Type)"
-description: "Compares the result of the specified command to the specified value at the position of the block."
+description: "Runs a command at the block's position and compares its result with a number."
 navigation_title: "Command"
 ---
 
-Compares the result of the specified command to the specified value at the position of the block.
+Runs a command at the block's position and compares its result with a number.
 
 Type ID: `apoli:command`
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`command` | [String](/docs/datapack/data-types/string) | |  The command to execute.
-`comparison` | [Comparison](/docs/datapack/data-types/comparison) | | Determines how the result value (an integer) of the executed command should be compared to the specified value.
-`compare_to` | [Integer](/docs/datapack/data-types/integer) | | The value at which the result value (an integer) of the executed command will be compared to.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `command` | [String](/docs/datapack/data-types/string) | _required_ | The command to run. |
+| `comparison` | [Comparison](/docs/datapack/data-types/comparison) | _required_ | How the command's result, an integer, is compared with `compare_to`. |
+| `compare_to` | [Integer](/docs/datapack/data-types/integer) | _required_ | The number the result is compared with. |
 
 ## Examples
 
@@ -27,4 +27,4 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will check if there is an entity inside the block.
+This checks whether there is an entity inside the block.

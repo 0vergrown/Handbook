@@ -1,18 +1,19 @@
 ---
 title: "High Humidity (Biome Condition Type)"
-description: "Checks whether the biome counts as an area with high humidity (downfall value of > 0.85)."
+description: "Checks whether the biome counts as humid, with a downfall value above 0.85."
 navigation_title: "High Humidity"
 ---
 
-Checks whether the biome counts as an area with high humidity (downfall value of > 0.85).
+Checks whether the biome counts as humid, meaning its downfall value is above 0.85.
 
-> If you want functional equality to fire burning out quicker (which was defined via this value in previous Minecraft versions), you should check for the biome tag `minecraft:increased_fire_burnout` with an [In Tag (Biome Condition Type](/docs/datapack/entity-conditions/in_tag) instead.
+> [!TIP]
+> To match the biomes where fire burns out faster, check the `minecraft:increased_fire_burnout` biome tag with [In Tag (Biome Condition Type)](/docs/datapack/biome-conditions/in_tag) instead. Older Minecraft versions decided that from this value.
 
 Type ID: `apoli:high_humidity`
 
 ## Fields
 
-_None._
+This condition has no fields.
 
 ## Examples
 

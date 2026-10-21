@@ -1,16 +1,16 @@
 ---
 title: "Smeltable (Item Condition Type)"
-description: "Checks if the item stack is an ingredient used in a smelting recipe."
+description: "Checks whether the item can be smelted in a furnace."
 navigation_title: "Smeltable"
 ---
 
-Checks if the item stack is an ingredient used in a smelting recipe.
+Checks whether the item stack is an ingredient of a smelting recipe.
 
 Type ID: `apoli:smeltable`
 
 ## Fields
 
-_None._
+This condition has no fields.
 
 ## Examples
 

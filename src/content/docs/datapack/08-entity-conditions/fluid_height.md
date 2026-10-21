@@ -1,20 +1,20 @@
 ---
 title: "Fluid Height (Entity Condition Type)"
-description: "Checks how high a specific fluid is at the entity. A fluid height of 0 means the entity is not touching the fluid."
+description: "Compares how high a fluid reaches on the entity with a number."
 navigation_title: "Fluid Height"
 ---
 
-Checks how high a specific fluid is at the entity. A fluid height of 0 means the entity is not touching the fluid.
+Compares how high a fluid reaches on the entity with a number. A fluid height of 0 means the entity isn't touching the fluid.
 
 Type ID: `apoli:fluid_height`
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`fluid` | Identifier | | The namespace and ID of the fluid tag of which the height should be checked. Most important examples: `minecraft:water` and `minecraft:lava`. The leading `#` is optional.
-`comparison` | Comparison | | Determines how the height of the fluid should be compared to the specified value.
-`compare_to` | Float | | The value at which the height of the fluid will be compared to.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `fluid` | [Identifier](/docs/datapack/data-types/identifier) | _required_ | The ID of the fluid tag to measure, most often `minecraft:water` or `minecraft:lava`. The leading `#` is optional. |
+| `comparison` | [Comparison](/docs/datapack/data-types/comparison) | _required_ | How the fluid height is compared with `compare_to`. |
+| `compare_to` | [Float](/docs/datapack/data-types/float) | _required_ | The number the fluid height is compared with. |
 
 ## Examples
 
@@ -27,4 +27,4 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will check if the entity is not touching a lava fluid.
+This checks whether the entity isn't touching lava.

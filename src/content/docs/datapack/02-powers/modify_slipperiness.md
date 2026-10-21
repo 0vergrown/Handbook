@@ -1,20 +1,20 @@
 ---
 title: "Modify Slipperiness (Power Type)"
-description: "Adjusts your friction, allowing you to emulate or counter the effects of ice blocks under certain conditions."
+description: "Changes how slippery blocks are for the entity, to imitate or cancel out ice."
 navigation_title: "Modify Slipperiness"
 ---
 
-Adjusts your friction, allowing you to emulate or counter the effects of ice blocks under certain conditions.
+Changes how slippery blocks are for the entity with the power. Use it to make ground behave like ice, or to stop ice from being slippery, under the conditions you choose.
 
 Type ID: `apoli:modify_slipperiness`
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|-------------
-`block_condition` | Block Condition Type | _optional_ | If specified, the modifier(s) will only apply to the blocks that fulfills this condition.
-`modifier` | Attribute Modifier | _optional_ | If specified, this modifier will be applied to the entity's slipperiness.
-`modifiers` | Array of Attribute Modifiers | _optional_ | If specified, these modifiers will be applied to the entity's slipperiness.
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `block_condition` | [Block Condition Type](/docs/datapack/block-conditions) | _optional_ | If set, the modifiers only apply to blocks that pass this condition. |
+| `modifier` | [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) | _optional_ | If set, this modifier is applied to the slipperiness. |
+| `modifiers` | [Array](/docs/datapack/data-types/array) of [Attribute Modifiers](/docs/datapack/data-types/attribute-modifier) | _optional_ | If set, these modifiers are applied to the slipperiness. |
 
 ## Examples
 
@@ -32,4 +32,4 @@ Field | Type | Default | Description
 }
 ```
 
-This example will increase the entity's friction by 50% while standing on dirt blocks.
+This makes dirt 50% more slippery for the entity.

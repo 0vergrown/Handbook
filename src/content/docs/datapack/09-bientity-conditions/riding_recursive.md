@@ -1,16 +1,16 @@
 ---
 title: "Riding Recursive (Bi-Entity Condition Type)"
-description: "Checks if the actor entity is riding the target entity, regardless of where the target entity is in the riding chain."
+description: "Checks whether the actor is riding the target, wherever the target is in the riding stack."
 navigation_title: "Riding Recursive"
 ---
 
-Checks if the actor entity is riding the target entity, regardless of where the target entity is in the riding chain. 
+Checks whether the actor is riding the target, wherever the target is in the riding stack below it.
 
 Type ID: `apoli:riding_recursive`
 
 ## Fields
 
-_None._
+This condition has no fields.
 
 ## Examples
 

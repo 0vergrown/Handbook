@@ -1,32 +1,33 @@
 ---
 title: "Item Slot (Data Type)"
-description: "A String that represents a slot from an entity or container's inventory."
+description: "A string that names a slot of an entity's or container's inventory."
 navigation_title: "Item Slot"
 ---
 
-A [String](/docs/datapack/data-types/string) that represents a slot from an entity or container's inventory.
+A [String](/docs/datapack/data-types/string) that names a slot of an entity's or a container's inventory.
 
-> It's recommended to use the `container.<slot_number>` item slots for representing the slots of a power that uses the [apoli:inventory](/docs/datapack/powers/inventory)
+> [!TIP]
+> Use the `container.<slot_number>` slots for the slots of an [apoli:inventory](/docs/datapack/powers/inventory) power.
 
-## Table
+## Slots
 
-Name                       | Valid `<slot_number>` | Mapped index
----------------------------|-----------------------|-------------
-`armor.chest`              |                       | 102
-`armor.feet`               |                       | 100
-`armor.head`               |                       | 103
-`armor.legs`               |                       | 101
-`container.<slot_number>`  | 0 to 53               | 0 to 53
-`enderchest.<slot_number>` | 0 to 26               | 200 to 226
-`horse.<slot_number>`      | 0 to 14               | 500 to 514
-`horse.armor`              |                       | 401
-`horse.saddle`             |                       | 400
-`hotbar.<slot_number>`     | 0 to 8                | 0 to 8
-`inventory.<slot_number>`  | 0 to 26               | 9 to 35
-`villager.<slot_number>`   | 0 to 7                | 300 to 307
-`weapon.mainhand`          |                       | 98
-`weapon.offhand`           |                       | 99
-`weapon`                   |                       | 98
+| Name | Valid `<slot_number>` | Mapped index |
+| --- | --- | --- |
+| `armor.chest` | | 102 |
+| `armor.feet` | | 100 |
+| `armor.head` | | 103 |
+| `armor.legs` | | 101 |
+| `container.<slot_number>` | 0 to 53 | 0 to 53 |
+| `enderchest.<slot_number>` | 0 to 26 | 200 to 226 |
+| `horse.<slot_number>` | 0 to 14 | 500 to 514 |
+| `horse.armor` | | 401 |
+| `horse.saddle` | | 400 |
+| `hotbar.<slot_number>` | 0 to 8 | 0 to 8 |
+| `inventory.<slot_number>` | 0 to 26 | 9 to 35 |
+| `villager.<slot_number>` | 0 to 7 | 300 to 307 |
+| `weapon.mainhand` | | 98 |
+| `weapon.offhand` | | 99 |
+| `weapon` | | 98 |
 
 ## Examples
 
@@ -34,7 +35,7 @@ Name                       | Valid `<slot_number>` | Mapped index
 "slot": "weapon.mainhand"
 ```
 
-This example represents the mainhand slot of the entity.
+This is the entity's main hand slot.
 
 ```json
 "slots": [
@@ -50,4 +51,4 @@ This example represents the mainhand slot of the entity.
 ]
 ```
 
-This example represents slots 0 to 8 of a container. It may be used to represent the hotbar slots 0 to 8 of a player, considering that the mappings have the same mapped index.
+These are slots 0 to 8 of a container. They can also stand for a player's hotbar slots 0 to 8, since those map to the same indices.

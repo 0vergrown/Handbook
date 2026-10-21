@@ -1,87 +1,64 @@
 ---
 title: Performance Mods
-description: How Apoli's render powers behave alongside Sodium, Lithium, EntityCulling, ImmediatelyFast, FerriteCore, BadOptimizations, Flywheel, Vanillin and the Extra/Rubidium forks.
+description: "How Apoli's render powers behave alongside Sodium, Lithium, EntityCulling, ImmediatelyFast, FerriteCore, BadOptimizations, Flywheel, Vanillin and the Extra and Rubidium forks."
 ---
 
-Performance mods rewrite the parts of the client that Apoli's render powers hook, so Apoli meets them
-half way: it hooks the replacement where one exists, stays out of the way where the mod is already
-doing the right thing, and keeps its own per-frame cost near zero so it never becomes the bottleneck
-the mod was installed to fix.
+Performance mods rewrite the parts of the client that Apoli's render powers hook, so Apoli meets them halfway. It hooks the replacement where there is one, stays out of the way where the mod already does the right thing, and keeps its own cost per frame near zero so it never becomes the bottleneck the mod was installed to fix.
 
-This integration is **behaviour-gated and adds no types**. Nothing to enable and no new JSON — install
-the mod and the powers you already have keep working.
+This integration is behaviour-gated and adds no types. There is nothing to enable and no new JSON: install the mod and the powers you already have keep working.
 
 ## At a glance
 
 | Mod | What it changes | What Apoli does |
 | --- | --- | --- |
-| [Sodium](https://modrinth.com/mod/sodium) / Rubidium / Embeddium | Replaces chunk meshing, including where block states are read from | Hooks Sodium's own chunk reader as well as vanilla's, so [`apoli:modify_block_render`](/docs/datapack/powers/modify_block_render) applies to the mesh either way |
-| [Sodium Extra](https://modrinth.com/mod/sodium-extra) / Rubidium Extra | Fog distance, particle toggles, per-entity render toggles | Apoli's fog powers apply after its fog distance; its particle toggles gate Apoli's particles like any other |
-| [EntityCulling](https://modrinth.com/mod/entityculling) | Skips entities hidden behind blocks | Nothing to do — Apoli decides visibility earlier, in `shouldRender`, so a hidden entity costs even less |
-| [ImmediatelyFast](https://modrinth.com/mod/immediatelyfast) | Batches HUD and immediate-mode drawing | Apoli's HUD bars, overlays and badges draw through `GuiGraphics` and never force a flush, so they batch with everything else |
-| [Lithium](https://modrinth.com/mod/lithium) | Server-side game logic, entity collisions | Its collision sweeper asks the block for its shape the normal way, so [`apoli:phasing`](/docs/datapack/powers/phasing) still applies |
-| [FerriteCore](https://modrinth.com/mod/ferritecore) | Memory layout of block states and models | No interaction — it touches nothing Apoli hooks |
-| [BadOptimizations](https://modrinth.com/mod/badoptimizations) | Caches entity renderers, the lightmap, the sky colour and (on 1.20.1) entity flags, and skips FOV maths at 0% FOV effects | Works through every cache: a player disguise keeps its model, [`apoli:night_vision`](/docs/datapack/powers/night_vision) asks for a lightmap redraw when its strength changes, and Apoli's invisibility and glow checks sit on the cached flags without allocating. Opts out of the FOV shortcut only, so [`apoli:modify_fov`](/docs/datapack/powers/modify_fov) still applies |
-| [Flywheel](https://github.com/Engine-Room/Flywheel) / [Vanillin](https://modrinth.com/mod/flw-vanillin) | Draws some entities with GPU instancing instead of the vanilla renderer | Hands an entity back to the vanilla renderer while an Apoli power changes how it looks, so hiding, glowing, scaling and disguises still show, and draws Apoli's own custom projectiles through Flywheel |
+| [Sodium](https://modrinth.com/mod/sodium), Rubidium, Embeddium | Replaces chunk meshing, including where block states are read from | Hooks Sodium's own chunk reader as well as vanilla's, so [`apoli:modify_block_render`](/docs/datapack/powers/modify_block_render) applies to the mesh either way |
+| [Sodium Extra](https://modrinth.com/mod/sodium-extra), Rubidium Extra | Fog distance, particle toggles, render toggles for each entity | Apoli's fog powers apply after its fog distance, and its particle toggles control Apoli's particles like any other |
+| [EntityCulling](https://modrinth.com/mod/entityculling) | Skips entities hidden behind blocks | Nothing is needed, because Apoli decides visibility earlier, in `shouldRender`, so a hidden entity costs even less |
+| [ImmediatelyFast](https://modrinth.com/mod/immediatelyfast) | Batches HUD and immediate mode drawing | Apoli's HUD bars, overlays and badges draw through `GuiGraphics` and never force a flush, so they batch with everything else |
+| [Lithium](https://modrinth.com/mod/lithium) | Server game logic and entity collisions | Its collision sweeper asks the block for its shape the normal way, so [`apoli:phasing`](/docs/datapack/powers/phasing) still applies |
+| [FerriteCore](https://modrinth.com/mod/ferritecore) | The memory layout of block states and models | No interaction, since it touches nothing Apoli hooks |
+| [BadOptimizations](https://modrinth.com/mod/badoptimizations) | Caches entity renderers, the lightmap, the sky colour and (on 1.20.1) entity flags, and skips FOV maths at 0% FOV effects | Works through every cache: a player disguise keeps its model, [`apoli:night_vision`](/docs/datapack/powers/night_vision) asks for a lightmap redraw when its strength changes, and Apoli's invisibility and glow checks sit on the cached flags without allocating. It only opts out of the FOV shortcut, so [`apoli:modify_fov`](/docs/datapack/powers/modify_fov) still applies |
+| [Flywheel](https://github.com/Engine-Room/Flywheel), [Vanillin](https://modrinth.com/mod/flw-vanillin) | Draws some entities with GPU instancing instead of the vanilla renderer | Hands an entity back to the vanilla renderer while an Apoli power changes how it looks, so hiding, glowing, scaling and disguises still show, and draws Apoli's own custom projectiles through Flywheel |
 
 ## Sodium and the block render powers
 
-Sodium does not build chunk meshes from vanilla's `RenderChunkRegion`; it copies each chunk section
-into its own reader on a worker thread. A power that swaps one block's appearance for another has to
-be applied there too, or the mesh is built from the real block and the power looks like it does
-nothing.
+Sodium doesn't build chunk meshes from vanilla's `RenderChunkRegion`. It copies each chunk section into its own reader on a worker thread. A power that swaps one block's look for another's has to be applied there too, or the mesh is built from the real block and the power seems to do nothing.
 
-Apoli hooks both readers, so [`apoli:modify_block_render`](/docs/datapack/powers/modify_block_render)
-behaves the same with Sodium as without it, and the Sodium hook is only installed when Sodium is
-actually present. Rubidium and Embeddium are Sodium ports and are covered by the same hook.
+Apoli hooks both readers, so [`apoli:modify_block_render`](/docs/datapack/powers/modify_block_render) behaves the same with Sodium as without it, and the Sodium hook is only installed when Sodium is present. Rubidium and Embeddium are Sodium ports and are covered by the same hook.
 
-Granting or revoking the power — or a `block_condition` on it changing — rebuilds the affected chunks
-on its own, so the swap appears immediately instead of waiting for something else to dirty the chunk.
+Granting or revoking the power, or a change in its `block_condition`, rebuilds the affected chunks by itself, so the swap appears straight away instead of waiting for something else to dirty the chunk.
 
-> A block-render power costs a condition test per block lookup during a chunk rebuild, which is the
-> hottest loop in the game. Keep its `block_condition` cheap — a block or tag test, not a nested
-> entity condition — and prefer one power with a broad condition over several narrow ones.
+> [!WARNING]
+> A block render power costs a condition test for every block lookup during a chunk rebuild, which is the hottest loop in the game. Keep its `block_condition` cheap, such as a block or tag test instead of a nested entity condition, and prefer one power with a broad condition over several narrow ones.
 
 ## BadOptimizations
 
-[BadOptimizations](https://modrinth.com/mod/badoptimizations) replaces the lookup that picks an entity's renderer with a cache. Apoli applies a player disguise to whatever renderer that lookup returns, so a player disguised as someone with the other arm width — wide or slim — is drawn with the disguise's model with the cache on or off.
+[BadOptimizations](https://modrinth.com/mod/badoptimizations) replaces the lookup that picks an entity's renderer with a cache. Apoli applies a player disguise to whatever renderer that lookup returns, so a player disguised as someone with the other arm width, wide or slim, is drawn with the disguise's model whether the cache is on or off.
 
 It also skips redrawing the lightmap until something it watches changes: the night vision effect, gamma, the dimension, or enough in-game time. An [`apoli:night_vision`](/docs/datapack/powers/night_vision) power is none of those, so Apoli registers a lightmap hook with BadOptimizations that asks for a redraw whenever the player's night vision strength changes. The power turns on and off straight away, and a `strength` expression fades smoothly, even with the daylight cycle stopped. There is no need to turn `enable_lightmap_caching` off. The strength is worked out once per tick and shared between that hook and the lightmap itself.
 
-With the FOV Effects slider at 0%, BadOptimizations stops asking the player for a field-of-view modifier at all. [`apoli:modify_fov`](/docs/datapack/powers/modify_fov) works through that modifier — including with `affected_by_fov_effect_scale` set to `false`, which exists precisely for players at 0% — so Apoli tells BadOptimizations to leave that one optimization off. It logs `Disabling enable_remove_redundant_fov_calculations because mod "apoli" marks itself as incompatible with it`, and every other BadOptimizations option stays on.
+With the FOV Effects slider at 0%, BadOptimizations stops asking the player for a field of view modifier at all. [`apoli:modify_fov`](/docs/datapack/powers/modify_fov) works through that modifier, including with `affected_by_fov_effect_scale` set to `false`, which exists for players at 0%, so Apoli tells BadOptimizations to leave that one optimisation off. It logs `Disabling enable_remove_redundant_fov_calculations because mod "apoli" marks itself as incompatible with it`, and every other BadOptimizations option stays on.
 
-On 1.20.1, BadOptimizations keeps entity flags such as invisibility and glowing in plain fields instead of reading them from synced entity data. Apoli's [`apoli:invisibility`](/docs/datapack/powers/invisibility) and [`apoli:entity_glow`](/docs/datapack/powers/entity_glow) checks run on the value it returns, so those getters stay a field read plus Apoli's check, which is skipped outright while no loaded power uses those types.
+On 1.20.1, BadOptimizations keeps entity flags such as invisibility and glowing in plain fields instead of reading them from synced entity data. Apoli's [`apoli:invisibility`](/docs/datapack/powers/invisibility) and [`apoli:entity_glow`](/docs/datapack/powers/entity_glow) checks run on the value it returns, so those getters stay a field read plus Apoli's check, which is skipped entirely while no loaded power uses those types.
 
 ## Sodium Extra and fog
 
-Sodium Extra sets its own fog distance after vanilla has set fog up. Apoli's fog powers —
-[`apoli:fluid_vision`](/docs/datapack/powers/fluid_vision) and the `blindness` render type of
-[`apoli:phasing`](/docs/datapack/powers/phasing) — apply last, so the power wins where the two
-disagree and Sodium Extra's setting governs everything else.
+Sodium Extra sets its own fog distance after vanilla has set fog up. Apoli's fog powers, [`apoli:fluid_vision`](/docs/datapack/powers/fluid_vision) and the `blindness` render type of [`apoli:phasing`](/docs/datapack/powers/phasing), apply last, so the power wins where the two disagree and Sodium Extra's setting covers everything else.
 
-Its **Particles** page gates Apoli's particles the same way it gates vanilla's: turning particles off,
-or switching `apoli:custom` off in the per-type list, stops them being created at all.
+Its Particles page controls Apoli's particles the same way it controls vanilla's: turning particles off, or switching `apoli:custom` off in the list of particle types, stops them from being created at all.
 
-Its **Prevent Shaders** setting blocks every post-processing shader the game loads, including the one
-[`apoli:shader`](/docs/datapack/powers/shader) asks for. If a shader power does nothing, check that
-setting first — Apoli logs a warning naming it when a shader fails to load.
+Its Prevent Shaders setting blocks every post-processing shader the game loads, including the one [`apoli:shader`](/docs/datapack/powers/shader) asks for. If a shader power does nothing, check that setting first. Apoli logs a warning naming it when a shader fails to load.
 
 ## Flywheel and Vanillin
 
-[Flywheel](https://github.com/Engine-Room/Flywheel) draws entities and block entities with GPU
-instancing instead of the vanilla renderer. It takes nothing over by itself; the mods built on it
-choose what to draw. [Vanillin](https://modrinth.com/mod/flw-vanillin) takes minecarts, block displays,
-chests, bells and shulker boxes, plus dropped items, item displays and item frames when those are
-turned on in its config. Create takes its contraptions.
+[Flywheel](https://github.com/Engine-Room/Flywheel) draws entities and block entities with GPU instancing instead of the vanilla renderer. It takes nothing over by itself, and the mods built on it choose what to draw. [Vanillin](https://modrinth.com/mod/flw-vanillin) takes minecarts, block displays, chests, bells and shulker boxes, plus dropped items, item displays and item frames when those are turned on in its config. Create takes its contraptions.
 
-An entity Flywheel draws skips the vanilla renderer entirely, and the vanilla renderer is where Apoli's
-render powers do their work. So for as long as one of these applies to an entity, Apoli hands it back
-to the vanilla renderer, and gives it back to Flywheel as soon as none does:
+An entity Flywheel draws skips the vanilla renderer entirely, and the vanilla renderer is where Apoli's render powers do their work. So for as long as one of these applies to an entity, Apoli hands it back to the vanilla renderer, and gives it back to Flywheel as soon as none does:
 
 | Applies to the entity | Comes from |
 | --- | --- |
 | Hidden from you | [`apoli:prevent_entity_render`](/docs/datapack/powers/prevent_entity_render) |
-| Glowing for you — the outline is drawn by the vanilla renderer | [`apoli:entity_glow`](/docs/datapack/powers/entity_glow), or any other source of glowing |
+| Glowing for you, since the vanilla renderer draws the outline | [`apoli:entity_glow`](/docs/datapack/powers/entity_glow), or any other source of glowing |
 | Model resized | [`apoli:scale`](/docs/datapack/powers/scale) or `/apoli:scale` with `model_width`, `model_height` or a type above them |
 | Disguised | [`apoli:disguise`](/docs/datapack/bientity-actions/disguise) |
 | Running at another tick rate | [`apoli:modify_tick_rate`](/docs/datapack/powers/modify_tick_rate) |
@@ -91,49 +68,35 @@ to the vanilla renderer, and gives it back to Flywheel as soon as none does:
 
 The check runs once a tick, and only for entities of a type Flywheel is drawing.
 
-On players and mobs, Apoli's own layers — [`apoli:custom_model_render`](/docs/datapack/powers/custom_model_render)
-with its energy swirls, and [`apoli:model_color`](/docs/datapack/powers/model_color) — stay on the
-vanilla renderer. Flywheel mods leave players and mobs to it, and those layers are posed from the live
-model every frame, a pose that only exists there, so they look the same with Flywheel as without it.
+On players and mobs, Apoli's own layers, [`apoli:custom_model_render`](/docs/datapack/powers/custom_model_render) with its energy swirls and [`apoli:model_color`](/docs/datapack/powers/model_color), stay on the vanilla renderer. Flywheel mods leave players and mobs to it, and those layers are posed from the live model every frame, a pose that only exists there, so they look the same with Flywheel as without it.
 
-With a shader pack loaded, Flywheel switches itself off unless a Flywheel shader compat mod is
-installed, and everything draws the vanilla way.
+With a shader pack loaded, Flywheel switches itself off unless a Flywheel shader compat mod is installed, and everything draws the vanilla way.
 
 ### Custom projectiles
 
-With Flywheel installed, Vanillin or not, Apoli draws the projectiles
-[`apoli:fire_projectile`](/docs/datapack/powers/fire_projectile) fires through Flywheel as well. They
-look the same as they do without it:
+With Flywheel installed, with or without Vanillin, Apoli draws the projectiles that [`apoli:fire_projectile`](/docs/datapack/powers/fire_projectile) fires through Flywheel as well. They look the same as they do without it:
 
 | The projectile shows | With Flywheel |
 | --- | --- |
 | A [`custom_model_render`](/docs/datapack/powers/custom_model_render) geometry model | Instanced, keeping its `render_type`, colour, `alpha`, `scale`, `body_parts` and animations |
 | Its `texture_location` as a flat sprite | Instanced |
-| An item, from `held_item` or `offhand_item` | Instanced when Vanillin 1.1.3 or newer is installed, drawn the vanilla way otherwise |
+| An item, from `held_item` or `offhand_item` | Instanced when Vanillin 1.1.3 or newer is installed, and drawn the vanilla way otherwise |
 
-A projectile goes back to the vanilla renderer while any of these is true, and returns to Flywheel once
-none is:
+A projectile goes back to the vanilla renderer while any of these is true, and returns to Flywheel once none is:
 
-- one of its layers uses the `energy_swirl` render type;
-- it is on fire;
-- its name tag is showing;
-- hitboxes are showing (F3+B);
-- anything in the table above applies to it, so hiding and glowing work on projectiles too.
+- one of its layers uses the `energy_swirl` render type
+- it is on fire
+- its name tag is showing
+- hitboxes are showing (F3+B)
+- anything in the table above applies to it, so hiding and glowing work on projectiles too
 
-> Instancing pays off when many projectiles are in view. With 400 model projectiles on screen, the
-> frame rate was about three times higher with Flywheel than without it in testing.
+Instancing pays off when many projectiles are in view. In testing, 400 model projectiles on screen ran at about three times the frame rate with Flywheel as without it.
 
-> **Vanillin on NeoForge.** Vanillin 1.1.3 for NeoForge ships the mixin that lets it read item colours
-> but never registers it, so turning on its dropped-item, item-display or item-frame visuals crashes the
-> game the first time an item entity comes into view — including the one `/give` spawns for its pickup
-> animation. When Vanillin's own is missing, Apoli registers an equivalent so those options work. A
-> Vanillin build that registers its own is left alone.
+> [!WARNING]
+> Vanillin 1.1.3 for NeoForge ships the mixin that lets it read item colours but never registers it, so turning on its dropped item, item display or item frame visuals crashes the game the first time an item entity comes into view, including the one `/give` spawns for its pickup animation. When Vanillin's own mixin is missing, Apoli registers an equivalent so those options work. A Vanillin build that registers its own is left alone.
 
 ## What a power costs when nobody has it
 
-Every render hook Apoli installs reads one flag before it does anything else, refreshed once per tick
-from the powers you actually hold. A player with no `prevent_entity_render` pays a field read per
-entity per frame; a world with no `modify_block_render` pays an array-length check per block lookup.
-That is the reason these hooks can sit in the middle of Sodium's mesher at all.
+Every render hook Apoli installs reads one flag before it does anything else, refreshed once per tick from the powers players actually hold. A player with no `prevent_entity_render` pays one field read per entity per frame, and a world with no `modify_block_render` pays one array length check per block lookup. That is why these hooks can sit in the middle of Sodium's mesher at all.
 
-The same goes for the entity getters Apoli extends. `isInvisible`, `isInvisibleTo` and `isCurrentlyGlowing` run several times per entity per frame, and on the server's mob AI too. While no loaded power uses [`apoli:invisibility`](/docs/datapack/powers/invisibility) or [`apoli:entity_glow`](/docs/datapack/powers/entity_glow), Apoli's part of each is a single flag read. When one does, entities without the power cost one container lookup, and none of them allocate.
+The same goes for the entity getters Apoli extends. `isInvisible`, `isInvisibleTo` and `isCurrentlyGlowing` run several times per entity per frame, and in the server's mob AI too. While no loaded power uses [`apoli:invisibility`](/docs/datapack/powers/invisibility) or [`apoli:entity_glow`](/docs/datapack/powers/entity_glow), Apoli's part of each is a single flag read. When one does, entities without the power cost one container lookup, and none of them allocate.

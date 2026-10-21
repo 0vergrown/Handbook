@@ -1,18 +1,18 @@
 ---
 title: "Block Action At (Entity Action Type)"
-description: "Executes a Block Action Type at the position of the entity."
+description: "Runs a block action at the entity's position."
 navigation_title: "Block Action At"
 ---
 
-Executes a Block Action Type at the position of the entity.
+Runs a block action at the entity's position.
 
 Type ID: `apoli:block_action_at`
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`block_action` | Block Action Type |  | The block action type to execute.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `block_action` | [Block Action Type](/docs/datapack/block-actions) | _required_ | The block action to run. |
 
 ## Examples
 
@@ -26,4 +26,4 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will execute a [apoli:set_block](/docs/datapack/block-actions/set_block) that would set a Sand block at the entity's feet.
+This runs [apoli:set_block](/docs/datapack/block-actions/set_block) to place a sand block at the entity's feet.

@@ -1,39 +1,39 @@
 ---
 title: "Prevent Key Press (Power Type)"
-description: "Stops the holder's keys from reaching the game — the whole keyboard, or just the keys you name."
+description: "Stops the player's key presses from reaching the game, for every key or only the ones you list."
 navigation_title: "Prevent Key Press"
 ---
 
-Stops the holder's key presses from reaching the game while the power is active. With no `keys` list that is the whole keyboard and mouse: no movement, no attacking, no using items, no inventory, no hotbar, and no Apoli or Origins ability keys. With a list, only those keys go dead and everything else keeps working.
+Stops the key presses of the player with the power from reaching the game while the power is active. Without a `keys` list that means the whole keyboard and mouse: no movement, attacking, using items, inventory, hotbar, or Apoli and Origins ability keys. With a list, only those keys stop working and everything else works as usual.
 
 Type ID: `apoli:prevent_key_press`
 
 ## Fields
 
-| Field | Type | Default | Purpose |
+| Field | Type | Default | Description |
 | --- | --- | --- | --- |
-| `keys` | array of [Key](/docs/datapack/data-types/key) | _optional_ | The keys to block. Left out, **every** key is blocked. |
-| `scroll` | [Boolean](/docs/datapack/data-types/boolean) | `true` when `keys` is absent, otherwise `false` | Also block the mouse wheel — hotbar scrolling and [`apoli:action_on_scroll_wheel`](/docs/datapack/powers/action_on_scroll_wheel). The wheel is not a keybind, so it needs its own switch. |
-| `affect_forced` | [Boolean](/docs/datapack/data-types/boolean) | `false` | Also block keys that [`apoli:force_key_pressed`](/docs/datapack/entity-actions/force_key_pressed) is holding down. Left `false`, a paralysed player can still be puppeted. |
-| `unpress` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Release everything currently held the moment the block starts, so a player who was already running does not keep sliding. |
+| `keys` | [Array](/docs/datapack/data-types/array) of [Key](/docs/datapack/data-types/key) | _optional_ | The keys to block. Without it, every key is blocked. |
+| `scroll` | [Boolean](/docs/datapack/data-types/boolean) | `true` when `keys` is absent, otherwise `false` | Also blocks the mouse wheel, meaning hotbar scrolling and [`apoli:action_on_scroll_wheel`](/docs/datapack/powers/action_on_scroll_wheel). The wheel isn't a keybind, so it needs its own switch. |
+| `affect_forced` | [Boolean](/docs/datapack/data-types/boolean) | `false` | Also blocks keys that [`apoli:force_key_pressed`](/docs/datapack/entity-actions/force_key_pressed) is holding down. With `false`, a paralysed player can still be steered. |
+| `unpress` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Releases every held key the moment the block starts, so a player who was already running doesn't keep sliding. |
 
-Escape and the debug keys are deliberately **not** blocked — they are not keybinds the game reads through this path, so a blocked player can always open the pause menu.
+Escape and the debug keys are never blocked, because the game doesn't read them through keybinds, so a blocked player can always open the pause menu.
 
 ## What it covers
 
-The block sits on the keybind itself, which is what makes it reach everything Apoli does with keys:
+The block applies to the keybind itself, so it reaches everything Apoli does with keys:
 
-- Vanilla controls — movement, jump, sneak, sprint, attack, use, drop, swap hands, hotbar slots, inventory, chat.
-- **Data-driven keybinds** from `data/<namespace>/keybinds/*.json`, including Origins' ten active-power keys. Blocking `key.origins.primary_active` disables exactly that ability and nothing else.
-- Every key-driven power: [`apoli:action_on_key_press`](/docs/datapack/powers/action_on_key_press), [`apoli:toggle`](/docs/datapack/powers/toggle), [`apoli:fire_projectile`](/docs/datapack/powers/fire_projectile), [`apoli:inventory`](/docs/datapack/powers/inventory), [`apoli:action_on_key_sequence`](/docs/datapack/powers/action_on_key_sequence).
-- [`apoli:key_pressed`](/docs/datapack/entity-conditions/key_pressed) reads a blocked key as **not held**, so conditions built on it go false rather than sticking.
-- The server refuses a blocked key even if a client sends the press anyway, so this is not a client-side-only honour system.
+- Vanilla controls: movement, jump, sneak, sprint, attack, use, drop, swap hands, hotbar slots, inventory and chat.
+- Data-driven keybinds from `data/<namespace>/keybinds/*.json`, including the ten Origins active power keys. Blocking `key.origins.primary_active` disables exactly that ability and nothing else.
+- Every power driven by keys: [`apoli:action_on_key_press`](/docs/datapack/powers/action_on_key_press), [`apoli:toggle`](/docs/datapack/powers/toggle), [`apoli:fire_projectile`](/docs/datapack/powers/fire_projectile), [`apoli:inventory`](/docs/datapack/powers/inventory) and [`apoli:action_on_key_sequence`](/docs/datapack/powers/action_on_key_sequence).
+- [`apoli:key_pressed`](/docs/datapack/entity-conditions/key_pressed) reads a blocked key as not held, so conditions built on it turn false instead of sticking.
+- The server refuses a blocked key even if a client sends the press anyway, so a modified client can't get around it.
 
-Add a `condition` to the power and the block follows it — that is how a timed stun works, without granting and revoking anything.
+Add a `condition` to the power and the block follows it. That is how a timed stun works, without granting or revoking anything.
 
 ## Examples
 
-Total lockout while a resource is above zero — the classic stun:
+A total lockout while a resource is above zero, for a stun:
 
 ```json
 {
@@ -47,7 +47,7 @@ Total lockout while a resource is above zero — the classic stun:
 }
 ```
 
-Silence just the origin's abilities, leaving the player free to move and fight:
+Silence only the origin's abilities, leaving the player free to move and fight:
 
 ```json
 {
@@ -69,7 +69,7 @@ Bind a player's legs without taking their hands:
 }
 ```
 
-Paralysis a puppeteer can still steer — the player cannot press anything, but [`apoli:force_key_pressed`](/docs/datapack/entity-actions/force_key_pressed) still works because `affect_forced` is left off:
+Paralysis that someone else can still steer. The player can't press anything, but [`apoli:force_key_pressed`](/docs/datapack/entity-actions/force_key_pressed) still works because `affect_forced` is off:
 
 ```json
 {
@@ -79,4 +79,5 @@ Paralysis a puppeteer can still steer — the player cannot press anything, but 
 }
 ```
 
-> Blocking `keys` is per keybind **name**, so it follows the player's own bindings. Blocking `key.jump` blocks whichever key they rebound jump to, not the space bar.
+> [!NOTE]
+> `keys` blocks keybinds by name, so it follows the player's own bindings. Blocking `key.jump` blocks whichever key they bound jump to, not the space bar.

@@ -1,18 +1,18 @@
 ---
 title: "In Tag (Entity Condition Type)"
-description: "Checks whether the entity's entity type is in a specific tag."
+description: "Checks whether the entity's type is in an entity type tag."
 navigation_title: "In Tag"
 ---
 
-Checks whether the entity's entity type is in a specific tag.
+Checks whether the entity's type is in an entity type tag.
 
 Type ID: `apoli:in_tag`
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`tag` | Identifier | | The namespace and ID of the entity type tag the entity type needs to be in to pass the check. The leading `#` is optional.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `tag` | [Identifier](/docs/datapack/data-types/identifier) | _required_ | The ID of the entity type tag. The leading `#` is optional. |
 
 ## Examples
 
@@ -23,4 +23,4 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will check if the entity is inside the `#minecraft:skeletons` entity type tag. (`data/minecraft/tags/entity_types/skeletons.json`)
+This checks whether the entity is in the `#minecraft:skeletons` entity type tag (`data/minecraft/tags/entity_types/skeletons.json`).

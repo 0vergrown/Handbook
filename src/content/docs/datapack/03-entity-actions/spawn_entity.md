@@ -1,21 +1,21 @@
 ---
 title: "Spawn Entity (Entity Action Type)"
-description: "Spawns another entity at the position of the target entity."
+description: "Spawns an entity at the position of the target entity."
 navigation_title: "Spawn Entity"
 ---
 
-Spawns another entity at the position of the target entity.
+Spawns an entity at the position of the target entity.
 
 Type ID: `apoli:spawn_entity`
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`entity_type` | Identifier |  | The namespace and ID of the entity type that will be spawned.
-`tag` | NBT | _optional_ | If specified, this NBT data will be applied to the entity that will be spawned.
-`entity_action` | Entity Action Type | _optional_ | If specified, the specified entity action type will be executed on the entity that will be spawned when it is spawned.
-`bientity_action` | Bi-Entity Action Type | _optional_ | If specified, this bi-entity action will be executed on either or both the actor (the entity that invoked the entity action) and the target (the spawned entity).
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `entity_type` | [Identifier](/docs/datapack/data-types/identifier) | _required_ | The ID of the entity type to spawn. |
+| `tag` | [NBT](/docs/datapack/data-types/nbt) | _optional_ | NBT data applied to the spawned entity. |
+| `entity_action` | [Entity Action Type](/docs/datapack/entity-actions) | _optional_ | Runs on the spawned entity once it is spawned. |
+| `bientity_action` | [Bi-entity Action Type](/docs/datapack/bientity-actions) | _optional_ | Runs with the entity that ran the action as the actor and the spawned entity as the target. |
 
 ## Examples
 
@@ -27,4 +27,4 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will spawn a baby Zombie holding a Gold Block that has no AI at the position of the entity.
+This spawns a baby zombie with no AI, holding a gold block, at the entity's position.

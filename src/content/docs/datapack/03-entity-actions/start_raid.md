@@ -10,18 +10,18 @@ Type ID: `apoli:start_raid`
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`omen_level` | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | `1` | The omen level the raid absorbs, from `1` to `5`. A new raid starts at this level; a raid already running here adds it to its own level, up to `5`. Values outside `1`–`5` are clamped. Higher levels add a bonus wave and give raiders better odds of enchanted gear.
-`success_action` | Entity Action Type | _optional_ | Runs on the entity when a raid starts or grows.
-`fail_action` | Entity Action Type | _optional_ | Runs on the entity when no raid can start here. See below.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `omen_level` | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | `1` | The omen level the raid absorbs, from `1` to `5`. A new raid starts at this level, and a raid already running here adds it to its own level, up to `5`. Values outside `1` to `5` are clamped. Higher levels add a bonus wave and give raiders better odds of enchanted gear. |
+| `success_action` | [Entity Action Type](/docs/datapack/entity-actions) | _optional_ | Runs on the entity when a raid starts or grows. |
+| `fail_action` | [Entity Action Type](/docs/datapack/entity-actions) | _optional_ | Runs on the entity when no raid can start here. See [When it fails](#when-it-fails). |
 
 ## Who gets the credit
 
 The raid is credited to the entity that ran the action, the same way vanilla credits a raid to the player whose omen started it.
 
-- A **player** gets the *Raids Triggered* statistic, and the `minecraft:voluntary_exile` advancement trigger fires for them. Like vanilla, both happen only while the raid has not spawned its first wave yet.
-- **Any other entity** — a mob, an armor stand, a marker — starts the raid from its own position. Vanilla records nothing else about who started a raid, so there is nothing more to give it.
+- A player gets the Raids Triggered statistic, and the `minecraft:voluntary_exile` advancement trigger fires for them. As in vanilla, both only happen while the raid hasn't spawned its first wave yet.
+- Any other entity (a mob, an armor stand, a marker) starts the raid from its own position. Vanilla records nothing else about who started a raid, so there is nothing more to give it.
 
 Hero of the Village still works the vanilla way: kill at least one raider and win.
 
@@ -29,14 +29,14 @@ Hero of the Village still works the vanilla way: kill at least one raider and wi
 
 Nothing happens and `fail_action` runs when:
 
-- the entity is not in a village. This is the same test Bad Omen uses: a village is wherever villagers have claimed beds, workstations or a bell;
+- the entity isn't in a village, using the same test as Bad Omen: a village is wherever villagers have claimed beds, workstations or a bell;
 - the entity is a spectator;
 - the difficulty is Peaceful;
 - the `disableRaids` game rule is on;
-- the dimension has `has_raids` set to `false` in its dimension type (the Nether, by default);
+- the dimension type has `has_raids` set to `false` (the Nether, by default);
 - the raid already here has ended and is celebrating, or has already spawned its first wave at level `5`.
 
-The raid is centred where vanilla would centre it: the average position of the claimed beds, workstations and bells within 64 blocks of the entity.
+The raid is centred where vanilla would centre it, on the average position of the claimed beds, workstations and bells within 64 blocks of the entity.
 
 ## Examples
 
@@ -46,7 +46,7 @@ The raid is centred where vanilla would centre it: the average position of the c
 }
 ```
 
-Starts a level 1 raid on the village the entity is in.
+This starts a level 1 raid on the village the entity is in.
 
 ```json
 {
@@ -79,4 +79,5 @@ Pressing the primary active key calls a level 3 raid down on the village and sou
 
 The raid's level comes from a resource, so it can grow with how much trouble the player has caused.
 
-> The action works on any entity, so a data pack can start a raid at a chosen spot by running it on a marker placed there. The credit then goes to the marker, not to a player.
+> [!TIP]
+> The action works on any entity, so a data pack can start a raid at a chosen spot by running it on a marker placed there. The credit then goes to the marker instead of a player.

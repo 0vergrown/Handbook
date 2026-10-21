@@ -10,17 +10,16 @@ Type ID: `apoli:script`
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|-------------
-`script` | [Identifier](/docs/datapack/data-types/identifier) | **required** | The script to run. Either an id registered from KubeJS with `ApoliEvents`, or the path of a `.js` file shipped in a data pack at `data/<namespace>/apoli/scripts/<path>.js` — in which case the `.js` is part of the id.
-`params` | [NBT](/docs/datapack/data-types/nbt) | _optional_ | Values handed to the script. Read them with `event.params` from KubeJS, or `params` inside a data pack script. This is how one script serves several powers.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `script` | [Identifier](/docs/datapack/data-types/identifier) | _required_ | The script to run. Either an ID registered from KubeJS with `ApoliEvents`, or the path of a `.js` file shipped in a data pack at `data/<namespace>/apoli/scripts/<path>.js`, in which case the `.js` is part of the ID. |
+| `params` | [NBT](/docs/datapack/data-types/nbt) | _optional_ | Values handed to the script. Read them with `event.params` from KubeJS, or `params` inside a data pack script. This is how one script serves several powers. |
 
 ## Example
 
-Steal a random effect from whoever you hit and put it on yourself:
+Steal a random effect from whoever you hit and put it on yourself. The script goes in `kubejs/server_scripts/thief.js`:
 
-```js
-// kubejs/server_scripts/thief.js
+```js title="kubejs/server_scripts/thief.js"
 ApoliEvents.bientityAction('thief:steal_effect', event => {
   const effects = event.target.activeEffectsMap
   const keys = Object.keys(effects)
@@ -42,4 +41,5 @@ ApoliEvents.bientityAction('thief:steal_effect', event => {
 }
 ```
 
-> Needs [KubeJS](/docs/compat/kubejs). Without it the type still loads and the pack still works — the call logs once and does nothing. Scripts always run on the server.
+> [!NOTE]
+> This action needs [KubeJS](/docs/compat/kubejs). Without it the type still loads and the pack still works, but the call logs once and does nothing. Scripts always run on the server.

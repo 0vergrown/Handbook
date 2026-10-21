@@ -4,19 +4,22 @@ description: "Checks whether the player's origin carries one of the given origin
 navigation_title: "Origin Tag"
 ---
 
-Checks whether the player's origin carries one of the given tags, rather than naming origins by id. Tag the origins once and a condition written against the tag keeps working when a pack adds more of them.
+Checks whether the player's origin carries one of the given tags, instead of naming origins by ID. Tag the origins once, and a condition written against the tag keeps working when a pack adds more of them.
 
 Type ID: `origins:origin_tag`
+
+> [!NOTE]
+> This condition comes from the Origins mod. It only passes for players.
 
 ## Fields
 
 | Field | Type | Default | Description |
 | --- | --- | --- | --- |
-| `tag` | string or array of strings | — | The tag(s) to look for. Passes if the origin carries any of them. |
-| `layer` | [Identifier](/docs/datapack/data-types/identifier) | _every layer_ | Only look at the origin held on this layer. |
-| `selection` | `main`, `active`, `pool` or `all` | `main` | Which origins are checked — the chosen one, the one currently swapped in, the player's pool, or all of them. Same meaning as on [origins:origin](/docs/datapack/origins/origin). |
+| `tag` | [String](/docs/datapack/data-types/string) or [Array](/docs/datapack/data-types/array) of strings | _required_ | The tags to look for. The condition passes if the origin carries any of them. |
+| `layer` | [Identifier](/docs/datapack/data-types/identifier) | _every layer_ | Only looks at the origin held on this layer. |
+| `selection` | [Selection](/docs/datapack/data-types/selection) | `main` | Which origins are checked: the chosen one, the one swapped in, the player's pool, or all of them. It means the same as on [origins:origin](/docs/datapack/origins/origin). |
 
-Tagging an origin is a `tags` list on the origin JSON:
+Tagging an origin is a `tags` list in the origin's JSON:
 
 ```json
 {
@@ -41,7 +44,7 @@ Tags are plain strings, matched exactly and case-sensitively.
 }
 ```
 
-Passes for anyone whose origin is **not** tagged `universeLevel` — the usual shape for "this only works on people below your weight class".
+This passes for anyone whose origin isn't tagged `universeLevel`, which suits a power that only works on players below a certain tier.
 
 ```json
 {
@@ -51,4 +54,4 @@ Passes for anyone whose origin is **not** tagged `universeLevel` — the usual s
 }
 ```
 
-Passes if any origin the player holds — chosen, swapped or in their pool — is tagged either way.
+This passes if any origin the player holds, whether chosen, swapped in or in their pool, carries either tag.

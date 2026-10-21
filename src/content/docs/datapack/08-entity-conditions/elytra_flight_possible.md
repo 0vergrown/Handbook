@@ -1,23 +1,22 @@
 ---
 title: "Elytra Flight Possible (Entity Condition Type)"
-description: "Checks if the entity can fly with either an Elytra item or a power that uses the apoli:elytraflight."
+description: "Checks whether the entity can glide, with an elytra or an apoli:elytra_flight power."
 navigation_title: "Elytra Flight Possible"
 ---
 
-Checks if the entity can fly with either an Elytra item or a power that uses the [apoli:elytra_flight](/docs/datapack/powers/elytra_flight).
+Checks whether the entity can glide, either with an elytra or with a power that uses [apoli:elytra_flight](/docs/datapack/powers/elytra_flight).
 
 Type ID: `apoli:elytra_flight_possible`
 
-> If both `check_state` and `check_abilities` boolean fields are set to `true`, the entity condition type will check if the player can activate elytra flight at the very moment.
-
-> If both `check_state` and `check_abilities` boolean fields are set to `false`, the entity condition type will evaluate to true.
+> [!NOTE]
+> With both `check_state` and `check_abilities` set to `true`, the condition checks whether the player could start gliding right now. With both set to `false`, it always passes.
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|------------
-`check_state` | Boolean | `false` | If set to `true`, the entity condition type will check if pressing the `key.jump` keybind would activate elytra flight if the player had the ability to.
-`check_abilities` | Boolean | `true` | If set to `true`, the entity condition type will check whether the player has the ability to activate elytra flight. (e.g: wearing an elytra or have a power that uses the [apoli:elytra_flight](/docs/datapack/powers/elytra_flight))
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `check_state` | [Boolean](/docs/datapack/data-types/boolean) | `false` | With `true`, checks whether pressing `key.jump` would start gliding, if the player had the ability to. |
+| `check_abilities` | [Boolean](/docs/datapack/data-types/boolean) | `true` | With `true`, checks whether the player has the ability to glide, for example by wearing an elytra or having a power that uses [apoli:elytra_flight](/docs/datapack/powers/elytra_flight). |
 
 ## Examples
 
@@ -29,4 +28,4 @@ Field | Type | Default | Description
 }
 ```
 
-This example will check if the player can activate elytra flight.
+This checks whether the player can start gliding.

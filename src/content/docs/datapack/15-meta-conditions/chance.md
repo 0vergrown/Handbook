@@ -1,20 +1,20 @@
 ---
 title: "Chance (Meta Condition Type)"
-description: "Generates a random number between 0.0 and 1.0 and checks if it's less than a specified value."
+description: "Passes with a given probability, by rolling a random number from 0 to 1."
 navigation_title: "Chance"
 ---
 
-Generates a random number between 0.0 and 1.0 and checks if it's less than a specified value.
+Rolls a random number between 0.0 and 1.0 and passes if it is less than a given value.
 
 Type ID: `apoli:chance`
 
-##	Fields
+## Fields
 
-Field | Type | Default | Description
-------|------|---------|------------
-`chance` | [Float](/docs/datapack/data-types/float) | | The value to compare the randomly generated number to.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `chance` | [Float](/docs/datapack/data-types/float) | _required_ | The value the random number is compared with. |
 
-##	Examples
+## Examples
 
 ```json
 "condition": {
@@ -23,4 +23,4 @@ Field | Type | Default | Description
 }
 ```
 
-This example will evaluate to true 50% of the time.
+This passes 50% of the time.

@@ -1,31 +1,34 @@
 export const SITE = {
 	name: 'Handbook',
-	tagline: 'The manual for the Apoli power engine and the Origins addon.',
 	description:
-		'Documentation for Apoli — the data-driven power engine for Minecraft — and Origins, the addon built on top of it.',
-
-	// Social / community
+		'Documentation for Apoli, a data-driven power engine for Minecraft, and Origins, the mod built on it.',
+	author: 'Overgrown',
+	repo: 'https://github.com/0vergrown/Handbook',
 	github: 'https://github.com/0vergrown',
-	x: 'https://x.com/OvergrownMC',
 	discord: 'https://discord.gg/Th7q5BXPjG',
-
-	// Download destinations.
+	x: 'https://x.com/OvergrownMC',
 	downloads: {
 		modrinth: 'https://modrinth.com/collection/P0Z8iLdQ',
 		curseforge: 'https://www.curseforge.com/members/overgrownmc/projects',
 		mods: [
 			{
 				name: 'Apoli',
-				blurb: 'The engine. Adds the power system every origin is built from.',
+				description:
+					'The power engine. Every power, action and condition in these docs comes from it, and data packs and addons build on it.',
 				modrinth: 'https://modrinth.com/mod/opoli',
 				curseforge: 'https://www.curseforge.com/minecraft/mc-mods/opoli'
 			},
 			{
 				name: 'Origins',
-				blurb: 'The addon. Pick an origin at spawn and play with its powers.',
+				description:
+					'Players pick an origin when they first join and get its powers. It needs Apoli to run.',
 				modrinth: 'https://modrinth.com/mod/overgrowns-origins',
 				curseforge: 'https://www.curseforge.com/minecraft/mc-mods/o-origins'
 			}
+		],
+		versions: [
+			{ minecraft: '1.21.1', fabric: 'Java 21', neoforge: 'Java 21' },
+			{ minecraft: '1.20.1', fabric: 'Java 17', neoforge: null }
 		]
 	}
 };

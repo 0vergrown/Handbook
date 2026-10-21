@@ -1,33 +1,33 @@
 ---
 title: "Receive Action (Power Type)"
-description: Holds a block of actions that other powers can trigger with apoli:send_action.
+description: "Holds actions that other powers can run with apoli:send_action."
 navigation_title: "Receive Action"
 aliases: ["shappoli:receive_action"]
 ---
 
-Holds a block of actions that other powers trigger with [`apoli:send_action`](/docs/datapack/entity-actions/send_action). On its own it does nothing — it waits to be called.
+Holds actions that other powers run with [`apoli:send_action`](/docs/datapack/entity-actions/send_action). On its own it does nothing until something calls it.
 
-Use it to write a behaviour once and call it from many places. Because it is a normal power, granting, revoking or suppressing it changes what every sender does, without touching the senders.
+Use it to write a behaviour once and call it from many places. Because it is a normal power, granting, revoking or suppressing it changes what every sender does without touching the senders.
 
 Type ID: `apoli:receive_action` (also `shappoli:receive_action`)
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|-------------
-`action` | [Entity Action](/docs/datapack/entity-actions) | _optional_ | Runs on the holder whenever this power receives anything, whichever flavour sent it. Fires after the flavour-specific action below.
-`entity_action` | [Entity Action](/docs/datapack/entity-actions) | _optional_ | Runs when an entity `apoli:send_action` calls in.
-`entity_condition` | [Entity Condition](/docs/datapack/entity-conditions) | _optional_ | Gate on the entity action. When it fails, nothing runs — not even `action`.
-`bientity_action` | [Bi-Entity Action](/docs/datapack/bientity-actions) | _optional_ | Runs when a bi-entity `apoli:send_action` calls in.
-`bientity_condition` | [Bi-Entity Condition](/docs/datapack/bientity-conditions) | _optional_ | Gate on the bi-entity action.
-`item_action` | [Item Action](/docs/datapack/item-actions) | _optional_ | Runs when an item `apoli:send_action` calls in.
-`item_condition` | [Item Condition](/docs/datapack/item-conditions) | _optional_ | Gate on the item action.
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `action` | [Entity Action](/docs/datapack/entity-actions) | _optional_ | Runs on the entity with the power whenever this power receives anything, whatever kind of action sent it. It runs after the action for that kind below. |
+| `entity_action` | [Entity Action](/docs/datapack/entity-actions) | _optional_ | Runs when an entity `apoli:send_action` calls this power. |
+| `entity_condition` | [Entity Condition](/docs/datapack/entity-conditions) | _optional_ | The condition for the entity action. When it fails, nothing runs, including `action`. |
+| `bientity_action` | [Bi-Entity Action](/docs/datapack/bientity-actions) | _optional_ | Runs when a bi-entity `apoli:send_action` calls this power. |
+| `bientity_condition` | [Bi-Entity Condition](/docs/datapack/bientity-conditions) | _optional_ | The condition for the bi-entity action. |
+| `item_action` | [Item Action](/docs/datapack/item-actions) | _optional_ | Runs when an item `apoli:send_action` calls this power. |
+| `item_condition` | [Item Condition](/docs/datapack/item-conditions) | _optional_ | The condition for the item action. |
 
-At least one action field is worth setting; a receiver with none is a no-op. A power's own top-level `condition` is checked before any of this, so a receiver whose condition fails is simply not there as far as senders are concerned.
+Set at least one action field, because a receiver with none does nothing. The power's own top-level `condition` is checked before any of this, so to senders a receiver whose condition fails doesn't exist.
 
 ## Example
 
-A receiver that spends blood, plays a sound, and — through `action` — always logs the spend regardless of which flavour called:
+A receiver that spends blood and plays a sound, and through `action` always triggers a cooldown, whatever kind of action called it:
 
 ```json
 {

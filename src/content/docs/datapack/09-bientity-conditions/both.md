@@ -1,17 +1,18 @@
 ---
 title: "Both (Bi-Entity Condition Type)"
-description: "Checks for an entity condition on both the actor and target entities."
+description: "Checks whether both the actor and the target pass an entity condition."
 navigation_title: "Both"
 ---
 
-Checks for an entity condition on both the actor and target entities.
+Checks whether both the actor and the target pass an entity condition.
 
 Type ID: `apoli:both`
+
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|-------------
-`condition` | Entity Condition Type | | The entity condition type to check on both the actor and target entity.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `condition` | [Entity Condition Type](/docs/datapack/entity-conditions) | _required_ | The entity condition to check on the actor and on the target. |
 
 ## Examples
 
@@ -25,4 +26,4 @@ Field | Type | Default | Description
 }
 ```
 
-This example will check if both the actor entity and the target entity is a player.
+This checks whether the actor and the target are both players.

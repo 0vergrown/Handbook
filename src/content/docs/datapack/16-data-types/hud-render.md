@@ -1,25 +1,26 @@
 ---
 title: "HUD Render (Data Type)"
-description: "An Object or Array of objects used to define how a resource or cooldown bar should be rendered."
+description: "An object or array of objects that decides how a resource or cooldown bar is drawn on the HUD."
 navigation_title: "HUD Render"
 ---
 
-An [Object](/docs/datapack/data-types/object) or [Array](/docs/datapack/data-types/array) of objects used to define how a resource or cooldown bar should be rendered.
+An [Object](/docs/datapack/data-types/object) or [Array](/docs/datapack/data-types/array) of objects that decides how a resource or cooldown bar is drawn.
 
-> If the specified HUD render is an array of objects, then the HUD render will choose the first object that is allowed to be rendered (its `should_render` field set to `true`) and its condition fulfilled (or if its `condition` field is absent) from top to bottom. The `order` value of the very first object will also be inherited by the following objects that do not have the `order` field specified.
+> [!NOTE]
+> With an array, the bar uses the first object, from top to bottom, that is allowed to render (its `should_render` is `true`) and whose condition passes or is absent. The `order` value of the first object carries over to the following objects that don't set `order` themselves.
 
-##	Fields
+## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`should_render` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Whether the bar should be visible or not.
-`sprite_location` | [Identifier](/docs/datapack/data-types/identifier) | `"origins:textures/gui/resource_bar.png"` | The path to the file in the assets which contains what the bar looks like. See the List of sprites for a list of files included by default in the mod.
-`bar_index` | [Integer](/docs/datapack/data-types/integer) | `0` | The indexed position of the bar on the sprite to use. Please note that indexes start at `0`.
-`icon_index` | [Integer](/docs/datapack/data-types/integer) | `0` | The indexed position of the icon on the sprite to use. Please note that indexes start at `0`.
-`condition` | Entity Condition Type | _optional_ | If set (and `should_render` is true), the bar will only display when the entity with the power fulfills this condition.
-`inverted` | [Boolean](/docs/datapack/data-types/boolean) | `false` | If set to true, inverts the way the hud render process (it'll look like its value is being decreased).
-`order` | [Integer](/docs/datapack/data-types/integer) | *optional* | If specified, this determines the position of the HUD render when being rendered. The higher the `order` value is, the higher it is on the rendered HUD render stack.
-`max` | [Integer](/docs/datapack/data-types/integer) OR [Expression](/docs/datapack/data-types/expression) | *optional* | The value at which the bar reads full, overriding whatever the power itself would use. Required to draw a bar for a resource that has no `max` of its own — see below.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `should_render` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Whether the bar is visible. |
+| `sprite_location` | [Identifier](/docs/datapack/data-types/identifier) | `"origins:textures/gui/resource_bar.png"` | The path to the texture in the assets that holds what the bar looks like. |
+| `bar_index` | [Integer](/docs/datapack/data-types/integer) | `0` | Which bar on the sprite to use. Indexes start at `0`. |
+| `icon_index` | [Integer](/docs/datapack/data-types/integer) | `0` | Which icon on the sprite to use. Indexes start at `0`. |
+| `condition` | [Entity Condition Type](/docs/datapack/entity-conditions) | _optional_ | With `should_render` on, the bar only shows when the entity with the power passes this condition. |
+| `inverted` | [Boolean](/docs/datapack/data-types/boolean) | `false` | With `true`, the bar fills the other way, so its value looks like it is going down. |
+| `order` | [Integer](/docs/datapack/data-types/integer) | _optional_ | The bar's position in the stack of HUD bars. The higher the `order`, the higher it sits. |
+| `max` | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | _optional_ | The value at which the bar reads full, overriding whatever the power itself would use. Required to draw a bar for a resource that has no `max` of its own (see below). |
 
 ## Which powers draw a bar
 
@@ -28,35 +29,28 @@ Every power type with a `hud_render` field draws a bar from it, and the bar alwa
 | Kind | Power types | The bar |
 | --- | --- | --- |
 | Resource | [apoli:resource](/docs/datapack/powers/resource) | Always shown. Fills from `min` to `max`. |
-| Cooldown | [apoli:cooldown](/docs/datapack/powers/cooldown), [apoli:action_on_key_press](/docs/datapack/powers/action_on_key_press), [apoli:action_on_key_sequence](/docs/datapack/powers/action_on_key_sequence), [apoli:fire_projectile](/docs/datapack/powers/fire_projectile), [apoli:action_on_hit](/docs/datapack/powers/action_on_hit), [apoli:action_when_hit](/docs/datapack/powers/action_when_hit), [apoli:action_on_kill](/docs/datapack/powers/action_on_kill), [apoli:action_on_collision](/docs/datapack/powers/action_on_collision), [apoli:game_event_listener](/docs/datapack/powers/game_event_listener), [apoli:action_on_scroll_wheel](/docs/datapack/powers/action_on_scroll_wheel), [apoli:action_on_mouse_movement](/docs/datapack/powers/action_on_mouse_movement) | Shown only while cooling down. Fills as the cooldown recovers. |
+| Cooldown | [apoli:cooldown](/docs/datapack/powers/cooldown), [apoli:action_on_key_press](/docs/datapack/powers/action_on_key_press), [apoli:action_on_key_sequence](/docs/datapack/powers/action_on_key_sequence), [apoli:fire_projectile](/docs/datapack/powers/fire_projectile), [apoli:action_on_hit](/docs/datapack/powers/action_on_hit), [apoli:action_when_hit](/docs/datapack/powers/action_when_hit), [apoli:action_on_kill](/docs/datapack/powers/action_on_kill), [apoli:action_on_collision](/docs/datapack/powers/action_on_collision), [apoli:game_event_listener](/docs/datapack/powers/game_event_listener), [apoli:action_on_scroll_wheel](/docs/datapack/powers/action_on_scroll_wheel), [apoli:action_on_mouse_movement](/docs/datapack/powers/action_on_mouse_movement) | Only shown while cooling down. Fills as the cooldown recovers. |
 
-The bar is drawn whether or not the power's own `condition` currently passes, so an ability that needs you on the ground still shows its cooldown while you are in the air. Use the `condition` on the `hud_render` entry to hide it.
+The bar is drawn whether or not the power's own `condition` passes, so an ability that needs you on the ground still shows its cooldown while you are in the air. Use the `condition` on the `hud_render` entry to hide it.
 
 ## Where the bars sit
 
-Bars stack upward in the right-hand status column, starting on the first free row above whatever the HUD already
-draws there — the hunger bar, mount health, the air bubbles, and rows other mods add such as a thirst meter. Apoli
-claims the rows it fills, so a HUD element drawn after it stacks on top rather than through it. Within Apoli's own
-bars, a higher `order` sits higher up.
+Bars stack upward in the status column on the right, starting on the first free row above whatever the HUD already draws there: the hunger bar, mount health, the air bubbles, and rows other mods add, such as a thirst meter. Apoli claims the rows it fills, so a HUD element drawn after it stacks on top instead of through it. Among Apoli's own bars, a higher `order` sits higher up.
 
-There is nothing to configure for this in a data pack. It reads the HUD as it is actually drawn, so a mod that
-hides the hunger bar, keeps the air bubbles up permanently, or adds a row of its own moves the bars without either
-of you knowing about the other.
+There is nothing to configure for this in a data pack. Apoli reads the HUD as it is drawn, so a mod that hides the hunger bar, keeps the air bubbles up all the time or adds a row of its own moves the bars without either mod knowing about the other.
 
-> On NeoForge every HUD element advances a shared row counter, and Apoli reads and advances the same one. Fabric has
-> no such shared counter, so Apoli measures the column instead: anything drawn on the status-bar row grid inside it
-> counts as a row. An element that draws itself some other way — off the 10-pixel grid, or wider than the column —
-> is not seen, and the offsets below are there for that case.
+> [!NOTE]
+> On NeoForge every HUD element advances a shared row counter, and Apoli reads and advances the same one. Fabric has no shared counter, so Apoli measures the column instead, and anything drawn on the grid of status bar rows inside it counts as a row. An element that draws itself some other way, off the 10-pixel grid or wider than the column, isn't seen, and the offsets below are there for that case.
 
 ### Client options
 
-These live in `config/apoli-client.json`, and on the **Apoli Settings** screen. They only affect the player who sets them.
+These live in `config/apoli-client.json` and on the Apoli Settings screen. They only affect the player who sets them.
 
-Option | Default | What it does
--------|---------|--------------
-`hudAutoStack` | `true` | Position the bars above whatever the HUD already draws. `false` pins them to the vanilla position — one row above the hunger bar — and leaves the rest to the offsets.
-`hudOffsetX` | `0` | Moves the bars sideways. Positive is right.
-`hudOffsetY` | `0` | Moves the bars down. Negative is up.
+| Option | Default | What it does |
+| --- | --- | --- |
+| `hudAutoStack` | `true` | Places the bars above whatever the HUD already draws. `false` pins them to the vanilla position, one row above the hunger bar, and leaves the rest to the offsets. |
+| `hudOffsetX` | `0` | Moves the bars sideways. Positive is right. |
+| `hudOffsetY` | `0` | Moves the bars down. Negative is up. |
 
 ## Examples
 
@@ -67,7 +61,7 @@ Option | Default | What it does
 }
 ```
 
-This definition shows the resource/cooldown as a white bar with a bone icon.
+This draws the resource or cooldown with bar `5` of the `resource_bar_03.png` sprite sheet.
 
 ```json
 "hud_render": [
@@ -86,22 +80,24 @@ This definition shows the resource/cooldown as a white bar with a bone icon.
 	}
 ]
 ```
-This definition will show the resource/cooldown as a white bar with a bone icon if the player has half or less of their max health. Otherwise, the resource/cooldown will be shown as a red bar with a heart icon.
+
+This draws bar `3` of `resource_bar_03.png` while the player has half of their max health or less, and bar `4` of `resource_bar_01.png` otherwise.
 
 ## Bars need something to fill up to
 
-A bar is a fraction: how far the current value has travelled from empty to full. For a [apoli:resource](/docs/datapack/powers/resource) that is `min` to `max`, and for a cooldown it is the cooldown's length.
+A bar is a fraction: how far the current value has travelled from empty to full. For an [apoli:resource](/docs/datapack/powers/resource) that is `min` to `max`, and for a cooldown it is the cooldown's length.
 
-A resource with no `max` is uncapped, so there is no value that would fill the bar. In that case Apoli **does not draw the bar** and logs one warning naming the power, rather than showing a bar that is stuck at either end.
+A resource with no `max` is uncapped, so there is no value that would fill the bar. In that case Apoli doesn't draw the bar and logs one warning naming the power, instead of showing a bar stuck at either end.
 
-Three ways out, depending on what you meant:
+There are three ways out, depending on what you meant:
 
-- Give the resource a `max`. The bar then works normally.
-- Give the **`hud_render`** a `max`. The resource stays uncapped and the bar fills up to whatever you name, so a score with no ceiling can still show progress toward the next milestone. Because it is an [Expression](/docs/datapack/data-types/expression), that milestone can move: `"max": "100 * (1 + example:level)"`.
-- Set `should_render` to `false` if you did not want a bar at all.
+- Give the resource a `max`, and the bar works normally.
+- Give the `hud_render` a `max`. The resource stays uncapped and the bar fills up to whatever you name, so a score with no ceiling can still show progress toward the next milestone. Because it is an [expression](/docs/datapack/data-types/expression), that milestone can move: `"max": "100 * (1 + example:level)"`.
+- Set `should_render` to `false` if you didn't want a bar at all.
 
 `max` on the `hud_render` works for cooldowns too, if you want the bar to fill over something other than the full cooldown.
 
-If `min` is absent but a maximum is available, the bar treats `0` as empty.
+If `min` is absent but there is a maximum, the bar treats `0` as empty.
 
+> [!NOTE]
 > A resource with a `size` above `1` draws slot `0`, the same value everything else reads when no `position` is given.

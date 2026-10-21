@@ -4,17 +4,17 @@ description: Compares the entity's experience, in levels or points.
 navigation_title: "XP"
 ---
 
-Compares the player's experience. The aliases pick the unit for you: `apoli:xp_levels` compares levels, `apoli:xp_points` compares raw points.
+Compares the player's experience with a number. The aliases pick the unit for you: `apoli:xp_levels` compares levels, and `apoli:xp_points` compares raw points.
 
-Type ID: `apoli:xp` (aliases `apoli:xp_levels`, `apoli:xp_points`)
+Type ID: `apoli:xp` (aliases `apoli:xp_levels` and `apoli:xp_points`)
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|-------------
-`comparison` | [Comparison](/docs/datapack/data-types/comparison) | **required** | `<`, `<=`, `>`, `>=`, `==`, `!=`.
-`compare_to` | [Integer](/docs/datapack/data-types/integer) | **required** | The value to compare against.
-`unit` | [Unit](/docs/datapack/data-types/unit) | `levels` | `levels` or `points`. Filled in by the aliases.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `comparison` | [Comparison](/docs/datapack/data-types/comparison) | _required_ | `<`, `<=`, `>`, `>=`, `==` or `!=`. |
+| `compare_to` | [Integer](/docs/datapack/data-types/integer) | _required_ | The value to compare against. |
+| `unit` | [Unit](/docs/datapack/data-types/unit) | `levels` | `levels` or `points`. The aliases fill this in. |
 
 ## Examples
 
@@ -28,7 +28,7 @@ Level 30 or higher:
 }
 ```
 
-Gate an expensive ability behind experience you then spend:
+Gate an expensive ability behind experience that it then spends:
 
 ```json
 {
@@ -50,4 +50,5 @@ Gate an expensive ability behind experience you then spend:
 }
 ```
 
-> `levels` is what the number on the XP bar says; `points` is the raw total, which grows non-linearly with level. Compare against points only when you actually mean the raw amount.
+> [!NOTE]
+> `levels` is the number on the XP bar, and `points` is the raw total, which grows faster than the level does. Only compare against points when you mean the raw amount.

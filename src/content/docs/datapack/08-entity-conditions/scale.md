@@ -1,20 +1,20 @@
 ---
 title: "Scale (Entity Condition Type)"
-description: "Compares one of the entity's scales against a number."
+description: "Compares one of the entity's scales with a number."
 navigation_title: "Scale"
 ---
 
-Compares one of the entity's scales — the final value, with every power, stored value and parent scale folded in — against a number.
+Compares one of the entity's scales with a number. The scale read is the final value, with every power, stored value and parent scale already applied.
 
 Type ID: `apoli:scale`
 
 ## Fields
 
 | Field | Type | Default | Description |
-|-------|------|---------|-------------|
+| --- | --- | --- | --- |
 | `scale_type` | [Scale Type](/docs/datapack/data-types/scale-type) | `apoli:base` | Which scale to read. |
-| `comparison` | [Comparison](/docs/datapack/data-types/comparison) | — | How to compare. |
-| `compare_to` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | — | What to compare against. |
+| `comparison` | [Comparison](/docs/datapack/data-types/comparison) | _required_ | How to compare. |
+| `compare_to` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | _required_ | What to compare against. |
 
 ## Examples
 

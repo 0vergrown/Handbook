@@ -1,19 +1,19 @@
 ---
 title: "Amount (Item Condition Type)"
-description: "Checks the amount of the item in the item stack."
+description: "Compares the number of items in the stack with a number."
 navigation_title: "Amount"
 ---
 
-Checks the amount of the item in the item stack.
+Compares the number of items in the stack with a number.
 
 Type ID: `apoli:amount`
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|-------------
-`comparison` | Comparison | | Determines how the amount of the item in the item stack should be compared to the specified value.
-`compare_to` | Integer | | The value at which the amount of the item in the item stack will be compared to.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `comparison` | [Comparison](/docs/datapack/data-types/comparison) | _required_ | How the stack size is compared with `compare_to`. |
+| `compare_to` | [Integer](/docs/datapack/data-types/integer) | _required_ | The number the stack size is compared with. |
 
 ## Examples
 
@@ -25,4 +25,4 @@ Field | Type | Default | Description
 }
 ```
 
-This example will check if there are 10 or more items in the item stack.
+This checks whether the stack holds 10 or more items.

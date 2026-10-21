@@ -1,24 +1,25 @@
 ---
 title: "Spawn Entity (Block Action Type)"
-description: "Spawns an entity at the position of the block."
+description: "Spawns an entity at the block's position."
 navigation_title: "Spawn Entity"
 ---
 
-Spawns an entity at the position of the block.
+Spawns an entity at the block's position.
 
 Type ID: `apoli:spawn_entity`
 
-##	Fields
+## Fields
 
-Field | Type | Default | Description
-------|------|---------|------------
-`entity_type` | Identifier | | The ID of the type of entity that will be spawned.
-`tag` | NBT | *optional* | If specified, this NBT data will be applied to the entity that will be spawned.
-`entity_action` | Entity Action Type | *optional* | If specified, this entity action will be executed on the spawned entity.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `entity_type` | [Identifier](/docs/datapack/data-types/identifier) | _required_ | The ID of the entity type to spawn. |
+| `tag` | [NBT](/docs/datapack/data-types/nbt) | _optional_ | NBT data applied to the spawned entity. |
+| `entity_action` | [Entity Action Type](/docs/datapack/entity-actions) | _optional_ | Runs on the spawned entity. |
 
-> The action runs on **any** spawned entity, living or not — markers, arrows, item frames, armour stands.
+> [!NOTE]
+> The action runs on any spawned entity, living or not, including markers, arrows, item frames and armour stands.
 
-##	Examples
+## Examples
 
 ```json
 "block_action": {
@@ -32,4 +33,4 @@ Field | Type | Default | Description
 }
 ```
 
-This example will summon a Vex with the power `apoli:arcane_skin` power with the source as the ID of the example power at the position of the block.
+This summons a vex at the block's position and grants it the `apoli:arcane_skin` power, with the ID of the power the action is written in as the source.

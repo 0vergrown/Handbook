@@ -1,18 +1,18 @@
 ---
 title: "In Block (Entity Condition Type)"
-description: "Checks whether a block that fulfills the specified Block Condition Type is overlapping with the entity's feet."
+description: "Checks whether a block that passes a condition overlaps the entity's feet."
 navigation_title: "In Block"
 ---
 
-Checks whether a block that fulfills the specified Block Condition Type is overlapping with the entity's feet.
+Checks whether a block that passes a block condition overlaps the entity's feet.
 
 Type ID: `apoli:in_block`
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`block_condition` | Block Condition Type | | The block condition type to check for on the block that is overlapping with the entity's feet.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `block_condition` | [Block Condition Type](/docs/datapack/block-conditions) | _required_ | The condition the block at the entity's feet must pass. |
 
 ## Examples
 
@@ -26,7 +26,7 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will check if Grass (foliage) is currently overlapping the entity's feet.
+This checks whether grass (the plant) overlaps the entity's feet.
 
 ```json
 "condition": {
@@ -51,4 +51,4 @@ This example will check if Grass (foliage) is currently overlapping the entity's
 }
 ```
 
-This example will check if there are Sand blocks at the entity's feet and eyes, essentially checking if the entity is buried in sand.
+This checks whether there is sand at the entity's feet and at its eyes, which means it is buried in sand.

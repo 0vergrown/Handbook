@@ -1,20 +1,21 @@
 ---
 title: "Toggle (Entity Action Type)"
-description: "Toggles the state of a power that uses the Toggle (Power Type)."
+description: "Switches a toggle power on or off."
 navigation_title: "Toggle"
 ---
 
-Toggles the state of a power that uses the [Toggle (Power Type)](/docs/datapack/powers/toggle).
+Switches a power that uses the [Toggle power type](/docs/datapack/powers/toggle) on if it is off, and off if it is on.
 
 Type ID: `apoli:toggle`
 
-> Not to be confused with [Toggle (Power Type)](/docs/datapack/powers/toggle).
+> [!NOTE]
+> This is the entity action. For the power type it switches, see [Toggle (Power Type)](/docs/datapack/powers/toggle).
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|-------------
-`power` | Identifier | | The namespace and ID of the power that uses the [Toggle (Power Type)](/docs/datapack/powers/toggle).
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `power` | [Identifier](/docs/datapack/data-types/identifier) | _required_ | The ID of a power that uses the [Toggle power type](/docs/datapack/powers/toggle). |
 
 ## Examples
 
@@ -25,4 +26,4 @@ Field | Type | Default | Description
 }
 ```
 
-This example will toggle the state of the [`origins:phantomize`](https://github.com/apace100/origins-fabric/blob/1.17/src/main/resources/data/origins/powers/phantomize.json) (`data/origins/powers/phantomize.json`) power (e.g: ON --> OFF, OFF --> ON).
+This switches the [`origins:phantomize`](https://github.com/apace100/origins-fabric/blob/1.17/src/main/resources/data/origins/powers/phantomize.json) power (`data/origins/powers/phantomize.json`) to its other state.

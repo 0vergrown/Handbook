@@ -4,17 +4,17 @@ description: "Switches a player's camera to first person, third person from behi
 navigation_title: "Set Perspective"
 ---
 
-Switches a player's camera between first person and the two third-person views, exactly as pressing F5 does. Does nothing to entities that are not players.
+Switches a player's camera between first person and the two third person views, exactly as pressing F5 does. It does nothing to entities that aren't players.
 
 Type ID: `apoli:set_perspective`
 
 ## Fields
 
-| Field | Type | Default | Purpose |
+| Field | Type | Default | Description |
 | --- | --- | --- | --- |
-| `perspective` | String | _required_ | `first_person`, `third_person_back` or `third_person_front`. `third_person` is accepted for `third_person_back`. |
+| `perspective` | [String](/docs/datapack/data-types/string) | _required_ | `first_person`, `third_person_back` or `third_person_front`. `third_person` is accepted for `third_person_back`. |
 
-The player can press F5 again afterwards; this sets the view once rather than locking it. To hold a view, run the action from a power that fires repeatedly, or use [apoli:modify_camera](/docs/datapack/powers/modify_camera).
+The player can press F5 again afterwards, because this sets the view once and doesn't lock it. To hold a view, run the action from a power that fires repeatedly, or use [apoli:modify_camera](/docs/datapack/powers/modify_camera).
 
 The change is applied on the player's client, which needs Apoli installed.
 

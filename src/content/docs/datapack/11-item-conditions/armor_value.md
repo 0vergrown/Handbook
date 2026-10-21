@@ -1,26 +1,22 @@
 ---
 title: "Armor Value (Item Condition Type)"
-description: "Checks whether the item has a certain armor value."
+description: "Compares the item's armor value with a number."
 navigation_title: "Armor Value"
 ---
 
-Checks whether the item has a certain armor value. Non-armor items are considered as having an armor value of 0.
+Compares the item's armor value with a number. Items that aren't armor have an armor value of 0.
 
 Type ID: `apoli:armor_value`
 
-> You can visit these pages to get the armor values for each armor item piece:
->
-> * [Helmet](https://minecraft.wiki/w/Helmet#Defense_points)
-> * [Chestplate](https://minecraft.wiki/w/Chestplate#Defense_points)
-> * [Leggings](https://minecraft.wiki/w/Leggings#Defense_points)
-> * [Boots](https://minecraft.wiki/w/Boots#Defense_points)
+> [!TIP]
+> The Minecraft Wiki lists the armor value of each piece: [Helmet](https://minecraft.wiki/w/Helmet#Defense_points), [Chestplate](https://minecraft.wiki/w/Chestplate#Defense_points), [Leggings](https://minecraft.wiki/w/Leggings#Defense_points) and [Boots](https://minecraft.wiki/w/Boots#Defense_points).
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`comparison` | Comparison | | Determines how the armor value of the item should be compared to the specified value.
-`compare_to` | Integer | | The value at which the armor value of the item will be compared to.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `comparison` | [Comparison](/docs/datapack/data-types/comparison) | _required_ | How the armor value is compared with `compare_to`. |
+| `compare_to` | [Integer](/docs/datapack/data-types/integer) | _required_ | The number the armor value is compared with. |
 
 ## Examples
 
@@ -32,4 +28,4 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will check if the armor item (in this context, a chestplate) has a higher armor value than 3, which is the armor value for the leather chestplate armor item.
+This checks whether the item, here a chestplate, has an armor value above 3, which is the value of a leather chestplate.

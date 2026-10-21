@@ -1,34 +1,26 @@
-<!--
-  TEMPLATE: a condition page (or one condition within a flavour's page).
-  Copy to src/content/docs/datapack/04-conditions/NN-NAME.md
-  Source of truth: condition/builtin/FLAVOUR/*Conditions.java and each condition's codec().
-  FLAVOUR is one of: entity, bientity, block, item, damage, biome, fluid, meta.
--->
 ---
-title: apoli:CONDITION_ID
-description: ONE LINE SAYING WHAT THIS CONDITION TESTS FOR.
+title: "NAME (KIND Condition Type)"
+description: "ONE_SENTENCE_SUMMARY"
+navigation_title: "NAME"
 ---
 
-<!-- One or two sentences. What question does this ask? True when...? -->
-Passes when CONDITION. This is a **FLAVOUR condition**.
+Checks whether WHAT_THE_CONDITION_TESTS.
+
+Type ID: `apoli:TYPE_ID`
 
 ## Fields
 
-| Field     | Type | Default | Purpose       |
-|-----------|------|---------|---------------|
-| `FIELD_A` | TYPE | DEFAULT | WHAT IT DOES. |
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `FIELD` | [DATA_TYPE](/docs/datapack/data-types/DATA_TYPE) | DEFAULT | WHAT_THE_FIELD_DOES |
 
-<!-- Comparison-style conditions take `comparison` + `compare_to`; document those here. -->
-
-## Example
+## Examples
 
 ```json
-{
-  "type": "apoli:CONDITION_ID",
-  "FIELD_A": EXAMPLE_VALUE
+"condition": {
+    "type": "apoli:TYPE_ID",
+    "FIELD": VALUE
 }
 ```
 
-EXPLAIN THE EXAMPLE IN ONE LINE.
-
-<!-- Remember: any condition can be inverted with "inverted": true — don't add a separate "not_x". -->
+WHAT_THE_EXAMPLE_CHECKS

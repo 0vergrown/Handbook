@@ -4,19 +4,19 @@ description: Grants or revokes an advancement, or specific criteria of one.
 navigation_title: "Advancement"
 ---
 
-Grants or revokes an advancement for the player, or just some of its criteria. The two aliases fill in the `revoke` field: `apoli:grant_advancement` sets it to `false`, `apoli:revoke_advancement` sets it to `true`.
+Grants or revokes an advancement for the player, or only some of its criteria. The two aliases fill in the `revoke` field: `apoli:grant_advancement` sets it to `false` and `apoli:revoke_advancement` sets it to `true`.
 
-Type ID: `apoli:advancement` (aliases `apoli:grant_advancement`, `apoli:revoke_advancement`)
+Type ID: `apoli:advancement` (aliases `apoli:grant_advancement` and `apoli:revoke_advancement`)
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|-------------
-`advancement` | [Identifier](/docs/datapack/data-types/identifier) | _optional_ | The advancement to act on. Omit it with `selection: everything` to act on all of them.
-`criterion` | [String](/docs/datapack/data-types/string) | _optional_ | A single criterion name, rather than the whole advancement.
-`criteria` | array of [String](/docs/datapack/data-types/string) | _optional_ | Several criterion names.
-`selection` | [String](/docs/datapack/data-types/string) | `only` | Which advancements are affected: `only` just this one, `through` this one and everything leading to it, `from` this one and everything below it, `until` everything leading to it but not itself, `everything` all advancements.
-`revoke` | [Boolean](/docs/datapack/data-types/boolean) | `false` | Revoke rather than grant. Filled in by the aliases.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `advancement` | [Identifier](/docs/datapack/data-types/identifier) | _optional_ | The advancement to act on. Leave it out with `selection: everything` to act on all of them. |
+| `criterion` | [String](/docs/datapack/data-types/string) | _optional_ | A single criterion name, instead of the whole advancement. |
+| `criteria` | array of [String](/docs/datapack/data-types/string) | _optional_ | Several criterion names. |
+| `selection` | [String](/docs/datapack/data-types/string) | `only` | Which advancements are affected: `only` is just this one, `through` is this one and everything leading to it, `from` is this one and everything below it, `until` is everything leading to it but not itself, and `everything` is all advancements. |
+| `revoke` | [Boolean](/docs/datapack/data-types/boolean) | `false` | Revokes instead of granting. The aliases fill this in. |
 
 ## Examples
 
@@ -29,7 +29,7 @@ Grant one advancement when an origin is chosen:
 }
 ```
 
-Grant a whole branch at once — this one and everything that leads to it, so the tree does not look half-finished:
+Grant a whole branch at once, this advancement and everything that leads to it, so the tree doesn't look half finished:
 
 ```json
 {
@@ -49,7 +49,7 @@ Wipe an origin's progress when the player swaps away from it:
 }
 ```
 
-Tick off one criterion of a multi-step advancement:
+Tick off one criterion of an advancement with several steps:
 
 ```json
 {

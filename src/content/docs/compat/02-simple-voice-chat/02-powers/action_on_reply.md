@@ -4,21 +4,19 @@ description: "Runs a bi-entity action when another player answers the holder in 
 navigation_title: "Action On Reply"
 ---
 
-Held by the **actor**. When another player starts speaking near the holder shortly after the holder spoke, runs a [Bi-Entity Action](/docs/datapack/bientity-actions) with `actor` = the holder and `target` = the responder.
+When another player starts speaking near the holder shortly after the holder spoke, this power runs a [bi-entity action](/docs/datapack/bientity-actions) with the holder as the actor and the responder as the target.
 
 Type ID: `apoli:action_on_reply`
 
 ## Fields
 
-| Field | Type | Default | Purpose |
+| Field | Type | Default | Description |
 | --- | --- | --- | --- |
-| `bientity_action` | Bi-Entity Action | _optional_ | Run with actor = holder, target = responder. |
-| `window` | Integer | `60` | How many ticks after the holder spoke a reply still counts. |
-| `range` | Double | `16.0` | Maximum distance in blocks between holder and responder. |
+| `bientity_action` | [Bi-entity Action Type](/docs/datapack/bientity-actions) | _optional_ | Runs with the holder as the actor and the responder as the target. |
+| `window` | [Integer](/docs/datapack/data-types/integer) | `60` | How many ticks after the holder spoke a reply still counts. |
+| `range` | [Float](/docs/datapack/data-types/float) | `16.0` | The maximum distance in blocks between the holder and the responder. |
 
 ## Example
-
-Answer within three seconds from ten blocks and you get shoved:
 
 ```json
 {
@@ -31,3 +29,5 @@ Answer within three seconds from ten blocks and you get shoved:
   }
 }
 ```
+
+Anyone who answers within three seconds and ten blocks is launched upwards.

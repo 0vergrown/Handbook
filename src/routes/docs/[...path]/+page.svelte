@@ -1,156 +1,95 @@
 <script>
-	import { base } from '$app/paths';
+	import nav from 'virtual:handbook/nav';
 	import { SITE } from '$lib/config.js';
 	import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
-	import OnThisPage from '$lib/components/OnThisPage.svelte';
-	import PageEnd from '$lib/components/PageEnd.svelte';
+	import DocCards from '$lib/components/DocCards.svelte';
+	import Paginator from '$lib/components/Paginator.svelte';
+	import TOC from '$lib/components/TOC.svelte';
+	import TOCCollapsible from '$lib/components/TOCCollapsible.svelte';
 
 	let { data } = $props();
 
 	const doc = $derived(data.doc);
-	const Doc = $derived(data.doc?.component);
 	const section = $derived(data.section);
-
-	const head = $derived(
-		section
-			? {
-					title: `${section.title} • ${section.breadcrumbs[0].title} • ${SITE.name}`,
-					description: `Every page in the ${section.title} section of the ${section.breadcrumbs[0].title} reference.`
-				}
-			: {
-					title: `${doc.title} • ${doc.breadcrumbs[0].title} • ${SITE.name}`,
-					description: doc.description || `${doc.title} — ${SITE.name}`
-				}
-	);
+	const Content = $derived(data.component);
+	const topic = $derived((doc ?? section).topic);
+	const home = $derived(`/docs/${nav.first[topic]}/`);
+	const homeLabel = $derived(`${(doc ?? section).topicTitle} home`);
+	const title = $derived((doc ?? section).title);
+	const description = $derived(doc?.description || section?.description || SITE.description);
 </script>
 
 <svelte:head>
-	<title>{head.title}</title>
-	<meta name="description" content={head.description} />
+	<title>{title} | {SITE.name}</title>
+	<meta name="description" content={description} />
+	<meta property="og:title" content="{title} | {SITE.name}" />
+	<meta property="og:description" content={description} />
 </svelte:head>
 
 {#if section}
-	<article class="doc">
-		<div class="doc-inner">
-			<header>
-				<Breadcrumbs crumbs={section.breadcrumbs.slice(0, -1)} />
-				<h1>{section.title}</h1>
-				<p class="lead">
-					{section.count}
-					{section.count === 1 ? 'page' : 'pages'} in this section.
-				</p>
-			</header>
-
-			{#if section.pages.length}
-				<ul class="index">
-					{#each section.pages as page (page.slug)}
-						<li>
-							<a href="{base}/docs/{page.slug}">
-								<span class="name">{page.navTitle}</span>
-								{#if page.description}<span class="blurb">{page.description}</span>{/if}
-							</a>
-						</li>
+	<div class="row">
+		<div class="col doc-item-col">
+			<div class="doc-item-container">
+				<Breadcrumbs {home} {homeLabel} crumbs={[{ title: section.title }]} />
+				<header>
+					<h1 class="page-title">{section.title}</h1>
+					{#if section.description}
+						<p>{section.description}</p>
+					{/if}
+				</header>
+				<article class="margin-top--lg">
+					{#if section.items.length}
+						<DocCards items={section.items} />
+					{/if}
+					{#each section.groups as group (group.key)}
+						<h2 class="section-group">{group.title}</h2>
+						<DocCards items={group.items} />
 					{/each}
-				</ul>
-			{/if}
-
-			{#each section.groups as group (group.key)}
-				<h2>{group.title}</h2>
-				<ul class="index">
-					{#each group.pages as page (page.slug)}
-						<li>
-							<a href="{base}/docs/{page.slug}">
-								<span class="name">{page.navTitle}</span>
-								{#if page.description}<span class="blurb">{page.description}</span>{/if}
-							</a>
-						</li>
-					{/each}
-				</ul>
-			{/each}
-		</div>
-	</article>
-{:else}
-	<article class="doc">
-		<OnThisPage headings={doc.headings} />
-
-		<div class="doc-inner">
-			<header>
-				<Breadcrumbs crumbs={doc.breadcrumbs.slice(0, -1)} />
-				<h1>{doc.title}</h1>
-				{#if doc.description}
-					<p class="lead">{doc.description}</p>
-				{/if}
-			</header>
-
-			<div class="prose">
-				{#key doc.slug}
-					<Doc />
-				{/key}
+				</article>
+				<Paginator prev={section.prev} next={section.next} />
 			</div>
-
-			<PageEnd prev={doc.prev} next={doc.next} />
 		</div>
-	</article>
+	</div>
+{:else}
+	<div class="row">
+		<div class={['col', doc.headings.length && 'doc-item-col']}>
+			<div class="doc-item-container">
+				<article>
+					<Breadcrumbs {home} {homeLabel} crumbs={doc.breadcrumbs} />
+					<TOCCollapsible headings={doc.headings} />
+					<div class="markdown">
+						<header>
+							<h1>{doc.title}</h1>
+						</header>
+						<Content />
+					</div>
+					<footer class="doc-footer">
+						<a class="edit-this-page" href="{SITE.repo}/edit/main/{doc.source}" target="_blank" rel="noopener noreferrer">
+							<svg fill="currentColor" viewBox="0 0 40 40" aria-hidden="true">
+								<g>
+									<path
+										d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"
+									/>
+								</g>
+							</svg>
+							Edit this page
+						</a>
+					</footer>
+				</article>
+				<Paginator prev={doc.prev} next={doc.next} />
+			</div>
+		</div>
+		{#if doc.headings.length}
+			<div class="col col--3">
+				<TOC headings={doc.headings} />
+			</div>
+		{/if}
+	</div>
 {/if}
 
 <style>
-	.doc {
-		position: relative;
-	}
-	.doc-inner {
-		max-width: var(--sk-page-content-width);
-		margin: 0 auto;
-		padding: var(--sk-page-padding-top) var(--sk-page-padding-side) var(--sk-page-padding-bottom);
-	}
-	header {
-		margin-bottom: 3rem;
-	}
-	h1 {
-		font: var(--sk-font-h1);
-		font-size: clamp(3.2rem, 6vw, 4.4rem);
-		margin-bottom: 1rem;
-	}
-	.lead {
-		font: var(--sk-font-body);
-		font-size: 2rem;
-		color: var(--sk-fg-3);
-		max-width: var(--sk-page-content-width);
-	}
-	h2 {
-		font: var(--sk-font-h2);
-		margin: 4rem 0 1.6rem;
-	}
-	.index {
-		list-style: none;
-		padding: 0;
-		margin: 0;
-		display: grid;
-		gap: 0.8rem;
-		grid-template-columns: repeat(auto-fill, minmax(28rem, 1fr));
-	}
-	.index a {
-		display: flex;
-		flex-direction: column;
-		gap: 0.4rem;
-		height: 100%;
-		padding: 1.2rem 1.6rem;
-		border: 1px solid var(--sk-border);
-		border-radius: var(--sk-border-radius, 0.6rem);
-		background: var(--sk-bg-2);
-		text-decoration: none;
-		color: inherit;
-	}
-	.index a:hover {
-		border-color: var(--sk-fg-accent);
-	}
-	.name {
-		font: var(--sk-font-ui-medium, inherit);
-		font-weight: 600;
-		color: var(--sk-fg-1);
-	}
-	.blurb {
-		font-size: 1.4rem;
-		line-height: 1.5;
-		color: var(--sk-fg-3);
+	.section-group {
+		font-size: 1.5rem;
+		margin: 2rem 0 1rem;
 	}
 </style>

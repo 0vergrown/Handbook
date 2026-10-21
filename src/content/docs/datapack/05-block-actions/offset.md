@@ -1,21 +1,21 @@
 ---
 title: "Offset (Block Action Type)"
-description: "Executes the provided Block Action Type at the position offset from the current position."
+description: "Runs a block action at a position offset from the current one."
 navigation_title: "Offset"
 ---
 
-Executes the provided Block Action Type at the position offset from the current position.
+Runs a block action at a position offset from the current one.
 
 Type ID: `apoli:offset`
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`action` | Block Action Type | | The action to apply with the given offset.
-`x` | Integer | `0` | How much to offset the position on the x-axis.
-`y` | Integer | `0` | How much to offset the position on the y-axis.
-`z` | Integer | `0` | How much to offset the position on the z-axis.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `action` | [Block Action Type](/docs/datapack/block-actions) | _required_ | The action to run at the offset position. |
+| `x` | [Integer](/docs/datapack/data-types/integer) | `0` | The offset on the X axis. |
+| `y` | [Integer](/docs/datapack/data-types/integer) | `0` | The offset on the Y axis. |
+| `z` | [Integer](/docs/datapack/data-types/integer) | `0` | The offset on the Z axis. |
 
 ## Examples
 
@@ -30,4 +30,4 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will offset the position of the [apoli:add_block](/docs/datapack/block-actions/add_block) in the positive Y axis, raising the positional context of the block action to be 1 block above to where it initially was.
+This runs [apoli:add_block](/docs/datapack/block-actions/add_block) one block above the original position.

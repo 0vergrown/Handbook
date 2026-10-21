@@ -1,24 +1,3 @@
-// Content cleanup pass over the docs. Idempotent — safe to re-run.
-//
-//   node scripts/clean-docs.mjs --dry    report what would change
-//   node scripts/clean-docs.mjs          apply
-//
-// What it fixes, all of it left over from the one-shot port:
-//
-//  1. A stray "Power Type" / "Entity Condition Type" line at the top of the
-//     body — a breadcrumb from the source docs. The page title already says it.
-//  2. `description:` frontmatter that is a markdown link ("[Power Type](../powertypes.md)")
-//     rather than a summary. Rebuilt from the page's first real sentence.
-//  3. Type ids written in the legacy `origins:` namespace. Origins aliases the
-//     whole Apoli namespace, so `origins:health` resolves — but `apoli:health`
-//     is what the mod registers, and writing it that way drops the dependency
-//     on Origins. Only `Type ID:` lines and `"type":` values are touched; power
-//     ids, tags, recipes and command arguments keep their namespace, because
-//     `origins:phantomize` really is an Origins data-pack power.
-//  4. `## See also` sections. The prev/next footer already links neighbours.
-//  5. `## Sources` sections, which cite private paths in the author's vault.
-//  6. Links the porter wrapped twice — `[[text](a)](b)` renders as a broken
-//     link with a stray bracket. The inner target is the original one.
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -27,8 +6,6 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DOCS = path.join(ROOT, 'src/content/docs');
 const DRY = process.argv.includes('--dry');
 
-// The type ids Origins itself registers. Everything else under `origins:` is a
-// core Apoli type reached through the namespace alias.
 const ORIGINS_TYPES = new Set([
 	'origin',
 	'copy_origin',
@@ -41,23 +18,19 @@ const ORIGINS_TYPES = new Set([
 	'stored_origin',
 	'stored_value',
 	'origin_tag',
+	'impact',
 	'action_on_swap',
 	'force_swap',
 	'open_swap_menu',
 	'swapped'
 ]);
-// Badge ids collide with core Apoli power ids (`tooltip`), so they only count
-// as Origins types on the pages that document badges.
 const BADGE_TYPES = new Set(['sprite', 'tooltip', 'keybind', 'crafting_recipe']);
 const BADGE_PAGES = /18-origins\/(0\d-badge-types|01-guide\/03-badges)/;
-// The page that explains the alias has to be able to show both spellings.
 const NAMESPACE_EXEMPT = /18-origins\/01-guide\/01-overview\.md$/;
 
 const KIND_LINE =
 	/^(?:Power|Entity Action|Bi-entity Action|Bi-Entity Action|Block Action|Item Action|Meta Action|Entity Condition|Bi-entity Condition|Bi-Entity Condition|Block Condition|Item Condition|Damage Condition|Biome Condition|Fluid Condition|Meta Condition|Data|Badge) Types?$/;
 
-// Descriptions the porter mangled by substituting a link's text with a page
-// title. Too few and too varied to detect; stated outright instead.
 const DESCRIPTION_FIXES = {
 	'datapack/17-skill-tree/02-entity-actions/grant_skill_tree.md':
 		'Grants a skill tree to the player this action runs on.',
@@ -65,16 +38,14 @@ const DESCRIPTION_FIXES = {
 		'Revokes a previously granted skill tree from the player this action runs on.',
 	'datapack/16-data-types/model-part-transformation.md':
 		'A single edit to one named part of a biped model, used by apoli:modify_model_parts.',
-	// the porter also stripped underscores out of field/type names it quoted
 	'datapack/03-entity-actions/inventory_action.md':
-		"Walks the entity's inventory or a power inventory and performs one operation per matching slot — the operation field replaces the separate modify_inventory, replace_inventory and drop_inventory actions.",
+		"Goes through the entity's inventory or a power inventory and does one operation on each matching slot: modify, replace or drop.",
 	'datapack/02-powers/ignore_fluid.md':
-		'Stops the entity being affected by the matching fluid — water by default, but the fluid_condition accepts any.',
+		'The entity moves through a fluid as if it were air. Water by default, and fluid_condition picks any other fluid.',
 	'datapack/10-block-conditions/water_loggable.md':
-		'Checks whether the block is waterloggable, meaning fluid can occupy the same block space (stairs, for example).'
+		'Checks whether the block can be waterlogged, so a fluid can share its space, as with stairs.'
 };
 
-/** Strip markdown links down to their text, however deeply they nest. */
 function delink(s) {
 	let out = s;
 	for (let i = 0; i < 4; i++) {
@@ -85,7 +56,6 @@ function delink(s) {
 	return out.replace(/\[|\]\([^)]*\)/g, '').trim();
 }
 
-/** `[[text](inner)](outer)` -> `[text](inner)` */
 const unwrapNestedLinks = (body) =>
 	body.replace(/\[(\[[^[\]]*\]\([^)]*\))\]\([^)]*\)/g, '$1');
 
@@ -101,7 +71,6 @@ function firstSentence(body) {
 	return null;
 }
 
-/** Drop `## <name>` and everything under it, up to the next h2 or EOF. */
 function dropSection(body, name) {
 	const re = new RegExp(`\\n#{2}\\s+${name}\\s*\\n[\\s\\S]*?(?=\\n## |$)`, 'i');
 	return body.replace(re, '\n');
@@ -118,7 +87,6 @@ function fixNamespace(body, rel) {
 		/("(?:type|power_type)"\s*:\s*")origins:([a-z0-9_]+)"/g,
 		(m, head, id) => (keep(id) ? m : `${head}apoli:${id}"`)
 	);
-	// prose links whose text is a type id but whose target is an Apoli reference page
 	out = out.replace(
 		/\[(`?)origins:([a-z0-9_]+)(`?)\]\((\/docs\/datapack\/(?!origins\/)[^)]*)\)/g,
 		(m, a, id, b, href) => (keep(id) ? m : `[${a}apoli:${id}${b}](${href})`)
@@ -148,7 +116,6 @@ for (const file of files) {
 	let body = raw.slice(m[0].length);
 	const before = raw;
 
-	// 1. stray breadcrumb line
 	const stripped = body.replace(/^\s*\n*/, '');
 	const firstLine = stripped.split(/\r?\n/, 1)[0].trim();
 	if (KIND_LINE.test(firstLine)) {
@@ -156,21 +123,18 @@ for (const file of files) {
 		tally.kindLine++;
 	}
 
-	// 6. double-wrapped links
 	const unwrapped = unwrapNestedLinks(body);
 	if (unwrapped !== body) {
 		body = unwrapped;
 		tally.nestedLinks++;
 	}
 
-	// 3. namespace (before the description is rebuilt from the body)
 	const nsFixed = fixNamespace(body, rel);
 	if (nsFixed !== body) {
 		body = nsFixed;
 		tally.namespace++;
 	}
 
-	// 4 + 5. redundant sections
 	const noSeeAlso = dropSection(body, 'See also');
 	if (noSeeAlso !== body) {
 		body = noSeeAlso;
@@ -182,7 +146,6 @@ for (const file of files) {
 		tally.sources++;
 	}
 
-	// 2. description
 	const descMatch = /^description:\s*(.*)$/m.exec(fm);
 	if (descMatch) {
 		const current = descMatch[1].trim().replace(/^["']|["']$/g, '');
@@ -193,7 +156,6 @@ for (const file of files) {
 		if (forced) next = forced;
 		else if (broken) next = firstSentence(body) ?? cleaned;
 		else if (cleaned !== current) next = cleaned;
-		// a description must never carry link markup, whatever it came from
 		if (next) next = delink(next);
 		if (next && next !== current) {
 			fm = fm.replace(/^description:\s*.*$/m, `description: "${next.replace(/"/g, "'")}"`);

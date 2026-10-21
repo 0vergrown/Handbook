@@ -1,33 +1,33 @@
 ---
 title: "Copy Origin (Bi-Entity Action Type)"
-description: "Bi-entity action — copies the target's chosen origin onto the actor's copy layer."
+description: "Copies the target's chosen origin onto the actor's copy layer."
 navigation_title: "Copy Origin"
 ---
 
-Copies the **target's** chosen origin onto the **actor's** copy layer. Because an origin is just a set of powers granted from its layer as source, this reconciles the actor's `to_layer` to the copied origin's powers in one action — replacing the old approach of scripting a `/origin set` command per possible origin.
+Copies the target's chosen origin onto the actor's copy layer. An origin is a set of powers granted with its layer as the source, so this reconciles the actor's `to_layer` to the copied origin's powers in one action, with no `/origin set` command needed for every possible origin.
 
-This is the copy-only convenience over [`origins:transfer_origin`](/docs/datapack/origins/transfer_origin): it delegates to the same origin-transfer core (which mirrors how [`apoli:transfer`](/docs/datapack/bientity-actions/transfer) moves powers by source) with `mode: steal`, `copy: true`. Reach for `transfer_origin` when you also want to **take** the origin away from the target, or hand yours to them.
+It is the copy-only shortcut for [`origins:transfer_origin`](/docs/datapack/origins/transfer_origin). It runs the same transfer code, which mirrors how [`apoli:transfer`](/docs/datapack/bientity-actions/transfer) moves powers by source, with `mode: steal` and `copy: true`. Use `transfer_origin` when you also want to take the origin away from the target, or give yours to them.
 
-Type ID: `origins:copy_origin` — a [bi-entity action](/docs/datapack/bientity-actions).
+Type ID: `origins:copy_origin`
 
-> **Needs the Origins mod.** Registered by Origins, not core Apoli. Both the actor and the target must be players. If the target has no origin (or it's the "blank"/empty one) in `from_layer`, nothing happens.
+> [!NOTE]
+> This action comes from the Origins mod. Both the actor and the target must be players. If the target has no origin in `from_layer`, or has the empty one, nothing happens.
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`from_layer` | [Identifier](/docs/datapack/data-types/identifier) | `origins:origin` | The layer whose origin is read from the **target**.
-`to_layer` | [Identifier](/docs/datapack/data-types/identifier) | `origins:copy` | The layer set on the **actor** to the copied origin. Its powers are granted from this layer's source, so clearing the actor's `to_layer` (e.g. `/origin set @s origins:copy <blank>`) removes them again — the basis for a temporary copy.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `from_layer` | [Identifier](/docs/datapack/data-types/identifier) | `origins:origin` | The layer whose origin is read from the target. |
+| `to_layer` | [Identifier](/docs/datapack/data-types/identifier) | `origins:copy` | The layer on the actor that is set to the copied origin. Its powers are granted with this layer as the source, so clearing the actor's `to_layer` (for example with `/origin set @s origins:copy origins:empty`) removes them again, which is the basis for a temporary copy. |
+| `origin` | [Identifier](/docs/datapack/data-types/identifier) | _optional_ | Copies exactly this origin. |
+| `selection` | [Selection](/docs/datapack/data-types/selection) | _see below_ | Which of the target's origins on `from_layer` to read: `main`, `active`, `pool` or `all`. |
 
 ## Notes
 
-- The actor's `to_layer` must exist as a real origin layer. The copied origin is applied even if the layer doesn't formally list it, so a dedicated "copy" layer needs no per-origin enumeration.
-- Only the origin's power **grants** are copied (via the layer reconcile), not live resource/cooldown values — the actor's copy starts fresh.
-- To make the copy temporary, drive a resource timer whose `min_action` clears `to_layer` back to your blank origin.
+- The actor's `to_layer` must exist as a real origin layer. The copied origin is applied even if that layer doesn't list it, so a dedicated copy layer doesn't need to list every origin.
+- To make the copy temporary, run a resource timer whose `min_action` clears `to_layer` back to `origins:empty`.
 
 ## Example
-
-Used inside an `action_on_entity_use` so sneaking + using a player copies their main-layer origin onto your copy layer:
 
 ```json
 {
@@ -52,8 +52,10 @@ Used inside an `action_on_entity_use` so sneaking + using a player copies their 
 }
 ```
 
+With this power, using another player copies their main layer origin onto your copy layer and plays an amethyst sound.
+
 ## Picking which origin to copy
 
-Like [`origins:transfer_origin`](/docs/datapack/origins/transfer_origin), this action accepts `origin` (copy exactly this one) and a [`selection`](/docs/datapack/data-types/selection) (`main`, `active`, `pool` or `all` — which of the target's origins on `from_layer` to read). Both default to the target's chosen origin on `from_layer`, or that layer's swap pool when `from_layer` is itself swappable.
+Like [`origins:transfer_origin`](/docs/datapack/origins/transfer_origin), this action takes `origin`, which copies exactly that origin, and a [`selection`](/docs/datapack/data-types/selection) that says which of the target's origins on `from_layer` to read (`main`, `active`, `pool` or `all`). Without either, it reads the target's chosen origin on `from_layer`, or that layer's swap pool when `from_layer` is itself swappable.
 
-The copy carries the target's **resource values** with it: a resource bar, cooldown or toggle arrives at the value the target is holding it at, not at its starting value. Stored `apoli:inventory` contents are left behind, since copying those would duplicate items.
+The copy brings the target's resource values with it, so a resource bar, cooldown or toggle arrives at the value the target has instead of its starting value. Stored `apoli:inventory` contents stay behind, since copying them would duplicate items.

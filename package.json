@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "The Handbook — documentation for the Apoli power engine and the Origins addon.",
+  "description": "Documentation for Apoli, a data-driven power engine for Minecraft, and Origins, the mod built on it.",
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",
@@ -23,9 +23,6 @@
     "vite": "^5.4.11"
   },
   "dependencies": {
-    "@fontsource/dm-serif-display": "^5.3.0",
-    "@fontsource/fira-mono": "^5.3.0",
-    "@fontsource/fira-sans": "^5.3.0",
     "github-slugger": "^2.0.0"
   }
 }

@@ -1,20 +1,20 @@
 ---
 title: "Biome (Entity Condition Type)"
-description: "Checks whether the entity is in a specified biome."
+description: "Checks whether the entity is in a given biome, one of several biomes, or a biome that passes a condition."
 navigation_title: "Biome"
 ---
 
-Checks whether the entity is in a specified biome.
+Checks whether the entity is in a given biome, one of several biomes, or a biome that passes a biome condition.
 
 Type ID: `apoli:biome`
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`biome` | Identifier | _optional_ | If specified, only evaluate the condition to true if the biome the entity is in matches the specified namespace and ID.
-`biomes` | Array of Identifiers | _optional_ | If specified, only evaluate the condition to true if the biome the entity is in matches one of the specified namespace and IDs.
-`condition` | Biome Condition Type | _optional_ | If specified, only evaluate the condition to true if the biome the entity is in fulfills the specified biome condition type.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `biome` | [Identifier](/docs/datapack/data-types/identifier) | _optional_ | The ID of the biome the entity must be in. |
+| `biomes` | [Array](/docs/datapack/data-types/array) of Identifiers | _optional_ | Several biome IDs. The entity must be in one of them. |
+| `condition` | [Biome Condition Type](/docs/datapack/biome-conditions) | _optional_ | The biome the entity is in must pass this condition. |
 
 ## Examples
 
@@ -25,7 +25,7 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will check if the entity is currently in a Plains biome.
+This checks whether the entity is in a plains biome.
 
 ```json
 "condition": {
@@ -37,4 +37,4 @@ This example will check if the entity is currently in a Plains biome.
 }
 ```
 
-This example will check if the entity is currently in a Forest-like biome (any biome in the `minecraft:is_forest` biome tag, through the [apoli:in_tag](/docs/datapack/biome-conditions/in_tag) biome condition).
+This checks whether the entity is in a forest-like biome, meaning any biome in the `minecraft:is_forest` biome tag, through the [apoli:in_tag](/docs/datapack/biome-conditions/in_tag) biome condition.

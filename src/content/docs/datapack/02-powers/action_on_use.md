@@ -1,31 +1,31 @@
 ---
 title: "Action On Use (Power Type)"
-description: "Executes an action when one entity right-clicks another."
+description: "Runs an action when one entity right-clicks another."
 navigation_title: "Action On Use"
 aliases: ["action_on_entity_use", "action_on_being_used"]
 ---
 
-Executes an action when one entity right-clicks another. The same power type covers both sides of the interaction — toggle with `target_used`.
+Runs an action when one entity right-clicks another. One power type covers both sides of the interaction, and `target_used` picks the side.
 
 Type ID: `apoli:action_on_use`
 
-> Aliases the two legacy ids: `apoli:action_on_entity_use` (`target_used` defaults to `false`) and `apoli:action_on_being_used` (`target_used` defaults to `true`). Old data packs using either id load unchanged.
+It is also reached through two legacy IDs: `apoli:action_on_entity_use` (`target_used` defaults to `false`) and `apoli:action_on_being_used` (`target_used` defaults to `true`). Old data packs using either ID load unchanged.
 
-> When `target_used` is `false` (entity-use side), the `actor` is the entity that has the power and `target` is the entity that was right-clicked. When `target_used` is `true` (being-used side), the `actor` is the entity that did the right-clicking and `target` is the entity that has the power. In both cases, `actor` = the right-clicker and `target` = the entity being right-clicked.
+The actor is always the entity doing the right-clicking and the target is the entity being right-clicked. With `target_used: false` the actor is the entity with the power, and with `target_used: true` the target is.
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|-------------
-`bientity_action` | Bi-entity Action Type | _optional_ | If specified, run on the actor/target pair.
-`held_item_action`| Item Action Type | _optional_ | If specified, run on the actor's held stack in the hand that triggered the use.
-`result_item_action` | Item Action Type | _optional_ | If specified, run on `result_stack` before it is given to the actor. Does nothing without `result_stack` — to change the item in hand, use `held_item_action`.
-`bientity_condition` | Bi-entity Condition Type | _optional_ | Gate: only run if this passes for the actor/target pair.
-`item_condition` | Item Condition Type | _optional_ | Gate: only run if this passes for the actor's held stack.
-`hands`| [Array](/docs/datapack/data-types/array) of [Hand](/docs/datapack/data-types/hand) | `["off_hand", "main_hand"]` | Which hand(s) of the actor are allowed to trigger this power.
-`result_stack`| [Item Stack](/docs/datapack/data-types/item-stack) | _optional_ | If specified, this stack is given to the actor (replacing the held stack if empty, otherwise added to inventory or dropped).
-`action_result` | [Action Result](/docs/datapack/data-types/action-result) | `"success"` | The InteractionResult returned to the engine when this power fires.
-`target_used` | [Boolean](/docs/datapack/data-types/boolean) | `false` | `false` = listen on the actor side (entity-use); `true` = listen on the target side (being-used). Authored automatically when using the legacy aliases.
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `bientity_action` | [Bi-entity Action Type](/docs/datapack/bientity-actions) | _optional_ | If set, this runs on the actor and target pair. |
+| `held_item_action` | [Item Action Type](/docs/datapack/item-actions) | _optional_ | If set, this runs on the stack in the actor's hand that triggered the use. |
+| `result_item_action` | [Item Action Type](/docs/datapack/item-actions) | _optional_ | If set, this runs on `result_stack` before the actor gets it. Without `result_stack` it does nothing, so to change the item in hand, use `held_item_action`. |
+| `bientity_condition` | [Bi-entity Condition Type](/docs/datapack/bientity-conditions) | _optional_ | The actions only run if this passes for the actor and target pair. |
+| `item_condition` | [Item Condition Type](/docs/datapack/item-conditions) | _optional_ | The actions only run if this passes for the actor's held stack. |
+| `hands` | [Array](/docs/datapack/data-types/array) of [Hand](/docs/datapack/data-types/hand) | `["off_hand", "main_hand"]` | The actor's hands that can trigger this power. |
+| `result_stack` | [Item Stack](/docs/datapack/data-types/item-stack) | _optional_ | If set, this stack is given to the actor. It replaces the held stack if that is empty, and otherwise goes into the inventory or is dropped. |
+| `action_result` | [Action Result](/docs/datapack/data-types/action-result) | `"success"` | The interaction result returned to the game when this power fires. |
+| `target_used` | [Boolean](/docs/datapack/data-types/boolean) | `false` | `false` listens on the actor's side (using another entity), and `true` listens on the target's side (being used). The legacy aliases set it for you. |
 
 ## Examples
 
@@ -46,7 +46,7 @@ Field | Type | Default | Description
 }
 ```
 
-Player with this power can right-click any entity (empty main hand, not sneaking) to mount it. Equivalent to the legacy `apoli:action_on_entity_use` form.
+A player with this power can ride any entity by right-clicking it with an empty main hand while not sneaking. This is the same as the legacy `apoli:action_on_entity_use` form.
 
 ```json
 {
@@ -65,4 +65,4 @@ Player with this power can right-click any entity (empty main hand, not sneaking
 }
 ```
 
-The entity with this power can be mounted by right-clicking it, unless it already has a passenger. Equivalent to the legacy `apoli:action_on_being_used` form.
+Others can ride the entity with this power by right-clicking it, unless it already has a passenger. This is the same as the legacy `apoli:action_on_being_used` form.

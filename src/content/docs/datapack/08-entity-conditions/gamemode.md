@@ -1,22 +1,24 @@
 ---
 title: "Gamemode (Entity Condition Type)"
-description: "Checks the gamemode of the entity."
+description: "Checks which game mode the player is in."
 navigation_title: "Gamemode"
 ---
 
-Checks the gamemode of the entity.
+Checks which game mode the entity is in.
 
 Type ID: `apoli:gamemode`
 
-> **This entity condition type will only work on players.**
+> [!NOTE]
+> This condition only works on players.
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`gamemode` | String | | One of `survival`, `creative`, `adventure`, `spectator`. The gamemode the player must be in for this condition to evaluate to true.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `gamemode` | [String](/docs/datapack/data-types/string) | _required_ | The game mode the player must be in: `survival`, `creative`, `adventure` or `spectator`. |
 
-> On the client — which is where powers that only draw something evaluate their `condition`, such as [apoli:overlay](/docs/datapack/powers/overlay) or [apoli:shaking](/docs/datapack/powers/shaking) — `spectator` and `creative` are exact for every player, but a *different* player in adventure mode reads as `survival` there, because another player's build permissions are not sent to your client. Your own gamemode is always exact.
+> [!WARNING]
+> Powers that only draw something, such as [apoli:overlay](/docs/datapack/powers/overlay) or [apoli:shaking](/docs/datapack/powers/shaking), evaluate their `condition` on the client. There, `spectator` and `creative` are exact for every player, but another player in adventure mode reads as `survival`, because other players' build permissions aren't sent to your client. Your own game mode is always exact.
 
 ## Examples
 
@@ -27,4 +29,4 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will check if the player is in Creative Mode.
+This checks whether the player is in Creative mode.

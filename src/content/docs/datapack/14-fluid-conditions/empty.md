@@ -1,16 +1,16 @@
 ---
 title: "Empty (Fluid Condition Type)"
-description: "Checks whether there is no fluid in this state."
+description: "Checks whether there is no fluid at all."
 navigation_title: "Empty"
 ---
 
-Checks whether there is no fluid in this state.
+Checks whether there is no fluid at all.
 
 Type ID: `apoli:empty`
 
 ## Fields
 
-_None._
+This condition has no fields.
 
 ## Examples
 

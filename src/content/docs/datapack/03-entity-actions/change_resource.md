@@ -1,28 +1,28 @@
 ---
 title: "Change Resource (Entity Action Type)"
-description: "Legacy action that changes the value of a Resource or Cooldown."
+description: "Legacy action that changes the value of a resource or cooldown."
 navigation_title: "Change Resource"
 ---
 
-Legacy action that changes the value of a [apoli:resource](/docs/datapack/powers/resource) or [apoli:cooldown](/docs/datapack/powers/cooldown). **Use [apoli:modify_resource](/docs/datapack/entity-actions/modify_resource) for new packs** — Change Resource is preserved only for back-compat.
+A legacy action that changes the value of an [apoli:resource](/docs/datapack/powers/resource) or [apoli:cooldown](/docs/datapack/powers/cooldown). Use [apoli:modify_resource](/docs/datapack/entity-actions/modify_resource) in new packs. This action is kept so older packs keep working.
 
-Type ID: `apoli:change_resource` (also accepted: `origins:change_resource`, both alias to `apoli:modify_resource` under the hood)
+Type ID: `apoli:change_resource` (`origins:change_resource` is accepted too). Both are read as `apoli:modify_resource`.
 
-## Why this page still exists
+## Legacy packs
 
-In Apace's Apoli, `origins:change_resource` came first; `apoli:modify_resource` was added later as a richer replacement. Many existing data packs cite the old name and the old field shape, so this rewrite recognizes both.
+Many existing data packs written for Apace's Apoli use `origins:change_resource` with its old field shape, so this Apoli reads both names.
 
-The runtime treats `apoli:change_resource` as a type-alias of `apoli:modify_resource` AND auto-translates the `change` / `operation` fields into a synthesized `modifier`. You don't have to update old packs — they just keep working.
+`apoli:change_resource` is a type alias of `apoli:modify_resource`, and its `change` and `operation` fields are translated into a `modifier` when the pack loads. Old packs don't need updating.
 
-## Fields (legacy schema, still accepted)
+## Fields (legacy schema)
 
 | Field | Type | Default | Description |
-|-------|------|---------|-------------|
-| `resource` | [Identifier](/docs/datapack/data-types/identifier) | | The target Resource/Cooldown power. |
-| `change` | [Integer](/docs/datapack/data-types/integer) OR [Expression](/docs/datapack/data-types/expression) | | The amount; never exceeds the resource's `min`/`max` when `enforce_limits` is true. As an Expression it is evaluated each time the action runs, with `value` bound to the resource's current value. |
-| `operation` | [String](/docs/datapack/data-types/string) — `"add"` or `"set"` | `"add"` | `"add"` translates to `add_base_early`; `"set"` translates to `set_base`. |
+| --- | --- | --- | --- |
+| `resource` | [Identifier](/docs/datapack/data-types/identifier) | _required_ | The resource or cooldown power to change. |
+| `change` | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | _required_ | The amount. The result never goes past the resource's `min` or `max` while `enforce_limits` is on. An expression is evaluated each time the action runs, with `value` bound to the resource's current value. |
+| `operation` | [String](/docs/datapack/data-types/string) (`"add"` or `"set"`) | `"add"` | `"add"` becomes `add_base_early` and `"set"` becomes `set_base`. |
 
-## Example (kept verbatim from Apace's docs — still valid)
+## Examples
 
 ```json
 "entity_action": {
@@ -32,7 +32,7 @@ The runtime treats `apoli:change_resource` as a type-alias of `apoli:modify_reso
 }
 ```
 
-This adds 1 to the `namespace:example` (`data/namespace/powers/example.json`) [apoli:resource](/docs/datapack/powers/resource).
+This adds 1 to the `namespace:example` [apoli:resource](/docs/datapack/powers/resource) (`data/namespace/powers/example.json`).
 
 `change` also accepts an [Expression](/docs/datapack/data-types/expression):
 
@@ -45,4 +45,4 @@ This adds 1 to the `namespace:example` (`data/namespace/powers/example.json`) [a
 }
 ```
 
-This tops the resource up by a tenth of its own maximum. `value` is bound to the resource's current value, and `<id>_max` / `<id>_min` read any resource's bounds.
+This tops the resource up by a tenth of its own maximum. `value` is bound to the resource's current value, and `<id>_max` and `<id>_min` read any resource's limits.

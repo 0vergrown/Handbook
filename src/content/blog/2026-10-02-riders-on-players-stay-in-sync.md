@@ -5,13 +5,13 @@ date: 2026-10-02
 author: Overgrown
 ---
 
-Apoli **1.107.1** and Origins **1.46.13**. Origins has no changes of its own this time; it is built against the new Apoli.
+This is Apoli 1.107.1 and Origins 1.46.13. Origins has no changes of its own this time, and is built against the new Apoli.
 
 ## Sneaking off a player
 
-A rider placed on a player with [`apoli:mount`](/docs/datapack/bientity-actions/mount) could get off with the sneak key, but the player being ridden never found out. Their screen kept drawing the rider on top of them after it had left. [`apoli:dismount`](/docs/datapack/entity-actions/dismount) did not have the problem, which is why it looked like a sneak bug.
+A rider placed on a player with [`apoli:mount`](/docs/datapack/bientity-actions/mount) could get off with the sneak key, but the player being ridden never found out, and their screen kept drawing the rider on top of them after it had left. [`apoli:dismount`](/docs/datapack/entity-actions/dismount) didn't have the problem, which is why it looked like a bug with sneaking.
 
-The cause is in vanilla. When a vehicle's passengers change, the server tells every player *watching* the vehicle, and a player never watches themselves. Vanilla never needed to, because nothing in vanilla rides a player. Apoli now tells the carried player as well, whatever ended the ride.
+The cause is in vanilla. When a vehicle's passengers change, the server tells every player watching the vehicle, and a player never watches themselves. Vanilla never needed to, because nothing in vanilla rides a player. Apoli now tells the carried player as well, whatever ended the ride.
 
 ## Mount offsets show for everyone
 

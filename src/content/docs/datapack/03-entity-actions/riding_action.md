@@ -1,23 +1,24 @@
 ---
 title: "Riding Action (Entity Action Type)"
-description: "Executes an action on the entity/entities that's being ridden by the entity."
+description: "Runs an action on the entity this entity is riding."
 navigation_title: "Riding Action"
 ---
 
-Executes an action on the entity/entities that's being ridden by the entity.
+Runs an action on the entity this entity is riding.
 
 Type ID: `apoli:riding_action`
 
-> Not to be confused with [Passenger Action](/docs/datapack/entity-actions/passenger_action).
+> [!NOTE]
+> For the opposite direction, the entities riding this one, see [Passenger Action](/docs/datapack/entity-actions/passenger_action).
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|-------------
-`action` | Entity Action Type | _optional_ | If specified, this action will be executed on the entity being ridden.
-`bientity_action` | Bi-entity Action Type | _optional_ | If specified, this action will be executed on either the 'actor' (the passenger entity) or the 'target' (the entity being ridden) or both.
-`bientity_condition` | Bi-entity Condition Type | _optional_ | If specified, only execute the specified actions if this condition is fulfilled by either the 'actor' (the passenger entity) or the 'target' (entity being ridden) or both.
-`recursive` | Boolean | `false` | If set to `true`, the specified action(s) will be executed on all entities that are being ridden.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `action` | [Entity Action Type](/docs/datapack/entity-actions) | _optional_ | Runs on the entity being ridden. |
+| `bientity_action` | [Bi-entity Action Type](/docs/datapack/bientity-actions) | _optional_ | Runs with the passenger as the actor and the entity being ridden as the target. |
+| `bientity_condition` | [Bi-entity Condition Type](/docs/datapack/bientity-conditions) | _optional_ | The actions only run when this passes, with the passenger as the actor and the entity being ridden as the target. |
+| `recursive` | [Boolean](/docs/datapack/data-types/boolean) | `false` | With `true`, the actions run on every entity further down the stack as well, not only the one the entity rides directly. |
 
 ## Examples
 
@@ -35,4 +36,4 @@ Field | Type | Default | Description
 }
 ```
 
-This example will apply a Speed II status effect to the entity that is currently being ridden by the entity that executed the entity action type.
+This gives Speed II for 5 seconds to the entity that the entity running the action is riding.

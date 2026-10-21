@@ -1,17 +1,17 @@
 ---
 title: "Action Result (Data Type)"
-description: "A String used to indicate the result of a certain action."
+description: "A string that gives the result of an action, such as success or pass."
 navigation_title: "Action Result"
 ---
 
-A [String](/docs/datapack/data-types/string) used to indicate the result of a certain action.
+A [String](/docs/datapack/data-types/string) that gives the result of an action.
 
-##	Values
+## Values
 
-Value				|	Description
---------------------|--------------
-`consume_partial`	|	Indicates that the action is performed but the actor's hand is not swung and no statistic is incremented.
-`consume`			|	Indicates that the action is performed but the actor's hand is not swung.
-`fail`				|	Indicates that the action is **not** performed and prevents other actions from performing.
-`pass`				|	Indicates that the action is **not** performed but allows other actions to perform.
-`success`			|	Indicates that the action is performed and the actor's hand is swung.
+| Value | Description |
+| --- | --- |
+| `consume_partial` | The action happens, but the actor's hand doesn't swing and no statistic goes up. |
+| `consume` | The action happens, but the actor's hand doesn't swing. |
+| `fail` | The action doesn't happen, and other actions are stopped too. |
+| `pass` | The action doesn't happen, but other actions can still happen. |
+| `success` | The action happens and the actor's hand swings. |

@@ -4,24 +4,24 @@ description: "Swaps the positions of the actor and the target."
 navigation_title: "Swap"
 ---
 
-Swaps the positions of the actor and the target: each ends up where the other one was, across dimensions if they were in different ones.
+Swaps the positions of the actor and the target, so each ends up where the other one was, across dimensions if they were in different ones.
 
 Type ID: `apoli:swap`
 
-This is [apoli:teleport_to](/docs/datapack/bientity-actions/teleport_to) with `swap` already on, and it takes every field that one does — the offset, the landing conditions and the success and fail actions all work the same way.
+This is [apoli:teleport_to](/docs/datapack/bientity-actions/teleport_to) with `swap` already on, and it takes every field that one does. The offset, the landing conditions and the success and fail actions all work the same way.
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`swap` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Setting this to `false` turns the action back into a plain `apoli:teleport_to`. _Alias: `swap_position`._
-`x`, `y`, `z` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | `0` | An offset applied to where the **actor** lands. The target still lands exactly where the actor was.
-`space` | [Space](/docs/datapack/data-types/space) | `world` | Which axes the offset is measured along.
-`landing_block_condition` | Block Condition Type | _optional_ | If specified, the swap only happens when the block **below** the actor's destination fulfills this condition.
-`landing_condition` | Entity Condition Type | _optional_ | If specified, the swap only happens when the actor would fulfill this condition at the destination.
-`loaded_chunks_only` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Whether the swap is refused when the destination chunk is not loaded.
-`success_action` | Bi-Entity Action Type | _optional_ | Runs with the same pair once both have arrived.
-`fail_action` | Bi-Entity Action Type | _optional_ | Runs when the swap is refused.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `swap` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Setting this to `false` turns the action back into a plain `apoli:teleport_to`. `swap_position` is accepted as an alias. |
+| `x`, `y`, `z` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | `0` | An offset applied to where the actor lands. The target still lands exactly where the actor was. |
+| `space` | [Space](/docs/datapack/data-types/space) | `world` | Which axes the offset is measured along. |
+| `landing_block_condition` | [Block Condition Type](/docs/datapack/block-conditions) | _optional_ | The swap only happens when the block below the actor's destination passes this condition. |
+| `landing_condition` | [Entity Condition Type](/docs/datapack/entity-conditions) | _optional_ | The swap only happens when the actor would pass this condition at the destination. |
+| `loaded_chunks_only` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Whether the swap is refused when the destination chunk isn't loaded. |
+| `success_action` | [Bi-entity Action Type](/docs/datapack/bientity-actions) | _optional_ | Runs with the same pair once both have arrived. |
+| `fail_action` | [Bi-entity Action Type](/docs/datapack/bientity-actions) | _optional_ | Runs when the swap is refused. |
 
 ## Examples
 
@@ -61,4 +61,5 @@ Hitting something trades places with it.
 
 A thrown eye that changes places with whoever it hits and leaves them dizzy.
 
-> If [apoli:prevent_teleport](/docs/datapack/powers/prevent_teleport) stops the **actor**, nothing moves at all. If it stops only the target, the actor still arrives and the target stays put — a one-way trip rather than a swap.
+> [!NOTE]
+> If [apoli:prevent_teleport](/docs/datapack/powers/prevent_teleport) stops the actor, nothing moves at all. If it only stops the target, the actor still arrives and the target stays put, which makes it a one-way trip instead of a swap.

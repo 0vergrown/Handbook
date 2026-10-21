@@ -1,10 +1,11 @@
 ---
 title: "Array (Data Type)"
-description: "Arrays are lists of other existing data types."
+description: "A list of values of another data type, in square brackets."
 navigation_title: "Array"
 ---
 
-Arrays are lists of other existing data types. They are enclosed by square brackets and each element is separated from the next by a comma.
+A list of values of another data type. It is enclosed in square brackets, with a comma between each element and the next.
+
 ## Examples
 
 ```json
@@ -15,7 +16,7 @@ Arrays are lists of other existing data types. They are enclosed by square brack
 ]
 ```
 
-An array of Strings (Data Type)
+An array of strings.
 
 ```json
 "conditions": [
@@ -28,4 +29,4 @@ An array of Strings (Data Type)
 ]
 ```
 
-An array of Entity Condition Types.
+An array of entity condition types.

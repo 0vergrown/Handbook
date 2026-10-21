@@ -1,20 +1,20 @@
 ---
 title: "Attribute (Entity Condition Type)"
-description: "Applies a check towards a specific attribute value of the entity."
+description: "Compares the total value of one of the entity's attributes with a number."
 navigation_title: "Attribute"
 ---
 
-Applies a check towards a specific attribute value of the entity.
+Compares the total value of one of the entity's attributes with a number.
 
 Type ID: `apoli:attribute`
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`attribute` | Identifier | |  ID of the attribute of which the value should be checked. See [Minecraft Wiki: Attribute (Attributes)](https://minecraft.wiki/w/Attribute#Attributes) for a list of vanilla attributes that can be checked for.
-`comparison` | Comparison | |  Determines how the attribute's total value should be compared to the specified value.
-`compare_to` | Float | | The value at which the attribute's total value will be compared to.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `attribute` | [Identifier](/docs/datapack/data-types/identifier) | _required_ | The ID of the attribute to check. [Minecraft Wiki: Attribute (Attributes)](https://minecraft.wiki/w/Attribute#Attributes) lists the vanilla attributes. |
+| `comparison` | [Comparison](/docs/datapack/data-types/comparison) | _required_ | How the attribute's total value is compared with `compare_to`. |
+| `compare_to` | [Float](/docs/datapack/data-types/float) | _required_ | The number the attribute's total value is compared with. |
 
 ## Examples
 
@@ -27,4 +27,4 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will check if the value of the entity's `minecraft:generic.armor` attribute is 10 or more.
+This checks whether the entity's `minecraft:generic.armor` attribute is 10 or more.

@@ -1,23 +1,23 @@
 ---
 title: "Modify Projectile Damage (Power Type)"
-description: "Modifies how much damage the projectile of the entity that has the power deals."
+description: "Changes how much damage the entity's projectiles deal."
 navigation_title: "Modify Projectile Damage"
 ---
 
-Modifies how much damage the projectile of the entity that has the power deals.
+Changes how much damage projectiles fired by the entity with the power deal.
 
 Type ID: `apoli:modify_projectile_damage`
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`damage_condition` | Damage Condition Type | _optional_ | If specified, the specified modifier(s) and action(s) will only apply if the dealt damage fulfills by this condition.
-`modifier` | Attribute Modifier | _optional_ | If specified, this modifier will apply to the damage amount.
-`modifiers` | Array of Attribute Modifiers | _optional_ | If specified, these modifiers will apply to the damage amount.
-`target_condition` | Entity Condition Type | _optional_ | If specified, the specified modifier(s) and action(s) will only apply if the the entity that has been hit fulfills this condition.
-`self_action` | Entity Action Type | _optional_ | If specified, this action will be executed on the 'actor' entity (the entity that has the power) whenever the modifier(s) are applied.
-`target_action` | Entity Action Type | _optional_ | If specified, this action will be executed on the the entity that has been hit whenever the modifier(s) are applied.
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `damage_condition` | [Damage Condition Type](/docs/datapack/damage-conditions) | _optional_ | If set, the modifiers and actions only apply when the damage passes this condition. |
+| `modifier` | [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) | _optional_ | If set, this modifier is applied to the damage. |
+| `modifiers` | [Array](/docs/datapack/data-types/array) of [Attribute Modifiers](/docs/datapack/data-types/attribute-modifier) | _optional_ | If set, these modifiers are applied to the damage. |
+| `target_condition` | [Entity Condition Type](/docs/datapack/entity-conditions) | _optional_ | If set, the modifiers and actions only apply when the entity that was hit passes this condition. |
+| `self_action` | [Entity Action Type](/docs/datapack/entity-actions) | _optional_ | If set, this action runs on the entity with the power whenever the modifiers are applied. |
+| `target_action` | [Entity Action Type](/docs/datapack/entity-actions) | _optional_ | If set, this action runs on the entity that was hit whenever the modifiers are applied. |
 
 ## Examples
 
@@ -35,4 +35,4 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will modify the damage of the Spectral Arrow projectile entity shot by the entity that has the power to deal additional 4 hearts of damage.
+This makes spectral arrows shot by the entity deal 4 extra hearts of damage.

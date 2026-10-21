@@ -1,20 +1,21 @@
 ---
 title: "Riding (Entity Condition Type)"
-description: "Checks whether the 'actor' entity is directly riding the 'target' entity."
+description: "Checks whether the entity is riding another entity directly, optionally one that passes a condition."
 navigation_title: "Riding"
 ---
 
-Checks whether the '**actor**' entity is directly riding the '**target**' entity.
+Checks whether the entity is directly riding another entity.
 
 Type ID: `apoli:riding`
 
-> In the context for this entity condition type, the '**actor**' entity is the passenger and the entity that invoked the condition while the '**target**' entity is the entity that is being ridden.
+> [!NOTE]
+> For `bientity_condition`, the actor is the passenger, which is the entity the condition is checked on, and the target is the entity being ridden.
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|-------------
-`bientity_condition` | Bi-entity Condition Type | _optional_ | If specified, this condition type will only evaluate to true if this condition is fulfilled by either or both the '**actor**' and '**target**' entities.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `bientity_condition` | [Bi-entity Condition Type](/docs/datapack/bientity-conditions) | _optional_ | The condition only passes if the pair of entities also passes this. |
 
 ## Examples
 
@@ -24,7 +25,7 @@ Field | Type | Default | Description
 }
 ```
 
-This example will check if the '**actor**' entity is riding an entity.
+This checks whether the entity is riding anything.
 
 ```json
 "condition": {
@@ -39,4 +40,4 @@ This example will check if the '**actor**' entity is riding an entity.
 }
 ```
 
-This example will check if the '**actor**' entity is currently riding a minecart ('**target**' entity).
+This checks whether the entity is riding a minecart.

@@ -4,17 +4,17 @@ description: Passes when the item is meat.
 navigation_title: "Meat"
 ---
 
-Passes when the stack is edible **and** counts as meat — the same set of foods a wolf will accept.
+Passes when the stack is edible and counts as meat, the same set of foods a wolf accepts.
 
 Type ID: `apoli:meat`
 
 ## Fields
 
-This type has no fields.
+This condition has no fields.
 
 ## Example
 
-A vegetarian origin that cannot bring itself to eat meat:
+A vegetarian origin that can't bring itself to eat meat:
 
 ```json
 {
@@ -25,7 +25,7 @@ A vegetarian origin that cannot bring itself to eat meat:
 }
 ```
 
-Or the reverse — a carnivore who gets nothing out of anything else:
+Or the reverse, a carnivore that gets nothing out of anything else:
 
 ```json
 {
@@ -39,4 +39,5 @@ Or the reverse — a carnivore who gets nothing out of anything else:
 }
 ```
 
-> On 1.21.1 this matches the `c:foods/meat` convention tag as well as vanilla's meat items, so items added by other mods that tag themselves correctly are included.
+> [!NOTE]
+> On 1.21.1 this also matches the `c:foods/meat` convention tag as well as vanilla's meat items, so items from other mods that tag themselves correctly are included.

@@ -1,16 +1,16 @@
 ---
 title: "Riding (Bi-Entity Condition Type)"
-description: "Checks if the actor entity is currently riding the target entity."
+description: "Checks whether the actor is riding the target."
 navigation_title: "Riding"
 ---
 
-Checks if the actor entity is currently riding the target entity.
+Checks whether the actor is riding the target directly.
 
 Type ID: `apoli:riding`
 
 ## Fields
 
-_None._
+This condition has no fields.
 
 ## Examples
 

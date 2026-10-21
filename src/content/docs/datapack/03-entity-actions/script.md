@@ -4,23 +4,22 @@ description: Runs a script against one entity.
 navigation_title: "Script"
 ---
 
-Runs a script against one entity. Use it when the behaviour you want has no shape in JSON — picking a target out of a list, remembering something between calls, or branching on state Apoli has no condition for.
+Runs a script against one entity. Use it when the behaviour you want has no shape in JSON, such as picking a target out of a list, remembering something between calls, or branching on state Apoli has no condition for.
 
 Type ID: `apoli:script`
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|-------------
-`script` | [Identifier](/docs/datapack/data-types/identifier) | **required** | The script to run. Either an id registered from KubeJS with `ApoliEvents`, or the path of a `.js` file shipped in a data pack at `data/<namespace>/apoli/scripts/<path>.js` — in which case the `.js` is part of the id.
-`params` | [NBT](/docs/datapack/data-types/nbt) | _optional_ | Values handed to the script. Read them with `event.params` from KubeJS, or `params` inside a data pack script. This is how one script serves several powers.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `script` | [Identifier](/docs/datapack/data-types/identifier) | _required_ | The script to run. Either an ID registered from KubeJS with `ApoliEvents`, or the path of a `.js` file shipped in a data pack at `data/<namespace>/apoli/scripts/<path>.js`, in which case the `.js` is part of the ID. |
+| `params` | [NBT](/docs/datapack/data-types/nbt) | _optional_ | Values handed to the script. Read them with `event.params` from KubeJS, or `params` inside a data pack script. This is how one script serves several powers. |
 
 ## Examples
 
-Drain the nearest living entity within four blocks and heal for what you took. The whole search-and-pick is one line of JavaScript instead of a nested `apoli:selector` and `apoli:if_else_list`:
+Drain the nearest living entity within four blocks and heal for what you took. The whole search and pick is a few lines of JavaScript instead of a nested `apoli:selector` and `apoli:if_else_list`. The script goes in `kubejs/server_scripts/vampire.js`:
 
-```js
-// kubejs/server_scripts/vampire.js
+```js title="kubejs/server_scripts/vampire.js"
 ApoliEvents.entityAction('vampire:drain', event => {
   const player = event.entity
   const victim = event.level.getEntitiesWithin(player.boundingBox.inflate(4))
@@ -46,10 +45,9 @@ ApoliEvents.entityAction('vampire:drain', event => {
 }
 ```
 
-The same action written as a data pack file instead, so the behaviour ships inside the zip. The file body *is* the action, and `ctx` and `params` are already in scope:
+The same action can be written as a data pack file instead, so the behaviour ships inside the zip. The file body is the action, and `ctx` and `params` are already in scope. This one is `data/vampire/apoli/scripts/drain.js`:
 
-```js
-// data/vampire/apoli/scripts/drain.js
+```js title="data/vampire/apoli/scripts/drain.js"
 ctx.entity.heal(params.getFloat('heal'))
 ```
 
@@ -61,6 +59,7 @@ ctx.entity.heal(params.getFloat('heal'))
 }
 ```
 
-Data pack scripts are disabled until an operator enables them — see [the KubeJS page](/docs/compat/kubejs) for that and for what the sandbox allows.
+Data pack scripts are disabled until an operator enables them. See [the KubeJS page](/docs/compat/kubejs) for how, and for what the sandbox allows.
 
-> Needs [KubeJS](/docs/compat/kubejs). Without it the type still loads and the pack still works — the call logs once and does nothing. Scripts always run on the server.
+> [!NOTE]
+> This action needs [KubeJS](/docs/compat/kubejs). Without it the type still loads and the pack still works, but the call logs once and does nothing. Scripts always run on the server.

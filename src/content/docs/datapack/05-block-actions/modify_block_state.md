@@ -1,25 +1,26 @@
 ---
 title: "Modify Block State (Block Action Type)"
-description: "Modifies the block state property of the block."
+description: "Changes one block state property of the block."
 navigation_title: "Modify Block State"
 ---
 
-Modifies the block state property of the block. Depending on the property type, different values are expected: boolean properties use `value`, enumeration properties use `enum`, and integer properties use `operation` and `change`.
+Changes one block state property of the block. Each kind of property takes a different field: boolean properties use `value`, enum properties use `enum`, and integer properties use `operation` and `change`.
 
 Type ID: `apoli:modify_block_state`
 
-> If none of the expected fields are specified, this action will do nothing.
+> [!NOTE]
+> If none of the fields the property expects are set, the action does nothing.
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|-------------
-`property` | String | | The name of the property that will be modified. Examples are `facing` or `age`.
-`operation` | String | `"add"` | Determines how the value specified in the `change` field is operated on the specified property. Accepts `"add"` or `"set"`.
-`change` | Integer | _optional_ | If specified, the value to add, remove or set to/from the specified property if the specified property is an integer.
-`value` | Boolean | _optional_ | If specified, the boolean to use as the new value for the specified property if the specified property is a boolean.
-`enum` | String | _optional_ | If specified, the string to use as the new value for the specified property if the specified property is a string.
-`cycle` | Boolean | `false` | If set to true, changes the property to the next state in the cycle, ignoring all other optional fields. All property types can use this operation.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `property` | [String](/docs/datapack/data-types/string) | _required_ | The name of the property to change, such as `facing` or `age`. |
+| `operation` | [String](/docs/datapack/data-types/string) | `"add"` | How `change` is applied to an integer property: `"add"` or `"set"`. |
+| `change` | [Integer](/docs/datapack/data-types/integer) | _optional_ | For an integer property, the value to add, subtract or set. |
+| `value` | [Boolean](/docs/datapack/data-types/boolean) | _optional_ | For a boolean property, the new value. |
+| `enum` | [String](/docs/datapack/data-types/string) | _optional_ | For an enum property, the new value. |
+| `cycle` | [Boolean](/docs/datapack/data-types/boolean) | `false` | With `true`, moves the property to its next value in the cycle and ignores the other optional fields. It works on every kind of property. |
 
 ## Examples
 
@@ -31,4 +32,4 @@ Field | Type | Default | Description
 }
 ```
 
-This example will cycle through the values of the `facing` property if available.
+This cycles through the values of the `facing` property, if the block has one.

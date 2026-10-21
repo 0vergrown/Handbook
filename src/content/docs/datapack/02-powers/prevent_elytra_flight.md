@@ -1,18 +1,18 @@
 ---
 title: "Prevent Elytra Flight (Power Type)"
-description: "Prevents the entity that has the power from flying with either an Elytra item or a power that uses the apoli:elytraflight."
+description: "Stops the entity from gliding with an Elytra or with apoli:elytra_flight."
 navigation_title: "Prevent Elytra Flight"
 ---
 
-Prevents the entity that has the power from flying with either an Elytra item or a power that uses the [apoli:elytra_flight](/docs/datapack/powers/elytra_flight).
+Stops the entity that has the power from gliding, whether with an Elytra item or with a power that uses [apoli:elytra_flight](/docs/datapack/powers/elytra_flight).
 
 Type ID: `apoli:prevent_elytra_flight`
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|------------
-`entity_action` | Entity Action Type | _optional_ | If specified, this action will be executed upon the entity trying to fly an Elytra/power that uses the [apoli:elytra_flight](/docs/datapack/powers/elytra_flight).
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `entity_action` | [Entity Action Type](/docs/datapack/entity-actions) | _optional_ | If set, this action runs on the entity when it tries to glide with an Elytra or with a power that uses [apoli:elytra_flight](/docs/datapack/powers/elytra_flight). |
 
 ## Examples
 
@@ -34,4 +34,4 @@ Field | Type | Default | Description
 }
 ```
 
-This example will display a warning and prevent the entity that has the power from flying with an Elytra if they're at Y=64 or lower.
+This shows a warning and stops the entity from gliding while it is at Y=64 or lower.

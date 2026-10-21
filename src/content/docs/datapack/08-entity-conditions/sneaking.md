@@ -1,18 +1,19 @@
 ---
 title: "Sneaking (Entity Condition Type)"
-description: "Checks whether the entity is currently sneaking."
+description: "Checks whether the player is sneaking."
 navigation_title: "Sneaking"
 ---
 
-Checks whether the entity is currently sneaking.
+Checks whether the entity is sneaking.
 
 Type ID: `apoli:sneaking`
 
->This entity condition type will only work on players.
+> [!NOTE]
+> This condition only works on players.
 
 ## Fields
 
-_None._
+This condition has no fields.
 
 ## Examples
 

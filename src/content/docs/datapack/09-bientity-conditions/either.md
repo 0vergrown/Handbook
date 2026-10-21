@@ -1,18 +1,18 @@
 ---
 title: "Either (Bi-Entity Condition Type)"
-description: "Checks for a condition on either the actor or the target entities."
+description: "Checks whether the actor or the target passes an entity condition."
 navigation_title: "Either"
 ---
 
-Checks for a condition on either the actor or the target entities.
+Checks whether the actor or the target passes an entity condition.
 
 Type ID: `apoli:either`
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|-------------
-`condition` | Condition Type | | The condition type to check on either actor or target entities.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `condition` | [Entity Condition Type](/docs/datapack/entity-conditions) | _required_ | The condition to check on the actor and on the target. |
 
 ## Examples
 
@@ -25,4 +25,4 @@ Field | Type | Default | Description
 }
 ```
 
-This example will check if either the actor or target entities are in rain.
+This checks whether the actor or the target is in the rain.

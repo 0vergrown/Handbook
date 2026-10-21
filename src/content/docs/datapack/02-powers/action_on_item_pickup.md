@@ -1,25 +1,26 @@
 ---
 title: "Action On Item Pickup (Power Type)"
-description: "Execute actions upon picking up an item."
+description: "Runs actions when the entity picks up an item."
 navigation_title: "Action On Item Pickup"
 ---
 
-Execute actions upon picking up an item.
+Runs actions when the entity that has the power picks up an item. The actor is the entity that threw the item, if any, and the target is the entity that picked it up. Items that nobody threw, such as mob drops, broken blocks and items made with `/summon`, have no actor, so use `apoli:target_action` to act on the entity picking up.
 
 Type ID: `apoli:action_on_item_pickup`
 
-> In the context of this power type, the '**actor**' entity is the entity that may have thrown the item while the '**target**' entity is the entity that picked up the item.
+It works for players and for mobs that pick up loot, such as zombies, piglins, foxes, villagers and allays.
 
-##	Fields
+## Fields
 
-Field | Type | Default | Description
-------|------|---------|------------
-`bientity_action` | Bi-entity Action Type | *optional* | If specified, this bi-entity action will be executed on either or both the '**actor**' and '**target**' entities.
-`item_action` | Item Action Type | *optional* | If specified, this item action will be executed on the item that was picked up.
-`bientity_condition` | Bi-entity Condition Type | *optional* | If specified, the actions will only be executed if this bi-entity condition is fulfilled by either or both the '**actor**' and '**target**' entities.
-`item_condition` | Item Condition Type | *optional* | If specified, the actions will only be executed if this item condition is fulfilled by the item about to be picked up.
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `bientity_action` | [Bi-entity Action Type](/docs/datapack/bientity-actions) | _optional_ | If set, this action runs on the actor, the target or both once the item has been picked up. |
+| `item_action` | [Item Action Type](/docs/datapack/item-actions) | _optional_ | If set, this action runs on the item just before it enters the inventory, so the item arrives already changed. For a player it only runs when the inventory has room for the item. |
+| `bientity_condition` | [Bi-entity Condition Type](/docs/datapack/bientity-conditions) | _optional_ | If set, the actions only run when the actor and target pass this condition. |
+| `item_condition` | [Item Condition Type](/docs/datapack/item-conditions) | _optional_ | If set, the actions only run when the item about to be picked up passes this condition. |
+| `priority` | [Integer](/docs/datapack/data-types/integer) | `0` | When the entity has several of these powers, the ones with a higher priority run their actions first. |
 
-##	Examples
+## Examples
 
 ```json
 {
@@ -40,7 +41,7 @@ Field | Type | Default | Description
 }
 ```
 
-This example will recover 1 heart to the entity upon the entity picking up an item included in the `#minecraft:flowers` (`data/minecraft/tags/items/flowers.json`) item tag.
+This heals the entity 1 heart whenever it picks up an item in the `#minecraft:flowers` item tag.
 
 ```json
 {
@@ -83,4 +84,4 @@ This example will recover 1 heart to the entity upon the entity picking up an it
 }
 ```
 
-This example will notify all players that the entity that has the power has picked up an item thrown by another entity.
+This tells every player when the entity with the power picks up an item that another entity threw, and who threw it.

@@ -1,19 +1,19 @@
 ---
 title: "Revoke Power (Entity Action Type)"
-description: "Revokes a power from the entity from a specified power source."
+description: "Takes a power away from the entity, for one power source only."
 navigation_title: "Revoke Power"
 ---
 
-Revokes a power from the entity from a specified power source.
+Takes a power away from the entity, for one power source only. The entity keeps the power if another source still grants it.
 
 Type ID: `apoli:revoke_power`
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|-------------
-`power` | Identifier | | The namespace and ID of the power to be revoked from the entity.
-`source` | Identifier | | The namespace and ID of the source of the power.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `power` | [Identifier](/docs/datapack/data-types/identifier) | _required_ | The ID of the power to revoke. |
+| `source` | [Identifier](/docs/datapack/data-types/identifier) | _required_ | The ID of the source the power is revoked from. |
 
 ## Examples
 
@@ -25,4 +25,4 @@ Field | Type | Default | Description
 }
 ```
 
-This example will revoke the `origins:elytra` power from the `origins:elytrian` source from the entity.
+This revokes the `origins:elytra` power granted by the `origins:elytrian` source.

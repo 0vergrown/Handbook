@@ -1,18 +1,18 @@
 ---
 title: "Both (Bi-Entity Action Type)"
-description: "Executes an Entity Action Type on both the actor and the target entity."
+description: "Runs an entity action on both the actor and the target."
 navigation_title: "Both"
 ---
 
-Executes an Entity Action Type on both the actor and the target entity — the action counterpart of [`apoli:both`](/docs/datapack/bientity-conditions/both), and a shorthand for pairing [`apoli:actor_action`](/docs/datapack/bientity-actions/actor_action) with [`apoli:target_action`](/docs/datapack/bientity-actions/target_action) inside an [`apoli:and`](/docs/datapack/meta-actions/and). The actor runs it first, then the target.
+Runs an entity action on both the actor and the target, first on the actor and then on the target. It is the action counterpart of the [`apoli:both`](/docs/datapack/bientity-conditions/both) condition, and a shorter way to write [`apoli:actor_action`](/docs/datapack/bientity-actions/actor_action) and [`apoli:target_action`](/docs/datapack/bientity-actions/target_action) inside an [`apoli:and`](/docs/datapack/meta-actions/and).
 
 Type ID: `apoli:both`
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|-------------
-`action` | Entity Action Type | | The entity action type to execute on the actor and on the target entity.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `action` | [Entity Action Type](/docs/datapack/entity-actions) | _required_ | The entity action to run on the actor and on the target. |
 
 ## Examples
 
@@ -26,7 +26,7 @@ Field | Type | Default | Description
 }
 ```
 
-Sets both entities on fire for 5 seconds.
+This sets both entities on fire for 5 seconds.
 
 ```json
 {
@@ -42,4 +42,4 @@ Sets both entities on fire for 5 seconds.
 }
 ```
 
-A collision that launches attacker and victim alike.
+A hit that launches the attacker and the victim alike.

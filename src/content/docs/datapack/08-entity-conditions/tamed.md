@@ -1,16 +1,16 @@
 ---
 title: "Tamed (Entity Condition Type)"
-description: "Checks whether a tamable entity is tamed. Will always return false if the entity is not tamable."
+description: "Checks whether a tameable entity is tamed."
 navigation_title: "Tamed"
 ---
 
-Checks whether a tamable entity is tamed. Will always return false if the entity is not tamable.
+Checks whether a tameable entity is tamed. It is always false for entities that can't be tamed.
 
 Type ID: `apoli:tamed`
 
 ## Fields
 
-_None._
+This condition has no fields.
 
 ## Examples
 

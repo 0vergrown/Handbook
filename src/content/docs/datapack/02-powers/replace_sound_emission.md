@@ -1,27 +1,27 @@
 ---
 title: "Replace Sound Emission (Power Type)"
-description: "Swaps out the sounds the entity that has the power makes."
+description: "Replaces the sounds the entity that has the power makes."
 navigation_title: "Replace Sound Emission"
 ---
 
-Swaps out the sounds the entity that has the power **makes** — its hurt and death sounds, footsteps, eating, equipping, attack swings, level-up chime and so on. Everyone who can hear the entity hears the replacement, the holder included.
+Replaces the sounds the entity that has the power makes, such as its hurt and death sounds, footsteps, eating, equipping, attack swings and the level-up chime. Everyone who can hear the entity hears the replacement, including the entity itself.
 
-**Type ID:** `apoli:replace_sound_emission`
+Type ID: `apoli:replace_sound_emission`
 
-For the other direction — changing what the holder *hears* — use [`apoli:replace_sound_reception`](/docs/datapack/powers/replace_sound_reception). Both share the same fields.
+To change what the entity hears instead, use [`apoli:replace_sound_reception`](/docs/datapack/powers/replace_sound_reception). Both take the same fields.
 
 ## Fields
 
 | Field | Type | Default | Description |
 | --- | --- | --- | --- |
-| `sounds` | Object | **required** | Map of sound to replace → what to replace it with. See below. |
-| `replace` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Whether a match stops the original sound (and every lower-priority power). `false` plays the replacement *on top of* the original. |
-| `entity_action` | [Entity Action Type](/docs/datapack/entity-actions) | _optional_ | Action run on the holder whenever one of its rules matches. It runs once, on the server, however many players hear the sound. |
-| `priority` | [Integer](/docs/datapack/data-types/integer) | `0` | Ordering when the holder has several replace-sound powers. Higher runs first. |
+| `sounds` | [Object](/docs/datapack/data-types/object) | _required_ | Maps each sound to replace to what replaces it. See below. |
+| `replace` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Whether a match stops the original sound and every power with a lower priority. `false` plays the replacement on top of the original. |
+| `entity_action` | [Entity Action Type](/docs/datapack/entity-actions) | _optional_ | Runs on the entity whenever one of the power's rules matches. It runs once, on the server, however many players hear the sound. |
+| `priority` | [Integer](/docs/datapack/data-types/integer) | `0` | The order when the entity has several sound replacement powers. Higher runs first. |
 
-## The `sounds` map
+## The sounds map
 
-Each key is a sound event id **or** a regular expression matching one; each value is what to play instead.
+Each key is a sound event ID or a regular expression that matches one, and each value is what plays instead.
 
 ```json
 "sounds": {
@@ -35,28 +35,29 @@ Each key is a sound event id **or** a regular expression matching one; each valu
 }
 ```
 
-A value can be a bare sound id, one object, or an array of objects. An array picks one at random, weighted:
+A value can be a bare sound ID, one object or an array of objects. An array picks one at random, weighted:
 
 | Field | Type | Default | Description |
 | --- | --- | --- | --- |
-| `id` | String | **required** | The sound event to play. `minecraft:empty` plays nothing, which mutes the original. |
-| `volume` | [Float](/docs/datapack/data-types/float) | the original's | Volume of the replacement. |
-| `pitch` | [Float](/docs/datapack/data-types/float) | the original's | Pitch of the replacement. |
-| `weight` | [Integer](/docs/datapack/data-types/integer) | `1` | Relative chance of being picked out of an array. Minimum `1`. |
+| `id` | [String](/docs/datapack/data-types/string) | _required_ | The sound event to play. `minecraft:empty` plays nothing, which mutes the original. |
+| `volume` | [Float](/docs/datapack/data-types/float) | the original's | The replacement's volume. |
+| `pitch` | [Float](/docs/datapack/data-types/float) | the original's | The replacement's pitch. |
+| `weight` | [Integer](/docs/datapack/data-types/integer) | `1` | The relative chance of being picked from an array. The minimum is `1`. |
 
 ### How a key is matched
 
-A key with no regex metacharacters (`\ ^ $ | ? * + ( ) [ ] { }`) is an **exact sound id** and is matched by a direct lookup — `entity.player.hurt` is `minecraft:entity.player.hurt`, and the `minecraft:` namespace is filled in for you. Exact keys are checked first and cost nothing.
+A key with no regex metacharacters (`\ ^ $ | ? * + ( ) [ ] { }`) is an exact sound ID, matched by a direct lookup. `entity.player.hurt` means `minecraft:entity.player.hurt`, because the `minecraft:` namespace is filled in for you. Exact keys are checked first and cost nothing.
 
-Any other key is a **regular expression**, tested against the full namespaced id (`minecraft:entity.zombie.ambient`) and required to match it **completely**. Regex keys are tried in the order they appear in the file, and the first match wins. Remember JSON needs backslashes doubled: `\\.` is a literal dot.
+Any other key is a regular expression, tested against the full namespaced ID (`minecraft:entity.zombie.ambient`), and it has to match the whole ID. Regex keys are tried in the order they appear in the file, and the first match wins. JSON needs backslashes doubled, so `\\.` is a literal dot.
 
-A regex key can use capture groups in the replacement id — `$1` is the first group. The example above turns every `minecraft:entity.zombie.*` sound into the matching `minecraft:entity.pig.*` one in a single rule.
+A regex key can use capture groups in the replacement ID, where `$1` is the first group. The example above turns every `minecraft:entity.zombie.*` sound into the matching `minecraft:entity.pig.*` one with a single rule.
 
-> Prefer exact keys. A pack full of regex rules runs every one of them against every sound the entity makes; exact ids are a hash lookup.
+> [!TIP]
+> Use exact keys where you can. A pack full of regex rules runs every one of them against every sound the entity makes, while exact IDs are a single hash lookup.
 
 ## Examples
 
-Sound like a ghast — and mute your own footsteps:
+Sound like a ghast, with your own footsteps muted:
 
 ```json
 {

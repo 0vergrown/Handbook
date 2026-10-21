@@ -1,26 +1,25 @@
 ---
 title: "Stored Origin (Entity Condition Type)"
-description: "Entity condition — passes when the entity has an origin saved in its store."
+description: "Checks whether the entity has an origin saved in its store."
 navigation_title: "Stored Origin"
 ---
 
-Passes when the entity has an origin saved in its [store](/docs/datapack/origins/storage), optionally matching a specific key, origin or layer.
+Checks whether the entity has an origin saved in its [store](/docs/datapack/origins/storage), optionally matching a specific key, origin or layer.
 
-Type ID: `origins:stored_origin` — an [entity condition](/docs/datapack/entity-conditions).
+Type ID: `origins:stored_origin`
 
-> **Needs the Origins mod.** Registered by Origins, not core Apoli. It reads server-side state, so it always fails when evaluated purely client-side.
+> [!NOTE]
+> This condition comes from the Origins mod. It reads server state, so it always fails when evaluated only on the client.
 
 ## Fields
 
-| Field | Type | Default | Purpose |
+| Field | Type | Default | Description |
 | --- | --- | --- | --- |
-| `key` | [String](/docs/datapack/data-types/string) | _optional_ | Only check this key. Omit to match **any** stored origin. |
+| `key` | [String](/docs/datapack/data-types/string) | _optional_ | Only checks this key. Leave it out to match any stored origin. |
 | `origin` | [Identifier](/docs/datapack/data-types/identifier) | _optional_ | The stored entry must be this origin. |
 | `layer` | [Identifier](/docs/datapack/data-types/identifier) | _optional_ | The stored entry must have been taken from this layer. |
 
 ## Examples
-
-Is there anything to restore?
 
 ```json
 {
@@ -29,7 +28,7 @@ Is there anything to restore?
 }
 ```
 
-Have they stolen a Merling specifically?
+This checks whether there is anything stored under `before_curse` to restore.
 
 ```json
 {
@@ -39,8 +38,10 @@ Have they stolen a Merling specifically?
 }
 ```
 
-Anything at all in the store:
+This checks whether the origin stored under `stolen` is a Merling.
 
 ```json
 { "type": "origins:stored_origin" }
 ```
+
+This passes if the store holds any origin at all.

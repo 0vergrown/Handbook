@@ -1,18 +1,18 @@
 ---
 title: "Ability (Entity Condition Type)"
-description: "Checks if the player has the specified ability enabled."
+description: "Checks whether the player has a player ability turned on."
 navigation_title: "Ability"
 ---
 
-Checks if the player has the specified ability enabled.
+Checks whether the player has a player ability turned on.
 
 Type ID: `apoli:ability`
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|------------
-`ability` | Player Ability | | The namespace and ID of the ability to check for.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `ability` | [Player Ability](/docs/datapack/data-types/player-abilities) | _required_ | The ID of the ability to check for. |
 
 ## Examples
 
@@ -23,4 +23,4 @@ Field | Type | Default | Description
 }
 ```
 
-This example will check if the player can fly in a Creative Mode-like fashion.
+This checks whether the player can fly the way Creative mode allows.

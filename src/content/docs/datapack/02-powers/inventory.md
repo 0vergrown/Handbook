@@ -1,29 +1,29 @@
 ---
 title: "Inventory (Power Type)"
-description: "Provides an inventory that can be opened with the specified Key; may or may not persist on death."
+description: "Gives the player an extra inventory that opens with a key, and can keep or drop its items on death."
 navigation_title: "Inventory"
 ---
 
-Provides an inventory that can be opened with the specified [Key](/docs/datapack/data-types/key); may or may not persist on death.
+Gives the player an extra inventory that opens with the chosen [Key](/docs/datapack/data-types/key). Its items can stay with the player when they die or drop with the rest.
 
 Type ID: `apoli:inventory`
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`title` | [Text Component](/docs/datapack/data-types/text-component) | `"container.inventory"` | The translation key or literal text to use as the display name for the inventory.
-`container_type` | [Container Type](/docs/datapack/data-types/container-type) | `"dropper"` | Determines what type of container the inventory will be similar to.
-`drop_on_death` | [Boolean](/docs/datapack/data-types/boolean) | `false` | When this is set to true, the player will drop the items in the inventory on death (vanishing items will vanish!).
-`drop_on_death_filter` | Item Condition Type | _optional_ | If this is set, only item stacks matching this condition will be dropped on death.
-`recoverable` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Determines if the content of the inventory should be dropped upon losing the power.
-`key` | [Key](/docs/datapack/data-types/key) | `{"key": "key.apoli.primary_active"}` | Which active key this power should respond to.
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `title` | [Text Component](/docs/datapack/data-types/text-component) | `"container.inventory"` | The translation key or literal text shown as the inventory's name. |
+| `container_type` | [Container Type](/docs/datapack/data-types/container-type) | `"dropper"` | The kind of container the inventory looks like. |
+| `drop_on_death` | [Boolean](/docs/datapack/data-types/boolean) | `false` | If `true`, the player drops the inventory's items on death. Items with Curse of Vanishing are destroyed. |
+| `drop_on_death_filter` | [Item Condition Type](/docs/datapack/item-conditions) | _optional_ | If set, only item stacks that pass this condition drop on death. |
+| `recoverable` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Whether the inventory's contents drop when the player loses the power. |
+| `key` | [Key](/docs/datapack/data-types/key) | `{"key": "key.apoli.primary_active"}` | The active key the power responds to. |
 
 ## Closing the inventory
 
-Pressing the power's `key` again closes the inventory, as do Esc and the inventory key. The key has to be let go first, so holding it down after opening does not close it. The press that closes the inventory does not open it again, even while the key is still held.
+Pressing the power's `key` again closes the inventory, and so do Esc and the inventory key. The key has to be let go first, so holding it down after opening doesn't close the inventory. The press that closes the inventory doesn't open it again, even while the key is still held.
 
-When `key` is also one of Minecraft's slot keys (a hotbar number, swap offhand, drop or pick block), pressing it with the cursor over a slot does the slot action, as usual, and pressing it anywhere else closes the inventory.
+When `key` is also one of Minecraft's slot keys (a hotbar number, swap offhand, drop or pick block), pressing it with the cursor over a slot does the usual slot action, and pressing it anywhere else closes the inventory.
 
 ## Examples
 
@@ -38,7 +38,7 @@ When `key` is also one of Minecraft's slot keys (a hotbar number, swap offhand, 
 }
 ```
 
-This example will allow the player to open an inventory similar to a Hopper; consisting only of 5 slots but does not drop on death.
+This lets the player open a 5-slot inventory like a hopper's, which doesn't drop on death.
 
 ```json
 {
@@ -51,6 +51,7 @@ This example will allow the player to open an inventory similar to a Hopper; con
 }
 ```
 
-This example will allow the player to open a 9-slots inventory of which only non-food items will drop on death.
+This lets the player open a 9-slot inventory, and only the items in it that aren't food drop on death.
 
+> [!NOTE]
 > With a grave mod installed, the items that would drop go into the grave instead: [You're in Grave Danger](/docs/compat/youre-in-grave-danger/overview), [Gravestones](/docs/compat/gravestones/overview) and the [GraveStone Mod](/docs/compat/gravestone-mod/overview). With the first two, collecting the grave puts them back into this power.

@@ -1,152 +1,89 @@
 <script>
 	import { base } from '$app/paths';
+	import nav from 'virtual:handbook/nav';
 	import { SITE } from '$lib/config.js';
-	import Icon from '$lib/components/Icon.svelte';
-	import Footer from '$lib/components/Footer.svelte';
+	import TOC from '$lib/components/TOC.svelte';
+	import TOCCollapsible from '$lib/components/TOCCollapsible.svelte';
 
-	const mods = SITE.downloads.mods;
+	const downloads = SITE.downloads;
+
+	const headings = [
+		...downloads.mods.map((mod) => ({ slug: mod.name.toLowerCase(), title: mod.name, children: [] })),
+		{ slug: 'supported-versions', title: 'Supported versions', children: [] },
+		{ slug: 'where-to-start', title: 'Where to start', children: [] }
+	];
 </script>
 
 <svelte:head>
-	<title>Download • {SITE.name}</title>
-	<meta name="description" content="Download Apoli and Origins from Modrinth or CurseForge." />
+	<title>Download | {SITE.name}</title>
+	<meta name="description" content="Download Apoli and Origins from Modrinth or CurseForge, and check which loaders and Minecraft versions they support." />
 </svelte:head>
 
-<div class="dl">
-	<header>
-		<span class="eyebrow">Download</span>
-		<h1>Get the mods</h1>
-		<p>
-			Both mods run on Fabric and NeoForge. <strong>Origins depends on Apoli</strong> — installing
-			Origins pulls in the engine, but you can run Apoli on its own (or with any other addon).
-		</p>
-	</header>
+<main id="main" class="container page-container">
+	<div class="row page-row">
+		<div class="col col--8">
+			<article>
+				<TOCCollapsible {headings} />
+				<div class="markdown">
+					<header>
+						<h1>Download</h1>
+					</header>
+					<p>
+						Both mods are published on Modrinth and CurseForge. Origins needs Apoli installed, and on Fabric both
+						of them also need Fabric API.
+					</p>
 
-	<div class="mods">
-		{#each mods as mod}
-			<div class="mod">
-				<h2>{mod.name}</h2>
-				<p>{mod.blurb}</p>
-				<div class="links">
-					<a class="store modrinth" href={mod.modrinth} target="_blank" rel="noreferrer">
-						<Icon name="download" size={18} /> Modrinth
-					</a>
-					<a class="store curseforge" href={mod.curseforge} target="_blank" rel="noreferrer">
-						<Icon name="download" size={18} /> CurseForge
-					</a>
+					{#each downloads.mods as mod (mod.name)}
+						<h2 id={mod.name.toLowerCase()}>
+							{mod.name}<a class="hash-link" href="#{mod.name.toLowerCase()}" aria-label="Direct link to {mod.name}" title="Direct link to {mod.name}"></a>
+						</h2>
+						<p>{mod.description}</p>
+						<p class="download-buttons">
+							<a class="button button--lg" href={mod.modrinth} target="_blank" rel="noopener noreferrer">Modrinth</a>
+							<a class="button button--secondary button--lg" href={mod.curseforge} target="_blank" rel="noopener noreferrer">CurseForge</a>
+						</p>
+					{/each}
+
+					<h2 id="supported-versions">
+						Supported versions<a class="hash-link" href="#supported-versions" aria-label="Direct link to Supported versions" title="Direct link to Supported versions"></a>
+					</h2>
+					<p>Apoli and Origins support the same loaders and game versions.</p>
+					<table>
+						<thead>
+							<tr>
+								<th>Minecraft</th>
+								<th>Fabric</th>
+								<th>NeoForge</th>
+							</tr>
+						</thead>
+						<tbody>
+							{#each downloads.versions as version (version.minecraft)}
+								<tr>
+									<td>{version.minecraft}</td>
+									<td>{version.fabric ? `Yes, needs ${version.fabric}` : 'No'}</td>
+									<td>{version.neoforge ? `Yes, needs ${version.neoforge}` : 'No'}</td>
+								</tr>
+							{/each}
+						</tbody>
+					</table>
+
+					<h2 id="where-to-start">
+						Where to start<a class="hash-link" href="#where-to-start" aria-label="Direct link to Where to start" title="Direct link to Where to start"></a>
+					</h2>
+					<p>
+						If you only want to play, install Origins and Apoli. To make your own powers, read the
+						<a href="{base}/docs/{nav.first.datapack}/">Data Pack docs</a>. To extend Apoli from Java, read the
+						<a href="{base}/docs/{nav.first.addon}/">Addon docs</a>.
+					</p>
+					<p>
+						Every other Overgrown project is in the <a href={downloads.modrinth} target="_blank" rel="noopener noreferrer">Modrinth collection</a>
+						and on the <a href={downloads.curseforge} target="_blank" rel="noopener noreferrer">CurseForge profile</a>.
+					</p>
 				</div>
-			</div>
-		{/each}
+			</article>
+		</div>
+		<div class="col col--2">
+			<TOC {headings} />
+		</div>
 	</div>
-
-	<div class="note">
-		<h3>New here?</h3>
-		<p>
-			If you just want to play, grab <strong>Origins</strong>. If you want to build powers, read the
-			<a href="{base}/docs/datapack">Data Pack docs</a>. If you want to extend the engine from Java,
-			read the <a href="{base}/docs/addon">Addon docs</a>.
-		</p>
-	</div>
-</div>
-
-<Footer />
-
-<style>
-	.dl {
-		max-width: 84rem;
-		margin: 0 auto;
-		padding: var(--sk-page-padding-top) var(--sk-page-padding-side) 6rem;
-	}
-	header {
-		max-width: 60rem;
-		margin-bottom: 4rem;
-	}
-	.eyebrow {
-		font: var(--sk-font-ui-small);
-		text-transform: uppercase;
-		letter-spacing: 0.12em;
-		color: var(--sk-fg-accent);
-	}
-	h1 {
-		font: var(--sk-font-h1);
-		font-size: clamp(3.2rem, 6vw, 4.4rem);
-		margin: 1rem 0 1.4rem;
-	}
-	header p {
-		font-size: 1.9rem;
-		color: var(--sk-fg-3);
-	}
-	header strong {
-		color: var(--sk-fg-1);
-		font-weight: 500;
-	}
-	.mods {
-		display: grid;
-		gap: 2rem;
-	}
-	@media (min-width: 720px) {
-		.mods {
-			grid-template-columns: 1fr 1fr;
-		}
-	}
-	.mod {
-		padding: 2.8rem;
-		border: 1px solid var(--sk-border);
-		border-radius: 0.8rem;
-		background: var(--sk-bg-2);
-	}
-	.mod h2 {
-		font-size: 2.6rem;
-		border: none;
-		padding: 0;
-	}
-	.mod p {
-		color: var(--sk-fg-3);
-		font-size: 1.6rem;
-		margin: 0.8rem 0 1.8rem;
-	}
-	.links {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 1rem;
-	}
-	.store {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.6rem;
-		padding: 0.9rem 1.4rem;
-		border-radius: var(--sk-border-radius);
-		font: var(--sk-font-ui-medium);
-		font-weight: 500;
-		text-decoration: none;
-		color: white;
-	}
-	.store:hover {
-		text-decoration: none;
-		filter: brightness(1.08);
-	}
-	.modrinth {
-		background: #00af5c;
-	}
-	.curseforge {
-		background: #f16436;
-	}
-	.note {
-		margin-top: 4rem;
-		padding: 2.4rem;
-		border-radius: 0.8rem;
-		background: color-mix(in srgb, var(--sk-fg-accent) 8%, var(--sk-bg-2));
-		border: 1px solid var(--sk-border);
-	}
-	.note h3 {
-		font-size: 2rem;
-		margin-bottom: 0.6rem;
-	}
-	.note p {
-		color: var(--sk-fg-2);
-		font-size: 1.7rem;
-	}
-	.note a {
-		color: var(--sk-fg-accent);
-	}
-</style>
+</main>

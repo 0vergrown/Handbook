@@ -1,39 +1,35 @@
 ---
 title: "Modify Falling (Power Type)"
-description: "Modifies the falling velocity of the entity that has the power; can determine whether the entity should take fall damage or not."
+description: "Changes how fast the entity falls, and whether it takes fall damage."
 navigation_title: "Modify Falling"
 ---
 
-Modifies the falling velocity of the entity that has the power; can determine whether the entity should take fall damage or not.
+Changes how fast the entity that has the power falls, and whether it takes fall damage. Vanilla gravity is 0.08, or 0.01 with Slow Falling.
 
 Type ID: `apoli:modify_falling`
 
-> By default, the player falls at a speed of 0.08, or 0.01 if a Slow Falling status effect is present.
-
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|------------
-`velocity` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | _optional_ | The falling gravity to use. The lowest value wins when several `apoli:modify_falling` powers apply at once, and vanilla gravity is one of the candidates, so this can only slow a fall down.
-`modifier` | [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) | _optional_ | A single modifier applied to the gravity that survives the `velocity` step. Unlike `velocity` this can speed a fall up.
-`modifiers` | array of [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) | _optional_ | Several modifiers, applied in operation order.
-`take_fall_damage` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Determines whether the entity should take fall damage or not.
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `velocity` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | _optional_ | The gravity to fall with. When several `apoli:modify_falling` powers apply, the lowest value wins, and vanilla gravity is one of the candidates, so `velocity` can only slow a fall down. |
+| `modifier` | [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) | _optional_ | A single modifier applied to the gravity left after the `velocity` step. Unlike `velocity`, a modifier can make a fall faster. |
+| `modifiers` | [Array](/docs/datapack/data-types/array) of [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) | _optional_ | Several modifiers, applied in operation order. |
+| `take_fall_damage` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Whether the entity takes fall damage. |
 
-`velocity` runs first and clamps the gravity down; the modifiers from every applying power are then
-gathered and applied to the result, so a power with only modifiers scales vanilla gravity directly. A
-power with neither field does nothing but still honours `take_fall_damage`.
+`velocity` runs first and lowers the gravity. The modifiers from every power that applies are then gathered and applied to the result, so a power with only modifiers scales vanilla gravity directly. A power with neither field still applies `take_fall_damage`.
 
-`take_fall_damage: false` cancels the damage on the landing tick, and only then. The fall distance
-keeps counting up all the way down, so [apoli:fall_distance](/docs/datapack/entity-conditions/fall_distance),
-the `fall_distance` expression variable and
-[apoli:action_on_land](/docs/datapack/powers/action_on_land) all still see a real fall.
+`take_fall_damage: false` cancels the damage on the landing tick and nowhere else. The fall distance keeps counting all the way down, so [apoli:fall_distance](/docs/datapack/entity-conditions/fall_distance), the `fall_distance` expression variable and [apoli:action_on_land](/docs/datapack/powers/action_on_land) all still see a real fall.
 
 ## Examples
 
 ```json
 {
     "type": "apoli:modify_falling",
-    "velocity": 1.0,
+    "modifier": {
+        "operation": "multiply_base_multiplicative",
+        "value": 1.0
+    },
     "take_fall_damage": false,
     "condition": {
         "type": "apoli:sneaking"
@@ -41,9 +37,9 @@ the `fall_distance` expression variable and
 }
 ```
 
-This example will make the player fall faster and not take fall damage if they're sneaking.
+While sneaking, the player falls twice as fast and takes no fall damage.
 
-Gravity as a fraction of vanilla, which a plain `velocity` cannot express:
+Gravity as a fraction of vanilla, which `velocity` alone can't express:
 
 ```json
 {
@@ -55,7 +51,7 @@ Gravity as a fraction of vanilla, which a plain `velocity` cannot express:
 }
 ```
 
-An expression reads the entity's own state, so a fall can get gentler the emptier a resource is:
+An expression reads the entity's own state, so the fall gets gentler as the resource fills up:
 
 ```json
 {

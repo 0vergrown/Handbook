@@ -18,6 +18,7 @@ This condition has no fields. To check who is holding it, use the [bi-entity con
 }
 ```
 
-Passes while the entity is held. Put it in a power's `condition` to switch that power off while its holder is being carried.
+This passes while the entity is held. Put it in a power's `condition` to switch that power off while its holder is being carried.
 
-> Grabs are tracked on the server, so this condition is always false when the client evaluates it — it can't drive a purely visual power.
+> [!WARNING]
+> Grabs are tracked on the server, so this condition is always false when the client evaluates it, and it can't drive a power that only changes visuals.

@@ -1,16 +1,16 @@
 ---
 title: "Tame (Bi-Entity Action Type)"
-description: "Tames the target entity with the actor entity as the owner."
+description: "Tames the target entity, with the actor as its owner."
 navigation_title: "Tame"
 ---
 
-Tames the target entity with the actor entity as the owner. Only works on tameable entities such as wolves or cats.
+Tames the target entity, with the actor as its owner. It only works on tameable entities such as wolves and cats.
 
 Type ID: `apoli:tame`
 
 ## Fields
 
-_None._
+This action has no fields.
 
 ## Examples
 

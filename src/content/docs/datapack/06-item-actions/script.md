@@ -4,23 +4,22 @@ description: Runs a script against an item stack.
 navigation_title: "Script"
 ---
 
-Runs a script against an item stack. `event.stack` is the stack and `event.entity` is whoever is holding it, when there is one.
+Runs a script against an item stack. `event.stack` is the stack and `event.entity` is whoever is holding it, when someone is.
 
 Type ID: `apoli:script`
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|-------------
-`script` | [Identifier](/docs/datapack/data-types/identifier) | **required** | The script to run. Either an id registered from KubeJS with `ApoliEvents`, or the path of a `.js` file shipped in a data pack at `data/<namespace>/apoli/scripts/<path>.js` — in which case the `.js` is part of the id.
-`params` | [NBT](/docs/datapack/data-types/nbt) | _optional_ | Values handed to the script. Read them with `event.params` from KubeJS, or `params` inside a data pack script. This is how one script serves several powers.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `script` | [Identifier](/docs/datapack/data-types/identifier) | _required_ | The script to run. Either an ID registered from KubeJS with `ApoliEvents`, or the path of a `.js` file shipped in a data pack at `data/<namespace>/apoli/scripts/<path>.js`, in which case the `.js` is part of the ID. |
+| `params` | [NBT](/docs/datapack/data-types/nbt) | _optional_ | Values handed to the script. Read them with `event.params` from KubeJS, or `params` inside a data pack script. This is how one script serves several powers. |
 
 ## Example
 
-Rename the stack after the holder, which needs a value only known at runtime:
+Rename the stack after the holder, which needs a value only known while the game runs. The script goes in `kubejs/server_scripts/soulbound.js`:
 
-```js
-// kubejs/server_scripts/soulbound.js
+```js title="kubejs/server_scripts/soulbound.js"
 ApoliEvents.itemAction('soulbound:brand', event => {
   if (!event.entity) return
   event.stack.setCustomName(`${event.entity.username}'s ${event.stack.name.string}`)
@@ -37,4 +36,5 @@ ApoliEvents.itemAction('soulbound:brand', event => {
 }
 ```
 
-> Needs [KubeJS](/docs/compat/kubejs). Without it the type still loads and the pack still works — the call logs once and does nothing. Scripts always run on the server.
+> [!NOTE]
+> This action needs [KubeJS](/docs/compat/kubejs). Without it the type still loads and the pack still works, but the call logs once and does nothing. Scripts always run on the server.

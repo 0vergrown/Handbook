@@ -1,18 +1,18 @@
 ---
 title: "And (Meta Action Type)"
-description: "Executes all provided actions in order."
+description: "Runs every action in a list, in order."
 navigation_title: "And"
 ---
 
-Executes all provided actions in order.
+Runs every action in a list, in order.
 
 Type ID: `apoli:and`
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`actions` | [Array](/docs/datapack/data-types/array) of Action Types | | These actions will be executed one after the other (but in the same tick).
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `actions` | [Array](/docs/datapack/data-types/array) of action types | _required_ | The actions to run one after the other, all in the same tick. |
 
 ## Examples
 
@@ -36,4 +36,4 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will apply exhaustion with a value of 0.5 to the player, and apply a Regeneration II status effect that would last for 5 seconds.
+This adds 0.5 exhaustion to the player and gives them Regeneration II for 5 seconds.

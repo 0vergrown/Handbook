@@ -1,32 +1,33 @@
 ---
 title: "Prevent Block Place (Power Type)"
-description: "Prevents the player from placing a block."
+description: "Stops the player from placing blocks."
 navigation_title: "Prevent Block Place"
 ---
 
-Prevents the player from placing a block.
+Stops the player from placing blocks.
 
 Type ID: `apoli:prevent_block_place`
 
-##	Fields
+## Fields
 
-Field | Type | Default | Description
-------|------|---------|------------
-`entity_action` | Entity Action Type | *optional* | If specified, this entity action will be executed on the player upon being prevented from placing a block.
-`held_item_action` | Item Action Type | *optional* | If specified, this item action will be executed on the item the player has used to try to place a block.
-`place_to_action` | Block Action Type | *optional* | If specified, this block action will be executed at the position of the block the player tried to place.
-`place_on_action` | Block Action Type | *optional* | If specified, this block action will be executed on the block the player tried to place a block on.
-`item_condition` | Item Condition Type | *optional* | If specified, the specified actions will only be executed if the item the player has used to try to place a block fulfills this item condition.
-`place_to_condition` | Block Condition Type | *optional* | If specified, the specified actions will only be executed if the block at the position of the block the player tried to place fulfills this block condition.
-`place_on_condition` | Block Condition Type | *optional* | If specified, the specified actions will only be executed if the block the player tried to place a block on fulfills this block condition.
-`directions` | Array of Strings | `["up", "down", "north", "south", "east", "west"]` | Determines whether the specified actions should be executed if the player tried to place a block at the specified side(s) of a block.
-`hands` | Array of Hands | `["main_hand", "off_hand"]` | Determines whether the specified actions should be executed if the player used the specified hand(s) when trying to place a block.
-`result_stack` | Item Stack | *optional* | If specified, this item stack will be given to the player upon trying to place a block.
-`result_item_action` | Item Action Type | *optional* | If specified, this item action will be executed on the item that will be given to the player upon trying to place a block.
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `entity_action` | [Entity Action Type](/docs/datapack/entity-actions) | _optional_ | If set, this action runs on the player when they are stopped from placing a block. |
+| `held_item_action` | [Item Action Type](/docs/datapack/item-actions) | _optional_ | If set, this action runs on the item the player tried to place a block with. |
+| `place_to_action` | [Block Action Type](/docs/datapack/block-actions) | _optional_ | If set, this action runs at the position where the player tried to place the block. |
+| `place_on_action` | [Block Action Type](/docs/datapack/block-actions) | _optional_ | If set, this action runs on the block the player tried to place the block against. |
+| `item_condition` | [Item Condition Type](/docs/datapack/item-conditions) | _optional_ | If set, the actions only run when the item the player used passes this condition. |
+| `place_to_condition` | [Block Condition Type](/docs/datapack/block-conditions) | _optional_ | If set, the actions only run when the block at the target position passes this condition. |
+| `place_on_condition` | [Block Condition Type](/docs/datapack/block-conditions) | _optional_ | If set, the actions only run when the block placed against passes this condition. |
+| `directions` | [Array](/docs/datapack/data-types/array) of [Strings](/docs/datapack/data-types/string) | `["up", "down", "north", "south", "east", "west"]` | The sides of a block the player has to place against for the actions to run. |
+| `hands` | [Array](/docs/datapack/data-types/array) of [Hands](/docs/datapack/data-types/hand) | `["main_hand", "off_hand"]` | The hands the player has to use for the actions to run. |
+| `result_stack` | [Item Stack](/docs/datapack/data-types/item-stack) | _optional_ | If set, this item stack is given to the player when they try to place a block. |
+| `result_item_action` | [Item Action Type](/docs/datapack/item-actions) | _optional_ | If set, this action runs on the item given to the player. |
 
-> This runs **before** the block is placed, so `place_to_condition` matches whatever is currently in that space — air, or the replaceable block being overwritten — not the block being placed.
+> [!NOTE]
+> The power runs before the block is placed, so `place_to_condition` matches whatever is in that space now, either air or the replaceable block being overwritten, not the block being placed.
 
-##	Examples
+## Examples
 
 ```json
 {
@@ -38,11 +39,10 @@ Field | Type | Default | Description
 	"place_to_condition": {
 		"type": "apoli:fluid",
 		"fluid_condition": {
-			"type": "apoli:still",
-			"inverted": true
+			"type": "apoli:still"
 		}
 	}
 }
 ```
 
-This example will prevent the player from placing blocks in spaces occupied by source fluids.
+This stops the player from placing blocks into spaces filled with a source fluid, such as a water source, and tells them why.

@@ -1,19 +1,19 @@
 ---
 title: "Modify Exhaustion (Power Type)"
-description: "Modifies the amount of exhaustion the player receives each time they receive exhaustion."
+description: "Changes how much exhaustion the player receives."
 navigation_title: "Modify Exhaustion"
 ---
 
-Modifies the amount of exhaustion the player receives each time they receive exhaustion.
+Changes the amount of exhaustion the player receives each time they receive any.
 
 Type ID: `apoli:modify_exhaustion`
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`modifier` | Attribute Modifier | _optional_ | If specified, this modifier will be applied to the received exhaustion amount.
-`modifiers` | Array of Attribute Modifiers | _optional_ | If specified, these modifiers will be applied to the received exhaustion amount.
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `modifier` | [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) | _optional_ | If set, this modifier is applied to the exhaustion received. |
+| `modifiers` | [Array](/docs/datapack/data-types/array) of [Attribute Modifiers](/docs/datapack/data-types/attribute-modifier) | _optional_ | If set, these modifiers are applied to the exhaustion received. |
 
 ## Examples
 
@@ -28,4 +28,4 @@ Field  | Type | Default | Description
 }
 ```
 
-This example triples the exhaustion rate of the player.
+This triples the player's exhaustion rate.

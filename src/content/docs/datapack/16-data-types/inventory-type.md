@@ -1,16 +1,17 @@
 ---
 title: "Inventory Type (Data Type)"
-description: "A String used to determine whether to reference the inventory of the entity or the inventory of a power present in the entity."
+description: "A string that decides whether the entity's own inventory or a power's inventory is used."
 navigation_title: "Inventory Type"
 ---
 
-A [String](/docs/datapack/data-types/string) used to determine whether to reference the inventory of the entity or the inventory of a power present in the entity.
+A [String](/docs/datapack/data-types/string) that decides whether to use the entity's own inventory or the inventory of one of its powers.
 
-> Not to be confused with the [Container Type](/docs/datapack/data-types/container-type)
+> [!NOTE]
+> This is different from [Container Type](/docs/datapack/data-types/container-type).
 
-##	Values
+## Values
 
-| Value       | Description                                                                                                     |
-|-------------|-----------------------------------------------------------------------------------------------------------------|
-| `inventory` | Determines that the inventory of the entity will be referenced, if they have one.                               |
-| `power`     | Determines that the inventory of a power will be referenced. (e.g: a power that uses the [apoli:inventory](/docs/datapack/powers/inventory) |
+| Value | Description |
+| --- | --- |
+| `inventory` | Uses the entity's inventory, if it has one. |
+| `power` | Uses the inventory of a power, such as one that uses [apoli:inventory](/docs/datapack/powers/inventory). |

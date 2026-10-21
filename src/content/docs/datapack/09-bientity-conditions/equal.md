@@ -1,18 +1,18 @@
 ---
 title: "Equal (Bi-Entity Condition Type)"
-description: "Checks if the actor entity is the target entity."
+description: "Checks whether the actor and the target are the same entity."
 navigation_title: "Equal"
 ---
 
-Checks if the actor entity is the target entity.
+Checks whether the actor and the target are the same entity.
 
 Type ID: `apoli:equal`
 
-##	Fields
+## Fields
 
-_None._
+This condition has no fields.
 
-##	Examples
+## Examples
 
 ```json
 "bientity_condition": {

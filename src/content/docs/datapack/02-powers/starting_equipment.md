@@ -1,20 +1,20 @@
 ---
 title: "Starting Equipment (Power Type)"
-description: "Provides the player with items when the power is granted."
+description: "Gives the player items when the power is granted."
 navigation_title: "Starting Equipment"
 ---
 
-Provides the player with items when the power is granted.
+Gives the player items when the power is granted.
 
 Type ID: `apoli:starting_equipment`
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`stack` | Positioned Item Stack | _optional_ | If specified, this item will be given to the player (can be specified in an inventory slot). 
-`stacks` | Array of Positioned Item Stacks | _optional_ | If specified, these items will be given to the player (can be specified in an inventory slot). 
-`recurrent` | Boolean | `false` | Determines whether the specified item(s) should be given after respawning.
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `stack` | [Positioned Item Stack](/docs/datapack/data-types/positioned-item-stack) | _optional_ | If set, this item is given to the player, optionally in a specific inventory slot. |
+| `stacks` | [Array](/docs/datapack/data-types/array) of [Positioned Item Stacks](/docs/datapack/data-types/positioned-item-stack) | _optional_ | If set, these items are given to the player, optionally in specific inventory slots. |
+| `recurrent` | [Boolean](/docs/datapack/data-types/boolean) | `false` | Whether the items are given again after the player respawns. |
 
 ## Examples
 
@@ -36,7 +36,7 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will give the player the "Explorer Kit" known from Origins: Classes that consists of a compass, a clock and 9 empty maps.
+This gives the player the Explorer Kit from the Origins: Classes mod: a compass, a clock and 9 empty maps.
 
 ```json
 {
@@ -75,4 +75,4 @@ This example will give the player the "Explorer Kit" known from Origins: Classes
 }
 ```
 
-This example will give the player a White Stained Glass Block in its head equipment slot, a white-colored Leather Chestplate, Leggings and Boots in its chest, legs, and feet equipment slots respectively and a Written Book with two pages in the 9th hotbar slot.
+This gives the player a white stained glass block in the head slot, white leather chestplate, leggings and boots in the chest, legs and feet slots, and a written book with two pages in the ninth hotbar slot.

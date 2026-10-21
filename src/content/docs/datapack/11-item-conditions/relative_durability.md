@@ -1,21 +1,22 @@
 ---
 title: "Relative Durability (Item Condition Type)"
-description: "Checks the current durability of the item relative to its max durability (in percentage.)"
+description: "Compares the item's durability, as a fraction of its maximum, with a number."
 navigation_title: "Relative Durability"
 ---
 
-Checks the current durability of the item relative to its max durability (in percentage.)
+Compares the item's remaining durability, as a fraction of its maximum durability, with a number.
 
 Type ID: `apoli:relative_durability`
 
-> The relative durability value of an item can be calculated with the `currentDurability / maxDurability` formula.
+> [!NOTE]
+> The fraction is `currentDurability / maxDurability`, so `1` is a brand new item.
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|------------
-`comparison` | Comparison | | Determines how the relative durability value of the item from the item stack should be compared to the specified value.
-`compare_to` | Float |  | The value at which the relative durability value of the item from the item stack will be compared to.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `comparison` | [Comparison](/docs/datapack/data-types/comparison) | _required_ | How the relative durability is compared with `compare_to`. |
+| `compare_to` | [Float](/docs/datapack/data-types/float) | _required_ | The number the relative durability is compared with. |
 
 ## Examples
 
@@ -27,4 +28,4 @@ Field | Type | Default | Description
 }
 ```
 
-This example will check if the item has a 90% durability or greater.
+This checks whether the item has 90% of its durability or more left.

@@ -1,25 +1,23 @@
 ---
 title: "Voice Listeners (Entity Condition Type)"
-description: "Passes when enough voice-chat-connected players are within earshot."
+description: "Checks whether enough players connected to voice chat are within earshot."
 navigation_title: "Voice Listeners"
 ---
 
-Passes when at least `min_count` other players who are connected to voice chat are within `range` blocks of the entity.
+Checks whether at least `min_count` other players who are connected to voice chat are within `range` blocks of the entity.
 
 Type ID: `apoli:voice_listeners`
 
 ## Fields
 
-| Field | Type | Default | Purpose |
+| Field | Type | Default | Description |
 | --- | --- | --- | --- |
-| `range` | Double | `16.0` | Radius in blocks to search. |
-| `min_count` | Integer | `1` | How many connected players must be inside it. |
+| `range` | [Float](/docs/datapack/data-types/float) | `16.0` | The radius in blocks to search. |
+| `min_count` | [Integer](/docs/datapack/data-types/integer) | `1` | How many connected players must be inside it. |
 
-The entity itself is not counted.
+The entity itself isn't counted.
 
 ## Example
-
-A power that only works when somebody is there to hear it:
 
 ```json
 {
@@ -28,3 +26,5 @@ A power that only works when somebody is there to hear it:
   "entity_action": { "type": "apoli:apply_effect", "effect": { "effect": "minecraft:strength", "duration": 200 } }
 }
 ```
+
+This power only gives Strength when at least two other players within eight blocks are there to hear the holder speak.

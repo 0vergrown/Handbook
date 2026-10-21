@@ -1,24 +1,21 @@
 ---
 title: "Prevent Block Selection (Power Type)"
-description: "Prevents the selection of blocks for the player that has the power."
+description: "Stops the player that has the power from selecting blocks."
 navigation_title: "Prevent Block Selection"
 ---
 
-Prevents the selection of blocks for the player that has the power.
+Stops the player that has the power from selecting blocks. The player can't mine or interact with an unselectable block, and anything they aim at passes through it to whatever is behind.
 
 Type ID: `apoli:prevent_block_selection`
 
-> Preventing the "selection" of a block means that the player won't be able to mine or interact with the said block; meaning that actions will pass through the block to whatever is behind the said block.
-
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`block_condition` | Block Condition Type | _optional_ | If specified, only blocks that fulfill this condition are affected.
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `block_condition` | [Block Condition Type](/docs/datapack/block-conditions) | _optional_ | If set, only blocks that pass this condition are affected. With no `block_condition`, every block is unselectable. |
 
-> Implemented by emptying the block's **outline** shape for that player, which is what a picking raycast tests — so the ray carries on to whatever is behind, exactly as described above. The *collision* shape is untouched, so the block is still solid; walking through things is [apoli:phasing](/docs/datapack/powers/phasing).
->
-> With no `block_condition` at all, every block becomes unselectable.
+> [!NOTE]
+> The power empties the block's outline shape for that player. Picking raycasts test the outline, so they carry on to whatever is behind the block. The collision shape is untouched, so the block is still solid. To walk through blocks, use [apoli:phasing](/docs/datapack/powers/phasing).
 
 ## Examples
 
@@ -36,4 +33,4 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will prevent the selection of cobwebs (including the Temporary Cobweb block from the Arachnid's power), allowing the player to punch through them, unless they sneak.
+This stops the player from selecting cobwebs, including the temporary cobwebs from the Arachnid's power, so they can hit things through them. Sneaking turns the power off.

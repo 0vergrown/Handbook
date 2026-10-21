@@ -1,29 +1,30 @@
 ---
 title: "Store Origin (Bi-Entity Action Type)"
-description: "Bi-entity action — stores the target's origin into the actor's store under a named key."
+description: "Stores the target's origin in the actor's store under a named key."
 navigation_title: "Store Origin"
 ---
 
-Reads the **target's** origin and writes it into the **actor's** store under a named key. The target is not changed — this copies the id, it does not take the origin.
+Reads the target's origin and writes it into the actor's store under a named key. The target isn't changed, since this only copies the ID.
 
-Type ID: `origins:store_origin` — a [bi-entity action](/docs/datapack/bientity-actions). It shares its id and its fields with the [entity action of the same name](/docs/datapack/origins/store_origin); which one you get depends on whether you write it in a `bientity_action` field or an `entity_action` field.
+Type ID: `origins:store_origin`
 
-> **Needs the Origins mod.** Registered by Origins, not core Apoli. **Both** the actor and target must be players, and it only runs on the server. See [Origin storage](/docs/datapack/origins/storage) for the system as a whole.
+It shares its ID and fields with the [entity action of the same name](/docs/datapack/origins/store_origin). Which one you get depends on whether you write it in a `bientity_action` field or an `entity_action` field.
+
+> [!NOTE]
+> This action comes from the Origins mod. Both the actor and the target must be players, and it only runs on the server. See [Origin storage](/docs/datapack/origins/storage) for the whole system.
 
 ## Fields
 
-| Field | Type | Default | Purpose |
+| Field | Type | Default | Description |
 | --- | --- | --- | --- |
 | `key` | [String](/docs/datapack/data-types/string) | _required_ | The name to store the entry under on the actor. |
-| `layer` | [Identifier](/docs/datapack/data-types/identifier) | `origins:origin` | Which of the target's layers to read, and the layer recorded with the entry. |
-| `origin` | [Identifier](/docs/datapack/data-types/identifier) | _optional_ | Store this origin id literally instead of reading the target's. |
-| `clear` | [Boolean](/docs/datapack/data-types/boolean) | `false` | Remove the entry at `key` from the actor instead of writing one. |
+| `layer` | [Identifier](/docs/datapack/data-types/identifier) | `origins:origin` | The target's layer to read, which is also recorded with the entry. |
+| `origin` | [Identifier](/docs/datapack/data-types/identifier) | _optional_ | Stores this origin ID as given instead of reading the target's. |
+| `clear` | [Boolean](/docs/datapack/data-types/boolean) | `false` | Removes the entry at `key` from the actor instead of writing one. |
 
-Wrap it in [`apoli:invert`](/docs/datapack/bientity-actions/invert) to store the *actor's* origin onto the *target* instead.
+Wrap it in [`apoli:invert`](/docs/datapack/bientity-actions/invert) to store the actor's origin on the target instead.
 
 ## Examples
-
-Note down what you just hit:
 
 ```json
 {
@@ -32,7 +33,7 @@ Note down what you just hit:
 }
 ```
 
-Read the actor's origin but write it to the target's own store:
+This power remembers the origin of whoever you hit under `last_victim`.
 
 ```json
 {
@@ -40,3 +41,5 @@ Read the actor's origin but write it to the target's own store:
   "action": { "type": "origins:store_origin", "key": "mine" }
 }
 ```
+
+This reads the actor's origin and writes it to the target's own store, under `mine`.

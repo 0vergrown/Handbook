@@ -1,17 +1,17 @@
 ---
 title: "Power (Command)"
-description: "Grant, revoke, inspect and suppress powers on any entity."
+description: "Grants, revokes, inspects and suppresses powers on any entity."
 navigation_title: "Power"
 ---
 
-Grants, revokes, inspects and suppresses powers. Aliased to `/power`.
+Grants, revokes, inspects and suppresses powers. The short alias is `/power`.
 
-Every sub-command takes an entity selector, not just players — Apoli holds powers on any entity that can carry them.
+Every sub-command takes any entity selector, because Apoli holds powers on any entity that can carry them.
 
 ## Sub-commands
 
 | Sub-command | What it does |
-|-------------|--------------|
+| --- | --- |
 | `grant <targets> <power> [source]` | Adds a power. |
 | `revoke <targets> <power>` | Removes a power completely, including its sub-powers. |
 | `remove <targets> <power>` | Alias of `revoke`. |
@@ -20,7 +20,7 @@ Every sub-command takes an entity selector, not just players — Apoli holds pow
 | `revokeall <targets> <source>` | Removes every power that came from `<source>`. |
 | `removeall <targets> <source>` | Alias of `revokeall`. |
 | `has <targets>` | Lists every power the targets hold. |
-| `has <targets> <power>` | Reports `true`/`false` per target. |
+| `has <targets> <power>` | Reports `true` or `false` per target. |
 | `suppress <targets> power <power> [source]` | Suppresses one power. |
 | `suppress <targets> key <key> [source]` | Suppresses every held power bound to a keybind. |
 | `unsuppress <targets> power <power> [source]` | Lifts a suppression. |
@@ -34,7 +34,7 @@ power grant @s example:flight
 power grant @e[type=zombie] example:flight example:zombie_kit
 ```
 
-`<source>` is the tag the grant is recorded under. It defaults to the power's own id, which is what you want unless you plan to `revokeall` a whole batch later. A power is only really gone once every source that granted it has been removed — that is how an origin, a skill tree and a command can all hand out the same power without stepping on each other.
+`<source>` is the tag the grant is recorded under. It defaults to the power's own ID, which is what you want unless you plan to `revokeall` a whole batch later. A power is only really gone once every source that granted it has been removed, which is how an origin, a skill tree and a command can all hand out the same power without getting in each other's way.
 
 Granting an [`apoli:multiple`](/docs/datapack/powers/multiple) power also grants its sub-powers.
 
@@ -46,34 +46,36 @@ power revoke @s example:fire_dome
 power revoke @s example:fire from example:origin_kit
 ```
 
-`revoke` removes the power **entirely** — every source that granted it, plus any sub-powers it owns. That is almost always what you mean.
+`revoke` removes the power entirely: every source that granted it, plus any sub-powers it owns. That is almost always what you mean.
 
-`remove` is an alias of `revoke`, and `removeall` of `revokeall` — identical behaviour, for muscle memory from `/effect` and friends.
+`remove` is an alias of `revoke`, and `removeall` of `revokeall`. They behave the same, for anyone used to `/effect` and similar commands.
 
-Sub-powers of an `apoli:multiple` power are named `<parent>_<key>`, so a `dome` block inside `example:fire` becomes `example:fire_dome`. Type `example:fire_` at the prompt and tab-completion lists the sub-powers you can target individually.
+Sub-powers of an `apoli:multiple` power are named `<parent>_<key>`, so a `dome` block inside `example:fire` becomes `example:fire_dome`. Type `example:fire_` at the prompt and tab completion lists the sub-powers you can target one by one.
 
-Use `from <source>` when you specifically want to drop one grant and leave the others — for example removing a command-granted copy while the player's origin keeps its own.
+Use `from <source>` when you want to drop one grant and leave the others, for example to remove a copy granted by command while the player's origin keeps its own.
 
-> Revoking a power an origin grants is temporary: the origin re-applies its powers on relog or `/reload`. Change the origin instead if you want it to stick.
+> [!NOTE]
+> Revoking a power an origin grants only lasts until the origin applies its powers again, on relog or `/reload`. Change the origin instead if you want it to stick.
 
-## grantall / revokeall
+## grantall and revokeall
 
 ```mcfunction
 power grantall @s example:phoenix
 power revokeall @s example:phoenix
 ```
 
-`<source>` here is a **power source** — something that owns a list of powers:
+`<source>` here is a power source, something that owns a list of powers:
 
-- an **origin** id (Origins), e.g. `example:phoenix`
-- a **skill tree** id, which resolves to its `default_powers` plus every skill under it
-- an [`apoli:multiple`](/docs/datapack/powers/multiple) power id, which resolves to its sub-powers
+- an origin ID (with Origins), such as `example:phoenix`
+- a skill tree ID, which resolves to its `default_powers` plus every skill under it
+- an [`apoli:multiple`](/docs/datapack/powers/multiple) power ID, which resolves to its sub-powers
 
-Anything else is rejected with a message telling you so, rather than silently doing nothing. `grantall` records the source id on each power, so `revokeall` with the same id undoes it exactly.
+Anything else is rejected with a message saying so, so the command never silently does nothing. `grantall` records the source ID on each power, so `revokeall` with the same ID undoes it exactly.
 
-`revokeall` also removes powers held under a literal source of that name, so it still works for sources you invented yourself in `grant`.
+`revokeall` also removes powers held under a literal source of that name, so it still works for sources you made up yourself in `grant`.
 
-> `grantall` always needs a source to draw from; there is no "every power in the pack" form. The [`apoli:grant_all_powers`](/docs/datapack/entity-actions/grant_all_powers) action has the same `from` field for JSON.
+> [!NOTE]
+> `grantall` always needs a source to draw from, and there is no form for every power in the pack. The [`apoli:grant_all_powers`](/docs/datapack/entity-actions/grant_all_powers) action has the same `from` field for JSON.
 
 ## has
 
@@ -82,17 +84,17 @@ power has @s
 power has @a example:flight
 ```
 
-With no power id it prints every power the target holds, one per line, with the sources that granted it and a marker on suppressed ones. Sub-powers are dimmed so a long list is still readable.
+With no power ID it prints every power the target holds, one per line, with the sources that granted it and a marker on suppressed ones. Sub-powers are dimmed so a long list stays readable.
 
-With a power id it prints `true` or `false` per target and returns the number of targets that hold it, so it drops straight into `/execute`:
+With a power ID it prints `true` or `false` per target and returns the number of targets that hold it, so it goes straight into `/execute`:
 
 ```mcfunction
 execute store result score @s has_flight run power has @s example:flight
 ```
 
-## suppress / unsuppress
+## suppress and unsuppress
 
-Suppression switches a power off without taking it away: it stops ticking, stops rendering its HUD, and stops responding to its keybind, but it stays in the container and comes back the moment the suppression is lifted.
+Suppression switches a power off without taking it away. It stops ticking, stops drawing its HUD and stops responding to its keybind, but it stays in the container and comes back as soon as the suppression is lifted.
 
 ```mcfunction
 power suppress @s power example:flight
@@ -101,9 +103,9 @@ power unsuppress @s power example:flight
 power unsuppress @s all
 ```
 
-Like grants, suppressions are tracked per source (default `apoli:suppressed`), so two systems can suppress the same power and it only wakes up when both let go.
+Like grants, suppressions are tracked per source (`apoli:suppressed` by default), so two systems can suppress the same power and it only wakes up when both let go.
 
-Suppressing a power also suppresses everything that power granted, so naming an [`apoli:multiple`](/docs/datapack/powers/multiple) switches off its whole bundle of sub-powers — which is what you want, since a `multiple` has no behaviour of its own. `power has <targets>` marks the cascaded sub-powers as suppressed too; `unsuppress … all` lifts the suppressions that were applied directly.
+Suppressing a power also suppresses everything that power granted, so naming an [`apoli:multiple`](/docs/datapack/powers/multiple) switches off its whole bundle of sub-powers, which is what you want, since a `multiple` has no behaviour of its own. `power has <targets>` marks the cascaded sub-powers as suppressed too, and `unsuppress … all` lifts the suppressions that were applied directly.
 
 ### By keybind
 
@@ -112,6 +114,6 @@ power suppress @a key "key.origins.primary"
 power unsuppress @a key "key.origins.primary"
 ```
 
-`key` mode suppresses every power the target holds that is bound to that key — handy when a pack maps a dozen active powers onto the same button and you want to disable the lot during a cutscene or a minigame round. Tab-completion offers the keys the selected targets actually use.
+`key` mode suppresses every power the target holds that is bound to that key. That helps when a pack maps a dozen active powers onto the same button and you want to disable them all during a cutscene or a minigame round. Tab completion offers the keys the selected targets actually use.
 
 Keys are quoted strings, matching the `key` field on [`apoli:action_on_key_press`](/docs/datapack/powers/action_on_key_press), [`apoli:toggle`](/docs/datapack/powers/toggle), [`apoli:inventory`](/docs/datapack/powers/inventory), [`apoli:fire_projectile`](/docs/datapack/powers/fire_projectile) and [`apoli:action_on_key_sequence`](/docs/datapack/powers/action_on_key_sequence).

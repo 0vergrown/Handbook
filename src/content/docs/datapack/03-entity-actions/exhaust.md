@@ -1,20 +1,21 @@
 ---
 title: "Exhaust (Entity Action Type)"
-description: "Applies exhaustion to the entity, reducing saturation and hunger."
+description: "Adds exhaustion to a player, which drains saturation and then hunger."
 navigation_title: "Exhaust"
 ---
 
-Applies exhaustion to the entity, reducing saturation and hunger.
+Adds exhaustion to the player, which drains saturation and then hunger.
 
 Type ID: `apoli:exhaust`
 
-> This entity action type will only work on players.
+> [!NOTE]
+> This action only works on players.
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`amount` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) |  | The amount of exhaustion to apply to the player.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `amount` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | _required_ | How much exhaustion to add. |
 
 ## Examples
 
@@ -25,4 +26,4 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will apply 0.4 exhaustion to the player, which is similar in effect to jumping 8 times (without sprinting).
+This adds 0.4 exhaustion, about the same as jumping 8 times without sprinting.

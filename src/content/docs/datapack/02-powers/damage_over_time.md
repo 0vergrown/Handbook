@@ -1,26 +1,26 @@
 ---
 title: "Damage Over Time (Power Type)"
-description: "Legacy alias of apoli:action_over_time with an apoli:damage action pre-filled."
+description: "Legacy alias of apoli:action_over_time with an apoli:damage action filled in."
 navigation_title: "Damage Over Time"
 ---
 
-Damages the holder on an interval. This is a **legacy alias** — it resolves to [`apoli:action_over_time`](/docs/datapack/powers/action_over_time) with an [`apoli:damage`](/docs/datapack/entity-actions/damage) action built for you, so existing data packs keep working unchanged.
+Damages the entity with the power on an interval. `apoli:damage_over_time` is a legacy alias: it resolves to [`apoli:action_over_time`](/docs/datapack/powers/action_over_time) with an [`apoli:damage`](/docs/datapack/entity-actions/damage) action built for you, so existing data packs keep working unchanged.
 
 Type ID: `apoli:damage_over_time`
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|-------------
-`damage` | [Float](/docs/datapack/data-types/float) | **required** | How much damage to deal each interval.
-`damage_easy` | [Float](/docs/datapack/data-types/float) | value of `damage` | Damage dealt on Easy difficulty.
-`damage_type` | [Identifier](/docs/datapack/data-types/identifier) | `minecraft:generic` | The damage type to use.
-`interval` | [Integer](/docs/datapack/data-types/integer) | `20` | Ticks between hits.
-`onset_delay` | [Integer](/docs/datapack/data-types/integer) | value of `interval` | Ticks to wait after the condition becomes true before the first hit.
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `damage` | [Float](/docs/datapack/data-types/float) | _required_ | How much damage to deal each interval. |
+| `damage_easy` | [Float](/docs/datapack/data-types/float) | value of `damage` | The damage dealt on Easy difficulty. |
+| `damage_type` | [Identifier](/docs/datapack/data-types/identifier) | `minecraft:generic` | The damage type to use. |
+| `interval` | [Integer](/docs/datapack/data-types/integer) | `20` | Ticks between hits. |
+| `onset_delay` | [Integer](/docs/datapack/data-types/integer) | value of `interval` | Ticks to wait after the condition becomes true before the first hit. |
 
-## The composed form
+## The same power without the alias
 
-Write this instead in new packs — it is what the alias expands to, and it lets you swap the damage for any other [entity action](/docs/datapack/entity-actions):
+In new packs, write the power out like this. It is what the alias expands to, and it lets you swap the damage for any other [entity action](/docs/datapack/entity-actions):
 
 ```json
 {
@@ -36,6 +36,7 @@ Write this instead in new packs — it is what the alias expands to, and it lets
 }
 ```
 
-When `damage_easy` differs from `damage`, the alias wraps the action in [`apoli:if_else`](/docs/datapack/meta-actions/if_else) against the new [`apoli:difficulty`](/docs/datapack/entity-conditions/difficulty) condition — you can write that yourself for finer control, such as a separate Hard value.
+When `damage_easy` differs from `damage`, the alias wraps the action in an [`apoli:if_else`](/docs/datapack/meta-actions/if_else) on the [`apoli:difficulty`](/docs/datapack/entity-conditions/difficulty) condition. You can write that yourself for finer control, such as a separate value for Hard.
 
-> `protection_enchantment` and `protection_effectiveness` are not supported — they do not scale the onset delay, and Apoli logs a warning once if a pack sets them. Track the protection level in an [`apoli:resource`](/docs/datapack/powers/resource) and use an expression instead — `"onset_delay": "20 + mypack:protection * 26"` — which is both clearer and not limited to enchantments.
+> [!NOTE]
+> `protection_enchantment` and `protection_effectiveness` are not supported. They don't scale the onset delay, and Apoli logs a warning once if a pack sets them. Track the protection level in an [`apoli:resource`](/docs/datapack/powers/resource) and use an expression instead, such as `"onset_delay": "20 + mypack:protection * 26"`, which also works for things other than enchantments.

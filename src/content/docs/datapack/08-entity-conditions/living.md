@@ -1,16 +1,16 @@
 ---
 title: "Living (Entity Condition Type)"
-description: "Checks if the entity is an instance of Living Entity."
+description: "Checks whether the entity is a living entity."
 navigation_title: "Living"
 ---
 
-Checks if the entity is an instance of Living Entity.
+Checks whether the entity is a living entity, as opposed to something like an item, an arrow or a boat.
 
 Type ID: `apoli:living`
 
 ## Fields
 
-_None._
+This condition has no fields.
 
 ## Examples
 

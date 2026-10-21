@@ -1,37 +1,37 @@
 ---
 title: "Modify Hearing Range (Power Type)"
-description: "Changes how far away the holder can hear game sounds and voice chat."
+description: "Changes how far away the entity can hear game sounds and voice chat."
 navigation_title: "Modify Hearing Range"
 ---
 
-Changes how far away the holder can hear — both ordinary game sounds and [Simple Voice Chat](/docs/compat/simple-voice-chat/overview) proximity audio. This is a **listener-side** power: it changes what its holder hears, not what anyone hears from them.
+Changes how far away the entity with the power can hear, for both ordinary game sounds and [Simple Voice Chat](/docs/compat/simple-voice-chat/overview) proximity audio. The power works on the listener's side: it changes what the entity hears, not how far others hear it.
 
 Type ID: `apoli:modify_hearing_range`
 
 ## Fields
 
-| Field | Type | Default | Purpose |
+| Field | Type | Default | Description |
 | --- | --- | --- | --- |
 | `modifier` | [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) | _optional_ | A single modifier applied to the base hearing distance. |
-| `modifiers` | Array of Attribute Modifier | _optional_ | Several modifiers applied to the base hearing distance. |
-| `sounds` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Apply to ordinary game sounds. |
-| `voice` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Apply to Simple Voice Chat proximity audio. |
-| `bientity_condition` | [Bi-entity Condition](/docs/datapack/bientity-conditions) | _optional_ | Decides **per speaker** whether this power applies, with the holder as the actor and the speaker as the target. Voice chat only — a power that sets it is skipped for game sounds. |
+| `modifiers` | [Array](/docs/datapack/data-types/array) of [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) | _optional_ | Several modifiers applied to the base hearing distance. |
+| `sounds` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Whether the power applies to ordinary game sounds. |
+| `voice` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Whether the power applies to Simple Voice Chat proximity audio. |
+| `bientity_condition` | [Bi-entity Condition](/docs/datapack/bientity-conditions) | _optional_ | Decides for each speaker whether this power applies, with the listener as the actor and the speaker as the target. It only works for voice chat, so a power that sets it is skipped for game sounds. |
 
 ## What the base value is
 
-The modifiers are applied to whatever the sound would normally carry, so one power covers every sound at once:
+The modifiers apply to however far the sound would normally carry, so one power covers every sound at once:
 
 | Channel | Base |
 | --- | --- |
-| Game sounds | The sound event's own range — `16` blocks for most sounds, further for loud ones such as the Ender Dragon or a lightning strike. |
+| Game sounds | The sound event's own range: `16` blocks for most sounds, and further for loud ones such as the Ender Dragon or a lightning strike. |
 | Voice chat | The server's `max_voice_distance` (`48` by default), or `whisper_distance` (`24`) when the speaker is whispering. |
 
-A result of `0` or less means the holder hears nothing on that channel. There is no upper limit — set it high enough and the holder hears the whole dimension.
+A result of `0` or less means the entity hears nothing on that channel. There is no upper limit, so with a high enough value the entity hears the whole dimension.
 
-## Hearing some people further than others
+## Hearing some players further than others
 
-Without `bientity_condition` this power changes one number: how far its holder hears everything. With one, the range is decided for each speaker separately — the holder is the **actor** and whoever is talking is the **target** — so a pack can give one squad clear comms while everyone else fades out at the usual distance. This one doubles how far the holder hears their own team, and leaves everybody else alone.
+Without `bientity_condition`, this power changes one number: how far the entity hears everything. With one, the range is decided for each speaker separately, with the listener as the actor and whoever is talking as the target, so a pack can give one squad clear comms while everyone else fades out at the usual distance. This one triples how far the entity hears its own team and leaves everyone else alone:
 
 ```json
 {
@@ -47,13 +47,13 @@ Without `bientity_condition` this power changes one number: how far its holder h
 }
 ```
 
-Voice ranges are worked out once a tick, for each listener who holds one of these powers against each player who is actually talking, so the cost scales with conversations rather than with players. That pass is also where [apoli:modify_speaking_range](/docs/compat/simple-voice-chat/modify_speaking_range) is folded in: the speaker's range is the base the listener's modifiers are applied to, so a shout heard by keen ears really does compound.
+Voice ranges are worked out once a tick, for each listener with one of these powers against each player who is talking, so the cost grows with the number of conversations, not the number of players. [apoli:modify_speaking_range](/docs/compat/simple-voice-chat/modify_speaking_range) is applied in the same pass: the speaker's range is the base that the listener's modifiers apply to, so a shout heard by keen ears goes further still.
 
-A power with a `bientity_condition` is skipped entirely for game sounds, because a sound has no speaker to test against — split it into two powers if you want both halves.
+A power with a `bientity_condition` is skipped entirely for game sounds, because a sound has no speaker to test against. Split it into two powers if you want both.
 
 ## Examples
 
-Deaf — no game sounds, no voice chat:
+Deaf, with no game sounds and no voice chat:
 
 ```json
 {
@@ -65,7 +65,7 @@ Deaf — no game sounds, no voice chat:
 }
 ```
 
-Keen hearing — everything reaches four times as far:
+Keen hearing, where everything reaches four times as far:
 
 ```json
 {
@@ -77,7 +77,7 @@ Keen hearing — everything reaches four times as far:
 }
 ```
 
-Hears voices from anywhere in the dimension, but game sounds normally:
+Hears voices from anywhere in the dimension, and game sounds as usual:
 
 ```json
 {
@@ -90,7 +90,7 @@ Hears voices from anywhere in the dimension, but game sounds normally:
 }
 ```
 
-Deafened only while a `example:concussed` resource is above zero, and only for game sounds:
+Deafened only while an `example:concussed` resource is above zero, and only for game sounds:
 
 ```json
 {
@@ -109,15 +109,16 @@ Deafened only while a `example:concussed` resource is above zero, and only for g
 }
 ```
 
-The modifier's `value` accepts an [Expression](/docs/datapack/data-types/expression), so hearing can scale off a resource: `"value": "example:focus / 10"`.
+The modifier's `value` accepts an [expression](/docs/datapack/data-types/expression), so hearing can scale with a resource: `"value": "example:focus / 10"`.
 
 ## Notes
 
-- Whether the power is active is decided **on the server**, so its `condition` can use anything. For game sounds, the server decides which sounds reach the holder at all, and the holder's client — which needs Apoli installed — stretches how far each sound carries, so a far sound is heard and every sound in range is louder. Without Apoli on the client the extra sounds arrive but fade out at the usual distance.
-- Extended voice hearing works by widening how far the speaker's audio is broadcast and then trimming it back per listener, so a distant listener hears the speaker while everyone else's range is unchanged.
-- For the first tick of an utterance the listener hears at the speaker's own range; the listener's modifiers take over from the next tick. At 50 ms it is not audible, but it is why a range change never clips the start of a word.
-- Only **proximity** voice audio is affected. Group chat is a separate channel and is always audible to its members.
-- Several active `modify_hearing_range` powers stack, in the order the modifiers sort.
-- The voice-chat half needs Simple Voice Chat installed; the `sounds` half does not. Without Simple Voice Chat the `voice` field simply does nothing.
+- The server decides whether the power is active, so its `condition` can use anything. For game sounds, the server decides which sounds reach the entity at all, and the entity's client, which needs Apoli installed, stretches how far each sound carries, so a far sound is heard and every sound in range is louder. Without Apoli on the client, the extra sounds arrive but fade out at the usual distance.
+- Longer voice hearing works by widening how far the speaker's audio is broadcast and then trimming it back for each listener, so the distant listener hears the speaker while everyone else's range stays the same.
+- For the first tick of a sentence, the listener hears at the speaker's own range, and the listener's modifiers take over from the next tick. At 50 ms this isn't audible, and it is why a range change never cuts off the start of a word.
+- Only proximity voice audio is affected. Group chat is a separate channel and its members can always hear it.
+- Several active `modify_hearing_range` powers stack, in the order their modifiers sort.
+- The voice chat half needs Simple Voice Chat installed, and the `sounds` half doesn't. Without Simple Voice Chat, the `voice` field does nothing.
 
-> Game sounds are filtered per listener, so while any pack in the world uses this power, every broadcast sound costs one extra power lookup per online player. It is cheap, but it is not free — prefer one power with a condition over several.
+> [!NOTE]
+> Game sounds are filtered for each listener, so while any pack in the world uses this power, every broadcast sound costs one extra power lookup per online player. That is cheap, but it adds up, so prefer one power with a condition over several.

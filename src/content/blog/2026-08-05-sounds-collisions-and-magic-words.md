@@ -1,21 +1,21 @@
 ---
 title: Rewriting sound, colliding with things, and what a magic word actually matches
-description: Apoli 1.23.1 adds two sound-replacement powers, action_on_collision, three new play_sound fields, texture icons for skill trees, and fixes the chat magic-word trigger properly.
+description: "Apoli 1.23.1 adds two sound replacement powers, apoli:action_on_collision, three play_sound fields and texture icons for skill trees, and fixes the chat magic word trigger properly."
 date: 2026-08-05
 author: Overgrown
 ---
 
-Apoli **1.23.1** (Origins **1.11.1**) is a sound update, a collision trigger, and a long-overdue fix for the chat magic-word trigger.
+Apoli 1.23.1 (Origins 1.11.1) brings sound replacement, a collision trigger, and a fix for the chat magic word trigger that was long overdue.
 
 ## Sound, rewritten in both directions
 
-Two new power types, mirror images of each other.
+There are two new power types, mirror images of each other.
 
-[`apoli:replace_sound_emission`](/docs/datapack/powers/replace_sound_emission) changes the sounds an entity **makes** — hurt, death, footsteps, eating, equipping, attack swings, the level-up chime. Everyone who can hear the entity hears the replacement.
+[`apoli:replace_sound_emission`](/docs/datapack/powers/replace_sound_emission) changes the sounds an entity makes: hurt, death, footsteps, eating, equipping, attack swings and the level up chime. Everyone who can hear the entity hears the replacement.
 
-[`apoli:replace_sound_reception`](/docs/datapack/powers/replace_sound_reception) changes the sounds a player **hears**, from any source, on their client only.
+[`apoli:replace_sound_reception`](/docs/datapack/powers/replace_sound_reception) changes the sounds a player hears, from any source, on their client only.
 
-Both take the same `sounds` map. A key is either an exact sound id or a regular expression matched against the whole id, and a value is a sound id, an object with `volume`/`pitch`, or a weighted array to pick from:
+Both take the same `sounds` map. A key is either an exact sound ID or a regular expression matched against the whole ID, and a value is a sound ID, an object with `volume` and `pitch`, or a weighted array to pick from:
 
 ```json
 {
@@ -42,7 +42,7 @@ Both take the same `sounds` map. A key is either an exact sound id or a regular 
 }
 ```
 
-That last rule is the interesting one: a regex key can feed its capture groups into the replacement, so every `minecraft:entity.zombie.*` sound becomes the matching `minecraft:entity.pig.*` one — ambient, hurt, death, step, all of it — in a single line. `minecraft:empty` mutes a sound outright, which is all deafness needs:
+The last rule is the interesting one. A regex key can feed its capture groups into the replacement, so every `minecraft:entity.zombie.*` sound becomes the matching `minecraft:entity.pig.*` one (ambient, hurt, death, step, all of it) in a single line. `minecraft:empty` mutes a sound outright, which is all deafness needs:
 
 ```json
 {
@@ -53,13 +53,13 @@ That last rule is the interesting one: a regex key can feed its capture groups i
 }
 ```
 
-Set `replace: false` and the replacement plays *on top of* the original instead of taking it away, which is how you get a layered effect — a chime over every footstep, muffled water over everything while submerged. `priority` orders several such powers on the same holder.
+Set `replace: false` and the replacement plays on top of the original instead of replacing it. That gives you layered effects, like a chime over every footstep, or muffled water over everything while you're underwater. `priority` orders several such powers on the same holder.
 
-**A note on writing these.** A key with no regex metacharacters is treated as an exact sound id and matched with a hash lookup; anything else is compiled once at load and tested in file order. Prefer exact ids where you can — a pack full of `.*` rules runs every one of them against every sound the entity makes, and sound emission is close to a per-tick path.
+A key with no regex metacharacters is treated as an exact sound ID and matched with a hash lookup. Anything else is compiled once at load and tested in file order. Prefer exact IDs where you can, since a pack full of `.*` rules runs every one of them against every sound the entity makes, and sound emission is close to a per-tick path.
 
 ## Walking into things
 
-[`apoli:action_on_collision`](/docs/datapack/powers/action_on_collision) runs a bi-entity action while the holder's bounding box overlaps another entity's. No attack required — touching is enough.
+[`apoli:action_on_collision`](/docs/datapack/powers/action_on_collision) runs a bi-entity action while the holder's bounding box overlaps another entity's. No attack is needed, and touching is enough.
 
 ```json
 {
@@ -72,13 +72,14 @@ Set `replace: false` and the replacement plays *on top of* the original instead 
 }
 ```
 
-It takes `bientity_condition` and `target_condition` to filter what counts, a `radius` to inflate the check outwards if you want a bubble rather than skin contact, and `hud_render` for the cooldown. Because it works off an overlap test rather than vanilla's push logic, it also fires for the things vanilla never pushes: armour stands, boats, dropped items, projectiles in flight.
+It takes `bientity_condition` and `target_condition` to filter what counts, a `radius` to inflate the check outwards if you want a bubble instead of skin contact, and `hud_render` for the cooldown. It works from an overlap test instead of vanilla's push logic, so it also fires for things vanilla never pushes: armour stands, boats, dropped items and projectiles in flight.
 
-One thing to watch: `cooldown` is per power, not per target. With `cooldown: 20`, walking into a crowd fires once and then waits — it does not fire once per mob. Leave it at `0` if you want every colliding entity every tick, and keep in mind what that multiplies out to.
+> [!WARNING]
+> `cooldown` counts per power. With `cooldown: 20`, walking into a crowd fires once and then waits, instead of firing once for each mob. Leave it at `0` if you want every colliding entity every tick, and keep in mind what that multiplies out to.
 
 ## play_sound grew three fields
 
-[`apoli:play_sound`](/docs/datapack/entity-actions/play_sound) picks up `follow_entity` (the sound travels with the entity instead of pinning to the spot it started), `global` (no distance falloff) and `internal` (everyone *except* the holder hears it). `global` defaults to whatever `follow_entity` is, since a following sound almost always wants full range.
+[`apoli:play_sound`](/docs/datapack/entity-actions/play_sound) picks up `follow_entity` (the sound travels with the entity instead of staying where it started), `global` (no falloff with distance) and `internal` (everyone except the holder hears it). `global` defaults to whatever `follow_entity` is, since a sound that follows almost always wants full range.
 
 ```json
 {
@@ -90,7 +91,7 @@ One thing to watch: `cooldown` is per power, not per target. With `cooldown: 20`
 
 ## Skill tree icons can be textures
 
-Origins has been able to point `icon` at a PNG for a while. Skill trees now use the same [Icon](/docs/datapack/data-types/icon) type, so a tree tab, a skill node, or a power's `skill` block all take a texture:
+Origins has been able to point `icon` at a PNG for a while. Skill trees now use the same [Icon](/docs/datapack/data-types/icon) type, so a tree tab, a skill node or a power's `skill` block can all take a texture:
 
 ```json
 {
@@ -101,23 +102,23 @@ Origins has been able to point `icon` at a PNG for a while. Skill trees now use 
 }
 ```
 
-Item ids and item stacks work exactly as before. The file's real size is read from the PNG and scaled into the slot, so a 16×16 or a 256×256 icon both just work.
+Item IDs and item stacks work exactly as before. The file's real size is read from the PNG and scaled into the slot, so a 16×16 or a 256×256 icon both work.
 
 ## What a magic word actually matches
 
-[`apoli:action_on_sending_message`](/docs/datapack/powers/action_on_sending_message) matches typed chat against a pattern. The part nobody could tell from the docs: the pattern was a **substring search**. `"fireball"` fired on `Fireball 1`, on `I cast fireball`, on `fireballs`. That is a fine default, but it was never stated and it is not what most people mean by a magic word.
+[`apoli:action_on_sending_message`](/docs/datapack/powers/action_on_sending_message) matches typed chat against a pattern. What nobody could tell from the docs was that the pattern was a substring search. `"fireball"` fired on `Fireball 1`, on `I cast fireball` and on `fireballs`. That's a fine default, but it was never stated, and it isn't what most people mean by a magic word.
 
 There is now a `match_mode` field that says it out loud:
 
 | `match_mode` | `"fireball"` fires on |
 | --- | --- |
 | `"contains"` (default, unchanged) | `fireball`, `Fireball 1`, `throw a fireball!`, `fireballs` |
-| `"full"` | `fireball` — and nothing else |
-| `"word"` | `fireball`, `throw a fireball!` — but not `fireballs` |
+| `"full"` | `fireball` and nothing else |
+| `"word"` | `fireball` and `throw a fireball!`, but not `fireballs` |
 | `"starts_with"` | `fireball`, `fireball at the sky` |
 | `"ends_with"` | `fireball`, `cast a fireball` |
 
-So the trigger most people were actually reaching for is:
+So the trigger most people were actually reaching for is this one:
 
 ```json
 {
@@ -136,19 +137,20 @@ So the trigger most people were actually reaching for is:
 }
 ```
 
-`case_insensitive` replaces hand-writing `(?i)`, `literal: true` turns off regex entirely for words containing `(` or `[`, and a filter can now be written as a bare string when you don't need any of that. Existing packs are untouched — `contains` is still the default and `(?i)` still works.
+`case_insensitive` replaces writing `(?i)` by hand, `literal: true` turns regex off entirely for words containing `(` or `[`, and a filter can now be written as a plain string when you don't need any of that. Existing packs are untouched, since `contains` is still the default and `(?i)` still works.
 
-> `(?i)` is regex for *ignore case*. It is not "not this" — a surprising number of packs were using it that way. For "not this", see `inverted` below.
+> [!NOTE]
+> `(?i)` is regex for ignore case. It doesn't mean "not this", and a surprising number of packs were using it that way. For "not this", see `inverted` below.
 
 ### One match, one action
 
-Filters are a gate, not a loop. Each filter used to run the power's `entity_action` when it matched, so a message matching two filters ran the action twice — and with the default substring matching that is easy to hit without noticing. `"stone"` and `"smooth stone"` *both* match the message `smooth stone`.
+Each filter used to run the power's `entity_action` when it matched, so a message matching two filters ran the action twice. With the default substring matching, that's easy to hit without noticing: `"stone"` and `"smooth stone"` both match the message `smooth stone`.
 
-Now the list is evaluated first and `entity_action` runs **once**. Per-filter `before_action`, `after_action`, `replacement` and `prevent` still run for every filter that matched, because those are deliberately per-filter — a `filters` list used as a dispatch table, one `after_action` per magic word, keeps working exactly as before.
+Now the list is evaluated first and `entity_action` runs once. The per-filter `before_action`, `after_action`, `replacement` and `prevent` still run for every filter that matched, because those are meant to be per filter. A `filters` list used as a dispatch table, with one `after_action` per magic word, keeps working exactly as before.
 
 ### `inverted`, for carving out exceptions
 
-A filter can now be marked `"inverted": true`, which turns it into a veto: it never triggers the power by itself, it only stops the power when it matches.
+A filter can now be marked `"inverted": true`, which turns it into a veto. It never triggers the power by itself, and only stops the power when it matches.
 
 ```json
 {
@@ -172,7 +174,7 @@ A filter can now be marked `"inverted": true`, which turns it into a veto: it ne
 
 That fires on `stone` and `stonecutter`, but not on `smooth stone` or `mossy cobblestone`.
 
-Before reaching for it, though: if the words are simply *different messages*, `match_mode` already says that, and says it more clearly.
+Before you reach for it, though: if the words are simply different messages, `match_mode` already says that, and more clearly.
 
 ```json
 {
@@ -184,19 +186,19 @@ Before reaching for it, though: if the words are simply *different messages*, `m
 }
 ```
 
-`inverted` earns its keep when the pattern genuinely has to stay loose and you only want a few holes in it.
+`inverted` earns its keep when the pattern really has to stay loose and you only want a few holes in it.
 
-### …and three reasons it wasn't firing at all
+### Three reasons it wasn't firing at all
 
-`message_type` never worked: the chat hook didn't pass a chat type, so any power that set the field could never match and simply never fired. `priority` was parsed and then never read. And **only typed chat was hooked** — `/say`, `/me` and `/msg` went straight past the filters, so a magic word sent as a command did nothing at all. All three work now.
+`message_type` never worked. The chat hook didn't pass a chat type, so any power that set the field could never match and never fired. `priority` was parsed and then never read. And only typed chat was hooked, so `/say`, `/me` and `/msg` went straight past the filters, and a magic word sent as a command did nothing. All three work now.
 
-An invalid regex in a filter also used to fall back to a literal match silently, leaving you with a filter that quietly matched nothing you expected. It still falls back — but it says so in the log.
+An invalid regex in a filter also fell back to a literal match silently, leaving you with a filter that matched nothing you expected. It still falls back, but now it says so in the log.
 
-Worse, a failing action *inside* the power could break chat with no usable error. Chat broadcast runs inside a future chain whose exception handler logs a generic "Chain link failed" and moves on, never naming the mod. The power now catches its own failures, names itself and the message, and lets the message through.
+A failing action inside the power could also break chat with no useful error. Chat broadcast runs inside a future chain whose exception handler logs a generic "Chain link failed" and moves on, never naming the mod. The power now catches its own failures, names itself and the message, and lets the message through.
 
 ### Rewriting instead of blocking
 
-A filter can now carry a `replacement`, which rewrites the message rather than swallowing it — capture groups and all:
+A filter can now carry a `replacement`, which rewrites the message instead of swallowing it, capture groups and all:
 
 ```json
 {
@@ -209,17 +211,17 @@ A filter can now carry a `replacement`, which rewrites the message rather than s
 }
 ```
 
-### And a way to see what's happening
+### A way to see what's happening
 
-`/apoli:message <text>` tests `<text>` as if you'd typed it and tells you which powers are active, which filters matched, whether the power ends up inert, and what would have happened to the message. If a magic word isn't firing, start there — it will tell you whether the power is even active before you start rewriting regex.
+`/apoli:message <text>` tests `<text>` as if you'd typed it, and tells you which powers are active, which filters matched, whether the power ends up inert, and what would have happened to the message. If a magic word isn't firing, start there. It tells you whether the power is even active before you start rewriting regex.
 
-It is a dry run: no `entity_action` is executed. Debugging a power that hands out items no longer fills your inventory with the evidence.
+It's a dry run, and no `entity_action` is executed, so debugging a power that hands out items doesn't fill your inventory with the evidence.
 
 ### Translation keys got much cheaper
 
-`#{some.translation.key}` in a filter expands to every translation of that key, so one filter catches a phrase in any language. It used to index **every** translation key of **every** installed mod at startup — tens of thousands of strings held for the whole session to serve a couple of lookups. Now only the keys your filters actually name are read, once, the first time such a filter is tested. A pack with no `#{...}` never opens a language file at all.
+`#{some.translation.key}` in a filter expands to every translation of that key, so one filter catches a phrase in any language. It used to index every translation key of every installed mod at startup, tens of thousands of strings held for the whole session to serve a couple of lookups. Now only the keys your filters name are read, once, the first time such a filter is tested. A pack with no `#{...}` never opens a language file at all.
 
 ## Smaller things
 
-- Skill trees logged a bogus *"has no skill tree at the top of its parent chain"* warning for **every** skill in the pack on each data-pack load. Skills were registered before their trees, so the first of two rebuilds validated against an empty tree map. If you have been ignoring a wall of those, they are gone.
-- `apoli:action_on_sending_message` has moved in these docs out of the Simple Voice Chat section and in with the rest of the power types. It never needed voice chat — it is plain vanilla chat — and filing it under a compat section implied otherwise.
+- Skill trees logged a bogus "has no skill tree at the top of its parent chain" warning for every skill in the pack on each data pack load. Skills were registered before their trees, so the first of two rebuilds checked against an empty tree map. If you've been ignoring a wall of those, they're gone.
+- In these docs, `apoli:action_on_sending_message` has moved out of the Simple Voice Chat section and in with the rest of the power types. It never needed voice chat, since it works on plain vanilla chat, and filing it under a compat section suggested otherwise.

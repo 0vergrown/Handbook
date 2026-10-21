@@ -1,26 +1,24 @@
 ---
 title: "Prevent Entity Use (Power Type)"
-description: "Prevents the player that has the power from 'using' (right-clicking) an entity and executes a bi-entity action, item action and/or give an item upon being prevented."
+description: "Stops the player that has the power from right-clicking entities, and can run actions or give an item when it does."
 navigation_title: "Prevent Entity Use"
 ---
 
-Prevents the player that has the power from "using" (right-clicking) an entity and executes a bi-entity action, item action and/or give an item upon being prevented.
+Stops the player that has the power from using (right-clicking) entities. When it stops them, it can run a bi-entity action, run item actions and give them an item. The actor is the entity with the power, and the target is the entity that was right-clicked.
 
 Type ID: `apoli:prevent_entity_use`
 
-> In the context of this power type, the '**actor**' entity is the entity that has the power whilst the '**target**' entity is the entity that was "used" (right-clicked).
-
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|-------------
-`bientity_action` | Bi-entity Action Type | _optional_ | If specified, this action will be executed on either or both the '**actor**' and '**target**' entities.
-`held_item_action` | Item Action Type | _optional_ | If specified, this action will be executed on the item used by the '**actor**' entity for right-clicking the '**target**' entity.
-`result_item_action` | Item Action Type | _optional_ | If specified, this action will be executed on the item that is given to the '**actor**' entity.
-`bientity_condition` | Bi-entity Condition Type | _optional_ | If specified, the specified actions will only be executed if this condition is fulfilled by either or both '**actor**' and '**target**' entities.
-`item_condition` | Item Condition Type | _optional_ | If specified, the specified actions will only be executed if this condition is fulfilled by the item used by the '**actor**' entity for right-clicking the '**target**' entity.
-`hands` | Array of Strings | `["off_hand", "main_hand"]` | Determines if the power should be activated if the '**actor**' entity used the specified hand(s). Accepts `"off_hand"`, `"main_hand"` or both.
-`result_stack` | Item Stack | _optional_ | If specified, this item stack will be given to the '**actor**' entity.
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `bientity_action` | [Bi-entity Action Type](/docs/datapack/bientity-actions) | _optional_ | If set, this action runs on the actor, the target or both. |
+| `held_item_action` | [Item Action Type](/docs/datapack/item-actions) | _optional_ | If set, this action runs on the item the actor right-clicked the target with. |
+| `result_item_action` | [Item Action Type](/docs/datapack/item-actions) | _optional_ | If set, this action runs on the item given to the actor. |
+| `bientity_condition` | [Bi-entity Condition Type](/docs/datapack/bientity-conditions) | _optional_ | If set, the actions only run when the actor and target pass this condition. |
+| `item_condition` | [Item Condition Type](/docs/datapack/item-conditions) | _optional_ | If set, the actions only run when the item the actor right-clicked with passes this condition. |
+| `hands` | [Array](/docs/datapack/data-types/array) of [Strings](/docs/datapack/data-types/string) | `["off_hand", "main_hand"]` | The hands the actor can use for the power to trigger: `"off_hand"`, `"main_hand"` or both. |
+| `result_stack` | [Item Stack](/docs/datapack/data-types/item-stack) | _optional_ | If set, this item stack is given to the actor. |
 
 ## Examples
 
@@ -44,4 +42,4 @@ Field | Type | Default | Description
 }
 ```
 
-This example will prevent the player that has the power from interacting with a Pig (also prevent powers that enables you to interact with a Pig) and executes an [apoli:execute_command](/docs/datapack/entity-actions/execute_command) to the entity that has attempted to interact with a Pig.
+This stops the player from interacting with pigs, including through powers that would let them, and runs an [apoli:execute_command](/docs/datapack/entity-actions/execute_command) that tells them so in the action bar.

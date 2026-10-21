@@ -1,18 +1,18 @@
 ---
 title: "Modify Death Ticks (Entity Action Type)"
-description: "Modifies how long the entity has been dead for."
+description: "Changes how long the entity counts as having been dead."
 navigation_title: "Modify Death Ticks"
 ---
 
-Modifies how long the entity has been dead for.
+Changes the entity's death ticks, the counter of how long it has been dead.
 
 Type ID: `apoli:modify_death_ticks`
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|------------
-`modifier` | Attribute Modifier | | This modifier will be applied to the current death ticks value of the entity.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) | _required_ | The modifier applied to the entity's current death ticks. |
 
 ## Examples
 
@@ -26,4 +26,4 @@ Field | Type | Default | Description
 }
 ```
 
-This example will make the corpse of the entity remain in the world forever.
+This sets the death ticks back to 0, which restarts the death animation. Run it every tick while the entity is dead and the corpse stays in the world.

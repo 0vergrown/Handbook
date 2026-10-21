@@ -1,9 +1,9 @@
 ---
 title: Powers
-description: The top-level unit: What a power is and the fields every power shares.
+description: What a power is, and the fields every power type shares.
 ---
 
-A **power** is the top-level unit in Apoli: the thing an entity *has*. Every power is a JSON object with a `type`, and the `type` decides what the power does.
+A power is the top-level unit in Apoli: something an entity has. Every power is a JSON object with a `type`, and the `type` decides what the power does.
 
 ## The shape of a power
 
@@ -22,38 +22,38 @@ A **power** is the top-level unit in Apoli: the thing an entity *has*. Every pow
 }
 ```
 
-Seven fields are shared by **every** power type. Everything else is type-specific.
+Every power type shares these seven fields. All other fields depend on the type.
 
-| Field         | Type                                                       | Default  | Purpose                                                      |
-|---------------|------------------------------------------------------------|----------|--------------------------------------------------------------|
-| `type`        | [Identifier](/docs/datapack/data-types/identifier)         | —        | **Required.** Which power type this is.                      |
-| `name`        | [Text Component](/docs/datapack/data-types/text-component) | auto     | Display name. Falls back to a translation key.               |
-| `description` | [Text Component](/docs/datapack/data-types/text-component) | auto     | Description shown in menus. Falls back to a translation key. |
-| `condition`   | [Entity Condition](/docs/datapack/introduction/conditions) | optional | The power is only *active* while this passes.                |
-| `hidden`      | [Boolean](/docs/datapack/data-types/boolean)               | `false`  | Hide the power from origin/power screens.                    |
-| `tags`        | string or list of strings                                  | `[]`     | Free-form labels for this power. Actions that work on powers can select by tag instead of by id — see [Tagging powers](#tagging-powers). |
-| `load_condition` | [Meta condition](/docs/datapack/meta-conditions/constant) | optional | Checked during the reload; the power is skipped before it parses if it fails — see [Gating a power at load time](#gating-a-power-at-load-time). |
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `type` | [Identifier](/docs/datapack/data-types/identifier) | _required_ | Which power type this is. |
+| `name` | [Text Component](/docs/datapack/data-types/text-component) | auto | The display name. Falls back to a translation key. |
+| `description` | [Text Component](/docs/datapack/data-types/text-component) | auto | The description shown in menus. Falls back to a translation key. |
+| `condition` | [Entity Condition](/docs/datapack/introduction/conditions) | _optional_ | The power is only active while this passes. |
+| `hidden` | [Boolean](/docs/datapack/data-types/boolean) | `false` | Hides the power from the origin and power screens. |
+| `tags` | string or list of strings | `[]` | Free-form labels. Actions that work on powers can select powers by tag instead of by ID. See [Tagging powers](#tagging-powers). |
+| `load_condition` | [Meta condition](/docs/datapack/meta-conditions/constant) | _optional_ | Checked during the reload. If it fails, the power is skipped before it is parsed. See [Skipping a power at load time](#skipping-a-power-at-load-time). |
 
-The top-level `condition` is worth remembering: it's how you make a power conditional without changing its type. A `condition` of `apoli:sneaking` means the power only works while sneaking.
+The top-level `condition` makes any power conditional without changing its type. With a `condition` of `apoli:sneaking`, the power only works while the entity sneaks.
 
-## Gating a power at load time
+## Skipping a power at load time
 
-`condition` decides whether an already-loaded power is *active*. A seventh field, `load_condition`, decides whether the power is **read at all**.
+`condition` decides whether a loaded power is active. `load_condition` decides whether the power is read at all.
 
-| Field | Type | Default | Purpose |
-|-------|------|---------|---------|
-| `load_condition` | [Meta condition](/docs/datapack/meta-conditions/constant) | optional | Checked once, during the reload, before the rest of the power reaches a codec. If it does not hold, the power is skipped entirely. |
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `load_condition` | [Meta condition](/docs/datapack/meta-conditions/constant) | _optional_ | Checked once during the reload, before the rest of the power reaches a codec. If it doesn't hold, the power is skipped entirely. |
 
-That ordering is the whole point. A power whose `load_condition` fails is dropped *before* its other fields are parsed, so it does not matter whether they would have parsed on this version of the game or with this set of mods. A `condition` cannot do that — the power has to load successfully first, and a field the codec rejects takes the whole power with it.
+The order matters. A power whose `load_condition` fails is dropped before its other fields are parsed, so those fields don't have to parse on this game version or with this set of mods. A `condition` can't do that: the power has to load first, and a field the codec rejects takes the whole power with it.
 
-Only **context-free** condition types are allowed there, because there is no entity, item or block to test against during a reload:
+Only condition types that need no context are allowed here, because a reload has no entity, item or block to test:
 
 - [`apoli:minecraft_version`](/docs/datapack/meta-conditions/minecraft_version)
 - [`apoli:mod_loaded`](/docs/datapack/meta-conditions/mod_loaded)
 - [`apoli:constant`](/docs/datapack/meta-conditions/constant) and [`apoli:nothing`](/docs/datapack/meta-conditions/nothing)
-- [`apoli:all_of`](/docs/datapack/meta-conditions/all_of) / [`apoli:any_of`](/docs/datapack/meta-conditions/any_of) over those
+- [`apoli:all_of`](/docs/datapack/meta-conditions/all_of) and [`apoli:any_of`](/docs/datapack/meta-conditions/any_of) over those types
 
-`inverted` works as it does on any other condition. Anything else is rejected with a log line and the power is **kept**, so a typo never silently deletes a power.
+`inverted` works as it does on any other condition. Any other type is rejected with a line in the log and the power is kept, so a typo never deletes a power without telling you.
 
 ```json
 {
@@ -71,39 +71,39 @@ Only **context-free** condition types are allowed there, because there is no ent
 }
 ```
 
-Written on [`apoli:multiple`](/docs/datapack/powers/multiple), `load_condition` works on each sub-power independently — a dropped sub-power is left out of the parent's `sub_powers` list, so nothing goes looking for it. Put it at the top level of the `apoli:multiple` instead and it gates the whole bundle.
+On an [`apoli:multiple`](/docs/datapack/powers/multiple) sub-power, `load_condition` applies to that sub-power alone. A dropped sub-power is left out of the parent's `sub_powers` list, so nothing goes looking for it. Put `load_condition` at the top level of the `apoli:multiple` to apply it to the whole bundle.
 
-Origins reads the same field on `origins/` and `origin_layers/` files, so an origin can exist only where its powers do.
+Origins reads the same field on files in `origins/` and `origin_layers/`, so an origin can exist only where its powers do.
 
-## Categories of power
+## Kinds of power
 
-There are over a hundred power types and every one has its __own page__ in the **Powers** section of the sidebar. They fall into a few loose families:
+There are over a hundred power types, and each one has its own page in the Powers section of the sidebar. They fall into a few loose groups:
 
-| Family                | What they do                                                     | Examples                                                                                                                                     |
-|-----------------------|------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------|
-| Attribute & stat      | Change numbers                                                   | [`Attribute (Power Type)`](/docs/datapack/powers/attribute), [`Modify Damage (Power Type)`](/docs/datapack/powers/modify_damage_dealt)       |
-| Movement              | Flight, climbing, phasing                                        | [`Creative Flight (Power Type)`](/docs/datapack/powers/creative_flight), [`Climbing (Power Type)`](/docs/datapack/powers/climbing)           |
-| Prevention & immunity | Take an ability away                                             | [`Invulnerability (Power Type)`](/docs/datapack/powers/invulnerability), [`Prevent Death (Power Type)`](/docs/datapack/powers/prevent_death) |
-| Action-driven         | Fire [actions](/docs/datapack/introduction/actions) on a trigger | [`apoli:action_on_hit`](/docs/datapack/powers/action_on_hit), [`apoli:action_over_time`](/docs/datapack/powers/action_over_time)             |
-| Resources & state     | Store a number, timer, or group                                  | [`apoli:resource`](/docs/datapack/powers/resource), [`apoli:cooldown`](/docs/datapack/powers/cooldown)                                       |
-| Rendering & cosmetic  | Colours, overlays, particles                                     | [`apoli:model_color`](/docs/datapack/powers/model_color), [`apoli:particle`](/docs/datapack/powers/particle)                                 |
-| Item & inventory      | Containers, recipes, projectiles                                 | [`apoli:inventory`](/docs/datapack/powers/inventory), [`apoli:fire_projectile`](/docs/datapack/powers/fire_projectile)                       |
-| Structural            | Bundle or flag                                                   | [`apoli:multiple`](/docs/datapack/powers/multiple), [`apoli:simple`](/docs/datapack/powers/simple)                                           |
+| Group | What they do | Examples |
+|-------|--------------|----------|
+| Attributes and stats | Change numbers | [`apoli:attribute`](/docs/datapack/powers/attribute), [`apoli:modify_damage`](/docs/datapack/powers/modify_damage) |
+| Movement | Flight, climbing, phasing | [`apoli:creative_flight`](/docs/datapack/powers/creative_flight), [`apoli:climbing`](/docs/datapack/powers/climbing) |
+| Prevention and immunity | Take an ability away | [`apoli:invulnerability`](/docs/datapack/powers/invulnerability), [`apoli:prevent_death`](/docs/datapack/powers/prevent_death) |
+| Action powers | Run [actions](/docs/datapack/introduction/actions) on a trigger | [`apoli:action_on_hit`](/docs/datapack/powers/action_on_hit), [`apoli:action_over_time`](/docs/datapack/powers/action_over_time) |
+| Resources and state | Store a number, a timer or a group | [`apoli:resource`](/docs/datapack/powers/resource), [`apoli:cooldown`](/docs/datapack/powers/cooldown) |
+| Rendering | Colours, overlays, particles | [`apoli:model_color`](/docs/datapack/powers/model_color), [`apoli:particle`](/docs/datapack/powers/particle) |
+| Items and inventories | Containers, recipes, projectiles | [`apoli:inventory`](/docs/datapack/powers/inventory), [`apoli:fire_projectile`](/docs/datapack/powers/fire_projectile) |
+| Structure | Bundle powers or act as a flag | [`apoli:multiple`](/docs/datapack/powers/multiple), [`apoli:simple`](/docs/datapack/powers/simple) |
 
-## Powers are inert until granted
+## Granting powers
 
-Writing a power file doesn't do anything on its own. Something has to give the power to an entity:
+A power file does nothing on its own. Something has to give the power to an entity:
 
-- a `/power grant` command,
-- an **Origins** origin (via a [layer](/docs/datapack/origins/layers)),
-- an [action](/docs/datapack/introduction/actions) like `Grant Power (Entity Action Type)`,
-- a [global power set](#global-powers), which grants to whole entity types automatically.
+- the `/power grant` command,
+- an Origins origin, through a [layer](/docs/datapack/origins/layers),
+- an [action](/docs/datapack/introduction/actions) such as [`apoli:grant_power`](/docs/datapack/entity-actions/grant_power),
+- a [global power set](#global-powers), which grants powers to whole entity types.
 
-Once granted, Apoli applies the power's effect and if it has a top-level `condition`, it keeps it active only while that condition holds.
+Once an entity has the power, Apoli applies its effect. If the power has a top-level `condition`, it is only active while that condition holds.
 
 ## Global powers
 
-A file in `data/<namespace>/global_powers/<name>.json` grants powers to entities **by entity type**, with no origin and no command. Every matching entity gets them when it loads into the world.
+A file in `data/<namespace>/global_powers/<name>.json` grants powers to entities by entity type, with no origin and no command. Every matching entity gets the powers when it loads into the world.
 
 ```json
 {
@@ -120,24 +120,24 @@ A file in `data/<namespace>/global_powers/<name>.json` grants powers to entities
 
 | Field | Type | Default | Description |
 |-------|------|---------|-------------|
-| `entity_types` | [Identifier](/docs/datapack/data-types/identifier), or an array of them | all entities | Which entity types get the powers. `#`-prefixed entries are entity type tags. Omit the field entirely to match **everything**. |
+| `entity_types` | [Identifier](/docs/datapack/data-types/identifier), or an array of them | all entities | The entity types that get the powers. Entries starting with `#` are entity type tags. Leave the field out to match every entity. |
 | `powers` | [Array](/docs/datapack/data-types/array) of [Identifier](/docs/datapack/data-types/identifier) | _required_ | The powers to grant. |
-| `replace` | [Boolean](/docs/datapack/data-types/boolean) | `false` | Discard the powers every earlier-ordered set contributed to this entity type, then add these. |
-| `order` | [Integer](/docs/datapack/data-types/integer) | `0` | Sets which sets are applied first. Ties break by file id. |
-| `loading_priority` | [Integer](/docs/datapack/data-types/integer) | `0` | Higher wins when two data packs define the same file id. |
+| `replace` | [Boolean](/docs/datapack/data-types/boolean) | `false` | Discards the powers that every set with an earlier `order` gave this entity type, then adds these. |
+| `order` | [Integer](/docs/datapack/data-types/integer) | `0` | Which sets apply first. Ties are broken by file ID. |
+| `loading_priority` | [Integer](/docs/datapack/data-types/integer) | `0` | When two data packs define the same file ID, the higher value wins. |
 
-The powers arrive under the source `apoli:global`, so they sit alongside anything an origin or a command granted and are revoked cleanly when a set stops matching.
+The powers come from the source `apoli:global`, so they sit alongside anything an origin or a command granted, and they are revoked cleanly when a set stops matching.
 
-> **This is the most expensive feature in Apoli if you misuse it.** A set with no `entity_types` grants to *every* entity in the world — arrows, item drops, area-effect clouds — and each one then ticks each power. Scope by type or tag, and think hard before putting an [`apoli:action_over_time`](/docs/datapack/powers/action_over_time) in one.
+> [!WARNING]
+> Global power sets are the most expensive feature in Apoli when misused. A set with no `entity_types` grants its powers to every entity in the world, including arrows, dropped items and area effect clouds, and each of those entities then ticks each power. Limit sets to the types or tags you need, and think hard before putting an [`apoli:action_over_time`](/docs/datapack/powers/action_over_time) in one.
 
-> Which powers a given entity type receives is worked out **once per entity type per data-pack load** and cached, so spawning a thousand zombies does not re-evaluate a thousand times. When no global power sets exist at all, the whole system costs a single boolean check per entity load.
+Which powers an entity type receives is worked out once per entity type each time data packs load, and the result is cached, so spawning a thousand zombies doesn't evaluate the sets a thousand times. When no global power sets exist, the whole system costs one boolean check each time an entity loads.
 
-> Sets are re-evaluated on `/reload`, and every already-loaded entity is reconciled against the new result — powers whose set no longer matches are revoked in the same pass.
+Sets are evaluated again on `/reload`, and every loaded entity is checked against the new result. Powers whose set no longer matches are revoked in the same pass.
 
 ## Tagging powers
 
-`tags` puts one or more free-form labels on a power. Nothing reads them on its own — they exist so
-that actions which operate on powers can name a *group* of powers instead of listing every id:
+`tags` puts one or more free-form labels on a power. Nothing reads them by default. They let actions that work on powers name a group of powers instead of listing every ID:
 
 ```json
 {
@@ -150,22 +150,17 @@ that actions which operate on powers can name a *group* of powers instead of lis
 }
 ```
 
-Three actions take a `tags` list and act on every power the entity holds that carries one of them:
+Three actions take a `tags` list and act on every power the entity holds that has one of those tags:
 
-- [apoli:transfer](/docs/datapack/bientity-actions/transfer) — steal or copy the tagged powers.
-- [apoli:suppress_power](/docs/datapack/entity-actions/suppress_power) — switch them off.
-- [apoli:unsuppress_power](/docs/datapack/entity-actions/unsuppress_power) — switch them back on.
+- [apoli:transfer](/docs/datapack/bientity-actions/transfer) steals or copies the tagged powers.
+- [apoli:suppress_power](/docs/datapack/entity-actions/suppress_power) switches them off.
+- [apoli:unsuppress_power](/docs/datapack/entity-actions/unsuppress_power) switches them back on.
 
-Two conditions accept `tags` as well, and pass when the entity holds (or has active) any power with one of them:
+Two conditions accept `tags` too:
 
-- [apoli:power](/docs/datapack/entity-conditions/power) — the entity holds a tagged power.
-- [apoli:power_active](/docs/datapack/entity-conditions/power_active) — a tagged power is active.
+- [apoli:power](/docs/datapack/entity-conditions/power) passes when the entity holds a power with one of the tags.
+- [apoli:power_active](/docs/datapack/entity-conditions/power_active) passes when a power with one of the tags is active.
 
-That is what makes "copy one move from whatever origin you touched" a single action rather than a
-list that has to be updated whenever a pack adds a power: tag the moves once, and the action finds
-them.
+With tags, "copy one move from whatever origin you touched" is a single action. Tag the moves once and the action finds them, including powers a pack adds later.
 
-Tags are plain strings, matched exactly and case-sensitively. They are not
-[identifiers](/docs/datapack/data-types/identifier) and are not namespaced for you, so on a server
-running several packs, prefix them with something of your own (`mypack.copyable`) to avoid two packs
-meaning different things by the same word.
+Tags are plain strings, matched exactly and case-sensitively. They are not [identifiers](/docs/datapack/data-types/identifier) and get no namespace, so on a server with several packs, prefix your tags with something of your own (`mypack.copyable`) so two packs don't use the same word for different things.

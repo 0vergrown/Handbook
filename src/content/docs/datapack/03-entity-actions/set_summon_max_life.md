@@ -1,21 +1,20 @@
 ---
 title: "Set Summon Max Life (Entity Action Type)"
-description: "Re-targets a summon's remaining lifetime."
+description: "Changes how long a summon has left to live."
 navigation_title: "Set Summon Max Life"
 aliases: ["set_summon_max_life_ticks"]
 ---
 
-Re-targets a summon's remaining lifetime. Apply it **to the summon**. For example, through a summon action's `bientity_action`, or any entity-targeting action (selector, area of effect, …). Has no effect on entities that are not summons.
+Changes how long a summon has left to live. Apply it to the summon, for example through a summon action's `bientity_action` or any action that targets entities (a selector, an area of effect and so on). It has no effect on entities that aren't summons.
 
-Type ID: `apoli:set_summon_max_life`
-Alias: `apoli:set_summon_max_life_ticks`.
+Type ID: `apoli:set_summon_max_life` (alias `apoli:set_summon_max_life_ticks`)
 
 ## Fields
 
-| Field       | Type                   | Default    | Description                                                                                    |
-|-------------|------------------------|------------|------------------------------------------------------------------------------------------------|
-| `amount`    | [Integer](/docs/datapack/data-types/integer)    | —          | The new lifetime in ticks. `0` or less = permanent until killed.                               |
-| `summon_id` | [Identifier](/docs/datapack/data-types/identifier) | _optional_ | If set, only summons whose `summon_id` matches are affected. If unset, any summon is affected. |
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `amount` | [Integer](/docs/datapack/data-types/integer) | _required_ | The new lifetime in ticks. `0` or less makes the summon permanent until it is killed. |
+| `summon_id` | [Identifier](/docs/datapack/data-types/identifier) | _optional_ | Only affects summons whose `summon_id` matches. Leave it out to affect any summon. |
 
 ## Examples
 
@@ -33,4 +32,4 @@ Alias: `apoli:set_summon_max_life_ticks`.
 }
 ```
 
-Spawns a minion and immediately makes it permanent by re-targeting its lifetime through the summon's `bientity_action`.
+This spawns a minion and immediately makes it permanent by changing its lifetime through the summon's `bientity_action`.

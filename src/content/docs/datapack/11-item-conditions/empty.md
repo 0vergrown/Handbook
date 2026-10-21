@@ -1,16 +1,16 @@
 ---
 title: "Empty (Item Condition Type)"
-description: "Checks if there is no item."
+description: "Checks whether there is no item at all."
 navigation_title: "Empty"
 ---
 
-Checks if there is no item.
+Checks whether there is no item at all, such as an empty slot.
 
 Type ID: `apoli:empty`
 
 ## Fields
 
-_None._
+This condition has no fields.
 
 ## Examples
 

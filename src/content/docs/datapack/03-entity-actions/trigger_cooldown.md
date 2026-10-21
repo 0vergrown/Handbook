@@ -4,15 +4,15 @@ description: "Starts a power's cooldown, as if the power had just been used."
 navigation_title: "Trigger Cooldown"
 ---
 
-Starts a power's cooldown as if the power had just been used, so it can't fire again until the cooldown runs out. It works on every power that has a cooldown, not only [apoli:cooldown](/docs/datapack/powers/cooldown).
+Starts a power's cooldown as if the power had just been used, so it can't fire again until the cooldown runs out. It works on every power that has a cooldown, as well as [apoli:cooldown](/docs/datapack/powers/cooldown).
 
 Type ID: `apoli:trigger_cooldown`
 
 ## Fields
 
 | Field | Type | Default | Description |
-|-------|------|---------|-------------|
-| `power` | [Identifier](/docs/datapack/data-types/identifier) | | The power whose cooldown to start. (The legacy field `resource` is still accepted as an alias.) |
+| --- | --- | --- | --- |
+| `power` | [Identifier](/docs/datapack/data-types/identifier) | _required_ | The power whose cooldown to start. The legacy field `resource` is accepted as an alias. |
 
 ## Which powers
 
@@ -21,12 +21,12 @@ Any power type with a `cooldown`: [apoli:cooldown](/docs/datapack/powers/cooldow
 ## Behaviour
 
 - If the cooldown is ready (`0`), it is set to the power's full `cooldown` and starts counting down, and the power's HUD bar shows it straight away.
-- If the cooldown is already running, this action does nothing — the countdown carries on from where it is.
-- To set a cooldown to an exact number of ticks regardless, use [apoli:modify_resource](/docs/datapack/entity-actions/modify_resource) with `operation: set_base`.
+- If the cooldown is already running, this action does nothing and the countdown carries on from where it is.
+- To set a cooldown to an exact number of ticks, use [apoli:modify_resource](/docs/datapack/entity-actions/modify_resource) with `operation: set_base`.
 
 ## Example
 
-Two abilities that share a cooldown — using the dash also puts `example:blink` on cooldown, and `example:blink` does the same to the dash:
+Two abilities that share a cooldown. Using the dash also puts `example:blink` on cooldown, and `example:blink` does the same to the dash:
 
 ```json
 {

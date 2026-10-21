@@ -1,27 +1,27 @@
 ---
 title: "Modify Grindstone (Power Type)"
-description: "Modifies the result of a certain item upon repairing/removing the enchantments of the said item using a Grindstone."
+description: "Changes what a grindstone gives back when the player repairs an item or removes its enchantments."
 navigation_title: "Modify Grindstone"
 ---
 
-Modifies the result of a certain item upon repairing/removing the enchantments of the said item using a Grindstone.
+Changes what a grindstone gives back when the player repairs an item or removes its enchantments.
 
 Type ID: `apoli:modify_grindstone`
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|------------
-`result_type` | String | `"unchanged"` | Determines whether to not change the initial item stack (`"unchanged"`), replace it with the item stack specified in the `result_stack` field (`"specified"`), replace it with the item stack from the top input slot of a Grindstone block (`"from_top"`) or replace it with the item stack from the bottom input slot of a Grindstone block (`"from_bottom"`).
-`entity_action` | Entity Action Type | _optional_ | If specified, this action will be executed on the player upon taking the item stack from the result slot of a Grindstone.
-`block_action` | Block Action Type | _optional_ | If specified, this action will be executed on the Grindstone block upon taking the item stack from the result slot of the said Grindstone block.
-`item_action` | Item Action Type | _optional_ | If specified, this action will be executed on the result item stack.
-`item_action_after_grinding` | Item Action Type | _optional_ | If specified, this action will be executed on the result item stack **after** the grinding process.
-`top_condition` | Item Condition Type | _optional_ | If specified, the specified actions will only be executed if the item stack from the top input slot of the Grindstone fulfills this condition.
-`bottom_condition` | Item Condition Type | _optional_ | If specified, the specified actions will only be executed if the item stack from the bottom input slot of the Grindstone fulfills this condition.
-`output_condition` | Item Condition Type | _optional_ | If specified, the specified actions will only be executed if the item stack from the output/result slot of the Grindstone fulfills this condition.
-`result_stack` | Item Stack | _optional_ | If specified, this item stack will be used as a replacement only if the `result_type` field has a value of `"specified"`.
-`xp_modifier` | Attribute Modifier | _optional_ | If specified, this modifier will be applied to the value of the experience received from removing an enchantment from an item stack.
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `result_type` | [String](/docs/datapack/data-types/string) | `"unchanged"` | What the result becomes: `"unchanged"` keeps it, `"specified"` replaces it with `result_stack`, `"from_top"` replaces it with the item in the top input slot, and `"from_bottom"` replaces it with the item in the bottom input slot. |
+| `entity_action` | [Entity Action Type](/docs/datapack/entity-actions) | _optional_ | If set, this action runs on the player when they take the item out of the result slot. |
+| `block_action` | [Block Action Type](/docs/datapack/block-actions) | _optional_ | If set, this action runs on the grindstone block when the player takes the item out of its result slot. |
+| `item_action` | [Item Action Type](/docs/datapack/item-actions) | _optional_ | If set, this action runs on the result item. |
+| `item_action_after_grinding` | [Item Action Type](/docs/datapack/item-actions) | _optional_ | If set, this action runs on the result item after the grinding is done. |
+| `top_condition` | [Item Condition Type](/docs/datapack/item-conditions) | _optional_ | If set, the actions only run when the item in the top input slot passes this condition. |
+| `bottom_condition` | [Item Condition Type](/docs/datapack/item-conditions) | _optional_ | If set, the actions only run when the item in the bottom input slot passes this condition. |
+| `output_condition` | [Item Condition Type](/docs/datapack/item-conditions) | _optional_ | If set, the actions only run when the item in the result slot passes this condition. |
+| `result_stack` | [Item Stack](/docs/datapack/data-types/item-stack) | _optional_ | The replacement item, used only when `result_type` is `"specified"`. |
+| `xp_modifier` | [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) | _optional_ | If set, this modifier is applied to the experience gained from removing enchantments. |
 
 ## Examples
 
@@ -35,7 +35,7 @@ Field | Type | Default | Description
 }
 ```
 
-This example will increase the experience recieved from removing enchantments from an enchanted item to 50%.
+This gives 50% more experience for removing enchantments at a grindstone.
 
 ```json
 {
@@ -57,4 +57,4 @@ This example will increase the experience recieved from removing enchantments fr
 }
 ```
 
-This example will replace the item in the output/result slot of a Grindstone with a Netherite Sword if the initial item is a Diamond Sword. This will also remove the used Grindstone block after taking the said item.
+When the result would be a diamond sword, this replaces it with a netherite sword, and the grindstone disappears once the player takes the item.

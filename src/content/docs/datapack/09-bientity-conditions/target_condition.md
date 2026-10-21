@@ -1,18 +1,18 @@
 ---
 title: "Target Condition (Bi-Entity Condition Type)"
-description: "Checks for an Entity Condition Type on the target entity."
+description: "Checks an entity condition on the target."
 navigation_title: "Target Condition"
 ---
 
-Checks for an Entity Condition Type on the target entity.
+Checks an entity condition on the target.
 
 Type ID: `apoli:target_condition`
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`condition` | Entity Condition Type | | The entity condition type to check for on the target entity.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `condition` | [Entity Condition Type](/docs/datapack/entity-conditions) | _required_ | The entity condition to check on the target. |
 
 ## Examples
 
@@ -25,4 +25,4 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will check if the target entity is a tamable and a tamed mob.
+This checks whether the target is a tameable mob that has been tamed.

@@ -1,17 +1,17 @@
 ---
 title: "Fireproof (Item Condition Type)"
-description: "Checks if the item stack is fireproof."
+description: "Checks whether the item stack survives fire and lava."
 navigation_title: "Fireproof"
 aliases: ["fire_resistant"]
 ---
 
-Checks if the item stack is fireproof.
+Checks whether the item stack is fireproof, like netherite items, so it survives fire and lava.
 
 Type ID: `apoli:fireproof`
 
 ## Fields
 
-_None._
+This condition has no fields.
 
 ## Examples
 
@@ -21,4 +21,5 @@ _None._
 }
 ```
 
-> **`apoli:fire_resistant` is this condition,** kept as an alias for packs ported from the original Apoli.
+> [!NOTE]
+> `apoli:fire_resistant` is the same condition, kept as an alias for packs ported from the original Apoli.

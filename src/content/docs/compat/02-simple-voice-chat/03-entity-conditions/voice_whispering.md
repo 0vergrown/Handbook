@@ -1,22 +1,20 @@
 ---
 title: "Voice Whispering (Entity Condition Type)"
-description: "Passes while the entity is talking with Simple Voice Chat's whisper key held."
+description: "Checks whether the entity is talking with Simple Voice Chat's whisper key held."
 navigation_title: "Voice Whispering"
 ---
 
-Passes while the entity is talking **and** holding Simple Voice Chat's whisper key, which halves how far their voice carries.
+Checks whether the entity is talking while holding Simple Voice Chat's whisper key, which halves how far their voice carries.
 
 Type ID: `apoli:voice_whispering`
 
 ## Fields
 
-This type has no fields.
+This condition has no fields.
 
-The condition is false whenever the entity is not speaking, so it already implies [`apoli:voice_speaking`](/docs/compat/simple-voice-chat/voice_speaking). Pair it with `apoli:voice_speaking` inverted to test for "talking normally".
+The condition is false whenever the entity isn't speaking, so it already implies [`apoli:voice_speaking`](/docs/compat/simple-voice-chat/voice_speaking). To test for talking normally, pair it inverted with `apoli:voice_speaking`.
 
-## Example
-
-Turn invisible while whispering:
+## Examples
 
 ```json
 {
@@ -27,7 +25,7 @@ Turn invisible while whispering:
 }
 ```
 
-Sneak-attack damage that only lands while whispering:
+This power makes the holder invisible while they whisper.
 
 ```json
 {
@@ -41,3 +39,5 @@ Sneak-attack damage that only lands while whispering:
   }
 }
 ```
+
+This doubles the holder's damage, but only while they whisper.

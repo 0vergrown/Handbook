@@ -1,23 +1,22 @@
 ---
 title: "Voice Disabled (Entity Condition Type)"
-description: "Passes when the entity has voice chat turned off or isn't connected to it."
+description: "Checks whether the entity has voice chat turned off or isn't connected to it."
 navigation_title: "Voice Disabled"
 aliases: ["voice_muted"]
 ---
 
-Passes when the entity has voice chat disabled, or is not connected to it at all — including every player on a server without Simple Voice Chat installed.
+Checks whether the entity has voice chat disabled or isn't connected to it at all, which includes every player on a server without Simple Voice Chat installed.
 
 Type ID: `apoli:voice_disabled` (alias `apoli:voice_muted`)
 
-> This is **not** microphone mute. Simple Voice Chat keeps the mic-mute toggle client-side and never tells the server about it, so no server-side condition can see it.
+> [!NOTE]
+> This doesn't detect a muted microphone. Simple Voice Chat keeps the mute toggle on the client and never tells the server about it, so no condition on the server can see it.
 
 ## Fields
 
-This type has no fields.
+This condition has no fields.
 
 ## Example
-
-Fall back to a chat-based trigger for players who don't use voice:
 
 ```json
 {
@@ -30,3 +29,5 @@ Fall back to a chat-based trigger for players who don't use voice:
   }
 }
 ```
+
+This power is a fallback for players who don't use voice: typing "fireball" in chat casts a fireball and hides the message.

@@ -1,21 +1,22 @@
 ---
 title: "Accessory (Item Condition Type)"
-description: Passes when the item can be worn as an accessory.
+description: "Checks whether the item can be worn as an accessory."
 navigation_title: "Accessory"
 aliases: ["trinket"]
 ---
 
-Passes when the stack is something an accessory mod recognises as equippable in an accessory slot.
+Checks whether the stack is something an accessory mod recognises as equippable in an accessory slot.
 
 Type ID: `apoli:accessory` (alias `apoli:trinket`)
 
+> [!NOTE]
+> This type only exists when an accessory mod is installed: [Trinkets](https://modrinth.com/mod/trinkets), [Accessories](https://modrinth.com/mod/accessories) or Curios, depending on your loader. A pack that uses it must depend on one.
+
 ## Fields
 
-_None._
+This condition has no fields.
 
 ## Examples
-
-An origin that cannot use accessories at all:
 
 ```json
 {
@@ -24,7 +25,7 @@ An origin that cannot use accessories at all:
 }
 ```
 
-Only act on accessories inside a broader item action:
+This origin can't use accessories at all.
 
 ```json
 {
@@ -34,4 +35,4 @@ Only act on accessories inside a broader item action:
 }
 ```
 
-> Needs an accessory mod — [Trinkets](https://modrinth.com/mod/trinkets), [Accessories](https://modrinth.com/mod/accessories) or Curios, depending on your loader. These types do not exist without one, so a pack using them must depend on it.
+This action only damages the accessories in the inventory.

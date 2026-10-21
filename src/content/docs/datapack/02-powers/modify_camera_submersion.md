@@ -1,26 +1,26 @@
 ---
 title: "Modify Camera Submersion (Power Type)"
-description: Swaps one camera submersion type for another, such as water for none.
+description: "Swaps one camera submersion type for another, such as water for none."
 navigation_title: "Modify Camera Submersion"
 aliases: ["modify_camera_submersion_type"]
 ---
 
-Lies to the camera about what it is submerged in. It changes the fog, the overlay and the underwater sound filter — everything the game decides from "what is my head in" — without changing the block or how you move through it.
+Changes what the camera thinks it is submerged in. That controls the fog, the overlay and the underwater sound filter, which the game all decides from what the player's head is in, without changing the block or how the player moves through it.
 
 Type ID: `apoli:modify_camera_submersion` (alias `apoli:modify_camera_submersion_type`)
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|-------------
-`from` | [String](/docs/datapack/data-types/string) | **required** | The submersion to replace: `none`, `water`, `lava` or `powder_snow`.
-`to` | [String](/docs/datapack/data-types/string) | **required** | What to report instead. Same four values.
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `from` | [String](/docs/datapack/data-types/string) | _required_ | The submersion to replace: `none`, `water`, `lava` or `powder_snow`. |
+| `to` | [String](/docs/datapack/data-types/string) | _required_ | What to report instead, using the same four values. |
 
-Several of these chain: a power turning `water` into `none` and another turning `none` into `lava` will, together, report lava while you are in water. Order is not guaranteed, so avoid overlapping pairs.
+Several of these chain. A power that turns `water` into `none` and another that turns `none` into `lava` together report lava while you are in water. The order is not guaranteed, so avoid overlapping pairs.
 
 ## Examples
 
-See underwater as if you were in open air — no blue fog, no muffled sound:
+See underwater as if in open air, with no blue fog or muffled sound:
 
 ```json
 {
@@ -30,7 +30,7 @@ See underwater as if you were in open air — no blue fog, no muffled sound:
 }
 ```
 
-The opposite, as a curse — the world looks flooded even on dry land:
+The opposite as a curse, where the world looks flooded even on dry land:
 
 ```json
 {
@@ -46,4 +46,5 @@ The opposite, as a curse — the world looks flooded even on dry land:
 }
 ```
 
-> This is purely visual and audible. You still drown in water and still burn in lava; use [`apoli:water_breathing`](/docs/datapack/powers/water_breathing) or [`apoli:invulnerability`](/docs/datapack/powers/invulnerability) for the rest.
+> [!NOTE]
+> This only changes what you see and hear. You still drown in water and burn in lava. Use [`apoli:water_breathing`](/docs/datapack/powers/water_breathing) or [`apoli:invulnerability`](/docs/datapack/powers/invulnerability) for those.

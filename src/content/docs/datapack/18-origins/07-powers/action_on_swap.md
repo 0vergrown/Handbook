@@ -1,29 +1,28 @@
 ---
 title: "Action On Swap (Power Type)"
-description: "Power — runs an entity action whenever the player swaps their active origin."
+description: "Runs an entity action whenever the player swaps the origin they are wearing."
 navigation_title: "Action On Swap"
 ---
 
-Runs an entity action whenever the player swaps the origin they are wearing on a [swappable layer's](/docs/datapack/origins/swapping) target layer — in either direction, including back to the main origin.
+Runs an entity action whenever the player swaps the origin they are wearing on the target layer of a [swappable layer](/docs/datapack/origins/swapping), in either direction, including back to the main origin.
 
-Type ID: `origins:action_on_swap` — a power type.
+Type ID: `origins:action_on_swap`
 
-> **Needs the Origins mod.** Registered by Origins, not core Apoli.
+> [!NOTE]
+> This power type comes from the Origins mod.
 
 ## Fields
 
-| Field | Type | Default | Purpose |
+| Field | Type | Default | Description |
 | --- | --- | --- | --- |
-| `entity_action` | [Entity Action](/docs/datapack/entity-actions) | _optional_ | Executed on the player when the swap happens. |
-| `layer` | [Identifier](/docs/datapack/data-types/identifier) | _optional_ | Only fire for swaps on this target layer. |
-| `from_origin` | [Identifier](/docs/datapack/data-types/identifier) | _optional_ | Only fire when swapping *away from* this origin. |
-| `to_origin` | [Identifier](/docs/datapack/data-types/identifier) | _optional_ | Only fire when swapping *to* this origin. |
+| `entity_action` | [Entity Action Type](/docs/datapack/entity-actions) | _optional_ | Runs on the player when the swap happens. |
+| `layer` | [Identifier](/docs/datapack/data-types/identifier) | _optional_ | Only runs for swaps on this target layer. |
+| `from_origin` | [Identifier](/docs/datapack/data-types/identifier) | _optional_ | Only runs when swapping away from this origin. |
+| `to_origin` | [Identifier](/docs/datapack/data-types/identifier) | _optional_ | Only runs when swapping to this origin. |
 
-The action runs after the power state has already changed, so conditions inside it see the new origin's powers.
+The action runs after the power state has changed, so conditions inside it see the new origin's powers.
 
 ## Examples
-
-A puff of smoke and a sound on every swap:
 
 ```json
 {
@@ -45,7 +44,7 @@ A puff of smoke and a sound on every swap:
 }
 ```
 
-Punish returning to your own origin:
+This power makes a puff of smoke and plays a sound on every swap.
 
 ```json
 {
@@ -60,3 +59,5 @@ Punish returning to your own origin:
   }
 }
 ```
+
+This power gives the player Weakness for 100 ticks (5 seconds) when they swap back to `example:base`, as a cost for returning to their own origin.

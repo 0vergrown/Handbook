@@ -1,21 +1,23 @@
 ---
 title: "Prevent Sleep (Power Type)"
-description: "Prevents sleeping and sends the player a message about why they can't sleep."
+description: "Stops the player from sleeping and tells them why."
 navigation_title: "Prevent Sleep"
 ---
 
-Prevents sleeping and sends the player a message about why they can't sleep.
+Stops the player from sleeping and sends them a message saying why.
 
 Type ID: `apoli:prevent_sleep`
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`block_condition` | Block Condition Type | _optional_ | If specified, sleep will only be prevented if this condition is fulfilled by the bed block.
-`message` | Default Translatable Text Component | `{"translatable": "text.apoli.cannot_sleep"}` | The message that will be shown when sleep is prevented this way.
-`set_spawn_point` | Boolean | `false` | Determines whether the spawnpoint of the player is set upon right-clicking a bed while being prevented. (similar to what happens when you right-click a bed while it's daytime)
-`priority` | Integer | `0` | Determines the priority of which power will prevent the player to sleep, set their spawn and display a message. The power with `set_spawn_point` set to `true` and the highest `priority` value will be prioritized.
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `block_condition` | [Block Condition Type](/docs/datapack/block-conditions) | _optional_ | If set, sleep is only prevented when the bed block passes this condition. |
+| `message` | Default Translatable [Text Component](/docs/datapack/data-types/text-component) | `{"translatable": "text.apoli.cannot_sleep"}` | The message shown when sleep is prevented. |
+| `set_spawn_point` | [Boolean](/docs/datapack/data-types/boolean) | `false` | Whether right-clicking the bed still sets the player's spawn point, as it does when you right-click a bed during the day. |
+| `priority` | [Integer](/docs/datapack/data-types/integer) | `0` | When several of these powers stop the same bed, the one with the highest `priority` shows its message. The spawn point is only set if every one of them has `set_spawn_point` set to `true`. |
+
+The bed is checked after the vanilla checks that come before setting a spawn point: the bed has to be close enough, not obstructed, and in a dimension where beds work. Past those, the power wins over the time of day and nearby monsters, so during the day the player sees this power's message instead of "You can only sleep at night".
 
 ## Examples
 
@@ -30,4 +32,21 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will prevent the player from sleeping unless they are burning.
+This stops the player from sleeping unless they are on fire.
+
+```json
+{
+    "type": "apoli:prevent_sleep",
+    "message": {
+        "text": "The air down here is too thick to sleep. Find a bed at y 160 or higher.",
+        "color": "red"
+    },
+    "block_condition": {
+        "type": "apoli:height",
+        "comparison": "<",
+        "compare_to": 160
+    }
+}
+```
+
+This only lets the player sleep in a bed placed at Y 160 or higher. A bed lower down doesn't let them sleep and doesn't move their spawn point either.

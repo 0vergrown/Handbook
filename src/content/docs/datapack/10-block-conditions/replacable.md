@@ -1,17 +1,17 @@
 ---
 title: "Replacable (Block Condition Type)"
-description: "Checks whether the block is a replaceable material (e.g."
+description: "Checks whether the block can be replaced by placing another block, like tall grass or water."
 navigation_title: "Replacable"
 aliases: ["replaceable"]
 ---
 
-Checks whether the block is a replaceable material (e.g. tall grass, water, ...).
+Checks whether the block is a replaceable material, which placing another block simply overwrites, such as tall grass or water.
 
 Type ID: `apoli:replacable`
 
 ## Fields
 
-_None._
+This condition has no fields.
 
 ## Examples
 

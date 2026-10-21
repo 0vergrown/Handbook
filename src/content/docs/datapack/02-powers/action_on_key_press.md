@@ -1,29 +1,30 @@
 ---
 title: "Action On Key Press (Power Type)"
-description: "Executes an Entity Action Type on the entity that has the power upon pressing the specified Key."
+description: "Runs an entity action on the entity that has the power when a key is pressed."
 navigation_title: "Action On Key Press"
 aliases: ["active_self"]
 ---
 
-Executes an Entity Action Type on the entity that has the power upon pressing the specified [Key](/docs/datapack/data-types/key).
+Runs an entity action on the entity that has the power when the chosen [Key](/docs/datapack/data-types/key) is pressed.
 
-Type ID: `apoli:action_on_key_press` (but can use it's old `active_self` type id as an alias)
+Type ID: `apoli:action_on_key_press` (the old ID `active_self` still works as an alias)
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`entity_action` | Entity Action Type | | The action to execute on the player.
-`entity_action_released` | Entity Action Type | _optional_ | Runs when the key is let go after a press that fired `entity_action`. See [Acting on release](#acting-on-release).
-`cooldown` | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | `1` | Interval of ticks this power needs to recharge before the power can be triggered again.
-`hud_render` | [Hud Render](/docs/datapack/data-types/hud-render) | `{"should_render": false}` | Determines how the cooldown of this power is visualized on the HUD.
-`key` | [Key](/docs/datapack/data-types/key) | `{"key": "key.apoli.primary_active"}` | Which active key this power should respond to.
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `entity_action` | [Entity Action Type](/docs/datapack/entity-actions) | | The action to run on the player. |
+| `entity_action_released` | [Entity Action Type](/docs/datapack/entity-actions) | _optional_ | Runs when the key is let go after a press that fired `entity_action`. See [Acting on release](#acting-on-release). |
+| `cooldown` | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | `1` | Ticks the power needs to recharge before it can be triggered again. |
+| `hud_render` | [HUD Render](/docs/datapack/data-types/hud-render) | `{"should_render": false}` | How the power's cooldown is shown on the HUD. |
+| `key` | [Key](/docs/datapack/data-types/key) | `{"key": "key.apoli.primary_active"}` | The active key the power responds to. |
 
-> `cooldown` is evaluated at the moment the power fires, on the holder — so `"cooldown": "20 - mypack:haste * 2"` shortens the recharge as a resource grows. The HUD bar and the [apoli:resource](/docs/datapack/entity-conditions/resource) `max` read the same expression, so both follow the current value.
+> [!NOTE]
+> `cooldown` is evaluated when the power fires, against the entity with the power, so `"cooldown": "20 - mypack:haste * 2"` shortens the recharge as a resource grows. The HUD bar and the `max` of the [apoli:resource](/docs/datapack/entity-conditions/resource) condition read the same expression, so both follow the current value.
 
 ## Acting on release
 
-With `entity_action_released`, every press that fires `entity_action` is followed by exactly one release action when the key comes back up. While it runs, the [Expression](/docs/datapack/data-types/expression) variable `held_ticks` is the number of ticks the key was held, so a charged ability can scale with how long it was charged:
+With `entity_action_released`, every press that fires `entity_action` is followed by exactly one release action when the key comes back up. While it runs, the [expression](/docs/datapack/data-types/expression) variable `held_ticks` is the number of ticks the key was held, so a charged ability can scale with how long it was charged:
 
 ```json
 {
@@ -55,13 +56,13 @@ With `entity_action_released`, every press that fires `entity_action` is followe
 }
 ```
 
-Pressing the key slows the player while they charge; letting go clears the slowness and launches them forward, further the longer they held it, up to two seconds.
+Pressing the key slows the player while they charge. Letting go clears the slowness and launches them forward, further the longer they held the key, up to two seconds.
 
 - The release only follows a press that went through. A press blocked by the cooldown, the power's `condition` or a [prevent_key_press](/docs/datapack/powers/prevent_key_press) has no release.
-- The power's `condition` is not checked again on release, so the release can always undo what the press started. A release does not run if the power was removed or suppressed in between.
+- The power's `condition` isn't checked again on release, so the release can always undo what the press started. A release doesn't run if the power was removed or suppressed in between.
 - A `"continuous": true` key fires `entity_action` every tick it is held but releases once, and `held_ticks` counts from the first press.
 - Opening a screen while holding the key counts as letting go.
-- A forced press ([apoli:force_key_pressed](/docs/datapack/entity-actions/force_key_pressed) or the `/apoli:key press` command) releases when its duration runs out, on players and on mobs alike. A power activated directly, as [apoli:run_stored_power](/docs/datapack/entity-actions/run_stored_power) does, releases straight away with `held_ticks` at `0`.
+- A forced press ([apoli:force_key_pressed](/docs/datapack/entity-actions/force_key_pressed) or the `/apoli:key press` command) releases when its duration runs out, on players and mobs alike. A power activated directly, as [apoli:run_stored_power](/docs/datapack/entity-actions/run_stored_power) does, releases straight away with `held_ticks` at `0`.
 
 ## Examples
 
@@ -88,7 +89,7 @@ Pressing the key slows the player while they charge; letting go clears the slown
 }
 ```
 
-This example will set the player on fire for 8 seconds, or extinguish themselves if they're already on fire upon pressing the Primary ability key.
+When the player presses the primary ability key, this sets them on fire for 8 seconds, or puts the fire out if they are already burning.
 
 ```json
 {
@@ -138,4 +139,4 @@ This example will set the player on fire for 8 seconds, or extinguish themselves
 }
 ```
 
-This example will allow the player that has the power to essentially consume a Sugar item if the player is holding a Sugar item, which would then apply a Speed II status effect that would last for 5 seconds upon pressing the `key.use` keybind. (The example is bound to the `key.use` keybind.)
+While the player holds sugar in their main hand, holding the `key.use` keybind eats one sugar and gives them Speed II for 5 seconds.

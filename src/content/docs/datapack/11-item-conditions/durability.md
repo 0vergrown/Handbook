@@ -1,19 +1,19 @@
 ---
 title: "Durability (Item Condition Type)"
-description: "Checks the current durability of the item."
+description: "Compares the item's remaining durability with a number."
 navigation_title: "Durability"
 ---
 
-Checks the current durability of the item.
+Compares the item's remaining durability with a number.
 
 Type ID: `apoli:durability`
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|------------
-`comparison` | Comparison | | Determines how the durability value of the item should be compared to the specified value.
-`compare_to` | Integer | | The value at which the durability value of the item will be compared to.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `comparison` | [Comparison](/docs/datapack/data-types/comparison) | _required_ | How the durability is compared with `compare_to`. |
+| `compare_to` | [Integer](/docs/datapack/data-types/integer) | _required_ | The number the durability is compared with. |
 
 ## Examples
 
@@ -25,4 +25,4 @@ Field | Type | Default | Description
 }
 ```
 
-This example will check if the item has a durability value of 100 or less.
+This checks whether the item has 100 durability or less left.

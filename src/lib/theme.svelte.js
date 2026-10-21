@@ -1,42 +1,39 @@
-import { browser } from '$app/environment';
+const KEY = 'handbook:theme';
+const NEXT = { system: 'light', light: 'dark', dark: 'system' };
+const LABELS = { system: 'system mode', light: 'light mode', dark: 'dark mode' };
 
-/**
- * Global light/dark theme. The actual <html> class is set before first paint by
- * the inline script in app.html; this store keeps the reactive UI (toggle icon)
- * in sync and persists the user's choice.
- */
-function createTheme() {
-	let current = $state('light');
+class ThemeChoice {
+	choice = $state('system');
+	#media = null;
 
-	if (browser) {
-		const stored = localStorage.getItem('handbook:theme');
-		if (stored === 'dark' || stored === 'light') {
-			current = stored;
-		} else {
-			current = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
-		}
+	get label() {
+		return LABELS[this.choice];
 	}
 
-	function apply(value) {
-		current = value;
-		if (browser) {
-			localStorage.setItem('handbook:theme', value);
-			document.documentElement.classList.remove('light', 'dark');
-			document.documentElement.classList.add(value);
-		}
+	connect() {
+		const stored = document.documentElement.getAttribute('data-theme-choice');
+		this.choice = stored in NEXT ? stored : 'system';
+		if (this.#media) return;
+		this.#media = window.matchMedia('(prefers-color-scheme: dark)');
+		this.#media.addEventListener('change', () => this.#apply());
 	}
 
-	return {
-		get current() {
-			return current;
-		},
-		set current(value) {
-			apply(value);
-		},
-		toggle() {
-			apply(current === 'dark' ? 'light' : 'dark');
-		}
-	};
+	cycle() {
+		this.choice = NEXT[this.choice];
+		try {
+			if (this.choice === 'system') localStorage.removeItem(KEY);
+			else localStorage.setItem(KEY, this.choice);
+		} catch {}
+		this.#apply();
+	}
+
+	#apply() {
+		const dark =
+			this.choice === 'dark' ||
+			(this.choice === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+		document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+		document.documentElement.setAttribute('data-theme-choice', this.choice);
+	}
 }
 
-export const theme = createTheme();
+export const theme = new ThemeChoice();

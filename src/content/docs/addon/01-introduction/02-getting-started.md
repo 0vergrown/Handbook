@@ -1,33 +1,35 @@
 ---
 title: Getting started
-description: Set up an Apoli addon and register your first power type in Java.
+description: "Setting up an Apoli addon and registering a first power type in Java."
 ---
 
-This page takes you from an empty mod to a working custom power type. You should already have a Fabric (or NeoForge) mod project building.
+This page takes you from an empty mod to a working custom power type. You should already have a Fabric or NeoForge mod project that builds.
 
 ## 1. Depend on Apoli
 
-In `build.gradle`, add Apoli. The coordinate is qualified by loader and Minecraft version:
+In `build.gradle`, add Apoli. Its version string names the loader and Minecraft version, such as `1.118.1+1.21.1-fabric`:
 
 ```groovy
 repositories {
-    mavenLocal() // if you build Apoli yourself
+    mavenLocal()
 }
 
 dependencies {
-    modImplementation "dev.overgrown:apoli-fabric-1.21.1:${apoli_version}"
+    modImplementation "dev.overgrown.apoli:apoli:${apoli_version}"
 }
 ```
 
-And declare the dependency in `fabric.mod.json` so the game enforces it:
+`mavenLocal()` is for an Apoli you build and publish yourself with its `publishToMavenLocal` task. Released builds come from the Modrinth Maven repository, `https://api.modrinth.com/maven`, as `maven.modrinth:opoli:<version>`. On NeoForge, use `implementation` instead of `modImplementation`.
+
+Then declare the dependency in `fabric.mod.json` so the game enforces it:
 
 ```json
 { "depends": { "apoli": ">=1.5.0" } }
 ```
 
-## 2. An id helper
+## 2. An ID helper
 
-Everything you register needs an id in *your* namespace. Mirror Apoli's helper:
+Everything you register needs an ID in your own namespace. A small helper like Apoli's keeps that in one place:
 
 ```java
 public final class MyMod {
@@ -41,7 +43,7 @@ public final class MyMod {
 
 ## 3. Write a power type
 
-A power type is a `PowerType<C>` where `C` is a config record. The codec *is* the JSON schema:
+A power type is a `PowerType<C>`, where `C` is a config record, and its codec is the JSON schema:
 
 ```java
 public final class GravityPower extends PowerType<GravityPower.Cfg> {
@@ -52,18 +54,14 @@ public final class GravityPower extends PowerType<GravityPower.Cfg> {
     ).apply(i, Cfg::new));
 
     @Override public MapCodec<Cfg> configCodec() { return CODEC; }
-
-    @Override public void onAdded(ResourceLocation id, Cfg cfg, PowerContainer holder, ResourceLocation source) {
-        // apply the effect to holder.owner()
-    }
 }
 ```
 
-See [Registering power types](/docs/addon/api/registering-power-types) for the full lifecycle.
+To make it do something, override `onAdded` and apply the effect to `holder.owner()`, along with whichever other lifecycle hooks you need. See [Registering power types](/docs/addon/api/registering-power-types) for the full lifecycle.
 
 ## 4. Register it
 
-During mod initialisation (your entrypoint), hand it to the registry:
+During mod initialisation, in your entrypoint, hand it to the registry:
 
 ```java
 public class MyModInit implements ModInitializer {
@@ -75,7 +73,7 @@ public class MyModInit implements ModInitializer {
 
 ## 5. Use it from JSON
 
-Your type is now a first-class Apoli type — any data pack (including yours) can write:
+Your type is now an Apoli type like any other, and any data pack, including yours, can use it:
 
 ```json
 { "type": "mymod:gravity", "multiplier": 0.4 }
@@ -83,15 +81,15 @@ Your type is now a first-class Apoli type — any data pack (including yours) ca
 
 ## Where things get registered
 
-| You're adding… | Register with |
+| You are adding | Register with |
 | --- | --- |
-| a power type | [`PowerTypeRegistry.register`](/docs/addon/api/registering-power-types) |
-| an action | [`ActionTypes.ENTITY` / `.BI_ENTITY` / …](/docs/addon/api/actions-and-conditions) |
-| a condition | [`ConditionTypes.ENTITY` / …](/docs/addon/api/actions-and-conditions) |
-| a reusable JSON value type | [a shared `Codec`](/docs/addon/api/data-types) |
+| A power type | [`PowerTypeRegistry.register`](/docs/addon/api/registering-power-types) |
+| An action | [`ActionTypes.ENTITY`, `.BI_ENTITY` and the others](/docs/addon/api/actions-and-conditions) |
+| A condition | [`ConditionTypes.ENTITY` and the others](/docs/addon/api/actions-and-conditions) |
+| A reusable JSON value type | [A shared `Codec`](/docs/addon/api/data-types) |
 
 ## Next
 
 - [Registering power types](/docs/addon/api/registering-power-types)
-- [Actions & conditions](/docs/addon/api/actions-and-conditions)
-- [Performance rules](/docs/addon/systems/performance) — read before shipping tick code.
+- [Actions and conditions](/docs/addon/api/actions-and-conditions)
+- [Performance rules](/docs/addon/systems/performance), to read before shipping tick code

@@ -1,10 +1,10 @@
 ---
 title: "Key (Data Type)"
-description: "Defines which key an active power reacts to — a built-in key or one you define in a data pack."
+description: "Picks the key an active power reacts to, either a built-in key or one you define in a data pack."
 navigation_title: "Key"
 ---
 
-A **Key** tells an [active power](/docs/datapack/powers/action_on_key_press) which keybinding to react to. It can be written two ways: a plain [String](/docs/datapack/data-types/string) naming the key, or an [Object](/docs/datapack/data-types/object) with extra options.
+A Key tells an [active power](/docs/datapack/powers/action_on_key_press) which keybinding to react to. It can be written two ways: a plain [String](/docs/datapack/data-types/string) naming the key, or an [Object](/docs/datapack/data-types/object) with extra options.
 
 ```json
 "key": "key.attack"
@@ -20,18 +20,15 @@ A **Key** tells an [active power](/docs/datapack/powers/action_on_key_press) whi
 ## Fields
 
 | Field | Type | Default | Description |
-|-------|------|---------|-------------|
-| `key` | [String](/docs/datapack/data-types/string) | | The keybinding's translation key (see below). |
-| `continuous` | [Boolean](/docs/datapack/data-types/boolean) | `false` | If `false`, the power activates once when the key is first pressed. If `true`, it tries to activate every tick the key is held (still respecting cooldown and conditions). |
+| --- | --- | --- | --- |
+| `key` | [String](/docs/datapack/data-types/string) | `key.apoli.primary_active` | The keybinding's translation key (see below). |
+| `continuous` | [Boolean](/docs/datapack/data-types/boolean) | `false` | With `false`, the power activates once when the key is first pressed. With `true`, it tries to activate every tick the key is held, still following its cooldown and conditions. |
 
-> With `continuous: false` the power fires on the **press**, and holding the key does nothing more —
-> including when a `cooldown` expires while the key is still down. To fire again, release the key
-> and press it again.
+> [!NOTE]
+> With `continuous: false`, the power fires on the press, and holding the key does nothing more, even when a `cooldown` runs out while the key is still down. To fire again, let go of the key and press it again.
 
-> A key pressed while a screen is open — a chest, the chat, a [radial menu](/docs/datapack/entity-actions/radial_menu) —
-> does not activate a power, and neither does the press that closes the screen: a key still held
-> when the screen closes counts once it is released and pressed again. A `continuous: true` power
-> picks up as soon as the screen closes if its key is held.
+> [!NOTE]
+> A key pressed while a screen is open, such as a chest, the chat or a [radial menu](/docs/datapack/entity-actions/radial_menu), doesn't activate a power, and neither does the press that closes the screen. A key still held when the screen closes counts once it is let go and pressed again. A `continuous: true` power picks up as soon as the screen closes if its key is held.
 
 ## Built-in keys
 
@@ -39,24 +36,24 @@ You can point at any keybinding the game knows about:
 
 | Key string | Bound to |
 | --- | --- |
-| `key.apoli.primary_active` | Apoli's primary active-power key (default: **unbound**) |
-| `key.apoli.secondary_active` | Apoli's secondary active-power key (default: **unbound**) |
-| `key.origins.primary_active` | Origins' 1st active-power key (default: `G`) |
-| `key.origins.secondary_active` | Origins' 2nd active-power key (default: `H`) |
-| `key.origins.ternary_active` … `key.origins.denary_active` | Origins' 3rd through 10th active-power keys (default: **unbound**) |
-| `key.attack` | attack / left click |
-| `key.use` | use / right click |
+| `key.apoli.primary_active` | Apoli's primary active power key (unbound by default) |
+| `key.apoli.secondary_active` | Apoli's secondary active power key (unbound by default) |
+| `key.origins.primary_active` | Origins' first active power key (`G` by default) |
+| `key.origins.secondary_active` | Origins' second active power key (`H` by default) |
+| `key.origins.ternary_active` to `key.origins.denary_active` | Origins' third to tenth active power keys (unbound by default) |
+| `key.attack` | attack, left click |
+| `key.use` | use, right click |
 | `key.jump` | jump |
 | `key.sneak` | sneak |
-| `key.forward`, `key.left`, … | movement |
+| `key.forward`, `key.left` and the rest | movement |
 
-`key.apoli.primary_active` is the **default** for every Key field — omit `key` entirely and the power listens to it. Apoli ships it (and its secondary) unbound so it never collides with a mod's or a player's existing binding; both appear in the Controls menu under **Apoli** for the player to bind. A power that relies on the default therefore does nothing until the player binds that key, which is why packs that want a working key out of the box name a bound one such as `key.origins.primary_active`.
+`key.apoli.primary_active` is the default for every Key field, so leave `key` out and the power listens to it. Apoli ships it and its secondary unbound so they never clash with a mod's or a player's existing binding, and both show up in the Controls menu under Apoli for the player to bind. A power that relies on the default does nothing until the player binds that key, which is why packs that want a working key out of the box name one that is bound, such as `key.origins.primary_active`.
 
-Both are ordinary [data-driven keybinds](#data-driven-keybinds) — they live in Apoli's own `data/apoli/keybinds/`, and a data pack can override either by shipping a file at the same path with a different default `key`.
+Both are ordinary [data-driven keybinds](#data-driven-keybinds). They live in Apoli's own `data/apoli/keybinds/`, and a data pack can override either one by shipping a file at the same path with a different default `key`.
 
 ## Data-driven keybinds
 
-You aren't limited to the built-in keys — you can register your **own** keybind from a data pack. It appears in the vanilla **Controls** menu so players can rebind it, and you reference it from a Key field.
+You can also register your own keybind from a data pack. It shows up in the vanilla Controls menu so players can rebind it, and you reference it from a Key field.
 
 Create the keybind in `data/<namespace>/keybinds/<name>.json`:
 
@@ -69,22 +66,21 @@ Create the keybind in `data/<namespace>/keybinds/<name>.json`:
 ```
 
 | Field | Type | Default | Description |
-|-------|------|---------|-------------|
-| `key` | [String](/docs/datapack/data-types/string) | | The default physical key, e.g. `key.keyboard.g`, `key.mouse.left`. |
-| `category` | [String](/docs/datapack/data-types/string) | `key.categories.apoli` | The Controls-menu group it's listed under. |
-| `name` | [String](/docs/datapack/data-types/string) | *optional* | Display name. Falls back to an automatic translation key. |
+| --- | --- | --- | --- |
+| `key` | [String](/docs/datapack/data-types/string) | _required_ | The default physical key, such as `key.keyboard.g` or `key.mouse.left`. |
+| `category` | [String](/docs/datapack/data-types/string) | `key.categories.apoli` | The Controls menu group it is listed under. |
+| `name` | [String](/docs/datapack/data-types/string) | _optional_ | The display name. Without it, an automatic translation key is used. |
 
-> The Controls screen sorts each category alphabetically by the **displayed** name, so a set of keys
-> with a natural sequence needs names that sort into it. Origins' ten ability keys are called
-> "1st Active Power (Primary)" through "10th Active Power (Denary)" for exactly that reason.
+> [!TIP]
+> The Controls screen sorts each category alphabetically by the name it shows, so a set of keys with a natural order needs names that sort into that order. That is why Origins' ten ability keys are called "1st Active Power (Primary)" through "10th Active Power (Denary)".
 
-The keybind's **id** is its file path `data/my_pack/keybinds/dash.json` becomes `my_pack:dash` and its keybinding string is `key.<namespace>.<path>`. So reference the example above with:
+The keybind's ID comes from its file path, so `data/my_pack/keybinds/dash.json` becomes `my_pack:dash`, and its keybinding string is `key.<namespace>.<path>`. Reference the example above with:
 
 ```json
 "key": "key.my_pack.dash"
 ```
 
-Now an active power keyed to `key.my_pack.dash` fires when the player presses whatever they've bound "Dash" to.
+An active power keyed to `key.my_pack.dash` then fires when the player presses whatever they have bound Dash to.
 
 ## Examples
 

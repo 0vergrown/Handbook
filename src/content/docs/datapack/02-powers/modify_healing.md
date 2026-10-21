@@ -1,21 +1,21 @@
 ---
 title: "Modify Healing (Power Type)"
-description: "Modifies the amount of health you get from all sources of healing (e.g natural regen, instant health effect, regeneration effect)"
+description: "Changes how much health the entity gets from every source of healing."
 navigation_title: "Modify Healing"
 ---
 
-Modifies the amount of health you get from all sources of healing _(e.g natural regen, instant health effect, regeneration effect)_
+Changes how much health the entity gets from every source of healing.
 
 Type ID: `apoli:modify_healing`
 
-> Applies to every source that routes through the game's healing path — natural regeneration, Regeneration and Instant Health, golden apples, feeding a tamed animal, and the [apoli:heal](/docs/datapack/entity-actions/heal) action. The result is clamped at `0`, so a modifier that drives healing negative stops it entirely rather than dealing damage.
+It applies to every source that goes through the game's healing path: natural regeneration, Regeneration and Instant Health, golden apples, feeding a tamed animal and the [apoli:heal](/docs/datapack/entity-actions/heal) action. The result is clamped at `0`, so a modifier that would make healing negative stops healing instead of dealing damage.
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`modifier` | Attribute Modifier | _optional_ | If specified, this modifier will be applied to your healing bonus.
-`modifiers` | Array of Attribute Modifiers | _optional_ | If specified, these modifiers will be applied to your healing bonus.
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `modifier` | [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) | _optional_ | If set, this modifier is applied to the healing. |
+| `modifiers` | [Array](/docs/datapack/data-types/array) of [Attribute Modifiers](/docs/datapack/data-types/attribute-modifier) | _optional_ | If set, these modifiers are applied to the healing. |
 
 ## Examples
 
@@ -29,7 +29,8 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will double the effectiveness of all healing used on you.
+This doubles all healing the entity receives.
+
 ```json
 {
     "type": "apoli:modify_healing",
@@ -40,7 +41,7 @@ This example will double the effectiveness of all healing used on you.
 }
 ```
 
-This example will half the effectiveness of all healing used on you.
+This halves all healing the entity receives.
 
 ```json
 {
@@ -52,4 +53,4 @@ This example will half the effectiveness of all healing used on you.
 }
 ```
 
-This example stops the holder from being healed at all.
+This stops the entity from being healed at all.

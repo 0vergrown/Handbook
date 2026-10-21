@@ -1,19 +1,19 @@
 ---
 title: "Delay (Meta Action Type)"
-description: "Executes the provided action after a set amount of ticks."
+description: "Runs an action after a number of ticks."
 navigation_title: "Delay"
 ---
 
-Executes the provided action after a set amount of ticks.
+Runs an action after a number of ticks.
 
 Type ID: `apoli:delay`
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`action` | Action Type | | The action which will be executed after the delay.
-`ticks` | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | | The amount of ticks until the action is executed. `0` or less runs it straight away. An expression is worked out once, when the delay starts — see [Expressions](#expressions).
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `action` | Action type | _required_ | The action to run after the delay. |
+| `ticks` | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | _required_ | How many ticks to wait before running the action. `0` or less runs it straight away. An expression is worked out once, when the delay starts (see [Expressions](#expressions)). |
 
 ## Examples
 
@@ -31,11 +31,12 @@ Field  | Type | Default | Description
     }
 }
 ```
-This example will apply a Speed II status effect after 1 second.
+
+This gives Speed II after 1 second.
 
 ## Expressions
 
-`ticks` can be an [Expression](/docs/datapack/data-types/expression), worked out when the delay starts. Its variables read the entity the action runs on — the actor, in a bi-entity action; the entity that caused a block action; the holder of the item, in an item action.
+`ticks` can be an [expression](/docs/datapack/data-types/expression), worked out when the delay starts. Its variables read the entity the action runs on: the actor in a bi-entity action, the entity that caused a block action, and the holder of the item in an item action.
 
 ```json
 "entity_action": {

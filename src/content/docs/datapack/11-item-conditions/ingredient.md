@@ -1,18 +1,18 @@
 ---
 title: "Ingredient (Item Condition Type)"
-description: "Checks whether the item matches the specified Ingredient."
+description: "Checks whether the item matches an ingredient: an item ID, an item tag or a custom ingredient."
 navigation_title: "Ingredient"
 ---
 
-Checks whether the item matches the specified [Ingredient](/docs/datapack/data-types/ingredient). Essentially, checking either for the item ID or whether the item is in a specified tag.
+Checks whether the item matches an [Ingredient](/docs/datapack/data-types/ingredient): an item ID, an item tag, or a [custom ingredient](/docs/datapack/data-types/ingredient#custom-ingredients) that also checks the item's data components, such as a potion's contents or whether a crossbow is loaded.
 
 Type ID: `apoli:ingredient`
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`ingredient` | [Ingredient](/docs/datapack/data-types/ingredient) | |  The ingredient this item must match to pass the check.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `ingredient` | [Ingredient](/docs/datapack/data-types/ingredient) | _required_ | The ingredient the item must match. |
 
 ## Examples
 
@@ -25,7 +25,7 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will check if the item is a `minecraft:egg` item.
+This checks whether the item is an egg.
 
 ```json
 "item_condition": {
@@ -36,7 +36,7 @@ This example will check if the item is a `minecraft:egg` item.
 }
 ```
 
-This example will check if the item is included in the `#minecraft:flowers` (`data/minecraft/tags/items/flowers.json`) item tag.
+This checks whether the item is in the `#minecraft:flowers` item tag (`data/minecraft/tags/items/flowers.json`).
 
 ```json
 "item_condition": {
@@ -52,4 +52,21 @@ This example will check if the item is included in the `#minecraft:flowers` (`da
 }
 ```
 
-This example will check if the item is included in the `#minecraft:planks` (`data/minecraft/tags/items/planks.json`) item tag or if the item is a `minecraft:oak_log` item.
+This checks whether the item is in the `#minecraft:planks` item tag (`data/minecraft/tags/items/planks.json`) or is an oak log.
+
+```json
+"item_condition": {
+    "type": "apoli:ingredient",
+    "ingredient": {
+        "fabric:type": "fabric:components",
+        "base": "minecraft:potion",
+        "components": {
+            "minecraft:potion_contents": {
+                "potion": "minecraft:strong_swiftness"
+            }
+        }
+    }
+}
+```
+
+This checks whether the item is a Potion of Swiftness II. It works on Fabric and NeoForge alike.

@@ -1,13 +1,13 @@
 ---
 title: Writing actions
-description: A worked action in each flavour, plus taking a nested action and running it yourself.
+description: "A worked action of each flavour, plus taking a nested action and running it yourself."
 ---
 
 An action is a class with a codec and a `run`. The [context](/docs/addon/api/contexts) type is the only thing that decides its flavour, and the registry you put it in has to match.
 
 ## An entity action
 
-Something that happens to one entity. Register into `ActionTypes.ENTITY`, and it becomes valid in every `entity_action` field in the game.
+An entity action is something that happens to one entity. Register it in `ActionTypes.ENTITY`, and it becomes valid in every `entity_action` field in the game. The early return for a non-living entity covers an arrow or anything else that isn't living:
 
 ```java
 package dev.example.mymod.action;
@@ -34,7 +34,7 @@ public final class RechargeAction implements ActionType<EntityCtx, RechargeActio
     @Override
     public void run(Cfg cfg, EntityCtx ctx) {
         LivingEntity living = ctx.living();
-        if (living == null) return;                    // an arrow got here
+        if (living == null) return;
         if (!cfg.overheal() && living.getHealth() >= living.getMaxHealth()) return;
         living.heal(cfg.amount());
     }
@@ -44,18 +44,18 @@ public final class RechargeAction implements ActionType<EntityCtx, RechargeActio
 ```java
 ActionTypes.ENTITY.register(MyMod.id("recharge"), new RechargeAction());
 ```
-
 ```json
 "entity_action": { "type": "mymod:recharge", "amount": 4.0 }
 ```
 
 The config record is nested inside the action class. That is the convention throughout Apoli: the schema sits next to the code that reads it, and there is no separate file to keep in sync.
 
-> `ctx.living()` returns **null**, not an exception, when the entity is not living. Powers run on projectiles and item entities, so every action that reaches for health, effects or equipment needs that guard.
+> [!WARNING]
+> `ctx.living()` returns null instead of throwing when the entity isn't living. Powers run on projectiles and item entities, so every action that reaches for health, effects or equipment needs that check.
 
 ## A bi-entity action
 
-Two entities, an **actor** and a **target**. Which is which is decided by the power that fires it — for `apoli:action_on_hit` the actor is the attacker.
+A bi-entity action involves two entities, an actor and a target. Which is which is decided by the power that runs it, and for `apoli:action_on_hit` the actor is the attacker.
 
 ```java
 public final class YankAction implements ActionType<BiEntityCtx, YankAction.Cfg> {
@@ -77,7 +77,7 @@ public final class YankAction implements ActionType<BiEntityCtx, YankAction.Cfg>
 
         Vec3 pull = actor.position().subtract(target.position()).normalize().scale(cfg.strength());
         target.setDeltaMovement(target.getDeltaMovement().add(pull));
-        target.hurtMarked = true;      // makes the server send the new velocity
+        target.hurtMarked = true;
     }
 }
 ```
@@ -86,9 +86,9 @@ public final class YankAction implements ActionType<BiEntityCtx, YankAction.Cfg>
 ActionTypes.BI_ENTITY.register(MyMod.id("yank"), new YankAction());
 ```
 
-`hurtMarked = true` is the part people miss: without it the server keeps the change to itself and the client never sees the entity move.
+`hurtMarked = true` is the part people miss. It makes the server send the new velocity, and without it the server keeps the change to itself and the client never sees the entity move.
 
-To re-frame a bi-entity context as an entity one — the trick `apoli:actor_action` and `apoli:target_action` are built from:
+To turn a bi-entity context into an entity one, which is how `apoli:actor_action` and `apoli:target_action` are built:
 
 ```java
 cfg.actorAction().ifPresent(a -> a.run(ctx.asActor()));
@@ -97,7 +97,7 @@ cfg.targetAction().ifPresent(a -> a.run(ctx.asTarget()));
 
 ## A block action
 
-A position, its state, the level, and optionally whoever caused it.
+A block action gets a position, its state, the level, and optionally whoever caused it.
 
 ```java
 public final class SproutAction implements ActionType<BlockCtx, SproutAction.Cfg> {
@@ -119,18 +119,18 @@ public final class SproutAction implements ActionType<BlockCtx, SproutAction.Cfg
     }
 }
 ```
-
 ```java
 ActionTypes.BLOCK.register(MyMod.id("sprout"), new SproutAction());
 ```
 
-`ctx.state()` is handed to you so you never have to re-read the level for the common case. `ctx.actor()` is **nullable** — a block action fired from a raycast has no entity behind it.
+`ctx.state()` is handed to you so you never have to read the level again for the common case. `ctx.actor()` can be null, since a block action run from a raycast has no entity behind it.
 
-> Changing blocks is server work. `isClientSide()` first, always: a client-side `setBlock` produces a ghost block that desyncs until the chunk reloads.
+> [!WARNING]
+> Changing blocks is server work, so check `isClientSide()` first, always. A `setBlock` on the client produces a ghost block that stays out of sync until the chunk reloads.
 
 ## An item action
 
-A stack, the level, an optional holder, and — for actions, not conditions — a way to swap the stack.
+An item action gets a stack, the level, an optional holder and, for actions but not conditions, a way to swap the stack. When the damage reaches the maximum, this one replaces the stack with an empty one, so the item burns away:
 
 ```java
 public final class ScorchAction implements ActionType<ItemCtx, ScorchAction.Cfg> {
@@ -151,7 +151,7 @@ public final class ScorchAction implements ActionType<ItemCtx, ScorchAction.Cfg>
 
         int damage = stack.getDamageValue() + cfg.amount();
         if (damage >= stack.getMaxDamage()) {
-            ctx.replace(ItemStack.EMPTY);        // burned away
+            ctx.replace(ItemStack.EMPTY);
         } else {
             stack.setDamageValue(damage);
         }
@@ -163,14 +163,14 @@ public final class ScorchAction implements ActionType<ItemCtx, ScorchAction.Cfg>
 ActionTypes.ITEM.register(MyMod.id("scorch"), new ScorchAction());
 ```
 
-Two things about `ItemCtx`:
+Two things to know about `ItemCtx`:
 
-- `ctx.holder()` is **null** for a loose stack — an item entity, a container slot, a crafting result.
-- `ctx.replace(newStack)` returns `false` when the caller handed you a read-only view. Mutating the stack in place always works; replacing it does not, so check the return if the difference matters.
+- `ctx.holder()` is null for a loose stack: an item entity, a container slot or a crafting result.
+- `ctx.replace(newStack)` returns `false` when the caller handed you a read-only view. Changing the stack in place always works and replacing it doesn't, so check the return value if the difference matters.
 
 ## Taking a nested action
 
-Most interesting actions are meta: they take another action and decide when to run it. Hold the wrapper record in your config and call it:
+Most interesting actions are meta actions: they take another action and decide when to run it. Hold the wrapper record in your config and call it:
 
 ```java
 public record Cfg(Optional<EntityAction> success,
@@ -193,30 +193,27 @@ public void run(Cfg cfg, EntityCtx ctx) {
 }
 ```
 
-`EntityAction`, `BiEntityAction`, `BlockAction` and `ItemAction` each expose a public `CODEC` and a single `run`. You never look a type up by id yourself.
+`EntityAction`, `BiEntityAction`, `BlockAction` and `ItemAction` each have a public `CODEC` and a single `run`. You never look a type up by ID yourself.
 
-Use `LoggedOptionalField` rather than `optionalFieldOf` for these. DFU drops a malformed optional field **silently**, so a typo'd nested action would leave the power loading cleanly and doing nothing; `LoggedOptionalField.of` logs a warning naming the power and field, and `.strict` fails the whole enclosing object. A `condition` belongs in `strict` — a gate that silently vanishes is worse than a load error.
+Use `LoggedOptionalField` instead of `optionalFieldOf` for these. DFU drops a malformed optional field silently, so a nested action with a typo would leave the power loading cleanly and doing nothing. `LoggedOptionalField.of` logs a warning naming the power and the field, and `.strict` fails the whole enclosing object. A `condition` belongs in `strict`, because a gate that silently vanishes is worse than a load error.
 
 ## Running an action on a different entity
 
-Build the context you need. Contexts are cheap records, and every one has an `of(...)`:
+Build the context you need. Contexts are cheap records, and each one has an `of(...)` or a constructor. These run an entity action on any entity from anywhere, a bi-entity action between two entities you have, and a block action at a position you worked out:
 
 ```java
-// from anywhere, on any entity
 cfg.entityAction().ifPresent(a -> a.run(EntityCtx.of(entity, entity.level())));
 
-// a bi-entity action between two entities you have
 cfg.bientityAction().ifPresent(a -> a.run(BiEntityCtx.of(actor, target, actor.level())));
 
-// a block action at a position you computed
 cfg.blockAction().ifPresent(a -> a.run(new BlockCtx(pos, level.getBlockState(pos), level, actor)));
 ```
 
-Build it as late as possible — after the early-outs, not before.
+Build it as late as possible, after the early returns and not before.
 
 ## Aliases
 
-Accept an old id, or an old field name, without touching your codec:
+Accept an old ID, or an old field name, without touching your codec:
 
 ```java
 ActionTypes.ENTITY.register(
@@ -229,4 +226,4 @@ ActionTypes.ENTITY.register(
 );
 ```
 
-Both spellings keep working forever, which is the point — a data pack written against your old release should not break. See [aliasing](/docs/addon/api/aliasing).
+Both spellings keep working, so a data pack written against your old release doesn't break. See [aliasing](/docs/addon/api/aliasing).

@@ -1,16 +1,16 @@
 ---
 title: "Still (Fluid Condition Type)"
-description: "Checks whether this state describes a still (i.e."
+description: "Checks whether the fluid is a source, not flowing."
 navigation_title: "Still"
 ---
 
-Checks whether this state describes a still (i.e. not flowing, i.e. source) fluid.
+Checks whether the fluid is still, meaning a source block and not flowing.
 
 Type ID: `apoli:still`
 
 ## Fields
 
-_None._
+This condition has no fields.
 
 ## Examples
 

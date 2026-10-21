@@ -1,39 +1,26 @@
-<!--
-  TEMPLATE: a power type page. Copy to src/content/docs/datapack/02-powers/NN-NAME.md
-  Replace every UPPER_SNAKE placeholder and delete these comments.
-  Source of truth: power/PowerTypes.java (id -> class) and power/builtin/CLASSPower.java (configCodec).
--->
 ---
-title: apoli:TYPE_ID
-description: ONE LINE, PLAIN, SAYING WHAT THIS POWER DOES.
+title: "NAME (Power Type)"
+description: "ONE_SENTENCE_SUMMARY"
+navigation_title: "NAME"
 ---
 
-<!-- One or two sentences. What does having this power do? No "in this article". -->
-ONE OR TWO SENTENCES DESCRIBING THE POWER.
+ONE_OR_TWO_SENTENCES_ON_WHAT_HAVING_THIS_POWER_DOES
+
+Type ID: `apoli:TYPE_ID`
 
 ## Fields
 
-<!-- List EVERY field from the configCodec. optionalFieldOf("x", d) -> optional, default d. fieldOf("x") -> required, default "—". Link nested types. -->
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `FIELD` | [DATA_TYPE](/docs/datapack/data-types/DATA_TYPE) | DEFAULT | WHAT_THE_FIELD_DOES |
 
-| Field     | Type                                             | Default | Purpose       |
-|-----------|--------------------------------------------------|---------|---------------|
-| `FIELD_A` | TYPE                                             | DEFAULT | WHAT IT DOES. |
-| `FIELD_B` | [DATA_TYPE](/docs/datapack/data-types/DATA_TYPE) | DEFAULT | WHAT IT DOES. |
-
-<!-- The five shared power fields (type, name, description, condition, hidden) are documented once on the Powers overview — don't repeat them unless this power treats one specially. -->
-
-## Example
-
-<!-- A real, working power a reader can paste into a data pack. -->
+## Examples
 
 ```json
 {
-  "type": "apoli:TYPE_ID",
-  "name": "EXAMPLE NAME",
-  "FIELD_A": EXAMPLE_VALUE
+    "type": "apoli:TYPE_ID",
+    "FIELD": VALUE
 }
 ```
 
-EXPLAIN WHAT THE EXAMPLE DOES IN ONE LINE.
-
-<!-- Optional: a second example showing a common variation, or a > blockquote for a gotcha / performance note. -->
+WHAT_THE_EXAMPLE_DOES

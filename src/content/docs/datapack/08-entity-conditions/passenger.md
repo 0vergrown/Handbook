@@ -1,22 +1,23 @@
 ---
 title: "Passenger (Entity Condition Type)"
-description: "Checks how many passengers are currently riding the entity."
+description: "Compares how many passengers are riding the entity with a number."
 navigation_title: "Passenger"
 ---
 
-Checks how many passengers are currently riding the entity.
+Compares how many passengers are riding the entity with a number.
 
 Type ID: `apoli:passenger`
 
-> In the context of this entity condition type, the '**actor**' entity/entities is/are the passenger(s) and the '**target**' is the entity that invoked the condition.
+> [!NOTE]
+> For `bientity_condition`, each passenger is the actor, and the entity the condition is checked on is the target.
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|-------------
-`bientity_condition` | Bi-entity Condition Type | _optional_ | If specified, only increase the amount of passengers if either or both the '**actor**' entity/entities and the '**target**' entity fulfills this bi-entity condition.
-`comparison` | [Comparison](/docs/datapack/data-types/comparison) | `">="` | How the amount of passengers of the entity should be compared to the specified value.
-`compare_to` | [Integer](/docs/datapack/data-types/integer) | `1` | The value at which the amount of passengers of the entity will be compared to.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `bientity_condition` | [Bi-entity Condition Type](/docs/datapack/bientity-conditions) | _optional_ | Only passengers that pass this condition are counted. |
+| `comparison` | [Comparison](/docs/datapack/data-types/comparison) | `">="` | How the number of passengers is compared with `compare_to`. |
+| `compare_to` | [Integer](/docs/datapack/data-types/integer) | `1` | The number the passenger count is compared with. |
 
 ## Examples
 
@@ -33,4 +34,4 @@ Field | Type | Default | Description
 }
 ```
 
-This example will check if the target entity is being ridden by a player (actor entity).
+This checks whether a player is riding the entity.

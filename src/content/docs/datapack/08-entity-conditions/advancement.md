@@ -1,20 +1,21 @@
 ---
 title: "Advancement (Entity Condition Type)"
-description: "Checks whether the entity has completed a specified advancement."
+description: "Checks whether the player has completed an advancement."
 navigation_title: "Advancement"
 ---
 
-Checks whether the entity has completed a specified advancement.
+Checks whether the entity has completed an advancement.
 
 Type ID: `apoli:advancement`
 
-> **This entity condition type will only work on players.**
+> [!NOTE]
+> This condition only works on players.
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`advancement` | Identifier | | The namespace and ID of the advancement the player needs to have completed in order for this condition to evaluate to true.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `advancement` | [Identifier](/docs/datapack/data-types/identifier) | _required_ | The ID of the advancement the player must have completed. |
 
 ## Examples
 
@@ -25,4 +26,4 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will check if the player has the `minecraft:story/smelt_iron` advancement, which can be obtained by smelting or obtaining their first Iron Ingot.
+This checks whether the player has the `minecraft:story/smelt_iron` advancement, which they get by smelting or picking up their first iron ingot.

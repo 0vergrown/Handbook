@@ -1,18 +1,18 @@
 ---
 title: "NBT (Entity Condition Type)"
-description: "Checks the entity's NBT."
+description: "Checks whether the entity's NBT contains the given data."
 navigation_title: "NBT"
 ---
 
-Checks the entity's NBT.
+Checks whether the entity's NBT contains the given data.
 
 Type ID: `apoli:nbt`
 
 ## Fields
 
-Field | Type | Default | Description
-------|------|---------|-------------
-`nbt` | [NBT](/docs/datapack/data-types/nbt) | | The NBT data to check for.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `nbt` | [NBT](/docs/datapack/data-types/nbt) | _required_ | The NBT data to look for. |
 
 ## Examples
 
@@ -23,4 +23,4 @@ Field | Type | Default | Description
 }
 ```
 
-This example will check if the entity has the `example_tag` added via `/tag` or by modifying the entity's `Tags` NBT string list.
+This checks whether the entity has the `example_tag` tag, added with `/tag` or by editing the entity's `Tags` NBT list.

@@ -1,20 +1,20 @@
 ---
 title: "Adjacent (Block Condition Type)"
-description: "Checks whether a specified amount of blocks adjacent to the block in question fulfills a specified Block Condition Type."
+description: "Counts the neighbouring blocks that pass a condition and compares the count with a number."
 navigation_title: "Adjacent"
 ---
 
-Checks whether a specified amount of blocks adjacent to the block in question fulfills a specified Block Condition Type.
+Counts how many of the six blocks next to this one pass a block condition, and compares the count with a number.
 
 Type ID: `apoli:adjacent`
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`adjacent_condition` | Block Condition Type (Data Type) | | The block condition that needs to be fulfilled by adjacent blocks to count towards this condition.
-`comparison` | [Comparison](/docs/datapack/data-types/comparison) | | Determines how the number of adjacent blocks which fulfill the `adjacent_condition` block condition should be compared to the specified value.
-`compare_to` | [Integer](/docs/datapack/data-types/integer) | **required** | The number of matching neighbours to compare against. A block has six neighbours, so this is `0`–`6`.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `adjacent_condition` | [Block Condition Type](/docs/datapack/block-conditions) | _required_ | The condition a neighbouring block must pass to be counted. |
+| `comparison` | [Comparison](/docs/datapack/data-types/comparison) | _required_ | How the count is compared with `compare_to`. |
+| `compare_to` | [Integer](/docs/datapack/data-types/integer) | _required_ | The number of matching neighbours to compare against. A block has six neighbours, so this is `0` to `6`. |
 
 ## Examples
 
@@ -30,4 +30,4 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will check if there are four or more Iron Ore blocks next to the block in question.
+This checks whether four or more iron ore blocks are next to the block.

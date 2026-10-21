@@ -1,19 +1,19 @@
 ---
 title: "Projectile (Damage Condition Type)"
-description: "Checks whether the damage source was projectile damage, and optionally the type of projectile it was (if specified)."
+description: "Checks whether the damage came from a projectile, optionally of a given type or one that passes a condition."
 navigation_title: "Projectile"
 ---
 
-Checks whether the damage source was projectile damage, and optionally the type of projectile it was (if specified).
+Checks whether the damage came from a projectile, optionally of a given entity type or one that passes an entity condition.
 
 Type ID: `apoli:projectile`
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`projectile` | Identifier | _optional_ | If set, the check will only pass if the projectile was of an entity type with the specified namespace and ID.
-`projectile_condition` | Entity Condition Type | _optional_ | If set, the check will only pass if the projectile entity fulfills this condition.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `projectile` | [Identifier](/docs/datapack/data-types/identifier) | _optional_ | The projectile must be of this entity type. |
+| `projectile_condition` | [Entity Condition Type](/docs/datapack/entity-conditions) | _optional_ | The projectile must pass this condition. |
 
 ## Examples
 
@@ -24,7 +24,7 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will check if the damage source is a Spectral Arrow projectile entity.
+This checks whether the damage came from a spectral arrow.
 
 ```json
 "damage_condition": {
@@ -44,4 +44,4 @@ This example will check if the damage source is a Spectral Arrow projectile enti
 }
 ```
 
-This example will check if the damage source is a burning arrow.
+This checks whether the damage came from a burning arrow.

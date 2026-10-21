@@ -1,18 +1,19 @@
 ---
 title: "Using Effective Tool (Entity Condition Type)"
-description: "Checks whether the entity is currently using the effective tool of the block they're mining."
+description: "Checks whether the player is mining a block with the right tool for it."
 navigation_title: "Using Effective Tool"
 ---
 
-Checks whether the entity is currently using the effective tool of the block they're mining.
+Checks whether the entity is mining a block with the right tool for that block.
 
 Type ID: `apoli:using_effective_tool`
 
-> **This entity condition type will only work on players.**
+> [!NOTE]
+> This condition only works on players.
 
 ## Fields
 
-_None._
+This condition has no fields.
 
 ## Examples
 

@@ -4,17 +4,17 @@ description: Passes when the damage came from an explosion.
 navigation_title: "Explosive"
 ---
 
-Passes when the damage came from an explosion — creepers, TNT, beds in the Nether, end crystals.
+Passes when the damage came from an explosion, such as a creeper, TNT, a bed in the Nether or an end crystal.
 
 Type ID: `apoli:explosive`
 
 ## Fields
 
-This type has no fields. Like every condition, it accepts `inverted` to flip the result.
+This condition has no fields. Like every condition, it accepts `inverted` to flip the result.
 
 ## How it works
 
-It is shorthand for [`apoli:in_tag`](/docs/datapack/damage-conditions/in_tag) against the `minecraft:is_explosion` damage type tag, so a data pack that adds its own damage type to that tag is matched too.
+It is shorthand for [`apoli:in_tag`](/docs/datapack/damage-conditions/in_tag) with the `minecraft:is_explosion` damage type tag, so a data pack that adds its own damage type to that tag is matched too.
 
 ## Example
 
@@ -27,7 +27,7 @@ A blast-proof origin:
 }
 ```
 
-Or half damage rather than none, which usually plays better:
+Or half damage instead of none, which usually plays better:
 
 ```json
 {

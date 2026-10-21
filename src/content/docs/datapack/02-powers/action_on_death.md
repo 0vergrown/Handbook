@@ -1,22 +1,20 @@
 ---
 title: "Action On Death (Power Type)"
-description: "Executes an action when the entity that has the power dies."
+description: "Runs an action when the entity that has the power dies."
 navigation_title: "Action On Death"
 ---
 
-Executes an action when the entity that has the power dies.
+Runs an action when the entity that has the power dies. The target is the entity that died, and the actor is the entity that killed it.
 
 Type ID: `apoli:action_on_death`
 
-> In the context of this power type, the '**target**' entity is the entity that died while the '**actor**' entity is the one that killed it.
-
 ## Fields
 
-| Field                | Type                     | Default    | Description                                                                                                                                      |
-| -------------------- | ------------------------ | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `bientity_action`    | Bi-entity Action Type    |            | The action to be executed on either or both the '**actor**' and '**target**' entities.                                                           |
-| `bientity_condition` | Bi-entity Condition Type | _optional_ | If specified, the specified action will only be executed if this condition is fulfilled by either or both '**actor**' and '**target**' entities. |
-| `damage_condition`   | Damage Condition Type    | _optional_ | If specified, the specified action will only be executed if this condition is fulfilled by the damage dealt by the '**actor**' entity.           |
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `bientity_action` | [Bi-entity Action Type](/docs/datapack/bientity-actions) | | The action to run on the actor, the target or both. |
+| `bientity_condition` | [Bi-entity Condition Type](/docs/datapack/bientity-conditions) | _optional_ | If set, the action only runs when the actor and target pass this condition. |
+| `damage_condition` | [Damage Condition Type](/docs/datapack/damage-conditions) | _optional_ | If set, the action only runs when the killing damage passes this condition. |
 
 ## Examples
 
@@ -35,4 +33,4 @@ Type ID: `apoli:action_on_death`
 }
 ```
 
-This example will make the entity that died explode.
+This makes the entity explode when it dies.

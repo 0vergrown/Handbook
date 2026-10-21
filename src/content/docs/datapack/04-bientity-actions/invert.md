@@ -1,18 +1,18 @@
 ---
 title: "Invert (Bi-Entity Action Type)"
-description: "Swaps the context of the target entity and the actor entity."
+description: "Runs a bi-entity action with the actor and target swapped."
 navigation_title: "Invert"
 ---
 
-Swaps the context of the target entity and the actor entity.
+Runs a bi-entity action with the actor and the target swapped.
 
 Type ID: `apoli:invert`
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`action` | Bi-entity Action Type | | The bi-entity action to execute which will have its 'target' and 'actor' contexts swapped.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `action` | [Bi-entity Action Type](/docs/datapack/bientity-actions) | _required_ | The bi-entity action to run with the actor and target swapped. |
 
 ## Examples
 
@@ -26,4 +26,4 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will "pull" the actor entity to the target entity.
+This pulls the actor toward the target.

@@ -1,10 +1,11 @@
 ---
 title: "Boolean (Data Type)"
-description: "A data type of which the value can be either true or false."
+description: "A value that is either true or false."
 navigation_title: "Boolean"
 ---
 
-A data type of which the value can be either `true` or `false`.
+A value that is either `true` or `false`.
+
 ## Example
 
 ```json
@@ -13,4 +14,4 @@ A data type of which the value can be either `true` or `false`.
 }
 ```
 
-An `inverted` boolean set to true, which would invert the condition it's in.
+An `inverted` boolean set to `true`, which inverts the condition it is in.

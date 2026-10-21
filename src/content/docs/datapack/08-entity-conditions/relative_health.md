@@ -1,21 +1,22 @@
 ---
 title: "Relative Health (Entity Condition Type)"
-description: "Checks the current (and the percentage) health value of the entity."
+description: "Compares the entity's health, as a fraction of its maximum, with a number."
 navigation_title: "Relative Health"
 ---
 
-Checks the current (and the percentage) health value of the entity.
+Compares the entity's health, as a fraction of its maximum health, with a number.
 
 Type ID: `apoli:relative_health`
 
-> The percentage of the health value can be calculated with the `currentHealth / maxHealth` formula.
+> [!NOTE]
+> The fraction is `currentHealth / maxHealth`, so `1` is full health and `0.5` is half.
 
 ## Fields
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`comparison` | Comparison | | Determines how the relative health of the entity should be compared to the specified value.
-`compare_to` | Float | | The value at which the relative health of the entity will be compared to.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `comparison` | [Comparison](/docs/datapack/data-types/comparison) | _required_ | How the relative health is compared with `compare_to`. |
+| `compare_to` | [Float](/docs/datapack/data-types/float) | _required_ | The number the relative health is compared with. |
 
 ## Examples
 
@@ -27,4 +28,4 @@ Field  | Type | Default | Description
 }
 ```
 
-This example will check if the player has half or less of their max health.
+This checks whether the entity has half of its max health or less.

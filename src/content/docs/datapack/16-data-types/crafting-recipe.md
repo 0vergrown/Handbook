@@ -1,24 +1,24 @@
 ---
 title: "Crafting Recipe (Data Type)"
-description: "An Object specifying a shapeless or shaped crafting recipe."
+description: "An object that describes a shaped or shapeless crafting recipe."
 navigation_title: "Crafting Recipe"
 ---
 
-An [Object](/docs/datapack/data-types/object) specifying a shapeless or shaped crafting recipe.
+An [Object](/docs/datapack/data-types/object) that describes a shapeless or shaped crafting recipe.
 
 ## Fields (both types)
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`type` | Identifier | | The type of recipe. Either `minecraft:crafting_shaped` or `minecraft:crafting_shapeless`. Other recipe types are not supported.
-`id` | Identifier | | An ID for this recipe. In [`apoli:recipe`](/docs/datapack/powers/recipe) it is optional (the power's id is used instead) and several powers may share one, see [Sharing an `id`](/docs/datapack/powers/recipe#sharing-an-id). A power's recipe replaces a data-pack recipe with the same id.
-`result` | Object | | The crafted item: `id` (the item), an optional `count` (default `1`) and optional `components`. On 1.20.1 the item is written as `item` instead of `id`, and the result cannot carry NBT.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `type` | [Identifier](/docs/datapack/data-types/identifier) | _required_ | The type of recipe, either `minecraft:crafting_shaped` or `minecraft:crafting_shapeless`. Other recipe types aren't supported. |
+| `id` | [Identifier](/docs/datapack/data-types/identifier) | _required_ | An ID for this recipe. In [`apoli:recipe`](/docs/datapack/powers/recipe) it is optional (the power's ID is used instead), and several powers can share one, see [Sharing an `id`](/docs/datapack/powers/recipe#sharing-an-id). A power's recipe replaces a data pack recipe with the same ID. |
+| `result` | [Object](/docs/datapack/data-types/object) | _required_ | The crafted item: `id` (the item), an optional `count` (default `1`) and optional `components`. On 1.20.1 the item is written as `item` instead of `id`, and the result can't carry NBT. |
 
 ## Fields (shapeless)
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`ingredients` | Array of Ingredient | | The items that need to be put in the crafting grid for the recipe.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `ingredients` | Array of [Ingredient](/docs/datapack/data-types/ingredient) | _required_ | The items that go in the crafting grid for the recipe. |
 
 ## Examples (shapeless)
 
@@ -46,14 +46,14 @@ Field  | Type | Default | Description
 }
 ```
 
-A crafting recipe to craft fire charges, but without the blaze powder required by the vanilla recipe.
+A recipe for fire charges that doesn't need the blaze powder of the vanilla recipe.
 
 ## Fields (shaped)
 
-Field  | Type | Default | Description
--------|------|---------|-------------
-`pattern` | Array of Strings | | Specifies the pattern, with each element representing one row. Use a single character to describe one item. A space means that position is empty.
-`key` | Object of "character": Ingredient fields | | Specifies which character in the pattern corresponds to which Ingredient.
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `pattern` | Array of Strings | _required_ | The pattern, with each element as one row. Use one character for each item, and a space for an empty position. |
+| `key` | Object of "character": Ingredient fields | _required_ | Which [Ingredient](/docs/datapack/data-types/ingredient) each character in the pattern stands for. |
 
 ## Examples (shaped)
 
@@ -77,4 +77,4 @@ Field  | Type | Default | Description
 }
 ```
 
-A crafting recipe for a birch boat, but with the planks rotated to the side in the crafting grid.
+A recipe for a birch boat, with the planks turned sideways in the crafting grid.

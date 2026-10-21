@@ -1,34 +1,35 @@
 ---
 title: "Multiple (Power Type)"
-description: "Allows for defining more than one power in a single file."
+description: "Defines several powers in a single file."
 navigation_title: "Multiple"
 ---
 
-Allows for defining more than one power in a single file.
+Defines several powers in a single file.
 
 Type ID: `apoli:multiple`
 
-> The sub-powers are automatically hidden. When the super-power (where the `apoli:multiple` power type is used) is added to the entity, all sub-powers are added automatically.
-> 
-> You can reference sub-powers by using the ID of the super-power and the ID of the sub-power, split by an underscore (`_`). (e.g: `namespace:super-power_sub-power`)
-> 
-> Inside a sub-power, `*:*` expands to the **super-power's** id, which is why `"*:*_set"` in the example below names the `set` sub-power. `*` on its own in the namespace position — `"*:some/other_power"` — expands to just the file's namespace, so it works for referring to any power in your pack, in any folder. See [Identifier](/docs/datapack/data-types/identifier).
-> 
-> If you wish to check for an entity condition for the entire super-power, you would have to check for the said entity condition in every sub-power of the super-power.
-> 
-> `/reload` reconciles what an entity is already holding: a sub-power you add to the file is granted to everyone who already has the super-power, and one you delete is revoked from them. You do not have to re-grant the super-power.
+The sub-powers are hidden automatically. When the entity gets the main power (the one using `apoli:multiple`), it gets all of the sub-powers with it.
 
-> A multiple counts every power held under its own id as one of its sub-powers. A power granted to the same entity with the multiple's id as its `source` is therefore revoked again within a tick — give such grants a source of their own (see [apoli:grant_power](/docs/datapack/entity-actions/grant_power#choosing-a-source)).
+To refer to a sub-power, join the ID of the main power and the key of the sub-power with an underscore (`_`), for example `namespace:main-power_sub-power`.
+
+Inside a sub-power, `*:*` expands to the main power's ID, which is why `"*:*_set"` in the example below names the `set` sub-power. `*` on its own in the namespace position, as in `"*:some/other_power"`, expands to just the file's namespace, so it can refer to any power in your pack, in any folder. See [Identifier](/docs/datapack/data-types/identifier).
+
+To check an entity condition for the whole bundle, put that condition in every sub-power.
+
+`/reload` updates what entities already have. A sub-power you add to the file is granted to everyone who already has the main power, and one you delete is revoked from them, so you don't have to grant the main power again.
+
+> [!WARNING]
+> An `apoli:multiple` counts every power held under its own ID as one of its sub-powers. A power granted to the same entity with the bundle's ID as its `source` is revoked again within a tick, so give those grants a source of their own (see [apoli:grant_power](/docs/datapack/entity-actions/grant_power#choosing-a-source)).
 
 ## Fields
 
-Arbitrary fields. Any "key", except for `type`, `loading_priority`, `name`, `description`, `hidden`, `condition`, `tags`, `skill`, `sub_powers` and `load_condition`, is considered a sub-power and takes a fully-defined power type as the value.
+Any key except `type`, `loading_priority`, `name`, `description`, `hidden`, `condition`, `tags`, `skill`, `sub_powers` and `load_condition` is a sub-power, and takes a complete power as its value.
 
-Those reserved fields belong to the bundle itself, not to its sub-powers — `tags` on an `apoli:multiple` tags the **bundle**, so [`apoli:store_power`](/docs/datapack/entity-actions/store_power) and anything else that selects powers by tag picks up the whole thing rather than one piece of it. A field that is neither reserved nor an object cannot be a sub-power, and Apoli logs one line naming it at load rather than ignoring it silently.
+The reserved fields belong to the bundle itself, not to its sub-powers. `tags` on an `apoli:multiple` tags the whole bundle, so [`apoli:store_power`](/docs/datapack/entity-actions/store_power) and anything else that selects powers by tag picks up all of it, not one piece. A field that is neither reserved nor an object can't be a sub-power, and Apoli logs one line naming it at load instead of ignoring it.
 
-An entry with `"type": "apoli:macro"` defines a [macro](/docs/datapack/introduction/macros) instead of a sub-power, named the way a sub-power would be (`namespace:super-power_key`) and usable from any power in the pack; it is left out of the bundle. With a `macro` field it is a macro *call* instead, and becomes the sub-power the macro expands to.
+An entry with `"type": "apoli:macro"` defines a [macro](/docs/datapack/introduction/macros) instead of a sub-power. It is named the way a sub-power would be (`namespace:main-power_key`), any power in the pack can use it, and it is left out of the bundle. With a `macro` field, the entry is a macro call instead, and becomes the sub-power the macro expands to.
 
-Each sub-power takes its own [`load_condition`](/docs/datapack/introduction/powers#gating-a-power-at-load-time), checked before that sub-power is parsed — a sub-power that is gated off is left out of the bundle entirely. A `load_condition` on the `apoli:multiple` itself gates every sub-power with it.
+Each sub-power takes its own [`load_condition`](/docs/datapack/introduction/powers#skipping-a-power-at-load-time), checked before that sub-power is parsed. A sub-power whose `load_condition` fails is left out of the bundle entirely. A `load_condition` on the `apoli:multiple` itself applies to every sub-power.
 
 ## Examples
 
@@ -139,3 +140,5 @@ Each sub-power takes its own [`load_condition`](/docs/datapack/introduction/powe
 	}
 }
 ```
+
+This bundle keeps up to three zombies in an entity set. Right-clicking a zombie with an apple adds it to the set, and right-clicking it with a stick removes it. The last two sub-powers use the set to cancel damage.

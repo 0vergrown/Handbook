@@ -1,19 +1,19 @@
 ---
 title: "Disguise (Bi-Entity Action Type)"
-description: "Disguises the actor as the target, capturing the target's type and NBT (so the actor appears identical to it)."
+description: "Disguises the actor as the target, copying the target's type and NBT so the two look the same."
 navigation_title: "Disguise"
 ---
 
-Disguises the **actor** as the **target**, capturing the target's type and NBT (so the actor appears identical to it). Ported from the Sync mod. Useful for "become whatever you hit/look at" powers.
+Disguises the actor as the target, copying the target's type and NBT so the actor looks identical to it. It was ported from the Sync mod, and suits powers where you become whatever you hit or look at.
 
 Type ID: `apoli:disguise`
 
 ## Fields
 
-| Field       | Type                                   | Default | Description                                                            |
-| ----------- | -------------------------------------- | ------- | ---------------------------------------------------------------------- |
-| `overwrite` | Boolean | `true`  | If `false`, does nothing when the actor is already disguised.          |
-| `change_name` | Boolean | `true`  | Whether the disguise also changes the actor's shown name — nameplate, chat and multiplayer tab list. Set `false` to keep the original name. |
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `overwrite` | [Boolean](/docs/datapack/data-types/boolean) | `true` | With `false`, does nothing when the actor is already disguised. |
+| `change_name` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Whether the disguise also changes the name the actor shows in its nameplate, in chat and in the multiplayer tab list. Set it to `false` to keep the original name. |
 
 ## Examples
 
@@ -25,8 +25,7 @@ Type ID: `apoli:disguise`
 
 The actor takes on the appearance of the target.
 
-The actor does not have to be a player, and neither does the target: a mob or a player told to disguise as a
-player is drawn as that player, skin and arm model included. See
-[apoli:disguise_as](/docs/datapack/entity-actions/disguise_as) for how the disguise is rendered.
+Neither the actor nor the target has to be a player. A mob or a player told to disguise as a player is drawn as that player, skin and arm model included. See [apoli:disguise_as](/docs/datapack/entity-actions/disguise_as) for how the disguise is rendered.
 
-> A disguise also changes the actor's name in **chat** and the **multiplayer tab list** (not just the nameplate), unless `change_name` is `false`. An active [apoli:modify_label_render](/docs/datapack/powers/modify_label_render) takes priority over the disguise's name.
+> [!NOTE]
+> A disguise also changes the actor's name in chat and in the multiplayer tab list, as well as the nameplate, unless `change_name` is `false`. An active [apoli:modify_label_render](/docs/datapack/powers/modify_label_render) takes priority over the disguise's name.
