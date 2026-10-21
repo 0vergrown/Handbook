@@ -16,7 +16,7 @@ export const SITE = {
 				description:
 					'The power engine. Every power, action and condition in these docs comes from it, and data packs and addons build on it.',
 				modrinth: 'https://modrinth.com/mod/opoli',
-				curseforge: 'https://www.curseforge.com/minecraft/mc-mods/opoli'
+				curseforge: 'https://www.curseforge.com/minecraft/mc-mods/apoli'
 			},
 			{
 				name: 'Origins',
