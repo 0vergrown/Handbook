@@ -101,7 +101,7 @@ Constants: `pi` and `e`.
 | Standard normal | `[Nor]` | A number drawn from `N(0, 1)`. |
 
 > [!NOTE]
-> `[` only starts a random generator when the brackets contain one of the names above. After `enchantment`, `nbt` or `data` it holds that function's arguments (see [Enchantment levels](#enchantment-levels) and [Reading NBT](#reading-nbt)). Everywhere else it indexes a table resource, so `example:table[Nat]` is a resource times a random natural, while `example:table[2]` is slot 2.
+> `[` only starts a random generator when the brackets contain one of the names above. After `enchantment`, `durability`, `attribute`, `nbt` or `data` it holds that function's arguments (see [Enchantment levels](#enchantment-levels), [Durability](#durability), [Attributes](#attributes) and [Reading NBT](#reading-nbt)). Everywhere else it indexes a table resource, so `example:table[Nat]` is a resource times a random natural, while `example:table[2]` is slot 2.
 
 ## Bound variables
 
@@ -118,8 +118,8 @@ Variables are resolved when the expression is compiled and read live from the en
 | `<namespace>:<path>[n]` | Slot `n` of a table resource. `n` is itself an expression, so `example:table[example:cursor + 1]` works. Out of range reads `0`. |
 | `distance` | The distance from the ray's origin to the hit, inside [apoli:raycast](/docs/datapack/entity-actions/raycast) hooks. `0` everywhere else. |
 | `hit_x`, `hit_y`, `hit_z` | The hit position, inside raycast hooks. `0` everywhere else. |
-| `count` | How many entities matched, inside [apoli:area_of_effect](/docs/datapack/entity-actions/area_of_effect) and raycast hooks. `0` everywhere else. |
-| `index` | The zero-based iteration number, inside the per-entity hooks of `area_of_effect` and raycast. `0` everywhere else. |
+| `count` | How many entities matched, inside [apoli:area_of_effect](/docs/datapack/entity-actions/area_of_effect) and raycast hooks. How many blocks are in the group, inside [apoli:connected_blocks](/docs/datapack/block-actions/connected_blocks) and the modifiers of an [apoli:modify_break_speed](/docs/datapack/powers/modify_break_speed) with `connected_blocks`. `0` everywhere else. |
+| `index` | The zero-based iteration number, inside the per-entity hooks of `area_of_effect` and raycast and the `block_action` of `connected_blocks`. `0` everywhere else. |
 | `held_ticks` | How many ticks the key was held, inside the `entity_action_released` of [apoli:action_on_key_press](/docs/datapack/powers/action_on_key_press). `0` everywhere else. |
 | `power_count` | How many powers the entity holds. |
 | `health`, `max_health` | Current and maximum health. |
@@ -296,6 +296,24 @@ The arguments, separated by commas:
 Everything after the ID is optional and can come in either order, so `enchantment[minecraft:mending, weapon.mainhand]`, `enchantment[minecraft:protection, armor, max]` and `enchantment[minecraft:feather_falling]` all work. On a single slot, `sum` and `max` give the same number.
 
 An enchantment that isn't installed reads `0` instead of failing to load, so an expression can mention an enchantment from another mod. Hotbar, inventory and ender chest slots only read players, and on any other entity they read `0`. In a bi-entity context, `target_enchantment[...]` and `actor_enchantment[...]` read the target's and the actor's gear, like the `target_` and `actor_` variables.
+
+## Durability
+
+`durability[...]` reads how many more uses the item in a slot has before it breaks: its maximum durability minus the damage it has taken.
+
+```json
+{
+  "type": "apoli:modify_damage_dealt",
+  "modifier": {
+    "operation": "add_base_late",
+    "value": "if(durability[weapon.mainhand] > 0 && durability[weapon.mainhand] < 20, 4, 0)"
+  }
+}
+```
+
+This adds 4 damage while the held weapon has fewer than 20 uses left.
+
+The one argument is an [Item Slot](/docs/datapack/data-types/item-slot), such as `weapon.mainhand`, `armor.head` or `hotbar.0`. An empty slot or an item without durability reads `0`, and an unbreakable item reads the durability it would have. Hotbar, inventory and ender chest slots only read players. In a bi-entity context, `target_durability[...]` and `actor_durability[...]` read the target's and the actor's items.
 
 ## Attributes
 

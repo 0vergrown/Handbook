@@ -23,7 +23,7 @@ Type ID: `apoli:modify_food`
 | `prevent_effects` | [Boolean](/docs/datapack/data-types/boolean) | `false` | If `true`, the status effects the food would apply are dropped. |
 | `replace_stack` | [Item Stack](/docs/datapack/data-types/item-stack) | _optional_ | If set, the entity is left with this stack after eating instead of whatever the food would normally leave, such as a bowl, a bottle or nothing. |
 | `entity_action` | [Entity Action Type](/docs/datapack/entity-actions) | _optional_ | Runs on the entity after it eats a matching item. |
-| `item_action` | [Item Action Type](/docs/datapack/item-actions) | _optional_ | Runs on the stack that was eaten. |
+| `item_action` | [Item Action Type](/docs/datapack/item-actions) | _optional_ | Runs on the stack that was eaten. When that was the last item, such as a bowl of stew, it runs on a copy of the eaten item. |
 
 > [!NOTE]
 > The singular and plural spellings are the same field: `food_modifier` is read as a `food_modifiers` with one entry. Write whichever reads better, but not both.

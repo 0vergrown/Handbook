@@ -61,7 +61,7 @@ In an Apoli action, use it like any other [Status Effect Instance](/docs/datapac
 
 ## How the powers are granted
 
-- When the effect is applied, the entity is granted each power in `powers`, with the effect's ID as the source. Mobs get them too, even if they had no powers before.
+- When the effect is applied, the entity is granted each power in `powers`, with the source `apoli:effect/<namespace>/<path>`, so `example:frenzy` grants from `apoli:effect/example/frenzy`. Mobs get them too, even if they had no powers before. The source is separate from every power ID, so a power that happens to share the effect's ID keeps its own grants when the effect ends.
 - When the effect ends, those powers are revoked. That covers the effect running out, milk, `/effect clear`, [`apoli:clear_effect`](/docs/datapack/entity-actions/clear_effect) and death. A player who respawns does not keep them.
 - Only the effect's own grant is removed. If an origin, a command or another effect also granted the same power, the entity keeps it.
 - Applying the effect again while it is active follows Minecraft's usual rules: a stronger or longer instance replaces the current one. The powers are not granted a second time.

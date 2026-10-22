@@ -21,6 +21,8 @@ Type ID: `apoli:action_on_block_break`
 > The power fires after the block is removed, but `block_condition` is tested against the state captured beforehand. Conditions on the broken block work, and a `block_action` that places something acts on the now empty space.
 >
 > "Harvested" means the player had the right tool (`hasCorrectToolForDrops`), the same test vanilla uses to decide whether the block drops. [apoli:modify_harvest](/docs/datapack/powers/modify_harvest) changes what counts as harvested here too.
+>
+> A block the player breaks while one of these powers is running its actions, for example with `"mine": true` on [apoli:break_block](/docs/datapack/block-actions/break_block), fires their other `action_on_block_break` powers but not the one that is running. That keeps a power that mines more blocks from setting itself off again.
 
 ## Examples
 
