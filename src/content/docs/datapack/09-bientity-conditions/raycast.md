@@ -12,9 +12,9 @@ Type ID: `apoli:raycast`
 
 | Field | Type | Default | Description |
 | --- | --- | --- | --- |
-| `distance` | [Float](/docs/datapack/data-types/float) | _optional_ | How far the ray reaches. Without it, the ray reaches as far as the actor can hit an entity: its `minecraft:player.entity_interaction_range`, or 3 for anything without that attribute. `entity_distance` is accepted as another name. |
-| `cone_angle` | [Float](/docs/datapack/data-types/float) | _optional_ | Turns the ray into a cone. The target passes when its centre is within this many degrees of the aim direction and within `distance`. It takes the place of `radius`. |
-| `radius` | [Vector](/docs/datapack/data-types/vector) | _optional_ | Thickens the ray into a beam, with a single number or `{ "x": .., "y": .., "z": .. }`. The target passes when its hitbox, grown by this much, crosses the ray. |
+| `distance` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | _optional_ | How far the ray reaches. Without it, the ray reaches as far as the actor can hit an entity: its `minecraft:player.entity_interaction_range`, or 3 for anything without that attribute. `entity_distance` is accepted as another name. |
+| `cone_angle` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | _optional_ | Turns the ray into a cone. The target passes when its centre is within this many degrees of the aim direction and within `distance`. It takes the place of `radius`. |
+| `radius` | [Float](/docs/datapack/data-types/float), [Vector](/docs/datapack/data-types/vector) or [Expression](/docs/datapack/data-types/expression) | _optional_ | Thickens the ray into a beam. It takes a number or expression for every axis, or `{ "x": .., "y": .., "z": .. }` with a number or expression in each. The target passes when its hitbox, grown by this much, crosses the ray. |
 | `block` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Whether blocks between the actor and the target make the condition fail. |
 | `shape_type` | [Shape Type](/docs/datapack/data-types/shape-type) | `visual` | Which block shapes count when `block` is `true`. |
 | `fluid_handling` | [Fluid Handling](/docs/datapack/data-types/fluid-handling) | `any` | Whether fluids count as blocking when `block` is `true`. |
@@ -22,6 +22,8 @@ Type ID: `apoli:raycast`
 | `space` | [Space](/docs/datapack/data-types/space) | `world` | How `direction` is read. |
 
 Other entities never get in the way. Only the target is tested, so a crowd in front of it doesn't hide it. A target standing so close that the actor's eyes are inside its hitbox (or inside its grown box, with `radius`) always passes.
+
+The numeric fields accept an [expression](/docs/datapack/data-types/expression), evaluated against the actor.
 
 ## Examples
 

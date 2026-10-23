@@ -16,7 +16,7 @@ This is the same action as the [Raycast entity action](/docs/datapack/entity-act
 | `aim_at_target` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Aims at the target instead of along the actor's look direction. |
 | `stop_at_target` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Limits the ray's length to the distance from the actor to the target. |
 
-An explicit `direction` overrides the automatic aim.
+The numeric fields accept [expressions](/docs/datapack/data-types/expression), evaluated against the actor. The target and actor are both bound, so the fields can read `target_` variables. An explicit `direction` overrides the automatic aim.
 
 To test whether the target is inside the actor's ray, beam or cone without casting anything, use the [raycast bi-entity condition](/docs/datapack/bientity-conditions/raycast).
 

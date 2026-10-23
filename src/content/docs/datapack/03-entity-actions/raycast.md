@@ -14,7 +14,7 @@ It is registered as both an entity action and a bi-entity action. As a bi-entity
 
 | Field | Type | Default | Description |
 | --- | --- | --- | --- |
-| `distance` | [Float](/docs/datapack/data-types/float) | _optional_ | The maximum range for both blocks and entities. Without it, the ray reaches as far as the entity can (see the notes below). |
+| `distance` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | _optional_ | The maximum range for both blocks and entities. Without it, the ray reaches as far as the entity can (see the notes below). |
 | `block` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Whether the ray can hit blocks. |
 | `entity` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Whether the ray can hit entities. |
 | `shape_type` | [Shape Type](/docs/datapack/data-types/shape-type) | `visual` | The block shape used for collision. |
@@ -27,11 +27,11 @@ It is registered as both an entity action and a bi-entity action. As a bi-entity
 | `aim_at_target` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Bi-entity form only. Aims the ray at the target entity instead of along the actor's look direction. |
 | `stop_at_target` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Bi-entity form only. Limits the ray's length to the distance between the actor and the target. |
 | `particle` | [Particle Effect](/docs/datapack/data-types/particle-effect) | _optional_ | A particle to spawn at intervals along the ray. |
-| `spacing` | [Float](/docs/datapack/data-types/float) | `0.5` | The distance in blocks between particles along the ray. |
-| `entity_distance` | [Float](/docs/datapack/data-types/float) | _optional_ | The maximum range for entities only. It overrides `distance` for entities, and with neither set the entity's entity reach is used. |
-| `block_distance` | [Float](/docs/datapack/data-types/float) | _optional_ | The maximum range for blocks only. It overrides `distance` for blocks, and with neither set the entity's block reach is used. |
-| `radius` | [Vector](/docs/datapack/data-types/vector) | _optional_ | Thickens the ray into a beam for entity hits: a single number for every axis, or a vector `{ "x": .., "y": .., "z": .. }` for width, height and depth. Entities within this half-size of the ray line are hit. Blocks still use the centre line. |
-| `cone_angle` | [Float](/docs/datapack/data-types/float) | _optional_ | Turns entity hits into a cone attack that hits every entity within this many degrees of the ray direction, out to the entity range. It takes the place of `radius` for entities, and blocks still follow the centre line. |
+| `spacing` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | `0.5` | The distance in blocks between particles along the ray. |
+| `entity_distance` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | _optional_ | The maximum range for entities only. It overrides `distance` for entities, and with neither set the entity's entity reach is used. |
+| `block_distance` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | _optional_ | The maximum range for blocks only. It overrides `distance` for blocks, and with neither set the entity's block reach is used. |
+| `radius` | [Float](/docs/datapack/data-types/float), [Vector](/docs/datapack/data-types/vector) or [Expression](/docs/datapack/data-types/expression) | _optional_ | Thickens the ray into a beam for entity hits. It takes a number or expression for every axis, or a vector `{ "x": .., "y": .., "z": .. }` with a number or expression in each, for width, height and depth. Entities within this half-size of the ray line are hit. Blocks still use the centre line. |
+| `cone_angle` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | _optional_ | Turns entity hits into a cone attack that hits every entity within this many degrees of the ray direction, out to the entity range. It takes the place of `radius` for entities, and blocks still follow the centre line. |
 | `bientity_condition` | [Bi-entity Condition Type](/docs/datapack/bientity-conditions) | _optional_ | Only entities that pass this count as hits, with the source as the actor and the candidate as the target. |
 | `block_condition` | [Block Condition Type](/docs/datapack/block-conditions) | _optional_ | `block_action` only runs when the hit block passes this condition. |
 | `bientity_action` | [Bi-entity Action Type](/docs/datapack/bientity-actions) | _optional_ | Runs for each entity hit, with the source as the actor and the hit entity as the target. |
@@ -40,12 +40,14 @@ It is registered as both an entity action and a bi-entity action. As a bi-entity
 | `hit_action` | [Entity Action Type](/docs/datapack/entity-actions) | _optional_ | Runs on the source entity when the ray hits anything. |
 | `miss_action` | [Entity Action Type](/docs/datapack/entity-actions) | _optional_ | Runs on the source entity when the ray hits nothing. |
 | `command_at_hit` | [String](/docs/datapack/data-types/string) | _optional_ | A command to run at the hit position, which is the nearest hit, block or entity. It doesn't run on a miss. |
-| `command_hit_offset` | [Float](/docs/datapack/data-types/float) | `0.0` | How far in blocks to move the `command_at_hit` position back out of what was hit: along the block face for a block, or back along the ray for an entity. |
+| `command_hit_offset` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | `0.0` | How far in blocks to move the `command_at_hit` position back out of what was hit: along the block face for a block, or back along the ray for an entity. |
 | `command_along_ray` | [String](/docs/datapack/data-types/string) | _optional_ | A command to run repeatedly at intervals along the ray. |
-| `command_step` | [Float](/docs/datapack/data-types/float) | `1.0` | The distance in blocks between runs of `command_along_ray`. |
+| `command_step` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | `1.0` | The distance in blocks between runs of `command_along_ray`. |
 | `command_along_ray_only_on_hit` | [Boolean](/docs/datapack/data-types/boolean) | `false` | With `true`, `command_along_ray` only runs when the ray hits something. |
 | `chain_direction` | [String](/docs/datapack/data-types/string) | `forward` | For a chained ray only, how the child ray is aimed: `forward` continues in the same direction, `reflect` bounces off the hit block's surface, and `custom` uses the child's own `direction` and `space`. |
 | `chain` | [apoli:raycast](/docs/datapack/entity-actions/raycast) | _optional_ | Another raycast fired from this ray's end point, which is its hit position or, on a miss, the point at its maximum range. It lets rays bounce and branch for visual effects, and it nests, so a `chain` can have its own `chain`. |
+
+The numeric fields accept an [expression](/docs/datapack/data-types/expression). Each one is evaluated against the entity casting the ray, when that segment of the ray is cast. As a bi-entity action the entity is the actor, and the target is bound too, so a field can read `target_` variables.
 
 ## Notes
 
@@ -208,3 +210,17 @@ This fires a piercing ray that pushes back every entity within 8 blocks, traces 
 ```
 
 A wide spark beam with a 3-block cross-section that bounces once off the first wall it hits, damaging entities along both segments.
+
+```json
+{
+    "type": "apoli:raycast",
+    "distance": "8 + health / 4",
+    "cone_angle": "15 + 5 * abs(velocity_x) + 5 * abs(velocity_z)",
+    "particle": {
+        "type": "minecraft:electric_spark"
+    },
+    "spacing": 0.3
+}
+```
+
+This cone reaches further as the entity's health rises and widens with its horizontal speed.

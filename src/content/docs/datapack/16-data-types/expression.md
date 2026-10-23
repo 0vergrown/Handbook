@@ -17,6 +17,9 @@ A [String](/docs/datapack/data-types/string) holding a maths expression. Any fie
 | [apoli:action_on_key_press](/docs/datapack/powers/action_on_key_press), [apoli:action_on_key_sequence](/docs/datapack/powers/action_on_key_sequence), [apoli:action_on_hit](/docs/datapack/powers/action_on_hit), [apoli:action_when_hit](/docs/datapack/powers/action_when_hit), [apoli:action_on_kill](/docs/datapack/powers/action_on_kill), [apoli:action_on_collision](/docs/datapack/powers/action_on_collision), [apoli:fire_projectile](/docs/datapack/powers/fire_projectile), [apoli:game_event_listener](/docs/datapack/powers/game_event_listener) | `cooldown` |
 | [apoli:resource](/docs/datapack/entity-conditions/resource) (condition) | `compare_to` and `position` |
 | [apoli:modify_resource](/docs/datapack/entity-actions/modify_resource) | `position` and `from_position` |
+| [apoli:raycast](/docs/datapack/entity-actions/raycast) and [apoli:raycast](/docs/datapack/bientity-actions/raycast) | `distance`, `spacing`, `entity_distance`, `block_distance`, `radius`, `cone_angle`, `command_hit_offset` and `command_step` |
+| [apoli:raycast](/docs/datapack/entity-conditions/raycast) (entity condition) | `distance`, `entity_distance` and `block_distance` |
+| [apoli:raycast](/docs/datapack/bientity-conditions/raycast) (bi-entity condition) | `distance`, `radius` and `cone_angle` |
 | [Model Part Transformation](/docs/datapack/data-types/model-part-transformation) | `value`, and each keyframe's `value` |
 | [apoli:model_color](/docs/datapack/powers/model_color) | `red`, `green`, `blue` and `alpha`, also inside each `parts` entry, evaluated every frame on the client |
 | [apoli:entity_in_radius](/docs/datapack/entity-conditions/entity_in_radius), [apoli:block_in_radius](/docs/datapack/entity-conditions/block_in_radius) | `compare_to` |
