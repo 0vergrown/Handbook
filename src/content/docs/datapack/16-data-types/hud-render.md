@@ -14,13 +14,30 @@ An [Object](/docs/datapack/data-types/object) or [Array](/docs/datapack/data-typ
 | Field | Type | Default | Description |
 | --- | --- | --- | --- |
 | `should_render` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Whether the bar is visible. |
-| `sprite_location` | [Identifier](/docs/datapack/data-types/identifier) | `"origins:textures/gui/resource_bar.png"` | The path to the texture in the assets that holds what the bar looks like. |
+| `sprite_location` | [Identifier](/docs/datapack/data-types/identifier) | `"apoli:textures/gui/resource_bar.png"` | The path to the texture in the assets that holds what the bar looks like. |
 | `bar_index` | [Integer](/docs/datapack/data-types/integer) | `0` | Which bar on the sprite to use. Indexes start at `0`. |
 | `icon_index` | [Integer](/docs/datapack/data-types/integer) | `0` | Which icon on the sprite to use. Indexes start at `0`. |
 | `condition` | [Entity Condition Type](/docs/datapack/entity-conditions) | _optional_ | With `should_render` on, the bar only shows when the entity with the power passes this condition. |
 | `inverted` | [Boolean](/docs/datapack/data-types/boolean) | `false` | With `true`, the bar fills the other way, so its value looks like it is going down. |
 | `order` | [Integer](/docs/datapack/data-types/integer) | _optional_ | The bar's position in the stack of HUD bars. The higher the `order`, the higher it sits. |
 | `max` | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | _optional_ | The value at which the bar reads full, overriding whatever the power itself would use. Required to draw a bar for a resource that has no `max` of its own (see below). |
+| `fallback` | [Identifier](/docs/datapack/data-types/identifier), [Object](/docs/datapack/data-types/object) or [Array](/docs/datapack/data-types/array) of them | _optional_ | What to draw when `sprite_location` isn't in any loaded resource pack. See [Fallback textures](#fallback-textures). |
+
+## Fallback textures
+
+A `sprite_location` that comes from a resource pack is missing for every player who doesn't have that pack loaded, and their bar shows the missing texture instead. `fallback` names what to draw in that case. The bar goes through the fallbacks in order and draws the first one whose texture exists. If none of them exists either, it keeps `sprite_location`.
+
+Each fallback is a texture identifier or an object:
+
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `sprite_location` | [Identifier](/docs/datapack/data-types/identifier) | _required_ | The texture to draw instead. |
+| `bar_index` | [Integer](/docs/datapack/data-types/integer) | the entry's `bar_index` | Which bar on this texture to use. |
+| `icon_index` | [Integer](/docs/datapack/data-types/integer) | the entry's `icon_index` | Which icon on this texture to use. |
+
+A plain identifier keeps the entry's own `bar_index` and `icon_index`, which suits a fallback sheet laid out the same way as yours. Use the object form when the bar you want sits at a different position on the fallback sheet, which is usually the case when falling back to one of the sheets that ship with Apoli.
+
+Each player's game checks their own resource packs, and checks again whenever resource packs reload, so turning a pack on or off in the options menu switches the bar straight away.
 
 ## Which powers draw a bar
 
@@ -82,6 +99,21 @@ This draws the resource or cooldown with bar `5` of the `resource_bar_03.png` sp
 ```
 
 This draws bar `3` of `resource_bar_03.png` while the player has half of their max health or less, and bar `4` of `resource_bar_01.png` otherwise.
+
+```json
+"hud_render": {
+    "sprite_location": "example:textures/gui/mana_bar.png",
+    "bar_index": 0,
+    "icon_index": 0,
+    "fallback": {
+        "sprite_location": "apoli:textures/gui/resource_bar.png",
+        "bar_index": 3,
+        "icon_index": 2
+    }
+}
+```
+
+This draws the bar from the `example` resource pack, and bar `3` with icon `2` of Apoli's own sheet for players who don't have that pack.
 
 ## Bars need something to fill up to
 

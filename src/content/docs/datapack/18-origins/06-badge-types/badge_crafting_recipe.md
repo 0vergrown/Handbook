@@ -16,6 +16,7 @@ Type ID: `origins:crafting_recipe`
 | Field | Type | Default | Description |
 | --- | --- | --- | --- |
 | `sprite` | [Identifier](/docs/datapack/data-types/identifier) | _required_ | The full path of the texture to draw, such as `origins:textures/gui/badge/isaacfanta/recipe.png`. |
+| `fallback` | [Identifier](/docs/datapack/data-types/identifier) or [Array](/docs/datapack/data-types/array) of identifiers | _optional_ | Textures to draw when `sprite` isn't in any loaded resource pack. The first one that exists is used. |
 | `recipe` | [Identifier](/docs/datapack/data-types/identifier) or [Crafting Recipe](/docs/datapack/data-types/crafting-recipe) | _required_ | The recipe to show: the ID of a loaded recipe (from a data pack, or one an [`apoli:recipe`](/docs/datapack/powers/recipe) power adds), or the recipe written out in full. The grid is drawn from the real recipe when badges are sent to players. A written-out recipe is only drawn, never made craftable. |
 | `prefix` | [Text Component](/docs/datapack/data-types/text-component) | _optional_ | A line shown above the grid. |
 | `suffix` | [Text Component](/docs/datapack/data-types/text-component) | _optional_ | A line shown below the grid. |

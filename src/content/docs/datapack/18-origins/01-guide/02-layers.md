@@ -35,7 +35,7 @@ Layers live in `data/<namespace>/origin_layers/`.
 | `gui_title` | [Object](/docs/datapack/data-types/object) | `{}` | The translation keys `choose_origin` and `view_origin` for the two screens. They fall back to `layer.<namespace>.<path>.choose_origin.name` and `layer.<namespace>.<path>.view_origin.name`. |
 | `missing_name` | [String](/docs/datapack/data-types/string) | `""` | The translation key shown when the player has no origin in this layer. |
 | `missing_description` | [String](/docs/datapack/data-types/string) | `""` | The translation key for that placeholder's description. |
-| `default_origin` | [Identifier](/docs/datapack/data-types/identifier) | _optional_ | The fallback for players this layer offers no choice to. |
+| `default_origin` | [Identifier](/docs/datapack/data-types/identifier) | _optional_ | The origin a player gets when they join without one in this layer, so the layer's choose screen doesn't open for them (see [`auto_choose` and `default_origin`](#auto_choose-and-default_origin)). |
 | `auto_choose` | [Boolean](/docs/datapack/data-types/boolean) | `false` | Skips the screen when the layer offers exactly one choosable origin. |
 | `hidden` | [Boolean](/docs/datapack/data-types/boolean) | `false` | Hides the layer from the origin view screen. A hidden layer's origin is also left off [grave inscriptions](/docs/addon/api/grave-inscriptions). |
 | `revalidate` | [Boolean](/docs/datapack/data-types/boolean) | _the value of `auto_choose`_ | Takes the origin back when its group's condition stops being true (see [Keeping vs. offering](#keeping-vs-offering)). |
@@ -254,12 +254,16 @@ The pin is also dropped if a data pack change removes the pinned origin from the
 
 ## `auto_choose` and `default_origin`
 
-These two settings let a conditioned layer grant an origin without ever showing a screen. The pattern above needs one of them, or the player is asked to choose from a list of one.
+These two settings assign an origin without showing the choose screen. The conditioned pattern above needs one of them, or the player is asked to choose from a list of one.
 
-- With `auto_choose`, when the layer offers exactly one choosable origin for that player, it is assigned silently and no screen opens. With two or more options, the player still chooses normally.
-- `default_origin` is the fallback for a layer the player is never asked about. It only applies when the layer offers them nothing choosable and no random roll, on join and on data pack reload. A layer that can be chosen always shows its screen, so `default_origin` never takes the place of a real choice.
+- With `auto_choose`, when the layer offers exactly one choosable origin for that player, it is assigned silently and no screen opens. With two or more options, the player chooses on the screen, unless the layer also has a `default_origin`.
+- `default_origin` is given to a player who has no origin in the layer when they join or when a data pack reload runs, and the layer's screen doesn't open for them. This happens even when the layer lists other origins to choose from. An `auto_choose` layer that settles on a single origin takes that origin first, so a derived layer only falls back to its default when its conditions don't name exactly one.
 
-Both are checked again on join, on data pack reload, after every origin the player picks and on Orb of Origin use, so a layer whose condition only becomes true after an earlier layer is chosen resolves straight after that choice.
+When the origins assigned on join leave no layer to choose, the player has finished choosing. Their [`entity_action_chosen`](/docs/datapack/powers/action_on_callback) actions run and [`apoli:modify_player_spawn`](/docs/datapack/powers/modify_player_spawn) moves them to its spawn, the same as picking the last layer on the screen.
+
+A `default_origin` of `origins:empty` does nothing. The default is also skipped when that origin has reached its [player cap](#capping-a-whole-layer) or the [world config](/docs/datapack/origins/world-config) turns it off, and the player gets the screen instead. The Orb of Origin never applies a default, so a player who uses one always picks on the screen. If they leave before picking, they get the default when they next join.
+
+`auto_choose` is checked again on join, on data pack reload, after every origin the player picks and on Orb of Origin use, so a layer whose condition only becomes true after an earlier layer is chosen resolves straight after that choice.
 
 ## Adding to an existing layer
 

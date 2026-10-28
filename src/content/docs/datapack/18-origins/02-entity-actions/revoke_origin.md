@@ -20,7 +20,7 @@ Type ID: `origins:revoke_origin`
 
 With `origin` set, the swap pool is searched first. If the origin isn't there and it is the layer's current pick, the layer is cleared instead. Revoking the origin a player is currently swapped into returns them to their own origin automatically.
 
-Clearing a layer doesn't leave the player without an origin for good. A layer with conditions or a `default_origin` derives one again by itself, and a plain layer opens the choose screen again on their next join.
+Clearing a layer doesn't leave the player without an origin for good. A layer that uses `auto_choose` derives one again straight away. On the player's next join, a layer with a `default_origin` gives them that origin, and any other layer opens the choose screen.
 
 ## Examples
 

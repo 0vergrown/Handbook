@@ -14,13 +14,15 @@ Type ID: `apoli:summon_minion`
 | --- | --- | --- | --- |
 | `texture` | [Identifier](/docs/datapack/data-types/identifier) | `apoli:textures/entity/minion_template.png` | The minion's texture. |
 | `follow_owner` | [Boolean](/docs/datapack/data-types/boolean) | `false` | With `true`, the minion follows the owner and floats, ignoring gravity. |
-| `follow_offset` | [Vector](/docs/datapack/data-types/vector) | _optional_ | The offset from the owner while following, also used as the spawn offset. |
+| `follow_offset` | [Vector](/docs/datapack/data-types/vector) | _optional_ | The offset from the owner while following. The minion also spawns this far from the spawn point. |
 | `scale` | [Float](/docs/datapack/data-types/float) | `1.0` | The render and hitbox scale. |
 | `invulnerable` | [Boolean](/docs/datapack/data-types/boolean) | `false` | Whether the minion is invulnerable. |
 | `max_life_ticks` | [Integer](/docs/datapack/data-types/integer) | `1200` | Ticks before the minion dies by itself. `0` or less makes it permanent until it is killed. |
 | `summon_id` | [Identifier](/docs/datapack/data-types/identifier) | _optional_ | A tag that [apoli:set_summon_max_life](/docs/datapack/entity-actions/set_summon_max_life) can use to target this minion. |
 | `powers` | [Array](/docs/datapack/data-types/array) of Identifiers | _optional_ | Powers to grant the minion when it spawns. Granting it a geometry mode [apoli:custom_model_render](/docs/datapack/powers/custom_model_render) replaces the minion's model with a Blockbench one. |
 | `bientity_action` | [Bi-entity Action Type](/docs/datapack/bientity-actions) | _optional_ | Runs once after the minion spawns, with the owner as the actor and the minion as the target. If it moves the minion, for example with an [`apoli:teleport_to`](/docs/datapack/bientity-actions/teleport_to) that puts it in front of you, every player watching sees it appear at its new spot instead of at yours. |
+| `offset` | [Vector](/docs/datapack/data-types/vector) | `{"x": 0, "y": 0, "z": 0}` | Moves the spawn point away from the owner by this much, in blocks. |
+| `space` | [Space](/docs/datapack/data-types/space) | `"world"` | The frame `offset` is read in. `"local"` follows where the owner is looking, so `z` is forward and `x` is to its left. |
 
 ## Examples
 

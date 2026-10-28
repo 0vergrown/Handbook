@@ -16,6 +16,7 @@ Type ID: `origins:sprite`
 | Field | Type | Default | Description |
 | --- | --- | --- | --- |
 | `sprite` | [Identifier](/docs/datapack/data-types/identifier) | _required_ | The full path of the texture to draw, such as `my_pack:textures/gui/badge/water.png`. |
+| `fallback` | [Identifier](/docs/datapack/data-types/identifier) or [Array](/docs/datapack/data-types/array) of identifiers | _optional_ | Textures to draw when `sprite` isn't in any loaded resource pack. The first one that exists is used. |
 
 ## Examples
 

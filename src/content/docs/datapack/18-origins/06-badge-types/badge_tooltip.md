@@ -16,6 +16,7 @@ Type ID: `origins:tooltip`
 | Field | Type | Default | Description |
 | --- | --- | --- | --- |
 | `sprite` | [Identifier](/docs/datapack/data-types/identifier) | _required_ | The full path of the texture to draw, such as `origins:textures/gui/badge/isaacfanta/active.png`. |
+| `fallback` | [Identifier](/docs/datapack/data-types/identifier) or [Array](/docs/datapack/data-types/array) of identifiers | _optional_ | Textures to draw when `sprite` isn't in any loaded resource pack. The first one that exists is used. |
 | `text` | [Text Component](/docs/datapack/data-types/text-component) | _required_ | The hover text. A plain string is literal text, and an object can use a translation key or styling. |
 
 The text wraps to the width of the origin panel, so a couple of sentences fit.

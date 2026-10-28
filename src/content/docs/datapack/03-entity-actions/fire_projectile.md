@@ -24,7 +24,7 @@ Type ID: `apoli:fire_projectile`
 | `offset_x`, `offset_y`, `offset_z` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | `0` | Where the projectile spawns, relative to the shooter's eyes. Read through `space`, so `local` puts `offset_z: 1.5` a block and a half in front of wherever they are looking. An expression is evaluated for every projectile, with the shooter as the subject, so `"rUni(-3, 3)"` scatters a volley. |
 | `space` | [Space](/docs/datapack/data-types/space) | `world` | How the spawn offset is read. `local` is relative to the shooter's facing, and `world` uses the world axes. |
 | `divergence` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | `1.0` | How much random spread each projectile gets. An expression is evaluated for every projectile, with the shooter as the subject, so `"rUni(0, 4)"` gives every shot in a volley its own spread. |
-| `sound` | [Identifier](/docs/datapack/data-types/identifier) | _optional_ | A sound to play when the action runs. |
+| `sound` | [Identifier](/docs/datapack/data-types/identifier) | _optional_ | A sound to play when the action runs. Sounds that only a resource pack defines work too. |
 | `tag` | [NBT](/docs/datapack/data-types/nbt) | _optional_ | NBT data to apply to the projectiles. |
 | `entity_action_before_firing` | [Entity Action Type](/docs/datapack/entity-actions) | _optional_ | Runs on the entity firing the projectile, just before the projectile is created. |
 | `bientity_action_after_firing` | [Bi-entity Action Type](/docs/datapack/bientity-actions) | _optional_ | Runs as soon as the projectile is created, with the owner as the actor and the projectile as the target. |

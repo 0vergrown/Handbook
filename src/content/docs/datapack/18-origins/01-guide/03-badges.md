@@ -91,7 +91,20 @@ So a "costs 3" badge is `origins:textures/gui/badge/silent/math/number_3.png`, a
 
 ### Your own
 
-Put a 16×16 PNG in a resource pack at `assets/<namespace>/textures/gui/badge/<name>.png` and write `<namespace>:textures/gui/badge/<name>.png`. Any size loads, but the slot is drawn at 16×16 and anything else is scaled.
+Put a PNG in a resource pack at `assets/<namespace>/textures/gui/badge/<name>.png` and write `<namespace>:textures/gui/badge/<name>.png`. Any size loads, and the icon is scaled to fit the 9×9 slot.
+
+Players who don't have your resource pack loaded see the missing texture in place of that icon. Give the badge a `fallback` to show them one of the shipped icons instead:
+
+```json
+{
+  "type": "origins:tooltip",
+  "sprite": "my_pack:textures/gui/badge/water.png",
+  "fallback": "origins:textures/gui/badge/isaacfanta/info.png",
+  "text": "You breathe water, but drown in air."
+}
+```
+
+This badge draws the pack's water icon, and the shipped `info` icon for anyone without the pack. `fallback` also takes an array, tried in order, and every badge type has it.
 
 > [!TIP]
 > A sprite path that resolves to nothing draws the missing texture checkerboard. The badge still works and only the icon is wrong, so check the namespace and the folder first.

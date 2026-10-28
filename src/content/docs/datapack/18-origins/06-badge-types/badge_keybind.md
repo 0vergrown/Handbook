@@ -18,6 +18,7 @@ An inline badge entry with no `type` gets this type.
 | Field | Type | Default | Description |
 | --- | --- | --- | --- |
 | `sprite` | [Identifier](/docs/datapack/data-types/identifier) | _required_ | The full path of the texture to draw, such as `origins:textures/gui/badge/isaacfanta/active.png`. |
+| `fallback` | [Identifier](/docs/datapack/data-types/identifier) or [Array](/docs/datapack/data-types/array) of identifiers | _optional_ | Textures to draw when `sprite` isn't in any loaded resource pack. The first one that exists is used. |
 | `text` | [String](/docs/datapack/data-types/string) | _required_ | A translation key, not literal text. Its first argument (`%s`) is filled with the bound key's name. |
 | `key` | [String](/docs/datapack/data-types/string) | `key.apoli.primary_active` | The [key](/docs/datapack/data-types/key) to report. Match it to the power's own `key`. |
 

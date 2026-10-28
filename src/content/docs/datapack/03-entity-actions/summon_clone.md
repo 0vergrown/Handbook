@@ -24,6 +24,8 @@ Type ID: `apoli:summon_clone`
 | `summon_id` | [Identifier](/docs/datapack/data-types/identifier) | _optional_ | A tag that [apoli:set_summon_max_life](/docs/datapack/entity-actions/set_summon_max_life) can use to target this clone. |
 | `powers` | [Array](/docs/datapack/data-types/array) of Identifiers | _optional_ | Powers to grant the clone when it spawns. |
 | `bientity_action` | [Bi-entity Action Type](/docs/datapack/bientity-actions) | _optional_ | Runs once after the clone spawns, with the owner as the actor and the clone as the target. If it moves the clone, every player watching sees it appear at its new spot instead of at yours. |
+| `offset` | [Vector](/docs/datapack/data-types/vector) | `{"x": 0, "y": 0, "z": 0}` | Moves the spawn point away from the owner by this much, in blocks. |
+| `space` | [Space](/docs/datapack/data-types/space) | `"world"` | The frame `offset` is read in. `"local"` follows where the owner is looking, so `z` is forward and `x` is to its left. |
 
 ## Examples
 
