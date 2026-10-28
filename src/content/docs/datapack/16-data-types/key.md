@@ -74,6 +74,9 @@ Create the keybind in `data/<namespace>/keybinds/<name>.json`:
 > [!TIP]
 > The Controls screen sorts each category alphabetically by the name it shows, so a set of keys with a natural order needs names that sort into that order. That is why Origins' ten ability keys are called "1st Active Power (Primary)" through "10th Active Power (Denary)".
 
+> [!NOTE]
+> A data-driven keybind only exists while the player is in a world or on a server that has it, so it isn't listed in the Controls menu on the title screen. The key the player binds to it stays in their `options.txt` all the same, and it is back in place the next time they join.
+
 The keybind's ID comes from its file path, so `data/my_pack/keybinds/dash.json` becomes `my_pack:dash`, and its keybinding string is `key.<namespace>.<path>`. Reference the example above with:
 
 ```json

@@ -16,6 +16,9 @@ Describes one end of a rope, and how that end is picked when the action runs, fo
 | `blocks` | [Boolean](/docs/datapack/data-types/boolean) | `true` | For `raycast`, whether the ray can attach to a block it hits. With both `entities` and `blocks` on, the nearest hit wins. |
 | `position` | [Array](/docs/datapack/data-types/array) of 3 Float | _optional_ | For `position`, the fixed `[x, y, z]` point in the world. |
 
+> [!TIP]
+> The `raycast` source hits blocks by their collision shape, so it stops at glass, glass panes and iron bars. The [apoli:raycast](/docs/datapack/entity-conditions/raycast) condition uses `"shape_type": "visual"` unless told otherwise, and a visual ray passes straight through those blocks. When a raycast condition decides whether to attach the rope, give it `"shape_type": "collider"` so both rays stop at the same block. Otherwise the condition fails on glass with nothing solid behind it, even though the rope itself would attach.
+
 ## Examples
 
 ```json

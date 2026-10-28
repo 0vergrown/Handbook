@@ -52,6 +52,8 @@ The 1.20.1 build registers both itself, as `apoli:player.block_interaction_range
 >
 > One limit is specific to 1.20.1: the client looks for entities inside the block raycast, so entity reach can't go past block reach. Raise both together, as the example does, and reach works as expected.
 
+Reach that another mod grants stacks with these attributes on both the client and the server. Reach Entity Attributes, which many 1.20.1 mods bundle, is the common case: a tool with a `reach-entity-attributes:reach` modifier and an Apoli reach power add up. In Apoli powers, `reach-entity-attributes:reach` and `reach-entity-attributes:attack_range` also work as names for block and entity reach.
+
 ## Examples
 
 A single modifier:
