@@ -4,9 +4,12 @@ description: "Changes how far the holder's voice carries in Simple Voice Chat."
 navigation_title: "Modify Speaking Range"
 ---
 
-Changes how far the holder's own voice carries over [Simple Voice Chat](/docs/compat/simple-voice-chat/overview) proximity audio. It works on the speaker's side, as the counterpart of [apoli:modify_hearing_range](/docs/datapack/powers/modify_hearing_range): it changes what everyone else hears from the holder, and leaves what the holder hears alone.
+Changes how far the holder's own voice carries over Simple Voice Chat proximity audio. It works on the speaker's side, as the counterpart of [apoli:modify_hearing_range](/docs/datapack/powers/modify_hearing_range): it changes what everyone else hears from the holder, and leaves what the holder hears alone.
 
-Type ID: `apoli:modify_speaking_range`
+Type ID: `birdsong:modify_speaking_range` (alias `apoli:modify_speaking_range`)
+
+> [!NOTE]
+> This power comes from [Birdsong](/docs/compat/birdsong/overview) and needs Simple Voice Chat on the server.
 
 ## Fields
 
@@ -35,7 +38,7 @@ Unconditional powers are applied first and conditional ones on top of them, so t
 
 ```json
 {
-  "type": "apoli:modify_speaking_range",
+  "type": "birdsong:modify_speaking_range",
   "modifier": {
     "operation": "set_total",
     "value": 0
@@ -44,7 +47,7 @@ Unconditional powers are applied first and conditional ones on top of them, so t
 ```
 ```json
 {
-  "type": "apoli:modify_speaking_range",
+  "type": "birdsong:modify_speaking_range",
   "bientity_condition": {
     "type": "apoli:in_entity_set",
     "set": "example:audience"
@@ -79,7 +82,7 @@ Muting always wins over a listener's own hearing. If the range for a listener co
 
 ```json
 {
-  "type": "apoli:modify_speaking_range",
+  "type": "birdsong:modify_speaking_range",
   "modifier": {
     "operation": "multiply_total",
     "value": 2
@@ -91,7 +94,7 @@ This gives the holder a booming voice that carries three times as far, whispers 
 
 ```json
 {
-  "type": "apoli:modify_speaking_range",
+  "type": "birdsong:modify_speaking_range",
   "modifier": {
     "operation": "set_total",
     "value": 0
@@ -103,7 +106,7 @@ This mutes the holder, so nobody nearby hears them at all.
 
 ```json
 {
-  "type": "apoli:modify_speaking_range",
+  "type": "birdsong:modify_speaking_range",
   "normal": false,
   "modifier": {
     "operation": "set_total",

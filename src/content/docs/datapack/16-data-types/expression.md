@@ -243,6 +243,8 @@ With the Origins mod installed, five more are registered:
 
 Origins also registers the plain variables `origin_count` (the number of layers with an origin that isn't empty) and `is_swapped` (`1` while any layer is swapped).
 
+[Birdsong](/docs/compat/birdsong/overview#expression-variables) adds five voice chat variables, such as `voice_loudness` and `voice_speaking`. Without Birdsong, Apoli still accepts those five names and reads them as `0`.
+
 Unknown variable names, unknown functions and any other syntax error are an error when the pack loads. The power (or other JSON file) containing the expression fails to parse, and the error message names the expression and the position of the problem. Apoli has one compiled expression engine and no fallback evaluator.
 
 ## Reading a table resource

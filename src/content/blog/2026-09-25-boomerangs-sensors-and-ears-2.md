@@ -21,7 +21,7 @@ Six new [expression variables](/docs/datapack/data-types/expression#reading-the-
 
 ## Voice chat audiences
 
-[`apoli:action_on_speak`](/docs/compat/simple-voice-chat/action_on_speak) gained `bientity_action`, `bientity_action_stop` and `bientity_condition`, which run on everyone close enough to hear you. [`apoli:modify_speaking_range`](/docs/compat/simple-voice-chat/modify_speaking_range) takes a `bientity_condition` too, which decides for each listener, so you can mute yourself and then let an entity set of people you pointed at hear you at full range. Both range powers are now listed with the rest of the [Simple Voice Chat](/docs/compat/simple-voice-chat/overview) integration.
+[`apoli:action_on_speak`](/docs/compat/birdsong/action_on_speak) gained `bientity_action`, `bientity_action_stop` and `bientity_condition`, which run on everyone close enough to hear you. [`apoli:modify_speaking_range`](/docs/compat/birdsong/modify_speaking_range) takes a `bientity_condition` too, which decides for each listener, so you can mute yourself and then let an entity set of people you pointed at hear you at full range. Both range powers are now listed with the rest of the [Simple Voice Chat](/docs/compat/birdsong/overview) integration.
 
 ## Ears 2, and wings
 

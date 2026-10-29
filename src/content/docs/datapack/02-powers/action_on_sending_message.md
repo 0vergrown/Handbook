@@ -11,7 +11,7 @@ It fires for normal chat and for command messages (`/say`, `/me`, `/msg`), so a 
 Type ID: `apoli:action_on_sending_message`
 
 > [!NOTE]
-> This is plain vanilla chat, so it doesn't need Simple Voice Chat or any other mod. For the spoken version, see [`apoli:action_on_speech`](/docs/compat/simple-voice-chat/action_on_speech).
+> This is plain vanilla chat, so it doesn't need Simple Voice Chat or any other mod. For the spoken version, see [`birdsong:action_on_speech`](/docs/compat/birdsong/action_on_speech) from the Birdsong addon.
 
 ## Fields
 

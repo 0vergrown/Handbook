@@ -51,6 +51,9 @@ Powers go in `data/<namespace>/powers/`, and the file's path gives the power its
 
 Every power has a [`type`](/docs/datapack/introduction/powers). This one is `apoli:swim_speed`, which makes swimming faster. `name` and `description` are shown in game, and the other fields configure the type.
 
+> [!TIP]
+> The file can also be `swim.jsonc` or `swim.json5`, which accept comments and trailing commas. [File formats](/docs/datapack/introduction/file-formats) lists what each one allows.
+
 ## Grant it to yourself
 
 A power does nothing until an entity has it. Reload the pack and grant the power with a command:

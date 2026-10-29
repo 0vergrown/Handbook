@@ -6,7 +6,10 @@ navigation_title: "Action On Reply"
 
 When another player starts speaking near the holder shortly after the holder spoke, this power runs a [bi-entity action](/docs/datapack/bientity-actions) with the holder as the actor and the responder as the target.
 
-Type ID: `apoli:action_on_reply`
+Type ID: `birdsong:action_on_reply` (alias `apoli:action_on_reply`)
+
+> [!NOTE]
+> This power comes from [Birdsong](/docs/compat/birdsong/overview) and needs Simple Voice Chat on the server.
 
 ## Fields
 
@@ -20,7 +23,7 @@ Type ID: `apoli:action_on_reply`
 
 ```json
 {
-  "type": "apoli:action_on_reply",
+  "type": "birdsong:action_on_reply",
   "window": 60,
   "range": 10.0,
   "bientity_action": {

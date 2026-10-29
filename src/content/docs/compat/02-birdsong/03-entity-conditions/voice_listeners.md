@@ -6,7 +6,10 @@ navigation_title: "Voice Listeners"
 
 Checks whether at least `min_count` other players who are connected to voice chat are within `range` blocks of the entity.
 
-Type ID: `apoli:voice_listeners`
+Type ID: `birdsong:voice_listeners` (alias `apoli:voice_listeners`)
+
+> [!NOTE]
+> This condition comes from [Birdsong](/docs/compat/birdsong/overview) and needs Simple Voice Chat on the server.
 
 ## Fields
 
@@ -21,8 +24,8 @@ The entity itself isn't counted.
 
 ```json
 {
-  "type": "apoli:action_on_speak",
-  "condition": { "type": "apoli:voice_listeners", "range": 8.0, "min_count": 2 },
+  "type": "birdsong:action_on_speak",
+  "condition": { "type": "birdsong:voice_listeners", "range": 8.0, "min_count": 2 },
   "entity_action": { "type": "apoli:apply_effect", "effect": { "effect": "minecraft:strength", "duration": 200 } }
 }
 ```

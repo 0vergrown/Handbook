@@ -5,9 +5,12 @@ navigation_title: "Voice Disabled"
 aliases: ["voice_muted"]
 ---
 
-Checks whether the entity has voice chat disabled or isn't connected to it at all, which includes every player on a server without Simple Voice Chat installed.
+Checks whether the entity has voice chat disabled or isn't connected to it at all, which includes players who don't have Simple Voice Chat on their client. On a server without Simple Voice Chat it reads `false`, like the other voice conditions, and so do `apoli:voice_disabled` and `apoli:voice_muted` on a server without Birdsong. A chat fallback that only tests this condition stays off on those servers.
 
-Type ID: `apoli:voice_disabled` (alias `apoli:voice_muted`)
+Type ID: `birdsong:voice_disabled` (aliases `birdsong:voice_muted`, `apoli:voice_disabled`, `apoli:voice_muted`)
+
+> [!NOTE]
+> This condition comes from [Birdsong](/docs/compat/birdsong/overview) and needs Simple Voice Chat on the server.
 
 > [!NOTE]
 > This doesn't detect a muted microphone. Simple Voice Chat keeps the mute toggle on the client and never tells the server about it, so no condition on the server can see it.
@@ -21,7 +24,7 @@ This condition has no fields.
 ```json
 {
   "type": "apoli:action_on_sending_message",
-  "condition": { "type": "apoli:voice_disabled" },
+  "condition": { "type": "birdsong:voice_disabled" },
   "filter": { "filter": "(?i)fireball", "prevent": true },
   "entity_action": {
     "type": "apoli:fire_projectile",

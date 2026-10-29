@@ -9,7 +9,7 @@ Apoli ships integrations with a number of other mods. Each one is a gated module
 
 | Mod | Section | What it adds |
 | --- | --- | --- |
-| [Simple Voice Chat](https://modrinth.com/plugin/simple-voice-chat) | [Simple Voice Chat](/docs/compat/simple-voice-chat/overview) | Types that react to who is talking, how loudly and what they say. |
+| [Simple Voice Chat](https://modrinth.com/plugin/simple-voice-chat) | [Birdsong](/docs/compat/birdsong/overview) | Types from the Birdsong addon that react to who is talking, how loudly and what they say. |
 | [Trinkets](https://modrinth.com/mod/trinkets), [Accessories](https://modrinth.com/mod/accessories), [Curios](https://modrinth.com/mod/curios) | [Accessories](/docs/compat/accessories/overview) | Accessory slots, control over equipping and unequipping, and slot conditions. |
 | [Figura](https://modrinth.com/mod/figura) | [Figura](/docs/compat/figura/overview) | Lets `apoli:modify_player_model` use a Figura avatar. |
 | [Icarus](https://modrinth.com/mod/icarus) | [Icarus](/docs/compat/icarus/overview) | The `apoli:wings` flight power. |
@@ -32,7 +32,7 @@ Apoli ships integrations with a number of other mods. Each one is a gated module
 
 Registration-gated types are only registered when the other mod is loaded. Using one in a data pack without that mod is a load error for that power, exactly like a mistyped type ID. Everything under Accessories, Icarus, Hardcore Revival and WoodWalkers works this way.
 
-Behaviour-gated types are always registered and always load, but do nothing useful without the other mod: conditions read `false` and triggers never fire. The Simple Voice Chat and KubeJS types work this way, so a pack that uses them stays loadable on a server without those mods.
+Behaviour-gated types are always registered and always load, but do nothing useful without the other mod: conditions read `false` and triggers never fire. The KubeJS types work this way, so a pack that uses them stays loadable on a server without KubeJS. Birdsong's voice types are behaviour-gated on Simple Voice Chat, and the [Birdsong overview](/docs/compat/birdsong/overview#the-apoli-ids) explains what their IDs do on a server without Birdsong itself.
 
 Pufferfish's Skills sits in between. Its reward types are only registered with Skills installed, but they live in Skills' own category files, so nothing in an Apoli pack fails to load without it. The other integrations add no types of their own, and only change how existing types behave when the other mod is installed.
 

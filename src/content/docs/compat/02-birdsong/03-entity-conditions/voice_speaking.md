@@ -6,7 +6,10 @@ navigation_title: "Voice Speaking"
 
 Checks whether the entity is currently talking into voice chat.
 
-Type ID: `apoli:voice_speaking`
+Type ID: `birdsong:voice_speaking` (alias `apoli:voice_speaking`)
+
+> [!NOTE]
+> This condition comes from [Birdsong](/docs/compat/birdsong/overview) and needs Simple Voice Chat on the server.
 
 ## Fields
 
@@ -17,7 +20,7 @@ This condition has no fields.
 ```json
 {
   "type": "apoli:entity_glow",
-  "condition": { "type": "apoli:voice_speaking" }
+  "condition": { "type": "birdsong:voice_speaking" }
 }
 ```
 

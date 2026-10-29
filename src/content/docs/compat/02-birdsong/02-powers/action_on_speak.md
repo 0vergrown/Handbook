@@ -6,7 +6,10 @@ navigation_title: "Action On Speak"
 
 Runs an [entity action](/docs/datapack/entity-actions) when the holder starts talking into voice chat and another when they stop, and can also run a [bi-entity action](/docs/datapack/bientity-actions) on everyone who can hear them.
 
-Type ID: `apoli:action_on_speak`
+Type ID: `birdsong:action_on_speak` (alias `apoli:action_on_speak`)
+
+> [!NOTE]
+> This power comes from [Birdsong](/docs/compat/birdsong/overview) and needs Simple Voice Chat on the server.
 
 ## Fields
 
@@ -20,7 +23,7 @@ Type ID: `apoli:action_on_speak`
 
 ## Who counts as a listener
 
-A listener is any other player in the same dimension who could hear the holder over proximity chat at that moment: within the holder's speaking range as [apoli:modify_speaking_range](/docs/compat/simple-voice-chat/modify_speaking_range) and their own [apoli:modify_hearing_range](/docs/datapack/powers/modify_hearing_range) leave it, whispering included, and with voice chat switched on and connected. Group chat doesn't count.
+A listener is any other player in the same dimension who could hear the holder over proximity chat at that moment: within the holder's speaking range as [birdsong:modify_speaking_range](/docs/compat/birdsong/modify_speaking_range) and their own [apoli:modify_hearing_range](/docs/datapack/powers/modify_hearing_range) leave it, whispering included, and with voice chat switched on and connected. Group chat doesn't count.
 
 The entity actions still run once, on the holder, whether anyone is listening or not.
 
@@ -28,7 +31,7 @@ The entity actions still run once, on the holder, whether anyone is listening or
 
 ```json
 {
-  "type": "apoli:action_on_speak",
+  "type": "birdsong:action_on_speak",
   "entity_action": {
     "type": "apoli:grant_power",
     "power": "example:talking_glow",
@@ -46,12 +49,12 @@ This power makes the holder glow while they talk, by granting a glow power when 
 
 ```json
 {
-  "type": "apoli:action_on_speak",
+  "type": "birdsong:action_on_speak",
   "condition": {
     "type": "apoli:and",
     "conditions": [
-      { "type": "apoli:voice_loudness", "comparison": ">=", "compare_to": 70 },
-      { "type": "apoli:voice_listeners", "range": 8.0 }
+      { "type": "birdsong:voice_loudness", "comparison": ">=", "compare_to": 70 },
+      { "type": "birdsong:voice_listeners", "range": 8.0 }
     ]
   },
   "entity_action": {
@@ -66,7 +69,7 @@ This shockwave only goes off when the holder shouts, and only when somebody is c
 
 ```json
 {
-  "type": "apoli:action_on_speak",
+  "type": "birdsong:action_on_speak",
   "bientity_condition": {
     "type": "apoli:same_team"
   },

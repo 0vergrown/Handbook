@@ -3,7 +3,7 @@ title: Mod compatibility
 description: "How Apoli integrates with other mods without depending on them, and how to do the same in your addon."
 ---
 
-Apoli ships integrations with several other mods, such as accessory frameworks, Figura, Icarus, Simple Voice Chat and Hardcore Revival. Each one is a gated compat module: it adds features when the other mod is present, and does nothing (and never crashes) when it isn't. This page is the pattern to follow for compat of your own.
+Apoli ships integrations with several other mods, such as accessory frameworks, Figura, Icarus and Hardcore Revival. Each one is a gated compat module: it adds features when the other mod is present, and does nothing (and never crashes) when it isn't. This page is the pattern to follow for compat of your own.
 
 ## The gated module pattern
 
@@ -26,7 +26,6 @@ Some of the modules Apoli ships:
 | `compat.accessory` | Accessory slots, conditions and actions | Trinkets, Accessories or Curios |
 | `compat.figura` | `modify_player_model` with Figura avatars | Figura |
 | `compat.icarus` | `apoli:wings` flight | Icarus |
-| `compat.voicechat` | Voice conditions and speaking actions | Simple Voice Chat |
 | `compat.hardcorerevival` | Knockouts and revives | Hardcore Revival |
 
 The [compatibility overview](/docs/compat/introduction/overview) lists every mod Apoli integrates with.

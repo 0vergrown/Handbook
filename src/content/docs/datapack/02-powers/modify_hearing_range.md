@@ -4,7 +4,7 @@ description: "Changes how far away the entity can hear game sounds and voice cha
 navigation_title: "Modify Hearing Range"
 ---
 
-Changes how far away the entity with the power can hear, for both ordinary game sounds and [Simple Voice Chat](/docs/compat/simple-voice-chat/overview) proximity audio. The power works on the listener's side: it changes what the entity hears, not how far others hear it.
+Changes how far away the entity with the power can hear, for both ordinary game sounds and Simple Voice Chat proximity audio, the second through [Birdsong](/docs/compat/birdsong/overview). The power works on the listener's side: it changes what the entity hears, not how far others hear it.
 
 Type ID: `apoli:modify_hearing_range`
 
@@ -47,7 +47,7 @@ Without `bientity_condition`, this power changes one number: how far the entity 
 }
 ```
 
-Voice ranges are worked out once a tick, for each listener with one of these powers against each player who is talking, so the cost grows with the number of conversations, not the number of players. [apoli:modify_speaking_range](/docs/compat/simple-voice-chat/modify_speaking_range) is applied in the same pass: the speaker's range is the base that the listener's modifiers apply to, so a shout heard by keen ears goes further still.
+Voice ranges are worked out once a tick, for each listener with one of these powers against each player who is talking, so the cost grows with the number of conversations, not the number of players. [birdsong:modify_speaking_range](/docs/compat/birdsong/modify_speaking_range) is applied in the same pass: the speaker's range is the base that the listener's modifiers apply to, so a shout heard by keen ears goes further still.
 
 A power with a `bientity_condition` is skipped entirely for game sounds, because a sound has no speaker to test against. Split it into two powers if you want both.
 
@@ -118,7 +118,7 @@ The modifier's `value` accepts an [expression](/docs/datapack/data-types/express
 - For the first tick of a sentence, the listener hears at the speaker's own range, and the listener's modifiers take over from the next tick. At 50 ms this isn't audible, and it is why a range change never cuts off the start of a word.
 - Only proximity voice audio is affected. Group chat is a separate channel and its members can always hear it.
 - Several active `modify_hearing_range` powers stack, in the order their modifiers sort.
-- The voice chat half needs Simple Voice Chat installed, and the `sounds` half doesn't. Without Simple Voice Chat, the `voice` field does nothing.
+- The voice chat half needs Birdsong and Simple Voice Chat on the server, and the `sounds` half doesn't. Without them, the `voice` field does nothing.
 
 > [!NOTE]
 > Game sounds are filtered for each listener, so while any pack in the world uses this power, every broadcast sound costs one extra power lookup per online player. That is cheap, but it adds up, so prefer one power with a condition over several.

@@ -8,14 +8,15 @@ const OUT = path.join(ROOT, 'src/content/docs/datapack');
 const DOCS = path.join(ROOT, 'src/content/docs');
 
 const COMPAT = {
-	action_on_speak: 'compat/02-simple-voice-chat',
-	action_on_reply: 'compat/02-simple-voice-chat',
-	action_on_speech: 'compat/02-simple-voice-chat',
-	voice_speaking: 'compat/02-simple-voice-chat',
-	voice_disabled: 'compat/02-simple-voice-chat',
-	voice_loudness: 'compat/02-simple-voice-chat',
-	voice_listeners: 'compat/02-simple-voice-chat',
-	modify_speaking_range: 'compat/02-simple-voice-chat',
+	action_on_speak: 'compat/02-birdsong',
+	action_on_reply: 'compat/02-birdsong',
+	action_on_speech: 'compat/02-birdsong',
+	voice_speaking: 'compat/02-birdsong',
+	voice_disabled: 'compat/02-birdsong',
+	voice_loudness: 'compat/02-birdsong',
+	voice_listeners: 'compat/02-birdsong',
+	voice_whispering: 'compat/02-birdsong',
+	modify_speaking_range: 'compat/02-birdsong',
 	action_on_accessory_change: 'compat/03-accessories',
 	prevent_accessory_equip: 'compat/03-accessories',
 	prevent_accessory_unequip: 'compat/03-accessories',

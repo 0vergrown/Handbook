@@ -6,7 +6,10 @@ navigation_title: "Voice Loudness"
 
 Compares the entity's current speaking loudness, on a scale of `0` to `100`, against a value.
 
-Type ID: `apoli:voice_loudness`
+Type ID: `birdsong:voice_loudness` (alias `apoli:voice_loudness`)
+
+> [!NOTE]
+> This condition comes from [Birdsong](/docs/compat/birdsong/overview) and needs Simple Voice Chat on the server.
 
 ## Fields
 
@@ -24,7 +27,7 @@ The default of `>= 1` checks whether the entity is making any sound at all.
 
 ```json
 {
-   "type":"apoli:action_on_speak",
+   "type":"birdsong:action_on_speak",
    "entity_action":{
       "type":"apoli:area_of_effect",
       "radius":6.0,
@@ -34,7 +37,7 @@ The default of `>= 1` checks whether the entity is making any sound at all.
       }
    },
    "condition":{
-      "type":"apoli:voice_loudness",
+      "type":"birdsong:voice_loudness",
       "comparison":">=",
       "compare_to":70
    }

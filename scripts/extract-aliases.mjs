@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const APOLI = '/home/default/Documents/GitHub/Apoli/Apoli-Fabric-1.21.1/src/main/java/dev/overgrown/apoli';
+const BIRDSONG = '/home/default/Documents/GitHub/Birdsong/Birdsong-Fabric-1.21.1/src/main/java/dev/overgrown/birdsong';
 
 const FILES = {
 	powers: 'power/PowerTypes.java',
@@ -28,6 +29,11 @@ const META = {
 	'meta conditions/mod_loaded': ['mod_installed'],
 	'meta conditions/minecraft_version': ['game_version', 'mc_version']
 };
+
+const BIRDSONG_CALLS = [
+	[/PowerTypeRegistry\.register\(/, 'powers'],
+	[/ConditionTypes\.ENTITY\.register\(/, 'entity conditions']
+];
 
 const ID_ARG = /(?:Apoli\.id\(\s*"([^"]+)"\s*\)|"([a-z0-9_]+:[a-z0-9_/.]+)")/;
 
@@ -78,6 +84,32 @@ function scan(src, category, out) {
 	}
 }
 
+function scanBirdsong(out) {
+	const idsFile = path.join(BIRDSONG, 'BirdsongIds.java');
+	const typesFile = path.join(BIRDSONG, 'BirdsongTypes.java');
+	if (!fs.existsSync(idsFile) || !fs.existsSync(typesFile)) {
+		console.warn('missing: Birdsong registration files');
+		return false;
+	}
+	const constants = new Map();
+	const constantRe = /static final ResourceLocation\s+([A-Z0-9_]+)\s*=\s*Birdsong\.id\(\s*"([^"]+)"\s*\)/g;
+	for (const m of fs.readFileSync(idsFile, 'utf8').matchAll(constantRe)) constants.set(m[1], m[2]);
+	for (const statement of fs.readFileSync(typesFile, 'utf8').split(';')) {
+		const call = BIRDSONG_CALLS.find(([re]) => re.test(statement));
+		const constant = /register\(\s*BirdsongIds\.([A-Z0-9_]+)/.exec(statement);
+		if (!call || !constant || !constants.has(constant[1])) continue;
+		const own = constants.get(constant[1]);
+		const key = `${call[1]}/${own}`;
+		const aliasRe = /(?:addTypeAlias\(\s*(?:Apoli|Birdsong)\.id\(|legacy\()\s*"([^"]+)"/g;
+		for (const a of statement.matchAll(aliasRe)) {
+			if (a[1] === own) continue;
+			if (!out[key]) out[key] = [];
+			if (!out[key].includes(a[1])) out[key].push(a[1]);
+		}
+	}
+	return true;
+}
+
 const out = { ...META };
 let files = 0;
 for (const [category, rel] of Object.entries(FILES)) {
@@ -89,6 +121,7 @@ for (const [category, rel] of Object.entries(FILES)) {
 	scan(fs.readFileSync(file, 'utf8'), category, out);
 	files++;
 }
+if (scanBirdsong(out)) files += 2;
 
 const sorted = Object.fromEntries(Object.entries(out).sort(([a], [b]) => a.localeCompare(b)));
 fs.writeFileSync(path.join(ROOT, 'scripts/aliases.json'), JSON.stringify(sorted, null, '\t') + '\n');
