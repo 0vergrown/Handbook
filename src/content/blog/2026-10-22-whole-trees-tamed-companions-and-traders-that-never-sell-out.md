@@ -35,7 +35,7 @@ If chopping a whole tree should take longer than one log, [`apoli:modify_break_s
 
 - [`apoli:action_on_tame`](/docs/datapack/powers/action_on_tame) fires when the player tames something, from a wolf taking a bone to a horse finally letting them stay on.
 - [`apoli:action_on_breed`](/docs/datapack/powers/action_on_breed) fires when animals the player fed have a baby. It can act on the baby, or on the parents through `parents_action`, where the new [`apoli:breed`](/docs/datapack/bientity-actions/breed) action gives them another one. A 20% `random_chance` around it is twins.
-- [`apoli:share_effects`](/docs/datapack/powers/share_effects) hands a copy of every status effect the player gains to nearby entities you pick, such as their own pets.
+- `apoli:share_effects` handed a copy of every status effect the player gained to nearby entities you pick, such as their own pets. Apoli 1.124.0 removed it. An [`apoli:area_of_effect`](/docs/datapack/entity-actions/area_of_effect) that runs [`apoli:transfer_effects`](/docs/datapack/bientity-actions/transfer_effects) with `"mode": "give"` and `"copy": true` does the same job.
 
 ## Merchants
 
@@ -46,7 +46,7 @@ If chopping a whole tree should take longer than one log, [`apoli:modify_break_s
 - [`apoli:modify_projectile_divergence`](/docs/datapack/powers/modify_projectile_divergence) changes how far shots stray from the aim. A `set_total` of `0` makes every arrow, snowball and pearl fly true.
 - [`apoli:modify_enchantability`](/docs/datapack/powers/modify_enchantability) changes an item's enchantability at the enchanting table, for better rolls at the same level cost.
 - [`apoli:modify_anvil`](/docs/datapack/powers/modify_anvil) changes how many pieces of material a repair takes and how much combining two items restores.
-- [`apoli:sneaky`](/docs/datapack/powers/sneaky) makes the player count as sneaking for everything that cares how quiet they are: footsteps, vibrations, nameplates, mob detection and foxes. They keep walking at full speed.
+- `apoli:sneaky` made the player count as sneaking for everything that cares how quiet they are: footsteps, vibrations, nameplates, mob detection and foxes. Apoli 1.124.0 removed it. [`apoli:scale`](/docs/datapack/powers/scale) on `apoli:visibility`, [`apoli:modify_label_render`](/docs/datapack/powers/modify_label_render), [`apoli:replace_sound_emission`](/docs/datapack/powers/replace_sound_emission) and [`apoli:prevent_game_event`](/docs/datapack/powers/prevent_game_event) cover the same ground except for foxes.
 - [`apoli:prevent_level_event`](/docs/datapack/powers/prevent_level_event) hides the world events a player causes, such as the cracking sound and particles of the blocks they break.
 
 [`apoli:modify_xp_gain`](/docs/datapack/powers/modify_xp_gain) was listed on the site but did nothing until now. It changes the experience from orbs the player picks up, and with a `block_condition` it changes the experience from cooking in a matching furnace, smoker or blast furnace instead.
