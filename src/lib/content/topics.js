@@ -73,7 +73,7 @@ export const SECTION_DESCRIPTIONS = {
 	'compat/not-enough-recipe-book': 'Power-gated recipes with the recipe book removed.',
 	'compat/writing-compat': 'How to integrate an addon with other mods without depending on them.',
 	'compat/skin-rendering': '3D Skin Layers and Ears following the model and colour powers.',
-	'compat/sable': 'Phasing, walking on fluid and ropes on Sable sub-levels.',
+	'compat/sable': 'Phasing, walking on fluid, ropes and raycasts on Sable sub-levels.',
 	'compat/pufferfishs-skills': "Apoli powers and resources as Pufferfish's Skills rewards.",
 	'compat/better-combat': "The crash Apoli prevents in Better Combat's attack handling.",
 	'compat/woodwalkers': 'Conditions, actions and powers for WoodWalkers shapes.',
@@ -83,5 +83,6 @@ export const SECTION_DESCRIPTIONS = {
 	'compat/custom-entity-models': "Apoli's render powers on top of EMF and CEM packs.",
 	'compat/youre-in-grave-danger': "Power inventories and grave inscriptions with You're in Grave Danger.",
 	'compat/gravestones': "Power inventories and grave inscriptions with Pneumono's Gravestones.",
-	'compat/gravestone-mod': 'Power inventories and grave inscriptions with the GraveStone Mod.'
+	'compat/gravestone-mod': 'Power inventories and grave inscriptions with the GraveStone Mod.',
+	'compat/create': "Create's diving gear with the breathing and swimming powers, and its goggle overlay as a power."
 };

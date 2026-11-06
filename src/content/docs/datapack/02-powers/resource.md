@@ -1,10 +1,10 @@
 ---
 title: "Resource (Power Type)"
-description: "Stores a number on the entity, with limits that can be expressions, and runs actions when the value changes or reaches a limit."
+description: "Stores a number on the entity, whole or decimal, with limits that can be expressions, and runs actions when the value changes or reaches a limit."
 navigation_title: "Resource"
 ---
 
-Stores a number on the entity that has the power. The limits can be fixed numbers or expressions, so the range can move, and the resource can run actions when the value changes or reaches a limit.
+Stores a number on the entity that has the power. The number can be whole or decimal, the limits can be fixed numbers or expressions, so the range can move, and the resource can run actions when the value changes or reaches a limit.
 
 Type ID: `apoli:resource`
 
@@ -12,7 +12,8 @@ Change the value with [apoli:modify_resource](/docs/datapack/entity-actions/modi
 
 ## Differences from Apace's `apoli:resource`
 
-- `min`, `max` and `start_value` take an [Integer](/docs/datapack/data-types/integer) or an [Expression](/docs/datapack/data-types/expression). An expression limit is evaluated again every tick, so the ceiling can move with other resources, entity stats or world state.
+- The value can be a decimal, such as `0.25` or `12.5`. Whole numbers work exactly as they always have.
+- `min`, `max` and `start_value` take a number or an [Expression](/docs/datapack/data-types/expression). An expression limit is evaluated again every tick, so the ceiling can move with other resources, entity stats or world state.
 - `enforce_limits` and `retain_value` come from the `apoli:modifiable_resource` power type in Origins: Math. When `enforce_limits` is `false`, the value can go outside `[min, max]` until something clamps it.
 - Values persist across server restarts in the entity's `PowerContainer` aux data store.
 - `max` is optional. Leave it out and the resource has no upper limit, which suits score counters and running totals. `min` is optional too, and leaving it out removes the lower limit.
@@ -22,9 +23,9 @@ Change the value with [apoli:modify_resource](/docs/datapack/entity-actions/modi
 
 | Field | Type | Default | Description |
 | --- | --- | --- | --- |
-| `min` | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | _unbounded_ | The lowest value. An expression is evaluated again each tick. Leave it out for no lower limit. |
-| `max` | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | _unbounded_ | The highest value. An expression is evaluated again each tick. Leave it out for no upper limit. |
-| `start_value` | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | the value of `min`, or `0` when there is no `min` | The value when the entity first gets the power. `default` is accepted as an alias. |
+| `min` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | _unbounded_ | The lowest value. An expression is evaluated again each tick. Leave it out for no lower limit. |
+| `max` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | _unbounded_ | The highest value. An expression is evaluated again each tick. Leave it out for no upper limit. |
+| `start_value` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | the value of `min`, or `0` when there is no `min` | The value when the entity first gets the power. `default` is accepted as an alias. |
 | `size` | [Integer](/docs/datapack/data-types/integer) | `1` | How many values the resource stores. Above `1`, the power becomes a table of that many slots, each addressed by a `position` from `0` to `size - 1`. `positions` and `slots` are accepted as aliases. There is no upper limit (see [Big tables](#big-tables)). |
 | `hud_render` | [Hud Render](/docs/datapack/data-types/hud-render) | _hidden_ | How the resource shows on the HUD. A bar needs a value to fill up to, so an uncapped resource needs a `max` on the `hud_render`. See [Hud Render](/docs/datapack/data-types/hud-render). |
 | `enforce_limits` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Whether the value is clamped to `[min, max]`. |
@@ -41,8 +42,8 @@ Change the value with [apoli:modify_resource](/docs/datapack/entity-actions/modi
 | Field | Type | Default | Description |
 | --- | --- | --- | --- |
 | `entity_action` | [Entity Action Type](/docs/datapack/entity-actions) | _optional_ | What to run. An entry without one never runs. |
-| `value` | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | _optional_ | The number the new value is compared with. |
-| `values` | [Array](/docs/datapack/data-types/array) of [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | `[]` | More numbers to compare with. The entry matches if the comparison holds for `value` or for any of these. |
+| `value` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | _optional_ | The number the new value is compared with. |
+| `values` | [Array](/docs/datapack/data-types/array) of [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | `[]` | More numbers to compare with. The entry matches if the comparison holds for `value` or for any of these. |
 | `comparison` | [Comparison](/docs/datapack/data-types/comparison) | `"=="` | How the new value is compared. |
 
 An entry with neither `value` nor `values` matches every change. Inside these expressions, `value` is the resource's new value.
@@ -80,6 +81,14 @@ The warning shows on every change that leaves the value at 3 or below, and the c
 > [!NOTE]
 > An action that changes a resource can set off that resource's actions again. Apoli follows up to 64 of these chained changes, then stops running `min_action`, `max_action` and `on_change` for the rest of that chain and logs one warning that names the power. A resource that adds to itself on every change stops there instead of taking the server down.
 
+## Decimal values
+
+A resource keeps up to six decimal places, and every change is rounded to that precision. Adding `0.1` ten times lands exactly on `1`, so a `max` of `1` fires `max_action`, and an `on_change` entry with `"value": 0.3` matches when the value gets there. Comparisons in the [apoli:resource](/docs/datapack/entity-conditions/resource) condition round both sides the same way.
+
+Decimals reach the resource through [apoli:modify_resource](/docs/datapack/entity-actions/modify_resource), `/apoli:resource set` and `change`, and any limit written as a decimal or an expression. Expressions that read the resource get the exact value, and a [HUD bar](/docs/datapack/data-types/hud-render) fills in proportion to it.
+
+Places that can only hold a whole number round it. `/apoli:resource get` returns the value rounded down as its command result, and takes a scale for keeping decimals (see [Resource (Command)](/docs/datapack/commands/resource)). Macro arguments pass whole values as integers and decimal values as decimals, so `$(mana)` prints `5` or `2.5`.
+
 ## Storing more than one value
 
 Set `size` and the resource holds a row of independent values instead of a single one. Every slot shares the same `min`, `max`, `start_value` and `enforce_limits` rules, and each slot is addressed by a position, which is a zero-based index.
@@ -109,7 +118,7 @@ Slot `0` is the resource's scalar value. Anything that reads the resource withou
 
 Slots are only allocated when they are written. Declaring `"size": 1000000` costs nothing on its own: the resource stores slot 0 and grows only as far as the highest slot you have written to. A slot that has never been written reads as `start_value`, so an unwritten table behaves exactly as if it were full of that value.
 
-That is why `size` has no cap. The cost comes from the slots you write, and the declared number adds nothing. Writing slot 999999 does allocate a million slots' worth of memory for that holder, about 4 MB, and that memory is saved to disk and sent to clients with the rest of the power's data, so only write high slots on purpose.
+That is why `size` has no cap. The cost comes from the slots you write, and the declared number adds nothing. Writing slot 999999 does allocate a million slots' worth of memory for that holder, about 8 MB, and that memory is saved to disk and sent to clients with the rest of the power's data, so only write high slots on purpose.
 
 `size` is also the guard on a computed `position`. A write to a slot at or above `size` is refused, so however wrong an index expression goes, it can never allocate past the number you declared. A size far larger than you need leaves that guard with nothing to do, so pick a number that matches the table you want.
 
@@ -195,6 +204,38 @@ A six-slot table used as a saved position (x, y, z) plus three spare slots:
    "size":6
 }
 ```
+
+A stamina pool that refills by a twentieth of a point every tick, so it climbs from empty to full in 10 seconds:
+
+```json
+{
+   "type":"apoli:multiple",
+   "stamina":{
+      "type":"apoli:resource",
+      "min":0,
+      "max":10,
+      "start_value":10,
+      "hud_render":{
+         "should_render":true,
+         "bar_index":4
+      }
+   },
+   "regen":{
+      "type":"apoli:action_over_time",
+      "interval":1,
+      "entity_action":{
+         "type":"apoli:modify_resource",
+         "resource":"*:*_stamina",
+         "modifier":{
+            "operation":"add_base_early",
+            "value":0.05
+         }
+      }
+   }
+}
+```
+
+The bar moves a little every tick, and the value stops at exactly 10.
 
 A resource whose ceiling is the value of another resource, with no nesting needed:
 

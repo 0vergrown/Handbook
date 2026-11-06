@@ -19,7 +19,7 @@ Type ID: `apoli:chance`
 | `chance` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | _required_ | The chance that the action runs, from 0 to 1, so 0.1 is a 10% chance and 0.95 is a 95% chance. An expression is evaluated on each attempt against the context entity. |
 | `fail_action` | Action type | _optional_ | The action to run when `action` doesn't. |
 
-The expression context depends on the kind of action: entity actions use the acting entity, bi-entity actions use the actor, and item actions use the holder. Block actions have no entity, so entity variables read `0`, while world time variables still work.
+The expression context depends on the kind of action: entity actions use the acting entity, bi-entity actions use the actor, item actions use the holder and block actions use the acting entity when there is one. A block action with no acting entity reads `0` for entity variables, while world time variables still work.
 
 ## Examples
 

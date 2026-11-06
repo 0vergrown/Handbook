@@ -78,6 +78,8 @@ Each key also gets `_max` and `_min` companions wherever the resource declares t
 
 That prints `mana: 7/10` in chat, which is the quickest way to watch a resource move while you build the power that changes it. With [`/apoli:dev_mode`](/docs/datapack/commands/dev-mode) on, every `apoli:execute_command` also echoes its finished command to you with the macros already expanded, so you can see exactly what ran.
 
+A whole value fills in as a whole number and a decimal value as a decimal, so a resource at `7.5` prints `7.5` and one at `7` prints `7`.
+
 [apoli:store_data](/docs/datapack/entity-actions/store_data) is the usual way to fill that storage. It writes `id`, `pos`, `x`, `y` and `z`, and for blocks a `state` string that `/setblock` accepts as it is:
 
 ```json

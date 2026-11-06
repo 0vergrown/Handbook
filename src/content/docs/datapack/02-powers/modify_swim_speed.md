@@ -15,6 +15,9 @@ Type ID: `apoli:modify_swim_speed`
 | `modifier` | [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) | _optional_ | If set, this modifier is applied to the swim speed. |
 | `modifiers` | [Array](/docs/datapack/data-types/array) of [Attribute Modifiers](/docs/datapack/data-types/attribute-modifier) | _optional_ | If set, these modifiers are applied to the swim speed. |
 
+> [!NOTE]
+> With [Create](/docs/compat/create/overview) installed, this power doesn't apply while the entity wears diving boots, so it swims at the normal speed until it takes them off.
+
 ## Examples
 
 ```json

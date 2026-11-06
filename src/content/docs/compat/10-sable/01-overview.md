@@ -1,6 +1,6 @@
 ---
 title: Sable
-description: "How apoli:phasing, apoli:walk_on_fluid and ropes behave with Sable installed."
+description: "How apoli:phasing, apoli:walk_on_fluid, ropes and raycasts behave with Sable installed."
 ---
 
 [Sable](https://github.com/ryanhcode/sable) turns a region of blocks into a sub-level. The blocks keep living in the world, in a reserved chunk region called a plot, and Sable renders and collides them wherever the structure has moved and rotated to.
@@ -11,13 +11,29 @@ Apoli registers no types for Sable. This compat is behaviour-gated: it is applie
 
 ### Ropes anchor to the structure
 
-[`apoli:attach_rope`](/docs/datapack/entity-actions/attach_rope) resolves a `raycast` endpoint by firing a ray and keeping the point it hit. Sable answers that ray in the sub-level's own coordinates, the plot's and not the world's, so a raw hit point would land tens of thousands of blocks away in the reserved plot region, with the rope stretching off to nowhere.
+[`apoli:attach_rope`](/docs/datapack/entity-actions/attach_rope) resolves a `raycast` endpoint by firing a ray and keeping the point it hit. Sable answers that ray in the sub-level's own coordinates, the plot's and not the world's, so a raw hit point would land about 20 million blocks away in the reserved plot region, with the rope stretching off to nowhere.
 
 An endpoint that lands on a sub-level is instead stored as which sub-level it hit and where on it, and converted back to a world position every tick, on both the server and the client. The result is a rope that stays fixed to the block it hit: swing off a moving airship and you move with it, and the rope's length limit, its `break_beyond` distance and its rendering all use the tracked position. When the sub-level is unloaded or taken apart, the anchor stops resolving and the rope is released, exactly as when an entity anchor dies.
 
 Endpoints of type `self`, `target` and `position` are unaffected, since they are never in plot space.
 
 A block hit that resolves to a point further away than the raycast's own `distance` is thrown out instead of anchored. If a structure ever answers a ray in a way Apoli can't map back to the world, you get no rope instead of one stretched across the map.
+
+The rope's ray checks blocks the same way whoever casts it, so [`apoli:phasing`](/docs/datapack/powers/phasing) on the caster doesn't let it slip through a hull the caster could walk through. A phasing player can rope onto a ship like anyone else.
+
+### Raycasts report world positions
+
+[`apoli:raycast`](/docs/datapack/entity-actions/raycast) runs into the same plot coordinates when its ray hits a block on a sub-level. Apoli turns the hit back into the point on the structure the ray touched, in world coordinates, before the action uses it:
+
+- `hit_x`, `hit_y`, `hit_z` and `distance` in [expressions](/docs/datapack/data-types/expression) describe that point, so an [`apoli:teleport`](/docs/datapack/entity-actions/teleport) to the hit lands on the ship.
+- `command_at_hit` runs there, and `command_hit_offset` backs away from the face the ray hit, turned with the structure.
+- `particle` and `command_along_ray` stop where the ray stopped.
+- `chain` starts the next ray from there, and `chain_direction: "reflect"` bounces off the face as the structure is turned.
+- An entity behind the structure counts as hidden by it, for this action and for the [`apoli:raycast`](/docs/datapack/entity-conditions/raycast) condition.
+
+`block_condition` and `block_action` still get the block itself, on the structure, so a block action that breaks or replaces it changes the ship. Sable keeps track of particles and dropped items that start there.
+
+With `collision` on, an [`apoli:modify_camera`](/docs/datapack/powers/modify_camera) offset stops at a ship's hull the same way, instead of passing into it.
 
 ### Ropes can drag the structure
 
@@ -61,6 +77,7 @@ With Sable installed, Apoli asks the question again the vanilla way whenever a s
 | `phase_down_condition` | Applies | Ignored, so you always pass through |
 | [`apoli:grab`](/docs/datapack/bientity-actions/grab) hold position | World space | World space, which is already correct |
 | Rope endpoint | A fixed point | Tracked on the structure, and follows it |
+| [`apoli:raycast`](/docs/datapack/entity-actions/raycast) hit point | Where the ray hit | Where the ray hit the structure, in world coordinates |
 | [`apoli:rope_pull`](/docs/datapack/entity-actions/rope_pull) far end | Moves an entity | Applies a physics impulse to the structure |
 
 [`apoli:grab`](/docs/datapack/bientity-actions/grab) needs no fix. It holds the grabbed entity at an offset from the grabber's eyes, and entities standing on a sub-level already report world positions. The one gap is that the grabbed entity is only swept against world collision, so it can be dragged through an assembled hull, since Sable's own collision pass isn't consulted.

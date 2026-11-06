@@ -157,15 +157,15 @@ public void tick(ResourceLocation powerId, Cfg cfg, PowerContainer holder) {
 
 | Store | Use |
 | --- | --- |
-| One number | `getAuxIntOr` and `setAuxInt` |
-| Several numbers | `getAuxInts` and `setAuxInts` |
+| One number | `getAuxDoubleOr` and `setAuxDouble`, or `getAuxIntOr` and `setAuxInt` for a whole number |
+| Several numbers | `getAuxDoubles` and `setAuxDoubles` |
 | Anything else | `getAuxNbt` and `setAuxNbt` |
 | Throwaway scratch space for each tick | `scratchInts(powerId, length)` |
 
 `scratchInts` only lives in memory, and is never saved or synced. It is the right home for a schedule or an interpolation cursor that would be wrong to restore from disk.
 
 > [!WARNING]
-> The container serves a cached NBT tag to chunk saves and to `nbt=` selectors, and a change it isn't told about is invisible to both and lost on restart. `setAuxInt` and `setAuxInts` mark the container dirty themselves when the value changes. Every other write, including `setAuxNbt`, needs a `markDirty()`.
+> The container serves a cached NBT tag to chunk saves and to `nbt=` selectors, and a change it isn't told about is invisible to both and lost on restart. `setAuxDouble`, `setAuxInt` and `setAuxDoubles` mark the container dirty themselves when the value changes. Every other write, including `setAuxNbt`, needs a `markDirty()`.
 
 ## The early-out ladder
 

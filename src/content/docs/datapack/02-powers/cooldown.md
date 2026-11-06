@@ -26,7 +26,7 @@ A cooldown is an [apoli:resource](/docs/datapack/powers/resource) whose value is
 
 - The value is the number of ticks left until the cooldown is ready. [apoli:trigger_cooldown](/docs/datapack/entity-actions/trigger_cooldown) sets it to `cooldown`.
 - The cooldown counts down on the world clock. It keeps counting while the power's own `condition` fails, while the entity is offline and while its chunk is unloaded, so a cooldown that ran out in the meantime is ready the moment the entity is back.
-- [apoli:modify_resource](/docs/datapack/entity-actions/modify_resource) with `add 20` adds a second to the time left, and `set_base 0` makes it ready at once. Writes are clamped between `0` and `cooldown`.
+- [apoli:modify_resource](/docs/datapack/entity-actions/modify_resource) with `add 20` adds a second to the time left, and `set_base 0` makes it ready at once. Writes are clamped between `0` and `cooldown`, and a decimal is rounded to the nearest whole tick.
 - The [Resource](/docs/datapack/entity-conditions/resource) condition can check `== 0` (ready) or `> 0` (cooling down).
 - `min_action` fires once, when the time left reaches `0`. Setting the value to `0` yourself fires it too, but writing `0` to a cooldown that is already ready doesn't.
 

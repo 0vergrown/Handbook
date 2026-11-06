@@ -87,25 +87,25 @@ public final class BlinkPower extends PowerType<BlinkPower.Cfg> {
     }
 
     @Override
-    public OptionalInt readResource(ResourceLocation id, Cfg cfg, PowerContainer holder) {
+    public OptionalDouble readResource(ResourceLocation id, Cfg cfg, PowerContainer holder) {
         return PowerResources.readDeadline(holder, id);
     }
 
     @Override
-    public OptionalInt writeResource(ResourceLocation id, Cfg cfg, PowerContainer holder, int value) {
+    public OptionalDouble writeResource(ResourceLocation id, Cfg cfg, PowerContainer holder, double value) {
         return PowerResources.writeDeadline(holder, id, value, PowerResources.cooldownTicks(cfg.cooldown(), holder));
     }
 
     @Override
-    public OptionalInt resourceBound(ResourceLocation id, Cfg cfg, PowerContainer holder, boolean max) {
-        return OptionalInt.of(max ? PowerResources.cooldownTicks(cfg.cooldown(), holder) : 0);
+    public OptionalDouble resourceBound(ResourceLocation id, Cfg cfg, PowerContainer holder, boolean max) {
+        return OptionalDouble.of(max ? PowerResources.cooldownTicks(cfg.cooldown(), holder) : 0);
     }
 }
 ```
 
 - `HudRendered` is a one-method interface, `HudRender hudRender()`. A config record with a `hudRender` component already has that method, so `implements HudRendered` is all it takes. A type whose `HudRender` lives somewhere else overrides `PowerType#hudRender(cfg)` instead.
 - `isCooldown()` picks the bar style. With `true`, the bar draws `1 - value / max`, filling as the power recovers, and hides at `0`, when it is ready. With `false`, it always draws the value between the `min` and `max` from `resourceBound`.
-- `readResource` here returns the ticks left.
+- `readResource` here returns the ticks left. Resource values are doubles throughout this API, so a type that stores whole numbers returns them as whole doubles, and `PowerResources.whole(value)` rounds an incoming value to the nearest whole number for a type that can only store those. A type that keeps decimals passes the value through `PowerResources.canonical(value)` before storing it, so it rounds to six decimal places the same way `apoli:resource` does.
 - `resourceBound(…, holder, …)` can be called with a `null` holder, for command tab completion. Return a constant when you can.
 - `readDeadline` and `writeDeadline` store one absolute game time in the power's aux int. The value counts down by itself, so the container is written, and synced, once per trigger instead of once per tick.
 

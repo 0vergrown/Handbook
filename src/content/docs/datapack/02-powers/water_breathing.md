@@ -23,6 +23,7 @@ The air bar runs backwards, at vanilla's underwater rates:
 - In rain the drain pauses, so a downpour keeps the entity going without refilling its air.
 - Water Breathing or Conduit Power stops the drain completely, so a potion (or [apoli:gain_air](/docs/datapack/entity-actions/gain_air)) works as a stopgap on land.
 - A turtle helmet works the other way round. It keeps Water Breathing topped up at 10 seconds while the entity's head is underwater, and the timer runs down on land, so surfacing gives 10 seconds before the air starts to drain. A potion of Water Breathing still works on top of it.
+- With [Create](/docs/compat/create/overview) installed, a diving helmet worn with a backtank that still holds air keeps the air bar full on land, drawing 1 unit of air a second from the backtank until it runs dry.
 
 An active conduit counts a `suffocate_outside_water` entity as being in water, so it gives Conduit Power to one standing on dry land anywhere in its range, while vanilla only reaches players who are wet. With the point above, that makes a conduit a base camp: its range is 32 blocks with the smallest frame that activates it and 96 with a full one, and the entity can stay out of the water for as long as it stays in range.
 

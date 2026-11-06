@@ -12,8 +12,8 @@ A [String](/docs/datapack/data-types/string) holding a maths expression. Any fie
 | --- | --- |
 | [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) | `value` |
 | [Status Effect Instance](/docs/datapack/data-types/status-effect-instance) | `duration` and `amplifier`, evaluated against the entity receiving the effect |
-| [apoli:chance](/docs/datapack/meta-actions/chance) | `chance` |
-| [apoli:resource](/docs/datapack/powers/resource) and [apoli:cooldown](/docs/datapack/powers/cooldown) | `min`, `max` and `start_value`, and `cooldown` |
+| [apoli:chance](/docs/datapack/meta-actions/chance) and [apoli:random_chance](/docs/datapack/meta-actions/random_chance) (actions), [apoli:random_chance](/docs/datapack/meta-conditions/random_chance) (condition) | `chance` |
+| [apoli:resource](/docs/datapack/powers/resource) and [apoli:cooldown](/docs/datapack/powers/cooldown) | `min`, `max` and `start_value`, the `value` and `values` of each `on_change` entry, and `cooldown` |
 | [apoli:action_on_key_press](/docs/datapack/powers/action_on_key_press), [apoli:action_on_key_sequence](/docs/datapack/powers/action_on_key_sequence), [apoli:action_on_hit](/docs/datapack/powers/action_on_hit), [apoli:action_when_hit](/docs/datapack/powers/action_when_hit), [apoli:action_on_kill](/docs/datapack/powers/action_on_kill), [apoli:action_on_collision](/docs/datapack/powers/action_on_collision), [apoli:fire_projectile](/docs/datapack/powers/fire_projectile), [apoli:game_event_listener](/docs/datapack/powers/game_event_listener) | `cooldown` |
 | [apoli:resource](/docs/datapack/entity-conditions/resource) (condition) | `compare_to` and `position` |
 | [apoli:modify_resource](/docs/datapack/entity-actions/modify_resource) | `position` and `from_position` |
@@ -114,7 +114,7 @@ Variables are resolved when the expression is compiled and read live from the en
 | --- | --- |
 | `value` | Depends on where it is used: the current resource or cooldown value in resource operations, and the unmodified base value inside an [Attribute Modifier](/docs/datapack/data-types/attribute-modifier). `0` everywhere else. |
 | `damage` | The damage of the hit, inside actions fired by `action_on_hit` and `action_when_hit` (including their self, target, attacker and bi-entity actions and anything nested in them, such as a `modify_resource` with `"value": "damage * 2"`). `0` outside a hit. |
-| `<namespace>:<path>` | The value of any resource or cooldown power the entity has, with the full power ID as the variable name. Missing reads `0`. |
+| `<namespace>:<path>` | The value of any resource or cooldown power the entity has, with the full power ID as the variable name. A resource can hold decimals, and the variable reads the exact value. Missing reads `0`. |
 | `<namespace>:<path>_max` | The maximum of that resource or cooldown power, read live, so it follows a `max` written as an expression. If no such resource exists, the whole name is read as a plain resource ID instead. Missing reads `0`. |
 | `<namespace>:<path>_min` | The minimum of that resource power, with the same rules as `_max`. |
 | `<namespace>:<path>_size` | How many slots that resource power has (`1` for a resource with one value). The same fallback rules as `_max` apply. |

@@ -19,7 +19,7 @@ Many existing data packs written for Apace's Apoli use `origins:change_resource`
 | Field | Type | Default | Description |
 | --- | --- | --- | --- |
 | `resource` | [Identifier](/docs/datapack/data-types/identifier) | _required_ | The resource or cooldown power to change. |
-| `change` | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | _required_ | The amount. The result never goes past the resource's `min` or `max` while `enforce_limits` is on. An expression is evaluated each time the action runs, with `value` bound to the resource's current value. |
+| `change` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | _required_ | The amount, which can be a decimal such as `0.5`. The result never goes past the resource's `min` or `max` while `enforce_limits` is on. An expression is evaluated each time the action runs, with `value` bound to the resource's current value. |
 | `operation` | [String](/docs/datapack/data-types/string) (`"add"` or `"set"`) | `"add"` | `"add"` becomes `add_base_early` and `"set"` becomes `set_base`. |
 
 ## Examples

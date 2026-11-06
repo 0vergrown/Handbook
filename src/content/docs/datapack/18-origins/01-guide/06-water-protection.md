@@ -35,6 +35,12 @@ The cap at 8 means two pieces of Water Protection IV already buy the whole 3.4 s
 
 Conduit Power does. While `minecraft:conduit_power` is active, water and rain stop hurting entirely. A conduit stays where you build it, so it makes a base safe without following you around.
 
+## Diving gear
+
+With [Create](/docs/compat/create/overview) installed, a full diving set keeps the water off as well. Water and rain don't hurt while you wear a diving helmet, a backtank and diving boots together, in copper or netherite or a mix of both. Take any piece off and the next hit lands as soon as the gap allows. The backtank doesn't need any air for this.
+
+The three pieces come from the item tags `apoli:create/diving_helmets`, `apoli:create/backtanks` and `apoli:create/diving_boots`, so a data pack can let other gear count by adding it to them.
+
 ## Where the numbers live
 
 All of it is one `origins:water_vulnerability` power, an [apoli:multiple](/docs/datapack/powers/multiple) holding three parts, and every number in it can be changed:
@@ -92,6 +98,46 @@ All of it is one `origins:water_vulnerability` power, an [apoli:multiple](/docs/
               "type": "apoli:in_rain"
             }
           ]
+        },
+        {
+          "inverted": true,
+          "type": "apoli:all_of",
+          "conditions": [
+            {
+              "type": "apoli:mod_loaded",
+              "mod": "create"
+            },
+            {
+              "type": "apoli:equipped_item",
+              "equipment_slot": "head",
+              "item_condition": {
+                "type": "apoli:ingredient",
+                "ingredient": {
+                  "tag": "apoli:create/diving_helmets"
+                }
+              }
+            },
+            {
+              "type": "apoli:equipped_item",
+              "equipment_slot": "chest",
+              "item_condition": {
+                "type": "apoli:ingredient",
+                "ingredient": {
+                  "tag": "apoli:create/backtanks"
+                }
+              }
+            },
+            {
+              "type": "apoli:equipped_item",
+              "equipment_slot": "feet",
+              "item_condition": {
+                "type": "apoli:ingredient",
+                "ingredient": {
+                  "tag": "apoli:create/diving_boots"
+                }
+              }
+            }
+          ]
         }
       ]
     }
@@ -116,7 +162,7 @@ All of it is one `origins:water_vulnerability` power, an [apoli:multiple](/docs/
 
 - `water_prot_level` is scratch space: an [apoli:resource](/docs/datapack/powers/resource) holding the length of the next gap, in ticks. Its [Expression](/docs/datapack/data-types/expression) is where the balance lives. `20` is the bare gap, `6` is what one combined level is worth, and `8` is where extra levels stop counting.
 - `interval` is an [apoli:cooldown](/docs/datapack/powers/cooldown) that reads its length from that resource, so each hit sets the delay before the next one from the armour you were wearing when it landed. It keeps counting down out of the water.
-- `damage` is checked every tick and runs when the cooldown has run out, you are in water or rain, and you don't have Conduit Power. A fresh cooldown starts at `0`, which is why the first hit is immediate. The order inside the `apoli:and` matters: the level is written first, the cooldown is started from it second, and the damage lands last.
+- `damage` is checked every tick and runs when the cooldown has run out, you are in water or rain, you don't have Conduit Power and you aren't wearing the full diving set. The diving set check is an inverted [apoli:all_of](/docs/datapack/meta-conditions/all_of) that starts with [apoli:mod_loaded](/docs/datapack/meta-conditions/mod_loaded), so without Create it stops at that first condition and never looks at your armour. A fresh cooldown starts at `0`, which is why the first hit is immediate. The order inside the `apoli:and` matters: the level is written first, the cooldown is started from it second, and the damage lands last.
 
 Swap the `apoli:status_effect` condition for something else to move the immunity, or delete it to take immunity away. Raise `8` to make high levels keep paying off, or use an expression in `amount` to trade the delay for a softer hit.
 

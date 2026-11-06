@@ -5,7 +5,7 @@ navigation_title: "Modify Resource"
 aliases: ["change_resource", "origins:change_resource"]
 ---
 
-Changes the value of an [apoli:resource](/docs/datapack/powers/resource) or [apoli:cooldown](/docs/datapack/powers/cooldown) with an [Attribute Modifier](/docs/datapack/data-types/attribute-modifier).
+Changes the value of an [apoli:resource](/docs/datapack/powers/resource) or [apoli:cooldown](/docs/datapack/powers/cooldown) with an [Attribute Modifier](/docs/datapack/data-types/attribute-modifier). The result is written as worked out, decimals included, and rounded to six decimal places on a resource. A cooldown counts whole ticks, so a decimal result is rounded to the nearest tick there.
 
 Type ID: `apoli:modify_resource` (type aliases `apoli:change_resource` and `origins:change_resource`, whose legacy `change` and `operation` fields are translated automatically)
 
@@ -83,7 +83,7 @@ To work with packs written for Apace's `apoli:change_resource`, this action also
 
 | Legacy field | Translated into | Notes |
 | --- | --- | --- |
-| `change` (Integer) | `modifier.value` | The amount to add or set. |
+| `change` (number or expression) | `modifier.value` | The amount to add or set. Decimals such as `0.5` are kept. |
 | `operation` (`"add"`) | `modifier.operation` = `add_base_early` | The default. |
 | `operation` (`"set"`) | `modifier.operation` = `set_base` | |
 
@@ -113,6 +113,19 @@ Set resource A to the current value of resource B. No nesting is needed, because
     "modifier": {
         "operation": "set_base",
         "resource": "example:2nd_resource"
+    }
+}
+```
+
+Take a quarter of a point from a resource:
+
+```json
+"entity_action": {
+    "type": "apoli:modify_resource",
+    "resource": "example:mana",
+    "modifier": {
+        "operation": "add_base_early",
+        "value": -0.25
     }
 }
 ```

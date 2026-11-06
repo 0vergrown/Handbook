@@ -82,6 +82,9 @@ const PAGE_KIND = {
 	'compat/05-icarus': {
 		wings: ['Power Type', 'powers']
 	},
+	'compat/21-create': {
+		create_goggles: ['Power Type', 'powers']
+	},
 	'compat/06-hardcore-revival': {
 		action_on_knockout: ['Power Type', 'powers'],
 		action_on_revive: ['Power Type', 'powers'],

@@ -12,7 +12,7 @@ Type ID: `apoli:chance`
 
 | Field | Type | Default | Description |
 | --- | --- | --- | --- |
-| `chance` | [Float](/docs/datapack/data-types/float) | _required_ | The value the random number is compared with. |
+| `chance` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | _required_ | The value the random number is compared with. It works the same way as on [apoli:random_chance](/docs/datapack/meta-conditions/random_chance). |
 
 ## Examples
 

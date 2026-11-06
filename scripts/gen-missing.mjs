@@ -26,6 +26,7 @@ const COMPAT = {
 	accessory_slot_count: 'compat/03-accessories',
 	accessory: 'compat/03-accessories',
 	wings: 'compat/05-icarus',
+	create_goggles: 'compat/21-create',
 	action_on_knockout: 'compat/06-hardcore-revival',
 	action_on_revive: 'compat/06-hardcore-revival',
 	knock_out: 'compat/06-hardcore-revival',

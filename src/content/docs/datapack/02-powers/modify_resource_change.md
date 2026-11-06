@@ -28,8 +28,9 @@ The modifier never sees the resource's value. It sees how far the value was abou
 | `mana` from 40 to 30 (a drain of 10) | `multiply_total: 1` | 40 to 20 |
 | `mana` from 40 to 30 (a drain of 10) | `multiply_total: -0.5` | 40 to 35 |
 | `mana` from 40 to 50 (a gain of 10) | `add_base_early: 5` | 40 to 55 |
+| `mana` from 40 to 41 (a gain of 1) | `multiply_total: -0.5` | 40 to 40.5 |
 
-Cooldowns count remaining ticks, so their natural countdown of one tick per tick is a drain of `1`. A modifier that doubles drain empties a cooldown twice as fast. Fractions carry over between ticks, so `multiply_total: 0.25` makes a cooldown 25% faster instead of rounding away to nothing.
+A resource keeps the decimals the modifier produces. Cooldowns count remaining ticks, so their natural countdown of one tick per tick is a drain of `1`. A modifier that doubles drain empties a cooldown twice as fast. Fractions carry over between ticks, so `multiply_total: 0.25` makes a cooldown 25% faster instead of rounding away to nothing.
 
 `modify: drain` on a cooldown is the recharge speed. `modify: gain` on a cooldown is how much time goes on the clock when an ability fires, which works as a debuff that lengthens cooldowns.
 

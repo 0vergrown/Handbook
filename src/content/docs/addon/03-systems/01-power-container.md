@@ -93,19 +93,21 @@ A suppressed power doesn't tick and should be treated as absent by every read. E
 A `PowerType` is a singleton: one instance serves every entity in the world, so it must be stateless. State for each holder goes in the container's aux storage, keyed by power ID:
 
 ```java
+double charge = holder.getAuxDoubleOr(powerId, 0);
 int ticks = holder.getAuxIntOr(powerId, 0);
 
 if (holder instanceof PowerContainerImpl impl) {
+    impl.setAuxDouble(powerId, charge + 0.5);
     impl.setAuxInt(powerId, ticks + 1);
-    int[] slots = impl.getAuxInts(powerId);
-    impl.setAuxInts(powerId, new int[] { 1, 2, 3 });
+    double[] slots = impl.getAuxDoubles(powerId);
+    impl.setAuxDoubles(powerId, new double[] { 1, 2.5, 3 });
     CompoundTag nbt = impl.getAuxNbt(powerId);
     impl.setAuxNbt(powerId, tag);
     int[] scratch = impl.scratchInts(powerId, 4);
 }
 ```
 
-`getAuxInts` and `setAuxInts` hold several values, as table resources do, and `getAuxNbt` and `setAuxNbt` hold anything that isn't an int. The read side (`getAuxInt`, `getAuxIntOr`, `getAuxInts`) is on the `PowerContainer` interface, and the write side lives on `PowerContainerImpl`, so check for it with `instanceof`, as the built-in types do.
+The aux value of a power is a double. `getAuxInt`, `getAuxIntOr` and `setAuxInt` are views on that same value for state that is always whole, such as a counter or a game time, and they round down when they read a decimal. `getAuxDoubles` and `setAuxDoubles` hold several values, as table resources do, and `getAuxNbt` and `setAuxNbt` hold anything that isn't a number. The read side (`getAuxDouble`, `getAuxDoubleOr`, `getAuxInt`, `getAuxIntOr`, `getAuxDoubles`, `hasAux`) is on the `PowerContainer` interface, and the write side lives on `PowerContainerImpl`, so check for it with `instanceof`, as the built-in types do.
 
 `scratchInts` is the odd one out: it returns a mutable array that only lives in memory and is never written to disk or sent to the client. Use it for schedules and interpolation state that would be wrong to save.
 

@@ -20,7 +20,7 @@ An [Object](/docs/datapack/data-types/object) or [Array](/docs/datapack/data-typ
 | `condition` | [Entity Condition Type](/docs/datapack/entity-conditions) | _optional_ | With `should_render` on, the bar only shows when the entity with the power passes this condition. |
 | `inverted` | [Boolean](/docs/datapack/data-types/boolean) | `false` | With `true`, the bar fills the other way, so its value looks like it is going down. |
 | `order` | [Integer](/docs/datapack/data-types/integer) | _optional_ | The bar's position in the stack of HUD bars. The higher the `order`, the higher it sits. |
-| `max` | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | _optional_ | The value at which the bar reads full, overriding whatever the power itself would use. Required to draw a bar for a resource that has no `max` of its own (see below). |
+| `max` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | _optional_ | The value at which the bar reads full, overriding whatever the power itself would use. Required to draw a bar for a resource that has no `max` of its own (see below). |
 | `fallback` | [Identifier](/docs/datapack/data-types/identifier), [Object](/docs/datapack/data-types/object) or [Array](/docs/datapack/data-types/array) of them | _optional_ | What to draw when `sprite_location` isn't in any loaded resource pack. See [Fallback textures](#fallback-textures). |
 
 ## Fallback textures
@@ -47,6 +47,10 @@ Every power type with a `hud_render` field draws a bar from it, and the bar alwa
 | --- | --- | --- |
 | Resource | [apoli:resource](/docs/datapack/powers/resource) | Always shown. Fills from `min` to `max`. |
 | Cooldown | [apoli:cooldown](/docs/datapack/powers/cooldown), [apoli:action_on_key_press](/docs/datapack/powers/action_on_key_press), [apoli:action_on_key_sequence](/docs/datapack/powers/action_on_key_sequence), [apoli:fire_projectile](/docs/datapack/powers/fire_projectile), [apoli:action_on_hit](/docs/datapack/powers/action_on_hit), [apoli:action_when_hit](/docs/datapack/powers/action_when_hit), [apoli:action_on_kill](/docs/datapack/powers/action_on_kill), [apoli:action_on_collision](/docs/datapack/powers/action_on_collision), [apoli:game_event_listener](/docs/datapack/powers/game_event_listener), [apoli:action_on_scroll_wheel](/docs/datapack/powers/action_on_scroll_wheel), [apoli:action_on_mouse_movement](/docs/datapack/powers/action_on_mouse_movement) | Only shown while cooling down. Fills as the cooldown recovers. |
+
+## How full the bar looks
+
+The bar fills in proportion to the value, decimals included, so a resource at `2.5` out of `10` fills a quarter of it. The bar art has a one-pixel border at each end, and the fill is spread over the columns between them. A bar only looks completely full when the value is at its maximum, and only looks completely empty at its minimum. Any value in between shows at least one filled column and at least one empty one, so `0.001` out of `1` is visibly more than nothing and `0.999` is visibly short of full.
 
 The bar is drawn whether or not the power's own `condition` passes, so an ability that needs you on the ground still shows its cooldown while you are in the air. Use the `condition` on the `hud_render` entry to hide it.
 

@@ -19,15 +19,15 @@ Type ID: `apoli:edible_item`
 | `food_component` | [Food Component](/docs/datapack/data-types/food-component) | | The food values the item gives when eaten. |
 | `result_stack` | [Item Stack](/docs/datapack/data-types/item-stack) | _optional_ | If set, this item stack is given to the player. |
 | `consume_animation` | [String](/docs/datapack/data-types/string) | `"eat"` | The animation while consuming: `"eat"`, which shows particles based on the item, or `"drink"`, which shows none. |
-| `consume_sound` | [Identifier](/docs/datapack/data-types/identifier) | `"minecraft:entity.generic.eat"` | The sound event played when the item is eaten. Sounds that only a resource pack defines work too. |
+| `consume_sound` | [Identifier](/docs/datapack/data-types/identifier) | _optional_ | If set, this sound event replaces the eating or drinking sound, both while the item is being eaten and when it's finished. Sounds that only a resource pack defines work too. |
 | `consuming_time_modifier` | [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) | _optional_ | If set, this modifier is applied to how long the item takes to eat, in ticks. |
 | `consuming_time_modifiers` | [Array](/docs/datapack/data-types/array) of [Attribute Modifier](/docs/datapack/data-types/attribute-modifier) | _optional_ | If set, these modifiers are applied to how long the item takes to eat, in ticks. |
 
 ## How it behaves
 
-Right-clicking a matching stack starts the eating animation, exactly as if the item were food. When it finishes:
+Right-clicking a matching stack starts the eating animation, exactly as if the item were food. While it's being eaten, `consume_sound` plays every few ticks in place of the usual eating or drinking sound. Without a `consume_sound`, the item uses the eating sound with the `"eat"` animation and the drinking sound with `"drink"`. When it finishes:
 
-1. `consume_sound` plays (`minecraft:entity.generic.eat` unless you change it).
+1. The sound plays once more.
 2. The hunger and saturation from `food_component` are applied, and its effects roll.
 3. `item_action` runs on the stack being eaten, then `entity_action` runs on the eater.
 4. One item is consumed.

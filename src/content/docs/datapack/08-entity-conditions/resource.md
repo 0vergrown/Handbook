@@ -15,7 +15,7 @@ Type ID: `apoli:resource`
 | `resource` | [Identifier](/docs/datapack/data-types/identifier) | _required_ | The ID of the power to read. |
 | `position` | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | _optional_ | Which slot of a table resource to read. Leave it out and the condition passes if any slot satisfies the comparison. `index` and `slot` are accepted as aliases. |
 | `comparison` | [Comparison](/docs/datapack/data-types/comparison) | _required_ | How the power's value is compared with `compare_to`. |
-| `compare_to` | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | _required_ | The value the resource is compared against. `check` is accepted as an alias. An expression is evaluated again every time the condition is tested, so you can compare a resource against another resource, an entity stat or any arithmetic on them. |
+| `compare_to` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | _required_ | The value the resource is compared against, which can be a decimal. Both sides are rounded to six decimal places first, so `"compare_to": 0.3` matches a value reached by adding `0.1` three times. `check` is accepted as an alias. An expression is evaluated again every time the condition is tested, so you can compare a resource against another resource, an entity stat or any arithmetic on them. |
 
 ## Checking one slot of a table
 

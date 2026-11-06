@@ -14,7 +14,7 @@ Trigger ID: `apoli:resource`
 | --- | --- | --- | --- |
 | `player` | Entity predicate | _optional_ | The usual vanilla player predicate. |
 | `resource` | [Identifier](/docs/datapack/data-types/identifier) | _optional_ | The resource power that changed. Leave it out to match any of them. |
-| `value` | Int range | _any_ | Bounds the value must land inside, written like vanilla's `{"min": x, "max": y}`. A plain number means exactly that value. |
+| `value` | Number range | _any_ | Bounds the value must land inside, written like vanilla's `{"min": x, "max": y}`. The bounds can be decimals, such as `{"min": 0.5}`. A plain number means exactly that value. |
 
 ## Examples
 
