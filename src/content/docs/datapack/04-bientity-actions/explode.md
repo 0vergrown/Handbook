@@ -4,9 +4,12 @@ description: "Creates an explosion at the actor or the target, with control over
 navigation_title: "Explode"
 ---
 
-Creates an explosion at the actor or at the target, with control over how it treats blocks. Damage and kill credit go to the actor.
+Creates an explosion at the actor or at the target, with control over how it treats blocks. Damage and kill credit go to the actor. When the actor is a projectile, as it is in `bientity_action_on_hit` of [apoli:fire_projectile](/docs/datapack/powers/fire_projectile), they go to the entity that fired it.
 
 Type ID: `apoli:explode`
+
+> [!NOTE]
+> A credited explosion follows the server's PvP and team rules like a melee hit. With `pvp=false`, or between teammates when friendly fire is off, a blast credited to a player doesn't hurt other players.
 
 ## Fields
 

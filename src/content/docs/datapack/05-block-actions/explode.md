@@ -4,9 +4,15 @@ description: "Creates an explosion of a given power at the block's position."
 navigation_title: "Explode"
 ---
 
-Creates an explosion of a given power at the block's position.
+Creates an explosion of a given power at the block's position. The explosion is credited to the entity that ran the block action, such as the caster of an [apoli:raycast](/docs/datapack/entity-actions/raycast) or the shooter whose projectile ran it from `block_action_on_hit` in [apoli:fire_projectile](/docs/datapack/powers/fire_projectile), so a kill names them in the death message. A block action with no entity behind it gives no credit, and the death message names no killer.
 
 Type ID: `apoli:explode`
+
+> [!NOTE]
+> A credited explosion follows the server's PvP and team rules like a melee hit. With `pvp=false`, or between teammates when friendly fire is off, a blast credited to a player doesn't hurt other players.
+
+> [!NOTE]
+> The explosion starts at the centre of the block. When that block is solid, it shields nearby entities from the blast, so they take only the explosion's minimum damage and hardly any knockback. Entities still take full damage from an explosion that starts in an open space, such as the block an entity stands in through [apoli:block_action_at](/docs/datapack/entity-actions/block_action_at).
 
 ## Fields
 

@@ -4,9 +4,12 @@ description: "Creates an explosion of a given power at the entity."
 navigation_title: "Explode"
 ---
 
-Creates an explosion of a given power at the entity's position.
+Creates an explosion of a given power at the entity's position. The explosion is credited to that entity, so a kill names it in the death message. When the action runs on the target of a bi-entity action, for example through [apoli:target_action](/docs/datapack/bientity-actions/target_action) in an [apoli:raycast](/docs/datapack/entity-actions/raycast) or a hit power, the actor of that bi-entity action gets the credit instead. A projectile's credit goes to the entity that fired it.
 
 Type ID: `apoli:explode`
+
+> [!NOTE]
+> A credited explosion follows the server's PvP and team rules like a melee hit. With `pvp=false`, or between teammates when friendly fire is off, a blast credited to a player doesn't hurt other players.
 
 ## Fields
 

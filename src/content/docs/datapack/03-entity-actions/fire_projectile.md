@@ -20,7 +20,7 @@ Type ID: `apoli:fire_projectile`
 | `start_delay` | [Integer](/docs/datapack/data-types/integer) | `0` | Ticks to wait before the first shot. |
 | `speed` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | `1.5` | The speed of the fired projectile. An expression is evaluated for every projectile, with the shooter as the subject. |
 | `max_distance` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | `0` | Removes the projectile once it has travelled this far in blocks, or turns it around when `return` is set. Distance is measured along the path it flew, so bounces and homing curves count. `0` lets it fly until it hits something or expires. |
-| `lifetime` | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | `0` | Removes the projectile after this many ticks in the air, whatever it is doing, and runs `bientity_action_on_expire` first. Use it as the backstop for a slow projectile that would otherwise hang where it stopped, in water for example. Unlike `max_distance`, it also ends a projectile on its way back. `0` sets no limit. |
+| `lifetime` | [Integer](/docs/datapack/data-types/integer) or [Expression](/docs/datapack/data-types/expression) | `0` | Removes the projectile this many ticks after it is fired, whatever it is doing, and runs `bientity_action_on_expire` first. Time spent stuck in a block with `sticky` counts too. Use it as the backstop for a slow projectile that would otherwise hang where it stopped, in water for example. Unlike `max_distance`, it also ends a projectile on its way back. `0` sets no limit. |
 | `offset_x`, `offset_y`, `offset_z` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | `0` | Where the projectile spawns, relative to the shooter's eyes. Read through `space`, so `local` puts `offset_z: 1.5` a block and a half in front of wherever they are looking. An expression is evaluated for every projectile, with the shooter as the subject, so `"rUni(-3, 3)"` scatters a volley. |
 | `space` | [Space](/docs/datapack/data-types/space) | `world` | How the spawn offset is read. `local` is relative to the shooter's facing, and `world` uses the world axes. |
 | `divergence` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | `1.0` | How much random spread each projectile gets. An expression is evaluated for every projectile, with the shooter as the subject, so `"rUni(0, 4)"` gives every shot in a volley its own spread. |
@@ -42,9 +42,10 @@ Type ID: `apoli:fire_projectile`
 | `shooter_action` | [Entity Action Type](/docs/datapack/entity-actions) | _optional_ | Runs on the entity firing the projectile. |
 | `reflective` | [Projectile Reflection](/docs/datapack/data-types/projectile-reflection) or [Boolean](/docs/datapack/data-types/boolean) | _optional_ | Makes the projectile bounce off blocks instead of stopping on them, and off the entities it hits when `entities` is on. `true` bounces off blocks with the default settings. See [Bouncing off walls](#bouncing-off-walls). |
 | `bientity_action_on_bounce` | [Bi-entity Action Type](/docs/datapack/bientity-actions) | _optional_ | Runs every time the projectile bounces, with the owner as the actor and the projectile as the target. |
-| `bientity_action_on_expire` | [Bi-entity Action Type](/docs/datapack/bientity-actions) | _optional_ | Runs when the projectile runs out of `max_distance` or `lifetime` and is removed, with the owner as the actor and the projectile as the target. It doesn't run when `return` turns the projectile around instead. |
+| `bientity_action_on_expire` | [Bi-entity Action Type](/docs/datapack/bientity-actions) | _optional_ | Runs when the projectile runs out of `max_distance`, `lifetime` or its `sticky` duration and is removed, with the owner as the actor and the projectile as the target. It doesn't run when `return` turns the projectile around instead. |
 | `return` | [Projectile Return](/docs/datapack/data-types/projectile-return) | _optional_ | Makes the projectile fly back to the shooter, like a trident with Loyalty. See [Coming back](#coming-back). |
 | `homing` | [Projectile Homing](/docs/datapack/data-types/projectile-homing) | _optional_ | Makes the projectile seek out a nearby target and curve toward it. See [Chasing a target](#chasing-a-target). |
+| `sticky` | [Projectile Sticking](/docs/datapack/data-types/projectile-sticking) or [Boolean](/docs/datapack/data-types/boolean) | _optional_ | Makes the projectile stick in the block it hits and stay there, like an arrow, instead of ending the shot. `true` sticks with the default settings. See [Sticking to walls](#sticking-to-walls). |
 
 ## Bouncing off walls
 
@@ -177,6 +178,32 @@ A `condition` on `return` holds back the turn that `after` or `max_distance` cal
 ```
 
 A slow projectile with a high `turn_rate` circles in on its target like a wisp, and a fast one with a low `turn_rate` curves like a guided missile and can overshoot. Once `duration` runs out, it flies on in a straight line.
+
+## Sticking to walls
+
+`sticky` makes the projectile stop in the block it hits and stay there, angled the way it flew, like an arrow in a wall. The block hit runs `block_action_on_hit` and `bientity_action_on_miss` as usual, then `bientity_action_on_stick` runs, and the projectile stays put until its `duration` or `lifetime` runs out. `bientity_action_on_expire` runs at that point, which is where a sticky bomb goes off. Only a projectile drawn from `texture_location` sticks. The fields and the rest of the details are on [Projectile Sticking](/docs/datapack/data-types/projectile-sticking).
+
+```json
+{
+  "type": "apoli:fire_projectile",
+  "texture_location": "example:textures/entity/sticky_bomb.png",
+  "speed": 1.0,
+  "divergence": 0,
+  "lifetime": 200,
+  "sticky": {
+    "duration": 60
+  },
+  "bientity_action_on_expire": {
+    "type": "apoli:explode",
+    "power": 3,
+    "at_target": true,
+    "damage_self": false,
+    "destruction_type": "none"
+  }
+}
+```
+
+The bomb clings to the first block it hits and explodes three seconds later, and the blast is credited to whoever threw it.
 
 ## Examples
 
