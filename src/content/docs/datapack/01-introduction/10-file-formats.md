@@ -81,17 +81,54 @@ Global power sets, custom status effects and origins check their `loading_priori
 Inside one pack, two files with the same ID and different extensions are a mistake. Apoli keeps the `.json` over the `.jsonc` and the `.jsonc` over the `.json5`, and logs a warning that names both files:
 
 ```txt
-Data file example:swim is defined twice in file/example (example:powers/swim.json5 and example:powers/swim.json); using example:powers/swim.json
+[Apoli] Problem in power example:swim from data/example/powers/swim.json (pack file/example)
+  - Defined twice in pack file/example (example:powers/swim.json5 and example:powers/swim.json); using example:powers/swim.json
 ```
 
 ## When a file doesn't parse
 
-A file with a syntax error is skipped, and the rest of the pack still loads. The log names the file and its pack, says what was expected, and gives the line, the column and the path to the value where the problem is:
+A file with a syntax error is skipped, and the rest of the pack still loads. The log names the file and its pack, gives the path to the value, the line and the column, prints that line with a caret under the spot, and says what was expected:
 
 ```txt
-Couldn't parse data file example:swim (example:powers/swim.json in file/example): Expected ',' or '}' after a value, found '"' at line 3 column 3 path $.name
+[Apoli] Couldn't load power example:swim from data/example/powers/swim.json (pack file/example)
+  at $.name, line 3, column 3
+    3 |   "description": "Swim faster."
+      |   ^
+  - Expected ',' or '}' after a value, found '"'
 ```
 
 That message comes from a missing comma after the value of `name`. A comment or a trailing comma in a `.json` file is an error too, and the message names the extension that would accept it, such as `Use a .jsonc or .json5 file for comments`.
 
 Text after the closing bracket of the file doesn't stop it loading. Apoli ignores it and logs a warning with the line where it starts.
+
+## When a file parses but doesn't load
+
+A file can be valid JSON and still be wrong for its type: an action type that doesn't exist, a required field that is missing, or text where a number belongs. Apoli finds the value that caused it and logs it in the same shape, so the caret points at the broken part even when it sits deep inside nested actions:
+
+```txt
+[Apoli] Couldn't load power example:blast from data/example/powers/blast.json (pack file/example)
+  at $.entity_action.actions[1].type, line 8, column 17
+    8 |       { "type": "apoli:explod", "power": 3 }
+      |                 ^
+  - Unknown entity_action type: apoli:explod
+```
+
+A power that fails like this is skipped. When only an optional field is wrong, Apoli drops that field, loads the rest of the power, and logs a warning that points at the field instead:
+
+```txt
+[Apoli] Problem in power example:regen from data/example/powers/regen.json (pack file/example)
+  at $.interval, line 3, column 15
+    3 |   "interval": "twenty",
+      |               ^
+  - Ignored the 'interval' field, everything else loaded. Not a number: "twenty" / Invalid expression "twenty": unknown variable 'twenty' (at index 0)
+```
+
+Two reasons joined by `/` mean the field accepts two forms, and the value fit neither. Sub-powers of an [`apoli:multiple`](/docs/datapack/powers/multiple) point into the file they were written in, so the path starts at the sub-power's key.
+
+Origins, origin layers, badges, skill trees, keybinds, global power sets and custom status effects report problems the same way. Once all packs have loaded, one line sums them up by kind:
+
+```txt
+[Apoli] Data packs loaded with 2 errors and 1 warning (power 2, origin layer 1). Each one is logged above with its file and line; /apoli:dev_mode shows them in chat.
+```
+
+Players with [`/apoli:dev_mode`](/docs/datapack/commands/dev-mode) on see the same problems in chat.

@@ -18,6 +18,7 @@ The older `trinket` IDs are aliases, so packs written for the Apace types keep w
 | [`apoli:prevent_accessory_equip`](/docs/compat/accessories/prevent_accessory_equip) | Power | `prevent_trinket_equip` | Stops items going in. |
 | [`apoli:prevent_accessory_unequip`](/docs/compat/accessories/prevent_accessory_unequip) | Power | `prevent_trinket_unequip` | Stops items coming out. |
 | [`apoli:modify_accessory`](/docs/compat/accessories/modify_accessory) | Entity action | `modify_trinket` | Acts on equipped accessories. |
+| [`apoli:equipped_accessory`](/docs/compat/accessories/equipped_accessory) | Entity condition | | Checks whether a matching item is worn. |
 | [`apoli:accessory_equipped_count`](/docs/compat/accessories/accessory_equipped_count) | Entity condition | `equipped_trinket_count` | Counts what is worn. |
 | [`apoli:accessory_slot_count`](/docs/compat/accessories/accessory_slot_count) | Entity condition | `trinket_slot_count` | Counts the available slots. |
 | [`apoli:accessory`](/docs/compat/accessories/accessory) | Item condition | `trinket` | Checks whether an item is an accessory. |
@@ -42,6 +43,10 @@ A slot is written either as a string or as an object, and a single slot can be g
 ]
 ```
 
-The string form is `slot`, `group/slot` or `group/slot/index`. Every part is a filter, and anything you leave out matches everything. `provider` (`trinkets`, `accessories` or `curios`) limits a slot to one framework, which only matters when two are installed at once.
+The string form is `slot`, `group/slot` or `group/slot/index`. Every part is a filter, and anything you leave out matches everything. A part written as `*` matches everything too, so `"*"` on its own means any slot. `provider` (`trinkets`, `accessories` or `curios`) limits a slot to one framework, which only matters when two are installed at once.
 
-[`apoli:conjure_equipment`](/docs/datapack/entity-actions/conjure_equipment) uses the same format in its `accessory_slot` field. It is core Apoli and isn't gated, and the field does nothing when no accessory framework is installed.
+Only Trinkets puts slots in groups. Accessories and Curios slots have no group, so a filter like `"hand/ring"` only finds Trinkets slots, while `"ring"` finds a ring slot in any of the three.
+
+When the Accessories compatibility layer is installed, it serves Curios and Trinkets items out of Accessories' own slots. Apoli then reads those slots once, through Accessories, so an item is never counted twice and `apoli:action_on_accessory_change` fires once per change.
+
+[`apoli:conjure_equipment`](/docs/datapack/entity-actions/conjure_equipment) and the [`apoli:equipped_item`](/docs/datapack/entity-conditions/equipped_item) condition use the same format in their `accessory_slot` field. Both are core Apoli and aren't gated, and the field does nothing when no accessory framework is installed.

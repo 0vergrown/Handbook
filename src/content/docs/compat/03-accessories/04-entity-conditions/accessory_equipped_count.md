@@ -5,7 +5,7 @@ navigation_title: "Accessory Equipped Count"
 aliases: ["equipped_trinket_count"]
 ---
 
-Counts the accessories the entity currently has equipped and compares that number.
+Counts the accessories the entity currently has equipped and compares that number. With an `item_condition`, only the accessories that pass it are counted.
 
 Type ID: `apoli:accessory_equipped_count` (alias `apoli:equipped_trinket_count`)
 
@@ -19,6 +19,7 @@ Type ID: `apoli:accessory_equipped_count` (alias `apoli:equipped_trinket_count`)
 | `comparison` | [Comparison](/docs/datapack/data-types/comparison) | _required_ | How the count is compared: `<`, `<=`, `>`, `>=`, `==` or `!=`. |
 | `compare_to` | [Integer](/docs/datapack/data-types/integer) | _required_ | The count to compare against. |
 | `slots` | [Array](/docs/datapack/data-types/array) of [slots](/docs/compat/accessories/overview#slots) | `[]` | The accessory slots to count in. A string is `slot`, `group/slot` or `group/slot/index`, such as `"ring"`, `"hand/ring"` or `"hand/ring/0"`. An empty list means every slot. |
+| `item_condition` | [Item Condition Type](/docs/datapack/item-conditions) | _optional_ | If set, only accessories that pass this condition are counted. |
 
 ## Examples
 
@@ -55,10 +56,28 @@ This minimalist origin moves faster while it wears nothing at all.
 ```json
 {
   "type": "apoli:accessory_equipped_count",
-  "slots": ["hand/ring"],
+  "slots": [
+    "hand/ring"
+  ],
   "comparison": ">=",
   "compare_to": 2
 }
 ```
 
 This only counts rings, and passes for two or more.
+
+```json
+{
+  "type": "apoli:accessory_equipped_count",
+  "item_condition": {
+    "type": "apoli:ingredient",
+    "ingredient": {
+      "tag": "example:lucky_charms"
+    }
+  },
+  "comparison": ">=",
+  "compare_to": 2
+}
+```
+
+This passes when the entity wears at least two items from the `example:lucky_charms` tag, in any slots.

@@ -1,6 +1,6 @@
 ---
 title: "Dev Mode (Command)"
-description: "Toggles a debugging view that shows resources as text, outlines areas and raycasts in particles, reports what powers did, and removes cooldowns."
+description: "Toggles a debugging view that shows resources as text, outlines areas and raycasts in particles, reports what powers did and what failed to load, and removes cooldowns."
 navigation_title: "Dev Mode"
 ---
 
@@ -44,6 +44,10 @@ Every [`apoli:execute_command`](/docs/datapack/entity-actions/execute_command) y
 ### Macros
 
 When you turn dev mode on, and after every `/reload`, chat shows how many [macros](/docs/datapack/introduction/macros) are defined and how many calls were expanded in how many powers, followed by every macro error (red) and warning (gold). These are the same lines as the server log, naming the power, where in the file the call is, and the chain of macros it went through. Nothing is shown when no pack uses macros.
+
+### Data pack problems
+
+When you turn dev mode on, and after every `/reload`, chat lists what went wrong while the data packs loaded: a red line for each file that failed and a gold line for each warning, naming the kind, the ID, the first reason and the file and line. Hover a line to see the full report from the server log, with the path into the JSON and the caret under the broken value, and click it to copy the file path and line. Up to eight are listed, errors first, and the rest are counted. After a reload with nothing wrong, one line says so. [File formats](/docs/datapack/introduction/file-formats#when-a-file-parses-but-doesnt-load) shows what the reports look like.
 
 ### Keys
 
