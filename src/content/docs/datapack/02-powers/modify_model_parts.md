@@ -9,7 +9,7 @@ Changes the rotation, scale, pivot offset and visibility of parts of the holder'
 Type ID: `apoli:modify_model_parts`
 
 > [!NOTE]
-> This is a client-side rendering power and only affects biped models (players and humanoid mobs). On players, an edit to a base part such as `body` also applies to its skin overlay layer, here the jacket.
+> This is a client-side rendering power and only affects biped models (players and humanoid mobs). On players, an edit to a base part such as `body` also applies to its skin overlay layer, here the jacket. A cape and an elytra follow the body as well, so they stay on the back through any turn, move or scale the power gives it.
 
 ## Fields
 

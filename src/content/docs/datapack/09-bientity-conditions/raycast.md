@@ -13,7 +13,7 @@ Type ID: `apoli:raycast`
 | Field | Type | Default | Description |
 | --- | --- | --- | --- |
 | `distance` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | _optional_ | How far the ray reaches. Without it, the ray reaches as far as the actor can hit an entity: its `minecraft:player.entity_interaction_range`, or 3 for anything without that attribute. `entity_distance` is accepted as another name. |
-| `cone_angle` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | _optional_ | Turns the ray into a cone. The target passes when its centre is within this many degrees of the aim direction and within `distance`. It takes the place of `radius`. |
+| `cone_angle` | [Float](/docs/datapack/data-types/float) or [Expression](/docs/datapack/data-types/expression) | _optional_ | Turns the ray into a cone. The target passes when any part of its hitbox is within this many degrees of the aim direction and within `distance`, or when the aim line passes through it. It takes the place of `radius`. |
 | `radius` | [Float](/docs/datapack/data-types/float), [Vector](/docs/datapack/data-types/vector) or [Expression](/docs/datapack/data-types/expression) | _optional_ | Thickens the ray into a beam. It takes a number or expression for every axis, or `{ "x": .., "y": .., "z": .. }` with a number or expression in each. The target passes when its hitbox, grown by this much, crosses the ray. |
 | `block` | [Boolean](/docs/datapack/data-types/boolean) | `true` | Whether blocks between the actor and the target make the condition fail. |
 | `shape_type` | [Shape Type](/docs/datapack/data-types/shape-type) | `visual` | Which block shapes count when `block` is `true`. |
